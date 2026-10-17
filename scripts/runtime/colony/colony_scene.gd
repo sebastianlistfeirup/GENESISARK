@@ -91,8 +91,11 @@ func _ready() -> void:
 	GameSession.state_changed.connect(func(_k: String) -> void: _sync())
 	GameSession.event_started.connect(event_dialog.show_event)
 	GameSession.colony_clock_active = true
-	AudioService.set_ambience("amb_colony_wind")
-	AudioService.set_music("music_hope" if gs.population.alive_count() > 0 else "")
+	AudioService.set_ambience_any(["amb_colony_" + gs.colony.biome_id, "amb_colony_wind"])
+	if gs.population.alive_count() > 0:
+		AudioService.set_music_any(["music_colony_act3" if gs.campaign.colony_year() >= 20.0 else "music_colony_act2", "music_hope"])
+	else:
+		AudioService.set_music("")
 	if gs.colony.last_report.is_empty():
 		GameSession.sim.colony.recompute_network(gs)
 		GameSession.sim.colony.allocate_power(gs, GameSession.sim.colony.hazard_factors(gs, gs.campaign.colony_day))

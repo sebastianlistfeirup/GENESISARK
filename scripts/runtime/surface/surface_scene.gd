@@ -70,7 +70,7 @@ func _ready() -> void:
 	captain.interact_target_changed.connect(func(t: Interactable) -> void: hud.set_prompt(t.prompt_text() + ("\n" + t.consequence if t and not t.consequence.is_empty() else "") if t else ""))
 	captain.hold_progress.connect(hud.set_hold)
 	_build_suit_hud()
-	AudioService.set_ambience("amb_colony_wind")
+	AudioService.set_ambience_any(["amb_surface_" + str(planet.get("biome_id")), "amb_colony_wind"])
 	GameSession.trigger_story("expedition_start")
 	hud.toast(str(survey.get("goal", "")), "info", 9.0)
 

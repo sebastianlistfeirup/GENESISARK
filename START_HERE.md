@@ -30,6 +30,12 @@ Spillet er bygget, så du **kun skal samle grafik**:
 - `data/art/asset_slots.json` — 81 slots. Skriv stien til en wrapper i `"scene"`, og proxyen skiftes overalt.
 - `data/art/synty_suggestions.json` — forslag til pakke og navnemønstre pr. slot (ikke verificeret mod filerne).
 
+## 3b. Hele produktionsplanen
+
+`docs/PRODUCTION_PLAN.md` — plan fra nu til udgivelse: faser og milepæle, værktøjsmatrix (Synty, Blender, Mixamo, ElevenLabs, HeyGen, Gemini, Grok, Kimi/DeepSeek, Meshy), lyd og musik, stemmer, video og trailer, animation, tekst, lokalisering, UI, test, ydelse, Steam-udgivelse, budget og uge-for-uge-plan.
+- `docs/AUDIO_LEDGER.csv` — 53 lydcues med prompts til ElevenLabs. Læg færdige filer i `assets/audio/final/<cue_id>.ogg`, så bruger spillet dem automatisk.
+- `docs/VO_SCRIPT.csv` — alle 92 replikker til stemmer. Læg filer i `assets/audio/vo/<line_id>.ogg`, så afspilles de med underteksten.
+
 ## 4. Kvalitet og beviser
 
 | Lag | Kommando | Resultat |
@@ -45,4 +51,4 @@ Se `docs/STATUS.md` (fase, porte, tests, blokeringer, næste tre opgaver) og `do
 
 ## 6. Dokumenter
 
-`README.md` · `AGENTS.md`/`CLAUDE.md` (regler for kodeagenter) · `tasks.json` + `tools/validate_plan.py` · `docs/BIBLE.md` · `docs/STATUS.md` · `docs/DECISIONS.md` · `docs/RISKS.md` · `docs/VERSION_MATRIX.md` · `docs/CAPABILITY_MATRIX.md` · `docs/ASSET_LEDGER.csv` · `docs/ANIMATION_LEDGER.csv`
+`docs/PRODUCTION_PLAN.md` · `README.md` · `AGENTS.md`/`CLAUDE.md` (regler for kodeagenter) · `tasks.json` + `tools/validate_plan.py` · `docs/BIBLE.md` · `docs/STATUS.md` · `docs/DECISIONS.md` · `docs/RISKS.md` · `docs/VERSION_MATRIX.md` · `docs/CAPABILITY_MATRIX.md` · `docs/ASSET_LEDGER.csv` · `docs/ANIMATION_LEDGER.csv`

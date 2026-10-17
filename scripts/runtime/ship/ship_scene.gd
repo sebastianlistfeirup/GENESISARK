@@ -79,7 +79,7 @@ func _ready() -> void:
 	add_child(workshop_panel)
 	GameSession.state_changed.connect(_on_state)
 	_on_state("init")
-	AudioService.set_ambience("amb_ship_hum")
+	AudioService.set_ambience_any(["amb_ship_dark" if GameSession.state.ark.systems.get("power") == "offline" else "amb_ship_powered", "amb_ship_hum"])
 	AudioService.set_music("")
 	GameSession.trigger_story("intro_wakeup")
 	if GameSession.state.campaign.location_id != GameSession.content.start_location:

@@ -5,7 +5,7 @@
 
 Singleplayer sci-fi-kolonispil i **Godot 4.5.1 (GDScript)**, bygget efter *Genesis Ark Udviklingsbibel v1* (`docs/BIBLE.md`). Grafikken bliver Synty POLYGON; indtil pakkerne er importeret, kører hele spillet med registrerede greybox-proxies (`data/art/asset_slots.json`).
 
-**Start her:** [`START_HERE.md`](START_HERE.md)
+**Start her:** [`START_HERE.md`](START_HERE.md) · **Plan til udgivelse:** [`docs/PRODUCTION_PLAN.md`](docs/PRODUCTION_PLAN.md)
 
 ## Hurtigt
 

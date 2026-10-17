@@ -5,6 +5,7 @@ extends Node
 
 const BUSES := ["Music", "SFX", "Ambience", "UI", "Voice"]
 const DEFAULT_DIR := "res://assets/audio/placeholder/"
+const FINAL_DIR := "res://assets/audio/final/"
 const ALARM_COOLDOWN_MS := 6000
 
 var _players: Array[AudioStreamPlayer] = []
@@ -13,6 +14,7 @@ var _music: AudioStreamPlayer
 var _cache: Dictionary = {}
 var _overrides: Dictionary = {}
 var _last_alarm: Dictionary = {}
+var _voice: AudioStreamPlayer
 
 
 func _ready() -> void:
@@ -58,9 +60,20 @@ func _set_bus(bus: String, linear: float) -> void:
 func stream(slot: String) -> AudioStream:
 	if _cache.has(slot):
 		return _cache[slot]
-	var path := str(_overrides.get(slot, DEFAULT_DIR + slot + ".wav"))
-	var s: AudioStream = load(path) if ResourceLoader.exists(path) else null
-	if s is AudioStreamWAV and (slot.begins_with("amb_") or slot.begins_with("music_") or slot == "sfx_thruster"):
+	# Lookup order: explicit override -> finished sound in assets/audio/final/
+	# (ogg/wav) -> synthesized placeholder. Dropping a file in "final" is enough.
+	var path := str(_overrides.get(slot, ""))
+	if path.is_empty():
+		for cand: String in [FINAL_DIR + slot + ".ogg", FINAL_DIR + slot + ".wav", DEFAULT_DIR + slot + ".wav"]:
+			if ResourceLoader.exists(cand):
+				path = cand
+				break
+	var s: AudioStream = load(path) if not path.is_empty() and ResourceLoader.exists(path) else null
+	if s is AudioStreamOggVorbis and (slot.begins_with("amb_") or slot.begins_with("music_") or slot.ends_with("_loop") or slot == "sfx_thruster"):
+		var o := (s as AudioStreamOggVorbis).duplicate() as AudioStreamOggVorbis
+		o.loop = true
+		s = o
+	if s is AudioStreamWAV and (slot.begins_with("amb_") or slot.begins_with("music_") or slot.ends_with("_loop") or slot == "sfx_thruster"):
 		var w := (s as AudioStreamWAV).duplicate() as AudioStreamWAV
 		w.loop_mode = AudioStreamWAV.LOOP_FORWARD
 		w.loop_end = int(w.get_length() * w.mix_rate)
@@ -94,6 +107,48 @@ func alarm(critical: bool) -> void:
 		return
 	_last_alarm[key] = now
 	play(key, "SFX", -2.0)
+
+
+func has_sound(slot: String) -> bool:
+	return stream(slot) != null
+
+
+## First slot that exists wins, e.g. ["amb_desert", "amb_colony_wind"]: lets
+## finished sounds replace placeholders without code changes.
+func set_ambience_any(slots: Array) -> void:
+	for sl: Variant in slots:
+		if has_sound(str(sl)):
+			set_ambience(str(sl))
+			return
+
+
+func set_music_any(slots: Array) -> void:
+	for sl: Variant in slots:
+		if has_sound(str(sl)):
+			set_music(str(sl))
+			return
+
+
+## Voice-over for one story line (assets/audio/vo/<line_id>.ogg|.wav).
+## Returns its length in seconds, or 0 if no recording exists (subtitles only).
+func play_voice(line_id: String) -> float:
+	for ext: String in [".ogg", ".wav", ".mp3"]:
+		var path := "res://assets/audio/vo/" + line_id + ext
+		if ResourceLoader.exists(path):
+			var st: AudioStream = load(path)
+			if _voice == null:
+				_voice = AudioStreamPlayer.new()
+				_voice.bus = "Voice"
+				add_child(_voice)
+			_voice.stream = st
+			_voice.play()
+			return st.get_length()
+	return 0.0
+
+
+func stop_voice() -> void:
+	if _voice:
+		_voice.stop()
 
 
 func set_ambience(slot: String) -> void:

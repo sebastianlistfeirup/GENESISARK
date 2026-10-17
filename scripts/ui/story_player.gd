@@ -11,6 +11,7 @@ var _text: Label
 var _timer := 0.0
 var _lines: Array = []
 var _index := 0
+var _scene_id := ""
 
 
 func _ready() -> void:
@@ -46,6 +47,7 @@ func _next_scene() -> void:
 		_box.visible = false
 		return
 	var sc: Dictionary = _queue.pop_front()
+	_scene_id = str(sc.get("id", ""))
 	_lines = DictUtil.get_arr(sc, "lines")
 	_index = 0
 	_show_line()
@@ -70,6 +72,10 @@ func _show_line() -> void:
 	_text.add_theme_font_size_override("font_size", int(SettingsService.get_value("subtitle_size", 22)))
 	_box.visible = bool(SettingsService.get_value("subtitles", true)) or sp != "NARRATOR"
 	_timer = clampf(2.0 + _text.text.length() * 0.055, 3.0, 9.0)
+	# Line id = "<scene id>_<two-digit index>", matching docs/VO_SCRIPT.csv.
+	var vo := AudioService.play_voice("%s_%02d" % [_scene_id, _index + 1])
+	if vo > 0.0:
+		_timer = maxf(_timer, vo + 0.4)
 
 
 func _process(delta: float) -> void:
@@ -83,6 +89,7 @@ func _process(delta: float) -> void:
 
 func skip_line() -> void:
 	if not _lines.is_empty():
+		AudioService.stop_voice()
 		_index += 1
 		_show_line()
 
