@@ -8,7 +8,7 @@ cd "$(dirname "$0")/.."
 grep -E "SCRIPT ERROR|Parse Error" /tmp/ga_import.log | sort -u | head -20
 "$GODOT" --headless --path . --script res://tests/run_tests.gd 2>&1 | grep -E "FAIL|SCRIPT ERROR|tests,|Indholdsfejl" 
 T=${PIPESTATUS[0]}
-"$GODOT" --headless --path . --script res://tests/scene_smoke.gd 2>&1 | grep -E "SMOKE|FAIL|SCRIPT ERROR|ERROR" | sort -u | head -40
+"$GODOT" --headless --path . res://scenes/tests/scene_smoke.tscn 2>&1 | grep -E "SMOKE|FAIL|SCRIPT ERROR|ERROR" | sort -u | head -40
 S=${PIPESTATUS[0]}
 echo "tests_exit=$T smoke_exit=$S"
 exit $(( T | S ))

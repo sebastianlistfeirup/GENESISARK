@@ -1,0 +1,138 @@
+{
+  "checks": [
+    {
+      "detail": "",
+      "name": "menu_loads",
+      "ok": true
+    },
+    {
+      "detail": "(12.0, 0.000038, 22.8)",
+      "name": "ship_captain_spawned",
+      "ok": true
+    },
+    {
+      "detail": "escapes=0",
+      "name": "ga02_route_10_runs_no_wall_pass",
+      "ok": true
+    },
+    {
+      "detail": "lost=0",
+      "name": "ga02_route_10_runs_figure_kept",
+      "ok": true
+    },
+    {
+      "detail": "hit=0.63 cam_z=29.59",
+      "name": "ga02_camera_never_passes_hull",
+      "ok": true
+    },
+    {
+      "detail": "I_power_coupling:<Area3D#145559131215>",
+      "name": "prompt_targets_coupling",
+      "ok": true
+    },
+    {
+      "detail": "",
+      "name": "ga03_power_restored_by_interaction",
+      "ok": true
+    },
+    {
+      "detail": "",
+      "name": "ga03_objective_not_rewarded_twice",
+      "ok": true
+    },
+    {
+      "detail": "",
+      "name": "starmap_opens",
+      "ok": true
+    },
+    {
+      "detail": "",
+      "name": "ga05_travel_command",
+      "ok": true
+    },
+    {
+      "detail": "fuel=88.0",
+      "name": "ga05_double_click_rejected",
+      "ok": true
+    },
+    {
+      "detail": "ring=3",
+      "name": "flight_autopilot_progresses",
+      "ok": true
+    },
+    {
+      "detail": "",
+      "name": "ga06_expedition_start",
+      "ok": true
+    },
+    {
+      "detail": "(4.0, -0.263693, 4.0)",
+      "name": "surface_captain_on_terrain",
+      "ok": true
+    },
+    {
+      "detail": "",
+      "name": "ga06_suit_drains_in_scene",
+      "ok": true
+    },
+    {
+      "detail": "",
+      "name": "ga06_sample_recorded",
+      "ok": true
+    },
+    {
+      "detail": "",
+      "name": "ga06_expedition_finished",
+      "ok": true
+    },
+    {
+      "detail": "",
+      "name": "ga07_landing",
+      "ok": true
+    },
+    {
+      "detail": "",
+      "name": "ga07_landing_once",
+      "ok": true
+    },
+    {
+      "detail": "placed=3",
+      "name": "ga08_three_buildings_placed",
+      "ok": true
+    },
+    {
+      "detail": "4 vs 4",
+      "name": "ga08_building_views_synced",
+      "ok": true
+    },
+    {
+      "detail": "",
+      "name": "ga08_habitat_active",
+      "ok": true
+    },
+    {
+      "detail": "",
+      "name": "ga10_save",
+      "ok": true
+    },
+    {
+      "detail": "",
+      "name": "ga10_load_identical",
+      "ok": true
+    },
+    {
+      "detail": "",
+      "name": "ga25_handover",
+      "ok": true
+    },
+    {
+      "detail": "",
+      "name": "ending_loads",
+      "ok": true
+    }
+  ],
+  "engine_version": "4.5.1-stable (official)",
+  "failures": [],
+  "status": "PASS",
+  "timestamp": "2026-10-17T19:52:06"
+}

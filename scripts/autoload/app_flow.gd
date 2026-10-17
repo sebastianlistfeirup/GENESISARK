@@ -14,6 +14,10 @@ const SCENES := {
 }
 
 var current_key := ""
+## Scene tests set this so gameplay code can request transitions without the
+## test harness scene being replaced; the request is recorded instead.
+var test_mode := false
+var last_requested := ""
 var params: Dictionary = {}
 var _fade: ColorRect
 var _layer: CanvasLayer
@@ -35,6 +39,10 @@ func _ready() -> void:
 
 func goto(key: String, p: Dictionary = {}) -> void:
 	if _busy or not SCENES.has(key):
+		return
+	if test_mode:
+		last_requested = key
+		params = p
 		return
 	_busy = true
 	params = p

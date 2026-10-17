@@ -68,7 +68,7 @@ func build() -> void:
 	st.begin(Mesh.PRIMITIVE_TRIANGLES)
 	var base := Color(str(palette.get("nature", DictUtil.get_str(map_def, "base_color", "#556b4a"))))
 	var rock := Color(DictUtil.get_str(map_def, "rock_color", "#6f6a60"))
-	var ground := base.darkened(0.25) if biome_id == "green" else base
+	var ground := base.darkened(0.25) if biome_id == "green" else (base.darkened(0.12) if biome_id == "ice" else base)
 	for iz: int in n + 1:
 		for ix: int in n + 1:
 			var h := heights[iz * (n + 1) + ix]

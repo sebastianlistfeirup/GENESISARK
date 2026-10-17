@@ -27,8 +27,13 @@ func current(gs: GameState) -> Dictionary:
 	var ids: Array = content.objectives.keys()
 	ids.sort_custom(func(a: String, b: String) -> bool:
 		return int(content.objectives[a].get("order", 0)) < int(content.objectives[b].get("order", 0)))
+	var order := ["ARK", "VOYAGE", "SETTLED"]
+	var now := order.find(gs.campaign.phase)
 	for id: String in ids:
 		if id in gs.campaign.completed_objectives:
+			continue
+		# Objectives of an earlier phase can no longer be completed; skip them.
+		if order.find(str(content.objectives[id].get("phase", "ARK"))) < now and now >= 0:
 			continue
 		return content.objectives[id]
 	return {}
