@@ -1,0 +1,29 @@
+{
+  "task_id": "GA-06",
+  "commit": "42604c4",
+  "engine_version": "4.5.1-stable (official)",
+  "command": "godot --headless --path . --script res://tests/run_tests.gd && godot --headless --path . res://scenes/tests/scene_smoke.tscn",
+  "exit_code": 0,
+  "expected": "Scouting indsnævrer et interval og betaler én gang; udtømt dragt giver varslet tilbagevending.",
+  "observed": "Alle tilknyttede checks bestod.",
+  "checks": {
+    "unit_prefixes": [
+      "test_survey_expedition"
+    ],
+    "scene_checks": [
+      "ga06_expedition_start",
+      "ga06_suit_drains_in_scene",
+      "ga06_sample_recorded",
+      "ga06_expedition_finished"
+    ]
+  },
+  "fixture": "DebugFixtures + tests/unit fixtures, seeds 1234/4242/777",
+  "status": "PASS",
+  "artifacts": [
+    "evidence/test_report.json",
+    "evidence/scene_smoke.json",
+    "evidence/shots/surface.png"
+  ],
+  "visual_review": "Greybox-proxies; visuel animation/Synty ikke godkendt (bibel s. 17, 25).",
+  "timestamp": "2026-10-17T20:54:52+00:00"
+}

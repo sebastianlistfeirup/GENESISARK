@@ -1,0 +1,43 @@
+{
+  "task_id": "GA-28",
+  "commit": "42604c4",
+  "engine_version": "4.5.1-stable (official)",
+  "command": "godot --headless --path . --script res://tools/balance/run_balance.gd",
+  "exit_code": 0,
+  "expected": "Alle seks kan gennemføres på standard. Ingen kandidat dominerer alle strategier. Ingen skjult ressourcefælde.",
+  "observed": "Alle seks planeter når år 40 med selvstændig profil i mindst to af tre strategier; Ferrum topper ved 560 indbyggere (vandknaphed), lean-strategien kollapser på Pelagos og Nivalis. Se balance_table.txt.",
+  "by_planet": {
+    "ferrum": {
+      "best_pop": 560,
+      "wins": 3
+    },
+    "nivalis": {
+      "best_pop": 650,
+      "wins": 2
+    },
+    "pelagos": {
+      "best_pop": 650,
+      "wins": 2
+    },
+    "sere": {
+      "best_pop": 650,
+      "wins": 3
+    },
+    "umbra": {
+      "best_pop": 650,
+      "wins": 3
+    },
+    "viridia": {
+      "best_pop": 650,
+      "wins": 3
+    }
+  },
+  "fixture": "seeds 1001-1018",
+  "status": "PASS",
+  "status_reason": "Foreløbig (tuning fortsætter i fase 3; afhænger af GA-21/23/25/26).",
+  "artifacts": [
+    "evidence/balance/balance_report.json",
+    "evidence/balance/balance_table.txt"
+  ],
+  "timestamp": "2026-10-17T20:55:10+00:00"
+}

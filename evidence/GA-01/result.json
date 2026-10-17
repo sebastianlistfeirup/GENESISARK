@@ -1,0 +1,26 @@
+{
+  "task_id": "GA-01",
+  "commit": "42604c4",
+  "engine_version": "4.5.1-stable (official)",
+  "command": "tools/check.sh",
+  "exit_code": 0,
+  "expected": "Ren opstart uden parserfejl; version dokumenteret; repeatable smoke-kommando.",
+  "observed": "Alle tilknyttede checks bestod.",
+  "checks": {
+    "unit_prefixes": [
+      "test_content"
+    ],
+    "scene_checks": [
+      "menu_loads"
+    ]
+  },
+  "fixture": "DebugFixtures + tests/unit fixtures, seeds 1234/4242/777",
+  "status": "PASS",
+  "artifacts": [
+    "evidence/test_report.json",
+    "evidence/scene_smoke.json",
+    "evidence/shots/menu.png"
+  ],
+  "visual_review": "Greybox-proxies; visuel animation/Synty ikke godkendt (bibel s. 17, 25).",
+  "timestamp": "2026-10-17T20:54:52+00:00"
+}

@@ -25,9 +25,11 @@ NOTES = {
     "GA-28": ("IN_PROGRESS", "tools/balance/run_balance.gd: 6 planeter × 3 strategier til år 40; se evidence/balance."),
     "GA-29": ("IN_PROGRESS", "Tasteomlægning, UI-skala, reduceret bevægelse, undertekster; profilering af dagstick (tools/balance/profile_tick.gd)."),
 }
+by_id = {t["id"]: t for t in d["tasks"]}
 for t in d["tasks"]:
     ev = os.path.join(ROOT, "evidence", t["id"], "result.json")
-    if os.path.exists(ev) and json.load(open(ev, encoding="utf-8")).get("status") == "PASS":
+    deps_done = all(by_id[x]["status"] == "DONE" for x in t["depends_on"])
+    if deps_done and os.path.exists(ev) and json.load(open(ev, encoding="utf-8")).get("status") == "PASS":
         t["status"] = "DONE"
         t["last_commit"] = commit
         t["owner"] = "claude-code (ferie-session)"

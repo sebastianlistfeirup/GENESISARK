@@ -1,0 +1,25 @@
+{
+  "task_id": "GA-04",
+  "commit": "42604c4",
+  "engine_version": "4.5.1-stable (official)",
+  "command": "godot --headless --path . --script res://tests/run_tests.gd && godot --headless --path . res://scenes/tests/scene_smoke.tscn",
+  "exit_code": 0,
+  "expected": "Ugyldig planet afvises med præcis årsag; embryosum 50.000; negative ressourcer afvises; samme fixture samme state.",
+  "observed": "Alle tilknyttede checks bestod.",
+  "checks": {
+    "unit_prefixes": [
+      "test_content",
+      "test_ark_travel::test_new_campaign_baseline",
+      "test_ark_travel::test_negative_resources_rejected"
+    ],
+    "scene_checks": []
+  },
+  "fixture": "DebugFixtures + tests/unit fixtures, seeds 1234/4242/777",
+  "status": "PASS",
+  "artifacts": [
+    "evidence/test_report.json",
+    "evidence/scene_smoke.json"
+  ],
+  "visual_review": "Greybox-proxies; visuel animation/Synty ikke godkendt (bibel s. 17, 25).",
+  "timestamp": "2026-10-17T20:54:52+00:00"
+}

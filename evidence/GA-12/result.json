@@ -1,0 +1,29 @@
+{
+  "task_id": "GA-12",
+  "commit": "42604c4",
+  "engine_version": "4.5.1.stable.official.f62fdbde1",
+  "command": "godot --headless --path . --export-release \"Windows Desktop\" builds/windows/GenesisArk.exe ; --export-release \"Linux\" builds/linux/GenesisArk.x86_64",
+  "exit_code": 0,
+  "expected": "Gate 1 opfyldt med build-ID og faktiske beviser.",
+  "observed": "Begge eksporter lykkedes. Linux-build startet under Xvfb fra rent startstate-fixture og renderede kolonien (evidence/shots/export_linux_colony.png). Windows-build er ikke kørt (ingen Windows-maskine). Domæne- og savetests grønne på samme commit.",
+  "subchecks": {
+    "export_windows": "PASS",
+    "export_linux": "PASS",
+    "run_linux_export": "PASS",
+    "run_windows_export": "NOT_RUN",
+    "human_visual_review": "NOT_RUN",
+    "phase1_tag": "NOT_RUN"
+  },
+  "build_ids": {
+    "windows_exe_sha256_16": "78ccc576e8f8bffd",
+    "linux_x86_64_sha256_16": "54cc228405e5be61",
+    "pck_sha256_16": "0370d848e3398caf"
+  },
+  "fixture": "colony:sere",
+  "status": "FAIL",
+  "status_reason": "Porten er ikke DONE: Windows-kørsel og visuel kontrol mangler (bibel s. 35).",
+  "artifacts": [
+    "evidence/shots/export_linux_colony.png"
+  ],
+  "timestamp": "2026-10-17T20:55:10+00:00"
+}

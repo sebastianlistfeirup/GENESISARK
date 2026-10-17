@@ -1,0 +1,29 @@
+{
+  "task_id": "GA-03",
+  "commit": "42604c4",
+  "engine_version": "4.5.1-stable (official)",
+  "command": "godot --headless --path . --script res://tests/run_tests.gd && godot --headless --path . res://scenes/tests/scene_smoke.tscn",
+  "exit_code": 0,
+  "expected": "Ny spiller kan starte strøm og åbne planetskærm uden debug; objective belønnes ikke to gange.",
+  "observed": "Alle tilknyttede checks bestod.",
+  "checks": {
+    "unit_prefixes": [
+      "test_ark_travel::test_power_objective_once"
+    ],
+    "scene_checks": [
+      "ga03_power_restored_by_interaction",
+      "ga03_objective_not_rewarded_twice",
+      "starmap_opens"
+    ]
+  },
+  "fixture": "DebugFixtures + tests/unit fixtures, seeds 1234/4242/777",
+  "status": "PASS",
+  "artifacts": [
+    "evidence/test_report.json",
+    "evidence/scene_smoke.json",
+    "evidence/shots/ship_dark.png",
+    "evidence/shots/ship_power.png"
+  ],
+  "visual_review": "Greybox-proxies; visuel animation/Synty ikke godkendt (bibel s. 17, 25).",
+  "timestamp": "2026-10-17T20:54:52+00:00"
+}

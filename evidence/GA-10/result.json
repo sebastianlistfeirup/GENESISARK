@@ -1,0 +1,26 @@
+{
+  "task_id": "GA-10",
+  "commit": "42604c4",
+  "engine_version": "4.5.1-stable (official)",
+  "command": "godot --headless --path . --script res://tests/run_tests.gd && godot --headless --path . res://scenes/tests/scene_smoke.tscn",
+  "exit_code": 0,
+  "expected": "Roundtrip bevarer nøgletal og id'er; korrupt fil tilbyder backup; restore affyrer ingen events igen; v1-fixture migreres.",
+  "observed": "Alle tilknyttede checks bestod.",
+  "checks": {
+    "unit_prefixes": [
+      "test_save"
+    ],
+    "scene_checks": [
+      "ga10_save",
+      "ga10_load_identical"
+    ]
+  },
+  "fixture": "DebugFixtures + tests/unit fixtures, seeds 1234/4242/777",
+  "status": "PASS",
+  "artifacts": [
+    "evidence/test_report.json",
+    "evidence/scene_smoke.json"
+  ],
+  "visual_review": "Greybox-proxies; visuel animation/Synty ikke godkendt (bibel s. 17, 25).",
+  "timestamp": "2026-10-17T20:54:52+00:00"
+}

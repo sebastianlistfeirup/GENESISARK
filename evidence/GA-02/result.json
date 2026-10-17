@@ -1,0 +1,28 @@
+{
+  "task_id": "GA-02",
+  "commit": "42604c4",
+  "engine_version": "4.5.1-stable (official)",
+  "command": "godot --headless --path . res://scenes/tests/scene_smoke.tscn",
+  "exit_code": 0,
+  "expected": "10 gennemløb af samme rute uden væggennemgang eller mistet figur; kamera kolliderer.",
+  "observed": "Alle tilknyttede checks bestod.",
+  "checks": {
+    "unit_prefixes": [],
+    "scene_checks": [
+      "ga02_route_10_runs_no_wall_pass",
+      "ga02_route_10_runs_figure_kept",
+      "ga02_camera_never_passes_hull",
+      "ga02_camera_mode_switch_clean",
+      "prompt_targets_coupling"
+    ]
+  },
+  "fixture": "DebugFixtures + tests/unit fixtures, seeds 1234/4242/777",
+  "status": "PASS",
+  "artifacts": [
+    "evidence/test_report.json",
+    "evidence/scene_smoke.json",
+    "evidence/shots/ship_power.png"
+  ],
+  "visual_review": "Greybox-proxies; visuel animation/Synty ikke godkendt (bibel s. 17, 25).",
+  "timestamp": "2026-10-17T20:54:52+00:00"
+}

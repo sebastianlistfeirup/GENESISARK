@@ -1,0 +1,28 @@
+{
+  "task_id": "GA-05",
+  "commit": "42604c4",
+  "engine_version": "4.5.1-stable (official)",
+  "command": "godot --headless --path . --script res://tests/run_tests.gd && godot --headless --path . res://scenes/tests/scene_smoke.tscn",
+  "exit_code": 0,
+  "expected": "Dobbeltklik og load ved ankomst kan ikke bruge fuel to gange; reserve forklares før valg; flyvning kan assisteres.",
+  "observed": "Alle tilknyttede checks bestod.",
+  "checks": {
+    "unit_prefixes": [
+      "test_ark_travel"
+    ],
+    "scene_checks": [
+      "ga05_travel_command",
+      "ga05_double_click_rejected",
+      "flight_autopilot_progresses"
+    ]
+  },
+  "fixture": "DebugFixtures + tests/unit fixtures, seeds 1234/4242/777",
+  "status": "PASS",
+  "artifacts": [
+    "evidence/test_report.json",
+    "evidence/scene_smoke.json",
+    "evidence/shots/flight.png"
+  ],
+  "visual_review": "Greybox-proxies; visuel animation/Synty ikke godkendt (bibel s. 17, 25).",
+  "timestamp": "2026-10-17T20:54:52+00:00"
+}
