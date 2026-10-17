@@ -1,0 +1,18 @@
+# Godot
+.godot/
+*.import.tmp
+/builds/*
+!/builds/README.md
+export_credentials.cfg
+*.translation
+
+# Raw purchased asset packs never go into git (bible p.23). Import via quarantine.
+/assets/quarantine/
+/assets/synty_raw/
+*.unitypackage
+
+# OS / editor
+.DS_Store
+Thumbs.db
+*.tmp
+__pycache__/

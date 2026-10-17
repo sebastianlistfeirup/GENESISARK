@@ -1,0 +1,85 @@
+extends TestCase
+## GA-21/25: deterministic era leaps and endings.
+
+
+func _settled(pid: String) -> Simulation:
+	var sim := new_sim(99)
+	land_on(sim, pid)
+	var inv: Dictionary = sim.state.colony.inventory
+	inv["alloy"] = 800.0
+	inv["components"] = 60.0
+	inv["water"] = 600.0
+	inv["food"] = 600.0
+	for d: String in ["solar_array", "solar_array", "geothermal_generator", "water_plant", "greenhouse", "habitat", "care_center", "battery", "mine", "workshop"]:
+		place_near(sim, d)
+	var req := sim.colony.requires_module(sim.state)
+	if not req.is_empty():
+		for b: Dictionary in sim.state.colony.buildings:
+			if b["def_id"] == "habitat":
+				sim.colony.add_module(sim.state, int(b["id"]), req)
+	run_days(sim, 40)
+	sim.population.start_incubation(sim.state, 10, "first")
+	run_days(sim, 5)
+	return sim
+
+
+func test_forecast_equals_commit() -> void:
+	var sim := _settled("pelagos")
+	var plan := EraService.default_plan(3)
+	var fc := sim.era.forecast(sim.state, plan)
+	var res := sim.era.commit(sim.state, plan, "leap1")
+	if not ok(res, "commit"):
+		return
+	eq(res.data["end_day"], fc["end_day"], "samme stopdag")
+	eq(res.data["end_checksum"], fc["end_checksum"], "prognose == resultat")
+	fails(sim.era.commit(sim.state, plan, "leap1"), "duplicate_txn")
+
+
+func test_same_fixture_same_result() -> void:
+	var a := _settled("sere")
+	var b := _settled("sere")
+	a.era.commit(a.state, EraService.default_plan(2), "l")
+	b.era.commit(b.state, EraService.default_plan(2), "l")
+	eq(a.checksum(), b.checksum(), "deterministisk")
+
+
+func test_leap_stops_before_critical_event() -> void:
+	var sim := _settled("viridia")
+	var crit := ""
+	for id: String in content.events.keys():
+		if content.events[id].get("critical", false):
+			crit = id
+			break
+	sim.state.events.active.append({"id": crit, "day_started": sim.state.campaign.colony_day, "phase": "active"})
+	var r := sim.era.commit(sim.state, EraService.default_plan(20), "l")
+	fails(r, "leap_blocked", "uløst krise blokerer")
+
+
+func test_ledger_holds_over_leap() -> void:
+	var sim := _settled("nivalis")
+	sim.era.commit(sim.state, EraService.default_plan(4), "l")
+	eq(sim.state.ark.embryo_sum(), 50000, "sum efter spring")
+	check(sim.state.validation_errors(content).is_empty(), str(sim.state.validation_errors(content)))
+
+
+func test_ending_profiles_from_metrics() -> void:
+	var sim := new_sim()
+	var base := {"population": 520, "council": true, "power_independent": true, "reserve_days": 90.0}
+	eq(sim.endings.profile_for(base), "independent", "selvstændig")
+	var shielded := base.duplicate()
+	shielded["power_independent"] = false
+	eq(sim.endings.profile_for(shielded), "shielded", "skærmet")
+	var fragile := base.duplicate()
+	fragile["population"] = 120
+	fragile["council"] = false
+	eq(sim.endings.profile_for(fragile), "fragile", "skrøbelig")
+
+
+func test_handover_once_and_epilogue() -> void:
+	var sim := _settled("ferrum")
+	ok(sim.endings.handover(sim.state, "h"), "overdrag")
+	fails(sim.endings.handover(sim.state, "h2"), "already_ended")
+	var ep := sim.endings.epilogue(sim.state)
+	check(ep.size() >= 3, "epilog")
+	check("Ferrum" in " ".join(ep), "nævner planeten")
+	check(not "{" in " ".join(ep), "ingen ufyldte pladsholdere: " + " ".join(ep))

@@ -1,0 +1,21 @@
+{
+  "biome_id": "desert",
+  "map": { "name": "Ørkenbiomekort", "size_m": 260, "terrain_seed": 2202, "height_scale": 12.0, "base_color": "#b07a45", "rock_color": "#7e5236", "water_level": -100.0 },
+  "sites": [
+    { "id": "desert_a", "name": "Malmkløften", "center": [-55, 40],
+      "description": "En kløft med blottede malmårer. Skygge om eftermiddagen og en dyb akvifer under bunden.",
+      "districts": { "landing": {"center": [0, 0], "radius": 26}, "resource": {"center": [34, -24], "radius": 20}, "living": {"center": [-28, -30], "radius": 22} },
+      "blocked": [ {"center": [10, 30], "radius": 12} ],
+      "facts": { "water_distance_m": 45, "flatness": 0.55, "shelter": 0.7, "vent": false, "exposure": 0.4, "landing_quality": 0.7 } },
+    { "id": "desert_b", "name": "Glassletten", "center": [50, 55],
+      "description": "Smeltet sand, glat og fladt. Perfekt til byggeri, men totalt udsat for vind og støv.",
+      "districts": { "landing": {"center": [0, 0], "radius": 32}, "resource": {"center": [-44, -20], "radius": 24}, "living": {"center": [36, -30], "radius": 26} },
+      "blocked": [],
+      "facts": { "water_distance_m": 90, "flatness": 0.98, "shelter": 0.1, "vent": false, "exposure": 0.9, "landing_quality": 0.98 } },
+    { "id": "desert_c", "name": "Klippebuen", "center": [0, -60],
+      "description": "En naturlig klippebue danner læ. Lidt plads, men en svag varmekilde under klipperne.",
+      "districts": { "landing": {"center": [0, 0], "radius": 24}, "resource": {"center": [-30, 30], "radius": 18}, "living": {"center": [30, 26], "radius": 20} },
+      "blocked": [ {"center": [0, 32], "radius": 8} ],
+      "facts": { "water_distance_m": 60, "flatness": 0.5, "shelter": 0.85, "vent": true, "exposure": 0.3, "landing_quality": 0.6 } }
+  ]
+}

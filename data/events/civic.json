@@ -1,0 +1,616 @@
+{
+  "events": [
+    {
+      "id": "civic_first_night",
+      "kind": "civic",
+      "title": "Den første nat",
+      "biome": "",
+      "critical": false,
+      "trigger": {
+        "min_day": 320,
+        "min_population": 2,
+        "requires_buildings": [
+          "care_center"
+        ],
+        "chance_per_day": 0.05
+      },
+      "warning_days": 0,
+      "warning": "",
+      "text": "Børnene græder i omsorgscentret. Robotterne gør alt rigtigt, men gråden stopper ikke. ARK foreslår at flytte droner fra byggeriet til omsorgen.",
+      "options": [
+        {
+          "id": "a",
+          "label": "Flere droner på omsorg",
+          "description": "To droner flyttes fra byggeriet til centret. Børnene trives bedre, men byggeriet går langsommere.",
+          "cost": {
+            "alloy": 0,
+            "components": 0,
+            "water": 0,
+            "food": 0
+          },
+          "requires": {
+            "building": "",
+            "module": ""
+          },
+          "effects": {
+            "trust": 3,
+            "health": 0.04,
+            "food": 0,
+            "water": 0,
+            "wear": 0,
+            "autonomy": 0,
+            "priority": "safety",
+            "power_kw_days": 0,
+            "solar_penalty_days": 0
+          },
+          "result": "Det blev stille i centret. Byggeriet tabte en uge."
+        },
+        {
+          "id": "b",
+          "label": "Tag nattevagterne selv",
+          "description": "Du sidder hos dem om natten. Det koster ikke andet end din søvn.",
+          "cost": {
+            "alloy": 0,
+            "components": 0,
+            "water": 0,
+            "food": 0
+          },
+          "requires": {
+            "building": "",
+            "module": ""
+          },
+          "effects": {
+            "trust": 5,
+            "health": 0.03,
+            "food": 0,
+            "water": 0,
+            "wear": 0,
+            "autonomy": -1,
+            "priority": "",
+            "power_kw_days": 0,
+            "solar_penalty_days": 0
+          },
+          "result": "Du sang den eneste vuggevise, du kunne huske. Den virkede bedre end forventet."
+        },
+        {
+          "id": "c",
+          "label": "Lad programmet lære",
+          "description": "Omsorgsprogrammet tilpasser sig selv. Det tager tid, men det bliver bedre.",
+          "cost": {
+            "alloy": 0,
+            "components": 0,
+            "water": 0,
+            "food": 0
+          },
+          "requires": {
+            "building": "",
+            "module": ""
+          },
+          "effects": {
+            "trust": 0,
+            "health": -0.01,
+            "food": 0,
+            "water": 0,
+            "wear": 0,
+            "autonomy": 2,
+            "priority": "",
+            "power_kw_days": 0,
+            "solar_penalty_days": 0
+          },
+          "result": "Efter en uge kendte robotterne forskel på sult og uro. Efter to sov børnene."
+        }
+      ],
+      "fallback": "c"
+    },
+    {
+      "id": "civic_fever",
+      "kind": "civic",
+      "title": "Feber",
+      "biome": "",
+      "critical": true,
+      "trigger": {
+        "min_day": 450,
+        "min_population": 5,
+        "requires_buildings": [
+          "care_center"
+        ],
+        "chance_per_day": 0.02
+      },
+      "warning_days": 1,
+      "warning": "Tre børn i den første kohorte har forhøjet temperatur.",
+      "text": "En feber går gennem den første kohorte. ARK kender ikke virussen — den hører hjemme på denne planet. Den yngste, en pige på syv måneder, vil ikke spise.",
+      "options": [
+        {
+          "id": "a",
+          "label": "Behandl på klinikken",
+          "description": "Klinikken isolerer og behandler. Sikkert, men det koster medicinske komponenter.",
+          "cost": {
+            "alloy": 0,
+            "components": 2,
+            "water": 0,
+            "food": 0
+          },
+          "requires": {
+            "building": "clinic",
+            "module": ""
+          },
+          "effects": {
+            "trust": 4,
+            "health": 0.05,
+            "food": 0,
+            "water": 0,
+            "wear": 0,
+            "autonomy": 0,
+            "priority": "safety",
+            "power_kw_days": 0,
+            "solar_penalty_days": 0
+          },
+          "result": "Klinikken fandt et middel på fjerdedagen. På femtedagen spiste pigen igen."
+        },
+        {
+          "id": "b",
+          "label": "Brug arkens lægeafsnit",
+          "description": "Arkens gamle lægeafsnit kan behandle dem. Det kræver nødstrøm, og kolonien lærer, at arken er svaret.",
+          "cost": {
+            "alloy": 0,
+            "components": 0,
+            "water": 0,
+            "food": 0
+          },
+          "requires": {
+            "building": "",
+            "module": ""
+          },
+          "effects": {
+            "trust": 2,
+            "health": 0.03,
+            "food": 0,
+            "water": 0,
+            "wear": 0,
+            "autonomy": -4,
+            "priority": "",
+            "power_kw_days": -20,
+            "solar_penalty_days": 0
+          },
+          "result": "Lægeafsnittet vågnede efter mange års søvn. Det virkede stadig."
+        },
+        {
+          "id": "c",
+          "label": "Isolér og vent",
+          "description": "Hold de syge adskilt, og lad feberen gå sin gang. Ingen omkostning, men risikabelt for de svageste.",
+          "cost": {
+            "alloy": 0,
+            "components": 0,
+            "water": 0,
+            "food": 0
+          },
+          "requires": {
+            "building": "",
+            "module": ""
+          },
+          "effects": {
+            "trust": -4,
+            "health": -0.08,
+            "food": 0,
+            "water": 0,
+            "wear": 0,
+            "autonomy": 0,
+            "priority": "",
+            "power_kw_days": 0,
+            "solar_penalty_days": 0
+          },
+          "result": "Feberen gik over efter to uger. Det var to lange uger."
+        }
+      ],
+      "fallback": "b"
+    },
+    {
+      "id": "civic_naming",
+      "kind": "civic",
+      "title": "Et navn",
+      "biome": "",
+      "critical": false,
+      "trigger": {
+        "min_day": 2920,
+        "min_population": 10,
+        "requires_buildings": [
+          "care_center"
+        ],
+        "chance_per_day": 0.03
+      },
+      "warning_days": 0,
+      "warning": "",
+      "text": "Børnene spørger, hvad stedet hedder. I loggen står der kun »Koloni 1«. ARK har intet forslag: »Det er ikke mit at navngive.«",
+      "options": [
+        {
+          "id": "a",
+          "label": "Lad børnene stemme",
+          "description": "Det første fælles valg. Måske vælger de noget fjollet.",
+          "cost": {
+            "alloy": 0,
+            "components": 0,
+            "water": 0,
+            "food": 0
+          },
+          "requires": {
+            "building": "",
+            "module": ""
+          },
+          "effects": {
+            "trust": 3,
+            "health": 0.0,
+            "food": 0,
+            "water": 0,
+            "wear": 0,
+            "autonomy": 4,
+            "priority": "self_determination",
+            "power_kw_days": 0,
+            "solar_penalty_days": 0
+          },
+          "result": "Navnet vandt med to stemmers flertal. Det var ikke det, du ville have valgt. Det var deres."
+        },
+        {
+          "id": "b",
+          "label": "Opkald det efter arken",
+          "description": "Et navn, der husker, hvor de kom fra.",
+          "cost": {
+            "alloy": 0,
+            "components": 0,
+            "water": 0,
+            "food": 0
+          },
+          "requires": {
+            "building": "",
+            "module": ""
+          },
+          "effects": {
+            "trust": 2,
+            "health": 0.0,
+            "food": 0,
+            "water": 0,
+            "wear": 0,
+            "autonomy": -1,
+            "priority": "safety",
+            "power_kw_days": 0,
+            "solar_penalty_days": 0
+          },
+          "result": "Navnet blev malet over døren til omsorgscentret. Det var det første ord, børnene lærte at stave."
+        },
+        {
+          "id": "c",
+          "label": "Giv det et navn, der peger frem",
+          "description": "Et navn for det, der skal komme: de næste dale, de næste byer.",
+          "cost": {
+            "alloy": 0,
+            "components": 0,
+            "water": 0,
+            "food": 0
+          },
+          "requires": {
+            "building": "",
+            "module": ""
+          },
+          "effects": {
+            "trust": 1,
+            "health": 0.0,
+            "food": 0,
+            "water": 0,
+            "wear": 0,
+            "autonomy": 1,
+            "priority": "expansion",
+            "power_kw_days": 0,
+            "solar_penalty_days": 0
+          },
+          "result": "Navnet stod på kortet ved siden af tre tomme felter. Børnene begyndte at navngive dem også."
+        }
+      ],
+      "fallback": "a"
+    },
+    {
+      "id": "civic_school_or_work",
+      "kind": "civic",
+      "title": "Skole eller værksted",
+      "biome": "",
+      "critical": false,
+      "trigger": {
+        "min_day": 4745,
+        "min_population": 10,
+        "requires_buildings": [
+          "workshop"
+        ],
+        "chance_per_day": 0.03
+      },
+      "warning_days": 0,
+      "warning": "",
+      "text": "De ældste børn er tretten. Værkstedet mangler hænder, og flere af dem vil hellere reparere droner end sidde i skolen. Lærerprogrammet mener, de er for unge til at vælge.",
+      "options": [
+        {
+          "id": "a",
+          "label": "Fuld skolegang",
+          "description": "Alle går i skole, til de er seksten. Langsommere nu, stærkere senere.",
+          "cost": {
+            "alloy": 0,
+            "components": 0,
+            "water": 0,
+            "food": 0
+          },
+          "requires": {
+            "building": "school_hall",
+            "module": ""
+          },
+          "effects": {
+            "trust": 2,
+            "health": 0.0,
+            "food": 0,
+            "water": 0,
+            "wear": 0,
+            "autonomy": 3,
+            "priority": "safety",
+            "power_kw_days": 0,
+            "solar_penalty_days": 0
+          },
+          "result": "Skolehallen var fuld hver morgen. Værkstedet måtte vente."
+        },
+        {
+          "id": "b",
+          "label": "Lærepladser i værkstedet",
+          "description": "Halvt skole, halvt værksted. Byggeriet går hurtigere, men noget læring går tabt.",
+          "cost": {
+            "alloy": 0,
+            "components": 0,
+            "water": 0,
+            "food": 0
+          },
+          "requires": {
+            "building": "",
+            "module": ""
+          },
+          "effects": {
+            "trust": 1,
+            "health": 0.0,
+            "food": 0,
+            "water": 0,
+            "wear": 0,
+            "autonomy": 2,
+            "priority": "expansion",
+            "power_kw_days": 0,
+            "solar_penalty_days": 0
+          },
+          "result": "Værkstedet larmede af unge stemmer. Dronerne blev repareret hurtigere end nogensinde."
+        },
+        {
+          "id": "c",
+          "label": "Lad dem selv vælge",
+          "description": "Hvert barn vælger selv. Nogle vælger forkert. Alle lærer, hvad et valg koster.",
+          "cost": {
+            "alloy": 0,
+            "components": 0,
+            "water": 0,
+            "food": 0
+          },
+          "requires": {
+            "building": "",
+            "module": ""
+          },
+          "effects": {
+            "trust": 3,
+            "health": 0.0,
+            "food": 0,
+            "water": 0,
+            "wear": 0,
+            "autonomy": 5,
+            "priority": "self_determination",
+            "power_kw_days": 0,
+            "solar_penalty_days": 0
+          },
+          "result": "Halvdelen valgte værkstedet. To kom tilbage til skolen efter en måned — af egen vilje."
+        }
+      ],
+      "fallback": "c"
+    },
+    {
+      "id": "civic_mine_accident",
+      "kind": "civic",
+      "title": "Ulykken i minen",
+      "biome": "",
+      "critical": true,
+      "trigger": {
+        "min_day": 5475,
+        "min_population": 20,
+        "requires_buildings": [
+          "mine"
+        ],
+        "chance_per_day": 0.02
+      },
+      "warning_days": 0,
+      "warning": "",
+      "text": "En gang i minen er styrtet sammen. Ravi på femten var derinde med en drone. Dronerne fik ham ud. Han lever, men benet er knust, og hele kolonien så ham blive båret op.",
+      "options": [
+        {
+          "id": "a",
+          "label": "Luk minen, til den er sikret",
+          "description": "Minen lukker, indtil gangene er afstivet. Koster byggemateriale og stopper udvindingen en måned.",
+          "cost": {
+            "alloy": 25,
+            "components": 0,
+            "water": 0,
+            "food": 0
+          },
+          "requires": {
+            "building": "",
+            "module": ""
+          },
+          "effects": {
+            "trust": 4,
+            "health": 0.0,
+            "food": 0,
+            "water": 0,
+            "wear": 0,
+            "autonomy": 0,
+            "priority": "safety",
+            "power_kw_days": 0,
+            "solar_penalty_days": 0
+          },
+          "result": "Minen var lukket i en måned. Ravi var den første, der gik derind igen — på krykker, for at se afstivningen."
+        },
+        {
+          "id": "b",
+          "label": "Kun droner under jorden",
+          "description": "Ingen mennesker i minen. Dronerne overtager arbejdet og slides hurtigere.",
+          "cost": {
+            "alloy": 0,
+            "components": 0,
+            "water": 0,
+            "food": 0
+          },
+          "requires": {
+            "building": "",
+            "module": ""
+          },
+          "effects": {
+            "trust": 2,
+            "health": 0.0,
+            "food": 0,
+            "water": 0,
+            "wear": 15,
+            "autonomy": -3,
+            "priority": "safety",
+            "power_kw_days": 0,
+            "solar_penalty_days": 0
+          },
+          "result": "Minen blev dronernes. De unge stod ved indgangen og så dem forsvinde ned i mørket."
+        },
+        {
+          "id": "c",
+          "label": "Lad minearbejderne beslutte",
+          "description": "De unge, der arbejder i minen, skriver selv de nye regler.",
+          "cost": {
+            "alloy": 0,
+            "components": 0,
+            "water": 0,
+            "food": 0
+          },
+          "requires": {
+            "building": "",
+            "module": ""
+          },
+          "effects": {
+            "trust": 3,
+            "health": -0.01,
+            "food": 0,
+            "water": 0,
+            "wear": 0,
+            "autonomy": 4,
+            "priority": "self_determination",
+            "power_kw_days": 0,
+            "solar_penalty_days": 0
+          },
+          "result": "De skrev syv regler på en plade ved indgangen. Den første lød: Ingen går alene."
+        }
+      ],
+      "fallback": "c"
+    },
+    {
+      "id": "civic_youth_vote",
+      "kind": "civic",
+      "title": "De unge vil stemme",
+      "biome": "",
+      "critical": false,
+      "trigger": {
+        "min_day": 6205,
+        "min_population": 30,
+        "requires_buildings": [
+          "school_hall"
+        ],
+        "chance_per_day": 0.03
+      },
+      "warning_days": 0,
+      "warning": "",
+      "text": "Rådet består af de ældste. Nu står en flok sekstenårige i døren til skolehallen. »Vi arbejder. Vi lever med jeres beslutninger. Vi vil stemme.«",
+      "options": [
+        {
+          "id": "a",
+          "label": "Stemmeret fra seksten",
+          "description": "Rådet udvides. Flere stemmer, langsommere beslutninger.",
+          "cost": {
+            "alloy": 0,
+            "components": 0,
+            "water": 0,
+            "food": 0
+          },
+          "requires": {
+            "building": "",
+            "module": ""
+          },
+          "effects": {
+            "trust": 4,
+            "health": 0.0,
+            "food": 0,
+            "water": 0,
+            "wear": 0,
+            "autonomy": 6,
+            "priority": "self_determination",
+            "power_kw_days": 0,
+            "solar_penalty_days": 0
+          },
+          "result": "Det første møde varede fem timer. Ingen gik før tid."
+        },
+        {
+          "id": "b",
+          "label": "Hold fast ved atten",
+          "description": "Reglen står. Nogle bliver skuffede.",
+          "cost": {
+            "alloy": 0,
+            "components": 0,
+            "water": 0,
+            "food": 0
+          },
+          "requires": {
+            "building": "",
+            "module": ""
+          },
+          "effects": {
+            "trust": -3,
+            "health": 0.0,
+            "food": 0,
+            "water": 0,
+            "wear": 0,
+            "autonomy": 0,
+            "priority": "safety",
+            "power_kw_days": 0,
+            "solar_penalty_days": 0
+          },
+          "result": "De unge gik. Ugen efter kom de igen — med et skriftligt forslag."
+        },
+        {
+          "id": "c",
+          "label": "Taleret uden stemmeret",
+          "description": "De unge får en repræsentant i rådet, som må tale, men ikke stemme.",
+          "cost": {
+            "alloy": 0,
+            "components": 0,
+            "water": 0,
+            "food": 0
+          },
+          "requires": {
+            "building": "",
+            "module": ""
+          },
+          "effects": {
+            "trust": 1,
+            "health": 0.0,
+            "food": 0,
+            "water": 0,
+            "wear": 0,
+            "autonomy": 2,
+            "priority": "",
+            "power_kw_days": 0,
+            "solar_penalty_days": 0
+          },
+          "result": "Repræsentanten talte ved hvert møde. Efter et år huskede ingen, at hun ikke måtte stemme."
+        }
+      ],
+      "fallback": "c"
+    }
+  ]
+}

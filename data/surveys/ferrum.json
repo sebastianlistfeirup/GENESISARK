@@ -1,0 +1,109 @@
+{
+  "id": "survey_ferrum",
+  "planet_id": "ferrum",
+  "title": "Vand under sten",
+  "briefing": "Klippen gløder i middagssolen, og dragtens køling arbejder allerede. Et sted under kløften ligger en akvifer. Vi skal vide, hvor dybt den ligger, før vi bygger noget her.",
+  "goal": "Bor en prøve ved akviferen, og placér et relæ på kløftens kant.",
+  "points": {
+    "lander": [
+      0,
+      0
+    ],
+    "main_sample": {
+      "pos": [
+        30,
+        -40
+      ],
+      "label": "Akviferboringen",
+      "reveals": [
+        "water_access"
+      ],
+      "site_facts": [
+        "water_distance_m"
+      ],
+      "text": "Boret rammer fugt på fyrre meters dybde. Vandet er der — men det skal pumpes op, og pumperne vil koste strøm."
+    },
+    "risk_sample": {
+      "pos": [
+        22,
+        -16
+      ],
+      "label": "Den blottede malmåre",
+      "reveals": [
+        "mineral_yield"
+      ],
+      "site_facts": [
+        "exposure"
+      ],
+      "text": "Malmen ligger lige i overfladen, varm at røre ved selv gennem handsken. Her er nok til at bygge en by."
+    },
+    "relay": {
+      "pos": [
+        -20,
+        -10
+      ],
+      "label": "Kløftens kant"
+    }
+  },
+  "routes": [
+    {
+      "id": "safe",
+      "label": "I skyggen af kløftvæggen",
+      "description": "En omvej, men skyggen holder dragten kølig.",
+      "waypoints": [
+        [
+          0,
+          0
+        ],
+        [
+          -6,
+          -22
+        ],
+        [
+          0,
+          -44
+        ],
+        [
+          30,
+          -40
+        ]
+      ]
+    },
+    {
+      "id": "short",
+      "label": "Over solfladen",
+      "description": "Den direkte vej over den hvide flade. Heden tømmer dragten hurtigt.",
+      "waypoints": [
+        [
+          0,
+          0
+        ],
+        [
+          16,
+          -20
+        ],
+        [
+          30,
+          -40
+        ]
+      ]
+    }
+  ],
+  "hazard_zones": [
+    {
+      "center": [
+        16,
+        -20
+      ],
+      "radius": 11,
+      "hazard_id": "heat",
+      "label": "Hedeflade"
+    }
+  ],
+  "evacuation": "Dragtens køling når grænsen. ARK: »Find skygge, kaptajn, og gå langsomt. Landeren venter på dig.«",
+  "findings": {
+    "main": "Ferrum: Vandet ligger dybt. Vandanlægget skal bygges først og have strøm nok.",
+    "risk": "Ferrum: Malmen ligger i overfladen. Byggeri bliver billigt her.",
+    "relay": "Ferrum: Relæet på kløftkanten ser ud over hele dalen."
+  }
+}

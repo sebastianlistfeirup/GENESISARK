@@ -1,0 +1,21 @@
+{
+  "biome_id": "green",
+  "map": { "name": "Grønt biomekort", "size_m": 260, "terrain_seed": 1101, "height_scale": 9.0, "base_color": "#3f6b34", "rock_color": "#5b6e4f", "water_level": -2.0 },
+  "sites": [
+    { "id": "green_a", "name": "Lysningen", "center": [-60, -50],
+      "description": "En åben lysning omkranset af lave træer. Kort til vand, men sporerne samler sig i lavningen.",
+      "districts": { "landing": {"center": [0, 0], "radius": 28}, "resource": {"center": [46, 18], "radius": 22}, "living": {"center": [-30, 34], "radius": 24} },
+      "blocked": [ {"center": [18, -30], "radius": 10} ],
+      "facts": { "water_distance_m": 35, "flatness": 0.8, "shelter": 0.4, "vent": false, "exposure": 0.7, "landing_quality": 0.85 } },
+    { "id": "green_b", "name": "Flodterrassen", "center": [55, -40],
+      "description": "Terrasser over en bred flod. Gode læforhold, men lange afstande mellem distrikterne.",
+      "districts": { "landing": {"center": [0, 0], "radius": 26}, "resource": {"center": [-50, 30], "radius": 22}, "living": {"center": [30, 42], "radius": 22} },
+      "blocked": [ {"center": [-12, 26], "radius": 9} ],
+      "facts": { "water_distance_m": 20, "flatness": 0.6, "shelter": 0.75, "vent": false, "exposure": 0.4, "landing_quality": 0.7 } },
+    { "id": "green_c", "name": "Højsletten", "center": [5, 65],
+      "description": "En høj, vindblæst slette. Ren luft og fri udsigt — og intet læ.",
+      "districts": { "landing": {"center": [0, 0], "radius": 30}, "resource": {"center": [40, -30], "radius": 24}, "living": {"center": [-38, -14], "radius": 24} },
+      "blocked": [],
+      "facts": { "water_distance_m": 70, "flatness": 0.9, "shelter": 0.15, "vent": false, "exposure": 0.25, "landing_quality": 0.95 } }
+  ]
+}

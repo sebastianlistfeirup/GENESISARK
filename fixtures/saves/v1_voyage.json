@@ -1,0 +1,424 @@
+{
+	"build_id": "0.0.1-fixture",
+	"checksum": "ec715d3bfd21622033033e39bc91a650f1f478d06e252390fb410a4bb0c5e3e7",
+	"content_version": "0.0.1",
+	"game_id": "genesis_ark",
+	"payload": {
+		"ark": {
+			"components": 37,
+			"embryos": {
+				"born": 0,
+				"incubating": 0,
+				"lost": 0,
+				"viable": 50000
+			},
+			"fuel": 88.0,
+			"integrity": 98.0,
+			"systems": {
+				"embryo_bank_checked": false,
+				"power": "emergency",
+				"starmap": true,
+				"workshop_checked": false
+			}
+		},
+		"campaign": {
+			"act": 1,
+			"captain_stasis_years": 0.10958904109589,
+			"colony_day": 0,
+			"completed_objectives": [],
+			"elapsed_days": 40,
+			"ending_id": "",
+			"event_ids": [
+				"fx-probe",
+				"fx-trip"
+			],
+			"final_state": {
+
+			},
+			"journal": [
+				{
+					"day": 0,
+					"kind": "ark",
+					"text": "Nødstrøm genoprettet. Broen og stjernekortet er online igen."
+				},
+				{
+					"day": 0,
+					"kind": "survey",
+					"text": "Sonde til Ferrum: 6 nye oplysninger."
+				},
+				{
+					"day": 40,
+					"kind": "travel",
+					"text": "Ankommet til Viridia efter 40 dage i stasis."
+				}
+			],
+			"landing_site_id": "",
+			"landing_txn": "",
+			"location_id": "viridia",
+			"phase": "VOYAGE",
+			"selected_planet_id": "",
+			"visited": [
+				"drift",
+				"viridia"
+			]
+		},
+		"colony": null,
+		"events": {
+			"active": [],
+			"resolved": {
+
+			},
+			"warnings": []
+		},
+		"expedition": null,
+		"game_id": "ga-4242",
+		"knowledge": {
+			"ferrum": {
+				"expedition_sites": [],
+				"level_reached": {
+					"archive": true,
+					"orbital": true
+				},
+				"observations": {
+					"atmosphere_class": {
+						"confidence": 1.0,
+						"source": "Fjernsonde",
+						"status": "known",
+						"value": "thin_dry"
+					},
+					"biological_risk": {
+						"confidence": 0.7,
+						"max": 0.3,
+						"min": 0.0,
+						"source": "Arkens arkiv",
+						"status": "estimated"
+					},
+					"geothermal_factor": {
+						"confidence": 0.0,
+						"source": "",
+						"status": "unknown"
+					},
+					"gravity_multiplier": {
+						"confidence": 1.0,
+						"source": "Fjernsonde",
+						"status": "known",
+						"value": 1.12
+					},
+					"mean_temperature_c": {
+						"confidence": 1.0,
+						"source": "Fjernsonde",
+						"status": "known",
+						"value": 38.0
+					},
+					"mineral_yield": {
+						"confidence": 1.0,
+						"source": "Fjernsonde",
+						"status": "known",
+						"value": 1.5
+					},
+					"solar_factor": {
+						"confidence": 1.0,
+						"source": "Fjernsonde",
+						"status": "known",
+						"value": 1.3
+					},
+					"water_access": {
+						"confidence": 0.65,
+						"max": 0.45,
+						"min": 0.1,
+						"source": "Fjernsonde",
+						"status": "estimated"
+					}
+				},
+				"planet_id": "ferrum",
+				"probed_sites": [],
+				"site_facts": {
+
+				}
+			},
+			"nivalis": {
+				"expedition_sites": [],
+				"level_reached": {
+					"archive": true
+				},
+				"observations": {
+					"atmosphere_class": {
+						"candidates": [
+							"thin_cold",
+							"inert_thin"
+						],
+						"confidence": 0.5,
+						"source": "Arkens arkiv",
+						"status": "estimated"
+					},
+					"biological_risk": {
+						"confidence": 0.8,
+						"max": 0.2,
+						"min": 0.0,
+						"source": "Arkens arkiv",
+						"status": "estimated"
+					},
+					"gravity_multiplier": {
+						"confidence": 0.727272727272727,
+						"max": 1.1,
+						"min": 0.8,
+						"source": "Arkens arkiv",
+						"status": "estimated"
+					},
+					"mean_temperature_c": {
+						"confidence": 0.1,
+						"max": -10.0,
+						"min": -60.0,
+						"source": "Arkens arkiv",
+						"status": "estimated"
+					},
+					"solar_factor": {
+						"confidence": 0.5,
+						"max": 0.9,
+						"min": 0.4,
+						"source": "Arkens arkiv",
+						"status": "estimated"
+					},
+					"water_access": {
+						"confidence": 0.5,
+						"max": 1.0,
+						"min": 0.5,
+						"source": "Arkens arkiv",
+						"status": "estimated"
+					}
+				},
+				"planet_id": "nivalis",
+				"probed_sites": [],
+				"site_facts": {
+
+				}
+			},
+			"pelagos": {
+				"expedition_sites": [],
+				"level_reached": {
+					"archive": true
+				},
+				"observations": {
+					"gravity_multiplier": {
+						"confidence": 0.75,
+						"max": 1.2,
+						"min": 0.9,
+						"source": "Arkens arkiv",
+						"status": "estimated"
+					},
+					"mean_temperature_c": {
+						"confidence": 0.285714285714286,
+						"max": 35.0,
+						"min": 10.0,
+						"source": "Arkens arkiv",
+						"status": "estimated"
+					},
+					"solar_factor": {
+						"confidence": 0.545454545454545,
+						"max": 1.1,
+						"min": 0.6,
+						"source": "Arkens arkiv",
+						"status": "estimated"
+					},
+					"water_access": {
+						"confidence": 0.6,
+						"max": 1.0,
+						"min": 0.6,
+						"source": "Arkens arkiv",
+						"status": "estimated"
+					}
+				},
+				"planet_id": "pelagos",
+				"probed_sites": [],
+				"site_facts": {
+
+				}
+			},
+			"sere": {
+				"expedition_sites": [],
+				"level_reached": {
+					"archive": true
+				},
+				"observations": {
+					"atmosphere_class": {
+						"candidates": [
+							"thin_dry",
+							"thin_dusty"
+						],
+						"confidence": 0.5,
+						"source": "Arkens arkiv",
+						"status": "estimated"
+					},
+					"biological_risk": {
+						"confidence": 0.6,
+						"max": 0.4,
+						"min": 0.0,
+						"source": "Arkens arkiv",
+						"status": "estimated"
+					},
+					"gravity_multiplier": {
+						"confidence": 0.7,
+						"max": 1.0,
+						"min": 0.7,
+						"source": "Arkens arkiv",
+						"status": "estimated"
+					},
+					"mean_temperature_c": {
+						"confidence": 0.25,
+						"max": 40.0,
+						"min": 10.0,
+						"source": "Arkens arkiv",
+						"status": "estimated"
+					},
+					"solar_factor": {
+						"confidence": 0.461538461538461,
+						"max": 1.3,
+						"min": 0.6,
+						"source": "Arkens arkiv",
+						"status": "estimated"
+					},
+					"water_access": {
+						"confidence": 0.4,
+						"max": 0.7,
+						"min": 0.1,
+						"source": "Arkens arkiv",
+						"status": "estimated"
+					}
+				},
+				"planet_id": "sere",
+				"probed_sites": [],
+				"site_facts": {
+
+				}
+			},
+			"umbra": {
+				"expedition_sites": [],
+				"level_reached": {
+					"archive": true
+				},
+				"observations": {
+					"atmosphere_class": {
+						"candidates": [
+							"thin_cold",
+							"inert_thin"
+						],
+						"confidence": 0.5,
+						"source": "Arkens arkiv",
+						"status": "estimated"
+					},
+					"biological_risk": {
+						"confidence": 0.9,
+						"max": 0.1,
+						"min": 0.0,
+						"source": "Arkens arkiv",
+						"status": "estimated"
+					},
+					"gravity_multiplier": {
+						"confidence": 0.739130434782609,
+						"max": 1.15,
+						"min": 0.85,
+						"source": "Arkens arkiv",
+						"status": "estimated"
+					},
+					"mean_temperature_c": {
+						"confidence": 0.1,
+						"max": 0.0,
+						"min": -50.0,
+						"source": "Arkens arkiv",
+						"status": "estimated"
+					},
+					"mineral_yield": {
+						"confidence": 0.5,
+						"max": 1.4,
+						"min": 0.7,
+						"source": "Arkens arkiv",
+						"status": "estimated"
+					},
+					"solar_factor": {
+						"confidence": 0.4,
+						"max": 0.8,
+						"min": 0.2,
+						"source": "Arkens arkiv",
+						"status": "estimated"
+					},
+					"water_access": {
+						"confidence": 0.4,
+						"max": 0.9,
+						"min": 0.3,
+						"source": "Arkens arkiv",
+						"status": "estimated"
+					}
+				},
+				"planet_id": "umbra",
+				"probed_sites": [],
+				"site_facts": {
+
+				}
+			},
+			"viridia": {
+				"expedition_sites": [],
+				"level_reached": {
+					"archive": true
+				},
+				"observations": {
+					"gravity_multiplier": {
+						"confidence": 0.727272727272727,
+						"max": 1.1,
+						"min": 0.8,
+						"source": "Arkens arkiv",
+						"status": "estimated"
+					},
+					"mean_temperature_c": {
+						"confidence": 0.166666666666667,
+						"max": 30.0,
+						"min": 5.0,
+						"source": "Arkens arkiv",
+						"status": "estimated"
+					},
+					"solar_factor": {
+						"confidence": 0.583333333333333,
+						"max": 1.2,
+						"min": 0.7,
+						"source": "Arkens arkiv",
+						"status": "estimated"
+					},
+					"water_access": {
+						"confidence": 0.4,
+						"max": 0.9,
+						"min": 0.3,
+						"source": "Arkens arkiv",
+						"status": "estimated"
+					}
+				},
+				"planet_id": "viridia",
+				"probed_sites": [],
+				"site_facts": {
+
+				}
+			}
+		},
+		"population": {
+			"cohorts": [],
+			"deaths": 0,
+			"next_cohort_id": 1
+		},
+		"rng": {
+			"base_seed": "4242",
+			"streams": {
+
+			}
+		},
+		"schema_version": 1,
+		"seed": "4242"
+	},
+	"rng_state": {
+		"base_seed": "4242",
+		"streams": {
+
+		}
+	},
+	"save_id": "fixture_v1",
+	"saved_at": "2026-10-17T00:00:00",
+	"schema_version": 1,
+	"seed": "4242"
+}

@@ -1,0 +1,114 @@
+{
+  "id": "survey_viridia",
+  "planet_id": "viridia",
+  "title": "Lavningens ånde",
+  "briefing": "Tæt svampeskov omkranser landingsstedet. I lavningen mod øst står sporerne som tåge over jorden. Vi skal vide, om luften kan filtreres, før nogen skal trække vejret her.",
+  "goal": "Tag en vævsprøve ved svamperanden, og placér et relæ på højdedraget.",
+  "points": {
+    "lander": [
+      0,
+      0
+    ],
+    "main_sample": {
+      "pos": [
+        42,
+        18
+      ],
+      "label": "Svamperanden",
+      "reveals": [
+        "biological_risk"
+      ],
+      "site_facts": [
+        "water_distance_m",
+        "shelter"
+      ],
+      "text": "Prøven er levende. Sporerne binder sig til fugt, ikke til metal — et finmasket filter holder dem ude. Rent vand løber tæt på lysningen."
+    },
+    "risk_sample": {
+      "pos": [
+        18,
+        12
+      ],
+      "label": "Sporekapslen",
+      "reveals": [
+        "atmosphere_class"
+      ],
+      "site_facts": [
+        "exposure"
+      ],
+      "text": "Kapslen sprækker i handsken. Luften her er mættet, men måleren viser ilt nok. Næsten åndbar. Næsten."
+    },
+    "relay": {
+      "pos": [
+        -22,
+        30
+      ],
+      "label": "Højdedraget"
+    }
+  },
+  "routes": [
+    {
+      "id": "safe",
+      "label": "Ad skovbrynet",
+      "description": "Længere, men over sporeniveau. Dragten klarer sig fint.",
+      "waypoints": [
+        [
+          0,
+          0
+        ],
+        [
+          6,
+          -18
+        ],
+        [
+          30,
+          -14
+        ],
+        [
+          48,
+          0
+        ],
+        [
+          42,
+          18
+        ]
+      ]
+    },
+    {
+      "id": "short",
+      "label": "Gennem lavningen",
+      "description": "Halvdelen af vejen. Sporerne tærer hårdt på dragtens filtre.",
+      "waypoints": [
+        [
+          0,
+          0
+        ],
+        [
+          20,
+          8
+        ],
+        [
+          42,
+          18
+        ]
+      ]
+    }
+  ],
+  "hazard_zones": [
+    {
+      "center": [
+        20,
+        8
+      ],
+      "radius": 10,
+      "hazard_id": "spores",
+      "label": "Sporetåge"
+    }
+  ],
+  "evacuation": "Dragtens filtre er mættede, og energien falder. ARK: »Vend om nu, kaptajn. Landeren tænder sit fyr — følg lyset hjem. Prøverne, du har, er gemt.«",
+  "findings": {
+    "main": "Viridia: Sporerne kan filtreres. Væksthuse skal stå adskilt fra boligerne.",
+    "risk": "Viridia: Luften er næsten åndbar. Sporerne er ikke giftige — der er bare alt for mange.",
+    "relay": "Viridia: Relæet på højdedraget dækker hele lysningen."
+  }
+}

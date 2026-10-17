@@ -1,0 +1,42 @@
+{
+  "endings": [
+    {
+      "id": "independent",
+      "title": "Selvstændig civilisation",
+      "summary": "{settlement} kan klare sig uden arkens nødstrøm.",
+      "criteria_text": "Mindst 500 indbyggere, robust forsyning uden arkens strøm og et råd, der fungerer.",
+      "epilogue": [
+        "{years} år efter landingen på {planet} slukkede rådet i {settlement} for arkens nødstrøm. Ingen lamper gik ud.",
+        "{population} mennesker bor nu ved {site}. De har klaret sig gennem {crises} kriser og lært noget af hver eneste. Generatorerne passes af folk, der blev født ved siden af dem.",
+        "Den første kohorte underviser nu den fjerde. Rådet har {council} medlemmer og mødes i den gamle skolehal. Det er uenigt det meste af tiden. Sådan skal det være.",
+        "Kaptajnen var vågen i {captain_years} år i alt. Arken står stadig ved landingspladsen: museum, reservedelslager, et sted børnene klatrer.",
+        "ARK skrev en sidste linje i loggen: »Der er stadig liv i embryobanken. Det er ikke længere mig, der bestemmer, hvornår de vækkes.«"
+      ]
+    },
+    {
+      "id": "shielded",
+      "title": "Skærmet civilisation",
+      "summary": "{settlement} lever, men stadig i arkens skygge.",
+      "criteria_text": "Kolonien overlever, men er kritisk afhængig af arkens nødstrøm, lægeafsnit eller reserver.",
+      "epilogue": [
+        "Efter {years} år på {planet} er {settlement} et rigtigt samfund: {population} mennesker, en skole, en klinik og et råd med {council} medlemmer.",
+        "Men hver nat løber arkens nødstrøm stadig ud i nettet. I {crises} kriser var det arken, der holdt lyset tændt, og alle ved det.",
+        "Rådet tager det op hvert år. De unge fra de sidste kohorter vil bygge flere generatorer ved {site}. De ældste vil ikke risikere noget. Begge sider har ret.",
+        "Kaptajnen gik i stasis efter {captain_years} års vagt. ARK fik én ordre: »Bliv, til de ikke har brug for dig.« ARK bliver."
+      ]
+    },
+    {
+      "id": "fragile",
+      "title": "Skrøbelig civilisation",
+      "summary": "{settlement} har brug for flere år, før byen kan stå alene.",
+      "criteria_text": "Forsyning eller reserver er for svage til overdragelse. Stabilisering kommer først.",
+      "epilogue": [
+        "{population} mennesker lever ved {site} på {planet}. Det er flere, end nogen turde håbe på, da arken landede for {years} år siden.",
+        "Men reserverne er tynde. Efter {crises} kriser er lagrene halvtomme og maskinerne slidte. Rådets {council} medlemmer bruger hvert møde på det samme spørgsmål: Hvordan kommer vi gennem den næste?",
+        "Den første kohorte er voksen nu. De passer vandanlægget i skiftehold og lærer de yngste at lappe filtre og rør.",
+        "Kaptajnen bliver vågen lidt endnu. Efter {captain_years} år kender kaptajnen hvert eneste rør i {settlement}.",
+        "Overdragelsen venter. Ikke fordi menneskene ikke er klar, men fordi kolonien ikke er. Det er ikke en fiasko. Det er et arbejde, der ikke er færdigt."
+      ]
+    }
+  ]
+}

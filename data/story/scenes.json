@@ -1,0 +1,506 @@
+{
+  "characters": [
+    {
+      "id": "ARK",
+      "name": "ARK",
+      "perspective": "",
+      "bio": "Arkens skibsintelligens. Rolig, præcis og mere omsorgsfuld, end den selv vil indrømme. Den lægger mulighederne frem, men vælger ikke for dig."
+    },
+    {
+      "id": "noor",
+      "name": "Noor Vestergaard",
+      "perspective": "expansion",
+      "bio": "Født i den første kohorte. Kortlægger dalene bag horisonten og tegner byer, der endnu ikke findes. Hun vil videre."
+    },
+    {
+      "id": "elias",
+      "name": "Elias Brandt",
+      "perspective": "safety",
+      "bio": "Født i den første kohorte. Passer vandanlægget og kender hver ventil. Han husker feberen og vil aldrig opleve den igen."
+    },
+    {
+      "id": "sana",
+      "name": "Sana Holm",
+      "perspective": "self_determination",
+      "bio": "Født i den første kohorte. Underviser de yngste og stiller de spørgsmål, andre undgår. Hun mener, kolonien skal kunne sige nej — også til arken."
+    }
+  ],
+  "scenes": [
+    {
+      "id": "scene_intro_wakeup",
+      "trigger": "intro_wakeup",
+      "lines": [
+        {
+          "speaker": "NARRATOR",
+          "text": "Kulde. Så lyden af ventilatorer, der starter én efter én."
+        },
+        {
+          "speaker": "ARK",
+          "text": "Kaptajn. Du er vågen. Godt."
+        },
+        {
+          "speaker": "ARK",
+          "text": "Nødstrømmen er nede på elleve procent. Jeg har vækket dig, fordi jeg ikke kan reparere koblingen alene."
+        },
+        {
+          "speaker": "CAPTAIN",
+          "text": "Hvor er de andre?"
+        },
+        {
+          "speaker": "ARK",
+          "text": "Der er ingen andre vågne. Kun dig."
+        },
+        {
+          "speaker": "ARK",
+          "text": "Værkstedet ligger agter. Jeg tænder lyset foran dig."
+        }
+      ]
+    },
+    {
+      "id": "scene_power_restored",
+      "trigger": "power_restored",
+      "lines": [
+        {
+          "speaker": "NARRATOR",
+          "text": "Koblingen klikker på plads. Et øjeblik sker der ingenting."
+        },
+        {
+          "speaker": "NARRATOR",
+          "text": "Så tændes gangen, sektion for sektion, helt frem til broen."
+        },
+        {
+          "speaker": "ARK",
+          "text": "Nødstrømmen er stabil. Vi har tid nu. Ikke meget, men noget."
+        },
+        {
+          "speaker": "ARK",
+          "text": "Der er noget, du bør se. Embryobanken ligger midtskibs."
+        }
+      ]
+    },
+    {
+      "id": "scene_embryo_bank",
+      "trigger": "embryo_bank",
+      "lines": [
+        {
+          "speaker": "NARRATOR",
+          "text": "Rækker af kolde beholdere. Et svagt, blåt lys. Ingen lyd ud over kølingen."
+        },
+        {
+          "speaker": "NARRATOR",
+          "text": "På væggen står et tal: 50.000."
+        },
+        {
+          "speaker": "ARK",
+          "text": "Det er ikke last. Det er alle, der endnu kan blive til nogen."
+        },
+        {
+          "speaker": "CAPTAIN",
+          "text": "Og de venter på et sted at bo."
+        },
+        {
+          "speaker": "ARK",
+          "text": "De venter på, at du finder det."
+        }
+      ]
+    },
+    {
+      "id": "scene_starmap_first",
+      "trigger": "starmap_first",
+      "lines": [
+        {
+          "speaker": "ARK",
+          "text": "Jorden kan ikke længere hjælpe os. Det her er, hvad vi har."
+        },
+        {
+          "speaker": "ARK",
+          "text": "Seks verdener inden for rækkevidde. Ingen af dem er perfekte. Alle kan bebos — med det rette arbejde."
+        },
+        {
+          "speaker": "ARK",
+          "text": "Det, vi ved, står i hvidt. Det, vi gætter på, står i gult."
+        },
+        {
+          "speaker": "CAPTAIN",
+          "text": "Og det, vi ikke ved?"
+        },
+        {
+          "speaker": "ARK",
+          "text": "Det må vi finde ud af. Det koster noget hver gang."
+        }
+      ]
+    },
+    {
+      "id": "scene_probe_result",
+      "trigger": "probe_result",
+      "lines": [
+        {
+          "speaker": "ARK",
+          "text": "Proben har sendt data. Et af spørgsmålene er besvaret."
+        },
+        {
+          "speaker": "ARK",
+          "text": "Det gør ikke valget lettere. Kun mere dit eget."
+        },
+        {
+          "speaker": "CAPTAIN",
+          "text": "Hvad ville du vælge?"
+        },
+        {
+          "speaker": "ARK",
+          "text": "Jeg har tal, kaptajn. Du har ansvaret. Det er ikke det samme."
+        }
+      ]
+    },
+    {
+      "id": "scene_arrival_orbit",
+      "trigger": "arrival_orbit",
+      "lines": [
+        {
+          "speaker": "NARRATOR",
+          "text": "Planeten fylder hele vinduet. Skyer, skygger, en tynd blå kant."
+        },
+        {
+          "speaker": "ARK",
+          "text": "Kredsløbet er stabilt. Scanningen kan begynde."
+        },
+        {
+          "speaker": "CAPTAIN",
+          "text": "Den er smukkere, end jeg troede."
+        },
+        {
+          "speaker": "ARK",
+          "text": "Det kan jeg ikke måle. Men jeg har noteret det."
+        }
+      ]
+    },
+    {
+      "id": "scene_expedition_start",
+      "trigger": "expedition_start",
+      "lines": [
+        {
+          "speaker": "NARRATOR",
+          "text": "Landerens luge glider op. Vind. Den første vind, du har hørt i meget lang tid."
+        },
+        {
+          "speaker": "ARK",
+          "text": "Dragten har energi til omkring et kvarter. Jeg holder øje med den."
+        },
+        {
+          "speaker": "ARK",
+          "text": "Prøvestedet er markeret. Der er to veje derhen. Den korte er ikke den sikre."
+        },
+        {
+          "speaker": "CAPTAIN",
+          "text": "Det er de korte veje sjældent."
+        }
+      ]
+    },
+    {
+      "id": "scene_expedition_suit_low",
+      "trigger": "expedition_suit_low",
+      "lines": [
+        {
+          "speaker": "ARK",
+          "text": "Kaptajn, dragtens energi er under tredive procent."
+        },
+        {
+          "speaker": "ARK",
+          "text": "Du har tid til at komme tilbage. Ikke til meget andet."
+        },
+        {
+          "speaker": "CAPTAIN",
+          "text": "Én prøve mere."
+        },
+        {
+          "speaker": "ARK",
+          "text": "Jeg kan ikke forhindre dig i det. Jeg kan bede dig om at lade være."
+        }
+      ]
+    },
+    {
+      "id": "scene_expedition_complete",
+      "trigger": "expedition_complete",
+      "lines": [
+        {
+          "speaker": "NARRATOR",
+          "text": "Lugen lukker. Trykket udlignes med et suk. Så stilhed."
+        },
+        {
+          "speaker": "ARK",
+          "text": "Prøverne er analyseret. Planetdata er opdateret."
+        },
+        {
+          "speaker": "ARK",
+          "text": "Vi ved mere nu. Ikke alt. Det gør vi aldrig."
+        },
+        {
+          "speaker": "CAPTAIN",
+          "text": "Er det godt nok?"
+        },
+        {
+          "speaker": "ARK",
+          "text": "Det er dig, der skal svare på det."
+        }
+      ]
+    },
+    {
+      "id": "scene_landing_commit",
+      "trigger": "landing_commit",
+      "lines": [
+        {
+          "speaker": "ARK",
+          "text": "Før du bekræfter: Arken kan ikke lette igen. Det her bliver vores hjem."
+        },
+        {
+          "speaker": "ARK",
+          "text": "Arken bliver koloniens base. Nødstrømmen, dronerne, dig."
+        },
+        {
+          "speaker": "CAPTAIN",
+          "text": "Og embryonerne?"
+        },
+        {
+          "speaker": "ARK",
+          "text": "De bliver her sammen med os. Uanset hvad."
+        },
+        {
+          "speaker": "NARRATOR",
+          "text": "Motorerne brøler en sidste gang. Så bliver der stille. En ny slags stille."
+        }
+      ]
+    },
+    {
+      "id": "scene_first_light",
+      "trigger": "first_light",
+      "lines": [
+        {
+          "speaker": "NARRATOR",
+          "text": "Kablet er lagt. Habitatet står mørkt et sidste sekund."
+        },
+        {
+          "speaker": "NARRATOR",
+          "text": "Så tændes lyset i vinduerne. Varmt, gult lys på en fremmed planet."
+        },
+        {
+          "speaker": "ARK",
+          "text": "Første habitat har strøm. Luft og temperatur er stabile."
+        },
+        {
+          "speaker": "CAPTAIN",
+          "text": "Det ligner et hjem."
+        },
+        {
+          "speaker": "ARK",
+          "text": "Det er en begyndelse. Hjem kommer senere."
+        }
+      ]
+    },
+    {
+      "id": "scene_incubation_start",
+      "trigger": "incubation_start",
+      "lines": [
+        {
+          "speaker": "ARK",
+          "text": "Forsyningen har været stabil i syv dage. Reserven holder. Omsorgscentret er klar."
+        },
+        {
+          "speaker": "ARK",
+          "text": "Ti embryoner kan begynde inkubationen. Det er dig, der starter den."
+        },
+        {
+          "speaker": "CAPTAIN",
+          "text": "Hvorfor ikke dig?"
+        },
+        {
+          "speaker": "ARK",
+          "text": "Fordi nogen bør huske, at det var et valg."
+        },
+        {
+          "speaker": "NARRATOR",
+          "text": "Ti lys skifter fra koldt blåt til varmt rav."
+        },
+        {
+          "speaker": "ARK",
+          "text": "49.990 tilbage i banken. Ti på vej."
+        }
+      ]
+    },
+    {
+      "id": "scene_first_birth",
+      "trigger": "first_birth",
+      "lines": [
+        {
+          "speaker": "NARRATOR",
+          "text": "Omsorgscentret. Nat. Kun ventilationen og et svagt, regelmæssigt bip."
+        },
+        {
+          "speaker": "NARRATOR",
+          "text": "Bippet bliver hurtigere."
+        },
+        {
+          "speaker": "ARK",
+          "text": "Kaptajn. Du skal komme nu."
+        },
+        {
+          "speaker": "NARRATOR",
+          "text": "Lyset over en af kapslerne skifter fra rav til hvidt."
+        },
+        {
+          "speaker": "NARRATOR",
+          "text": "Så en lyd, ingen har hørt på denne planet før. Lille, vred og levende."
+        },
+        {
+          "speaker": "ARK",
+          "text": "Første fødsel. En pige. 3.120 gram. Alle værdier normale."
+        },
+        {
+          "speaker": "ARK",
+          "text": "Jeg har ingen protokol for, hvad man siger nu."
+        },
+        {
+          "speaker": "CAPTAIN",
+          "text": "Velkommen."
+        }
+      ]
+    },
+    {
+      "id": "scene_captain_stasis",
+      "trigger": "captain_stasis",
+      "lines": [
+        {
+          "speaker": "ARK",
+          "text": "Kohorten er stabil. Robotterne og jeg kan klare dagligdagen."
+        },
+        {
+          "speaker": "ARK",
+          "text": "Du har været vågen længe, kaptajn. Stasis giver dig flere år sammen med dem senere."
+        },
+        {
+          "speaker": "CAPTAIN",
+          "text": "Væk mig, hvis de får brug for mig."
+        },
+        {
+          "speaker": "ARK",
+          "text": "Det gør jeg. Og når de har noget at vise dig."
+        }
+      ]
+    },
+    {
+      "id": "scene_crisis_survived",
+      "trigger": "crisis_survived",
+      "lines": [
+        {
+          "speaker": "NARRATOR",
+          "text": "Alarmen slukker. For første gang i dagevis er der stille i kontrolrummet."
+        },
+        {
+          "speaker": "ARK",
+          "text": "Krisen er overstået. Skaderne er registreret."
+        },
+        {
+          "speaker": "CAPTAIN",
+          "text": "Og menneskene?"
+        },
+        {
+          "speaker": "ARK",
+          "text": "De er trætte. De er her alle sammen."
+        }
+      ]
+    },
+    {
+      "id": "scene_year_20",
+      "trigger": "year_20",
+      "lines": [
+        {
+          "speaker": "NARRATOR",
+          "text": "Tyve år. Kaptajnen vågner af stasis til lyden af stemmer udenfor."
+        },
+        {
+          "speaker": "ARK",
+          "text": "Velkommen tilbage, kaptajn. Der er sket meget."
+        },
+        {
+          "speaker": "noor",
+          "text": "Kaptajn! Vi har kortlagt dalen mod nord. Der er plads til to nye bydele."
+        },
+        {
+          "speaker": "elias",
+          "text": "Der er plads til to nye fejl. Vandanlægget kører på sidste reserve hver vinter."
+        },
+        {
+          "speaker": "sana",
+          "text": "Det handler ikke om dalen eller vandet. Det handler om, hvem der bestemmer."
+        },
+        {
+          "speaker": "ARK",
+          "text": "De har ventet på dig. Jeg tror, de venter på et svar."
+        },
+        {
+          "speaker": "CAPTAIN",
+          "text": "Så lad os høre jer alle tre."
+        }
+      ]
+    },
+    {
+      "id": "scene_council_formed",
+      "trigger": "council_formed",
+      "lines": [
+        {
+          "speaker": "NARRATOR",
+          "text": "Skolehallen er fuld. Stolene er for små. De blev bygget til børn."
+        },
+        {
+          "speaker": "sana",
+          "text": "Første punkt på dagsordenen: Hvem sidder for bordenden?"
+        },
+        {
+          "speaker": "elias",
+          "text": "Ingen. Vi går på skift."
+        },
+        {
+          "speaker": "noor",
+          "text": "Og kaptajnen?"
+        },
+        {
+          "speaker": "CAPTAIN",
+          "text": "Kaptajnen sidder nede blandt jer."
+        },
+        {
+          "speaker": "ARK",
+          "text": "Rådet er registreret som koloniens højeste myndighed. Også over mig."
+        }
+      ]
+    },
+    {
+      "id": "scene_year_40",
+      "trigger": "year_40",
+      "lines": [
+        {
+          "speaker": "NARRATOR",
+          "text": "Fyrre år. Kolonien lyser i mørket, tydelig helt oppe fra kredsløb."
+        },
+        {
+          "speaker": "ARK",
+          "text": "Kaptajn, rådet har bedt om et møde. Det handler om nødstrømmen."
+        },
+        {
+          "speaker": "elias",
+          "text": "Vi har regnet på det. Vi kan klare os uden — næsten."
+        },
+        {
+          "speaker": "noor",
+          "text": "Næsten er nok til at begynde."
+        },
+        {
+          "speaker": "sana",
+          "text": "Det er ikke dit valg længere, kaptajn. Men vi vil gerne have, at du er her, når vi træffer det."
+        },
+        {
+          "speaker": "CAPTAIN",
+          "text": "Jeg er her."
+        }
+      ]
+    }
+  ]
+}

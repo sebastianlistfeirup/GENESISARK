@@ -1,0 +1,28 @@
+{
+  "hazards": [
+    { "id": "spores", "name": "Sporestorm", "biome_id": "green", "color": "#d6c447",
+      "description": "Svampesporer driver i lavninger. De sætter sig i filtre, lunger og væksthuse.",
+      "expedition": { "suit_drain_multiplier": 2.5, "zone_label": "Sporetæt område" },
+      "colony": { "requires_module": "filter", "health_penalty_per_day": 0.4, "food_penalty": 0.3 } },
+    { "id": "storms", "name": "Stormbælte", "biome_id": "green", "color": "#6b7fd6",
+      "description": "Kraftige storme ruller ind fra havet med få timers varsel.",
+      "expedition": { "suit_drain_multiplier": 2.0, "zone_label": "Stormfront" },
+      "colony": { "solar_penalty": 0.6, "wear_multiplier": 1.5, "shelter_matters": true } },
+    { "id": "heat", "name": "Middagshede", "biome_id": "desert", "color": "#e8e1c8",
+      "description": "Ved middag stiger temperaturen over hvad dragten er bygget til.",
+      "expedition": { "suit_drain_multiplier": 2.2, "zone_label": "Hedezone" },
+      "colony": { "cooling_kw_per_habitat": 1, "water_penalty": 0.15 } },
+    { "id": "dust", "name": "Støvfane", "biome_id": "desert", "color": "#8a6f4e",
+      "description": "Fint støv lægger sig på alt. Solpaneler mister effekt og maskiner slides.",
+      "expedition": { "suit_drain_multiplier": 1.8, "zone_label": "Støvfane" },
+      "colony": { "solar_penalty": 0.5, "wear_multiplier": 2.0 } },
+    { "id": "cold", "name": "Dybfrost", "biome_id": "ice", "color": "#4fa3d9",
+      "description": "Kulden trænger gennem alt, der ikke aktivt varmes op.",
+      "expedition": { "suit_drain_multiplier": 2.4, "zone_label": "Kuldelomme" },
+      "colony": { "requires_module": "heater", "heating_kw_per_habitat": 2 } },
+    { "id": "long_night", "name": "Den lange nat", "biome_id": "ice", "color": "#e8a33d",
+      "description": "Planeten roterer langsomt. I ugevis er der intet sollys.",
+      "expedition": { "suit_drain_multiplier": 1.6, "zone_label": "Mørkezone" },
+      "colony": { "solar_penalty": 1.0, "night_days": 40, "cycle_days": 120 } }
+  ]
+}

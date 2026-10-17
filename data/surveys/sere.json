@@ -1,0 +1,110 @@
+{
+  "id": "survey_sere",
+  "planet_id": "sere",
+  "title": "Hvor støvet lægger sig",
+  "briefing": "Sletten er flad og fast — bedre byggegrund findes ikke. Men støvfanerne hænger over horisonten, og vi ved ikke, hvor meget de dækker for solen. Mål det, før vi stoler på panelerne.",
+  "goal": "Mål støvlaget på glasskorpen, og placér et relæ på klippeknuden.",
+  "points": {
+    "lander": [
+      0,
+      0
+    ],
+    "main_sample": {
+      "pos": [
+        -44,
+        -22
+      ],
+      "label": "Glasskorpen",
+      "reveals": [
+        "solar_factor"
+      ],
+      "site_facts": [
+        "water_distance_m",
+        "exposure"
+      ],
+      "text": "Støvet lægger sig i et tyndt, fedtet lag. Et rent panel mister en fjerdedel af sin effekt på få dage. Vi får brug for rengøring og lagring."
+    },
+    "risk_sample": {
+      "pos": [
+        -26,
+        -8
+      ],
+      "label": "Den gamle flodseng",
+      "reveals": [
+        "water_access"
+      ],
+      "site_facts": [
+        "flatness"
+      ],
+      "text": "Under støvet ligger runde sten, slebet af vand for længe siden. Der er stadig fugt to meter nede."
+    },
+    "relay": {
+      "pos": [
+        -20,
+        -48
+      ],
+      "label": "Klippeknuden"
+    }
+  },
+  "routes": [
+    {
+      "id": "safe",
+      "label": "Rundt om fanen",
+      "description": "En stor bue syd om støvet. Længere, men med klar sigt.",
+      "waypoints": [
+        [
+          0,
+          0
+        ],
+        [
+          -6,
+          -30
+        ],
+        [
+          -30,
+          -42
+        ],
+        [
+          -44,
+          -22
+        ]
+      ]
+    },
+    {
+      "id": "short",
+      "label": "Gennem støvfanen",
+      "description": "Lige igennem. Sigtbarheden falder, og støvet slider på dragten.",
+      "waypoints": [
+        [
+          0,
+          0
+        ],
+        [
+          -22,
+          -12
+        ],
+        [
+          -44,
+          -22
+        ]
+      ]
+    }
+  ],
+  "hazard_zones": [
+    {
+      "center": [
+        -22,
+        -12
+      ],
+      "radius": 12,
+      "hazard_id": "dust",
+      "label": "Støvfane"
+    }
+  ],
+  "evacuation": "Visiret er gråt af støv, og energien er lav. ARK: »Jeg kan se dig, selv når du ikke kan se noget. Følg pilen. Jeg fører dig hjem.«",
+  "findings": {
+    "main": "Sere: Støvet koster en fjerdedel af solen. Batterier og rengøring er ikke valgfrie.",
+    "risk": "Sere: Der er vand under den gamle flodseng.",
+    "relay": "Sere: Relæet står frit. Det ser alt, men skal rengøres jævnligt."
+  }
+}

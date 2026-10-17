@@ -1,0 +1,110 @@
+{
+  "id": "survey_umbra",
+  "planet_id": "umbra",
+  "title": "Varme i mørket",
+  "briefing": "Solen gik ned for elleve dage siden og står først op om tre uger. Stjernerne er skarpe, og kulden er tålmodig. Et sted mod sydvest er fjeldet varmt indefra.",
+  "goal": "Mål varmen i fjeldet, og placér et relæ, landeren kan se.",
+  "points": {
+    "lander": [
+      0,
+      0
+    ],
+    "main_sample": {
+      "pos": [
+        -30,
+        -42
+      ],
+      "label": "Det varme fjeld",
+      "reveals": [
+        "geothermal_factor"
+      ],
+      "site_facts": [
+        "water_distance_m",
+        "vent"
+      ],
+      "text": "Klippen er lun at røre ved. Varmen kommer dybt nedefra og er ligeglad med nat og dag. Den kan bære os gennem mørket."
+    },
+    "risk_sample": {
+      "pos": [
+        -10,
+        -24
+      ],
+      "label": "Malmblotningen",
+      "reveals": [
+        "mineral_yield"
+      ],
+      "site_facts": [
+        "shelter"
+      ],
+      "text": "Lygten fanger en stribe metal i klippen. Ren, tæt malm — det bedste, vi har set."
+    },
+    "relay": {
+      "pos": [
+        -40,
+        -6
+      ],
+      "label": "Udsigtspunktet"
+    }
+  },
+  "routes": [
+    {
+      "id": "safe",
+      "label": "Langs fjeldfoden",
+      "description": "Længere, men lygten når klippevæggen hele vejen.",
+      "waypoints": [
+        [
+          0,
+          0
+        ],
+        [
+          -26,
+          -4
+        ],
+        [
+          -48,
+          -24
+        ],
+        [
+          -30,
+          -42
+        ]
+      ]
+    },
+    {
+      "id": "short",
+      "label": "Gennem skyggedalen",
+      "description": "Den korte vej. Her er så mørkt og koldt, at dragten tømmes dobbelt så hurtigt.",
+      "waypoints": [
+        [
+          0,
+          0
+        ],
+        [
+          -14,
+          -20
+        ],
+        [
+          -30,
+          -42
+        ]
+      ]
+    }
+  ],
+  "hazard_zones": [
+    {
+      "center": [
+        -14,
+        -20
+      ],
+      "radius": 12,
+      "hazard_id": "long_night",
+      "label": "Mørkezone"
+    }
+  ],
+  "evacuation": "Dragten slukker alt, der ikke holder dig i live. ARK: »Jeg tænder landerens projektører. Gå mod lyset, kaptajn. Bare mod lyset.«",
+  "findings": {
+    "main": "Umbra: Fjeldets varme er stabil. Med to generatorer klarer vi natten.",
+    "risk": "Umbra: Malmen er rig og ren.",
+    "relay": "Umbra: Relæet blinker i mørket. Landeren kan se det."
+  }
+}

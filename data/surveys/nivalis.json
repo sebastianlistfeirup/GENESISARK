@@ -1,0 +1,110 @@
+{
+  "id": "survey_nivalis",
+  "planet_id": "nivalis",
+  "title": "Dampen i isen",
+  "briefing": "Hvid stilhed, så langt sensorerne rækker. Mod nordøst stiger damp fra en sprække. Hvis varmen er stabil, kan den holde liv i en koloni. Hvis ikke, fryser vi.",
+  "goal": "Mål varmen i dampsprækken, og placér et relæ på isryggen.",
+  "points": {
+    "lander": [
+      0,
+      0
+    ],
+    "main_sample": {
+      "pos": [
+        36,
+        30
+      ],
+      "label": "Dampsprækken",
+      "reveals": [
+        "geothermal_factor"
+      ],
+      "site_facts": [
+        "water_distance_m",
+        "vent"
+      ],
+      "text": "Varmen er stabil og kommer dybt nedefra. En generator her kan give strøm dag og nat — og vandet ligger lige under isen."
+    },
+    "risk_sample": {
+      "pos": [
+        14,
+        18
+      ],
+      "label": "Moræneblokken",
+      "reveals": [
+        "mineral_yield"
+      ],
+      "site_facts": [
+        "flatness"
+      ],
+      "text": "Isen har skubbet blokken op fra dybet. Den er rig på jern og lidt nikkel. Ikke meget, men nok til at begynde."
+    },
+    "relay": {
+      "pos": [
+        44,
+        -4
+      ],
+      "label": "Isryggen"
+    }
+  },
+  "routes": [
+    {
+      "id": "safe",
+      "label": "Ad isryggen",
+      "description": "Længere, men i sol. Dragten holder varmen.",
+      "waypoints": [
+        [
+          0,
+          0
+        ],
+        [
+          24,
+          -6
+        ],
+        [
+          46,
+          10
+        ],
+        [
+          36,
+          30
+        ]
+      ]
+    },
+    {
+      "id": "short",
+      "label": "Over skyggebassinet",
+      "description": "Den direkte vej — gennem en lomme af kold, stillestående luft.",
+      "waypoints": [
+        [
+          0,
+          0
+        ],
+        [
+          18,
+          14
+        ],
+        [
+          36,
+          30
+        ]
+      ]
+    }
+  ],
+  "hazard_zones": [
+    {
+      "center": [
+        18,
+        14
+      ],
+      "radius": 10,
+      "hazard_id": "cold",
+      "label": "Kuldelomme"
+    }
+  ],
+  "evacuation": "Dragten bruger al sin strøm på at holde dig varm. ARK: »Bliv i bevægelse, kaptajn. Hold dig i solen. Landerens varmekabine er tændt.«",
+  "findings": {
+    "main": "Nivalis: Dampsprækken er stabil. Geotermi først, så habitat.",
+    "risk": "Nivalis: Mineralerne er sparsomme, men de er der.",
+    "relay": "Nivalis: Relæet på isryggen fanger den lave sol."
+  }
+}

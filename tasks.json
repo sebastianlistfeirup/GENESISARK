@@ -1,0 +1,781 @@
+{
+  "project": "GENESIS ARK",
+  "spec_version": "1.0",
+  "tasks": [
+    {
+      "id": "GA-01",
+      "phase": 1,
+      "title": "Miljø, repository og startscene",
+      "depends_on": [],
+      "status": "TODO",
+      "owner": "",
+      "paths": [
+        "project.godot",
+        "docs/",
+        "tools/"
+      ],
+      "steps": "Registrér Godot/OS/GPU og tilgængelige assets. Opret separat Git-repository, inputmap og en tom boot->menu->game->quit-sløjfe. Lås engineversion og renderer. Lav en repeatable smoke-kommando og et baseline-commit.",
+      "acceptance": "Ren opstart uden parserfejl; exit fungerer; version og faktisk kørsel er dokumenteret. Ingen eksisterende projekter overskrives.",
+      "fallback": "Hvis engine mangler: dokumentér installation/fejl og fortsæt kun med data og tooling; spilbarhed er BLOCKED_ENVIRONMENT.",
+      "evidence": "evidence/GA-01/result.json",
+      "last_commit": ""
+    },
+    {
+      "id": "GA-02",
+      "phase": 1,
+      "title": "Kaptajn, collision og to kameraer",
+      "depends_on": [
+        "GA-01"
+      ],
+      "status": "TODO",
+      "owner": "",
+      "paths": [
+        "scenes/actors/",
+        "scripts/runtime/player/",
+        "scenes/tests/"
+      ],
+      "steps": "Byg CharacterBody3D med VisualPivot, collision og interaktion. Lav tredjeperson og kolonipan som separate camera modes. Test ramper, hjørner og kameracollision med simple blokke. Hold input adskilt fra domænet.",
+      "acceptance": "10 gennemløb af samme rute uden væggennemgang eller mistet figur. Kameraskift giver ingen dobbelt input eller teleport.",
+      "fallback": "Reducer kamerafunktioner til én stabil mode ad gangen; rig må være en kapsel indtil import er afklaret. Aflevering: commit + faktiske testresultater + relevant billede/video + opdateret STATUS. Porten til næste fase skal være bestået.",
+      "evidence": "evidence/GA-02/result.json",
+      "last_commit": ""
+    },
+    {
+      "id": "GA-03",
+      "phase": 1,
+      "title": "Arkens tre rum og første opgave",
+      "depends_on": [
+        "GA-02"
+      ],
+      "status": "TODO",
+      "owner": "",
+      "paths": [
+        "scenes/ship/",
+        "data/objectives/",
+        "scripts/domain/"
+      ],
+      "steps": "Byg bro, embryobank og værksted med et kort loop. Gør nødstrømsreparation til første objective. Tilføj interaktionsprompts, låst/ulåst terminal og tydelig vej til næste mål. Brug samme interface på alle stationer.",
+      "acceptance": "Ny spiller kan starte strøm og åbne planetskærm uden debug. Objective kan ikke belønnes to gange ved gentaget interaktion.",
+      "fallback": "Skær pynt og ekstra korridorer; behold rumfunktioner og læsbare skiltning.",
+      "evidence": "evidence/GA-03/result.json",
+      "last_commit": ""
+    },
+    {
+      "id": "GA-04",
+      "phase": 1,
+      "title": "ArkState og validerede planetdata",
+      "depends_on": [
+        "GA-01"
+      ],
+      "status": "TODO",
+      "owner": "",
+      "paths": [
+        "scripts/domain/ark/",
+        "data/planets/",
+        "tests/"
+      ],
+      "steps": "Implementér fuel, integrity, components og embryo-ledger. Opret tre prototypeplaneter med known/estimated/unknown-observationer. Valider ID’er, intervaller og værdigrænser ved load. UI læser snapshots frem for at eje værdier.",
+      "acceptance": "Ugyldig planet afvises med præcis årsag. Embryosum er 50.000 og negative ressourcer afvises. Samme fixture giver samme state.",
+      "fallback": "Brug statiske Resources og korte tabeller; procedurale planeter indføres ikke. Aflevering: commit + faktiske testresultater + relevant billede/video + opdateret STATUS. Porten til næste fase skal være bestået.",
+      "evidence": "evidence/GA-04/result.json",
+      "last_commit": ""
+    },
+    {
+      "id": "GA-05",
+      "phase": 1,
+      "title": "Stjernekort og transaktionel rejse",
+      "depends_on": [
+        "GA-03",
+        "GA-04"
+      ],
+      "status": "TODO",
+      "owner": "",
+      "paths": [
+        "scenes/ui/starmap/",
+        "scripts/domain/travel/"
+      ],
+      "steps": "Vis tre destinationer, reelle omkostninger og minimumsreserve. Implementér RequestTravel med idempotens og et kort assisteret indflyvningssegment. Commit rejsen på ét punkt og opdatér location efter succes.",
+      "acceptance": "Dobbelklik og load ved ankomst kan ikke bruge fuel to gange. Utilstrækkelig reserve giver forklaring før valg. Spilleren kan assistere flyvesegmentet.",
+      "fallback": "Er manuel flyvning ustabil, behold en kontrolleret orbital tilgang og den fulde rejsebeslutning.",
+      "evidence": "evidence/GA-05/result.json",
+      "last_commit": ""
+    },
+    {
+      "id": "GA-06",
+      "phase": 1,
+      "title": "Probe, prøve og planetviden",
+      "depends_on": [
+        "GA-04",
+        "GA-05"
+      ],
+      "status": "TODO",
+      "owner": "",
+      "paths": [
+        "scripts/domain/survey/",
+        "scenes/surface/",
+        "data/surveys/"
+      ],
+      "steps": "Opret tre surveyhandlinger med pris og observation. Byg én 6-minutters gråbloksekspedition med to ruter, suit-energy og hjemvej. Prøven opdaterer kun relevante sitefelter og gemmer kilde.",
+      "acceptance": "Scouting indsnævrer et interval og betaler én gang. Udtømt dragt udløser varslet tilbagevending/checkpoint, ikke en tavs kampagnelås.",
+      "fallback": "Fjern tilfældige hændelser; bevar én forståelig fare og én værdifuld observation. Aflevering: commit + faktiske testresultater + relevant billede/video + opdateret STATUS. Porten til næste fase skal være bestået.",
+      "evidence": "evidence/GA-06/result.json",
+      "last_commit": ""
+    },
+    {
+      "id": "GA-07",
+      "phase": 1,
+      "title": "Landing og vedvarende kolonistart",
+      "depends_on": [
+        "GA-05",
+        "GA-06"
+      ],
+      "status": "TODO",
+      "owner": "",
+      "paths": [
+        "scripts/domain/landing/",
+        "scenes/colony/",
+        "tests/"
+      ],
+      "steps": "Lav landingspreview med kendte risici, startinventar og pre-landing save-hook. CommitLanding skifter phase én gang, placerer arkkerne og opretter ColonyState med valgt biome/site.",
+      "acceptance": "Gentagen landing giver ikke dobbelt ressourcer eller ekstra ark. Tilbage/annuller ændrer ingen state. Den valgte planet bestemmer biomeparametre.",
+      "fallback": "Brug en kort skærmovergang; dyr landingscinematic er ikke en afhængighed.",
+      "evidence": "evidence/GA-07/result.json",
+      "last_commit": ""
+    },
+    {
+      "id": "GA-08",
+      "phase": 1,
+      "title": "Robotbyggeri og første forsyningsnet",
+      "depends_on": [
+        "GA-07"
+      ],
+      "status": "TODO",
+      "owner": "",
+      "paths": [
+        "scripts/domain/colony/",
+        "scenes/buildings/",
+        "data/buildings/"
+      ],
+      "steps": "Implementér ghostplacement, footprint, gangbar adgang, byggecost og robotarbejde. Lav solarray, vandanlæg og habitat plus arkens reserve. Beregn netstatus og forklar strøm-/adgangsfejl i UI.",
+      "acceptance": "Tre bygninger kan opføres, nedrives og gemmes uden resource exploit. Et afbrudt strømnet stopper korrekt output og viser årsagen.",
+      "fallback": "Start med et enkelt energinet og fælles lager; transportgrafen kan være en simpel valideret afstand. Aflevering: commit + faktiske testresultater + relevant billede/video + opdateret STATUS. Porten til næste fase skal være bestået.",
+      "evidence": "evidence/GA-08/result.json",
+      "last_commit": ""
+    },
+    {
+      "id": "GA-09",
+      "phase": 1,
+      "title": "Incubation og kohortetest",
+      "depends_on": [
+        "GA-04",
+        "GA-08"
+      ],
+      "status": "TODO",
+      "owner": "",
+      "paths": [
+        "scripts/domain/population/",
+        "fixtures/",
+        "tests/"
+      ],
+      "steps": "Opret viable->incubating->born-overgange, omsorgskrav og alder. Blokér start uden forsyning og kapacitet. Lav en isoleret accelereret testfixture til fødsel og voksenalder; normal demo slutter ved robotkolonien.",
+      "acceptance": "Alle overgangsforløb bevarer 50.000-summen. En børnekohorte leverer ingen voksenarbejdskraft. Gentaget completion-event giver ingen ekstra fødsel.",
+      "fallback": "Hold tidsacceleration i testværktøj med tydelig debugmærkning; opfind ikke øjeblikkeligt voksne borgere.",
+      "evidence": "evidence/GA-09/result.json",
+      "last_commit": ""
+    },
+    {
+      "id": "GA-10",
+      "phase": 1,
+      "title": "Save/load og genoprettelse",
+      "depends_on": [
+        "GA-05",
+        "GA-07",
+        "GA-08",
+        "GA-09"
+      ],
+      "status": "TODO",
+      "owner": "",
+      "paths": [
+        "scripts/persistence/",
+        "tests/save/",
+        "fixtures/saves/"
+      ],
+      "steps": "Implementér envelope, validering, backup og restore-rækkefølge. Gem ArkState, observationer, kolonibygninger, kohorter og RNG. Lav corrupt-save og interrupted-write fixtures.",
+      "acceptance": "Roundtrip bevarer alle nøgletal og IDs. Korrupt hovedfil tilbyder gyldig backup. Restore affyrer ingen incubation-, landing- eller rewardevents igen.",
+      "fallback": "Gem kun på konsistente checkpoints før frie mid-action saves; dokumentér begrænsningen. Aflevering: commit + faktiske testresultater + relevant billede/video + opdateret STATUS. Porten til næste fase skal være bestået.",
+      "evidence": "evidence/GA-10/result.json",
+      "last_commit": ""
+    },
+    {
+      "id": "GA-11",
+      "phase": 1,
+      "title": "Saml 20-minutters demo og læsbarhed",
+      "depends_on": [
+        "GA-02",
+        "GA-03",
+        "GA-05",
+        "GA-06",
+        "GA-07",
+        "GA-08",
+        "GA-10"
+      ],
+      "status": "TODO",
+      "owner": "",
+      "paths": [
+        "scenes/ui/",
+        "scenes/demo/",
+        "evidence/"
+      ],
+      "steps": "Forbind ny kampagne til robotkoloni med tydelige objectives. Lav kompakt HUD, pause, fejlbeskeder og placeholderlyd. Fjern debuggenveje fra spillerflow. Optag én hel gennemspilning og ret de tre største friktioner.",
+      "acceptance": "Hele demoen kan afsluttes og load fortsætter korrekt. Alle kritiske beslutninger viser pris og konsekvens. Ingen P0/P1-fejl er åbne.",
+      "fallback": "Skær ekstra prøver og dekoration, ikke rejsevalg eller koloniens forsyningsfeedback.",
+      "evidence": "evidence/GA-11/result.json",
+      "last_commit": ""
+    },
+    {
+      "id": "GA-12",
+      "phase": 1,
+      "title": "Fase 1-port og eksport",
+      "depends_on": [
+        "GA-01",
+        "GA-02",
+        "GA-03",
+        "GA-04",
+        "GA-05",
+        "GA-06",
+        "GA-07",
+        "GA-08",
+        "GA-09",
+        "GA-10",
+        "GA-11"
+      ],
+      "status": "TODO",
+      "owner": "",
+      "paths": [
+        "builds/",
+        "evidence/GA-12/",
+        "docs/STATUS.md"
+      ],
+      "steps": "Byg native desktopversion, kør demo fra rent startstate og genkør domæne-/savetests. Registrér proxyassets og visuelle blokeringer. Pak test-save, logs og næste opgaver. Lav fase 1-tag.",
+      "acceptance": "Gate 1 opfyldt med build-ID og faktiske beviser. Hvis eksport eller visuel test mangler, er porten ikke DONE, og årsagen er eksplicit.",
+      "fallback": "Fortsæt mulige datatests ved miljøstop; markér ikke en scriptsamling som spilbar demo. Aflevering: commit + faktiske testresultater + relevant billede/video + opdateret STATUS. Porten til næste fase skal være bestået.",
+      "evidence": "evidence/GA-12/result.json",
+      "last_commit": ""
+    },
+    {
+      "id": "GA-13",
+      "phase": 2,
+      "title": "Hjemkomstaudit og Synty-basiskit",
+      "depends_on": [
+        "GA-12"
+      ],
+      "status": "TODO",
+      "owner": "",
+      "paths": [
+        "assets/",
+        "art/prefabs/",
+        "docs/ASSET_LEDGER.csv"
+      ],
+      "steps": "Kontrollér fuld værktøjskæde og actual assetpaths. Importér ét skibsmodul, én humanoid og én terrænprøve. Lav wrappers, skala/collision og materialepalette. Sammenlign med feriedemo før bred udskiftning.",
+      "acceptance": "Synty-scener kører på låst engine, navigation og save-ID’er er uændrede. Sourcehash og screenshot ved gameplaykamera er gemt.",
+      "fallback": "Ret import i isoleret RigLab; behold proxyversion som rollback.",
+      "evidence": "evidence/GA-13/result.json",
+      "last_commit": ""
+    },
+    {
+      "id": "GA-14",
+      "phase": 2,
+      "title": "Kaptajnens færdige animationskerne",
+      "depends_on": [
+        "GA-13"
+      ],
+      "status": "TODO",
+      "owner": "",
+      "paths": [
+        "scenes/tests/RigLab.tscn",
+        "art/animations/",
+        "scripts/runtime/"
+      ],
+      "steps": "Normalisér rig, in-place locomotion, turn, interact, sample og suit-reaction. Opsæt AnimationTree med afbrydelser og manifest. Test kontaktpunkt ved terminal og prøvetagning.",
+      "acceptance": "Gang/løb/stop og interaktion har korrekt fodfæste, greb og eventtid i galleri samt ekspedition. Pause/restore giver ingen posesnap eller dobbeltsample.",
+      "fallback": "Skær kompleks hånd-IK; ret clip, rig og socket før mere avanceret runtimekorrektion. Aflevering: commit + faktiske testresultater + relevant billede/video + opdateret STATUS. Porten til næste fase skal være bestået.",
+      "evidence": "evidence/GA-14/result.json",
+      "last_commit": ""
+    },
+    {
+      "id": "GA-15",
+      "phase": 2,
+      "title": "Seks planetprofiler og sammenligning",
+      "depends_on": [
+        "GA-04",
+        "GA-06",
+        "GA-12"
+      ],
+      "status": "TODO",
+      "owner": "",
+      "paths": [
+        "data/planets/",
+        "scenes/ui/planet_compare/",
+        "tests/"
+      ],
+      "steps": "Udvid til seks navngivne kandidater og tre sites pr. biomekort. Indfør tre niveauer af viden og valider alle rejseomkostninger. Lav automatiske tests af mindst én levedygtig strategi pr. planet.",
+      "acceptance": "Ingen universel bedste planet i alle felter. Alle kandidater har en mulig landings-/koloniplan; surveykilde og usikkerhed fremgår.",
+      "fallback": "Balancer ud fra data; lav ikke seks unikke open worlds for at skabe forskel.",
+      "evidence": "evidence/GA-15/result.json",
+      "last_commit": ""
+    },
+    {
+      "id": "GA-16",
+      "phase": 2,
+      "title": "Komplet økonomi og tolv byggeklasser",
+      "depends_on": [
+        "GA-08",
+        "GA-12"
+      ],
+      "status": "TODO",
+      "owner": "",
+      "paths": [
+        "data/buildings/",
+        "scripts/domain/economy/",
+        "tests/"
+      ],
+      "steps": "Tilføj alle 12 byggeklasser, workforce, upkeep, batterilagring og biometilpasninger. Vis reserve i persondøgn og prioriteret strømafbrydelse. Test cancel, rebuild og resource reservation.",
+      "acceptance": "Ingen negativ lagerbeholdning eller uendelig genbrugsgevinst. Kritiske systemer prioriteres korrekt. Hver bygning har én tydelig nødvendig funktion.",
+      "fallback": "Fjern overflødige varianter; behold klare basiskæder og målbare biomeforskelle. Aflevering: commit + faktiske testresultater + relevant billede/video + opdateret STATUS. Porten til næste fase skal være bestået.",
+      "evidence": "evidence/GA-16/result.json",
+      "last_commit": ""
+    },
+    {
+      "id": "GA-17",
+      "phase": 2,
+      "title": "Omsorgsloop og første menneskelige scene",
+      "depends_on": [
+        "GA-09",
+        "GA-14",
+        "GA-16"
+      ],
+      "status": "TODO",
+      "owner": "",
+      "paths": [
+        "scripts/domain/population/",
+        "scenes/story/",
+        "data/events/"
+      ],
+      "steps": "Tilføj første kohorte, pleje/uddannelse og varslede behov. Skab en kort håndskrevet scene med kaptajn, AI og et fremtidsperspektiv. Lad omsorg være afhængig af fungerende koloni, ikke af et videoklip.",
+      "acceptance": "Spilleren kan forklare kravene til første fødsel. Forsyningssvigt stopper farlige fremskridt med forklaring. Cohortstatus overlever save/load.",
+      "fallback": "Brug lys, lyd og tekst frem for ansigtsrig og lange cinematics.",
+      "evidence": "evidence/GA-17/result.json",
+      "last_commit": ""
+    },
+    {
+      "id": "GA-18",
+      "phase": 2,
+      "title": "Tre biomeudsnit og farer",
+      "depends_on": [
+        "GA-13",
+        "GA-15",
+        "GA-16"
+      ],
+      "status": "TODO",
+      "owner": "",
+      "paths": [
+        "scenes/biomes/",
+        "data/hazards/",
+        "art/"
+      ],
+      "steps": "Byg grøn-, ørken- og isgreybox til samme interface. Tilføj én central fare og én specifik koloniløsning pr. biome. Dressing følger først efter kontrol af ruter, landingssites og forsyningsafstande.",
+      "acceptance": "Spore, støv og kulde giver forskellige beslutninger. Alle sites kan navigeres og landes på uden skjulte dead ends. Fare er synlig uden lyd.",
+      "fallback": "Genbrug modulære terrænelementer; fokuser på forskellige funktionelle layouts. Aflevering: commit + faktiske testresultater + relevant billede/video + opdateret STATUS. Porten til næste fase skal være bestået.",
+      "evidence": "evidence/GA-18/result.json",
+      "last_commit": ""
+    },
+    {
+      "id": "GA-19",
+      "phase": 2,
+      "title": "UI, lyd og 45-minutters spiltest",
+      "depends_on": [
+        "GA-14",
+        "GA-15",
+        "GA-16",
+        "GA-17",
+        "GA-18"
+      ],
+      "status": "TODO",
+      "owner": "",
+      "paths": [
+        "scenes/ui/",
+        "audio/",
+        "evidence/playtest/"
+      ],
+      "steps": "Saml kvalitetsudsnit med undertekster, skalerbar UI og lydprioriteter. Test planettradeoff og incubationforståelse med eksterne testere hvis tilgængelige. Registrér observationer og ret konkrete misforståelser.",
+      "acceptance": "Fire af fem testere finder første mål; tre beskriver et varigt planettradeoff. Manglende testere registreres som udestående, ikke simuleret evidens.",
+      "fallback": "Agentens walkthrough kan fange bugs, men erstatter ikke spillerbevis for sjov og forståelse.",
+      "evidence": "evidence/GA-19/result.json",
+      "last_commit": ""
+    },
+    {
+      "id": "GA-20",
+      "phase": 2,
+      "title": "Fase 2-port og contentlås",
+      "depends_on": [
+        "GA-13",
+        "GA-14",
+        "GA-15",
+        "GA-16",
+        "GA-17",
+        "GA-18",
+        "GA-19"
+      ],
+      "status": "TODO",
+      "owner": "",
+      "paths": [
+        "docs/",
+        "builds/",
+        "evidence/GA-20/"
+      ],
+      "steps": "Kør kvalitetsudsnittet, profiler referencehardware og fastfrys data/interfaces. Dokumentér præcis contentliste og åbne P2-forhold. Opret tag og fixtures til resten af kampagnen.",
+      "acceptance": "Gate 2 er opfyldt: Synty/animation godkendt, seks valg fungerer, første kohorte er meningsfuld og buildet har ingen P0/P1.",
+      "fallback": "Udskyd indholdsproduktion ved svag kerne; reparér planetvalg eller koloniforståelse først. Aflevering: commit + faktiske testresultater + relevant billede/video + opdateret STATUS. Porten til næste fase skal være bestået.",
+      "evidence": "evidence/GA-20/result.json",
+      "last_commit": ""
+    },
+    {
+      "id": "GA-21",
+      "phase": 3,
+      "title": "Era-simulator og sikre tidsspring",
+      "depends_on": [
+        "GA-20"
+      ],
+      "status": "TODO",
+      "owner": "",
+      "paths": [
+        "scripts/domain/era/",
+        "tests/era/",
+        "fixtures/"
+      ],
+      "steps": "Implementér deterministiske intervalberegninger for forbrug, aldring, upkeep og arbejdskraft. Stop før næste kritiske hændelse/underskud. Vis prognose, plan og resultat før commit.",
+      "acceptance": "År 20/40 kan nås uden dag-for-dag scene-simulation. Samme fixture giver samme resultat. Simulatoren springer ikke over en uløst kritisk krise.",
+      "fallback": "Brug kohorter og analytiske intervaller; simuler ikke alle fremtidige mennesker individuelt.",
+      "evidence": "evidence/GA-21/result.json",
+      "last_commit": ""
+    },
+    {
+      "id": "GA-22",
+      "phase": 3,
+      "title": "Akt I og seks scoutingproblemer",
+      "depends_on": [
+        "GA-20"
+      ],
+      "status": "TODO",
+      "owner": "",
+      "paths": [
+        "data/missions/act_1/",
+        "scenes/survey/"
+      ],
+      "steps": "Skriv og implementér seks surveyproblemer på tre biomekort. Hvert har hovedprøve, valgfri risiko og tydelig evakuering. Forbind dem til rejse- og videnmodellen uden at kræve alle seks i en kampagne.",
+      "acceptance": "Alle surveys afsluttes, afbrydes og genoptages lovligt. Valgfrie prøver ændrer faktisk viden, ikke kun journaltekst.",
+      "fallback": "Genbrug korttopologi med nye mål; undgå seks uafhængige store baner. Aflevering: commit + faktiske testresultater + relevant billede/video + opdateret STATUS. Porten til næste fase skal være bestået.",
+      "evidence": "evidence/GA-22/result.json",
+      "last_commit": ""
+    },
+    {
+      "id": "GA-23",
+      "phase": 3,
+      "title": "Akt II og ni krise-/borgerbegivenheder",
+      "depends_on": [
+        "GA-17",
+        "GA-20"
+      ],
+      "status": "TODO",
+      "owner": "",
+      "paths": [
+        "data/events/",
+        "scripts/domain/events/",
+        "scenes/ui/"
+      ],
+      "steps": "Byg tre biomespecifikke kriser og seks omsorgs-/samfundsbegivenheder. Hver definerer trigger, varsel, valgmuligheder, cost, effect og fallback. Vis menneskelige konsekvenser i korte håndskrevne scener.",
+      "acceptance": "Ingen event kræver en tabt engangsressource uden alternativ. Hver løsning har et synligt resultat og anvendes højst én gang.",
+      "fallback": "Reducer tekstmængde, ikke konsekvens. Uafklarede events skal standse tidsspring.",
+      "evidence": "evidence/GA-23/result.json",
+      "last_commit": ""
+    },
+    {
+      "id": "GA-24",
+      "phase": 3,
+      "title": "Akt III, råd og overdragelse",
+      "depends_on": [
+        "GA-21",
+        "GA-23"
+      ],
+      "status": "TODO",
+      "owner": "",
+      "paths": [
+        "scripts/domain/society/",
+        "data/story/act_3/"
+      ],
+      "steps": "Indfør de første voksnes tre perspektiver, trust og rådets forudsætninger. Knyt valg til arkafhængighed, robusthed og ekspansion. Byg finaleobjective om 500 indbyggere og institutionsstabilitet.",
+      "acceptance": "Råd kan ikke opstå før voksne kohorter. Samfundets behov og overdragelseskriterier er forklaret. Ingen usynlig moralsk score styrer slutningen alene.",
+      "fallback": "Hold dialogsystemet lineært med dataforgreninger; ingen generativ NPC-chat som runtimekrav. Aflevering: commit + faktiske testresultater + relevant billede/video + opdateret STATUS. Porten til næste fase skal være bestået.",
+      "evidence": "evidence/GA-24/result.json",
+      "last_commit": ""
+    },
+    {
+      "id": "GA-25",
+      "phase": 3,
+      "title": "Tre afslutninger og epilog",
+      "depends_on": [
+        "GA-24"
+      ],
+      "status": "TODO",
+      "owner": "",
+      "paths": [
+        "data/endings/",
+        "scenes/story/ending/",
+        "tests/"
+      ],
+      "steps": "Definér kriterier for selvstændig, skærmet og skrøbelig civilisation. Lav epilog, der refererer til planet, kriser, kohorter og institutionsvalg. Gem final_state og tilbyd fortsættelse fra pre-ending save.",
+      "acceptance": "Tre målrettede fixtures udløser hver sin korrekte profil. Samme save giver samme epilog; ingen modstridende planet- eller befolkningstal.",
+      "fallback": "Brug stærk art/lyd/tekst og ingamekamera frem for store specialproducerede film.",
+      "evidence": "evidence/GA-25/result.json",
+      "last_commit": ""
+    },
+    {
+      "id": "GA-26",
+      "phase": 3,
+      "title": "Alle biomekort og artpass",
+      "depends_on": [
+        "GA-18",
+        "GA-20",
+        "GA-22"
+      ],
+      "status": "TODO",
+      "owner": "",
+      "paths": [
+        "scenes/biomes/",
+        "art/prefabs/",
+        "lighting/"
+      ],
+      "steps": "Færdiggør tre koloniregioner med tre sites hver, landmærker, collision og artpalette. Kontrollér alle byggefootprints og kameraer. Tilføj kun props, der støtter orientering eller fortælling.",
+      "acceptance": "Alle ni sites understøtter startbygninger og levedygtig progression. Ingen pynt blokerer kritiske paths eller skjuler interaktion.",
+      "fallback": "Reducer propdensitet og genbrug materialer, før performance kræver store systemomskrivninger. Aflevering: commit + faktiske testresultater + relevant billede/video + opdateret STATUS. Porten til næste fase skal være bestået.",
+      "evidence": "evidence/GA-26/result.json",
+      "last_commit": ""
+    },
+    {
+      "id": "GA-27",
+      "phase": 3,
+      "title": "Borgere, robotter og lydidentitet",
+      "depends_on": [
+        "GA-14",
+        "GA-17",
+        "GA-24"
+      ],
+      "status": "TODO",
+      "owner": "",
+      "paths": [
+        "scenes/actors/",
+        "audio/",
+        "scripts/runtime/crowd/"
+      ],
+      "steps": "Tilføj repræsentative borgere med kohortetilknytning, robotarbejdsloops og variation. Begræns synlige borgere og opdatering. Udbyg lyd fra ensom ark til beboet koloni.",
+      "acceptance": "Synlige aktører ændrer ikke autoritativ population. Crowd undgår kritiske indgange; animationer og lyd kan reduceres uden tab af information.",
+      "fallback": "Brug få gode loops og sceneprioritering; ingen fuld hverdags-AI til hvert menneske.",
+      "evidence": "evidence/GA-27/result.json",
+      "last_commit": ""
+    },
+    {
+      "id": "GA-28",
+      "phase": 3,
+      "title": "Balance af seks verdener",
+      "depends_on": [
+        "GA-21",
+        "GA-23",
+        "GA-25",
+        "GA-26"
+      ],
+      "status": "TODO",
+      "owner": "",
+      "paths": [
+        "tools/balance/",
+        "fixtures/strategies/",
+        "data/"
+      ],
+      "steps": "Kør mindst tre strategier på hver kandidat. Mål reserver, krisetid, arkafhængighed og slutprofil. Justér data i små sammenlignelige ændringer og spil mindst én fuld kampagne på hvert biome.",
+      "acceptance": "Alle seks kan gennemføres på standard. Ingen kandidat dominerer alle strategier. Ingen skjult ressourcefælde før nødvendig teknologi.",
+      "fallback": "Skift én variabelgruppe ad gangen og behold baselinefixtures til sammenligning. Aflevering: commit + faktiske testresultater + relevant billede/video + opdateret STATUS. Porten til næste fase skal være bestået.",
+      "evidence": "evidence/GA-28/result.json",
+      "last_commit": ""
+    },
+    {
+      "id": "GA-29",
+      "phase": 3,
+      "title": "Robusthed, accessibility og performance",
+      "depends_on": [
+        "GA-26",
+        "GA-27",
+        "GA-28"
+      ],
+      "status": "TODO",
+      "owner": "",
+      "paths": [
+        "settings/",
+        "tests/",
+        "tools/profile/"
+      ],
+      "steps": "Test UI-skalering, remap, lydløst spil og reduceret motion. Profilér rejse, ekspedition, koloni og era-hop. Test gammel savefixture efter contentændringer og stress af build/cancel.",
+      "acceptance": "Referencebudget er opfyldt eller ærligt revideret med dokumenteret lav profil. Ingen tab af data ved migration, og kritiske alarmer har visuelle alternativer.",
+      "fallback": "Optimer målt flaskehals; undgå ny engineversion eller threading midt i contentlås.",
+      "evidence": "evidence/GA-29/result.json",
+      "last_commit": ""
+    },
+    {
+      "id": "GA-30",
+      "phase": 3,
+      "title": "Fase 3-port: fuld kampagne",
+      "depends_on": [
+        "GA-21",
+        "GA-22",
+        "GA-23",
+        "GA-24",
+        "GA-25",
+        "GA-26",
+        "GA-27",
+        "GA-28",
+        "GA-29"
+      ],
+      "status": "TODO",
+      "owner": "",
+      "paths": [
+        "builds/",
+        "evidence/GA-30/",
+        "docs/"
+      ],
+      "steps": "Gennemspil start->overdragelse uden debug, plus fixtures til de to øvrige slutprofiler. Kontrollér contentloft, credits og kendte fejl. Fastfrys featurelisten.",
+      "acceptance": "Gate 3 opfyldt med fuld kampagne, alle planeter/biomer og tre korrekt beregnede afslutninger. Ingen P0/P1.",
+      "fallback": "Fjern ufærdige valgfri features i et dokumenteret cut; behold kampagnens hovedløfte. Aflevering: commit + faktiske testresultater + relevant billede/video + opdateret STATUS. Porten til næste fase skal være bestået.",
+      "evidence": "evidence/GA-30/result.json",
+      "last_commit": ""
+    },
+    {
+      "id": "GA-31",
+      "phase": 4,
+      "title": "Ekstern beta og prioriteter",
+      "depends_on": [
+        "GA-30"
+      ],
+      "status": "TODO",
+      "owner": "",
+      "paths": [
+        "evidence/beta/",
+        "docs/feedback/"
+      ],
+      "steps": "Pak en privat testbuild og instruktion uden spoilers. Indsaml sessionlængde, første blokering, planetvalg og forståelse af generationer, når testadgang er godkendt. Triagér efter observeret problem.",
+      "acceptance": "Alle P0/P1 er reproduceret eller tydeligt afkræftet med bevis. Feedback er adskilt fra agentens egne antagelser.",
+      "fallback": "Hvis testere mangler, hold releaseporten åben og færdiggør øvrig QA; opfind ikke resultater.",
+      "evidence": "evidence/GA-31/result.json",
+      "last_commit": ""
+    },
+    {
+      "id": "GA-32",
+      "phase": 4,
+      "title": "Bugfix og finale-polish",
+      "depends_on": [
+        "GA-31"
+      ],
+      "status": "TODO",
+      "owner": "",
+      "paths": [
+        "scripts/",
+        "scenes/",
+        "tests/regression/"
+      ],
+      "steps": "Ret prioriterede fejl i små commits med regressionsfixture. Gennemgå overgangene ark->planet->koloni->era->epilog. Finpuds tone, alarmsystem og ventetid uden nye systemer.",
+      "acceptance": "Alle beta-P0/P1 lukket med retest. Ingen nye savebrud. Tidsspring og epilog har tydelig konsekvens uden unødig venten.",
+      "fallback": "Rollback et risikabelt fix hvis det bryder flere stabile flows; lav en mindre rettelse. Aflevering: commit + faktiske testresultater + relevant billede/video + opdateret STATUS. Porten til næste fase skal være bestået.",
+      "evidence": "evidence/GA-32/result.json",
+      "last_commit": ""
+    },
+    {
+      "id": "GA-33",
+      "phase": 4,
+      "title": "Udgivelsesdata, indstillinger og rettigheder",
+      "depends_on": [
+        "GA-30"
+      ],
+      "status": "TODO",
+      "owner": "",
+      "paths": [
+        "docs/release/",
+        "localization/",
+        "credits/"
+      ],
+      "steps": "Kontrollér asset/animation/audio-ledger mod faktisk build. Gennemgå tekst, credits, remap og settings persistence. Definér supporterede platforme og kendte begrænsninger ud fra tests.",
+      "acceptance": "Ingen rå købte sourcepakker følger offentlig levering. Alle shipped assets har kilde og afklaret brug. Indstillinger overlever restart.",
+      "fallback": "Erstat et uafklaret asset med et allerede godkendt alternativ; stop ikke hele projektet unødigt.",
+      "evidence": "evidence/GA-33/result.json",
+      "last_commit": ""
+    },
+    {
+      "id": "GA-34",
+      "phase": 4,
+      "title": "Demo, trailer og salgssidegrundlag",
+      "depends_on": [
+        "GA-32",
+        "GA-33"
+      ],
+      "status": "TODO",
+      "owner": "",
+      "paths": [
+        "docs/store/",
+        "captures/",
+        "builds/demo/"
+      ],
+      "steps": "Lav en afgrænset demo til robotkoloni og optag faktisk progression. Skriv pitch, features og systemkrav baseret på build. Vis forskelle mellem tre planeter og kolonien over tid.",
+      "acceptance": "Alle påstande kan demonstreres i den angivne build. Video er gameplay, ikke genereret dokumentation. Demo har klar slutning og savegrænse.",
+      "fallback": "Skær løfter om fremtidige funktioner; sælg den oplevelse, der faktisk er færdig. Aflevering: commit + faktiske testresultater + relevant billede/video + opdateret STATUS. Porten til næste fase skal være bestået.",
+      "evidence": "evidence/GA-34/result.json",
+      "last_commit": ""
+    },
+    {
+      "id": "GA-35",
+      "phase": 4,
+      "title": "Ren releasekandidat og rollback",
+      "depends_on": [
+        "GA-32",
+        "GA-33",
+        "GA-34"
+      ],
+      "status": "TODO",
+      "owner": "",
+      "paths": [
+        "tools/release/",
+        "builds/rc/",
+        "evidence/"
+      ],
+      "steps": "Eksportér fra rent checkout på låst engine. Kør fuld smoke, save migration og mindst én kampagne. Pak checksum, versionsnoter, install-/startvejledning og forrige kandidat til rollback.",
+      "acceptance": "Gate 4 teknisk bestået: ren opstart, gyldige saves, ingen P0/P1 og verificeret runtimepakke. Publicering er ikke implicit udført.",
+      "fallback": "Ved forskel mellem editor og eksport laves en minimal eksportreproduktion før øvrige ændringer.",
+      "evidence": "evidence/GA-35/result.json",
+      "last_commit": ""
+    },
+    {
+      "id": "GA-36",
+      "phase": 4,
+      "title": "Overdragelse og vedligeholdelsesplan",
+      "depends_on": [
+        "GA-35"
+      ],
+      "status": "TODO",
+      "owner": "",
+      "paths": [
+        "docs/RELEASE_HANDOFF.md",
+        "docs/STATUS.md"
+      ],
+      "steps": "Aflevér build, beviser, bugstatus, assetledger og startordre til næste kørsel. Lav en 30-dages prioriteret plan for bugs, support og måling af demo-/salgsinteresse. Notér alle handlinger, der stadig kræver faktisk adgang.",
+      "acceptance": "En ny agent kan bygge, teste og lokalisere saveformat uden samtalehistorik. Slutstatus skelner klart mellem RC_READY og faktisk offentlig udgivelse.",
+      "fallback": "Stop ved manglende offentliggørelsesmandat efter at have gjort releasepakken fuldt reviewklar.",
+      "evidence": "evidence/GA-36/result.json",
+      "last_commit": ""
+    }
+  ]
+}

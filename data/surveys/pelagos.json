@@ -1,0 +1,110 @@
+{
+  "id": "survey_pelagos",
+  "planet_id": "pelagos",
+  "title": "Før fronten",
+  "briefing": "En stormfront ruller ind fra havet om få timer. Kysten er frugtbar, men vi ved ikke, hvad der lever i tidevandszonen. Find ud af det, før vejret lukker.",
+  "goal": "Tag en prøve af tidevandsmåtten, og placér et relæ i læ af højderyggen.",
+  "points": {
+    "lander": [
+      0,
+      0
+    ],
+    "main_sample": {
+      "pos": [
+        -38,
+        30
+      ],
+      "label": "Tidevandsmåtten",
+      "reveals": [
+        "biological_risk"
+      ],
+      "site_facts": [
+        "water_distance_m",
+        "shelter"
+      ],
+      "text": "Alger og små skaldyr — intet, der vil os noget ondt. Vandet kan renses med enkle filtre, og højderyggen tager det værste af vinden."
+    },
+    "risk_sample": {
+      "pos": [
+        -24,
+        10
+      ],
+      "label": "Revkanten",
+      "reveals": [
+        "solar_factor"
+      ],
+      "site_facts": [
+        "exposure"
+      ],
+      "text": "Bølgerne slår ind over revet. Lysmåleren viser, hvor meget skyerne stjæler: solenergi alene vil ikke række her."
+    },
+    "relay": {
+      "pos": [
+        6,
+        36
+      ],
+      "label": "Højderyggen"
+    }
+  },
+  "routes": [
+    {
+      "id": "safe",
+      "label": "Over højderyggen",
+      "description": "Stejlere og længere, men i læ for vinden.",
+      "waypoints": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          28
+        ],
+        [
+          -16,
+          46
+        ],
+        [
+          -38,
+          30
+        ]
+      ]
+    },
+    {
+      "id": "short",
+      "label": "Langs stranden",
+      "description": "Lige ud langs vandkanten — midt i stormfrontens vej.",
+      "waypoints": [
+        [
+          0,
+          0
+        ],
+        [
+          -18,
+          16
+        ],
+        [
+          -38,
+          30
+        ]
+      ]
+    }
+  ],
+  "hazard_zones": [
+    {
+      "center": [
+        -18,
+        16
+      ],
+      "radius": 12,
+      "hazard_id": "storms",
+      "label": "Stormfront"
+    }
+  ],
+  "evacuation": "Vinden river i dragten, og energien falder hurtigt. ARK: »Søg læ og gå mod landeren. Vi kommer igen, når fronten har passeret.«",
+  "findings": {
+    "main": "Pelagos: Tidevandszonen er levende, men ufarlig. Byg i læ af ryggen.",
+    "risk": "Pelagos: Skyerne tager meget af solen. Batterier bliver nødvendige.",
+    "relay": "Pelagos: Relæet sidder i læ og holder forbindelsen gennem stormene."
+  }
+}

@@ -1,0 +1,82 @@
+asset_id,source_pack,source_path,checksum,format,rig_id,scale_m,materials,license_status,target_scene,slot_id,review_status
+asset_ship_floor,POLYGON - Sci-Fi Space Pack,,,FBX,,,pakke-atlas (PolygonSciFi*_Texture_* – verificér),purchased_unverified,ship_interior (bro/embryobank/værksted),ship.floor,PROXY
+asset_ship_wall,POLYGON - Sci-Fi Space Pack,,,FBX,,,pakke-atlas (PolygonSciFi*_Texture_* – verificér),purchased_unverified,ship_interior (bro/embryobank/værksted),ship.wall,PROXY
+asset_ship_wall_window,POLYGON - Sci-Fi Space Pack,,,FBX,,,pakke-atlas (PolygonSciFi*_Texture_* – verificér),purchased_unverified,ship_interior (bro/embryobank/værksted),ship.wall_window,PROXY
+asset_ship_door,POLYGON - Sci-Fi Space Pack,,,FBX,,,pakke-atlas (PolygonSciFi*_Texture_* – verificér),purchased_unverified,ship_interior (bro/embryobank/værksted),ship.door,PROXY
+asset_ship_ceiling_light,POLYGON - Sci-Fi Space Pack,,,FBX,,,pakke-atlas (PolygonSciFi*_Texture_* – verificér),purchased_unverified,ship_interior (bro/embryobank/værksted),ship.ceiling_light,PROXY
+asset_ship_pillar,POLYGON - Sci-Fi Space Pack,,,FBX,,,pakke-atlas (PolygonSciFi*_Texture_* – verificér),purchased_unverified,ship_interior (bro/embryobank/værksted),ship.pillar,PROXY
+asset_ship_terminal,POLYGON - Sci-Fi Space Pack,,,FBX,,,pakke-atlas (PolygonSciFi*_Texture_* – verificér),purchased_unverified,ship_interior (bro/embryobank/værksted),ship.terminal,PROXY
+asset_ship_terminal_bridge,POLYGON - Sci-Fi Space Pack,,,FBX,,,pakke-atlas (PolygonSciFi*_Texture_* – verificér),purchased_unverified,ship_interior (bro),ship.terminal_bridge,PROXY
+asset_ship_starmap_table,POLYGON - Sci-Fi Space Pack,,,FBX,,,pakke-atlas (PolygonSciFi*_Texture_* – verificér),purchased_unverified,ship_interior (bro),ship.starmap_table,PROXY
+asset_ship_captain_chair,POLYGON - Sci-Fi Space Pack,,,FBX,,,pakke-atlas (PolygonSciFi*_Texture_* – verificér),purchased_unverified,ship_interior (bro),ship.captain_chair,PROXY
+asset_ship_embryo_tank,POLYGON - Sci-Fi Space Pack,,,FBX,,,pakke-atlas (PolygonSciFi*_Texture_* – verificér),purchased_unverified,ship_interior (embryobank),ship.embryo_tank,PROXY
+asset_ship_embryo_bank_core,POLYGON - Sci-Fi Space Pack,,,FBX,,,pakke-atlas (PolygonSciFi*_Texture_* – verificér),purchased_unverified,ship_interior (embryobank),ship.embryo_bank_core,PROXY
+asset_ship_cryo_pod,POLYGON - Sci-Fi Space Pack,,,FBX,,,pakke-atlas (PolygonSciFi*_Texture_* – verificér),purchased_unverified,ship_interior,ship.cryo_pod,PROXY
+asset_ship_workbench,POLYGON - Sci-Fi Space Pack,,,FBX,,,pakke-atlas (PolygonSciFi*_Texture_* – verificér),purchased_unverified,ship_interior (værksted),ship.workbench,PROXY
+asset_ship_power_coupling,POLYGON - Sci-Fi Space Pack,,,FBX,,,pakke-atlas (PolygonSciFi*_Texture_* – verificér),purchased_unverified,ship_interior,ship.power_coupling,PROXY
+asset_ship_robot_station,POLYGON - Sci-Fi Space Pack,,,FBX,,,pakke-atlas (PolygonSciFi*_Texture_* – verificér),purchased_unverified,ship_interior (værksted),ship.robot_station,PROXY
+asset_ship_crate,POLYGON - Sci-Fi Space Pack,,,FBX,,,pakke-atlas (PolygonSciFi*_Texture_* – verificér),purchased_unverified,ship_interior,ship.crate,PROXY
+asset_ship_pipe,POLYGON - Sci-Fi Space Pack,,,FBX,,,pakke-atlas (PolygonSciFi*_Texture_* – verificér),purchased_unverified,ship_interior,ship.pipe,PROXY
+asset_ship_window_space,POLYGON - Sci-Fi Space Pack,,,FBX,,,pakke-atlas (PolygonSciFi*_Texture_* – verificér),purchased_unverified,ship_interior (bro),ship.window_space,PROXY
+asset_char_captain,POLYGON - Sci-Fi Worlds Pack,,,FBX,humanoid_main,,pakke-atlas (PolygonSciFi*_Texture_* – verificér),purchased_unverified,ship_interior / surface_* / colony,char.captain,PROXY
+asset_char_ark_ai_hologram,Sci-Fi Robots - Sidekick Modular Characters,,,FBX,humanoid_main,,pakke-atlas (PolygonSciFi*_Texture_* – verificér),purchased_unverified,ship_interior,char.ark_ai_hologram,PROXY
+asset_char_robot_worker,Sci-Fi Robots - Sidekick Modular Characters,,,FBX,humanoid_main eller robot_rig (skal verificeres),,pakke-atlas (PolygonSciFi*_Texture_* – verificér),purchased_unverified,ship_interior (værksted) / colony,char.robot_worker,PROXY
+asset_char_robot_drone,POLYGON - Sci-Fi Space Pack,,,FBX,none (kode-animeret),,pakke-atlas (PolygonSciFi*_Texture_* – verificér),purchased_unverified,colony / surface_*,char.robot_drone,PROXY
+asset_char_citizen_adult,POLYGON - Sci-Fi City Pack,,,FBX,humanoid_main,,pakke-atlas (PolygonSciFi*_Texture_* – verificér),purchased_unverified,colony,char.citizen_adult,PROXY
+asset_char_citizen_child,POLYGON - Sci-Fi City Pack,,,FBX,humanoid_main (skaleret – verificér),,pakke-atlas (PolygonSciFi*_Texture_* – verificér),purchased_unverified,colony,char.citizen_child,PROXY
+asset_building_ark_core,POLYGON - Sci-Fi Space Pack,,,FBX,,,pakke-atlas (PolygonSciFi*_Texture_* – verificér),purchased_unverified,colony,building.ark_core,PROXY
+asset_building_solar_array,POLYGON - Sci-Fi Outpost Map,,,FBX,,,pakke-atlas (PolygonSciFi*_Texture_* – verificér),purchased_unverified,colony,building.solar_array,PROXY
+asset_building_geothermal_generator,POLYGON - Sci-Fi Outpost Map,,,FBX,,,pakke-atlas (PolygonSciFi*_Texture_* – verificér),purchased_unverified,colony,building.geothermal_generator,PROXY
+asset_building_battery,POLYGON - Sci-Fi Outpost Map,,,FBX,,,pakke-atlas (PolygonSciFi*_Texture_* – verificér),purchased_unverified,colony,building.battery,PROXY
+asset_building_water_plant,POLYGON - Sci-Fi Outpost Map,,,FBX,,,pakke-atlas (PolygonSciFi*_Texture_* – verificér),purchased_unverified,colony,building.water_plant,PROXY
+asset_building_greenhouse,POLYGON - Sci-Fi Outpost Map,,,FBX,,,pakke-atlas (PolygonSciFi*_Texture_* – verificér),purchased_unverified,colony,building.greenhouse,PROXY
+asset_building_mine,POLYGON - Sci-Fi Outpost Map,,,FBX,,,pakke-atlas (PolygonSciFi*_Texture_* – verificér),purchased_unverified,colony,building.mine,PROXY
+asset_building_workshop,POLYGON - Sci-Fi Outpost Map,,,FBX,,,pakke-atlas (PolygonSciFi*_Texture_* – verificér),purchased_unverified,colony,building.workshop,PROXY
+asset_building_drone_hub,POLYGON - Sci-Fi Outpost Map,,,FBX,,,pakke-atlas (PolygonSciFi*_Texture_* – verificér),purchased_unverified,colony,building.drone_hub,PROXY
+asset_building_habitat,POLYGON - Sci-Fi Outpost Map,,,FBX,,,pakke-atlas (PolygonSciFi*_Texture_* – verificér),purchased_unverified,colony,building.habitat,PROXY
+asset_building_care_center,POLYGON - Sci-Fi Outpost Map,,,FBX,,,pakke-atlas (PolygonSciFi*_Texture_* – verificér),purchased_unverified,colony,building.care_center,PROXY
+asset_building_clinic,POLYGON - Sci-Fi City Pack,,,FBX,,,pakke-atlas (PolygonSciFi*_Texture_* – verificér),purchased_unverified,colony,building.clinic,PROXY
+asset_building_school_hall,POLYGON - Sci-Fi City Pack,,,FBX,,,pakke-atlas (PolygonSciFi*_Texture_* – verificér),purchased_unverified,colony,building.school_hall,PROXY
+asset_building_module_filter,POLYGON - Sci-Fi Outpost Map,,,FBX,,,pakke-atlas (PolygonSciFi*_Texture_* – verificér),purchased_unverified,colony,building.module_filter,PROXY
+asset_building_module_heater,POLYGON - Sci-Fi Outpost Map,,,FBX,,,pakke-atlas (PolygonSciFi*_Texture_* – verificér),purchased_unverified,colony,building.module_heater,PROXY
+asset_building_construction_frame,POLYGON - Sci-Fi Outpost Map,,,FBX,,,pakke-atlas (PolygonSciFi*_Texture_* – verificér),purchased_unverified,colony,building.construction_frame,PROXY
+asset_surface_lander,POLYGON - Sci-Fi Space Pack,,,FBX,,,pakke-atlas (PolygonSciFi*_Texture_* – verificér),purchased_unverified,surface_*,surface.lander,PROXY
+asset_surface_rock_small,POLYGON - Sci-Fi Worlds Pack,,,FBX,,,pakke-atlas (PolygonSciFi*_Texture_* – verificér),purchased_unverified,surface_*,surface.rock_small,PROXY
+asset_surface_rock_large,POLYGON - Sci-Fi Worlds Pack,,,FBX,,,pakke-atlas (PolygonSciFi*_Texture_* – verificér),purchased_unverified,surface_*,surface.rock_large,PROXY
+asset_surface_tree_green,POLYGON - Sci-Fi Worlds Pack,,,FBX,,,pakke-atlas (PolygonSciFi*_Texture_* – verificér),purchased_unverified,surface_green,surface.tree_green,PROXY
+asset_surface_plant_green,POLYGON - Sci-Fi Worlds Pack,,,FBX,,,pakke-atlas (PolygonSciFi*_Texture_* – verificér),purchased_unverified,surface_green,surface.plant_green,PROXY
+asset_surface_crystal_ice,POLYGON - Sci-Fi Worlds Pack,,,FBX,,,pakke-atlas (PolygonSciFi*_Texture_* – verificér),purchased_unverified,surface_ice,surface.crystal_ice,PROXY
+asset_surface_ice_spire,POLYGON - Sci-Fi Worlds Pack,,,FBX,,,pakke-atlas (PolygonSciFi*_Texture_* – verificér),purchased_unverified,surface_ice,surface.ice_spire,PROXY
+asset_surface_desert_rock,POLYGON - Sci-Fi Worlds Pack,,,FBX,,,pakke-atlas (PolygonSciFi*_Texture_* – verificér),purchased_unverified,surface_desert,surface.desert_rock,PROXY
+asset_surface_sample_marker,POLYGON - Sci-Fi Outpost Map,,,FBX,,,pakke-atlas (PolygonSciFi*_Texture_* – verificér),purchased_unverified,surface_*,surface.sample_marker,PROXY
+asset_surface_relay_beacon,POLYGON - Sci-Fi Outpost Map,,,FBX,,,pakke-atlas (PolygonSciFi*_Texture_* – verificér),purchased_unverified,surface_*,surface.relay_beacon,PROXY
+asset_surface_hazard_marker,POLYGON - Sci-Fi Outpost Map,,,FBX,,,pakke-atlas (PolygonSciFi*_Texture_* – verificér),purchased_unverified,surface_*,surface.hazard_marker,PROXY
+asset_space_ark_exterior,POLYGON - Sci-Fi Space Pack,,,FBX,,,pakke-atlas (PolygonSciFi*_Texture_* – verificér),purchased_unverified,space_starmap / approach,space.ark_exterior,PROXY
+asset_space_planet_green,POLYGON - Sci-Fi Space Pack,,,FBX,,,pakke-atlas (PolygonSciFi*_Texture_* – verificér),purchased_unverified,space_starmap / approach,space.planet_green,PROXY
+asset_space_planet_desert,POLYGON - Sci-Fi Space Pack,,,FBX,,,pakke-atlas (PolygonSciFi*_Texture_* – verificér),purchased_unverified,space_starmap / approach,space.planet_desert,PROXY
+asset_space_planet_ice,POLYGON - Sci-Fi Space Pack,,,FBX,,,pakke-atlas (PolygonSciFi*_Texture_* – verificér),purchased_unverified,space_starmap / approach,space.planet_ice,PROXY
+asset_space_asteroid,POLYGON - Sci-Fi Space Pack,,,FBX,,,pakke-atlas (PolygonSciFi*_Texture_* – verificér),purchased_unverified,space_starmap / approach,space.asteroid,PROXY
+asset_space_approach_ring,POLYGON - Sci-Fi Space Pack,,,FBX,,,pakke-atlas (PolygonSciFi*_Texture_* – verificér),purchased_unverified,space_starmap / approach,space.approach_ring,PROXY
+asset_fx_spores,POLYGON - Particle FX Pack,,,PNG (tekstur) + egen GPUParticles3D,,,FX-teksturer,purchased_unverified,surface_green,fx.spores,PROXY
+asset_fx_dust,POLYGON - Particle FX Pack,,,PNG (tekstur) + egen GPUParticles3D,,,FX-teksturer,purchased_unverified,surface_desert,fx.dust,PROXY
+asset_fx_snow,POLYGON - Particle FX Pack,,,PNG (tekstur) + egen GPUParticles3D,,,FX-teksturer,purchased_unverified,surface_ice,fx.snow,PROXY
+asset_fx_storm,POLYGON - Particle FX Pack,,,PNG (tekstur) + egen GPUParticles3D,,,FX-teksturer,purchased_unverified,surface_*,fx.storm,PROXY
+asset_fx_steam_vent,POLYGON - Particle FX Pack,,,PNG (tekstur) + egen GPUParticles3D,,,FX-teksturer,purchased_unverified,colony / surface_ice,fx.steam_vent,PROXY
+asset_fx_thruster,POLYGON - Particle FX Pack,,,PNG (tekstur) + egen GPUParticles3D,,,FX-teksturer,purchased_unverified,space / surface.lander,fx.thruster,PROXY
+asset_fx_construction_sparks,POLYGON - Particle FX Pack,,,PNG (tekstur) + egen GPUParticles3D,,,FX-teksturer,purchased_unverified,colony,fx.construction_sparks,PROXY
+asset_fx_power_surge,POLYGON - Particle FX Pack,,,PNG (tekstur) + egen GPUParticles3D,,,FX-teksturer,purchased_unverified,ship_interior / colony,fx.power_surge,PROXY
+asset_fx_scan_pulse,POLYGON - Particle FX Pack,,,PNG (tekstur) + egen GPUParticles3D,,,FX-teksturer,purchased_unverified,space / surface_*,fx.scan_pulse,PROXY
+asset_fx_landing_dust,POLYGON - Particle FX Pack,,,PNG (tekstur) + egen GPUParticles3D,,,FX-teksturer,purchased_unverified,surface_*,fx.landing_dust,PROXY
+asset_ui_panel,INTERFACE - Sci-Fi Menus,,,PNG,,,pakke-atlas (PNG),purchased_unverified,HUD / menuer,ui.panel,PROXY
+asset_ui_button,INTERFACE - Sci-Fi Menus,,,PNG,,,pakke-atlas (PNG),purchased_unverified,HUD / menuer,ui.button,PROXY
+asset_ui_icon_power,INTERFACE - Sci-Fi Soldier HUD,,,PNG,,,pakke-atlas (PNG),purchased_unverified,HUD / menuer,ui.icon_power,PROXY
+asset_ui_icon_water,INTERFACE - Sci-Fi Soldier HUD,,,PNG,,,pakke-atlas (PNG),purchased_unverified,HUD / menuer,ui.icon_water,PROXY
+asset_ui_icon_food,INTERFACE - Sci-Fi Soldier HUD,,,PNG,,,pakke-atlas (PNG),purchased_unverified,HUD / menuer,ui.icon_food,PROXY
+asset_ui_icon_alloy,INTERFACE - Sci-Fi Soldier HUD,,,PNG,,,pakke-atlas (PNG),purchased_unverified,HUD / menuer,ui.icon_alloy,PROXY
+asset_ui_icon_components,INTERFACE - Sci-Fi Soldier HUD,,,PNG,,,pakke-atlas (PNG),purchased_unverified,HUD / menuer,ui.icon_components,PROXY
+asset_ui_icon_embryo,INTERFACE - Sci-Fi Soldier HUD,,,PNG,,,pakke-atlas (PNG),purchased_unverified,HUD / menuer,ui.icon_embryo,PROXY
+asset_ui_icon_population,INTERFACE - Sci-Fi Soldier HUD,,,PNG,,,pakke-atlas (PNG),purchased_unverified,HUD / menuer,ui.icon_population,PROXY
+asset_ui_icon_fuel,INTERFACE - Sci-Fi Soldier HUD,,,PNG,,,pakke-atlas (PNG),purchased_unverified,HUD / menuer,ui.icon_fuel,PROXY
+asset_ui_icon_integrity,INTERFACE - Sci-Fi Soldier HUD,,,PNG,,,pakke-atlas (PNG),purchased_unverified,HUD / menuer,ui.icon_integrity,PROXY
+asset_ui_hud_frame,INTERFACE - Sci-Fi Soldier HUD,,,PNG,,,pakke-atlas (PNG),purchased_unverified,HUD / menuer,ui.hud_frame,PROXY
+asset_ui_crosshair_interact,INTERFACE - Sci-Fi Soldier HUD,,,PNG,,,pakke-atlas (PNG),purchased_unverified,HUD / menuer,ui.crosshair_interact,PROXY

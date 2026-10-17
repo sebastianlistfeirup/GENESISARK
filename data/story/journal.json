@@ -1,0 +1,134 @@
+{
+  "entries": [
+    {
+      "id": "journal_intro_wakeup",
+      "trigger": "intro_wakeup",
+      "text": "Jeg er vågen. Arken er kold, og jeg er den eneste."
+    },
+    {
+      "id": "journal_power_restored",
+      "trigger": "power_restored",
+      "text": "Nødstrømmen er tilbage. Med lys i gangene føles skibet mindre tomt."
+    },
+    {
+      "id": "journal_embryo_bank",
+      "trigger": "embryo_bank",
+      "text": "50.000. Jeg stod foran tavlen i en halv time. Tallet ændrede sig ikke."
+    },
+    {
+      "id": "journal_starmap_first",
+      "trigger": "starmap_first",
+      "text": "Seks verdener. Ingen af dem er Jorden. Måske er det meningen."
+    },
+    {
+      "id": "journal_probe_result",
+      "trigger": "probe_result",
+      "text": "Proben har svaret. Én usikkerhed mindre. Mange tilbage."
+    },
+    {
+      "id": "journal_travel_start",
+      "trigger": "travel_start",
+      "text": "Kursen er sat. Arken knager, som om den også er spændt."
+    },
+    {
+      "id": "journal_arrival_viridia",
+      "trigger": "arrival_viridia",
+      "text": "Viridia. Grøn som en drøm, men luften er fuld af sporer. Vi får brug for filtre."
+    },
+    {
+      "id": "journal_arrival_pelagos",
+      "trigger": "arrival_pelagos",
+      "text": "Pelagos. Hav så langt øjet rækker, og storme, der kommer med få timers varsel."
+    },
+    {
+      "id": "journal_arrival_ferrum",
+      "trigger": "arrival_ferrum",
+      "text": "Ferrum. Rød klippe og hvid sol. Rig på malm, fattig på vand."
+    },
+    {
+      "id": "journal_arrival_sere",
+      "trigger": "arrival_sere",
+      "text": "Sere. Flad og venlig set fra kredsløb. Støvet ser harmløst ud herfra."
+    },
+    {
+      "id": "journal_arrival_nivalis",
+      "trigger": "arrival_nivalis",
+      "text": "Nivalis. Hvid og stille. Damp stiger fra isen som åndedræt."
+    },
+    {
+      "id": "journal_arrival_umbra",
+      "trigger": "arrival_umbra",
+      "text": "Umbra. Natsiden er så mørk, at stjernerne synes at fortsætte ned i jorden."
+    },
+    {
+      "id": "journal_orbital_scan",
+      "trigger": "orbital_scan",
+      "text": "Scanningen er færdig. Planeten har fået tal, men dens steder har endnu ingen navne."
+    },
+    {
+      "id": "journal_expedition_start",
+      "trigger": "expedition_start",
+      "text": "Første skridt på fremmed jord. Dragten summer. Jeg tæller procenter."
+    },
+    {
+      "id": "journal_expedition_suit_low",
+      "trigger": "expedition_suit_low",
+      "text": "Dragten var næsten tom. ARK talte roligt hele vejen tilbage."
+    },
+    {
+      "id": "journal_expedition_complete",
+      "trigger": "expedition_complete",
+      "text": "Prøverne er analyseret. Vi ved mere. Vi ved aldrig nok."
+    },
+    {
+      "id": "journal_landing_commit",
+      "trigger": "landing_commit",
+      "text": "Vi er landet. Arken flyver ikke igen. Nu er det her hjem."
+    },
+    {
+      "id": "journal_first_light",
+      "trigger": "first_light",
+      "text": "Lys i det første habitat. Jeg stod længe udenfor og så på det."
+    },
+    {
+      "id": "journal_stable_supply",
+      "trigger": "stable_supply",
+      "text": "Syv dage i træk med overskud. For første gang sov jeg en hel nat."
+    },
+    {
+      "id": "journal_incubation_start",
+      "trigger": "incubation_start",
+      "text": "Ti lys er blevet ravgule. 270 dage. Jeg tæller allerede."
+    },
+    {
+      "id": "journal_first_birth",
+      "trigger": "first_birth",
+      "text": "Hun græd. Højt. Det var den smukkeste lyd, jeg nogensinde har hørt."
+    },
+    {
+      "id": "journal_crisis_survived",
+      "trigger": "crisis_survived",
+      "text": "Vi kom igennem. Ikke uden skrammer, men alle var her stadig bagefter."
+    },
+    {
+      "id": "journal_captain_stasis",
+      "trigger": "captain_stasis",
+      "text": "Jeg går i stasis. ARK holder vagt. Jeg stoler på den — og på dem."
+    },
+    {
+      "id": "journal_year_20",
+      "trigger": "year_20",
+      "text": "Tyve år. De er voksne nu. De har meninger. Gode meninger."
+    },
+    {
+      "id": "journal_council_formed",
+      "trigger": "council_formed",
+      "text": "Rådet mødtes i dag. Jeg sad på bagerste række. Det føltes rigtigt."
+    },
+    {
+      "id": "journal_year_40",
+      "trigger": "year_40",
+      "text": "Fyrre år. De har ikke brug for mig på samme måde længere. Det var hele meningen."
+    }
+  ]
+}

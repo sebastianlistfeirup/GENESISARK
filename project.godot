@@ -1,0 +1,62 @@
+; Engine configuration file.
+; Genesis Ark — locked engine: Godot 4.5.1-stable (see docs/VERSION_MATRIX.md)
+
+config_version=5
+
+[application]
+
+config/name="Genesis Ark"
+config/description="Du er det sidste menneske, der kan give menneskeheden en fremtid."
+config/version="0.1.0"
+run/main_scene="res://scenes/boot/boot.tscn"
+config/features=PackedStringArray("4.5", "Forward Plus")
+config/icon="res://icon.svg"
+boot_splash/bg_color=Color(0.043, 0.071, 0.098, 1)
+boot_splash/show_image=false
+
+[autoload]
+
+SettingsService="*res://scripts/autoload/settings_service.gd"
+AudioService="*res://scripts/autoload/audio_service.gd"
+SaveService="*res://scripts/autoload/save_service.gd"
+GameSession="*res://scripts/autoload/game_session.gd"
+AppFlow="*res://scripts/autoload/app_flow.gd"
+
+[debug]
+
+gdscript/warnings/untyped_declaration=1
+gdscript/warnings/unsafe_property_access=0
+gdscript/warnings/unsafe_method_access=0
+gdscript/warnings/unsafe_call_argument=0
+
+[display]
+
+window/size/viewport_width=1920
+window/size/viewport_height=1080
+window/size/window_width_override=1600
+window/size/window_height_override=900
+window/stretch/mode="canvas_items"
+window/stretch/aspect="expand"
+
+[gui]
+
+theme/custom_font=""
+
+[layer_names]
+
+3d_physics/layer_1="world"
+3d_physics/layer_2="player"
+3d_physics/layer_3="interactable"
+3d_physics/layer_4="buildings"
+3d_physics/layer_5="terrain"
+3d_physics/layer_6="hazard"
+
+[physics]
+
+common/physics_ticks_per_second=60
+
+[rendering]
+
+rendering_device/fallback_to_opengl3=true
+anti_aliasing/quality/msaa_3d=1
+environment/defaults/default_clear_color=Color(0.043, 0.071, 0.098, 1)

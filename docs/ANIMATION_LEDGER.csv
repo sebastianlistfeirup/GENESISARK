@@ -1,0 +1,16 @@
+clip_id,source_asset_id,rig_id,state,duration_s,loop,in_place,speed_range,event_times,interrupt_policy,blend_in,blend_out,review_status
+captain_idle,asset_char_captain,humanoid_main,idle,,true,true,0,,any,0.2,0.2,NEEDED
+captain_walk,asset_char_captain,humanoid_main,locomotion,,true,true,0-3 m/s,foot_l;foot_r,any,0.15,0.15,NEEDED
+captain_run,asset_char_captain,humanoid_main,locomotion,,true,true,3-5 m/s,foot_l;foot_r,any,0.15,0.15,NEEDED
+captain_turn_l,asset_char_captain,humanoid_main,turn,,false,true,0,,locomotion_overrides,0.1,0.15,NEEDED
+captain_turn_r,asset_char_captain,humanoid_main,turn,,false,true,0,,locomotion_overrides,0.1,0.15,NEEDED
+captain_interact,asset_char_captain,humanoid_main,action,,false,true,0,contact;done,blocks_locomotion_until_done,0.15,0.2,NEEDED
+captain_sample_kneel,asset_char_captain,humanoid_main,action,8.0,false,true,0,kneel_down;contact;sample_commit;done,cancel_before_sample_commit_only,0.2,0.25,NEEDED
+captain_suit_reaction,asset_char_captain,humanoid_main,reaction,,false,true,0,,overrides_action,0.1,0.2,NEEDED
+captain_sit_console,asset_char_captain,humanoid_main,action,,true,true,0,seated;stand_up_done,exit_on_input,0.3,0.3,NEEDED
+robot_worker_idle,asset_char_robot_worker,robot_rig_tbd,idle,,true,true,0,,any,0.2,0.2,NEEDED
+robot_worker_walk,asset_char_robot_worker,robot_rig_tbd,locomotion,,true,true,0-2 m/s,foot_l;foot_r,any,0.15,0.15,NEEDED
+robot_worker_build_loop,asset_char_robot_worker,robot_rig_tbd,action,,true,true,0,tool_contact,stop_on_build_done,0.2,0.2,NEEDED
+citizen_idle,asset_char_citizen_adult,humanoid_main,idle,,true,true,0,,any,0.2,0.2,NEEDED
+citizen_walk,asset_char_citizen_adult,humanoid_main,locomotion,,true,true,0-1.5 m/s,foot_l;foot_r,any,0.15,0.15,NEEDED
+citizen_talk,asset_char_citizen_adult,humanoid_main,action,,true,true,0,,any,0.25,0.25,NEEDED

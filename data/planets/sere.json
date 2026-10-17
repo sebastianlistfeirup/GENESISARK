@@ -1,0 +1,176 @@
+{
+  "id": "sere",
+  "name": "Sere",
+  "family": "desert",
+  "biome_id": "desert",
+  "order": 4,
+  "tagline": "Stabilt terræn og nemt byggeri.",
+  "advantage": "Fladt, stabilt terræn gør byggeri billigt og hurtigt.",
+  "price": "Støv reducerer solenergi; lagring og vedligeholdelse får vægt.",
+  "description": "Bølgende okkerfarvede sletter. Fine støvfaner hænger over horisonten det meste af året.",
+  "palette": {
+    "nature": "#c99a5b",
+    "danger": "#8a6f4e",
+    "sky": "#d9c39a"
+  },
+  "hazard_ids": [
+    "dust"
+  ],
+  "site_templates": [
+    "desert_a",
+    "desert_b",
+    "desert_c"
+  ],
+  "properties": {
+    "gravity_multiplier": {
+      "type": "number",
+      "unit": "g",
+      "truth": 0.88,
+      "levels": {
+        "archive": {
+          "status": "estimated",
+          "min": 0.7,
+          "max": 1.0
+        },
+        "orbital": {
+          "status": "known"
+        }
+      }
+    },
+    "mean_temperature_c": {
+      "type": "number",
+      "unit": "°C",
+      "truth": 27,
+      "levels": {
+        "archive": {
+          "status": "estimated",
+          "min": 10,
+          "max": 40
+        },
+        "orbital": {
+          "status": "estimated",
+          "min": 22,
+          "max": 32
+        },
+        "probe": {
+          "status": "known"
+        }
+      }
+    },
+    "atmosphere_class": {
+      "type": "category",
+      "truth": "thin_dusty",
+      "levels": {
+        "archive": {
+          "status": "estimated",
+          "candidates": [
+            "thin_dry",
+            "thin_dusty"
+          ]
+        },
+        "orbital": {
+          "status": "known"
+        }
+      }
+    },
+    "water_access": {
+      "type": "number",
+      "unit": "indeks",
+      "truth": 0.45,
+      "levels": {
+        "archive": {
+          "status": "estimated",
+          "min": 0.1,
+          "max": 0.7
+        },
+        "orbital": {
+          "status": "estimated",
+          "min": 0.3,
+          "max": 0.6
+        },
+        "probe": {
+          "status": "known"
+        }
+      }
+    },
+    "mineral_yield": {
+      "type": "number",
+      "unit": "x",
+      "truth": 1.0,
+      "levels": {
+        "archive": {
+          "status": "unknown"
+        },
+        "orbital": {
+          "status": "estimated",
+          "min": 0.8,
+          "max": 1.2
+        },
+        "probe": {
+          "status": "known"
+        }
+      }
+    },
+    "solar_factor": {
+      "type": "number",
+      "unit": "x",
+      "truth": 0.75,
+      "levels": {
+        "archive": {
+          "status": "estimated",
+          "min": 0.6,
+          "max": 1.3
+        },
+        "orbital": {
+          "status": "estimated",
+          "min": 0.65,
+          "max": 0.95
+        },
+        "expedition": {
+          "status": "known"
+        }
+      }
+    },
+    "geothermal_factor": {
+      "type": "number",
+      "unit": "x",
+      "truth": 0.2,
+      "levels": {
+        "archive": {
+          "status": "unknown"
+        },
+        "probe": {
+          "status": "known"
+        }
+      }
+    },
+    "biological_risk": {
+      "type": "number",
+      "unit": "indeks",
+      "truth": 0.1,
+      "levels": {
+        "archive": {
+          "status": "estimated",
+          "min": 0.0,
+          "max": 0.4
+        },
+        "probe": {
+          "status": "known"
+        }
+      }
+    }
+  },
+  "colony_modifiers": {
+    "solar": 0.75,
+    "water": 0.8,
+    "food": 0.9,
+    "mine": 1.0,
+    "geothermal": 0.2,
+    "heating_kw_per_habitat": 0,
+    "build_cost": 0.8,
+    "drone_efficiency": 1.15,
+    "wear_multiplier": 1.6,
+    "requires_module": ""
+  },
+  "robust_plan": "Byg ekstra solpaneler og et batteri; prioritér værksted til komponenter, fordi støvet slider."
+}

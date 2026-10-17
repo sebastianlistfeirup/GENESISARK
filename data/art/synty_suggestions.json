@@ -1,0 +1,886 @@
+{
+  "_note": "Forslag til hvilken købt Synty-pakke og hvilke navnemønstre der kan dække hvert VisualSlot-id. INTET her er verificeret mod de faktiske pakkefiler (verified=false overalt). Navnemønstre som SM_Bld_*, SM_Prop_*, SM_Env_*, SM_Veh_*, SK_Chr_*, FX_* er typiske Synty-konventioner, ikke bekræftede filnavne. Når et asset er valgt og importeret: lav art/prefabs/<slot>.tscn, map slot i data/art/asset_slots.json, udfyld docs/ASSET_LEDGER.csv og sæt verified=true. Se docs/SYNTY_INTEGRATION.md.",
+  "slots": {
+    "ship.floor": {
+      "pack": "POLYGON - Sci-Fi Space Pack / POLYGON - Sci-Fi Worlds Pack",
+      "search": [
+        "SM_Env_Floor*",
+        "SM_Bld_*Floor*",
+        "floor tile",
+        "interior floor"
+      ],
+      "notes": "Modulært gulvelement; tjek grid (ofte 2,5 m eller 5 m i Synty-moduler – skal verificeres). Pivot i hjørne eller center – notér. Statisk mesh; StaticBody3D + BoxShape3D/ConvexPolygonShape3D-proxy i wrapper. Fælles atlas-materiale.",
+      "verified": false
+    },
+    "ship.wall": {
+      "pack": "POLYGON - Sci-Fi Space Pack / POLYGON - Sci-Fi Worlds Pack",
+      "search": [
+        "SM_Env_Wall*",
+        "SM_Bld_*Wall*",
+        "interior wall panel"
+      ],
+      "notes": "Samme grid som gulv. Facing: tjek hvilken side er indvendig (+Z/-Z). Statisk mesh; StaticBody3D + BoxShape3D/ConvexPolygonShape3D-proxy i wrapper. Fælles atlas-materiale.",
+      "verified": false
+    },
+    "ship.wall_window": {
+      "pack": "POLYGON - Sci-Fi Space Pack / POLYGON - Sci-Fi Worlds Pack",
+      "search": [
+        "SM_Env_Wall*Window*",
+        "SM_Bld_*Window*",
+        "window wall"
+      ],
+      "notes": "Glas er typisk separat materiale/del – brug transparent StandardMaterial3D. Statisk mesh; StaticBody3D + BoxShape3D/ConvexPolygonShape3D-proxy i wrapper. Fælles atlas-materiale.",
+      "verified": false
+    },
+    "ship.door": {
+      "pack": "POLYGON - Sci-Fi Space Pack / POLYGON - Sci-Fi Worlds Pack",
+      "search": [
+        "SM_Env_Door*",
+        "SM_Bld_*Door*",
+        "door frame",
+        "sliding door"
+      ],
+      "notes": "Døren skal animeres i Godot (AnimationPlayer på dørblad); tjek om dørblad er separat mesh. Collision på dørblad, fjernes når åben. Skal ligne funktionel dør (bibel s.23).",
+      "verified": false
+    },
+    "ship.ceiling_light": {
+      "pack": "POLYGON - Sci-Fi Space Pack / POLYGON - Sci-Fi Worlds Pack",
+      "search": [
+        "SM_Prop_Light*",
+        "SM_Env_Ceiling*Light*",
+        "light panel"
+      ],
+      "notes": "Kun mesh; selve lyset er en OmniLight3D/SpotLight3D i wrapper. Emissive materiale: sæt emission i egen material-override. Ingen collision.",
+      "verified": false
+    },
+    "ship.pillar": {
+      "pack": "POLYGON - Sci-Fi Space Pack / POLYGON - Sci-Fi Worlds Pack",
+      "search": [
+        "SM_Env_Pillar*",
+        "SM_Bld_*Column*",
+        "SM_Env_Support*"
+      ],
+      "notes": "Statisk mesh; StaticBody3D + BoxShape3D/ConvexPolygonShape3D-proxy i wrapper. Fælles atlas-materiale.",
+      "verified": false
+    },
+    "ship.terminal": {
+      "pack": "POLYGON - Sci-Fi Space Pack / POLYGON - Sci-Fi Worlds Pack",
+      "search": [
+        "SM_Prop_Console*",
+        "SM_Prop_Computer*",
+        "SM_Prop_Terminal*"
+      ],
+      "notes": "Interaktionsstation; tilføj Area3D/interaktionspunkt + skærm-overlay i wrapper. Facing mod spiller (+Z/-Z) skal noteres. Statisk mesh; StaticBody3D + BoxShape3D/ConvexPolygonShape3D-proxy i wrapper. Fælles atlas-materiale.",
+      "verified": false
+    },
+    "ship.terminal_bridge": {
+      "pack": "POLYGON - Sci-Fi Space Pack / POLYGON - Sci-Fi Worlds Pack",
+      "search": [
+        "SM_Prop_Console*",
+        "SM_Prop_Control*",
+        "SM_Prop_Bridge*",
+        "cockpit console"
+      ],
+      "notes": "Større bro-konsol. Skal kunne ses fra tredjepersonskamera. Statisk mesh; StaticBody3D + BoxShape3D/ConvexPolygonShape3D-proxy i wrapper. Fælles atlas-materiale.",
+      "verified": false
+    },
+    "ship.starmap_table": {
+      "pack": "POLYGON - Sci-Fi Space Pack / POLYGON - Sci-Fi Worlds Pack",
+      "search": [
+        "SM_Prop_Hologram*",
+        "SM_Prop_Table*",
+        "holo table",
+        "SM_Prop_Map*"
+      ],
+      "notes": "Hologram-projektion bygges i Godot (emissive/additiv shader eller ui.panel på Sprite3D). Statisk mesh; StaticBody3D + BoxShape3D/ConvexPolygonShape3D-proxy i wrapper. Fælles atlas-materiale.",
+      "verified": false
+    },
+    "ship.captain_chair": {
+      "pack": "POLYGON - Sci-Fi Space Pack / POLYGON - Sci-Fi Worlds Pack",
+      "search": [
+        "SM_Prop_Chair*",
+        "SM_Prop_Seat*",
+        "pilot seat",
+        "captain chair"
+      ],
+      "notes": "Sit_console-animation skal passe til sædehøjde; notér sædehøjde i m. Statisk mesh; StaticBody3D + BoxShape3D/ConvexPolygonShape3D-proxy i wrapper. Fælles atlas-materiale.",
+      "verified": false
+    },
+    "ship.embryo_tank": {
+      "pack": "POLYGON - Sci-Fi Space Pack / POLYGON - Sci-Fi Worlds Pack",
+      "search": [
+        "SM_Prop_Tank*",
+        "SM_Prop_Capsule*",
+        "SM_Prop_Cryo*",
+        "SM_Prop_Container*",
+        "specimen tank"
+      ],
+      "notes": "Mange instanser -> brug MultiMeshInstance3D eller delt materiale. Glas transparent. Kollision kun på rækken, ikke hver tank.",
+      "verified": false
+    },
+    "ship.embryo_bank_core": {
+      "pack": "POLYGON - Sci-Fi Space Pack / POLYGON - Sci-Fi Worlds Pack",
+      "search": [
+        "SM_Prop_Reactor*",
+        "SM_Prop_Core*",
+        "SM_Prop_Generator*",
+        "SM_Prop_Machine*"
+      ],
+      "notes": "Centralt landmærke i embryobanken, viser 50.000. Kan samles af flere meshes i wrapper. Statisk mesh; StaticBody3D + BoxShape3D/ConvexPolygonShape3D-proxy i wrapper. Fælles atlas-materiale.",
+      "verified": false
+    },
+    "ship.cryo_pod": {
+      "pack": "POLYGON - Sci-Fi Space Pack / POLYGON - Sci-Fi Worlds Pack",
+      "search": [
+        "SM_Prop_Cryo*",
+        "SM_Prop_Pod*",
+        "SM_Prop_Sleep*",
+        "stasis pod"
+      ],
+      "notes": "Kaptajnens stasis-pod (vågn-op-scene). Låg evt. separat mesh til animation. Statisk mesh; StaticBody3D + BoxShape3D/ConvexPolygonShape3D-proxy i wrapper. Fælles atlas-materiale.",
+      "verified": false
+    },
+    "ship.workbench": {
+      "pack": "POLYGON - Sci-Fi Space Pack / POLYGON - Sci-Fi Worlds Pack / POLYGON - Sci-Fi Outpost Map",
+      "search": [
+        "SM_Prop_Workbench*",
+        "SM_Prop_Bench*",
+        "SM_Prop_Table*",
+        "SM_Prop_Tool*"
+      ],
+      "notes": "Værkstedsstation. Statisk mesh; StaticBody3D + BoxShape3D/ConvexPolygonShape3D-proxy i wrapper. Fælles atlas-materiale.",
+      "verified": false
+    },
+    "ship.power_coupling": {
+      "pack": "POLYGON - Sci-Fi Space Pack / POLYGON - Sci-Fi Worlds Pack",
+      "search": [
+        "SM_Prop_Generator*",
+        "SM_Prop_Fuse*",
+        "SM_Prop_Power*",
+        "SM_Prop_Battery*",
+        "SM_Prop_Panel*"
+      ],
+      "notes": "Første objective (nødstrøm). Skal skille sig ud fra dekoration (farve/lys). Statisk mesh; StaticBody3D + BoxShape3D/ConvexPolygonShape3D-proxy i wrapper. Fælles atlas-materiale.",
+      "verified": false
+    },
+    "ship.robot_station": {
+      "pack": "POLYGON - Sci-Fi Space Pack / POLYGON - Sci-Fi Worlds Pack / POLYGON - Sci-Fi Outpost Map",
+      "search": [
+        "SM_Prop_Charging*",
+        "SM_Prop_Dock*",
+        "SM_Prop_Robot*",
+        "SM_Prop_Platform*"
+      ],
+      "notes": "Ladestation til robot_worker. Statisk mesh; StaticBody3D + BoxShape3D/ConvexPolygonShape3D-proxy i wrapper. Fælles atlas-materiale.",
+      "verified": false
+    },
+    "ship.crate": {
+      "pack": "POLYGON - Sci-Fi Space Pack / POLYGON - Sci-Fi Worlds Pack / POLYGON - Sci-Fi Outpost Map",
+      "search": [
+        "SM_Prop_Crate*",
+        "SM_Prop_Box*",
+        "SM_Prop_Container*"
+      ],
+      "notes": "Pynt/dækning; simpel BoxShape3D. Må ikke ligne funktionel cover hvis den ikke er det.",
+      "verified": false
+    },
+    "ship.pipe": {
+      "pack": "POLYGON - Sci-Fi Space Pack / POLYGON - Sci-Fi Worlds Pack",
+      "search": [
+        "SM_Env_Pipe*",
+        "SM_Prop_Pipe*",
+        "SM_Bld_*Pipe*"
+      ],
+      "notes": "Ofte ren pynt -> ingen collision. Modulær længde: tjek grid.",
+      "verified": false
+    },
+    "ship.window_space": {
+      "pack": "POLYGON - Sci-Fi Space Pack / POLYGON - Sci-Fi Worlds Pack",
+      "search": [
+        "SM_Env_Window*",
+        "SM_Bld_*Window*Large*",
+        "viewport window"
+      ],
+      "notes": "Stort udsigtsvindue; bag det en skybox/space-baggrund (Godot Environment/Sky). Glas transparent.",
+      "verified": false
+    },
+    "char.captain": {
+      "pack": "POLYGON - Sci-Fi Worlds Pack / POLYGON - Sci-Fi City Pack / Sci-Fi Robots - Sidekick Modular Characters",
+      "search": [
+        "SK_Chr_*",
+        "SM_Chr_*",
+        "Character_*",
+        "astronaut",
+        "space suit",
+        "Sidekick (human parts)"
+      ],
+      "notes": "Kaptajn i rumdragt. Sidekick-robotpakken indeholder sandsynligvis primært robotter – menneskefigur hentes fra en Synty-pakke med humanoide karakterer (skal verificeres hvilken af de købte der har en egnet rumdragtfigur). Skinned mesh. Retarget til spillets humanoid via BoneMap + SkeletonProfileHumanoid. In-place animationer. Collision = CapsuleShape3D i controlleren, ikke i visual. Mål højde mod 1 m-reference (~1,8 m).",
+      "verified": false
+    },
+    "char.ark_ai_hologram": {
+      "pack": "Sci-Fi Robots - Sidekick Modular Characters / POLYGON - Sci-Fi Worlds Pack",
+      "search": [
+        "SK_Chr_*",
+        "Sidekick robot head/torso",
+        "hologram"
+      ],
+      "notes": "Visualiseres som semi-transparent emissive kopi af en figur eller robothoved (egen shader i Godot: additiv/fresnel). Kan genbruge humanoid rig eller være statisk.",
+      "verified": false
+    },
+    "char.robot_worker": {
+      "pack": "Sci-Fi Robots - Sidekick Modular Characters",
+      "search": [
+        "Sidekick robot parts",
+        "SK_*Robot*",
+        "Robot"
+      ],
+      "notes": "Samles i Sidekick-værktøjet (Unity) og eksporteres som FBX. Hvis robotten er humanoid: retarget til humanoid_main; ellers egen rig (bibel s.24). Skinned mesh. Retarget til spillets humanoid via BoneMap + SkeletonProfileHumanoid. In-place animationer. Collision = CapsuleShape3D i controlleren, ikke i visual. Mål højde mod 1 m-reference (~1,8 m).",
+      "verified": false
+    },
+    "char.robot_drone": {
+      "pack": "POLYGON - Sci-Fi Space Pack / POLYGON - Sci-Fi Worlds Pack / POLYGON - Sci-Fi Outpost Map",
+      "search": [
+        "SM_Veh_Drone*",
+        "SM_Prop_Drone*",
+        "drone"
+      ],
+      "notes": "Ikke-humanoid: flyver; animeres med kode (bob/rotation) – ingen humanoid retarget. Pivot i massemidtpunkt.",
+      "verified": false
+    },
+    "char.citizen_adult": {
+      "pack": "POLYGON - Sci-Fi City Pack / POLYGON - Sci-Fi Worlds Pack / POLYGON - Sci-Fi Cyber City / Sci-Fi Robots - Sidekick Modular Characters",
+      "search": [
+        "SK_Chr_*",
+        "SM_Chr_*",
+        "Character_*",
+        "civilian",
+        "colonist"
+      ],
+      "notes": "Kolonist-voksen. Menneskefigurer findes formentlig i City/Worlds/Cyber City-pakkernes karaktersæt – skal verificeres. Skal dele rig med kaptajnen. Max ~40 synlige (bibel s.11). Skinned mesh. Retarget til spillets humanoid via BoneMap + SkeletonProfileHumanoid. In-place animationer. Collision = CapsuleShape3D i controlleren, ikke i visual. Mål højde mod 1 m-reference (~1,8 m).",
+      "verified": false
+    },
+    "char.citizen_child": {
+      "pack": "POLYGON - Sci-Fi City Pack / POLYGON - Sci-Fi Worlds Pack / Sci-Fi Robots - Sidekick Modular Characters",
+      "search": [
+        "SK_Chr_*Kid*",
+        "SK_Chr_*Child*",
+        "child",
+        "Character_*"
+      ],
+      "notes": "Børnefigur findes muligvis IKKE i de købte pakker – skal verificeres. Fallback: skaleret voksen-figur (0,6-0,7) med egne proportioner via Sidekick-blendshapes hvis muligt. Skinned mesh. Retarget til spillets humanoid via BoneMap + SkeletonProfileHumanoid. In-place animationer. Collision = CapsuleShape3D i controlleren, ikke i visual. Mål højde mod 1 m-reference (~1,8 m).",
+      "verified": false
+    },
+    "building.ark_core": {
+      "pack": "POLYGON - Sci-Fi Space Pack / POLYGON - Sci-Fi Worlds Pack",
+      "search": [
+        "SM_Veh_*Ship*",
+        "SM_Bld_*Station*",
+        "landed ship",
+        "SM_Env_*Ship*"
+      ],
+      "notes": "Den landede ark som eksisterende bygning. Stor; kan være et skib fra Space Pack 'parkeret' på overfladen. Bygning: footprint i wrapper skal matche proxyens footprint i data/buildings (bibel s.9). Collision = enkel boks/konveks proxy. Pivot i bunden, centreret på footprint. ",
+      "verified": false
+    },
+    "building.solar_array": {
+      "pack": "POLYGON - Sci-Fi Outpost Map / POLYGON - Sci-Fi Worlds Pack / POLYGON - Sci-Fi City Pack",
+      "search": [
+        "SM_Prop_Solar*",
+        "SM_Bld_*Solar*",
+        "solar panel"
+      ],
+      "notes": "Bygning: footprint i wrapper skal matche proxyens footprint i data/buildings (bibel s.9). Collision = enkel boks/konveks proxy. Pivot i bunden, centreret på footprint. ",
+      "verified": false
+    },
+    "building.geothermal_generator": {
+      "pack": "POLYGON - Sci-Fi Outpost Map / POLYGON - Sci-Fi Worlds Pack",
+      "search": [
+        "SM_Bld_*Generator*",
+        "SM_Prop_Generator*",
+        "SM_Bld_*Reactor*",
+        "SM_Prop_Vent*"
+      ],
+      "notes": "Bygning: footprint i wrapper skal matche proxyens footprint i data/buildings (bibel s.9). Collision = enkel boks/konveks proxy. Pivot i bunden, centreret på footprint. Kombinér evt. med fx.steam_vent.",
+      "verified": false
+    },
+    "building.battery": {
+      "pack": "POLYGON - Sci-Fi Outpost Map / POLYGON - Sci-Fi Worlds Pack / POLYGON - Sci-Fi City Pack",
+      "search": [
+        "SM_Prop_Battery*",
+        "SM_Prop_Fuel*",
+        "SM_Prop_Tank*",
+        "SM_Bld_*Storage*"
+      ],
+      "notes": "Bygning: footprint i wrapper skal matche proxyens footprint i data/buildings (bibel s.9). Collision = enkel boks/konveks proxy. Pivot i bunden, centreret på footprint. ",
+      "verified": false
+    },
+    "building.water_plant": {
+      "pack": "POLYGON - Sci-Fi Outpost Map / POLYGON - Sci-Fi Worlds Pack",
+      "search": [
+        "SM_Bld_*Water*",
+        "SM_Prop_Tank*",
+        "SM_Bld_*Pump*",
+        "SM_Prop_Pipe*"
+      ],
+      "notes": "Bygning: footprint i wrapper skal matche proxyens footprint i data/buildings (bibel s.9). Collision = enkel boks/konveks proxy. Pivot i bunden, centreret på footprint. ",
+      "verified": false
+    },
+    "building.greenhouse": {
+      "pack": "POLYGON - Sci-Fi Outpost Map / POLYGON - Sci-Fi Worlds Pack / POLYGON - Sci-Fi City Pack",
+      "search": [
+        "SM_Bld_*Greenhouse*",
+        "SM_Bld_*Dome*",
+        "SM_Bld_*Hydroponic*",
+        "SM_Prop_Plant*"
+      ],
+      "notes": "Bygning: footprint i wrapper skal matche proxyens footprint i data/buildings (bibel s.9). Collision = enkel boks/konveks proxy. Pivot i bunden, centreret på footprint. Glas transparent; planter indeni som separat instans.",
+      "verified": false
+    },
+    "building.mine": {
+      "pack": "POLYGON - Sci-Fi Outpost Map / POLYGON - Sci-Fi Worlds Pack",
+      "search": [
+        "SM_Bld_*Mine*",
+        "SM_Bld_*Drill*",
+        "SM_Prop_Drill*",
+        "SM_Veh_*Drill*"
+      ],
+      "notes": "Bygning: footprint i wrapper skal matche proxyens footprint i data/buildings (bibel s.9). Collision = enkel boks/konveks proxy. Pivot i bunden, centreret på footprint. ",
+      "verified": false
+    },
+    "building.workshop": {
+      "pack": "POLYGON - Sci-Fi Outpost Map / POLYGON - Sci-Fi Worlds Pack / POLYGON - Sci-Fi City Pack",
+      "search": [
+        "SM_Bld_*Workshop*",
+        "SM_Bld_*Hangar*",
+        "SM_Bld_*Garage*",
+        "SM_Bld_*Factory*"
+      ],
+      "notes": "Bygning: footprint i wrapper skal matche proxyens footprint i data/buildings (bibel s.9). Collision = enkel boks/konveks proxy. Pivot i bunden, centreret på footprint. ",
+      "verified": false
+    },
+    "building.drone_hub": {
+      "pack": "POLYGON - Sci-Fi Outpost Map / POLYGON - Sci-Fi Worlds Pack",
+      "search": [
+        "SM_Bld_*Landing*Pad*",
+        "SM_Bld_*Hangar*",
+        "SM_Prop_*Pad*",
+        "SM_Bld_*Tower*"
+      ],
+      "notes": "Bygning: footprint i wrapper skal matche proxyens footprint i data/buildings (bibel s.9). Collision = enkel boks/konveks proxy. Pivot i bunden, centreret på footprint. ",
+      "verified": false
+    },
+    "building.habitat": {
+      "pack": "POLYGON - Sci-Fi Outpost Map / POLYGON - Sci-Fi Worlds Pack / POLYGON - Sci-Fi City Pack",
+      "search": [
+        "SM_Bld_*Habitat*",
+        "SM_Bld_*Module*",
+        "SM_Bld_*House*",
+        "SM_Bld_*Dome*"
+      ],
+      "notes": "Bygning: footprint i wrapper skal matche proxyens footprint i data/buildings (bibel s.9). Collision = enkel boks/konveks proxy. Pivot i bunden, centreret på footprint. Skal have tydelig indgang og lys i vinduer (første beboede habitat er markedsførbar scene).",
+      "verified": false
+    },
+    "building.care_center": {
+      "pack": "POLYGON - Sci-Fi Outpost Map / POLYGON - Sci-Fi Worlds Pack / POLYGON - Sci-Fi City Pack",
+      "search": [
+        "SM_Bld_*Medical*",
+        "SM_Bld_*Lab*",
+        "SM_Bld_*Dome*",
+        "SM_Bld_*Module*"
+      ],
+      "notes": "Bygning: footprint i wrapper skal matche proxyens footprint i data/buildings (bibel s.9). Collision = enkel boks/konveks proxy. Pivot i bunden, centreret på footprint. Omsorgs-/incubationscenter; varm farveaccent (bibel s.13).",
+      "verified": false
+    },
+    "building.clinic": {
+      "pack": "POLYGON - Sci-Fi City Pack / POLYGON - Sci-Fi Worlds Pack / POLYGON - Sci-Fi Outpost Map",
+      "search": [
+        "SM_Bld_*Medical*",
+        "SM_Bld_*Hospital*",
+        "SM_Bld_*Clinic*",
+        "SM_Prop_Medical*"
+      ],
+      "notes": "Bygning: footprint i wrapper skal matche proxyens footprint i data/buildings (bibel s.9). Collision = enkel boks/konveks proxy. Pivot i bunden, centreret på footprint. ",
+      "verified": false
+    },
+    "building.school_hall": {
+      "pack": "POLYGON - Sci-Fi City Pack / POLYGON - Sci-Fi Worlds Pack",
+      "search": [
+        "SM_Bld_*School*",
+        "SM_Bld_*Hall*",
+        "SM_Bld_*Office*",
+        "SM_Bld_*Civic*"
+      ],
+      "notes": "Bygning: footprint i wrapper skal matche proxyens footprint i data/buildings (bibel s.9). Collision = enkel boks/konveks proxy. Pivot i bunden, centreret på footprint. Skole/rådshus. Til år 40-stadiet kan Cyber City-bygninger bruges.",
+      "verified": false
+    },
+    "building.module_filter": {
+      "pack": "POLYGON - Sci-Fi Outpost Map / POLYGON - Sci-Fi Worlds Pack",
+      "search": [
+        "SM_Prop_Filter*",
+        "SM_Prop_Vent*",
+        "SM_Prop_Fan*",
+        "SM_Prop_AirCon*"
+      ],
+      "notes": "Modul monteret på habitat/produktion via socket i wrapper (Marker3D). Lille; ofte ingen collision.",
+      "verified": false
+    },
+    "building.module_heater": {
+      "pack": "POLYGON - Sci-Fi Outpost Map / POLYGON - Sci-Fi Worlds Pack",
+      "search": [
+        "SM_Prop_Heater*",
+        "SM_Prop_Generator*",
+        "SM_Prop_Radiator*",
+        "SM_Prop_Vent*"
+      ],
+      "notes": "Modul via socket. Evt. orange emissive accent.",
+      "verified": false
+    },
+    "building.construction_frame": {
+      "pack": "POLYGON - Sci-Fi Outpost Map / POLYGON - Sci-Fi City Pack",
+      "search": [
+        "SM_Bld_*Scaffold*",
+        "SM_Prop_Scaffold*",
+        "SM_Bld_*Frame*",
+        "SM_Prop_Construction*"
+      ],
+      "notes": "Byggestillads vist under byggeri; skaleres til footprint. Ingen collision ud over footprint.",
+      "verified": false
+    },
+    "surface.lander": {
+      "pack": "POLYGON - Sci-Fi Space Pack / POLYGON - Sci-Fi Worlds Pack",
+      "search": [
+        "SM_Veh_*Lander*",
+        "SM_Veh_*Dropship*",
+        "SM_Veh_*Shuttle*"
+      ],
+      "notes": "Landingsfartøj til ekspedition. Pivot ved landingsstel. Konveks collision.",
+      "verified": false
+    },
+    "surface.rock_small": {
+      "pack": "POLYGON - Sci-Fi Worlds Pack / POLYGON - Sci-Fi Outpost Map",
+      "search": [
+        "SM_Env_Rock*",
+        "SM_Env_Rock_Small*",
+        "pebble"
+      ],
+      "notes": "Pynt: ingen collision (bibel s.23). Del materiale; brug MultiMesh ved mange.",
+      "verified": false
+    },
+    "surface.rock_large": {
+      "pack": "POLYGON - Sci-Fi Worlds Pack / POLYGON - Sci-Fi Outpost Map",
+      "search": [
+        "SM_Env_Rock*Large*",
+        "SM_Env_Cliff*",
+        "SM_Env_Boulder*"
+      ],
+      "notes": "Gameplayrelevant: ConvexPolygonShape3D eller boks. Navmesh bages efter disse.",
+      "verified": false
+    },
+    "surface.tree_green": {
+      "pack": "POLYGON - Sci-Fi Worlds Pack",
+      "search": [
+        "SM_Env_Tree*",
+        "SM_Env_*Alien*Tree*",
+        "SM_Env_*Plant*Large*"
+      ],
+      "notes": "Grøn biome (Viridia/Pelagos). Bladmateriale: alpha scissor hvis teksturen har alpha. Collision: kapsel om stammen.",
+      "verified": false
+    },
+    "surface.plant_green": {
+      "pack": "POLYGON - Sci-Fi Worlds Pack",
+      "search": [
+        "SM_Env_Plant*",
+        "SM_Env_Bush*",
+        "SM_Env_Grass*",
+        "SM_Env_*Flower*"
+      ],
+      "notes": "Pynt, ingen collision. Instansér (MultiMesh).",
+      "verified": false
+    },
+    "surface.crystal_ice": {
+      "pack": "POLYGON - Sci-Fi Worlds Pack",
+      "search": [
+        "SM_Env_Crystal*",
+        "SM_Env_Ice*",
+        "SM_Env_*Shard*"
+      ],
+      "notes": "Is-biome (Nivalis/Umbra). Evt. let emission/fresnel i egen material-override.",
+      "verified": false
+    },
+    "surface.ice_spire": {
+      "pack": "POLYGON - Sci-Fi Worlds Pack",
+      "search": [
+        "SM_Env_Ice*",
+        "SM_Env_*Spire*",
+        "SM_Env_*Spike*",
+        "SM_Env_Rock*Snow*"
+      ],
+      "notes": "Landmærke; konveks collision.",
+      "verified": false
+    },
+    "surface.desert_rock": {
+      "pack": "POLYGON - Sci-Fi Worlds Pack / POLYGON - Sci-Fi Outpost Map",
+      "search": [
+        "SM_Env_Rock*Desert*",
+        "SM_Env_Rock*",
+        "SM_Env_Mesa*",
+        "SM_Env_Cliff*"
+      ],
+      "notes": "Ørken-biome (Ferrum/Sere). Kan være samme rock tonet med egen materialfarve (sand/rust).",
+      "verified": false
+    },
+    "surface.sample_marker": {
+      "pack": "POLYGON - Sci-Fi Outpost Map / POLYGON - Sci-Fi Worlds Pack",
+      "search": [
+        "SM_Prop_Beacon*",
+        "SM_Prop_Marker*",
+        "SM_Prop_Flag*",
+        "SM_Prop_Probe*"
+      ],
+      "notes": "Interaktionspunkt for prøve; tydelig farve + Area3D. Ingen blokerende collision.",
+      "verified": false
+    },
+    "surface.relay_beacon": {
+      "pack": "POLYGON - Sci-Fi Outpost Map / POLYGON - Sci-Fi Worlds Pack",
+      "search": [
+        "SM_Prop_Antenna*",
+        "SM_Prop_Beacon*",
+        "SM_Prop_Satellite*",
+        "SM_Prop_Radio*"
+      ],
+      "notes": "Relæ kaptajnen placerer. Blinkende lys (OmniLight3D) i wrapper.",
+      "verified": false
+    },
+    "surface.hazard_marker": {
+      "pack": "POLYGON - Sci-Fi Outpost Map / POLYGON - Sci-Fi Worlds Pack / POLYGON - Sci-Fi City Pack",
+      "search": [
+        "SM_Prop_Warning*",
+        "SM_Prop_Sign*",
+        "SM_Prop_Barrier*",
+        "SM_Prop_Cone*"
+      ],
+      "notes": "Farefarve pr. biome (bibel s.13). Farve må ikke være eneste signal – brug form/ikon.",
+      "verified": false
+    },
+    "space.ark_exterior": {
+      "pack": "POLYGON - Sci-Fi Space Pack",
+      "search": [
+        "SM_Veh_*Ship*",
+        "SM_Veh_*Carrier*",
+        "SM_Veh_*Cruiser*",
+        "SM_Bld_*Station*"
+      ],
+      "notes": "Arkens ydre til indflyvning/stjernekort. Pivot i centrum; facing +Z/-Z skal matche flyvecontroller. Ingen fysik-collision nødvendig (eller simpel kapsel).",
+      "verified": false
+    },
+    "space.planet_green": {
+      "pack": "POLYGON - Sci-Fi Space Pack / POLYGON - Sci-Fi Worlds Pack",
+      "search": [
+        "SM_Env_Planet*",
+        "Planet*",
+        "SM_Prop_Planet*"
+      ],
+      "notes": "Planetkugle; findes der ikke en egnet mesh, brug Godot SphereMesh + Synty-tekstur/egen shader. Skal verificeres om pakken har planeter.",
+      "verified": false
+    },
+    "space.planet_desert": {
+      "pack": "POLYGON - Sci-Fi Space Pack / POLYGON - Sci-Fi Worlds Pack",
+      "search": [
+        "SM_Env_Planet*",
+        "Planet*"
+      ],
+      "notes": "Som planet_green, ørkenfarve (rav/rust).",
+      "verified": false
+    },
+    "space.planet_ice": {
+      "pack": "POLYGON - Sci-Fi Space Pack / POLYGON - Sci-Fi Worlds Pack",
+      "search": [
+        "SM_Env_Planet*",
+        "Planet*"
+      ],
+      "notes": "Som planet_green, isblå/hvid.",
+      "verified": false
+    },
+    "space.asteroid": {
+      "pack": "POLYGON - Sci-Fi Space Pack",
+      "search": [
+        "SM_Env_Asteroid*",
+        "SM_Env_Rock*Space*",
+        "Asteroid*"
+      ],
+      "notes": "Mange instanser -> MultiMesh. Collision kun på dem i flyvekorridoren (SphereShape3D).",
+      "verified": false
+    },
+    "space.approach_ring": {
+      "pack": "POLYGON - Sci-Fi Space Pack / POLYGON - Sci-Fi Cyber City",
+      "search": [
+        "SM_Prop_Ring*",
+        "SM_Bld_*Gate*",
+        "SM_Prop_*Hoop*",
+        "SM_Env_*Ring*"
+      ],
+      "notes": "Navigationsring i indflyvning; Area3D-trigger. Evt. bygges som TorusMesh med emissive materiale hvis intet passer.",
+      "verified": false
+    },
+    "fx.spores": {
+      "pack": "POLYGON - Particle FX Pack",
+      "search": [
+        "FX_*Spore*",
+        "FX_*Pollen*",
+        "FX_*Dust*",
+        "particle texture"
+      ],
+      "notes": "Synty Particle FX er Unity-partikelsystemer (Shuriken) og kan IKKE importeres som partikler i Godot. Genbrug kun pakkens teksturer/flipbooks (typisk FX_*-teksturer) i en egen GPUParticles3D-scene. Ingen collision.",
+      "verified": false
+    },
+    "fx.dust": {
+      "pack": "POLYGON - Particle FX Pack",
+      "search": [
+        "FX_*Dust*",
+        "FX_*Smoke*",
+        "FX_*Sand*"
+      ],
+      "notes": "Synty Particle FX er Unity-partikelsystemer (Shuriken) og kan IKKE importeres som partikler i Godot. Genbrug kun pakkens teksturer/flipbooks (typisk FX_*-teksturer) i en egen GPUParticles3D-scene. Ingen collision.",
+      "verified": false
+    },
+    "fx.snow": {
+      "pack": "POLYGON - Particle FX Pack",
+      "search": [
+        "FX_*Snow*",
+        "FX_*Particle*",
+        "FX_*Flake*"
+      ],
+      "notes": "Synty Particle FX er Unity-partikelsystemer (Shuriken) og kan IKKE importeres som partikler i Godot. Genbrug kun pakkens teksturer/flipbooks (typisk FX_*-teksturer) i en egen GPUParticles3D-scene. Ingen collision.",
+      "verified": false
+    },
+    "fx.storm": {
+      "pack": "POLYGON - Particle FX Pack",
+      "search": [
+        "FX_*Storm*",
+        "FX_*Wind*",
+        "FX_*Rain*",
+        "FX_*Lightning*"
+      ],
+      "notes": "Synty Particle FX er Unity-partikelsystemer (Shuriken) og kan IKKE importeres som partikler i Godot. Genbrug kun pakkens teksturer/flipbooks (typisk FX_*-teksturer) i en egen GPUParticles3D-scene. Ingen collision.",
+      "verified": false
+    },
+    "fx.steam_vent": {
+      "pack": "POLYGON - Particle FX Pack",
+      "search": [
+        "FX_*Steam*",
+        "FX_*Smoke*",
+        "FX_*Vent*"
+      ],
+      "notes": "Synty Particle FX er Unity-partikelsystemer (Shuriken) og kan IKKE importeres som partikler i Godot. Genbrug kun pakkens teksturer/flipbooks (typisk FX_*-teksturer) i en egen GPUParticles3D-scene. Ingen collision.",
+      "verified": false
+    },
+    "fx.thruster": {
+      "pack": "POLYGON - Particle FX Pack",
+      "search": [
+        "FX_*Thruster*",
+        "FX_*Jet*",
+        "FX_*Fire*",
+        "FX_*Flame*"
+      ],
+      "notes": "Synty Particle FX er Unity-partikelsystemer (Shuriken) og kan IKKE importeres som partikler i Godot. Genbrug kun pakkens teksturer/flipbooks (typisk FX_*-teksturer) i en egen GPUParticles3D-scene. Ingen collision.",
+      "verified": false
+    },
+    "fx.construction_sparks": {
+      "pack": "POLYGON - Particle FX Pack",
+      "search": [
+        "FX_*Spark*",
+        "FX_*Weld*"
+      ],
+      "notes": "Synty Particle FX er Unity-partikelsystemer (Shuriken) og kan IKKE importeres som partikler i Godot. Genbrug kun pakkens teksturer/flipbooks (typisk FX_*-teksturer) i en egen GPUParticles3D-scene. Ingen collision.",
+      "verified": false
+    },
+    "fx.power_surge": {
+      "pack": "POLYGON - Particle FX Pack",
+      "search": [
+        "FX_*Electric*",
+        "FX_*Lightning*",
+        "FX_*Spark*",
+        "FX_*Energy*"
+      ],
+      "notes": "Synty Particle FX er Unity-partikelsystemer (Shuriken) og kan IKKE importeres som partikler i Godot. Genbrug kun pakkens teksturer/flipbooks (typisk FX_*-teksturer) i en egen GPUParticles3D-scene. Ingen collision.",
+      "verified": false
+    },
+    "fx.scan_pulse": {
+      "pack": "POLYGON - Particle FX Pack",
+      "search": [
+        "FX_*Pulse*",
+        "FX_*Ring*",
+        "FX_*Shockwave*",
+        "FX_*Scan*"
+      ],
+      "notes": "Synty Particle FX er Unity-partikelsystemer (Shuriken) og kan IKKE importeres som partikler i Godot. Genbrug kun pakkens teksturer/flipbooks (typisk FX_*-teksturer) i en egen GPUParticles3D-scene. Ingen collision.",
+      "verified": false
+    },
+    "fx.landing_dust": {
+      "pack": "POLYGON - Particle FX Pack",
+      "search": [
+        "FX_*Dust*",
+        "FX_*Smoke*",
+        "FX_*Impact*"
+      ],
+      "notes": "Synty Particle FX er Unity-partikelsystemer (Shuriken) og kan IKKE importeres som partikler i Godot. Genbrug kun pakkens teksturer/flipbooks (typisk FX_*-teksturer) i en egen GPUParticles3D-scene. Ingen collision.",
+      "verified": false
+    },
+    "ui.panel": {
+      "pack": "INTERFACE - Sci-Fi Menus / INTERFACE - Sci-Fi Soldier HUD",
+      "search": [
+        "Panel*",
+        "Frame*",
+        "Window*",
+        "Background*",
+        "*.png"
+      ],
+      "notes": "Brug kun PNG/sprite-grafik (Unity-prefabs virker ikke i Godot). Importér som Texture2D; brug StyleBoxTexture/NinePatchRect med margins til paneler/knapper. Filter: Linear, mipmaps fra.",
+      "verified": false
+    },
+    "ui.button": {
+      "pack": "INTERFACE - Sci-Fi Menus",
+      "search": [
+        "Button*",
+        "Btn*",
+        "*.png"
+      ],
+      "notes": "Brug kun PNG/sprite-grafik (Unity-prefabs virker ikke i Godot). Importér som Texture2D; brug StyleBoxTexture/NinePatchRect med margins til paneler/knapper. Filter: Linear, mipmaps fra. Lav normal/hover/pressed/disabled StyleBox-varianter.",
+      "verified": false
+    },
+    "ui.icon_power": {
+      "pack": "INTERFACE - Sci-Fi Soldier HUD / INTERFACE - Sci-Fi Menus",
+      "search": [
+        "Icon*",
+        "*Power*",
+        "power",
+        "energy",
+        "lightning",
+        "battery"
+      ],
+      "notes": "Ikon-PNG -> TextureRect i HUD. Hold ét ikonsæt (én stil) på tværs af HUD; bland ikke Menus og Soldier HUD-ikoner tilfældigt. Findes intet direkte match (fx embryo), brug nærmeste ikon og notér.",
+      "verified": false
+    },
+    "ui.icon_water": {
+      "pack": "INTERFACE - Sci-Fi Soldier HUD / INTERFACE - Sci-Fi Menus",
+      "search": [
+        "Icon*",
+        "*Water*",
+        "water",
+        "drop"
+      ],
+      "notes": "Ikon-PNG -> TextureRect i HUD. Hold ét ikonsæt (én stil) på tværs af HUD; bland ikke Menus og Soldier HUD-ikoner tilfældigt. Findes intet direkte match (fx embryo), brug nærmeste ikon og notér.",
+      "verified": false
+    },
+    "ui.icon_food": {
+      "pack": "INTERFACE - Sci-Fi Soldier HUD / INTERFACE - Sci-Fi Menus",
+      "search": [
+        "Icon*",
+        "*Food*",
+        "food",
+        "leaf",
+        "plant"
+      ],
+      "notes": "Ikon-PNG -> TextureRect i HUD. Hold ét ikonsæt (én stil) på tværs af HUD; bland ikke Menus og Soldier HUD-ikoner tilfældigt. Findes intet direkte match (fx embryo), brug nærmeste ikon og notér.",
+      "verified": false
+    },
+    "ui.icon_alloy": {
+      "pack": "INTERFACE - Sci-Fi Soldier HUD / INTERFACE - Sci-Fi Menus",
+      "search": [
+        "Icon*",
+        "*Alloy*",
+        "metal",
+        "ingot",
+        "ore",
+        "resource"
+      ],
+      "notes": "Ikon-PNG -> TextureRect i HUD. Hold ét ikonsæt (én stil) på tværs af HUD; bland ikke Menus og Soldier HUD-ikoner tilfældigt. Findes intet direkte match (fx embryo), brug nærmeste ikon og notér.",
+      "verified": false
+    },
+    "ui.icon_components": {
+      "pack": "INTERFACE - Sci-Fi Soldier HUD / INTERFACE - Sci-Fi Menus",
+      "search": [
+        "Icon*",
+        "*Components*",
+        "gear",
+        "cog",
+        "parts",
+        "circuit"
+      ],
+      "notes": "Ikon-PNG -> TextureRect i HUD. Hold ét ikonsæt (én stil) på tværs af HUD; bland ikke Menus og Soldier HUD-ikoner tilfældigt. Findes intet direkte match (fx embryo), brug nærmeste ikon og notér.",
+      "verified": false
+    },
+    "ui.icon_embryo": {
+      "pack": "INTERFACE - Sci-Fi Soldier HUD / INTERFACE - Sci-Fi Menus",
+      "search": [
+        "Icon*",
+        "*Embryo*",
+        "dna",
+        "life",
+        "heart",
+        "cell"
+      ],
+      "notes": "Ikon-PNG -> TextureRect i HUD. Hold ét ikonsæt (én stil) på tværs af HUD; bland ikke Menus og Soldier HUD-ikoner tilfældigt. Findes intet direkte match (fx embryo), brug nærmeste ikon og notér.",
+      "verified": false
+    },
+    "ui.icon_population": {
+      "pack": "INTERFACE - Sci-Fi Soldier HUD / INTERFACE - Sci-Fi Menus",
+      "search": [
+        "Icon*",
+        "*Population*",
+        "people",
+        "person",
+        "group",
+        "crew"
+      ],
+      "notes": "Ikon-PNG -> TextureRect i HUD. Hold ét ikonsæt (én stil) på tværs af HUD; bland ikke Menus og Soldier HUD-ikoner tilfældigt. Findes intet direkte match (fx embryo), brug nærmeste ikon og notér.",
+      "verified": false
+    },
+    "ui.icon_fuel": {
+      "pack": "INTERFACE - Sci-Fi Soldier HUD / INTERFACE - Sci-Fi Menus",
+      "search": [
+        "Icon*",
+        "*Fuel*",
+        "fuel",
+        "canister",
+        "flame"
+      ],
+      "notes": "Ikon-PNG -> TextureRect i HUD. Hold ét ikonsæt (én stil) på tværs af HUD; bland ikke Menus og Soldier HUD-ikoner tilfældigt. Findes intet direkte match (fx embryo), brug nærmeste ikon og notér.",
+      "verified": false
+    },
+    "ui.icon_integrity": {
+      "pack": "INTERFACE - Sci-Fi Soldier HUD / INTERFACE - Sci-Fi Menus",
+      "search": [
+        "Icon*",
+        "*Integrity*",
+        "shield",
+        "health",
+        "armor",
+        "wrench"
+      ],
+      "notes": "Ikon-PNG -> TextureRect i HUD. Hold ét ikonsæt (én stil) på tværs af HUD; bland ikke Menus og Soldier HUD-ikoner tilfældigt. Findes intet direkte match (fx embryo), brug nærmeste ikon og notér.",
+      "verified": false
+    },
+    "ui.hud_frame": {
+      "pack": "INTERFACE - Sci-Fi Soldier HUD",
+      "search": [
+        "HUD*",
+        "Frame*",
+        "Corner*",
+        "Bracket*",
+        "*.png"
+      ],
+      "notes": "Brug kun PNG/sprite-grafik (Unity-prefabs virker ikke i Godot). Importér som Texture2D; brug StyleBoxTexture/NinePatchRect med margins til paneler/knapper. Filter: Linear, mipmaps fra. Én HUD-stil i hele spillet (bibel s.23).",
+      "verified": false
+    },
+    "ui.crosshair_interact": {
+      "pack": "INTERFACE - Sci-Fi Soldier HUD",
+      "search": [
+        "Crosshair*",
+        "Reticle*",
+        "Cursor*"
+      ],
+      "notes": "Interaktions-sigtekorn i skærmens centrum; skift form når et interagerbart objekt er i fokus (ikke kun farve).",
+      "verified": false
+    }
+  }
+}

@@ -1,0 +1,310 @@
+{
+  "events": [
+    {
+      "id": "crisis_spore_bloom",
+      "kind": "crisis",
+      "title": "Sporeblomstring",
+      "biome": "green",
+      "critical": true,
+      "trigger": {
+        "min_day": 220,
+        "min_population": 1,
+        "requires_buildings": [
+          "greenhouse"
+        ],
+        "chance_per_day": 0.02
+      },
+      "warning_days": 5,
+      "warning": "Sporetallet i lavningerne stiger. Om fem dage blomstrer skoven.",
+      "text": "Skoven blomstrer. En gul tåge driver ind over kolonien, og sporerne sætter sig i luftindtag og væksthuse. Uden beskyttelse mister vi høsten, og luften i boligerne bliver tung.",
+      "options": [
+        {
+          "id": "a",
+          "label": "Kør filtrene for fuldt",
+          "description": "Filtermodulet holder luften ren i boliger og væksthuse. Koster nye filterposer. Høsten reddes.",
+          "cost": {
+            "alloy": 0,
+            "components": 2,
+            "water": 0,
+            "food": 0
+          },
+          "requires": {
+            "building": "",
+            "module": "filter"
+          },
+          "effects": {
+            "trust": 3,
+            "health": 0.0,
+            "food": -5,
+            "water": 0,
+            "wear": 5,
+            "autonomy": 0,
+            "priority": "safety",
+            "power_kw_days": 0,
+            "solar_penalty_days": 0
+          },
+          "result": "Filtrene summede i ni dage. Da tågen lettede, var luften stadig ren, og væksthusene stod grønne."
+        },
+        {
+          "id": "b",
+          "label": "Forsegl væksthusene",
+          "description": "Byg ekstra sluser og hold væksthusene adskilt. Maden reddes, men luften i boligerne bliver dårlig en uges tid.",
+          "cost": {
+            "alloy": 15,
+            "components": 0,
+            "water": 0,
+            "food": 0
+          },
+          "requires": {
+            "building": "greenhouse",
+            "module": ""
+          },
+          "effects": {
+            "trust": 1,
+            "health": -0.03,
+            "food": 0,
+            "water": 0,
+            "wear": 5,
+            "autonomy": 0,
+            "priority": "",
+            "power_kw_days": 0,
+            "solar_penalty_days": 0
+          },
+          "result": "Sluserne holdt sporerne ude af væksthusene. I boligerne hostede man i en uge."
+        },
+        {
+          "id": "c",
+          "label": "Luk ned og vent",
+          "description": "Sluk luftindtagene og lev af lageret, til blomstringen er forbi. Det koster intet nu, men høsten går tabt.",
+          "cost": {
+            "alloy": 0,
+            "components": 0,
+            "water": 0,
+            "food": 0
+          },
+          "requires": {
+            "building": "",
+            "module": ""
+          },
+          "effects": {
+            "trust": -2,
+            "health": -0.05,
+            "food": -25,
+            "water": 0,
+            "wear": 0,
+            "autonomy": 0,
+            "priority": "",
+            "power_kw_days": 0,
+            "solar_penalty_days": 0
+          },
+          "result": "Kolonien holdt vejret i ti dage. Høsten rådnede, men alle kom igennem."
+        }
+      ],
+      "fallback": "c"
+    },
+    {
+      "id": "crisis_dust_storm",
+      "kind": "crisis",
+      "title": "Støvstorm",
+      "biome": "desert",
+      "critical": true,
+      "trigger": {
+        "min_day": 240,
+        "min_population": 1,
+        "requires_buildings": [
+          "solar_array"
+        ],
+        "chance_per_day": 0.02
+      },
+      "warning_days": 3,
+      "warning": "En brun front står 300 kilometer mod vest. Den når os om tre dage.",
+      "text": "Himlen bliver brun ved middagstid. Støvet lægger sig på panelerne lag på lag, og strømmen falder time for time. Stormen kan vare to uger.",
+      "options": [
+        {
+          "id": "a",
+          "label": "Kør på batterierne",
+          "description": "Klap panelerne sammen og lev af den lagrede strøm. Panelerne skånes, men reserven tømmes.",
+          "cost": {
+            "alloy": 0,
+            "components": 0,
+            "water": 0,
+            "food": 0
+          },
+          "requires": {
+            "building": "battery",
+            "module": ""
+          },
+          "effects": {
+            "trust": 2,
+            "health": 0.0,
+            "food": 0,
+            "water": 0,
+            "wear": 5,
+            "autonomy": 0,
+            "priority": "safety",
+            "power_kw_days": -60,
+            "solar_penalty_days": 4
+          },
+          "result": "Panelerne lå i ly, mens batterierne bar kolonien. Dagen efter stormen kørte alt igen."
+        },
+        {
+          "id": "b",
+          "label": "Send rengøringshold ud",
+          "description": "Droner og værksted holder panelerne rene døgnet rundt. Koster reservedele, men strømmen holdes oppe.",
+          "cost": {
+            "alloy": 0,
+            "components": 3,
+            "water": 0,
+            "food": 0
+          },
+          "requires": {
+            "building": "workshop",
+            "module": ""
+          },
+          "effects": {
+            "trust": 1,
+            "health": 0.0,
+            "food": 0,
+            "water": 0,
+            "wear": 10,
+            "autonomy": 0,
+            "priority": "expansion",
+            "power_kw_days": 0,
+            "solar_penalty_days": 3
+          },
+          "result": "Dronerne børstede panelerne hver fjerde time. Strømmen dykkede, men den faldt aldrig."
+        },
+        {
+          "id": "c",
+          "label": "Vent stormen af",
+          "description": "Gør ingenting, og spar på strømmen. Gratis nu, men støvet slider på alt, og panelerne yder mindre længe.",
+          "cost": {
+            "alloy": 0,
+            "components": 0,
+            "water": 0,
+            "food": 0
+          },
+          "requires": {
+            "building": "",
+            "module": ""
+          },
+          "effects": {
+            "trust": -2,
+            "health": -0.02,
+            "food": 0,
+            "water": 0,
+            "wear": 25,
+            "autonomy": 0,
+            "priority": "",
+            "power_kw_days": 0,
+            "solar_penalty_days": 14
+          },
+          "result": "Da stormen lagde sig, lå støvet en håndsbredde tykt. Det tog to uger at få panelerne rene."
+        }
+      ],
+      "fallback": "c"
+    },
+    {
+      "id": "crisis_deep_cold",
+      "kind": "crisis",
+      "title": "Den dybe kulde",
+      "biome": "ice",
+      "critical": true,
+      "trigger": {
+        "min_day": 260,
+        "min_population": 1,
+        "requires_buildings": [
+          "habitat"
+        ],
+        "chance_per_day": 0.02
+      },
+      "warning_days": 6,
+      "warning": "Temperaturen falder hurtigere end prognosen. Om seks dage rammer årets koldeste periode.",
+      "text": "Kulden kommer i bølger. Rørene knirker, og vandet i ledningerne begynder at fryse. Boligerne bruger dobbelt så meget varme som normalt, og natten er lang.",
+      "options": [
+        {
+          "id": "a",
+          "label": "Led jordvarmen ind",
+          "description": "Varmen fra undergrunden pumpes direkte ind i boligerne. Stabilt, men generatoren slides.",
+          "cost": {
+            "alloy": 0,
+            "components": 0,
+            "water": 0,
+            "food": 0
+          },
+          "requires": {
+            "building": "geothermal_generator",
+            "module": ""
+          },
+          "effects": {
+            "trust": 3,
+            "health": 0.0,
+            "food": 0,
+            "water": 0,
+            "wear": 12,
+            "autonomy": 0,
+            "priority": "safety",
+            "power_kw_days": 0,
+            "solar_penalty_days": 0
+          },
+          "result": "Gulvene var lune hele vinteren. Generatoren larmede, men den holdt."
+        },
+        {
+          "id": "b",
+          "label": "Skru varmemodulerne op",
+          "description": "Varmemodulerne kører på fuld kraft. Koster strøm fra reserven og et par reservedele.",
+          "cost": {
+            "alloy": 0,
+            "components": 2,
+            "water": 0,
+            "food": 0
+          },
+          "requires": {
+            "building": "",
+            "module": "heater"
+          },
+          "effects": {
+            "trust": 2,
+            "health": 0.0,
+            "food": 0,
+            "water": 0,
+            "wear": 5,
+            "autonomy": 0,
+            "priority": "",
+            "power_kw_days": -45,
+            "solar_penalty_days": 0
+          },
+          "result": "Varmemodulerne glødede døgnet rundt. Reserven faldt, men ingen frøs."
+        },
+        {
+          "id": "c",
+          "label": "Saml alle i arken",
+          "description": "Alle flytter ind i arkens kerne, som nødstrømmen holder varm. Gratis, men kolonien står stille, og afhængigheden af arken vokser.",
+          "cost": {
+            "alloy": 0,
+            "components": 0,
+            "water": 0,
+            "food": 0
+          },
+          "requires": {
+            "building": "",
+            "module": ""
+          },
+          "effects": {
+            "trust": 1,
+            "health": -0.04,
+            "food": 0,
+            "water": -10,
+            "wear": 8,
+            "autonomy": -6,
+            "priority": "",
+            "power_kw_days": 0,
+            "solar_penalty_days": 0
+          },
+          "result": "I tre uger boede alle tæt i arkens gange. Der var trangt. Der var varmt."
+        }
+      ],
+      "fallback": "c"
+    }
+  ]
+}

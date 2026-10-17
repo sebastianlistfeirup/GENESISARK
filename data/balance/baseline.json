@@ -1,0 +1,28 @@
+{
+  "content_version": "0.1.0",
+  "_source": "Bible p.29 'Startvaerdier og balancering'. First implementation baseline, not claimed final balance. Change with evidence (docs/DECISIONS.md).",
+  "embryos_total": 50000,
+  "ark_start": { "fuel": 100, "integrity": 100, "components": 40 },
+  "probe_component_cost": 3,
+  "orbital_scan_fuel_cost": 1,
+  "risky_route_integrity_threshold": 6,
+  "suit": { "max_energy": 100.0, "drain_per_s": 0.12, "reserve_warning": 30.0, "sample_time_s": 8.0, "drone_refill": 35.0 },
+  "colony_start": { "alloy": 120, "components": 0, "water": 60, "food": 60, "battery_kwh": 0 },
+  "ark_core": { "power_kw": 8, "drones": 3, "link_range_m": 24.0, "storage_alloy": 400 },
+  "network": { "link_range_m": 24.0 },
+  "incubation": {
+    "cohort_size": 10,
+    "required_surplus_kw": 5,
+    "required_reserve_days": 30,
+    "gestation_days": 270,
+    "adult_age_years": 18,
+    "first_leap_year": 20,
+    "second_leap_year": 40
+  },
+  "time": { "days_per_year": 365, "colony_seconds_per_day_1x": 2.0, "speeds": [0, 1, 3] },
+  "player": { "walk_speed": 3.0, "run_speed": 5.0, "accel": 18.0, "turn_speed": 10.0 },
+  "consumption": { "water_per_person_day": 1.0, "food_per_person_day": 1.0, "child_care_hours": 1.0 },
+  "maintenance": { "wear_per_day": 0.4, "service_threshold": 60.0, "degraded_output": 0.5, "component_per_service": 1 },
+  "demolish_refund": 0.5,
+  "campaign_goal": { "population": 500, "min_reserve_days": 60, "council_required": true }
+}
