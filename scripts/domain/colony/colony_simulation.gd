@@ -142,6 +142,7 @@ func place_building(gs: GameState, def_id: String, x: float, z: float, rot: int,
 	gs.colony.buildings.append(b)
 	gs.mark_applied(txn)
 	recompute_network(gs)
+	gs.colony.invalidate()
 	return CommandResult.success({"building_id": b["id"], "cost": cost})
 
 
@@ -163,6 +164,7 @@ func demolish(gs: GameState, building_id: int) -> CommandResult:
 		gs.colony.inventory[k] = float(gs.colony.inventory.get(k, 0.0)) + amount
 	gs.colony.buildings.erase(b)
 	recompute_network(gs)
+	gs.colony.invalidate()
 	return CommandResult.success({"refund": refund})
 
 
@@ -185,6 +187,7 @@ func add_module(gs: GameState, building_id: int, module_id: String) -> CommandRe
 		inv[k] = float(inv.get(k, 0.0)) + float(cost[k])
 		b["invested"] = inv
 	(b["modules"] as Array).append(module_id)
+	gs.colony.invalidate()
 	return CommandResult.success({"module": module_id})
 
 
@@ -195,6 +198,8 @@ static func _res_label(k: String) -> String:
 # ----------------------------------------------------------------- network
 
 func recompute_network(gs: GameState) -> void:
+	gs.colony.network_dirty = false
+	gs.colony.invalidate()
 	var bs: Array = gs.colony.buildings
 	for b: Dictionary in bs:
 		b["accessible"] = b.get("def_id") == "ark_core"
@@ -251,86 +256,143 @@ func hazard_factors(gs: GameState, day: int) -> Dictionary:
 
 
 func building_power_kw(gs: GameState, b: Dictionary, hz: Dictionary) -> float:
-	var def := content.building(str(b.get("def_id")))
+	return _power_kw(gs, b, hz, _power_ctx(gs))
+
+
+## Per-tick constants for power maths (hot path: called for every building).
+func _power_ctx(gs: GameState) -> Dictionary:
 	var mods := modifiers(gs)
+	return {
+		"solar": DictUtil.get_float(mods, "solar", 1.0), "geo": DictUtil.get_float(mods, "geothermal", 0.2),
+		"heat": DictUtil.get_float(mods, "heating_kw_per_habitat"), "water_extra": DictUtil.get_float(mods, "water_power_extra_kw"),
+		"vent": bool(DictUtil.get_dict(content.site(gs.colony.site_id), "facts").get("vent", false)), "ark": ark_power_kw(gs),
+	}
+
+
+func _power_kw(_gs: GameState, b: Dictionary, hz: Dictionary, ctx: Dictionary) -> float:
+	var def_id: String = b["def_id"]
+	if def_id == "ark_core":
+		return ctx["ark"]
+	var def: Dictionary = content.buildings[def_id]
 	var kw := float(def.get("power_kw", 0))
-	if b.get("def_id") == "ark_core":
-		return ark_power_kw(gs)
-	match str(def.get("power_source", "")):
-		"solar":
-			return kw * DictUtil.get_float(mods, "solar", 1.0) * float(hz["solar"]) * float(b.get("efficiency", 1.0))
-		"geothermal":
-			var vent := bool(DictUtil.get_dict(content.site(gs.colony.site_id), "facts").get("vent", false))
-			return kw * DictUtil.get_float(mods, "geothermal", 0.2) * (1.0 + (DictUtil.get_float(def, "vent_bonus") if vent else 0.0)) * float(b.get("efficiency", 1.0))
+	var src: String = def.get("power_source", "")
+	if src == "solar":
+		return kw * float(ctx["solar"]) * float(hz["solar"]) * float(b.get("efficiency", 1.0))
+	if src == "geothermal":
+		return kw * float(ctx["geo"]) * (1.0 + (float(def.get("vent_bonus", 0.0)) if ctx["vent"] else 0.0)) * float(b.get("efficiency", 1.0))
 	if kw >= 0.0:
 		return kw
 	var demand := kw
-	if b.get("def_id") == "habitat":
-		demand -= DictUtil.get_float(mods, "heating_kw_per_habitat")
-	if b.get("def_id") == "water_plant":
-		demand -= DictUtil.get_float(mods, "water_power_extra_kw")
-	var module_defs: Dictionary = DictUtil.get_dict(def, "modules")
-	for m: Variant in b.get("modules", []):
-		demand += DictUtil.get_float(module_defs.get(str(m), {}), "power_kw")
+	if def_id == "habitat":
+		demand -= float(ctx["heat"])
+	elif def_id == "water_plant":
+		demand -= float(ctx["water_extra"])
+	var mods: Array = b.get("modules", [])
+	if not mods.is_empty():
+		var module_defs: Dictionary = def.get("modules", {})
+		for m: Variant in mods:
+			demand += float(module_defs.get(str(m), {}).get("power_kw", 0.0))
 	return demand
 
 
+## One pass over all buildings per state change: counts and capacities.
+## "powered_*" capacities only count accessible, powered, safe buildings.
+func census(gs: GameState) -> Dictionary:
+	var c := gs.colony
+	if not c.census.is_empty():
+		return c.census
+	var active := {}
+	var battery := 0.0
+	var drone_n := 0.0
+	var pcap := {"residents": 0.0, "incubation_slots": 0.0, "care_capacity": 0.0, "education_capacity": 0.0, "health_per_day": 0.0}
+	var req := requires_module(gs)
+	for b: Dictionary in c.buildings:
+		if b["state"] != ColonyState.B_ACTIVE:
+			continue
+		var def_id: String = b["def_id"]
+		active[def_id] = int(active.get(def_id, 0)) + 1
+		if not b["accessible"]:
+			continue
+		var prov := _provides(def_id)
+		battery += prov["battery_kwh"]
+		drone_n += prov["drones"]
+		if not b["powered"]:
+			continue
+		if def_id == "habitat" and not req.is_empty() and not req in b["modules"]:
+			continue
+		for k: String in pcap.keys():
+			pcap[k] += prov[k]
+	var cap := {"battery_kwh": battery, "drones": drone_n}
+	c.census = {"active": active, "cap": cap, "powered_cap": pcap}
+	return c.census
+
+
+var _prov_cache: Dictionary = {}
+
+
+func _provides(def_id: String) -> Dictionary:
+	if not _prov_cache.has(def_id):
+		var prov: Dictionary = DictUtil.get_dict(content.building(def_id), "provides")
+		var out := {}
+		for k: String in ["battery_kwh", "drones", "residents", "incubation_slots", "care_capacity", "education_capacity", "health_per_day"]:
+			out[k] = DictUtil.get_float(prov, k)
+		_prov_cache[def_id] = out
+	return _prov_cache[def_id]
+
+
 func battery_capacity(gs: GameState) -> float:
-	var cap := 0.0
-	for b: Dictionary in gs.colony.buildings:
-		if b.get("state") == ColonyState.B_ACTIVE and b.get("accessible"):
-			cap += DictUtil.get_float(DictUtil.get_dict(content.building(str(b.get("def_id"))), "provides"), "battery_kwh")
-	return cap
+	return float(census(gs)["cap"]["battery_kwh"])
 
 
 func drones(gs: GameState) -> float:
-	var n := 0.0
-	for b: Dictionary in gs.colony.buildings:
-		if b.get("state") == ColonyState.B_ACTIVE and b.get("accessible"):
-			n += DictUtil.get_float(DictUtil.get_dict(content.building(str(b.get("def_id"))), "provides"), "drones")
-	return n * DictUtil.get_float(modifiers(gs), "drone_efficiency", 1.0)
+	return float(census(gs)["cap"]["drones"]) * DictUtil.get_float(modifiers(gs), "drone_efficiency", 1.0)
 
 
 ## Power allocation by priority. Writes powered/blocked flags; returns the power report.
 func allocate_power(gs: GameState, hz: Dictionary) -> Dictionary:
+	var ctx := _power_ctx(gs)
+	var prio_index := {}
+	for i: int in content.building_priorities.size():
+		prio_index[content.building_priorities[i]] = i
 	var produced := 0.0
-	var consumers: Array = []
+	var buckets: Array = [[], [], [], [], []]  # by priority; buildings are already in id order
 	for b: Dictionary in gs.colony.buildings:
-		if b.get("state") != ColonyState.B_ACTIVE:
+		if b["state"] != ColonyState.B_ACTIVE:
 			continue
-		var kw := building_power_kw(gs, b, hz)
-		if not b.get("accessible"):
+		if not b["accessible"]:
 			b["powered"] = false
 			continue
+		var kw := _power_kw(gs, b, hz, ctx)
 		if kw >= 0.0:
 			produced += kw
 			b["powered"] = true
 		else:
-			consumers.append({"b": b, "kw": -kw, "prio": building_priorities_index(str(content.building(str(b.def_id)).get("priority")))})
-	consumers.sort_custom(func(a: Dictionary, c: Dictionary) -> bool:
-		if a.prio != c.prio:
-			return a.prio < c.prio
-		return int(a.b.id) < int(c.b.id))
+			buckets[mini(int(prio_index.get(content.buildings[b["def_id"]].get("priority"), 4)), 4)].append([0, -kw, b])
+	var consumers: Array = []
+	for bucket: Array in buckets:
+		consumers.append_array(bucket)
 	var demand := 0.0
-	for c: Dictionary in consumers:
-		demand += float(c.kw)
+	for c: Array in consumers:
+		demand += float(c[1])
 	var cap := battery_capacity(gs)
 	gs.colony.battery_kwh = minf(gs.colony.battery_kwh, cap)
 	var available := produced + gs.colony.battery_kwh / 24.0
 	var used := 0.0
 	var shed: Array = []
-	for c: Dictionary in consumers:
-		if used + float(c.kw) <= available + 0.0001:
-			used += float(c.kw)
-			c.b["powered"] = true
+	for c: Array in consumers:
+		var b: Dictionary = c[2]
+		if used + float(c[1]) <= available + 0.0001:
+			used += float(c[1])
+			b["powered"] = true
 		else:
-			c.b["powered"] = false
-			shed.append(int(c.b.id))
+			b["powered"] = false
+			shed.append(int(b["id"]))
 	var net := produced - used
 	gs.colony.battery_kwh = clampf(gs.colony.battery_kwh + net * 24.0, 0.0, cap)
+	gs.colony.invalidate()  # Powered flags changed
 	return {"produced_kw": snappedf(produced, 0.01), "demand_kw": snappedf(demand, 0.01), "used_kw": snappedf(used, 0.01),
 		"surplus_kw": snappedf(produced - demand, 0.01), "battery_kwh": snappedf(gs.colony.battery_kwh, 0.01),
-		"battery_capacity": cap, "shed": shed, "ark_kw": ark_power_kw(gs), "night": hz["night"], "storm": hz["storm"]}
+		"battery_capacity": cap, "shed": shed, "ark_kw": float(ctx["ark"]), "night": hz["night"], "storm": hz["storm"]}
 
 
 func building_priorities_index(p: String) -> int:

@@ -13,7 +13,7 @@ func _ready() -> void:
 	bg.set_anchors_preset(Control.PRESET_FULL_RECT)
 	add_child(bg)
 	if not GameSession.has_game() or GameSession.state.campaign.ending_id.is_empty():
-		DebugFixtures.prepare("grown:pelagos")
+		DebugFixtures.prepare("era:pelagos:40")
 		GameSession.cmd_handover()
 	var gs: GameState = GameSession.state
 	var def: Dictionary = GameSession.content.endings.get(gs.campaign.ending_id, {})
@@ -23,7 +23,7 @@ func _ready() -> void:
 	add_child(col)
 	col.add_child(UiKit.label("EPILOG", 18, UiKit.PETROL.lightened(0.3)))
 	col.add_child(UiKit.label(str(def.get("title", gs.campaign.ending_id)), 54, UiKit.TEXT))
-	col.add_child(UiKit.label(str(def.get("summary", "")), 20, UiKit.AMBER, true))
+	col.add_child(UiKit.label(GameSession.sim.endings.summary(gs), 20, UiKit.AMBER, true))
 	for para: String in GameSession.sim.endings.epilogue(gs):
 		col.add_child(UiKit.label(para, 19, UiKit.TEXT, true))
 	var m: Dictionary = gs.campaign.final_state

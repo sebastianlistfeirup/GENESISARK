@@ -173,17 +173,19 @@ static func environment_for(p: Dictionary, biome: String) -> Array:
 	e.background_color = sky_col
 	e.ambient_light_source = Environment.AMBIENT_SOURCE_COLOR
 	e.ambient_light_color = sky_col.lerp(Color.WHITE, 0.3)
-	e.ambient_light_energy = 0.55 if str(p.get("id")) != "umbra" else 0.25
+	e.ambient_light_energy = 0.4 if str(p.get("id")) != "umbra" else 0.25
 	e.tonemap_mode = Environment.TONE_MAPPER_FILMIC
 	e.fog_enabled = true
 	e.fog_light_color = sky_col
-	e.fog_density = 0.006 if biome != "desert" else 0.009
+	e.fog_density = 0.0025 if biome != "desert" else 0.0035
+	e.fog_sky_affect = 0.6
+	e.tonemap_white = 1.4
 	e.glow_enabled = true
 	env.environment = e
 	var sun := DirectionalLight3D.new()
 	sun.rotation_degrees = Vector3(-48, 30, 0) if str(p.get("id")) != "umbra" else Vector3(-8, 60, 0)
 	sun.light_color = Color("fff1d6") if biome != "ice" else Color("e6f2ff")
-	sun.light_energy = 1.3 if str(p.get("id")) != "umbra" else 0.35
+	sun.light_energy = (1.1 if biome == "desert" else 1.25) if str(p.get("id")) != "umbra" else 0.35
 	sun.shadow_enabled = true
 	sun.directional_shadow_max_distance = 140.0
 	return [env, sun]

@@ -29,15 +29,16 @@ func tick_day(gs: GameState) -> Dictionary:
 	var hz := colony_sim.hazard_factors(gs, day)
 	var mods := colony_sim.modifiers(gs)
 	var bottlenecks: Array = []
-	colony_sim.recompute_network(gs)
+	if c.network_dirty:
+		colony_sim.recompute_network(gs)
 
 	# Workforce: drones (+ adults) staff production first, the rest builds.
 	var workforce := colony_sim.drones(gs) + floorf(float(gs.population.adult_workforce()) / 4.0)
 	for b: Dictionary in c.buildings:
 		b["staffed"] = true
-		if b.get("state") != ColonyState.B_ACTIVE:
+		if b["state"] != ColonyState.B_ACTIVE:
 			continue
-		var need := DictUtil.get_float(content.building(str(b.def_id)), "workforce")
+		var need := float(content.buildings[b["def_id"]].get("workforce", 0.0))
 		if need > 0.0:
 			if workforce >= need:
 				workforce -= need
@@ -61,30 +62,35 @@ func tick_day(gs: GameState) -> Dictionary:
 		if float(b.progress) >= 1.0:
 			b["state"] = ColonyState.B_ACTIVE
 			b["blocked_reason"] = ""
+			c.network_dirty = true
 			gs.log_journal("%s er færdigbygget." % content.building(str(b.def_id)).get("name"), "build")
-	colony_sim.recompute_network(gs)
+	if c.network_dirty:
+		colony_sim.recompute_network(gs)
 
 	var power := colony_sim.allocate_power(gs, hz)
 
 	# Production
 	var produced := {"water": 0.0, "food": 0.0, "alloy": 0.0, "components": 0.0}
+	var out_mult := {"water": DictUtil.get_float(mods, "water", 1.0), "food": DictUtil.get_float(mods, "food", 1.0), "alloy": DictUtil.get_float(mods, "mine", 1.0)}
+	var req_mod := colony_sim.requires_module(gs)
+	var empty := {}
 	for b: Dictionary in c.buildings:
-		if b.get("state") != ColonyState.B_ACTIVE:
+		if b["state"] != ColonyState.B_ACTIVE:
 			continue
-		var def := content.building(str(b.def_id))
+		var def: Dictionary = content.buildings[b["def_id"]]
 		var reason := ""
-		if not b.get("accessible"):
+		if not b["accessible"]:
 			reason = "no_access"
-		elif not b.get("powered"):
+		elif not b["powered"]:
 			reason = "no_power"
 		elif not b.get("staffed", true):
 			reason = "no_workforce"
-		elif b.def_id == "habitat" and not colony_sim.habitat_ok(gs, b):
+		elif b["def_id"] == "habitat" and not req_mod.is_empty() and not req_mod in b["modules"]:
 			reason = "module_missing"
 		var eff := float(b.get("efficiency", 1.0))
 		if reason.is_empty():
-			var output: Dictionary = DictUtil.get_dict(def, "output")
-			var input: Dictionary = DictUtil.get_dict(def, "input")
+			var output: Dictionary = def.get("output", empty)
+			var input: Dictionary = def.get("input", empty)
 			var has_input := true
 			for k: String in input.keys():
 				if float(c.inventory.get(k, 0.0)) < float(input[k]):
@@ -95,12 +101,7 @@ func tick_day(gs: GameState) -> Dictionary:
 				for k: String in input.keys():
 					c.inventory[k] = float(c.inventory[k]) - float(input[k])
 				for k: String in output.keys():
-					var m := 1.0
-					match k:
-						"water": m = DictUtil.get_float(mods, "water", 1.0)
-						"food": m = DictUtil.get_float(mods, "food", 1.0)
-						"alloy": m = DictUtil.get_float(mods, "mine", 1.0)
-					var amount := float(output[k]) * m * eff
+					var amount := float(output[k]) * float(out_mult.get(k, 1.0)) * eff
 					c.inventory[k] = float(c.inventory.get(k, 0.0)) + amount
 					produced[k] = float(produced[k]) + amount
 		if b.def_id != "ark_core" and b.get("state") == ColonyState.B_ACTIVE:
@@ -130,12 +131,14 @@ func tick_day(gs: GameState) -> Dictionary:
 
 	# Maintenance: robots service worn buildings with components; otherwise output halves.
 	var maint: Dictionary = content.bal("maintenance", {})
+	var wear_day := DictUtil.get_float(maint, "wear_per_day", 0.4) * float(hz["wear"])
+	var threshold := DictUtil.get_float(maint, "service_threshold", 60.0)
+	var cost := DictUtil.get_float(maint, "component_per_service", 1.0)
 	for b: Dictionary in c.buildings:
-		if b.get("state") != ColonyState.B_ACTIVE or b.def_id == "ark_core":
+		if b["state"] != ColonyState.B_ACTIVE or b["def_id"] == "ark_core":
 			continue
-		b["wear"] = float(b.get("wear", 0.0)) + DictUtil.get_float(maint, "wear_per_day", 0.4) * float(hz["wear"])
-		if float(b.wear) >= DictUtil.get_float(maint, "service_threshold", 60.0):
-			var cost := DictUtil.get_float(maint, "component_per_service", 1.0)
+		b["wear"] = float(b["wear"]) + wear_day
+		if float(b["wear"]) >= threshold:
 			if float(c.inventory["components"]) >= cost:
 				c.inventory["components"] = float(c.inventory["components"]) - cost
 				b["wear"] = 0.0

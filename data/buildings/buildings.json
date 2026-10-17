@@ -1,61 +1,324 @@
 {
-  "_note": "Bible p.10 + p.29. kW: positive = production, negative = consumption. Outputs per colony day. build_work in drone-days.",
-  "priorities": ["life_support", "care", "water", "production"],
+  "_note": "Bible p.10 + p.29. kW: positive = production, negative = consumption. Outputs per colony day. build_work in drone-days. Outputs tuned 2026-10-17 by tools/balance (see docs/DECISIONS.md D-016).",
+  "priorities": [
+    "life_support",
+    "care",
+    "water",
+    "production"
+  ],
   "buildings": [
-    { "id": "ark_core", "name": "Arkens kerne", "category": "core", "buildable": false, "footprint": [14, 10],
-      "cost": {}, "build_work": 0, "power_kw": 8, "priority": "life_support",
-      "provides": { "drones": 3, "network_node": true, "residents": 1, "salvage_alloy_per_day": 2, "salvage_pool": 300, "fuel_per_day": 0.1 },
-      "description": "Arken er nu koloniens base: nødstrøm, robotdepot og kaptajnens bolig. Den kan skilles ad til materialer — langsomt.",
-      "visual_slot": "building.ark_core" },
-    { "id": "solar_array", "name": "Solpanelfelt", "category": "power", "footprint": [6, 6], "district": "any",
-      "cost": { "alloy": 30 }, "build_work": 6, "power_kw": 12, "power_source": "solar", "priority": "production",
-      "description": "Billig, pålidelig strøm — hvis solen skinner.", "visual_slot": "building.solar_array" },
-    { "id": "geothermal_generator", "name": "Geotermisk generator", "category": "power", "footprint": [6, 6], "district": "any",
-      "cost": { "alloy": 60, "components": 4 }, "build_work": 14, "power_kw": 20, "power_source": "geothermal", "vent_bonus": 0.5, "priority": "production",
-      "description": "Stabil strøm dag og nat. Ydelsen afhænger af planetens indre varme.", "visual_slot": "building.geothermal_generator" },
-    { "id": "battery", "name": "Batteribank", "category": "power", "footprint": [4, 4], "district": "any",
-      "cost": { "alloy": 25, "components": 2 }, "build_work": 5, "power_kw": 0, "priority": "production",
-      "provides": { "battery_kwh": 120 },
-      "description": "Lagrer overskudsstrøm til nat, storme og nedbrud.", "visual_slot": "building.battery" },
-    { "id": "water_plant", "name": "Vandanlæg", "category": "supply", "footprint": [6, 8], "district": "any",
-      "cost": { "alloy": 35 }, "build_work": 8, "power_kw": -4, "priority": "water",
-      "output": { "water": 12 },
-      "description": "Udvinder, renser og lagrer vand. Måles i persondøgn.", "visual_slot": "building.water_plant" },
-    { "id": "greenhouse", "name": "Væksthus", "category": "supply", "footprint": [8, 6], "district": "living",
-      "cost": { "alloy": 30, "components": 1 }, "build_work": 8, "power_kw": -3, "priority": "water",
-      "output": { "food": 12 }, "input": { "water": 2 },
-      "description": "Lukket dyrkning. Mad måles i persondøgn.", "visual_slot": "building.greenhouse" },
-    { "id": "mine", "name": "Mine", "category": "industry", "footprint": [8, 8], "district": "resource",
-      "cost": { "alloy": 45 }, "build_work": 10, "power_kw": -4, "priority": "production", "workforce": 1,
-      "output": { "alloy": 4 },
-      "description": "Udvinder malm til byggemateriale. Skal ligge i ressourceområdet.", "visual_slot": "building.mine" },
-    { "id": "workshop", "name": "Værksted", "category": "industry", "footprint": [8, 6], "district": "any",
-      "cost": { "alloy": 50 }, "build_work": 10, "power_kw": -3, "priority": "production", "workforce": 1,
-      "output": { "components": 1 }, "input": { "alloy": 2 },
-      "description": "Raffinerer byggemateriale til reservedele og komponenter.", "visual_slot": "building.workshop" },
-    { "id": "drone_hub", "name": "Dronehub", "category": "industry", "footprint": [6, 6], "district": "any",
-      "cost": { "alloy": 60, "components": 4 }, "build_work": 12, "power_kw": -2, "priority": "production",
-      "provides": { "drones": 3, "network_node": true },
-      "description": "Flere byggedroner og et nyt knudepunkt i forsyningsnettet.", "visual_slot": "building.drone_hub" },
-    { "id": "habitat", "name": "Habitat", "category": "living", "footprint": [10, 8], "district": "living",
-      "cost": { "alloy": 40 }, "build_work": 10, "power_kw": -3, "priority": "life_support",
-      "provides": { "residents": 20 },
-      "modules": {
-        "filter": { "name": "Filtermodul", "cost": { "alloy": 10, "components": 2 }, "power_kw": -1, "description": "Holder sporer og støv ude." },
-        "heater": { "name": "Varmemodul", "cost": { "alloy": 10, "components": 2 }, "power_kw": -2, "description": "Holder boligen beboelig i frost." }
+    {
+      "id": "ark_core",
+      "name": "Arkens kerne",
+      "category": "core",
+      "buildable": false,
+      "footprint": [
+        14,
+        10
+      ],
+      "cost": {},
+      "build_work": 0,
+      "power_kw": 8,
+      "priority": "life_support",
+      "provides": {
+        "drones": 3,
+        "network_node": true,
+        "residents": 1,
+        "salvage_alloy_per_day": 2,
+        "salvage_pool": 300,
+        "fuel_per_day": 0.1
       },
-      "description": "Beskyttet bolig og livsstøtte.", "visual_slot": "building.habitat" },
-    { "id": "care_center", "name": "Omsorgs- og inkubationscenter", "category": "care", "footprint": [10, 10], "district": "living",
-      "cost": { "alloy": 70, "components": 6 }, "build_work": 16, "power_kw": -5, "priority": "care",
-      "provides": { "incubation_slots": 20, "care_capacity": 30 },
-      "description": "Kunstig gestation og robotomsorg. Her bliver embryoner til børn.", "visual_slot": "building.care_center" },
-    { "id": "clinic", "name": "Klinik", "category": "care", "footprint": [8, 6], "district": "living",
-      "cost": { "alloy": 60, "components": 4 }, "build_work": 12, "power_kw": -3, "priority": "care",
-      "provides": { "health_per_day": 0.3, "care_capacity": 10 },
-      "description": "Behandling og forebyggelse. Holder kohorterne sunde.", "visual_slot": "building.clinic" },
-    { "id": "school_hall", "name": "Skole og rådhus", "category": "society", "footprint": [10, 8], "district": "living",
-      "cost": { "alloy": 80, "components": 4 }, "build_work": 16, "power_kw": -3, "priority": "care",
-      "provides": { "education_per_day": 1.0, "council_seat": true, "education_capacity": 60 },
-      "description": "Undervisning for børn og et sted, hvor samfundet kan træffe beslutninger.", "visual_slot": "building.school_hall" }
+      "description": "Arken er nu koloniens base: nødstrøm, robotdepot og kaptajnens bolig. Den kan skilles ad til materialer — langsomt.",
+      "visual_slot": "building.ark_core"
+    },
+    {
+      "id": "solar_array",
+      "name": "Solpanelfelt",
+      "category": "power",
+      "footprint": [
+        6,
+        6
+      ],
+      "district": "any",
+      "cost": {
+        "alloy": 30
+      },
+      "build_work": 6,
+      "power_kw": 12,
+      "power_source": "solar",
+      "priority": "production",
+      "description": "Billig, pålidelig strøm — hvis solen skinner.",
+      "visual_slot": "building.solar_array"
+    },
+    {
+      "id": "geothermal_generator",
+      "name": "Geotermisk generator",
+      "category": "power",
+      "footprint": [
+        6,
+        6
+      ],
+      "district": "any",
+      "cost": {
+        "alloy": 60,
+        "components": 4
+      },
+      "build_work": 14,
+      "power_kw": 20,
+      "power_source": "geothermal",
+      "vent_bonus": 0.5,
+      "priority": "production",
+      "description": "Stabil strøm dag og nat. Ydelsen afhænger af planetens indre varme.",
+      "visual_slot": "building.geothermal_generator"
+    },
+    {
+      "id": "battery",
+      "name": "Batteribank",
+      "category": "power",
+      "footprint": [
+        4,
+        4
+      ],
+      "district": "any",
+      "cost": {
+        "alloy": 25,
+        "components": 2
+      },
+      "build_work": 5,
+      "power_kw": 0,
+      "priority": "production",
+      "provides": {
+        "battery_kwh": 120
+      },
+      "description": "Lagrer overskudsstrøm til nat, storme og nedbrud.",
+      "visual_slot": "building.battery"
+    },
+    {
+      "id": "water_plant",
+      "name": "Vandanlæg",
+      "category": "supply",
+      "footprint": [
+        6,
+        8
+      ],
+      "district": "any",
+      "cost": {
+        "alloy": 35
+      },
+      "build_work": 8,
+      "power_kw": -4,
+      "priority": "water",
+      "output": {
+        "water": 30
+      },
+      "description": "Udvinder, renser og lagrer vand. Måles i persondøgn.",
+      "visual_slot": "building.water_plant"
+    },
+    {
+      "id": "greenhouse",
+      "name": "Væksthus",
+      "category": "supply",
+      "footprint": [
+        8,
+        6
+      ],
+      "district": "any",
+      "cost": {
+        "alloy": 30,
+        "components": 1
+      },
+      "build_work": 8,
+      "power_kw": -3,
+      "priority": "water",
+      "output": {
+        "food": 28
+      },
+      "input": {
+        "water": 4
+      },
+      "description": "Lukket dyrkning. Mad måles i persondøgn.",
+      "visual_slot": "building.greenhouse"
+    },
+    {
+      "id": "mine",
+      "name": "Mine",
+      "category": "industry",
+      "footprint": [
+        8,
+        8
+      ],
+      "district": "resource",
+      "cost": {
+        "alloy": 45
+      },
+      "build_work": 10,
+      "power_kw": -4,
+      "priority": "production",
+      "workforce": 1,
+      "output": {
+        "alloy": 6
+      },
+      "description": "Udvinder malm til byggemateriale. Skal ligge i ressourceområdet.",
+      "visual_slot": "building.mine"
+    },
+    {
+      "id": "workshop",
+      "name": "Værksted",
+      "category": "industry",
+      "footprint": [
+        8,
+        6
+      ],
+      "district": "any",
+      "cost": {
+        "alloy": 50
+      },
+      "build_work": 10,
+      "power_kw": -3,
+      "priority": "production",
+      "workforce": 1,
+      "output": {
+        "components": 1
+      },
+      "input": {
+        "alloy": 2
+      },
+      "description": "Raffinerer byggemateriale til reservedele og komponenter.",
+      "visual_slot": "building.workshop"
+    },
+    {
+      "id": "drone_hub",
+      "name": "Dronehub",
+      "category": "industry",
+      "footprint": [
+        6,
+        6
+      ],
+      "district": "any",
+      "cost": {
+        "alloy": 60,
+        "components": 4
+      },
+      "build_work": 12,
+      "power_kw": -2,
+      "priority": "production",
+      "provides": {
+        "drones": 3,
+        "network_node": true
+      },
+      "description": "Flere byggedroner og et nyt knudepunkt i forsyningsnettet.",
+      "visual_slot": "building.drone_hub"
+    },
+    {
+      "id": "habitat",
+      "name": "Habitat",
+      "category": "living",
+      "footprint": [
+        10,
+        8
+      ],
+      "district": "living",
+      "cost": {
+        "alloy": 40
+      },
+      "build_work": 10,
+      "power_kw": -3,
+      "priority": "life_support",
+      "provides": {
+        "residents": 40
+      },
+      "modules": {
+        "filter": {
+          "name": "Filtermodul",
+          "cost": {
+            "alloy": 10,
+            "components": 2
+          },
+          "power_kw": -1,
+          "description": "Holder sporer og støv ude."
+        },
+        "heater": {
+          "name": "Varmemodul",
+          "cost": {
+            "alloy": 10,
+            "components": 2
+          },
+          "power_kw": -2,
+          "description": "Holder boligen beboelig i frost."
+        }
+      },
+      "description": "Beskyttet bolig og livsstøtte.",
+      "visual_slot": "building.habitat"
+    },
+    {
+      "id": "care_center",
+      "name": "Omsorgs- og inkubationscenter",
+      "category": "care",
+      "footprint": [
+        10,
+        10
+      ],
+      "district": "living",
+      "cost": {
+        "alloy": 70,
+        "components": 6
+      },
+      "build_work": 16,
+      "power_kw": -5,
+      "priority": "care",
+      "provides": {
+        "incubation_slots": 20,
+        "care_capacity": 30
+      },
+      "description": "Kunstig gestation og robotomsorg. Her bliver embryoner til børn.",
+      "visual_slot": "building.care_center"
+    },
+    {
+      "id": "clinic",
+      "name": "Klinik",
+      "category": "care",
+      "footprint": [
+        8,
+        6
+      ],
+      "district": "living",
+      "cost": {
+        "alloy": 60,
+        "components": 4
+      },
+      "build_work": 12,
+      "power_kw": -3,
+      "priority": "care",
+      "provides": {
+        "health_per_day": 0.3,
+        "care_capacity": 10
+      },
+      "description": "Behandling og forebyggelse. Holder kohorterne sunde.",
+      "visual_slot": "building.clinic"
+    },
+    {
+      "id": "school_hall",
+      "name": "Skole og rådhus",
+      "category": "society",
+      "footprint": [
+        10,
+        8
+      ],
+      "district": "living",
+      "cost": {
+        "alloy": 80,
+        "components": 4
+      },
+      "build_work": 16,
+      "power_kw": -3,
+      "priority": "care",
+      "provides": {
+        "education_per_day": 1.0,
+        "council_seat": true,
+        "education_capacity": 60
+      },
+      "description": "Undervisning for børn og et sted, hvor samfundet kan træffe beslutninger.",
+      "visual_slot": "building.school_hall"
+    }
   ]
 }

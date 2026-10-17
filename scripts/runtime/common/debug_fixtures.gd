@@ -35,11 +35,9 @@ static func prepare(setup: String) -> void:
 		sim.update_objectives()
 		return
 	# "colony": a working robot colony (phase 1 endpoint)
-	var tc := TestCase.new()
-	tc.content = GameSession.content
 	for d: String in ["solar_array", "water_plant", "habitat"]:
-		tc.place_near(sim, d)
-	tc.run_days(sim, 14)
+		PlacementHelper.place_near(sim, d)
+	PlacementHelper.run_days(sim, 14)
 	if kind == "colony":
 		sim.update_objectives()
 		return
@@ -50,15 +48,15 @@ static func prepare(setup: String) -> void:
 	inv["water"] = float(inv["water"]) + 400.0
 	inv["food"] = float(inv["food"]) + 400.0
 	for d: String in ["solar_array", "solar_array", "greenhouse", "care_center", "battery", "mine", "workshop", "habitat"]:
-		tc.place_near(sim, d)
+		PlacementHelper.place_near(sim, d)
 	var req := sim.colony.requires_module(gs)
 	if not req.is_empty():
 		for b: Dictionary in gs.colony.buildings:
 			if b["def_id"] == "habitat":
 				sim.colony.add_module(gs, int(b["id"]), req)
-	tc.run_days(sim, 40)
+	PlacementHelper.run_days(sim, 40)
 	sim.population.start_incubation(gs, 10, "dbg:inc")
-	tc.run_days(sim, 10)
+	PlacementHelper.run_days(sim, 10)
 	if kind == "grown":
 		sim.update_objectives()
 		return

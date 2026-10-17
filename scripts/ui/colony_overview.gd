@@ -121,6 +121,7 @@ func _future_tab() -> Control:
 	var sim: Simulation = GameSession.sim
 	var y := gs.campaign.colony_year()
 	v.add_child(UiKit.title("Generationsspring"))
+	v.add_child(UiKit.label("Plan: ca. %d fødsler om året, kohorter på %d, byggeri efter behov." % [int(EraService.default_plan(20)["births_per_year"]), int(EraService.default_plan(20)["cohort_size"])], 15, UiKit.TEXT, true))
 	v.add_child(UiKit.label("Et spring er en prognose, ikke en spoleknap. Simulatoren regner forsyning, aldring, arbejde og planlagte hændelser dag for dag og stopper før en uafklaret krise eller et underskud. ARK og koloniens institutioner bærer hverdagen efter planen: inkubation når forholdene tillader det, og byggeri efter behov.", 15, UiKit.MUTED, true))
 	_target = 20 if y < 20.0 else 40
 	var blockers := sim.era.leap_blockers(gs)

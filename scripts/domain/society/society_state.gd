@@ -9,13 +9,14 @@ var autonomy: float = 0.0           # 0..100: how much the society decides itsel
 var priorities: Dictionary = {"expansion": 0, "safety": 0, "self_determination": 0}
 var decisions: Array = []           # [{id, choice, day}]
 var voices: Dictionary = {}         # name -> {perspective, standing}
+var settlement_name: String = ""
 
 
 func to_dict() -> Dictionary:
 	return {
 		"trust": trust, "council_formed": council_formed, "council_day": council_day,
 		"autonomy": autonomy, "priorities": priorities.duplicate(), "decisions": decisions.duplicate(true),
-		"voices": voices.duplicate(true),
+		"voices": voices.duplicate(true), "settlement_name": settlement_name,
 	}
 
 
@@ -30,4 +31,5 @@ static func from_dict(d: Dictionary) -> SocietyState:
 		s.priorities[k] = DictUtil.get_int(p, k)
 	s.decisions = DictUtil.get_arr(d, "decisions").duplicate(true)
 	s.voices = DictUtil.get_dict(d, "voices").duplicate(true)
+	s.settlement_name = DictUtil.get_str(d, "settlement_name")
 	return s

@@ -62,26 +62,8 @@ func land_on(sim: Simulation, planet_id: String, site_index: int = 0) -> void:
 
 ## Places a building at the first valid spot near a district center.
 func place_near(sim: Simulation, def_id: String, district: String = "") -> int:
-	var gs := sim.state
-	var site := content.site(gs.colony.site_id)
-	var d: String = district if not district.is_empty() else str(content.building(def_id).get("district", "any"))
-	if d == "any":
-		d = "landing"
-	var center: Array = site["districts"][d]["center"]
-	for ring: int in range(0, 12):
-		for i: int in range(maxi(1, ring * 8)):
-			var ang := TAU * float(i) / float(maxi(1, ring * 8))
-			var x := snappedf(float(center[0]) + cos(ang) * ring * 3.0, 1.0)
-			var z := snappedf(float(center[1]) + sin(ang) * ring * 3.0, 1.0)
-			if sim.colony.check_placement(gs, def_id, x, z, 0)["ok"]:
-				var r := sim.colony.place_building(gs, def_id, x, z, 0, "p:%s:%d:%d" % [def_id, gs.colony.next_building_id, gs.campaign.colony_day])
-				if r.ok:
-					return int(r.data["building_id"])
-	return -1
+	return PlacementHelper.place_near(sim, def_id, district)
 
 
 func run_days(sim: Simulation, n: int) -> Dictionary:
-	var rep := {}
-	for i: int in n:
-		rep = sim.days.tick_day(sim.state)
-	return rep
+	return PlacementHelper.run_days(sim, n)

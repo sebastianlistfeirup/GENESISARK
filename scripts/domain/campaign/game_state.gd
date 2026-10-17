@@ -98,6 +98,22 @@ static func from_dict(d: Dictionary) -> GameState:
 	return gs
 
 
+## Replaces this state's contents with another's (used when an approved era
+## forecast is adopted as the result: identical by determinism).
+func assign_from(o: GameState) -> void:
+	game_id = o.game_id
+	seed_value = o.seed_value
+	rng = o.rng
+	campaign = o.campaign
+	ark = o.ark
+	knowledge = o.knowledge
+	expedition = o.expedition
+	colony = o.colony
+	population = o.population
+	society = o.society
+	events = o.events
+
+
 ## Validates types, ID references and value ranges before a state is activated (bible p.22).
 func validation_errors(content: ContentDB) -> PackedStringArray:
 	var out: PackedStringArray = []

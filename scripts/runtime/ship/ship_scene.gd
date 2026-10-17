@@ -34,9 +34,14 @@ func _ready() -> void:
 	e.fog_density = 0.01
 	env.environment = e
 	add_child(env)
-	builder = ShipBuilder.new()
-	builder.name = "ShipBuilder"
-	add_child(builder)
+	# The builder and an empty "Dressing" node live in ship.tscn: tick
+	# ShipBuilder.build_now in the editor to preview the layout, and place
+	# extra Synty props under Dressing (see docs/SCENE_ASSEMBLY.md).
+	builder = get_node_or_null("ShipBuilder")
+	if builder == null:
+		builder = ShipBuilder.new()
+		builder.name = "ShipBuilder"
+		add_child(builder)
 	builder.build()
 	_spawn_interactables()
 	_spawn_display()

@@ -100,7 +100,10 @@
           "result": "Kolonien holdt vejret i ti dage. Høsten rådnede, men alle kom igennem."
         }
       ],
-      "fallback": "c"
+      "fallback": "c",
+      "hazards": [
+        "spores"
+      ]
     },
     {
       "id": "crisis_dust_storm",
@@ -202,7 +205,11 @@
           "result": "Da stormen lagde sig, lå støvet en håndsbredde tykt. Det tog to uger at få panelerne rene."
         }
       ],
-      "fallback": "c"
+      "fallback": "c",
+      "hazards": [
+        "dust",
+        "heat"
+      ]
     },
     {
       "id": "crisis_deep_cold",
@@ -304,7 +311,11 @@
           "result": "I tre uger boede alle tæt i arkens gange. Der var trangt. Der var varmt."
         }
       ],
-      "fallback": "c"
+      "fallback": "c",
+      "hazards": [
+        "cold",
+        "long_night"
+      ]
     }
   ]
 }

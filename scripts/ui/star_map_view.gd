@@ -59,7 +59,7 @@ func _draw() -> void:
 		draw_circle(p, rad, col)
 		if loc in gs.campaign.visited and not pid.is_empty():
 			draw_arc(p, rad + 2, 0, TAU, 24, UiKit.TEXT, 1.0)
-		draw_string(font, p + Vector2(-40, rad + 18), str(content.locations[loc].get("name", loc)), HORIZONTAL_ALIGNMENT_CENTER, 80, 14, UiKit.TEXT)
+		draw_string(font, p + Vector2(-60, rad + 18), str(content.locations[loc].get("name", loc)), HORIZONTAL_ALIGNMENT_CENTER, 120, 14, UiKit.TEXT)
 	var ark := _pos(here)
 	draw_colored_polygon(PackedVector2Array([ark + Vector2(0, -12), ark + Vector2(8, 8), ark + Vector2(0, 4), ark + Vector2(-8, 8)]), UiKit.AMBER)
 	draw_string(font, ark + Vector2(12, 4), "ARK", HORIZONTAL_ALIGNMENT_LEFT, -1, 12, UiKit.AMBER)

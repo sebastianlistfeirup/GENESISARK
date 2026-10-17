@@ -20,6 +20,14 @@ func eligible(gs: GameState, def: Dictionary) -> bool:
 	var biome := str(def.get("biome", ""))
 	if not biome.is_empty() and biome != gs.colony.biome_id:
 		return false
+	var needs_hazard: Array = DictUtil.get_arr(def, "hazards")
+	if not needs_hazard.is_empty():
+		var has := false
+		for h: Variant in DictUtil.get_arr(content.planet(gs.colony.planet_id), "hazard_ids"):
+			if h in needs_hazard:
+				has = true
+		if not has:
+			return false
 	var pids: Array = DictUtil.get_arr(def, "planet_ids")
 	if not pids.is_empty() and not gs.colony.planet_id in pids:
 		return false
@@ -149,6 +157,8 @@ func _apply_effects(gs: GameState, e: Dictionary) -> void:
 		for b: Dictionary in c.buildings:
 			if b.get("state") == ColonyState.B_ACTIVE and b.get("def_id") != "ark_core":
 				b["wear"] = float(b.get("wear", 0.0)) + float(e["wear"])
+	if e.has("settlement_name"):
+		gs.society.settlement_name = str(e["settlement_name"])
 	var prio := DictUtil.get_str(e, "priority")
 	if gs.society.priorities.has(prio):
 		gs.society.priorities[prio] = int(gs.society.priorities[prio]) + 1

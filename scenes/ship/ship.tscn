@@ -1,6 +1,12 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene load_steps=3 format=3]
 
 [ext_resource type="Script" path="res://scripts/runtime/ship/ship_scene.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/runtime/ship/ship_builder.gd" id="2"]
 
 [node name="Ship" type="Node3D"]
 script = ExtResource("1")
+
+[node name="ShipBuilder" type="Node3D" parent="."]
+script = ExtResource("2")
+
+[node name="Dressing" type="Node3D" parent="."]

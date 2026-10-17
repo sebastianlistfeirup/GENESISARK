@@ -1,0 +1,12 @@
+# Risici og kendte blokeringer
+
+| # | Risiko | Sandsynlighed | Konsekvens | Afbødning / næste skridt |
+|---|---|---|---|---|
+| R1 | Synty FBX-import i Godot 4.5 kræver manuel materiale-/atlas-opsætning, skala- eller facingrettelser. | Høj | Forsinkelse på GA-13 | VisualSlot-systemet isolerer det: én wrapper pr. slot med `scale/offset/rotation_y`. Start med ét skibsmodul, én humanoid, én terrænprøve (GA-13). |
+| R2 | Sidekick-karakterer er bygget til Unity; eksport til Godot og retargeting af animationer er uafprøvet. | Middel | Kaptajnens animation (GA-14) | Kapsel-proxy bevares som rollback. Retarget via BoneMap/SkeletonProfileHumanoid i RigLab. Se `docs/SYNTY_INTEGRATION.md` §9. |
+| R3 | INTERFACE- og Particle FX-pakkerne er sandsynligvis Unity-only (prefabs/shaders). | Middel | UI/FX-pynt | Genbrug teksturer/sprites; Godot-temaet (`UiKit`) og partikelslots (`fx.*`) er klar til teksturer. |
+| R4 | Generationsspring regner dag-for-dag i GDScript (~0,7 ms/dag med 60 bygninger) → 20 år ≈ 5 s på én tråd. | Middel | UI fryser kort under prognose | Prognosen genbruges ved godkendelse (ingen dobbeltberegning). Næste skridt: kør prognosen i en `Thread`/`WorkerThreadPool` med statusbjælke, eller intervalberegning (bibel s. 11). |
+| R5 | Balance til 500 indbyggere ved år 40 er ikke færdigtunet for alle seks verdener. | Middel | Slutprofil | `tools/balance/run_balance.gd` måler 6 planeter × 3 strategier; se `evidence/balance/`. Tuning sker i data (bibel s. 29). |
+| R6 | Windows-build er kun krydseksporteret fra Linux og ikke kørt på Windows. | Middel | GA-12 port | Kør `builds/windows/GenesisArk.exe` på referencemaskinen ved hjemkomst og registrér resultatet. |
+| R7 | Ingen eksterne playtestere i ferieperioden. | Sikker | GA-19 | Registreret som udestående; agentens gennemgang er ikke spillerbevis. |
+| R8 | Softwarerenderede screenshots viser greybox-proxies, ikke endelig grafik. | Sikker | Markedsføring | Screenshots er funktionelle beviser, ikke udgivelsesgrafik (bibel s. 17). |

@@ -83,3 +83,14 @@ func test_handover_once_and_epilogue() -> void:
 	check(ep.size() >= 3, "epilog")
 	check("Ferrum" in " ".join(ep), "nævner planeten")
 	check(not "{" in " ".join(ep), "ingen ufyldte pladsholdere: " + " ".join(ep))
+
+
+func test_commit_without_forecast_matches_forecast() -> void:
+	var a := _settled("umbra")
+	var b := _settled("umbra")
+	var plan := EraService.default_plan(2)
+	var fc := a.era.forecast(a.state, plan)
+	var r := b.era.commit(b.state, plan, "fresh")
+	if ok(r, "commit uden prognose"):
+		check(not r.data.get("adopted_forecast", false), "simulerede selv")
+		eq(r.data["end_checksum"], fc["end_checksum"], "uafhængig simulering == prognose")

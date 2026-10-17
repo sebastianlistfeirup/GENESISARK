@@ -4,6 +4,10 @@ extends Node3D
 ## power, visible bottlenecks, real-time days (pause/1x/3x), incubation, era
 ## leaps, events and hand-over. B toggles captain <-> overhead.
 
+## F6 in the editor without a running campaign builds this fixture
+## (e.g. "colony:nivalis", "grown:umbra", "expedition:ferrum").
+@export var preview_setup := "colony:viridia"
+
 var terrain: TerrainBuilder
 var cam_rig: ColonyCamera
 var captain: Captain
@@ -34,7 +38,7 @@ var site: Dictionary = {}
 
 func _ready() -> void:
 	if not GameSession.has_game():
-		DebugFixtures.prepare("colony:viridia")
+		DebugFixtures.prepare(preview_setup)
 	var gs: GameState = GameSession.state
 	if gs.colony == null:
 		AppFlow.goto("ship")
@@ -56,6 +60,7 @@ func _ready() -> void:
 	terrain.build()
 	terrain.scatter(hash(gs.colony.site_id) + 1, 60, avoid)
 	_draw_districts()
+	SceneDressing.attach(self, str(site.get("id", "")), terrain)
 	_net = MeshInstance3D.new()
 	add_child(_net)
 	_people = Node3D.new()

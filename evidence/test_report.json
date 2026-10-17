@@ -1,18 +1,18 @@
 {
   "content_errors": [],
-  "elapsed_ms": 2612,
+  "elapsed_ms": 1532,
   "engine_version": "4.5.1-stable (official)",
   "failures": [],
   "files": {
     "test_ark_travel.gd": 9,
     "test_colony.gd": 9,
     "test_content.gd": 6,
-    "test_era_endings.gd": 6,
+    "test_era_endings.gd": 7,
     "test_population.gd": 5,
     "test_save.gd": 7,
     "test_survey_expedition.gd": 6
   },
   "status": "PASS",
-  "tests": 48,
-  "timestamp": "2026-10-17T19:37:27"
+  "tests": 49,
+  "timestamp": "2026-10-17T20:48:15"
 }

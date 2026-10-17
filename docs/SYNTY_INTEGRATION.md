@@ -130,16 +130,14 @@ En wrapper er din egen lille scene, som "pakker" vendor-modellen ind. Spillet br
 Eksempel for `ship.terminal` → fil `art/prefabs/ship.terminal.tscn`:
 
 ```
-ship_terminal (Node3D)               <- rod, står på (0,0,0)
-├── VisualPivot (Node3D)             <- drej 180° her hvis den vender forkert
-│   └── SM_Prop_Console_XX (instans af den importerede FBX)
-├── StaticBody3D
-│   └── CollisionShape3D (BoxShape3D)
-└── InteractPoint (Marker3D)         <- hvor kaptajnen står/kigger
+ship_terminal (Node3D)               <- rod, står på (0,0,0) = gulvniveau
+└── VisualPivot (Node3D)             <- drej 180° her hvis den vender forkert
+    └── SM_Prop_Console_XX (instans af den importerede FBX)
 ```
 
-Regler:
-- Samme **footprint og størrelse som proxyen** (bibel s. 9 og 19), så gameplay ikke ændrer sig.
+Regler (gælder for dette projekts VisualSlot-system):
+- **Kun visuelt indhold.** Spillet ejer allerede kollision, interaktion og navigation for alle slots: skibets vægge/gulve/døre (`ShipBuilder`), interaktive objekter (`Interactable`), bygninger (pick-kollider pr. footprint), kaptajnen (kapsel) og terrænet. Læg derfor **ingen** StaticBody/CollisionShape i wrappere for `ship.*`, `building.*`, `char.*`, `surface.lander`, `surface.sample_marker`, `surface.relay_beacon`. Rene pynte-props, du selv placerer i scenen (se `docs/SCENE_ASSEMBLY.md`), må få en simpel kollisionsproxy.
+- Samme **footprint og størrelse som proxyen** (bibel s. 9 og 19), så gameplay ikke ændrer sig. Proxyens mål står i `data/art/asset_slots.json` (`proxy`-listen) og bygningernes footprint i `data/buildings/buildings.json`.
 - Ingen scripts fra Unity/vendor. Ingen gameplaylogik i wrapperen.
 - Filnavn = slot-id + `.tscn` (fx `art/prefabs/building.habitat.tscn`).
 
@@ -149,13 +147,19 @@ Regler:
 
 ### 8a. `data/art/asset_slots.json`
 
-Find slot-id'et og sæt stien til din wrapper, fx:
+Find slot-id'et og udfyld `scene` (stien til din wrapper). `scale`, `offset` og `rotation_y` (grader) finjusterer den importerede model uden at røre proxyen:
 
 ```json
-"ship.terminal": "res://art/prefabs/ship.terminal.tscn"
+"ship.terminal": {
+  "scene": "res://art/prefabs/ship.terminal.tscn",
+  "scale": 1.0,
+  "offset": [0, 0, 0],
+  "rotation_y": 0,
+  "proxy": [ ...lad stå... ]
+}
 ```
 
-**(Den præcise struktur i `asset_slots.json` defineres af kode-teamet — følg formatet i filen. Står der allerede en tom værdi eller `null`, erstatter du blot den.)** Start spillet: proxyen er nu skiftet ud. Er stien forkert, viser spillet stadig proxyen (ingen crash).
+Start spillet: proxyen er nu skiftet ud **overalt**, hvor slotet bruges (fx alle vægge i arken). Er stien forkert eller filen væk, viser spillet stadig proxyen (ingen crash). Kører du `python3 tools/gen_asset_slots.py` igen, bevares dine `scene`/`scale`/`offset`/`rotation_y`.
 
 Hjælp til at finde assets: `data/art/synty_suggestions.json` foreslår pakke og navnemønstre for hvert slot.
 

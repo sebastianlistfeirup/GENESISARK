@@ -245,7 +245,8 @@
             "autonomy": 4,
             "priority": "self_determination",
             "power_kw_days": 0,
-            "solar_penalty_days": 0
+            "solar_penalty_days": 0,
+            "settlement_name": "Første Stemme"
           },
           "result": "Navnet vandt med to stemmers flertal. Det var ikke det, du ville have valgt. Det var deres."
         },
@@ -272,7 +273,8 @@
             "autonomy": -1,
             "priority": "safety",
             "power_kw_days": 0,
-            "solar_penalty_days": 0
+            "solar_penalty_days": 0,
+            "settlement_name": "Ny Ark"
           },
           "result": "Navnet blev malet over døren til omsorgscentret. Det var det første ord, børnene lærte at stave."
         },
@@ -299,7 +301,8 @@
             "autonomy": 1,
             "priority": "expansion",
             "power_kw_days": 0,
-            "solar_penalty_days": 0
+            "solar_penalty_days": 0,
+            "settlement_name": "Morgendal"
           },
           "result": "Navnet stod på kortet ved siden af tre tomme felter. Børnene begyndte at navngive dem også."
         }

@@ -14,21 +14,11 @@ func _init(db: ContentDB, sim: ColonySimulation) -> void:
 
 
 func incubation_slots(gs: GameState) -> int:
-	var slots := 0
-	for b: Dictionary in gs.colony.buildings:
-		if b.get("state") == ColonyState.B_ACTIVE and b.get("accessible") and b.get("powered"):
-			slots += DictUtil.get_int(DictUtil.get_dict(content.building(str(b.get("def_id"))), "provides"), "incubation_slots")
-	return slots
+	return capacity(gs, "incubation_slots")
 
 
 func capacity(gs: GameState, key: String) -> int:
-	var n := 0
-	for b: Dictionary in gs.colony.buildings:
-		if b.get("state") == ColonyState.B_ACTIVE and b.get("accessible") and b.get("powered"):
-			if b.get("def_id") == "habitat" and key == "residents" and not colony_sim.habitat_ok(gs, b):
-				continue
-			n += DictUtil.get_int(DictUtil.get_dict(content.building(str(b.get("def_id"))), "provides"), key)
-	return n
+	return int(colony_sim.census(gs)["powered_cap"].get(key, 0.0))
 
 
 func daily_need(gs: GameState, extra_people: int = 0) -> Dictionary:
@@ -108,7 +98,7 @@ func tick_day(gs: GameState, report: Dictionary) -> Dictionary:
 	var children := gs.population.count_stage("child")
 	var care_cap := capacity(gs, "care_capacity")
 	var edu_cap := capacity(gs, "education_capacity")
-	var clinic := capacity(gs, "health_per_day") > 0 or gs.colony.count_active("clinic") > 0
+	var clinic := gs.colony.count_active("clinic") > 0
 	var hazard_health := _hazard_health_penalty(gs)
 	for c: Dictionary in gs.population.cohorts:
 		match str(c.get("stage")):

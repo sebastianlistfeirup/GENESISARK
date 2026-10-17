@@ -5,6 +5,10 @@ extends Node3D
 
 const FX_FOR_HAZARD := {"spores": "fx.spores", "storms": "fx.storm", "heat": "fx.dust", "dust": "fx.dust", "cold": "fx.snow", "long_night": "fx.snow"}
 
+## F6 in the editor without a running campaign builds this fixture
+## (e.g. "colony:nivalis", "grown:umbra", "expedition:ferrum").
+@export var preview_setup := "expedition:viridia"
+
 var terrain: TerrainBuilder
 var captain: Captain
 var hud: GameHud
@@ -20,7 +24,7 @@ var _markers: Dictionary = {}
 
 func _ready() -> void:
 	if not GameSession.has_game():
-		DebugFixtures.prepare("expedition:viridia")
+		DebugFixtures.prepare(preview_setup)
 	var gs: GameState = GameSession.state
 	if gs.expedition == null:
 		AppFlow.goto("ship")
@@ -48,6 +52,7 @@ func _ready() -> void:
 	terrain.build()
 	terrain.scatter(hash(ex.site_id), 70, avoid)
 	_place_lander()
+	SceneDressing.attach(self, str(site.get("id", "")), terrain)
 	_place_points(pts)
 	_place_routes()
 	_place_hazards()

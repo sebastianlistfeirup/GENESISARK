@@ -20,6 +20,10 @@ var salvage_left: float = 0.0
 var speed: int = 0                    # 0 pause, 1, 3
 var last_report: Dictionary = {}      # Derived per tick, also saved for UI continuity
 var stats: Dictionary = {"days_stable": 0, "deficit_days": 0, "crises_resolved": 0}
+## Derived cache flag (not saved): the network is recomputed only after changes.
+var network_dirty := true
+## Derived per-tick census (not saved): counts and capacities of active buildings.
+var census: Dictionary = {}
 
 
 func building_by_id(bid: int) -> Dictionary:
@@ -30,11 +34,17 @@ func building_by_id(bid: int) -> Dictionary:
 
 
 func count_active(def_id: String) -> int:
+	if not census.is_empty():
+		return int(census["active"].get(def_id, 0))
 	var n := 0
 	for b: Dictionary in buildings:
 		if b.get("def_id") == def_id and b.get("state") == B_ACTIVE:
 			n += 1
 	return n
+
+
+func invalidate() -> void:
+	census = {}
 
 
 func to_dict() -> Dictionary:
