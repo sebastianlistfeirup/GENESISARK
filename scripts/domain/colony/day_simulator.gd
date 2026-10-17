@@ -129,6 +129,15 @@ func tick_day(gs: GameState) -> Dictionary:
 		else:
 			c.inventory[k] = have - float(need[k])
 
+	# Storage limits: lagers are physical. Water/food keep up to a year of need.
+	var st: Dictionary = content.bal("storage", {})
+	if not st.is_empty():
+		c.inventory["alloy"] = minf(float(c.inventory["alloy"]), DictUtil.get_float(st, "alloy", 1500.0))
+		c.inventory["components"] = minf(float(c.inventory["components"]), DictUtil.get_float(st, "components", 300.0))
+		for k: String in ["water", "food"]:
+			var cap := maxf(DictUtil.get_float(st, "supply_min", 1500.0), float(need[k]) * DictUtil.get_float(st, "supply_days", 365.0))
+			c.inventory[k] = minf(float(c.inventory[k]), cap)
+
 	# Maintenance: robots service worn buildings with components; otherwise output halves.
 	var maint: Dictionary = content.bal("maintenance", {})
 	var wear_day := DictUtil.get_float(maint, "wear_per_day", 0.4) * float(hz["wear"])

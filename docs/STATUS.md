@@ -33,7 +33,7 @@
 
 ## Balance (fase 3-forløber, `evidence/balance/balance_table.txt`)
 
-Alle seks verdener kan føres til år 40 og en *selvstændig* profil med mindst to af tre strategier. Ferrum er sværest (vand, 560 indbyggere); "lean"-strategien kollapser på Pelagos og Nivalis. Ingen planet dominerer alle felter (test). Fødselsplanen (16/år) gør, at gode strategier lander omkring 650 indbyggere ved år 40. Tuningen er foreløbig.
+Alle seks verdener kan føres til år 40 og en *selvstændig* profil med mindst to af tre strategier (15 af 18 kørsler). Ferrum er sværest (vand, 560 indbyggere); tre strategier kollapser (Viridia power_first, Pelagos lean, Nivalis lean). Lagre har loft (1 års forbrug). Ingen planet dominerer alle felter (test). Fødselsplanen (16/år) gør, at gode strategier lander omkring 650 indbyggere ved år 40. Tuningen er foreløbig.
 
 ## Kendte problemer / blokeringer
 

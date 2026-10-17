@@ -61,5 +61,22 @@ static func prepare(setup: String) -> void:
 		sim.update_objectives()
 		return
 	if kind == "era":
-		sim.era.commit(gs, EraService.default_plan(int(parts[2]) if parts.size() > 2 else 20), "dbg:era")
+		# Leap like a player would: resolve what stops the leap, then continue.
+		var target := int(parts[2]) if parts.size() > 2 else 20
+		for i: int in 30:
+			if gs.campaign.colony_year() >= float(target):
+				break
+			for a: Dictionary in gs.events.active.duplicate():
+				if a.get("phase") == "active":
+					sim.events.resolve(gs, str(a["id"]), str(GameSession.content.events[str(a["id"])].get("fallback", "")))
+			var r := sim.era.commit(gs, EraService.default_plan(target), "dbg:era:%d" % i)
+			if not r.ok:
+				PlacementHelper.run_days(sim, 5)
+			elif str(r.data["stop_reason"]) in [EraService.STOP_SHORTAGE, EraService.STOP_POWER]:
+				PlacementHelper.place_near(sim, "water_plant")
+				PlacementHelper.place_near(sim, "solar_array")
+			if gs.campaign.colony_year() >= 20.0 and gs.society.decisions.is_empty():
+				sim.society.choose_priority(gs, "year_20", "self_determination")
+			if not gs.society.council_formed:
+				sim.society.form_council(gs, "dbg:council")
 		sim.update_objectives()
