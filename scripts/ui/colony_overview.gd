@@ -8,6 +8,10 @@ signal handover_committed
 
 var _forecast: Dictionary = {}
 var _target := 0
+## Forecasts run on a copy of the state in a worker thread (RISKS R4), so the
+## UI keeps drawing. Commands stay on the main thread.
+var _thread: Thread
+var _computing := false
 
 
 func _init() -> void:
@@ -126,10 +130,8 @@ func _future_tab() -> Control:
 	_target = 20 if y < 20.0 else 40
 	var blockers := sim.era.leap_blockers(gs)
 	var row := UiKit.hbox(10)
-	var fb := UiKit.button("Beregn prognose til år %d" % _target, func() -> void:
-		_forecast = GameSession.era_forecast(_target)
-		refresh())
-	fb.disabled = not blockers.is_empty() or y >= 40.0
+	var fb := UiKit.button("Beregner prognose…" if _computing else "Beregn prognose til år %d" % _target, _start_forecast)
+	fb.disabled = not blockers.is_empty() or y >= 40.0 or _computing
 	row.add_child(fb)
 	v.add_child(row)
 	for bl: Variant in blockers:
@@ -177,6 +179,27 @@ func _future_tab() -> Control:
 	return sv[0]
 
 
+func _start_forecast() -> void:
+	if _computing:
+		return
+	_computing = true
+	GameSession.set_colony_speed(0)
+	_thread = Thread.new()
+	var target := _target
+	_thread.start(func() -> Dictionary: return GameSession.era_forecast(target))
+	refresh()
+
+
+func _process(_delta: float) -> void:
+	if _computing and _thread and not _thread.is_alive():
+		_forecast = _thread.wait_to_finish()
+		_thread = null
+		_computing = false
+		refresh()
+
+
 func close() -> void:
+	if _computing:
+		return  # Let the forecast finish; it only touches a copy.
 	_forecast = {}
 	super()

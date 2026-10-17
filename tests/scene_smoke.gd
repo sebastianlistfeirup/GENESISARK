@@ -168,6 +168,16 @@ func _run() -> void:
 	for i: int in 16:
 		GameSession.advance_colony_day()
 	await frames(5)
+	# GA-02: switching camera modes gives no double input and no teleport.
+	var cap3: Captain = col.get("captain")
+	var p0 := cap3.global_position
+	col.call("_toggle_mode")
+	await frames(5)
+	var on_captain: bool = col.get("mode") == "captain" and cap3.input_enabled and not (col.get("cam_rig") as ColonyCamera).active
+	col.call("_toggle_mode")
+	await frames(5)
+	var back: bool = col.get("mode") == "overhead" and not cap3.input_enabled and (col.get("cam_rig") as ColonyCamera).active
+	check("ga02_camera_mode_switch_clean", on_captain and back and cap3.global_position.distance_to(p0) < 0.5, "moved=%.2f" % cap3.global_position.distance_to(p0))
 	var views: Dictionary = col.get("views")
 	check("ga08_building_views_synced", views.size() == GameSession.state.colony.buildings.size(), "%d vs %d" % [views.size(), GameSession.state.colony.buildings.size()])
 	check("ga08_habitat_active", GameSession.state.colony.count_active("habitat") == 1)

@@ -86,3 +86,7 @@ Temaet bygges i `scripts/ui/ui_kit.gd` (farver, knapper, paneler). **INTERFACE �
 2. Map dem, kør `tools/check.sh`, tag screenshots med gameplaykameraet og sammenlign med greybox.
 3. Udfyld `docs/ASSET_LEDGER.csv` (kilde, checksum, skala, review_status).
 4. Derefter bred udskiftning scene for scene i rækkefølgen ovenfor.
+
+## Figurer og animation (GA-13/14)
+
+Når `char.captain` peger på en wrapper med en `AnimationPlayer` (fx en Sidekick-figur med retargetede klip), afspiller `CharacterAnimator` automatisk `idle`, `walk`, `run` og `sample` (hold-E prøvetagning). Klipnavnene står i `data/art/animation_map.json` — omdøb dem dér, ikke i koden. Bevægelse er *in-place*: controlleren flytter figuren, og afspilningshastigheden skaleres til den faktiske fart (`speed_ref`), så fødderne ikke glider (bibel s. 24). Udfyld `docs/ANIMATION_LEDGER.csv` og godkend først efter billed-/videokontrol (bibel s. 25).

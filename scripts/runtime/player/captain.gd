@@ -20,6 +20,8 @@ var visual_pivot: Node3D
 var _hold := 0.0
 var _probe: Area3D
 var _step_accum := 0.0
+var _anim: CharacterAnimator
+var _slot: VisualSlot
 
 
 func _ready() -> void:
@@ -35,7 +37,9 @@ func _ready() -> void:
 	visual_pivot = Node3D.new()
 	visual_pivot.name = "VisualPivot"
 	add_child(visual_pivot)
-	visual_pivot.add_child(VisualSlot.make("char.captain"))
+	_slot = VisualSlot.make("char.captain")
+	visual_pivot.add_child(_slot)
+	_anim = CharacterAnimator.for_slot(_slot)
 	_probe = Area3D.new()
 	_probe.collision_layer = 0
 	_probe.collision_mask = 4
@@ -81,6 +85,16 @@ func _physics_process(delta: float) -> void:
 			AudioService.play("sfx_footstep", "SFX", -14.0)
 	_update_target()
 	_update_hold(delta)
+	if _anim.active():
+		var spd := Vector2(velocity.x, velocity.z).length()
+		var st := "idle"
+		if _hold > 0.0:
+			st = "sample"
+		elif spd > walk_speed + 0.3:
+			st = "run"
+		elif spd > 0.2:
+			st = "walk"
+		_anim.update(st, spd)
 
 
 func _update_target() -> void:

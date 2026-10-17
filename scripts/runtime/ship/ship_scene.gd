@@ -14,6 +14,7 @@ var _display: Label3D
 var _ai: Node3D
 var _ai_t := 0.0
 var _window_planet: Node3D
+var _voyage_label: Label
 
 
 func _ready() -> void:
@@ -57,6 +58,10 @@ func _ready() -> void:
 	add_child(hud)
 	captain.interact_target_changed.connect(func(t: Interactable) -> void: hud.set_prompt(t.prompt_text() + ("" if t.consequence.is_empty() or t.locked else "\n" + t.consequence) if t else ""))
 	captain.hold_progress.connect(hud.set_hold)
+	var vp := UiKit.panel(Vector2(300, 0))
+	_voyage_label = UiKit.label("", 16)
+	vp.add_child(_voyage_label)
+	hud.top_right.add_child(vp)
 	starmap = StarMapPanel.new()
 	starmap.closed.connect(_panel_closed)
 	starmap.travel_committed.connect(func(dest: String) -> void: AppFlow.goto("flight", {"destination": dest}))
@@ -162,6 +167,10 @@ func _on_state(_kind: String) -> void:
 		var pid := GameSession.sim.travel.current_planet_id(gs)
 		orbit_it.locked = pid.is_empty()
 		orbit_it.locked_reason = "arken er ikke i kredsløb om en planet"
+	var loc: Dictionary = GameSession.content.locations.get(gs.campaign.location_id, {})
+	_voyage_label.text = "%s\nBrændstof %d · Skrog %d%% · Komp. %d\nEmbryoner %s · Stasis %.1f år" % [
+		str(loc.get("name", "")) + ("  (kredsløb)" if loc.has("planet_id") else ""), int(gs.ark.fuel), int(gs.ark.integrity),
+		gs.ark.components, UiKit.thousands(gs.ark.embryo_viable), gs.campaign.captain_stasis_years]
 	var pc: Interactable = interactables.get("power_coupling")
 	if pc:
 		pc.locked = powered

@@ -494,8 +494,7 @@ func debug_action(action: String) -> void:
 			overview.open()
 		"future":
 			overview.open()
-			overview._forecast = GameSession.era_forecast(20)
-			overview.refresh()
+			overview._start_forecast()
 		"zoomout":
 			cam_rig.zoom = 110.0
 		"event":

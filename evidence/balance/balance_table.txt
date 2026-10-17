@@ -1,0 +1,21 @@
+
+planet   strategy      year   pop  adult crisis reserve  ownkW   dmd profile      stops
+viridia  balanced      40.0   650    140     1    1627  312.0 288.0 independent  critic,critic,critic
+viridia  power_first   40.0   650    160     1    1420  316.0 288.0 independent  critic,critic,critic
+viridia  lean          40.0   650    360     1    2081  312.0 284.0 independent  critic,critic,critic
+pelagos  balanced      40.0   650    360     0    1544  268.8 247.0 independent  critic,critic
+pelagos  power_first   40.0   650    360     0    1555  270.8 247.0 independent  critic,critic
+pelagos  lean           5.5    80      0     0       0   72.0  66.0 fragile      critic,supply,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba
+ferrum   balanced      40.0   560    360     1    1969  577.2 557.0 independent  critic,critic,critic
+ferrum   power_first   40.0   560    360     1    1988  567.6 554.0 independent  critic,critic,critic
+ferrum   lean          40.0   560    360     1    1973  577.2 557.0 independent  critic,critic,critic
+sere     balanced      40.0   650    360     1    1995  360.0 338.0 independent  critic,critic,critic
+sere     power_first   40.0   650    360     1    1993  364.0 338.0 independent  critic,critic,critic
+sere     lean          40.0   650    360     1    1995  351.0 331.0 independent  critic,critic,critic
+nivalis  balanced      40.0   650    360     1    1911  398.4 375.0 independent  critic,critic,critic
+nivalis  power_first   40.0   650    360     1    1910  415.2 379.0 independent  critic,critic,critic
+nivalis  lean           4.6    60      0     1       0  108.0 141.0 fragile      critic,critic,supply,supply,supply,supply,supply,supply,supply,supply,supply,supply,supply,supply,supply,supply,supply,supply,supply,supply,supply,supply,supply,supply,supply,supply,supply,supply,supply,supply,supply,supply,supply,supply,supply,supply,supply,supply,supply,supply,supply,supply,supply,supply,supply,supply,supply,supply,supply,supply,supply,supply,supply,supply,supply,supply,supply,supply,supply,supply,supply,supply,supply,supply,supply,supply,supply,supply,supply,supply,supply,supply,supply,supply,supply,supply,supply,supply,supply,supply
+umbra    balanced      40.0   650    360     1    1933  378.0 344.0 independent  critic,critic,critic
+umbra    power_first   40.0   650    360     1    1935  360.0 340.0 independent  critic,critic,critic
+umbra    lean          40.0   650    360     1    1936  360.0 340.0 independent  critic,critic,critic
+by planet: {"ferrum":{"best_pop":560,"wins":3},"nivalis":{"best_pop":650,"wins":2},"pelagos":{"best_pop":650,"wins":2},"sere":{"best_pop":650,"wins":3},"umbra":{"best_pop":650,"wins":3},"viridia":{"best_pop":650,"wins":3}}

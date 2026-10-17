@@ -34,7 +34,7 @@ TASKS = {
     "GA-01": {"unit": ["test_content"], "smoke": ["menu_loads"], "shots": ["menu.png"],
               "expected": "Ren opstart uden parserfejl; version dokumenteret; repeatable smoke-kommando.",
               "cmd": "tools/check.sh"},
-    "GA-02": {"smoke": ["ga02_route_10_runs_no_wall_pass", "ga02_route_10_runs_figure_kept", "ga02_camera_never_passes_hull", "prompt_targets_coupling"], "shots": ["ship_power.png"],
+    "GA-02": {"smoke": ["ga02_route_10_runs_no_wall_pass", "ga02_route_10_runs_figure_kept", "ga02_camera_never_passes_hull", "ga02_camera_mode_switch_clean", "prompt_targets_coupling"], "shots": ["ship_power.png"],
               "expected": "10 gennemløb af samme rute uden væggennemgang eller mistet figur; kamera kolliderer.",
               "cmd": "godot --headless --path . res://scenes/tests/scene_smoke.tscn"},
     "GA-03": {"unit": ["test_ark_travel::test_power_objective_once"], "smoke": ["ga03_power_restored_by_interaction", "ga03_objective_not_rewarded_twice", "starmap_opens"], "shots": ["ship_dark.png", "ship_power.png"],

@@ -1,0 +1,14 @@
+{
+  "_note": "Maps game animation states to clip names inside an imported character's AnimationPlayer (bible p.24-25: in-place locomotion; playback speed follows real movement speed). Rename the clips here to match your imported Sidekick/Synty/Mixamo clips. speed_ref = the ground speed (m/s) the clip was authored for.",
+  "char.captain": {
+    "idle": { "clip": "Idle", "loop": true },
+    "walk": { "clip": "Walk", "loop": true, "speed_ref": 1.5 },
+    "run": { "clip": "Run", "loop": true, "speed_ref": 4.5 },
+    "interact": { "clip": "Interact", "loop": false },
+    "sample": { "clip": "Kneel", "loop": true },
+    "blend_s": 0.18
+  },
+  "char.citizen_adult": { "idle": { "clip": "Idle", "loop": true }, "walk": { "clip": "Walk", "loop": true, "speed_ref": 1.4 }, "blend_s": 0.25 },
+  "char.citizen_child": { "idle": { "clip": "Idle", "loop": true }, "walk": { "clip": "Walk", "loop": true, "speed_ref": 1.2 }, "blend_s": 0.25 },
+  "char.robot_worker": { "idle": { "clip": "Idle", "loop": true }, "walk": { "clip": "Walk", "loop": true, "speed_ref": 1.2 }, "build": { "clip": "Work", "loop": true }, "blend_s": 0.2 }
+}
