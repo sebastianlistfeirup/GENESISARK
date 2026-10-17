@@ -1,0 +1,259 @@
+{
+  "_note": "Ark interior on a 4 m grid. Legend: '#' void/hull, '.' corridor, 'B' bridge, 'E' embryo bank, 'W' workshop, 'C' cryo bay, 'D' doorway. Walls are generated on edges between different zones (doorways connect everything). Markers place interactables and props in cell coordinates [col, row] (+ fractional offsets). Swap the visuals by mapping ship.* slots in data/art/asset_slots.json.",
+  "cell_size": 4.0,
+  "wall_height": 3.6,
+  "rows": [
+    "###############",
+    "##BBBBBBBBBBB##",
+    "##BBBBBBBBBBB##",
+    "##BBBBBBBBBBB##",
+    "#######D#######",
+    "#.............#",
+    "#.#####D#####.#",
+    "#.#EEEEEEEEE#.#",
+    "#.#EEEEEEEEE#.#",
+    "#.#EEEEEEEEE#.#",
+    "#.#####D#####.#",
+    "#.............#",
+    "#####D####D####",
+    "##WWWWWW#CCCC##",
+    "##WWWWWW#CCCC##",
+    "##WWWWWW#CCCC##",
+    "###############"
+  ],
+  "zones": {
+    "B": {
+      "name": "Broen",
+      "light": "#9fd6e0",
+      "emergency": true
+    },
+    "E": {
+      "name": "Embryobanken",
+      "light": "#7fd6d0",
+      "emergency": true
+    },
+    "W": {
+      "name": "Værkstedet",
+      "light": "#ffd29a",
+      "emergency": true
+    },
+    "C": {
+      "name": "Kryorummet",
+      "light": "#b8d8ff",
+      "emergency": true
+    },
+    ".": {
+      "name": "Ringkorridoren",
+      "light": "#d8e2e6",
+      "emergency": true
+    }
+  },
+  "windows": [
+    {
+      "row": 1,
+      "side": "north",
+      "cols": [
+        3,
+        4,
+        5,
+        9,
+        10,
+        11
+      ]
+    }
+  ],
+  "markers": [
+    {
+      "type": "spawn",
+      "cell": [
+        10.5,
+        14.2
+      ],
+      "yaw": 180
+    },
+    {
+      "type": "cryo_pod",
+      "cell": [
+        9.5,
+        13.3
+      ],
+      "yaw": 0
+    },
+    {
+      "type": "cryo_pod",
+      "cell": [
+        11.0,
+        13.3
+      ],
+      "yaw": 0
+    },
+    {
+      "type": "cryo_pod",
+      "cell": [
+        12.3,
+        13.3
+      ],
+      "yaw": 0
+    },
+    {
+      "type": "cryo_pod",
+      "cell": [
+        12.3,
+        15.4
+      ],
+      "yaw": 0
+    },
+    {
+      "type": "interact",
+      "id": "power_coupling",
+      "slot": "ship.power_coupling",
+      "cell": [
+        2.1,
+        14.0
+      ],
+      "yaw": -90
+    },
+    {
+      "type": "interact",
+      "id": "workbench",
+      "slot": "ship.workbench",
+      "cell": [
+        5.0,
+        15.5
+      ],
+      "yaw": 0
+    },
+    {
+      "type": "prop",
+      "slot": "ship.robot_station",
+      "cell": [
+        6.6,
+        13.3
+      ],
+      "yaw": 0
+    },
+    {
+      "type": "prop",
+      "slot": "char.robot_worker",
+      "cell": [
+        6.6,
+        13.5
+      ],
+      "yaw": 180
+    },
+    {
+      "type": "prop",
+      "slot": "ship.crate",
+      "cell": [
+        2.6,
+        15.6
+      ],
+      "yaw": 0.3
+    },
+    {
+      "type": "prop",
+      "slot": "ship.crate",
+      "cell": [
+        3.3,
+        15.7
+      ],
+      "yaw": 0.1
+    },
+    {
+      "type": "interact",
+      "id": "embryo_bank",
+      "slot": "ship.embryo_bank_core",
+      "cell": [
+        7.5,
+        8.5
+      ],
+      "yaw": 0
+    },
+    {
+      "type": "embryo_tanks",
+      "rows": [
+        7.35,
+        9.65
+      ],
+      "from_col": 3.6,
+      "to_col": 11.4,
+      "spacing": 1.6,
+      "gap": [
+        6.3,
+        8.7
+      ]
+    },
+    {
+      "type": "embryo_display",
+      "cell": [
+        7.5,
+        7.05
+      ],
+      "yaw": 0
+    },
+    {
+      "type": "interact",
+      "id": "starmap",
+      "slot": "ship.starmap_table",
+      "cell": [
+        7.5,
+        2.4
+      ],
+      "yaw": 0
+    },
+    {
+      "type": "interact",
+      "id": "bridge_terminal",
+      "slot": "ship.terminal_bridge",
+      "cell": [
+        4.0,
+        1.5
+      ],
+      "yaw": 0
+    },
+    {
+      "type": "interact",
+      "id": "orbit_terminal",
+      "slot": "ship.terminal_bridge",
+      "cell": [
+        11.0,
+        1.5
+      ],
+      "yaw": 0
+    },
+    {
+      "type": "prop",
+      "slot": "ship.captain_chair",
+      "cell": [
+        7.5,
+        3.4
+      ],
+      "yaw": 0
+    },
+    {
+      "type": "ai",
+      "cell": [
+        9.2,
+        2.6
+      ]
+    },
+    {
+      "type": "prop",
+      "slot": "ship.pillar",
+      "cell": [
+        2.2,
+        3.7
+      ],
+      "yaw": 0
+    },
+    {
+      "type": "prop",
+      "slot": "ship.pillar",
+      "cell": [
+        12.8,
+        3.7
+      ],
+      "yaw": 0
+    }
+  ]
+}

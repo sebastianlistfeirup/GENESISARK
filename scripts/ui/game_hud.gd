@@ -1,0 +1,155 @@
+class_name GameHud
+extends CanvasLayer
+## Shared HUD for all gameplay scenes: current objective, interaction prompt,
+## hold progress, notices (never only colour), story subtitles, journal (Tab)
+## and pause (Esc). Scene-specific widgets go into `top_right` / `bottom`.
+
+var root: Control
+var objective_title: Label
+var objective_hint: Label
+var prompt: Label
+var hold_bar: ProgressBar
+var toasts: VBoxContainer
+var top_right: VBoxContainer
+var bottom: HBoxContainer
+var story: StoryPlayer
+var journal: JournalPanel
+var pause_menu: PauseMenu
+var _prompt_panel: PanelContainer
+
+
+func _ready() -> void:
+	layer = 10
+	root = Control.new()
+	root.set_anchors_preset(Control.PRESET_FULL_RECT)
+	root.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	root.theme = UiKit.theme()
+	add_child(root)
+	# Objective (top-left)
+	var op := UiKit.panel()
+	op.position = Vector2(24, 20)
+	op.custom_minimum_size = Vector2(420, 0)
+	op.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var ov := UiKit.vbox(2)
+	ov.add_child(UiKit.title("Mål"))
+	objective_title = UiKit.label("", 21, UiKit.TEXT, true)
+	objective_hint = UiKit.label("", 15, UiKit.MUTED, true)
+	ov.add_child(objective_title)
+	ov.add_child(objective_hint)
+	op.add_child(ov)
+	root.add_child(op)
+	# Top-right widgets
+	top_right = UiKit.vbox(8)
+	top_right.set_anchors_and_offsets_preset(Control.PRESET_TOP_RIGHT)
+	top_right.position = Vector2(-24, 20)
+	top_right.grow_horizontal = Control.GROW_DIRECTION_BEGIN
+	top_right.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	root.add_child(top_right)
+	# Prompt (center-bottom)
+	_prompt_panel = UiKit.panel()
+	_prompt_panel.set_anchors_and_offsets_preset(Control.PRESET_CENTER_BOTTOM)
+	_prompt_panel.grow_horizontal = Control.GROW_DIRECTION_BOTH
+	_prompt_panel.grow_vertical = Control.GROW_DIRECTION_BEGIN
+	_prompt_panel.position.y -= 210
+	_prompt_panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var pv := UiKit.vbox(4)
+	prompt = UiKit.label("", 20, UiKit.TEXT)
+	prompt.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	pv.add_child(prompt)
+	hold_bar = UiKit.bar(0, 1, UiKit.AMBER, 10)
+	hold_bar.visible = false
+	pv.add_child(hold_bar)
+	_prompt_panel.add_child(pv)
+	_prompt_panel.visible = false
+	root.add_child(_prompt_panel)
+	# Bottom bar for scene widgets
+	bottom = UiKit.hbox(10)
+	bottom.set_anchors_and_offsets_preset(Control.PRESET_CENTER_BOTTOM)
+	bottom.grow_horizontal = Control.GROW_DIRECTION_BOTH
+	bottom.grow_vertical = Control.GROW_DIRECTION_BEGIN
+	bottom.position.y -= 20
+	root.add_child(bottom)
+	# Toasts (left, under objective)
+	toasts = UiKit.vbox(6)
+	toasts.position = Vector2(24, 170)
+	toasts.custom_minimum_size = Vector2(420, 0)
+	toasts.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	root.add_child(toasts)
+	story = StoryPlayer.new()
+	add_child(story)
+	journal = JournalPanel.new()
+	add_child(journal)
+	pause_menu = PauseMenu.new()
+	add_child(pause_menu)
+	GameSession.objectives_completed.connect(_on_objectives)
+	GameSession.state_changed.connect(func(_k: String) -> void: refresh_objective())
+	GameSession.command_failed.connect(func(r: CommandResult) -> void:
+		AudioService.ui("ui_error")
+		toast(r.reason, "warning"))
+	GameSession.notice.connect(toast)
+	GameSession.story_requested.connect(story.play_scene)
+	refresh_objective()
+
+
+func refresh_objective() -> void:
+	if not GameSession.has_game():
+		return
+	var o := GameSession.sim.objectives.current(GameSession.state)
+	objective_title.text = str(o.get("title", "Kolonien klarer sig selv."))
+	objective_hint.text = str(o.get("hint", ""))
+
+
+func _on_objectives(ids: Array) -> void:
+	for id: Variant in ids:
+		toast("Mål fuldført: %s" % GameSession.content.objectives.get(str(id), {}).get("title", id), "ok")
+	refresh_objective()
+
+
+func set_prompt(text: String) -> void:
+	prompt.text = text
+	_prompt_panel.visible = not text.is_empty()
+
+
+func set_hold(fraction: float) -> void:
+	hold_bar.visible = fraction > 0.0
+	hold_bar.value = fraction
+
+
+## Notice with icon + colour + text (colour is never the only signal).
+func toast(text: String, kind: String = "info", seconds: float = 5.0) -> void:
+	if text.is_empty():
+		return
+	var p := UiKit.panel()
+	p.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var h := UiKit.hbox(8)
+	var icon := UiKit.label(UiKit.status_icon(kind), 18, UiKit.status_color(kind))
+	h.add_child(icon)
+	var l := UiKit.label(text, 16, UiKit.TEXT, true)
+	l.custom_minimum_size = Vector2(360, 0)
+	h.add_child(l)
+	p.add_child(h)
+	toasts.add_child(p)
+	while toasts.get_child_count() > 4:
+		var old := toasts.get_child(0)
+		toasts.remove_child(old)
+		old.queue_free()
+	var t := p.create_tween()
+	t.tween_interval(seconds)
+	t.tween_property(p, "modulate:a", 0.0, 0.6)
+	t.tween_callback(p.queue_free)
+
+
+func any_modal_open() -> bool:
+	return pause_menu.visible or journal.visible or story.blocking
+
+
+func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action_pressed("journal") and not pause_menu.visible:
+		journal.toggle()
+		get_viewport().set_input_as_handled()
+	elif event.is_action_pressed("pause"):
+		if journal.visible:
+			journal.toggle()
+		elif not pause_menu.visible:
+			pause_menu.open()
+		get_viewport().set_input_as_handled()

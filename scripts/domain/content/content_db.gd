@@ -21,6 +21,8 @@ var events: Dictionary = {}
 var endings: Dictionary = {}
 var objectives: Dictionary = {}
 var story: Dictionary = {}         # scene_id -> scene
+var journal_entries: Array = []    # [{id, trigger, text}]
+var characters: Dictionary = {}    # id -> {name, perspective, bio}
 var errors: PackedStringArray = []
 var content_version: String = "0"
 
@@ -74,6 +76,13 @@ func load_all(root: String) -> bool:
 	_load_keyed(root + "/endings", "endings", endings)
 	_load_keyed(root + "/objectives", "objectives", objectives)
 	_load_keyed(root + "/story", "scenes", story)
+	var jv: Variant = DictUtil.load_json(root + "/story/journal.json")
+	if jv is Dictionary:
+		journal_entries = DictUtil.get_arr(jv, "entries")
+	var sv2: Variant = DictUtil.load_json(root + "/story/scenes.json")
+	if sv2 is Dictionary:
+		for ch: Dictionary in DictUtil.get_arr(sv2, "characters"):
+			characters[str(ch.get("id"))] = ch
 	validate()
 	return errors.is_empty()
 
@@ -291,6 +300,22 @@ func planet_ids_sorted() -> Array:
 	ids.sort_custom(func(a: String, b: String) -> bool:
 		return int(planets[a].get("order", 0)) < int(planets[b].get("order", 0)))
 	return ids
+
+
+func scenes_for_trigger(trigger: String) -> Array:
+	var out: Array = []
+	for id: String in story.keys():
+		if str(story[id].get("trigger", "")) == trigger:
+			out.append(story[id])
+	return out
+
+
+func journal_for_trigger(trigger: String) -> Array:
+	var out: Array = []
+	for e: Dictionary in journal_entries:
+		if str(e.get("trigger", "")) == trigger:
+			out.append(e)
+	return out
 
 
 func building(id: String) -> Dictionary:
