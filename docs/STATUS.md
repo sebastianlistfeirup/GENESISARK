@@ -9,7 +9,7 @@
 | current_phase | 1 · Fundament (port ikke bestået endnu) |
 | last_passed_gate | — (fase 1-porten kræver GA-11 og GA-12 DONE) |
 | active_task | GA-11 / GA-12 (VERIFYING) |
-| last_commit | 42604c4 (+ statuscommit) |
+| last_commit | 83f12d9 (+ statuscommit) |
 | next_command | `tools/check.sh` og derefter `godot --path .` |
 
 ## Tests kørt (faktiske resultater på dette commit)

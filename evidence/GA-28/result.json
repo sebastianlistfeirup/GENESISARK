@@ -1,11 +1,11 @@
 {
   "task_id": "GA-28",
-  "commit": "42604c4",
+  "commit": "83f12d9",
   "engine_version": "4.5.1-stable (official)",
   "command": "godot --headless --path . --script res://tools/balance/run_balance.gd",
   "exit_code": 0,
   "expected": "Alle seks kan gennemføres på standard. Ingen kandidat dominerer alle strategier. Ingen skjult ressourcefælde.",
-  "observed": "Alle seks planeter når år 40 med selvstændig profil i mindst to af tre strategier; Ferrum topper ved 560 indbyggere (vandknaphed), lean-strategien kollapser på Pelagos og Nivalis. Se balance_table.txt.",
+  "observed": "15 af 18 kørsler når år 40 med selvstændig profil; alle seks planeter vindes med mindst to strategier. Ferrum topper ved 560 (vand). Kollaps: Viridia power_first, Pelagos lean, Nivalis lean. Lagre har loft (1 års forbrug).",
   "by_planet": {
     "ferrum": {
       "best_pop": 560,
@@ -29,7 +29,7 @@
     },
     "viridia": {
       "best_pop": 650,
-      "wins": 3
+      "wins": 2
     }
   },
   "fixture": "seeds 1001-1018",

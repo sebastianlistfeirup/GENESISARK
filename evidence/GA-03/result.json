@@ -1,6 +1,6 @@
 {
   "task_id": "GA-03",
-  "commit": "42604c4",
+  "commit": "83f12d9",
   "engine_version": "4.5.1-stable (official)",
   "command": "godot --headless --path . --script res://tests/run_tests.gd && godot --headless --path . res://scenes/tests/scene_smoke.tscn",
   "exit_code": 0,
@@ -25,5 +25,5 @@
     "evidence/shots/ship_power.png"
   ],
   "visual_review": "Greybox-proxies; visuel animation/Synty ikke godkendt (bibel s. 17, 25).",
-  "timestamp": "2026-10-17T20:54:52+00:00"
+  "timestamp": "2026-10-17T21:07:46+00:00"
 }
