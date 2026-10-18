@@ -15,6 +15,7 @@ Læs i denne rækkefølge, før du ændrer kode: `docs/BIBLE.md` (s. 3 mandat, s
 - Invarianter: alle ressourcer ≥ 0; viable+incubating+born+lost = 50.000; born er historisk, population er levende; børn arbejder ikke; landing kan kun committes én gang; byggeri kan ikke bruge samme pris to gange; tidsspring stopper ved første uafklarede kritiske hændelse.
 - Alle engangsvirkninger har et transaktions-/event-id (`GameState.mark_applied`).
 - Save = domæne (stabile id'er, primitive værdier). Afledte caches (`ColonyState.census`, `network_dirty`) gemmes ikke.
+- Al spillertekst skrives på **engelsk** (kildesproget, D-025) via `Loc.t("…")` eller datafelter; kør `python3 tools/loc_extract.py` og udfyld den danske kolonne. `tools/check.sh` fejler ved manglende oversættelse.
 - Balance er data (`data/`). Ændr én variabelgruppe ad gangen og kør `tools/balance/run_balance.gd`.
 - Grafik er VisualSlots. Vendor-filer er read-only; kollision/interaktion ejes af spillets noder. Rå købte pakker må aldrig committes.
 - GDScript med typer, snake_case filer, PascalCase klasser. Ingen addons uden dokumenteret gevinst.

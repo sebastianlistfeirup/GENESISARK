@@ -51,7 +51,7 @@ func test_placement_rules() -> void:
 	chk = sim.colony.check_placement(sim.state, "solar_array", 110, 110, 0)
 	check(not chk["ok"], "uden for distrikt/net")
 	chk = sim.colony.check_placement(sim.state, "mine", 0, 20, 0)
-	check(not chk["ok"] and " ".join(chk["reasons"]).contains("ressource"), "mine kun i ressourceområde")
+	check(not chk["ok"] and " ".join(chk["reasons"]).contains("resource area"), "mine only in the resource area")
 
 
 func test_no_double_spend_and_refund_bounds() -> void:

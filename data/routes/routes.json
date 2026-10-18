@@ -3,8 +3,8 @@
   "start_location": "drift",
   "locations": {
     "drift": {
-      "name": "Driftpunktet",
-      "description": "Arkens nuværende position — et tomt punkt mellem stjernerne.",
+      "name": "The Drift Point",
+      "description": "The Ark's current position — an empty point between the stars.",
       "star_position": [
         0.0,
         0.0
@@ -70,7 +70,7 @@
         "type": "field",
         "density": 0.25
       },
-      "risk_note": "Spredte asteroider på indflyvningen."
+      "risk_note": "Scattered asteroids on the approach."
     },
     {
       "a": "drift",
@@ -82,7 +82,7 @@
         "type": "debris",
         "density": 0.35
       },
-      "risk_note": "Ruten passerer et felt af vragrester og småsten."
+      "risk_note": "The route passes a field of debris and small rocks."
     },
     {
       "a": "drift",
@@ -94,7 +94,7 @@
         "type": "field",
         "density": 0.3
       },
-      "risk_note": "Spredte asteroider på indflyvningen."
+      "risk_note": "Scattered asteroids on the approach."
     },
     {
       "a": "drift",
@@ -117,7 +117,7 @@
         "type": "field",
         "density": 0.45
       },
-      "risk_note": "Spredte asteroider på indflyvningen."
+      "risk_note": "Scattered asteroids on the approach."
     },
     {
       "a": "drift",
@@ -125,7 +125,7 @@
       "fuel": 28,
       "integrity": 7,
       "days": 100,
-      "risk_note": "Ruten krydser et asteroidebælte.",
+      "risk_note": "The route crosses an asteroid belt.",
       "hazard": {
         "type": "belt",
         "density": 0.85
@@ -152,7 +152,7 @@
         "type": "field",
         "density": 0.3
       },
-      "risk_note": "Spredte asteroider på indflyvningen."
+      "risk_note": "Scattered asteroids on the approach."
     },
     {
       "a": "viridia",
@@ -164,7 +164,7 @@
         "type": "debris",
         "density": 0.4
       },
-      "risk_note": "Ruten passerer et felt af vragrester og småsten."
+      "risk_note": "The route passes a field of debris and small rocks."
     },
     {
       "a": "viridia",
@@ -176,7 +176,7 @@
         "type": "field",
         "density": 0.4
       },
-      "risk_note": "Spredte asteroider på indflyvningen."
+      "risk_note": "Scattered asteroids on the approach."
     },
     {
       "a": "viridia",
@@ -188,7 +188,7 @@
         "type": "belt",
         "density": 0.8
       },
-      "risk_note": "Ruten krydser et asteroidebælte."
+      "risk_note": "The route crosses an asteroid belt."
     },
     {
       "a": "pelagos",
@@ -200,7 +200,7 @@
         "type": "field",
         "density": 0.35
       },
-      "risk_note": "Spredte asteroider på indflyvningen."
+      "risk_note": "Scattered asteroids on the approach."
     },
     {
       "a": "pelagos",
@@ -212,7 +212,7 @@
         "type": "debris",
         "density": 0.45
       },
-      "risk_note": "Ruten passerer et felt af vragrester og småsten."
+      "risk_note": "The route passes a field of debris and small rocks."
     },
     {
       "a": "pelagos",
@@ -224,7 +224,7 @@
         "type": "field",
         "density": 0.3
       },
-      "risk_note": "Spredte asteroider på indflyvningen."
+      "risk_note": "Scattered asteroids on the approach."
     },
     {
       "a": "pelagos",
@@ -236,7 +236,7 @@
         "type": "belt",
         "density": 0.75
       },
-      "risk_note": "Ruten krydser et asteroidebælte."
+      "risk_note": "The route crosses an asteroid belt."
     },
     {
       "a": "ferrum",
@@ -259,7 +259,7 @@
         "type": "field",
         "density": 0.35
       },
-      "risk_note": "Spredte asteroider på indflyvningen."
+      "risk_note": "Scattered asteroids on the approach."
     },
     {
       "a": "ferrum",
@@ -271,7 +271,7 @@
         "type": "belt",
         "density": 0.65
       },
-      "risk_note": "Ruten krydser et asteroidebælte."
+      "risk_note": "The route crosses an asteroid belt."
     },
     {
       "a": "sere",
@@ -283,7 +283,7 @@
         "type": "field",
         "density": 0.3
       },
-      "risk_note": "Spredte asteroider på indflyvningen."
+      "risk_note": "Scattered asteroids on the approach."
     },
     {
       "a": "sere",
@@ -295,7 +295,7 @@
         "type": "belt",
         "density": 0.6
       },
-      "risk_note": "Ruten krydser et asteroidebælte."
+      "risk_note": "The route crosses an asteroid belt."
     },
     {
       "a": "nivalis",
@@ -307,7 +307,7 @@
         "type": "debris",
         "density": 0.5
       },
-      "risk_note": "Ruten passerer et felt af vragrester og småsten."
+      "risk_note": "The route passes a field of debris and small rocks."
     }
   ]
 }

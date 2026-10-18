@@ -36,7 +36,7 @@
       "ok": true
     },
     {
-      "detail": "moved=0.39",
+      "detail": "moved=0.36",
       "name": "riglab_runs",
       "ok": true
     },
@@ -56,7 +56,7 @@
       "ok": true
     },
     {
-      "detail": "Water plant",
+      "detail": "Vandanlæg",
       "name": "language_switch_keeps_state",
       "ok": true
     },
@@ -66,7 +66,7 @@
       "ok": true
     },
     {
-      "detail": "Gå til værkstedet, 6 steder",
+      "detail": "Go to the workshop, 6 steder",
       "name": "waypoint_points_to_objective",
       "ok": true
     },
@@ -86,7 +86,7 @@
       "ok": true
     },
     {
-      "detail": "dyaw=-0.60",
+      "detail": "dyaw=-0.61",
       "name": "pad_look_turns_camera",
       "ok": true
     },
@@ -101,7 +101,7 @@
       "ok": true
     },
     {
-      "detail": "obj_choose_probe → Sammenlign kandidaterne",
+      "detail": "obj_choose_probe → Compare the candidates",
       "name": "waypoint_follows_next_objective",
       "ok": true
     },
@@ -166,7 +166,7 @@
       "ok": true
     },
     {
-      "detail": "Tag hovedprøven",
+      "detail": "Take the main sample",
       "name": "waypoint_surface_main_sample",
       "ok": true
     },
@@ -176,7 +176,7 @@
       "ok": true
     },
     {
-      "detail": "Placér relæet",
+      "detail": "Place the relay",
       "name": "waypoint_surface_then_relay",
       "ok": true
     },
@@ -239,5 +239,5 @@
   "engine_version": "4.5.1-stable (official)",
   "failures": [],
   "status": "PASS",
-  "timestamp": "2026-10-18T15:03:45"
+  "timestamp": "2026-10-18T15:26:45"
 }

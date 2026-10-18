@@ -21,7 +21,7 @@ func test_blocked_without_supply() -> void:
 	land_on(sim, "pelagos")
 	var r := sim.population.start_incubation(sim.state, 10, "inc1")
 	fails(r, "incubation_blocked")
-	check(r.reason.contains("omsorgs"), "forklarer omsorgscenter: " + r.reason)
+	check(r.reason.contains("care and incubation center"), "explains care center: " + r.reason)
 	eq(sim.state.ark.embryo_viable, 50000, "intet trukket")
 
 

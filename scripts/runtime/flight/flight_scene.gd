@@ -70,7 +70,7 @@ func _ready() -> void:
 	var panel := UiKit.panel()
 	panel.add_child(_info)
 	hud.top_right.add_child(panel)
-	hud.set_prompt(Loc.t("W/S fart · A/D sideværts · Mellemrum/Ctrl op/ned · [Shift] undvigemanøvre · [F] autopilot"))
+	hud.set_prompt(Loc.t("W/S speed · A/D sideways · Space/Ctrl up/down · [Shift] evasive burn · [F] autopilot"))
 	AudioService.set_ambience("amb_space")
 	_thruster = AudioStreamPlayer.new()
 	_thruster.stream = AudioService.stream("sfx_thruster")
@@ -179,9 +179,9 @@ func _physics_process(delta: float) -> void:
 		_cleared = true
 		if GameSession.has_game():
 			hud.nav.say({"id": "hazard_cleared", "severity": "info", "speaker": "NAV", "text": GameSession.sim.nav.line("hazard_cleared", {"hits": hits})})
-	_info.text = Loc.t("Indflyvning: %s\nKredsløb om %d m · fart %d\nSkrog %d %% · Ilt %d %% · nedslag %d\n%s") % [
+	_info.text = Loc.t("Approach: %s\nOrbit in %d m · speed %d\nHull %d %% · Oxygen %d %% · impacts %d\n%s") % [
 		GameSession.content.locations.get(_dest, {}).get("name", _dest), int(maxf(0.0, LENGTH - progress)), int(speed),
-		int(_projected_integrity()), int(_projected_oxygen()), hits, Loc.t("AUTOPILOT (NAV)") if autopilot else Loc.t("manuel")]
+		int(_projected_integrity()), int(_projected_oxygen()), hits, Loc.t("AUTOPILOT (NAV)") if autopilot else Loc.t("manual")]
 	if progress >= LENGTH:
 		_arrive()
 
@@ -287,7 +287,7 @@ func _arrive() -> void:
 		var r := GameSession.cmd_resolve_approach(hits, severe, burn_s, autopilot_used)
 		if r.ok:
 			hud.nav.say(GameSession.sim.nav.arrival(GameSession.state))
-	hud.set_prompt(Loc.t("Kredsløb etableret."))
+	hud.set_prompt(Loc.t("Orbit established."))
 	await get_tree().create_timer(2.5).timeout
 	AppFlow.goto("ship", {"spawn": "orbit_terminal"})
 

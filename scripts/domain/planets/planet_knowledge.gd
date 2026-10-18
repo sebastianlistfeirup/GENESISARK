@@ -15,7 +15,7 @@ var site_facts: Dictionary = {}      # site_id -> {fact: {status, value, source}
 static func create(planet_def: Dictionary) -> PlanetKnowledge:
 	var k := PlanetKnowledge.new()
 	k.planet_id = str(planet_def.get("id"))
-	k.apply_level(planet_def, "archive", Loc.t("Arkens arkiv"))
+	k.apply_level(planet_def, "archive", Loc.t("The Ark's archive"))
 	return k
 
 

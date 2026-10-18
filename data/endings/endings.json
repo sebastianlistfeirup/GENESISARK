@@ -2,40 +2,40 @@
   "endings": [
     {
       "id": "independent",
-      "title": "Selvstændig civilisation",
-      "summary": "{settlement} kan klare sig uden arkens nødstrøm.",
-      "criteria_text": "Mindst 500 indbyggere, robust forsyning uden arkens strøm og et råd, der fungerer.",
+      "title": "Independent civilization",
+      "summary": "{settlement} can manage without the Ark's emergency power.",
+      "criteria_text": "At least 500 inhabitants, a robust supply without the Ark's power, and a working council.",
       "epilogue": [
-        "{years} år efter landingen på {planet} slukkede rådet i {settlement} for arkens nødstrøm. Ingen lamper gik ud.",
-        "{population} mennesker bor nu ved {site}. De har klaret sig gennem {crises} kriser og lært noget af hver eneste. Generatorerne passes af folk, der blev født ved siden af dem.",
-        "Den første kohorte underviser nu den fjerde. Rådet har {council} medlemmer og mødes i den gamle skolehal. Det er uenigt det meste af tiden. Sådan skal det være.",
-        "Kaptajnen var vågen i {captain_years} år i alt. Arken står stadig ved landingspladsen: museum, reservedelslager, et sted børnene klatrer.",
-        "ARK skrev en sidste linje i loggen: »Der er stadig liv i embryobanken. Det er ikke længere mig, der bestemmer, hvornår de vækkes.«"
+        "{years} years after the landing on {planet}, the council of {settlement} switched off the Ark's emergency power. No lamps went out.",
+        "{population} people now live at {site}. They have come through {crises} crises and learned something from every one. The generators are tended by people who were born beside them.",
+        "The first cohort now teaches the fourth. The council has {council} members and meets in the old school hall. It is divided most of the time. As it should be.",
+        "The captain was awake for {captain_years} years in all. The Ark still stands at the landing site: museum, spare-parts store, a place for the children to climb.",
+        "ARK wrote a last line in the log: “There is still life in the embryo bank. It is no longer for me to decide when they wake.”"
       ]
     },
     {
       "id": "shielded",
-      "title": "Skærmet civilisation",
-      "summary": "{settlement} lever, men stadig i arkens skygge.",
-      "criteria_text": "Kolonien overlever, men er kritisk afhængig af arkens nødstrøm, lægeafsnit eller reserver.",
+      "title": "Sheltered civilization",
+      "summary": "{settlement} lives, but still in the Ark's shadow.",
+      "criteria_text": "The colony survives, but remains critically dependent on the Ark's emergency power, medical bay or reserves.",
       "epilogue": [
-        "Efter {years} år på {planet} er {settlement} et rigtigt samfund: {population} mennesker, en skole, en klinik og et råd med {council} medlemmer.",
-        "Men hver nat løber arkens nødstrøm stadig ud i nettet. I {crises} kriser var det arken, der holdt lyset tændt, og alle ved det.",
-        "Rådet tager det op hvert år. De unge fra de sidste kohorter vil bygge flere generatorer ved {site}. De ældste vil ikke risikere noget. Begge sider har ret.",
-        "Kaptajnen gik i stasis efter {captain_years} års vagt. ARK fik én ordre: »Bliv, til de ikke har brug for dig.« ARK bliver."
+        "After {years} years on {planet}, {settlement} is a real community: {population} people, a school, a clinic and a council of {council} members.",
+        "But every night the Ark's emergency power still flows into the grid. In {crises} crises it was the Ark that kept the lights on, and everyone knows it.",
+        "The council raises it every year. The young from the latest cohorts want to build more generators at {site}. The elders will risk nothing. Both sides are right.",
+        "The captain went into stasis after {captain_years} years on watch. ARK was given one order: “Stay until they no longer need you.” ARK stays."
       ]
     },
     {
       "id": "fragile",
-      "title": "Skrøbelig civilisation",
-      "summary": "{settlement} har brug for flere år, før byen kan stå alene.",
-      "criteria_text": "Forsyning eller reserver er for svage til overdragelse. Stabilisering kommer først.",
+      "title": "Fragile civilization",
+      "summary": "{settlement} needs more years before it can stand alone.",
+      "criteria_text": "Supply or reserves are too weak for a handover. Stabilization comes first.",
       "epilogue": [
-        "{population} mennesker lever ved {site} på {planet}. Det er flere, end nogen turde håbe på, da arken landede for {years} år siden.",
-        "Men reserverne er tynde. Efter {crises} kriser er lagrene halvtomme og maskinerne slidte. De, der mødes i skolehallen, bruger hvert møde på det samme spørgsmål: Hvordan kommer vi gennem den næste?",
-        "Den første kohorte er voksen nu. De passer vandanlægget i skiftehold og lærer de yngste at lappe filtre og rør.",
-        "Kaptajnen bliver vågen lidt endnu. Efter {captain_years} år kender kaptajnen hvert eneste rør i {settlement}.",
-        "Overdragelsen venter. Ikke fordi menneskene ikke er klar, men fordi kolonien ikke er. Det er ikke en fiasko. Det er et arbejde, der ikke er færdigt."
+        "{population} people live at {site} on {planet}. More than anyone dared hope when the Ark landed {years} years ago.",
+        "But the reserves are thin. After {crises} crises the stores are half empty and the machines worn. Those who meet in the school hall spend every meeting on the same question: how do we get through the next one?",
+        "The first cohort is grown now. They tend the water plant in shifts and teach the youngest to patch filters and pipes.",
+        "The captain stays awake a little longer. After {captain_years} years, the captain knows every pipe in {settlement}.",
+        "The handover will have to wait. Not because the people aren't ready, but because the colony isn't. It is not a failure. It is unfinished work."
       ]
     }
   ]

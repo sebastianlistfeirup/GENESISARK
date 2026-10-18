@@ -41,9 +41,9 @@ func close() -> void:
 
 func _build() -> void:
 	UiKit.clear(_body)
-	_body.add_child(UiKit.heading(Loc.t("Indstillinger")))
+	_body.add_child(UiKit.heading(Loc.t("Settings")))
 	var lang_row := UiKit.hbox(8)
-	var ll := UiKit.label(Loc.t("Sprog"), 16)
+	var ll := UiKit.label(Loc.t("Language"), 16)
 	ll.custom_minimum_size = Vector2(300, 0)
 	lang_row.add_child(ll)
 	for code: String in Loc.LANGUAGES.keys():
@@ -53,38 +53,38 @@ func _build() -> void:
 		lb.disabled = code == Loc.lang()
 		lang_row.add_child(lb)
 	_body.add_child(lang_row)
-	_body.add_child(UiKit.title(Loc.t("Lyd")))
+	_body.add_child(UiKit.title(Loc.t("Audio")))
 	for k: String in ["master_volume", "music_volume", "sfx_volume", "ambience_volume", "ui_volume"]:
-		_slider(k, {"master_volume": Loc.t("Samlet"), "music_volume": Loc.t("Musik"), "sfx_volume": Loc.t("Effekter"), "ambience_volume": Loc.t("Stemning"), "ui_volume": Loc.t("Brugerflade")}[k], 0.0, 1.0, 0.05)
-	_body.add_child(UiKit.title(Loc.t("Visning og tilgængelighed")))
-	_slider("ui_scale", Loc.t("UI-skalering"), 0.75, 1.5, 0.05)
-	_slider("subtitle_size", Loc.t("Undertekststørrelse"), 16, 34, 1)
-	_toggle("subtitles", Loc.t("Undertekster"))
-	_toggle("reduced_motion", Loc.t("Reduceret bevægelse (ingen fades/rystelser)"))
-	_toggle("camera_shake", Loc.t("Kamerarystelser"))
-	_toggle("fullscreen", Loc.t("Fuld skærm"))
-	_body.add_child(UiKit.title(Loc.t("Mus")))
-	_slider("mouse_sensitivity", Loc.t("Følsomhed"), 0.05, 1.0, 0.05)
-	_toggle("invert_y", Loc.t("Invertér lodret akse"))
+		_slider(k, {"master_volume": Loc.t("Master"), "music_volume": Loc.t("Music"), "sfx_volume": Loc.t("Effects"), "ambience_volume": Loc.t("Ambience"), "ui_volume": Loc.t("Interface")}[k], 0.0, 1.0, 0.05)
+	_body.add_child(UiKit.title(Loc.t("Display and accessibility")))
+	_slider("ui_scale", Loc.t("UI scale"), 0.75, 1.5, 0.05)
+	_slider("subtitle_size", Loc.t("Subtitle size"), 16, 34, 1)
+	_toggle("subtitles", Loc.t("Subtitles"))
+	_toggle("reduced_motion", Loc.t("Reduced motion (no fades/shaking)"))
+	_toggle("camera_shake", Loc.t("Camera shake"))
+	_toggle("fullscreen", Loc.t("Fullscreen"))
+	_body.add_child(UiKit.title(Loc.t("Mouse")))
+	_slider("mouse_sensitivity", Loc.t("Sensitivity"), 0.05, 1.0, 0.05)
+	_toggle("invert_y", Loc.t("Invert vertical axis"))
 	if TouchControls.enabled:
-		_slider("touch_look_sensitivity", Loc.t("Kamera ved træk (touch)"), 0.4, 2.0, 0.05)
-	_body.add_child(UiKit.title(Loc.t("Taster")))
+		_slider("touch_look_sensitivity", Loc.t("Camera drag (touch)"), 0.4, 2.0, 0.05)
+	_body.add_child(UiKit.title(Loc.t("Controls")))
 	for action: String in SettingsService.ACTIONS.keys():
 		var h := UiKit.hbox(8)
 		var l := UiKit.label(Loc.t(str(SettingsService.ACTION_LABELS.get(action, action))), 16)
 		l.custom_minimum_size = Vector2(300, 0)
 		h.add_child(l)
-		var b := UiKit.button(Loc.t("Tryk en tast...") if _waiting_action == action else SettingsService.binding_text(action))
+		var b := UiKit.button(Loc.t("Press a key...") if _waiting_action == action else SettingsService.binding_text(action))
 		b.custom_minimum_size = Vector2(240, 0)
 		b.pressed.connect(func() -> void:
 			_waiting_action = action
 			_build())
 		h.add_child(b)
 		_body.add_child(h)
-	_body.add_child(UiKit.button(Loc.t("Nulstil taster"), func() -> void:
+	_body.add_child(UiKit.button(Loc.t("Reset keys"), func() -> void:
 		SettingsService.reset_bindings()
 		_build()))
-	_body.add_child(UiKit.button(Loc.t("Luk"), close))
+	_body.add_child(UiKit.button(Loc.t("Close"), close))
 
 
 func _slider(key: String, label_text: String, lo: float, hi: float, step: float) -> void:

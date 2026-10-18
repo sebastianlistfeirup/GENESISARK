@@ -3,7 +3,7 @@ extends Node
 ## points: GameSession pauses command intake while it snapshots (bible p.22).
 
 const SLOTS := ["auto", "manual_1", "manual_2", "manual_3", "pre_landing"]
-const SLOT_LABELS := {"auto": "Autogem", "manual_1": "Slot 1", "manual_2": "Slot 2", "manual_3": "Slot 3", "pre_landing": "Før landing"}
+const SLOT_LABELS := {"auto": "Autosave", "manual_1": "Slot 1", "manual_2": "Slot 2", "manual_3": "Slot 3", "pre_landing": "Before landing"}
 
 var store := SaveStore.new("user://saves")
 var _counter := 0

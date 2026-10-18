@@ -1,9 +1,9 @@
 {
   "id": "survey_pelagos",
   "planet_id": "pelagos",
-  "title": "Før fronten",
-  "briefing": "En stormfront ruller ind fra havet om få timer. Kysten er frugtbar, men vi ved ikke, hvad der lever i tidevandszonen. Find ud af det, før vejret lukker.",
-  "goal": "Tag en prøve af tidevandsmåtten, og placér et relæ i læ af højderyggen.",
+  "title": "Before the front",
+  "briefing": "A storm front is rolling in from the sea within hours. The coast is fertile, but we don't know what lives in the tidal zone. Find out before the weather closes in.",
+  "goal": "Take a sample of the tidal mat and place a relay in the lee of the ridge.",
   "points": {
     "lander": [
       0,
@@ -14,7 +14,7 @@
         -38,
         30
       ],
-      "label": "Tidevandsmåtten",
+      "label": "The Tidal Mat",
       "reveals": [
         "biological_risk"
       ],
@@ -22,35 +22,35 @@
         "water_distance_m",
         "shelter"
       ],
-      "text": "Alger og små skaldyr — intet, der vil os noget ondt. Vandet kan renses med enkle filtre, og højderyggen tager det værste af vinden."
+      "text": "Algae and small shellfish — nothing that means us harm. The water can be cleaned with simple filters, and the ridge takes the worst of the wind."
     },
     "risk_sample": {
       "pos": [
         -24,
         10
       ],
-      "label": "Revkanten",
+      "label": "The Reef Edge",
       "reveals": [
         "solar_factor"
       ],
       "site_facts": [
         "exposure"
       ],
-      "text": "Bølgerne slår ind over revet. Lysmåleren viser, hvor meget skyerne stjæler: solenergi alene vil ikke række her."
+      "text": "The waves break over the reef. The light meter shows how much the clouds steal: solar power alone won't be enough here."
     },
     "relay": {
       "pos": [
         6,
         36
       ],
-      "label": "Højderyggen"
+      "label": "The Ridge"
     }
   },
   "routes": [
     {
       "id": "safe",
-      "label": "Over højderyggen",
-      "description": "Stejlere og længere, men i læ for vinden.",
+      "label": "Over the ridge",
+      "description": "Steeper and longer, but sheltered from the wind.",
       "waypoints": [
         [
           0,
@@ -72,8 +72,8 @@
     },
     {
       "id": "short",
-      "label": "Langs stranden",
-      "description": "Lige ud langs vandkanten — midt i stormfrontens vej.",
+      "label": "Along the beach",
+      "description": "Straight along the waterline — right in the storm front's path.",
       "waypoints": [
         [
           0,
@@ -98,13 +98,13 @@
       ],
       "radius": 12,
       "hazard_id": "storms",
-      "label": "Stormfront"
+      "label": "Storm front"
     }
   ],
-  "evacuation": "Vinden river i dragten, og energien falder hurtigt. ARK: »Søg læ og gå mod landeren. Vi kommer igen, når fronten har passeret.«",
+  "evacuation": "The wind tears at the suit, and energy is falling fast. ARK: “Find shelter and head for the lander. We'll come back when the front has passed.”",
   "findings": {
-    "main": "Pelagos: Tidevandszonen er levende, men ufarlig. Byg i læ af ryggen.",
-    "risk": "Pelagos: Skyerne tager meget af solen. Batterier bliver nødvendige.",
-    "relay": "Pelagos: Relæet sidder i læ og holder forbindelsen gennem stormene."
+    "main": "Pelagos: The tidal zone is alive, but harmless. Build in the lee of the ridge.",
+    "risk": "Pelagos: The clouds take much of the sun. Batteries will be necessary.",
+    "relay": "Pelagos: The relay sits in the lee and holds the link through the storms."
   }
 }

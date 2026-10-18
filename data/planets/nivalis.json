@@ -4,31 +4,162 @@
   "family": "ice",
   "biome_id": "ice",
   "order": 5,
-  "tagline": "Vandis og geotermiske lommer.",
-  "advantage": "Rigelig vandis og geotermiske lommer giver stabil strøm og vand.",
-  "price": "Varmeforbrug og korte arbejdsperioder begrænser ekspansion.",
-  "description": "En hvid, stille verden. Damp stiger fra sprækker, hvor planetens indre varme når overfladen.",
-  "palette": { "nature": "#cfe3ea", "danger": "#4fa3d9", "sky": "#b8cdd8" },
-  "hazard_ids": ["cold"],
-  "site_templates": ["ice_a", "ice_b", "ice_c"],
-  "properties": {
-    "gravity_multiplier": { "type": "number", "unit": "g", "truth": 0.97,
-      "levels": { "archive": {"status": "estimated", "min": 0.8, "max": 1.1}, "orbital": {"status": "known"} } },
-    "mean_temperature_c": { "type": "number", "unit": "°C", "truth": -38,
-      "levels": { "archive": {"status": "estimated", "min": -60, "max": -10}, "orbital": {"status": "known"} } },
-    "atmosphere_class": { "type": "category", "truth": "thin_cold",
-      "levels": { "archive": {"status": "estimated", "candidates": ["thin_cold", "inert_thin"]}, "orbital": {"status": "known"} } },
-    "water_access": { "type": "number", "unit": "indeks", "truth": 0.9,
-      "levels": { "archive": {"status": "estimated", "min": 0.5, "max": 1.0}, "orbital": {"status": "known"} } },
-    "mineral_yield": { "type": "number", "unit": "x", "truth": 0.9,
-      "levels": { "archive": {"status": "unknown"}, "probe": {"status": "known"} } },
-    "solar_factor": { "type": "number", "unit": "x", "truth": 0.6,
-      "levels": { "archive": {"status": "estimated", "min": 0.4, "max": 0.9}, "orbital": {"status": "known"} } },
-    "geothermal_factor": { "type": "number", "unit": "x", "truth": 0.8,
-      "levels": { "archive": {"status": "unknown"}, "orbital": {"status": "estimated", "min": 0.3, "max": 1.0}, "probe": {"status": "estimated", "min": 0.6, "max": 0.9}, "expedition": {"status": "known"} } },
-    "biological_risk": { "type": "number", "unit": "indeks", "truth": 0.05,
-      "levels": { "archive": {"status": "estimated", "min": 0.0, "max": 0.2}, "orbital": {"status": "known"} } }
+  "tagline": "Water ice and geothermal pockets.",
+  "advantage": "Abundant water ice and geothermal pockets give stable power and water.",
+  "price": "Heating demand and short work periods limit expansion.",
+  "description": "A white, silent world. Steam rises from fissures where the planet's inner heat reaches the surface.",
+  "palette": {
+    "nature": "#cfe3ea",
+    "danger": "#4fa3d9",
+    "sky": "#b8cdd8"
   },
-  "colony_modifiers": { "solar": 0.6, "water": 1.3, "food": 0.7, "mine": 0.9, "geothermal": 0.8, "heating_kw_per_habitat": 2, "build_cost": 1.1, "drone_efficiency": 0.8, "requires_module": "heater" },
-  "robust_plan": "Landing ved en geotermisk lomme; geotermisk generator før habitat, og varmemodul før første kohorte."
+  "hazard_ids": [
+    "cold"
+  ],
+  "site_templates": [
+    "ice_a",
+    "ice_b",
+    "ice_c"
+  ],
+  "properties": {
+    "gravity_multiplier": {
+      "type": "number",
+      "unit": "g",
+      "truth": 0.97,
+      "levels": {
+        "archive": {
+          "status": "estimated",
+          "min": 0.8,
+          "max": 1.1
+        },
+        "orbital": {
+          "status": "known"
+        }
+      }
+    },
+    "mean_temperature_c": {
+      "type": "number",
+      "unit": "°C",
+      "truth": -38,
+      "levels": {
+        "archive": {
+          "status": "estimated",
+          "min": -60,
+          "max": -10
+        },
+        "orbital": {
+          "status": "known"
+        }
+      }
+    },
+    "atmosphere_class": {
+      "type": "category",
+      "truth": "thin_cold",
+      "levels": {
+        "archive": {
+          "status": "estimated",
+          "candidates": [
+            "thin_cold",
+            "inert_thin"
+          ]
+        },
+        "orbital": {
+          "status": "known"
+        }
+      }
+    },
+    "water_access": {
+      "type": "number",
+      "unit": "index",
+      "truth": 0.9,
+      "levels": {
+        "archive": {
+          "status": "estimated",
+          "min": 0.5,
+          "max": 1.0
+        },
+        "orbital": {
+          "status": "known"
+        }
+      }
+    },
+    "mineral_yield": {
+      "type": "number",
+      "unit": "x",
+      "truth": 0.9,
+      "levels": {
+        "archive": {
+          "status": "unknown"
+        },
+        "probe": {
+          "status": "known"
+        }
+      }
+    },
+    "solar_factor": {
+      "type": "number",
+      "unit": "x",
+      "truth": 0.6,
+      "levels": {
+        "archive": {
+          "status": "estimated",
+          "min": 0.4,
+          "max": 0.9
+        },
+        "orbital": {
+          "status": "known"
+        }
+      }
+    },
+    "geothermal_factor": {
+      "type": "number",
+      "unit": "x",
+      "truth": 0.8,
+      "levels": {
+        "archive": {
+          "status": "unknown"
+        },
+        "orbital": {
+          "status": "estimated",
+          "min": 0.3,
+          "max": 1.0
+        },
+        "probe": {
+          "status": "estimated",
+          "min": 0.6,
+          "max": 0.9
+        },
+        "expedition": {
+          "status": "known"
+        }
+      }
+    },
+    "biological_risk": {
+      "type": "number",
+      "unit": "index",
+      "truth": 0.05,
+      "levels": {
+        "archive": {
+          "status": "estimated",
+          "min": 0.0,
+          "max": 0.2
+        },
+        "orbital": {
+          "status": "known"
+        }
+      }
+    }
+  },
+  "colony_modifiers": {
+    "solar": 0.6,
+    "water": 1.3,
+    "food": 0.7,
+    "mine": 0.9,
+    "geothermal": 0.8,
+    "heating_kw_per_habitat": 2,
+    "build_cost": 1.1,
+    "drone_efficiency": 0.8,
+    "requires_module": "heater"
+  },
+  "robust_plan": "Land at a geothermal pocket; geothermal generator before habitat, and heating module before the first cohort."
 }

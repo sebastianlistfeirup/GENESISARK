@@ -4,10 +4,10 @@
   "family": "desert",
   "biome_id": "desert",
   "order": 4,
-  "tagline": "Stabilt terræn og nemt byggeri.",
-  "advantage": "Fladt, stabilt terræn gør byggeri billigt og hurtigt.",
-  "price": "Støv reducerer solenergi; lagring og vedligeholdelse får vægt.",
-  "description": "Bølgende okkerfarvede sletter. Fine støvfaner hænger over horisonten det meste af året.",
+  "tagline": "Stable terrain and easy construction.",
+  "advantage": "Flat, stable terrain makes construction cheap and fast.",
+  "price": "Dust reduces solar power; storage and maintenance matter.",
+  "description": "Rolling ochre plains. Fine plumes of dust hang over the horizon most of the year.",
   "palette": {
     "nature": "#c99a5b",
     "danger": "#8a6f4e",
@@ -75,7 +75,7 @@
     },
     "water_access": {
       "type": "number",
-      "unit": "indeks",
+      "unit": "index",
       "truth": 0.45,
       "levels": {
         "archive": {
@@ -146,7 +146,7 @@
     },
     "biological_risk": {
       "type": "number",
-      "unit": "indeks",
+      "unit": "index",
       "truth": 0.1,
       "levels": {
         "archive": {
@@ -172,5 +172,5 @@
     "wear_multiplier": 1.6,
     "requires_module": ""
   },
-  "robust_plan": "Byg ekstra solpaneler og et batteri; prioritér værksted til komponenter, fordi støvet slider."
+  "robust_plan": "Build extra solar panels and a battery; prioritize a workshop for components, because the dust wears things down."
 }

@@ -3,132 +3,132 @@
     {
       "id": "journal_intro_wakeup",
       "trigger": "intro_wakeup",
-      "text": "Jeg er vågen. Arken er kold, og jeg er den eneste."
+      "text": "I'm awake. The Ark is cold, and I'm the only one."
     },
     {
       "id": "journal_power_restored",
       "trigger": "power_restored",
-      "text": "Nødstrømmen er tilbage. Med lys i gangene føles skibet mindre tomt."
+      "text": "Emergency power is back. With light in the corridors, the ship feels less empty."
     },
     {
       "id": "journal_embryo_bank",
       "trigger": "embryo_bank",
-      "text": "50.000. Jeg stod foran tavlen i en halv time. Tallet ændrede sig ikke."
+      "text": "50,000. I stood in front of the board for half an hour. The number didn't change."
     },
     {
       "id": "journal_starmap_first",
       "trigger": "starmap_first",
-      "text": "Seks verdener. Ingen af dem er Jorden. Måske er det meningen."
+      "text": "Six worlds. None of them is Earth. Maybe that's the point."
     },
     {
       "id": "journal_probe_result",
       "trigger": "probe_result",
-      "text": "Proben har svaret. Én usikkerhed mindre. Mange tilbage."
+      "text": "The probe has answered. One uncertainty fewer. Many left."
     },
     {
       "id": "journal_travel_start",
       "trigger": "travel_start",
-      "text": "Kursen er sat. Arken knager, som om den også er spændt."
+      "text": "The course is set. The Ark creaks, as if it's nervous too."
     },
     {
       "id": "journal_arrival_viridia",
       "trigger": "arrival_viridia",
-      "text": "Viridia. Grøn som en drøm, men luften er fuld af sporer. Vi får brug for filtre."
+      "text": "Viridia. Green as a dream, but the air is full of spores. We'll need filters."
     },
     {
       "id": "journal_arrival_pelagos",
       "trigger": "arrival_pelagos",
-      "text": "Pelagos. Hav så langt øjet rækker, og storme, der kommer med få timers varsel."
+      "text": "Pelagos. Sea as far as the eye can see, and storms that come with only hours of warning."
     },
     {
       "id": "journal_arrival_ferrum",
       "trigger": "arrival_ferrum",
-      "text": "Ferrum. Rød klippe og hvid sol. Rig på malm, fattig på vand."
+      "text": "Ferrum. Red rock and white sun. Rich in ore, poor in water."
     },
     {
       "id": "journal_arrival_sere",
       "trigger": "arrival_sere",
-      "text": "Sere. Flad og venlig set fra kredsløb. Støvet ser harmløst ud herfra."
+      "text": "Sere. Flat and friendly from orbit. The dust looks harmless from up here."
     },
     {
       "id": "journal_arrival_nivalis",
       "trigger": "arrival_nivalis",
-      "text": "Nivalis. Hvid og stille. Damp stiger fra isen som åndedræt."
+      "text": "Nivalis. White and silent. Steam rises from the ice like breath."
     },
     {
       "id": "journal_arrival_umbra",
       "trigger": "arrival_umbra",
-      "text": "Umbra. Natsiden er så mørk, at stjernerne synes at fortsætte ned i jorden."
+      "text": "Umbra. The night side is so dark the stars seem to continue down into the ground."
     },
     {
       "id": "journal_orbital_scan",
       "trigger": "orbital_scan",
-      "text": "Scanningen er færdig. Planeten har fået tal, men dens steder har endnu ingen navne."
+      "text": "The scan is complete. The planet has numbers now, but its places have no names yet."
     },
     {
       "id": "journal_expedition_start",
       "trigger": "expedition_start",
-      "text": "Første skridt på fremmed jord. Dragten summer. Jeg tæller procenter."
+      "text": "First step on alien ground. The suit hums. I count percentages."
     },
     {
       "id": "journal_expedition_suit_low",
       "trigger": "expedition_suit_low",
-      "text": "Dragten var næsten tom. ARK talte roligt hele vejen tilbage."
+      "text": "The suit was almost empty. ARK talked calmly all the way back."
     },
     {
       "id": "journal_expedition_complete",
       "trigger": "expedition_complete",
-      "text": "Prøverne er analyseret. Vi ved mere. Vi ved aldrig nok."
+      "text": "The samples are analyzed. We know more. We never know enough."
     },
     {
       "id": "journal_landing_commit",
       "trigger": "landing_commit",
-      "text": "Vi er landet. Arken flyver ikke igen. Nu er det her hjem."
+      "text": "We've landed. The Ark won't fly again. This is home now."
     },
     {
       "id": "journal_first_light",
       "trigger": "first_light",
-      "text": "Lys i det første habitat. Jeg stod længe udenfor og så på det."
+      "text": "Light in the first habitat. I stood outside for a long time and looked at it."
     },
     {
       "id": "journal_stable_supply",
       "trigger": "stable_supply",
-      "text": "Syv dage i træk med overskud. For første gang sov jeg en hel nat."
+      "text": "Seven days in a row with a surplus. For the first time I slept through the night."
     },
     {
       "id": "journal_incubation_start",
       "trigger": "incubation_start",
-      "text": "Ti lys er blevet ravgule. 270 dage. Jeg tæller allerede."
+      "text": "Ten lights have turned amber. 270 days. I'm already counting."
     },
     {
       "id": "journal_first_birth",
       "trigger": "first_birth",
-      "text": "Hun græd. Højt. Det var den smukkeste lyd, jeg nogensinde har hørt."
+      "text": "She cried. Loudly. It was the most beautiful sound I have ever heard."
     },
     {
       "id": "journal_crisis_survived",
       "trigger": "crisis_survived",
-      "text": "Vi kom igennem. Ikke uden skrammer, men alle var her stadig bagefter."
+      "text": "We made it through. Not without scars, but everyone was still here afterward."
     },
     {
       "id": "journal_captain_stasis",
       "trigger": "captain_stasis",
-      "text": "Jeg går i stasis. ARK holder vagt. Jeg stoler på den — og på dem."
+      "text": "I'm going into stasis. ARK keeps watch. I trust it — and them."
     },
     {
       "id": "journal_year_20",
       "trigger": "year_20",
-      "text": "Tyve år. De er voksne nu. De har meninger. Gode meninger."
+      "text": "Twenty years. They're adults now. They have opinions. Good opinions."
     },
     {
       "id": "journal_council_formed",
       "trigger": "council_formed",
-      "text": "Rådet mødtes i dag. Jeg sad på bagerste række. Det føltes rigtigt."
+      "text": "The council met today. I sat in the back row. It felt right."
     },
     {
       "id": "journal_year_40",
       "trigger": "year_40",
-      "text": "Fyrre år. De har ikke brug for mig på samme måde længere. Det var hele meningen."
+      "text": "Forty years. They don't need me the same way anymore. That was the whole point."
     }
   ]
 }

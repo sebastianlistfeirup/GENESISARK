@@ -16,11 +16,11 @@ func quote(gs: GameState, destination: String) -> Dictionary:
 	var from := gs.campaign.location_id
 	var q := {"from": from, "to": destination, "ok": false, "reasons": [], "risky": false, "risk_reasons": []}
 	if destination == from:
-		q["reasons"].append(Loc.t("Arken er allerede her."))
+		q["reasons"].append(Loc.t("The Ark is already here."))
 		return q
 	var route: Dictionary = content.route_between(from, destination)
 	if route.is_empty():
-		q["reasons"].append(Loc.t("Ingen kendt rute."))
+		q["reasons"].append(Loc.t("No known route."))
 		return q
 	var fuel := float(route.get("fuel", 0))
 	var integ := float(route.get("integrity", 0))
@@ -38,15 +38,15 @@ func quote(gs: GameState, destination: String) -> Dictionary:
 	q["hazard"] = {"type": DictUtil.get_str(hz, "type", "none"), "density": DictUtil.get_float(hz, "density", 0.0)}
 	q.merge(approach_estimate(q["hazard"]))
 	if gs.campaign.phase == CampaignState.PHASE_SETTLED:
-		q["reasons"].append(Loc.t("Arken er landet. Rejsen er slut."))
+		q["reasons"].append(Loc.t("The Ark has landed. The voyage is over."))
 	elif gs.campaign.phase == CampaignState.PHASE_ARK:
-		q["reasons"].append(Loc.t("Nødstrømmen skal genoprettes først."))
+		q["reasons"].append(Loc.t("Emergency power must be restored first."))
 	if gs.ark.fuel < fuel:
-		q["reasons"].append(Loc.t("Ikke nok brændstof (%.0f / %.0f).") % [gs.ark.fuel, fuel])
+		q["reasons"].append(Loc.t("Not enough fuel (%.0f / %.0f).") % [gs.ark.fuel, fuel])
 	if gs.ark.integrity - integ <= 0.0:
-		q["reasons"].append(Loc.t("Skroget vil ikke holde til rejsen."))
+		q["reasons"].append(Loc.t("The hull will not survive the voyage."))
 	if float(q["oxygen_after"]) <= 0.0:
-		q["reasons"].append(Loc.t("Iltlageret rækker ikke til rejsen (%.0f %% / %.0f %%).") % [gs.ark.oxygen, float(q["oxygen"])])
+		q["reasons"].append(Loc.t("The oxygen reserve will not last the journey (%.0f %% / %.0f %%).") % [gs.ark.oxygen, float(q["oxygen"])])
 	# Minimum reserve: from the destination, can we still reach the nearest other candidate?
 	var nearest := INF
 	var nearest_id := ""
@@ -64,14 +64,14 @@ func quote(gs: GameState, destination: String) -> Dictionary:
 	q["reserve_ok"] = float(q["fuel_after"]) >= float(q["reserve_needed"])
 	if not q["reserve_ok"]:
 		q["risky"] = true
-		q["risk_reasons"].append(Loc.t("Efter rejsen kan arken ikke nå videre til %s (kræver %.0f brændstof). Landing bliver i praksis endelig.") % [
+		q["risk_reasons"].append(Loc.t("After this voyage, the Ark cannot continue to %s (requires %.0f fuel). Landing will be effectively final.") % [
 			content.locations.get(nearest_id, {}).get("name", nearest_id), nearest])
 	if integ >= float(content.bal("risky_route_integrity_threshold", 6)):
 		q["risky"] = true
-		q["risk_reasons"].append(Loc.t("Ruten slider hårdt på skroget (-%.0f integritet).") % integ)
+		q["risk_reasons"].append(Loc.t("The route is hard on the hull (-%.0f integrity).") % integ)
 	if float(q["oxygen_after"]) > 0.0 and float(q["oxygen_after"]) < DictUtil.get_float(ox, "low", 30.0):
 		q["risky"] = true
-		q["risk_reasons"].append(Loc.t("Iltlageret er under %.0f %% ved ankomst. Reparér iltrenserne i værkstedet.") % DictUtil.get_float(ox, "low", 30.0))
+		q["risk_reasons"].append(Loc.t("The oxygen reserve is below %.0f %% on arrival. Repair the scrubbers in the workshop.") % DictUtil.get_float(ox, "low", 30.0))
 	q["ok"] = (q["reasons"] as Array).is_empty()
 	return q
 
@@ -94,11 +94,11 @@ func approach_estimate(hazard: Dictionary) -> Dictionary:
 func resolve_approach(gs: GameState, hits: int, severe: int, burn_s: float, autopilot_used: bool) -> CommandResult:
 	var pa := gs.campaign.pending_approach
 	if pa.is_empty():
-		return CommandResult.fail("no_approach", Loc.t("Ingen indflyvning venter."))
+		return CommandResult.fail("no_approach", Loc.t("No approach is pending."))
 	var txn := str(pa.get("txn", ""))
 	if gs.is_applied(txn):
 		gs.campaign.pending_approach = {}
-		return CommandResult.fail("duplicate_txn", Loc.t("Indflyvningen er allerede gennemført."))
+		return CommandResult.fail("duplicate_txn", Loc.t("The approach has already been completed."))
 	var ap: Dictionary = content.bal("approach", {})
 	var dens := DictUtil.get_float(DictUtil.get_dict(pa, "hazard"), "density", 0.0)
 	var max_hits := int(ceil(DictUtil.get_float(ap, "max_hits", 12.0) * maxf(dens, 0.1)))
@@ -114,21 +114,21 @@ func resolve_approach(gs: GameState, hits: int, severe: int, burn_s: float, auto
 	gs.ark.fuel = maxf(0.0, gs.ark.fuel - fuel)
 	gs.mark_applied(txn)
 	gs.campaign.pending_approach = {}
-	gs.log_journal(Loc.t("Indflyvning til %s: %d nedslag, skrog −%.1f %%, ilt −%.1f %%, brændstof −%.1f.") % [
+	gs.log_journal(Loc.t("Approach to %s: %d impacts, hull −%.1f %%, oxygen −%.1f %%, fuel −%.1f.") % [
 		content.locations.get(gs.campaign.location_id, {}).get("name", gs.campaign.location_id), hits, integ, oxy, fuel], "travel")
 	return CommandResult.success({"hits": hits, "severe": severe, "integrity": integ, "oxygen": oxy, "fuel": fuel})
 
 
 func request_travel(gs: GameState, destination: String, txn: String, confirm_risky: bool = false) -> CommandResult:
 	if txn.is_empty():
-		return CommandResult.fail("missing_txn", Loc.t("Rejsen mangler et transaktions-id."))
+		return CommandResult.fail("missing_txn", Loc.t("The voyage is missing a transaction id."))
 	if gs.is_applied(txn):
-		return CommandResult.fail("duplicate_txn", Loc.t("Rejsen er allerede gennemført."), {"location": gs.campaign.location_id})
+		return CommandResult.fail("duplicate_txn", Loc.t("The voyage has already been completed."), {"location": gs.campaign.location_id})
 	var q := quote(gs, destination)
 	if not q["ok"]:
 		return CommandResult.fail("travel_blocked", "; ".join(q["reasons"]), q)
 	if q["risky"] and not confirm_risky:
-		return CommandResult.fail("needs_confirmation", Loc.t("Risikabel rute kræver bekræftelse: ") + " ".join(q["risk_reasons"]), q)
+		return CommandResult.fail("needs_confirmation", Loc.t("Risky route requires confirmation: ") + " ".join(q["risk_reasons"]), q)
 	# Single commit point.
 	gs.ark.fuel = maxf(0.0, gs.ark.fuel - float(q["fuel"]))
 	gs.ark.integrity = maxf(0.0, gs.ark.integrity - float(q["integrity"]))
@@ -140,7 +140,7 @@ func request_travel(gs: GameState, destination: String, txn: String, confirm_ris
 		gs.campaign.visited.append(destination)
 	gs.mark_applied(txn)
 	gs.campaign.pending_approach = {"txn": "approach:" + txn, "destination": destination, "hazard": q["hazard"]}
-	gs.log_journal(Loc.t("Ankommet til %s efter %d dage i stasis.") % [content.locations[destination].get("name", destination), int(q["days"])], "travel")
+	gs.log_journal(Loc.t("Arrived at %s after %d days in stasis.") % [content.locations[destination].get("name", destination), int(q["days"])], "travel")
 	return CommandResult.success({"location": destination, "quote": q})
 
 

@@ -12,28 +12,28 @@ func _init(db: ContentDB) -> void:
 ## The emergency power coupling in the workshop. First objective (GA-03).
 func restore_power(gs: GameState) -> CommandResult:
 	if gs.ark.systems.get("power") != "offline":
-		return CommandResult.fail("already_restored", Loc.t("Nødstrømmen kører allerede."))
+		return CommandResult.fail("already_restored", Loc.t("Emergency power is already running."))
 	gs.ark.systems["power"] = "emergency"
 	gs.ark.systems["starmap"] = true
 	if gs.campaign.phase == CampaignState.PHASE_ARK:
 		gs.campaign.phase = CampaignState.PHASE_VOYAGE
-	gs.log_journal(Loc.t("Nødstrøm genoprettet. Broen og stjernekortet er online igen."), "ark")
+	gs.log_journal(Loc.t("Emergency power restored. The bridge and the star map are back online."), "ark")
 	return CommandResult.success({"power": "emergency"})
 
 
 func mark_system(gs: GameState, key: String) -> CommandResult:
 	if bool(gs.ark.systems.get(key, false)):
-		return CommandResult.fail("already_done", Loc.t("Allerede registreret."))
+		return CommandResult.fail("already_done", Loc.t("Already registered."))
 	gs.ark.systems[key] = true
 	return CommandResult.success({key: true})
 
 
 func spend_components(gs: GameState, amount: int) -> CommandResult:
 	if amount < 0:
-		return CommandResult.fail("invalid_amount", Loc.t("Negativ mængde."))
+		return CommandResult.fail("invalid_amount", Loc.t("Negative amount."))
 	if gs.ark.components < amount:
 		return CommandResult.fail("insufficient_components",
-			Loc.t("Ikke nok komponenter (har %d, kræver %d).") % [gs.ark.components, amount])
+			Loc.t("Not enough components (have %d, need %d).") % [gs.ark.components, amount])
 	gs.ark.components -= amount
 	return CommandResult.success({"components": gs.ark.components})
 
@@ -42,11 +42,11 @@ func spend_components(gs: GameState, amount: int) -> CommandResult:
 ## Workbench: repair the oxygen scrubbers with components (bible p.8: what is used here is missing in the colony).
 func repair_life_support(gs: GameState, components: int, txn: String) -> CommandResult:
 	if gs.is_applied(txn):
-		return CommandResult.fail("duplicate_txn", Loc.t("Reparationen er allerede udført."))
+		return CommandResult.fail("duplicate_txn", Loc.t("The repair has already been done."))
 	if gs.campaign.phase != CampaignState.PHASE_VOYAGE and gs.campaign.phase != CampaignState.PHASE_ARK:
-		return CommandResult.fail("wrong_phase", Loc.t("Arken er landet; livsstøtten drives nu af kolonien."))
+		return CommandResult.fail("wrong_phase", Loc.t("The Ark has landed; life support is now run by the colony."))
 	if gs.ark.oxygen >= 100.0:
-		return CommandResult.fail("full_oxygen", Loc.t("Iltlageret er fuldt."))
+		return CommandResult.fail("full_oxygen", Loc.t("The oxygen reserve is full."))
 	var r := spend_components(gs, components)
 	if not r.ok:
 		return r
@@ -57,11 +57,11 @@ func repair_life_support(gs: GameState, components: int, txn: String) -> Command
 
 func repair(gs: GameState, components: int, txn: String) -> CommandResult:
 	if gs.is_applied(txn):
-		return CommandResult.fail("duplicate_txn", Loc.t("Reparationen er allerede udført."))
+		return CommandResult.fail("duplicate_txn", Loc.t("The repair has already been done."))
 	if gs.campaign.phase != CampaignState.PHASE_VOYAGE and gs.campaign.phase != CampaignState.PHASE_ARK:
-		return CommandResult.fail("wrong_phase", Loc.t("Arken er landet; reparationer sker nu i kolonien."))
+		return CommandResult.fail("wrong_phase", Loc.t("The Ark has landed; repairs now take place in the colony."))
 	if gs.ark.integrity >= 100.0:
-		return CommandResult.fail("full_integrity", Loc.t("Skroget er intakt."))
+		return CommandResult.fail("full_integrity", Loc.t("The hull is intact."))
 	var r := spend_components(gs, components)
 	if not r.ok:
 		return r

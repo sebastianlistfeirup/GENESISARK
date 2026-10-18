@@ -2,6 +2,9 @@
 
 Biblen er baseline. Her står begrundede valg og afvigelser. Nyeste øverst.
 
+### D-025 · Spillet er på engelsk: engelsk er kildesproget
+Sebastian: "Spillet er 100% på engelsk." Engelsk er nu kildesproget i kode (`Loc.t("…")`) og data; dansk er en valgfri oversættelse (`localization/translations.csv`: keys = engelsk, da = dansk). Omlægningen er lavet maskinelt (`tools/loc_flip_source.py`) efter en sprogvask af al engelsk tekst (amerikansk stavning, fast ordliste, tørre NAV-linjer); 1.124 tekster, 0 uden match. Standardsprog er engelsk; gamle indstillinger med dansk som standard nulstilles én gang (settings version 2). Stemmemanuskriptet er på engelsk med engelsk regi. Docs til Sebastian forbliver på dansk; testbeskeder og udviklerværktøjer (RigLab, Asset-slots) må være danske. Ny regel for agenter: al spillertekst skrives på engelsk, og `tools/loc_extract.py` tilføjer den til oversættelsen.
+
 ### D-024 · Indflyvning gennem asteroider, iltlager og NAV
 Sebastians ønske: ingen ringe, men asteroider/bælter at undgå, og en tør, følelsesløs navigationscomputer (TARS-agtig rolle, egne replikker). Hver rute har en fare i data (`none/field/debris/belt` + tæthed). Rejsen bogføres som før; derefter venter en indflyvning (`campaign.pending_approach`), som bogføres præcis én gang: nedslag koster skrog, kraftige nedslag lækker ilt, undvigemanøvrer og autopilot koster brændstof (tal i `balance.approach`). Ny ressource: kaptajnens iltlager (`ark.oxygen`, %), bruges i stasis pr. rejsedag, repareres i værkstedet med komponenter, blokerer rejser, der ikke kan gennemføres. Gamle saves får fuldt lager. NAV (`NavAdvisor`, `data/story/nav.json`) vurderer ruten på stjernekortet før valget og melder kollisionskurs, nedslag, brændstof og ilt under flyvningen. Målt: autopilot giver 0-2 nedslag, passiv flyvning 1-5, i tråd med NAV's skøn. Bevidst ikke kopieret: TARS' replikker, humorindstilling og navn.
 

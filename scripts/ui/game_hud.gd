@@ -32,7 +32,7 @@ func _ready() -> void:
 	op.custom_minimum_size = Vector2(420, 0)
 	op.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	var ov := UiKit.vbox(2)
-	ov.add_child(UiKit.title(Loc.t("Mål")))
+	ov.add_child(UiKit.title(Loc.t("Objectives")))
 	objective_title = UiKit.label("", 21, UiKit.TEXT, true)
 	objective_hint = UiKit.label("", 15, UiKit.MUTED, true)
 	ov.add_child(objective_title)
@@ -101,13 +101,13 @@ func refresh_objective() -> void:
 	if not GameSession.has_game():
 		return
 	var o := GameSession.sim.objectives.current(GameSession.state)
-	objective_title.text = str(o.get("title", Loc.t("Kolonien klarer sig selv.")))
+	objective_title.text = str(o.get("title", Loc.t("The colony is self-sufficient.")))
 	objective_hint.text = str(o.get("hint", ""))
 
 
 func _on_objectives(ids: Array) -> void:
 	for id: Variant in ids:
-		toast(Loc.t("Mål fuldført: %s") % GameSession.content.objectives.get(str(id), {}).get("title", id), "ok")
+		toast(Loc.t("Objective complete: %s") % GameSession.content.objectives.get(str(id), {}).get("title", id), "ok")
 	refresh_objective()
 
 

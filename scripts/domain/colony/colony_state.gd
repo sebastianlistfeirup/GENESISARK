@@ -89,6 +89,6 @@ func invariant_errors() -> PackedStringArray:
 	var ids := {}
 	for b: Dictionary in buildings:
 		if ids.has(b.get("id")):
-			out.append(Loc.t("dubleret bygnings-id %s") % b.get("id"))
+			out.append(Loc.t("duplicate building id %s") % b.get("id"))
 		ids[b.get("id")] = true
 	return out

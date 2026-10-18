@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-"""Extracts every player-facing Danish source string into localization/translations.csv.
+"""Extracts every player-facing English source string into localization/translations.csv.
 
-Danish source text is the translation key (D-017). Sources:
+English source text is the translation key (D-017, D-025); the da column is the Danish translation. Sources:
   1. Loc.t("...") literals in scripts/**/*.gd
   2. Values of label dictionaries (const NAME := {...}) listed in DICT_CONSTS
   3. Text fields (TEXT_KEYS) in data/**/*.json — the same keys ContentDB.localize() walks
@@ -15,7 +15,7 @@ import csv, glob, json, os, re, sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CSV_PATH = os.path.join(ROOT, "localization", "translations.csv")
-LANGS = ["en"]
+LANGS = ["da"]
 LOC_CALL = re.compile(r'Loc\.t\("((?:[^"\\]|\\.)*)"\)')
 STR = re.compile(r'"((?:[^"\\]|\\.)*)"\s*:\s*"((?:[^"\\]|\\.)*)"')
 DICT_CONSTS = ["ACTION_LABELS", "PROPERTY_LABELS", "ATMOSPHERE_LABELS", "PRIORITY_LABELS", "REASONS", "STOP_TEXT",
@@ -23,12 +23,35 @@ DICT_CONSTS = ["ACTION_LABELS", "PROPERTY_LABELS", "ATMOSPHERE_LABELS", "PRIORIT
 # Keep in sync with ContentDB.TEXT_KEYS.
 TEXT_KEYS = {"name", "description", "label", "result", "settlement_name", "text", "title", "warning", "criteria_text",
              "epilogue", "summary", "advantage", "briefing", "evacuation", "goal", "main", "price", "relay", "risk",
-             "robust_plan", "tagline", "hint", "bio", "zone_label", "risk_note", "short", "subtitle", "role"}
+             "robust_plan", "tagline", "hint", "bio", "zone_label", "risk_note", "short", "subtitle", "role", "unit"}
 SKIP_DATA = {"art", "levels", "balance"}
 
 
 def unescape(s: str) -> str:
     return s.encode("utf-8").decode("unicode_escape").encode("latin-1").decode("utf-8")
+
+
+def dict_body(src: str, name: str):
+    """(start, end) of the body of `const NAME := {...}`, braces balanced, strings skipped."""
+    m = re.search(r"const %s\s*:?=\s*\{" % name, src)
+    if not m:
+        return None
+    depth, i, in_str = 1, m.end(), False
+    while i < len(src) and depth:
+        ch = src[i]
+        if in_str:
+            if ch == "\\":
+                i += 1
+            elif ch == '"':
+                in_str = False
+        elif ch == '"':
+            in_str = True
+        elif ch == "{":
+            depth += 1
+        elif ch == "}":
+            depth -= 1
+        i += 1
+    return (m.end(), i - 1)
 
 
 def from_code() -> dict:
@@ -39,11 +62,10 @@ def from_code() -> dict:
         for m in LOC_CALL.finditer(src):
             out.setdefault(unescape(m.group(1)), rel)
         for name in DICT_CONSTS:
-            m = re.search(r"const %s\s*:?=\s*\{(.*?)\n\}" % name, src, re.S) or \
-                re.search(r"const %s\s*:?=\s*\{(.*?)\}" % name, src)
-            if not m:
+            span = dict_body(src, name)
+            if not span:
                 continue
-            for km in STR.finditer(m.group(1)):
+            for km in STR.finditer(src[span[0]:span[1]]):
                 out.setdefault(unescape(km.group(2)), "%s:%s" % (rel, name))
     return out
 

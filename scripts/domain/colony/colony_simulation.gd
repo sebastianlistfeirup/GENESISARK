@@ -5,15 +5,15 @@ extends RefCounted
 ## DaySimulator.tick_day runs one strategic colony day; never per render frame.
 
 const REASONS := {
-	"no_access": "Ingen adgang: bygningen er ikke forbundet til robotdepotet.",
-	"no_power": "Ingen strøm: afbrudt efter prioritet.",
-	"no_workforce": "Mangler robotarbejdskraft.",
-	"maintenance": "Mangler vedligeholdelse: ingen komponenter til service.",
-	"input_missing": "Mangler råvarer til produktionen.",
-	"module_missing": "Mangler modul, som planeten kræver.",
-	"constructing": "Under opførelse.",
+	"no_access": "No access: the building is not connected to the drone depot.",
+	"no_power": "No power: cut off by priority.",
+	"no_workforce": "Not enough robot labor.",
+	"maintenance": "Maintenance lacking: no components for servicing.",
+	"input_missing": "Missing raw materials for production.",
+	"module_missing": "Missing a module the planet requires.",
+	"constructing": "Under construction.",
 }
-const PRIORITY_LABELS := {"life_support": "Livsstøtte", "care": "Omsorg", "water": "Vand/mad", "production": "Produktion"}
+const PRIORITY_LABELS := {"life_support": "Life support", "care": "Care", "water": "Water/food", "production": "Production"}
 
 var content: ContentDB
 
@@ -71,11 +71,11 @@ func check_placement(gs: GameState, def_id: String, x: float, z: float, rot: int
 	var out := {"ok": false, "reasons": [], "cost": {}}
 	var reasons: Array = out["reasons"]
 	if gs.colony == null or gs.campaign.phase != CampaignState.PHASE_SETTLED:
-		reasons.append(Loc.t("Der er ingen koloni endnu."))
+		reasons.append(Loc.t("There is no colony yet."))
 		return out
 	var def := content.building(def_id)
 	if def.is_empty() or not def.get("buildable", true):
-		reasons.append(Loc.t("Ukendt eller ikke-byggelig bygning."))
+		reasons.append(Loc.t("Unknown or unbuildable building."))
 		return out
 	var rect := rect_for(def, x, z, rot)
 	var site := content.site(gs.colony.site_id)
@@ -91,16 +91,16 @@ func check_placement(gs: GameState, def_id: String, x: float, z: float, rot: int
 		if Vector2(x, z).distance_to(Vector2(float(dc[0]), float(dc[1]))) <= rad:
 			inside = true
 	if not inside:
-		reasons.append(Loc.t("Skal placeres i %s.") % (Loc.t("boligzonen") if wanted == "living" else Loc.t("ressourceområdet") if wanted == "resource" else Loc.t("et af koloniens distrikter")))
+		reasons.append(Loc.t("Must be placed in %s.") % (Loc.t("the living zone") if wanted == "living" else Loc.t("the resource area") if wanted == "resource" else Loc.t("one of the colony's districts")))
 	for bz: Dictionary in DictUtil.get_arr(site, "blocked"):
 		var bc: Array = DictUtil.get_arr(bz, "center")
 		if _rect_circle_overlap(rect, Vector2(float(bc[0]), float(bc[1])), DictUtil.get_float(bz, "radius")):
-			reasons.append(Loc.t("Terrænet her er ufremkommeligt."))
+			reasons.append(Loc.t("The terrain here is impassable."))
 			break
 	for b: Dictionary in gs.colony.buildings:
 		var other := rect_for(content.building(str(b.get("def_id"))), float(b.get("x")), float(b.get("z")), int(b.get("rot", 0)))
 		if rect.grow(0.5).intersects(other):
-			reasons.append(Loc.t("Overlapper %s.") % content.building(str(b.get("def_id"))).get("name"))
+			reasons.append(Loc.t("Overlaps %s.") % content.building(str(b.get("def_id"))).get("name"))
 			break
 	# Network: must be within link range of a connected node.
 	var linked := false
@@ -112,20 +112,20 @@ func check_placement(gs: GameState, def_id: String, x: float, z: float, rot: int
 			linked = true
 			break
 	if not linked:
-		reasons.append(Loc.t("Ingen forbindelse: placér inden for %.0f m af forsyningsnettet.") % float(content.bal("network.link_range_m", 24.0)))
+		reasons.append(Loc.t("No connection: place within %.0f m of the supply network.") % float(content.bal("network.link_range_m", 24.0)))
 	var cost := build_cost(gs, def_id)
 	out["cost"] = cost
 	if not ignore_cost:
 		for k: String in cost.keys():
 			if float(gs.colony.inventory.get(k, 0.0)) < float(cost[k]):
-				reasons.append(Loc.t("Mangler %s (%d / %d).") % [_res_label(k), int(gs.colony.inventory.get(k, 0.0)), int(cost[k])])
+				reasons.append(Loc.t("Missing %s (%d / %d).") % [_res_label(k), int(gs.colony.inventory.get(k, 0.0)), int(cost[k])])
 	out["ok"] = reasons.is_empty()
 	return out
 
 
 func place_building(gs: GameState, def_id: String, x: float, z: float, rot: int, txn: String) -> CommandResult:
 	if gs.is_applied(txn):
-		return CommandResult.fail("duplicate_txn", Loc.t("Byggeordren er allerede afgivet."))
+		return CommandResult.fail("duplicate_txn", Loc.t("The build order has already been placed."))
 	var chk := check_placement(gs, def_id, x, z, rot)
 	if not chk["ok"]:
 		return CommandResult.fail("placement_invalid", " ".join(chk["reasons"]), chk)
@@ -150,9 +150,9 @@ func place_building(gs: GameState, def_id: String, x: float, z: float, rot: int,
 func demolish(gs: GameState, building_id: int) -> CommandResult:
 	var b := gs.colony.building_by_id(building_id) if gs.colony else {}
 	if b.is_empty():
-		return CommandResult.fail("unknown_building", Loc.t("Bygningen findes ikke."))
+		return CommandResult.fail("unknown_building", Loc.t("The building does not exist."))
 	if b.get("def_id") == "ark_core":
-		return CommandResult.fail("protected", Loc.t("Arkens kerne kan ikke rives ned."))
+		return CommandResult.fail("protected", Loc.t("The Ark's core cannot be demolished."))
 	var invested: Dictionary = DictUtil.get_dict(b, "invested")
 	var frac := float(content.bal("demolish_refund", 0.5))
 	if b.get("state") == ColonyState.B_CONSTRUCTING and float(b.get("progress", 0.0)) <= 0.0:
@@ -171,16 +171,16 @@ func demolish(gs: GameState, building_id: int) -> CommandResult:
 func add_module(gs: GameState, building_id: int, module_id: String) -> CommandResult:
 	var b := gs.colony.building_by_id(building_id) if gs.colony else {}
 	if b.is_empty():
-		return CommandResult.fail("unknown_building", Loc.t("Bygningen findes ikke."))
+		return CommandResult.fail("unknown_building", Loc.t("The building does not exist."))
 	var mods: Dictionary = DictUtil.get_dict(content.building(str(b.get("def_id"))), "modules")
 	if not mods.has(module_id):
-		return CommandResult.fail("unknown_module", Loc.t("Bygningen kan ikke have dette modul."))
+		return CommandResult.fail("unknown_module", Loc.t("The building cannot take this module."))
 	if module_id in b.get("modules", []):
-		return CommandResult.fail("already_installed", Loc.t("Modulet er allerede installeret."))
+		return CommandResult.fail("already_installed", Loc.t("The module is already installed."))
 	var cost: Dictionary = DictUtil.get_dict(mods[module_id], "cost")
 	for k: String in cost.keys():
 		if float(gs.colony.inventory.get(k, 0.0)) < float(cost[k]):
-			return CommandResult.fail("insufficient", Loc.t("Mangler %s til modulet.") % _res_label(k))
+			return CommandResult.fail("insufficient", Loc.t("Missing %s for the module.") % _res_label(k))
 	for k: String in cost.keys():
 		gs.colony.inventory[k] = float(gs.colony.inventory[k]) - float(cost[k])
 		var inv: Dictionary = b.get("invested", {})
@@ -191,7 +191,7 @@ func add_module(gs: GameState, building_id: int, module_id: String) -> CommandRe
 	return CommandResult.success({"module": module_id})
 
 
-const RES_LABELS := {"alloy": "byggemateriale", "components": "komponenter", "water": "vand", "food": "mad"}
+const RES_LABELS := {"alloy": "building material", "components": "components", "water": "water", "food": "food"}
 
 
 static func _res_label(k: String) -> String:

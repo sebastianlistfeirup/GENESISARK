@@ -61,7 +61,7 @@ func _show_line() -> void:
 	var sp := str(line.get("speaker", ""))
 	var name := sp
 	if sp == "CAPTAIN":
-		name = Loc.t("Kaptajnen")
+		name = Loc.t("The captain")
 	elif sp == "NARRATOR":
 		name = ""
 	elif GameSession.content and GameSession.content.characters.has(sp):

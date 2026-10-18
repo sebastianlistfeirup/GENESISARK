@@ -1,9 +1,9 @@
 {
   "id": "survey_ferrum",
   "planet_id": "ferrum",
-  "title": "Vand under sten",
-  "briefing": "Klippen gløder i middagssolen, og dragtens køling arbejder allerede. Et sted under kløften ligger en akvifer. Vi skal vide, hvor dybt den ligger, før vi bygger noget her.",
-  "goal": "Bor en prøve ved akviferen, og placér et relæ på kløftens kant.",
+  "title": "Water under stone",
+  "briefing": "The rock glows in the midday sun, and the suit's cooling is already working. Somewhere beneath the ravine lies an aquifer. We need to know how deep it is before we build anything here.",
+  "goal": "Drill a sample at the aquifer and place a relay on the ravine's edge.",
   "points": {
     "lander": [
       0,
@@ -14,42 +14,42 @@
         30,
         -40
       ],
-      "label": "Akviferboringen",
+      "label": "The Aquifer Bore",
       "reveals": [
         "water_access"
       ],
       "site_facts": [
         "water_distance_m"
       ],
-      "text": "Boret rammer fugt på fyrre meters dybde. Vandet er der — men det skal pumpes op, og pumperne vil koste strøm."
+      "text": "The drill hits moisture at forty meters. The water is there — but it has to be pumped up, and the pumps will cost power."
     },
     "risk_sample": {
       "pos": [
         22,
         -16
       ],
-      "label": "Den blottede malmåre",
+      "label": "The Exposed Ore Vein",
       "reveals": [
         "mineral_yield"
       ],
       "site_facts": [
         "exposure"
       ],
-      "text": "Malmen ligger lige i overfladen, varm at røre ved selv gennem handsken. Her er nok til at bygge en by."
+      "text": "The ore lies right at the surface, warm to the touch even through the glove. There's enough here to build a town."
     },
     "relay": {
       "pos": [
         -20,
         -10
       ],
-      "label": "Kløftens kant"
+      "label": "The Ravine Edge"
     }
   },
   "routes": [
     {
       "id": "safe",
-      "label": "I skyggen af kløftvæggen",
-      "description": "En omvej, men skyggen holder dragten kølig.",
+      "label": "In the shade of the ravine wall",
+      "description": "A detour, but the shade keeps the suit cool.",
       "waypoints": [
         [
           0,
@@ -71,8 +71,8 @@
     },
     {
       "id": "short",
-      "label": "Over solfladen",
-      "description": "Den direkte vej over den hvide flade. Heden tømmer dragten hurtigt.",
+      "label": "Across the sun flat",
+      "description": "The direct route across the white flat. The heat drains the suit quickly.",
       "waypoints": [
         [
           0,
@@ -97,13 +97,13 @@
       ],
       "radius": 11,
       "hazard_id": "heat",
-      "label": "Hedeflade"
+      "label": "Heat Flat"
     }
   ],
-  "evacuation": "Dragtens køling når grænsen. ARK: »Find skygge, kaptajn, og gå langsomt. Landeren venter på dig.«",
+  "evacuation": "The suit's cooling is at its limit. ARK: “Find shade, captain, and walk slowly. The lander is waiting for you.”",
   "findings": {
-    "main": "Ferrum: Vandet ligger dybt. Vandanlægget skal bygges først og have strøm nok.",
-    "risk": "Ferrum: Malmen ligger i overfladen. Byggeri bliver billigt her.",
-    "relay": "Ferrum: Relæet på kløftkanten ser ud over hele dalen."
+    "main": "Ferrum: The water lies deep. The water plant must be built first and have enough power.",
+    "risk": "Ferrum: The ore lies at the surface. Building will be cheap here.",
+    "relay": "Ferrum: The relay on the ravine edge looks out over the whole valley."
   }
 }

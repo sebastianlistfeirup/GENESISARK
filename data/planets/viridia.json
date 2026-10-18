@@ -4,31 +4,183 @@
   "family": "green",
   "biome_id": "green",
   "order": 1,
-  "tagline": "Mildt klima og rig biomasse.",
-  "advantage": "Mildt klima og rig biomasse giver hurtig fødevareproduktion.",
-  "price": "Sporebelastning kræver filtre og adskilte væksthuse.",
-  "description": "En tempereret verden dækket af tæt, svampeagtig vegetation. Luften kan næsten indåndes — næsten.",
-  "palette": { "nature": "#4f8a3a", "danger": "#d6c447", "sky": "#9cc7c0" },
-  "hazard_ids": ["spores"],
-  "site_templates": ["green_a", "green_b", "green_c"],
-  "properties": {
-    "gravity_multiplier": { "type": "number", "unit": "g", "truth": 0.92,
-      "levels": { "archive": {"status": "estimated", "min": 0.8, "max": 1.1}, "orbital": {"status": "known"} } },
-    "mean_temperature_c": { "type": "number", "unit": "°C", "truth": 17,
-      "levels": { "archive": {"status": "estimated", "min": 5, "max": 30}, "orbital": {"status": "estimated", "min": 12, "max": 22}, "probe": {"status": "known"} } },
-    "atmosphere_class": { "type": "category", "truth": "breathable_spores",
-      "levels": { "archive": {"status": "unknown"}, "orbital": {"status": "estimated", "candidates": ["breathable", "breathable_spores"]}, "probe": {"status": "known"} } },
-    "water_access": { "type": "number", "unit": "indeks", "truth": 0.7,
-      "levels": { "archive": {"status": "estimated", "min": 0.3, "max": 0.9}, "orbital": {"status": "estimated", "min": 0.5, "max": 0.85}, "probe": {"status": "known"} } },
-    "mineral_yield": { "type": "number", "unit": "x", "truth": 0.8,
-      "levels": { "archive": {"status": "unknown"}, "orbital": {"status": "estimated", "min": 0.5, "max": 1.1}, "probe": {"status": "known"} } },
-    "solar_factor": { "type": "number", "unit": "x", "truth": 1.0,
-      "levels": { "archive": {"status": "estimated", "min": 0.7, "max": 1.2}, "orbital": {"status": "known"} } },
-    "geothermal_factor": { "type": "number", "unit": "x", "truth": 0.2,
-      "levels": { "archive": {"status": "unknown"}, "probe": {"status": "estimated", "min": 0.1, "max": 0.4}, "expedition": {"status": "known"} } },
-    "biological_risk": { "type": "number", "unit": "indeks", "truth": 0.7,
-      "levels": { "archive": {"status": "unknown"}, "orbital": {"status": "estimated", "min": 0.3, "max": 0.9}, "probe": {"status": "estimated", "min": 0.6, "max": 0.8}, "expedition": {"status": "known"} } }
+  "tagline": "Mild climate and rich biomass.",
+  "advantage": "Mild climate and rich biomass give fast food production.",
+  "price": "Spore load demands filters and separate greenhouses.",
+  "description": "A temperate world covered in dense, fungal vegetation. The air is almost breathable — almost.",
+  "palette": {
+    "nature": "#4f8a3a",
+    "danger": "#d6c447",
+    "sky": "#9cc7c0"
   },
-  "colony_modifiers": { "solar": 1.0, "water": 1.0, "food": 1.35, "mine": 0.8, "geothermal": 0.2, "heating_kw_per_habitat": 0, "build_cost": 1.0, "drone_efficiency": 1.0, "requires_module": "filter" },
-  "robust_plan": "Byg filtermodul på habitat før første kohorte; placér væksthuse i læ af boligzonen."
+  "hazard_ids": [
+    "spores"
+  ],
+  "site_templates": [
+    "green_a",
+    "green_b",
+    "green_c"
+  ],
+  "properties": {
+    "gravity_multiplier": {
+      "type": "number",
+      "unit": "g",
+      "truth": 0.92,
+      "levels": {
+        "archive": {
+          "status": "estimated",
+          "min": 0.8,
+          "max": 1.1
+        },
+        "orbital": {
+          "status": "known"
+        }
+      }
+    },
+    "mean_temperature_c": {
+      "type": "number",
+      "unit": "°C",
+      "truth": 17,
+      "levels": {
+        "archive": {
+          "status": "estimated",
+          "min": 5,
+          "max": 30
+        },
+        "orbital": {
+          "status": "estimated",
+          "min": 12,
+          "max": 22
+        },
+        "probe": {
+          "status": "known"
+        }
+      }
+    },
+    "atmosphere_class": {
+      "type": "category",
+      "truth": "breathable_spores",
+      "levels": {
+        "archive": {
+          "status": "unknown"
+        },
+        "orbital": {
+          "status": "estimated",
+          "candidates": [
+            "breathable",
+            "breathable_spores"
+          ]
+        },
+        "probe": {
+          "status": "known"
+        }
+      }
+    },
+    "water_access": {
+      "type": "number",
+      "unit": "index",
+      "truth": 0.7,
+      "levels": {
+        "archive": {
+          "status": "estimated",
+          "min": 0.3,
+          "max": 0.9
+        },
+        "orbital": {
+          "status": "estimated",
+          "min": 0.5,
+          "max": 0.85
+        },
+        "probe": {
+          "status": "known"
+        }
+      }
+    },
+    "mineral_yield": {
+      "type": "number",
+      "unit": "x",
+      "truth": 0.8,
+      "levels": {
+        "archive": {
+          "status": "unknown"
+        },
+        "orbital": {
+          "status": "estimated",
+          "min": 0.5,
+          "max": 1.1
+        },
+        "probe": {
+          "status": "known"
+        }
+      }
+    },
+    "solar_factor": {
+      "type": "number",
+      "unit": "x",
+      "truth": 1.0,
+      "levels": {
+        "archive": {
+          "status": "estimated",
+          "min": 0.7,
+          "max": 1.2
+        },
+        "orbital": {
+          "status": "known"
+        }
+      }
+    },
+    "geothermal_factor": {
+      "type": "number",
+      "unit": "x",
+      "truth": 0.2,
+      "levels": {
+        "archive": {
+          "status": "unknown"
+        },
+        "probe": {
+          "status": "estimated",
+          "min": 0.1,
+          "max": 0.4
+        },
+        "expedition": {
+          "status": "known"
+        }
+      }
+    },
+    "biological_risk": {
+      "type": "number",
+      "unit": "index",
+      "truth": 0.7,
+      "levels": {
+        "archive": {
+          "status": "unknown"
+        },
+        "orbital": {
+          "status": "estimated",
+          "min": 0.3,
+          "max": 0.9
+        },
+        "probe": {
+          "status": "estimated",
+          "min": 0.6,
+          "max": 0.8
+        },
+        "expedition": {
+          "status": "known"
+        }
+      }
+    }
+  },
+  "colony_modifiers": {
+    "solar": 1.0,
+    "water": 1.0,
+    "food": 1.35,
+    "mine": 0.8,
+    "geothermal": 0.2,
+    "heating_kw_per_habitat": 0,
+    "build_cost": 1.0,
+    "drone_efficiency": 1.0,
+    "requires_module": "filter"
+  },
+  "robust_plan": "Build a filter module on the habitat before the first cohort; place greenhouses in the lee of the living zone."
 }

@@ -1,9 +1,9 @@
 {
   "id": "survey_sere",
   "planet_id": "sere",
-  "title": "Hvor støvet lægger sig",
-  "briefing": "Sletten er flad og fast — bedre byggegrund findes ikke. Men støvfanerne hænger over horisonten, og vi ved ikke, hvor meget de dækker for solen. Mål det, før vi stoler på panelerne.",
-  "goal": "Mål støvlaget på glasskorpen, og placér et relæ på klippeknuden.",
+  "title": "Where the dust settles",
+  "briefing": "The plain is flat and firm — there's no better ground to build on. But the dust plumes hang over the horizon, and we don't know how much they block the sun. Measure it before we trust the panels.",
+  "goal": "Measure the dust layer on the glass crust and place a relay on the rock knoll.",
   "points": {
     "lander": [
       0,
@@ -14,7 +14,7 @@
         -44,
         -22
       ],
-      "label": "Glasskorpen",
+      "label": "The Glass Crust",
       "reveals": [
         "solar_factor"
       ],
@@ -22,35 +22,35 @@
         "water_distance_m",
         "exposure"
       ],
-      "text": "Støvet lægger sig i et tyndt, fedtet lag. Et rent panel mister en fjerdedel af sin effekt på få dage. Vi får brug for rengøring og lagring."
+      "text": "The dust settles in a thin, greasy layer. A clean panel loses a quarter of its output in a few days. We'll need cleaning and storage."
     },
     "risk_sample": {
       "pos": [
         -26,
         -8
       ],
-      "label": "Den gamle flodseng",
+      "label": "The Old Riverbed",
       "reveals": [
         "water_access"
       ],
       "site_facts": [
         "flatness"
       ],
-      "text": "Under støvet ligger runde sten, slebet af vand for længe siden. Der er stadig fugt to meter nede."
+      "text": "Under the dust lie round stones, worn smooth by water long ago. There's still moisture two meters down."
     },
     "relay": {
       "pos": [
         -20,
         -48
       ],
-      "label": "Klippeknuden"
+      "label": "The Rock Knoll"
     }
   },
   "routes": [
     {
       "id": "safe",
-      "label": "Rundt om fanen",
-      "description": "En stor bue syd om støvet. Længere, men med klar sigt.",
+      "label": "Around the plume",
+      "description": "A wide arc south around the dust. Longer, but with clear sight.",
       "waypoints": [
         [
           0,
@@ -72,8 +72,8 @@
     },
     {
       "id": "short",
-      "label": "Gennem støvfanen",
-      "description": "Lige igennem. Sigtbarheden falder, og støvet slider på dragten.",
+      "label": "Through the dust plume",
+      "description": "Straight through. Visibility drops, and the dust wears on the suit.",
       "waypoints": [
         [
           0,
@@ -98,13 +98,13 @@
       ],
       "radius": 12,
       "hazard_id": "dust",
-      "label": "Støvfane"
+      "label": "Dust plume"
     }
   ],
-  "evacuation": "Visiret er gråt af støv, og energien er lav. ARK: »Jeg kan se dig, selv når du ikke kan se noget. Følg pilen. Jeg fører dig hjem.«",
+  "evacuation": "The visor is gray with dust, and energy is low. ARK: “I can see you, even when you can't see anything. Follow the arrow. I'll lead you home.”",
   "findings": {
-    "main": "Sere: Støvet koster en fjerdedel af solen. Batterier og rengøring er ikke valgfrie.",
-    "risk": "Sere: Der er vand under den gamle flodseng.",
-    "relay": "Sere: Relæet står frit. Det ser alt, men skal rengøres jævnligt."
+    "main": "Sere: The dust costs us a quarter of the sunlight. Batteries and cleaning are not optional.",
+    "risk": "Sere: There is water under the old riverbed.",
+    "relay": "Sere: The relay stands in the open. It sees everything, but needs regular cleaning."
   }
 }

@@ -18,7 +18,7 @@ func test_negative_resources_rejected() -> void:
 	check(not sim.state.validation_errors(content).is_empty(), "negativ fuel afvises")
 	sim.state.ark.fuel = 10
 	sim.state.ark.embryo_viable = 49999
-	check(" ".join(sim.state.validation_errors(content)).contains("embryosum"), "embryosum skal være 50000")
+	check(" ".join(sim.state.validation_errors(content)).contains("embryo sum"), "embryo sum must be 50000")
 
 
 func test_power_objective_once() -> void:

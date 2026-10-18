@@ -5,7 +5,7 @@ extends Node
 func _ready() -> void:
 	if not GameSession.content.errors.is_empty():
 		var l := Label.new()
-		l.text = Loc.t("Indholdsfejl — se log:\n") + "\n".join(GameSession.content.errors)
+		l.text = Loc.t("Content error — see log:\n") + "\n".join(GameSession.content.errors)
 		add_child(l)
 		return
 	await get_tree().process_frame

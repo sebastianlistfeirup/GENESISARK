@@ -66,8 +66,8 @@ environment/defaults/default_clear_color=Color(0.043, 0.071, 0.098, 1)
 
 [internationalization]
 
-locale/translations=PackedStringArray("res://localization/translations.en.translation")
-locale/fallback="da"
+locale/translations=PackedStringArray("res://localization/translations.da.translation")
+locale/fallback="en"
 
 [editor_plugins]
 

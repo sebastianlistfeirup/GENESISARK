@@ -102,12 +102,12 @@ func _ready() -> void:
 		GameSession.sim.colony.allocate_power(gs, GameSession.sim.colony.hazard_factors(gs, gs.campaign.colony_day))
 	_sync()
 	if AppFlow.params.get("landing", false):
-		hud.toast(Loc.t("Arken er landet. Byg strøm, vand og et habitat. Tryk på en bygning nederst."), "info", 10.0)
+		hud.toast(Loc.t("The Ark has landed. Build power, water and a habitat. Tap a building below."), "info", 10.0)
 	_check_pending_event()
 
 
 func _draw_districts() -> void:
-	var labels := {"landing": Loc.t("Landingszone"), "resource": Loc.t("Ressourceområde"), "living": Loc.t("Boligzone")}
+	var labels := {"landing": Loc.t("Landing zone"), "resource": Loc.t("Resource area"), "living": Loc.t("Living zone")}
 	var cols := {"landing": "#1f8a8a", "resource": "#c08850", "living": "#7cc46a"}
 	var scale := GameSession.sim.colony.district_scale(GameSession.state)
 	for dk: String in DictUtil.get_dict(site, "districts").keys():
@@ -155,9 +155,9 @@ func _build_ui() -> void:
 	sl.add_child(_speed_label)
 	sp.add_child(sl)
 	for s: Array in [[0, "❚❚"], [1, "▶ 1x"], [3, "▶▶ 3x"]]:
-		sp.add_child(UiKit.button(s[1], func() -> void: GameSession.set_colony_speed(int(s[0])), Loc.t("Pause / 1x / 3x (Mellemrum, 1, 3)")))
-	sp.add_child(UiKit.button(Loc.t("Koloni-overblik"), func() -> void: _open_overview(), Loc.t("Forsyning, befolkning, generationsspring og råd")))
-	sp.add_child(UiKit.button(Loc.t("Kaptajn [B]"), _toggle_mode, Loc.t("Gå rundt i kolonien som kaptajnen")))
+		sp.add_child(UiKit.button(s[1], func() -> void: GameSession.set_colony_speed(int(s[0])), Loc.t("Pause / 1x / 3x (Space, 1, 3)")))
+	sp.add_child(UiKit.button(Loc.t("Colony overview"), func() -> void: _open_overview(), Loc.t("Supply, population, generation leap and council")))
+	sp.add_child(UiKit.button(Loc.t("Captain [B]"), _toggle_mode, Loc.t("Walk the colony as the captain")))
 	top.add_child(sp)
 	_info_holder = UiKit.vbox(6)
 	hud.top_right.add_child(_info_holder)
@@ -165,7 +165,7 @@ func _build_ui() -> void:
 	hud.bottom.add_child(_build_bar)
 	for def_id: String in ["solar_array", "geothermal_generator", "battery", "water_plant", "greenhouse", "habitat", "mine", "workshop", "drone_hub", "care_center", "clinic", "school_hall"]:
 		var def := GameSession.content.building(def_id)
-		var b := UiKit.button(str(def.get("name")).replace(Loc.t(" og inkubationscenter"), ""), func() -> void: _start_build(def_id))
+		var b := UiKit.button(str(def.get("name")).replace(Loc.t(" and incubation center"), ""), func() -> void: _start_build(def_id))
 		b.tooltip_text = ColonyUi.building_tooltip(GameSession.sim, def_id)
 		b.custom_minimum_size = Vector2(0, 46)
 		b.add_theme_font_size_override("font_size", 14)
@@ -191,7 +191,7 @@ func _sync() -> void:
 	UiKit.clear(_res_box)
 	_res_box.add_child(ColonyUi.resource_bar(gs))
 	AudioService.set_layer("amb_colony_people" if gs.population.alive_count() > 0 else "", -10.0)
-	_speed_label.text = Loc.t("År %d · dag %d   %s") % [int(gs.campaign.colony_year()), gs.campaign.colony_day % 365, [Loc.t("Pause"), "1x", "", "3x"][clampi(GameSession.colony_speed, 0, 3)]]
+	_speed_label.text = Loc.t("Year %d · day %d   %s") % [int(gs.campaign.colony_year()), gs.campaign.colony_day % 365, [Loc.t("Pause"), "1x", "", "3x"][clampi(GameSession.colony_speed, 0, 3)]]
 	var seen := {}
 	for b: Dictionary in gs.colony.buildings:
 		var bid := int(b["id"])
@@ -215,7 +215,7 @@ func _sync() -> void:
 			if float(gs.colony.inventory.get(k, 0.0)) < float(cost[k]):
 				afford = false
 		b.modulate = Color.WHITE if afford else Color(1, 1, 1, 0.55)
-		b.text = Loc.t("%s\n%d mat.%s") % [str(GameSession.content.building(def_id).get("name")).replace(Loc.t(" og inkubationscenter"), "").replace(Loc.t("Geotermisk generator"), Loc.t("Geotermi")), int(cost.get("alloy", 0)), (Loc.t(" · %d komp.") % int(cost["components"])) if cost.has("components") else ""]
+		b.text = Loc.t("%s\n%d mat.%s") % [str(GameSession.content.building(def_id).get("name")).replace(Loc.t(" and incubation center"), "").replace(Loc.t("Geothermal generator"), Loc.t("Geothermal")), int(cost.get("alloy", 0)), (Loc.t(" · %d comp.") % int(cost["components"])) if cost.has("components") else ""]
 	_draw_network()
 	_refresh_info()
 	_sync_people()
@@ -271,7 +271,7 @@ func _refresh_info() -> void:
 	if not bn.is_empty():
 		var p := UiKit.panel(Vector2(380, 0))
 		var v := UiKit.vbox(2)
-		v.add_child(UiKit.title(Loc.t("Flaskehalse")))
+		v.add_child(UiKit.title(Loc.t("Bottlenecks")))
 		for x: Dictionary in bn.slice(0, 5):
 			v.add_child(UiKit.label("▲ %s: %s" % [GameSession.content.building(str(x["def_id"])).get("name"), str(x["text"])], 14, UiKit.WARN, true))
 		p.add_child(v)
@@ -448,8 +448,8 @@ func _update_ghost() -> void:
 		vs.rebuild()
 	var def := GameSession.content.building(build_def)
 	var cost: Dictionary = chk["cost"]
-	_ghost_tip.text = Loc.t("%s — %s\n%s\n[Venstre klik] byg · [%s] drej · [Højre klik/Esc] fortryd") % [def.get("name"),
-		Loc.t("● kan bygges") if ghost_ok else Loc.t("✕ kan ikke bygges"), " ".join(chk["reasons"]) if not ghost_ok else Loc.t("Pris: %d mat.%s · %+d kW") % [int(cost.get("alloy", 0)), (Loc.t(" + %d komp.") % int(cost["components"])) if cost.has("components") else "", int(def.get("power_kw", 0))],
+	_ghost_tip.text = Loc.t("%s — %s\n%s\n[Left click] build · [%s] rotate · [Right click/Esc] cancel") % [def.get("name"),
+		Loc.t("● can be built") if ghost_ok else Loc.t("✕ cannot be built"), " ".join(chk["reasons"]) if not ghost_ok else Loc.t("Cost: %d mat.%s · %+d kW") % [int(cost.get("alloy", 0)), (Loc.t(" + %d comp.") % int(cost["components"])) if cost.has("components") else "", int(def.get("power_kw", 0))],
 		SettingsService.binding_text("rotate_building")]
 	_ghost_tip.add_theme_color_override("font_color", UiKit.TEXT if ghost_ok else UiKit.WARN)
 

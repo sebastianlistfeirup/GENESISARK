@@ -18,10 +18,10 @@ func ask(id: String) -> void:
 func refresh() -> void:
 	UiKit.clear(body)
 	var gs: GameState = GameSession.state
-	body.add_child(UiKit.label(Loc.t("År %d: den første generation taler") % int(gs.campaign.colony_year()), 28, UiKit.AMBER))
-	body.add_child(UiKit.label(Loc.t("De, der blev født her, har deres egne svar på, hvad kolonien skal være. Dit valg ændrer tillid, selvbestemmelse og hvad institutionerne prioriterer. Ingen svar er det rigtige."), 16, UiKit.TEXT, true))
-	var lines := {"expansion": Loc.t("Vi skal videre. Dalene mod nord kan brødføde tusinder."), "safety": Loc.t("Vi har ikke råd til at miste noget. Reserver før alt andet."),
-		"self_determination": Loc.t("Vi vil selv bestemme. Giv rådet nøglerne.")}
+	body.add_child(UiKit.label(Loc.t("Year %d: the first generation speaks") % int(gs.campaign.colony_year()), 28, UiKit.AMBER))
+	body.add_child(UiKit.label(Loc.t("Those born here have their own answers to what the colony should be. Your choice changes trust, autonomy and what the institutions prioritize. No answer is the right one."), 16, UiKit.TEXT, true))
+	var lines := {"expansion": Loc.t("We have to move on. The valleys to the north could feed thousands."), "safety": Loc.t("We can't afford to lose anything. Reserves before everything else."),
+		"self_determination": Loc.t("We want to decide for ourselves. Give the council the keys.")}
 	for ch: Dictionary in GameSession.content.characters.values():
 		var persp := str(ch.get("perspective", ""))
 		if persp.is_empty():
@@ -31,7 +31,7 @@ func refresh() -> void:
 		v.add_child(UiKit.label(str(ch.get("name")), 20, UiKit.TEXT))
 		v.add_child(UiKit.label(str(ch.get("bio", "")), 14, UiKit.MUTED, true))
 		v.add_child(UiKit.label("“%s”" % lines.get(persp, ""), 16, UiKit.TEXT, true))
-		v.add_child(UiKit.button(Loc.t("Støt %s (%s)") % [str(ch.get("name")).split(" ")[0], {"expansion": "ekspansion", "safety": "sikkerhed", "self_determination": "selvbestemmelse"}[persp]], func() -> void:
+		v.add_child(UiKit.button(Loc.t("Support %s (%s)") % [str(ch.get("name")).split(" ")[0], {"expansion": "ekspansion", "safety": "sikkerhed", "self_determination": "selvbestemmelse"}[persp]], func() -> void:
 			if GameSession.cmd_choose_priority(decision_id, persp).ok:
 				close()))
 		p.add_child(v)

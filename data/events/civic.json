@@ -3,7 +3,7 @@
     {
       "id": "civic_first_night",
       "kind": "civic",
-      "title": "Den første nat",
+      "title": "The first night",
       "biome": "",
       "critical": false,
       "trigger": {
@@ -16,12 +16,12 @@
       },
       "warning_days": 0,
       "warning": "",
-      "text": "Børnene græder i omsorgscentret. Robotterne gør alt rigtigt, men gråden stopper ikke. ARK foreslår at flytte droner fra byggeriet til omsorgen.",
+      "text": "The children cry in the care center. The robots do everything right, but the crying doesn't stop. ARK suggests moving drones from construction to care.",
       "options": [
         {
           "id": "a",
-          "label": "Flere droner på omsorg",
-          "description": "To droner flyttes fra byggeriet til centret. Børnene trives bedre, men byggeriet går langsommere.",
+          "label": "More drones for care",
+          "description": "Two drones move from construction to the center. The children do better, but construction slows.",
           "cost": {
             "alloy": 0,
             "components": 0,
@@ -43,12 +43,12 @@
             "power_kw_days": 0,
             "solar_penalty_days": 0
           },
-          "result": "Det blev stille i centret. Byggeriet tabte en uge."
+          "result": "The center fell quiet. Construction lost a week."
         },
         {
           "id": "b",
-          "label": "Tag nattevagterne selv",
-          "description": "Du sidder hos dem om natten. Det koster ikke andet end din søvn.",
+          "label": "Take the night shifts yourself",
+          "description": "You sit with them at night. It costs nothing but your sleep.",
           "cost": {
             "alloy": 0,
             "components": 0,
@@ -70,12 +70,12 @@
             "power_kw_days": 0,
             "solar_penalty_days": 0
           },
-          "result": "Du sang den eneste vuggevise, du kunne huske. Den virkede bedre end forventet."
+          "result": "You sang the only lullaby you could remember. It worked better than expected."
         },
         {
           "id": "c",
-          "label": "Lad programmet lære",
-          "description": "Omsorgsprogrammet tilpasser sig selv. Det tager tid, men det bliver bedre.",
+          "label": "Let the program learn",
+          "description": "The care program adapts on its own. It takes time, but it gets better.",
           "cost": {
             "alloy": 0,
             "components": 0,
@@ -97,7 +97,7 @@
             "power_kw_days": 0,
             "solar_penalty_days": 0
           },
-          "result": "Efter en uge kendte robotterne forskel på sult og uro. Efter to sov børnene."
+          "result": "After a week the robots could tell hunger from distress. After two, the children slept."
         }
       ],
       "fallback": "c"
@@ -105,7 +105,7 @@
     {
       "id": "civic_fever",
       "kind": "civic",
-      "title": "Feber",
+      "title": "Fever",
       "biome": "",
       "critical": true,
       "trigger": {
@@ -117,13 +117,13 @@
         "chance_per_day": 0.02
       },
       "warning_days": 1,
-      "warning": "Tre børn i den første kohorte har forhøjet temperatur.",
-      "text": "En feber går gennem den første kohorte. ARK kender ikke virussen — den hører hjemme på denne planet. Den yngste, en pige på syv måneder, vil ikke spise.",
+      "warning": "Three children in the first cohort are running a temperature.",
+      "text": "A fever moves through the first cohort. ARK doesn't know the virus — it belongs to this planet. The youngest, a girl of seven months, won't eat.",
       "options": [
         {
           "id": "a",
-          "label": "Behandl på klinikken",
-          "description": "Klinikken isolerer og behandler. Sikkert, men det koster medicinske komponenter.",
+          "label": "Treat at the clinic",
+          "description": "The clinic isolates and treats. Safe, but it costs medical components.",
           "cost": {
             "alloy": 0,
             "components": 2,
@@ -145,12 +145,12 @@
             "power_kw_days": 0,
             "solar_penalty_days": 0
           },
-          "result": "Klinikken fandt et middel på fjerdedagen. På femtedagen spiste pigen igen."
+          "result": "The clinic found a remedy on the fourth day. On the fifth, the girl ate again."
         },
         {
           "id": "b",
-          "label": "Brug arkens lægeafsnit",
-          "description": "Arkens gamle lægeafsnit kan behandle dem. Det kræver nødstrøm, og kolonien lærer, at arken er svaret.",
+          "label": "Use the Ark's medical bay",
+          "description": "The Ark's old medical bay can treat them. It takes emergency power, and the colony learns that the Ark is the answer.",
           "cost": {
             "alloy": 0,
             "components": 0,
@@ -172,12 +172,12 @@
             "power_kw_days": -20,
             "solar_penalty_days": 0
           },
-          "result": "Lægeafsnittet vågnede efter mange års søvn. Det virkede stadig."
+          "result": "The medical bay woke after many years of sleep. It still worked."
         },
         {
           "id": "c",
-          "label": "Isolér og vent",
-          "description": "Hold de syge adskilt, og lad feberen gå sin gang. Ingen omkostning, men risikabelt for de svageste.",
+          "label": "Isolate and wait",
+          "description": "Keep the sick apart and let the fever run its course. No cost, but risky for the weakest.",
           "cost": {
             "alloy": 0,
             "components": 0,
@@ -199,7 +199,7 @@
             "power_kw_days": 0,
             "solar_penalty_days": 0
           },
-          "result": "Feberen gik over efter to uger. Det var to lange uger."
+          "result": "The fever broke after two weeks. They were two long weeks."
         }
       ],
       "fallback": "b"
@@ -207,7 +207,7 @@
     {
       "id": "civic_naming",
       "kind": "civic",
-      "title": "Et navn",
+      "title": "A name",
       "biome": "",
       "critical": false,
       "trigger": {
@@ -220,12 +220,12 @@
       },
       "warning_days": 0,
       "warning": "",
-      "text": "Børnene spørger, hvad stedet hedder. I loggen står der kun »Koloni 1«. ARK har intet forslag: »Det er ikke mit at navngive.«",
+      "text": "The children ask what the place is called. The log only says “Colony 1.” ARK has no suggestion: “It is not mine to name.”",
       "options": [
         {
           "id": "a",
-          "label": "Lad børnene stemme",
-          "description": "Det første fælles valg. Måske vælger de noget fjollet.",
+          "label": "Let the children vote",
+          "description": "The first shared choice. Maybe they'll choose something silly.",
           "cost": {
             "alloy": 0,
             "components": 0,
@@ -246,14 +246,14 @@
             "priority": "self_determination",
             "power_kw_days": 0,
             "solar_penalty_days": 0,
-            "settlement_name": "Første Stemme"
+            "settlement_name": "First Vote"
           },
-          "result": "Navnet vandt med to stemmers flertal. Det var ikke det, du ville have valgt. Det var deres."
+          "result": "The name won by two votes. It wasn't the one you would have chosen. It was theirs."
         },
         {
           "id": "b",
-          "label": "Opkald det efter arken",
-          "description": "Et navn, der husker, hvor de kom fra.",
+          "label": "Name it after the Ark",
+          "description": "A name that remembers where they came from.",
           "cost": {
             "alloy": 0,
             "components": 0,
@@ -274,14 +274,14 @@
             "priority": "safety",
             "power_kw_days": 0,
             "solar_penalty_days": 0,
-            "settlement_name": "Ny Ark"
+            "settlement_name": "New Ark"
           },
-          "result": "Navnet blev malet over døren til omsorgscentret. Det var det første ord, børnene lærte at stave."
+          "result": "The name was painted above the door of the care center. It was the first word the children learned to spell."
         },
         {
           "id": "c",
-          "label": "Giv det et navn, der peger frem",
-          "description": "Et navn for det, der skal komme: de næste dale, de næste byer.",
+          "label": "Give it a name that looks ahead",
+          "description": "A name for what is to come: the next valleys, the next towns.",
           "cost": {
             "alloy": 0,
             "components": 0,
@@ -302,9 +302,9 @@
             "priority": "expansion",
             "power_kw_days": 0,
             "solar_penalty_days": 0,
-            "settlement_name": "Morgendal"
+            "settlement_name": "Morningdale"
           },
-          "result": "Navnet stod på kortet ved siden af tre tomme felter. Børnene begyndte at navngive dem også."
+          "result": "The name went on the map beside three blank spaces. The children began naming those too."
         }
       ],
       "fallback": "a"
@@ -312,7 +312,7 @@
     {
       "id": "civic_school_or_work",
       "kind": "civic",
-      "title": "Skole eller værksted",
+      "title": "School or workshop",
       "biome": "",
       "critical": false,
       "trigger": {
@@ -325,12 +325,12 @@
       },
       "warning_days": 0,
       "warning": "",
-      "text": "De ældste børn er tretten. Værkstedet mangler hænder, og flere af dem vil hellere reparere droner end sidde i skolen. Lærerprogrammet mener, de er for unge til at vælge.",
+      "text": "The oldest children are thirteen. The workshop is short of hands, and several of them would rather repair drones than sit in school. The teaching program thinks they are too young to choose.",
       "options": [
         {
           "id": "a",
-          "label": "Fuld skolegang",
-          "description": "Alle går i skole, til de er seksten. Langsommere nu, stærkere senere.",
+          "label": "Full schooling",
+          "description": "Everyone stays in school until sixteen. Slower now, stronger later.",
           "cost": {
             "alloy": 0,
             "components": 0,
@@ -352,12 +352,12 @@
             "power_kw_days": 0,
             "solar_penalty_days": 0
           },
-          "result": "Skolehallen var fuld hver morgen. Værkstedet måtte vente."
+          "result": "The school hall was full every morning. The workshop had to wait."
         },
         {
           "id": "b",
-          "label": "Lærepladser i værkstedet",
-          "description": "Halvt skole, halvt værksted. Byggeriet går hurtigere, men noget læring går tabt.",
+          "label": "Workshop apprenticeships",
+          "description": "Half school, half workshop. Construction goes faster, but some learning is lost.",
           "cost": {
             "alloy": 0,
             "components": 0,
@@ -379,12 +379,12 @@
             "power_kw_days": 0,
             "solar_penalty_days": 0
           },
-          "result": "Værkstedet larmede af unge stemmer. Dronerne blev repareret hurtigere end nogensinde."
+          "result": "The workshop rang with young voices. The drones were repaired faster than ever."
         },
         {
           "id": "c",
-          "label": "Lad dem selv vælge",
-          "description": "Hvert barn vælger selv. Nogle vælger forkert. Alle lærer, hvad et valg koster.",
+          "label": "Let them choose",
+          "description": "Each child chooses for themselves. Some choose wrong. All learn what a choice costs.",
           "cost": {
             "alloy": 0,
             "components": 0,
@@ -406,7 +406,7 @@
             "power_kw_days": 0,
             "solar_penalty_days": 0
           },
-          "result": "Halvdelen valgte værkstedet. To kom tilbage til skolen efter en måned — af egen vilje."
+          "result": "Half chose the workshop. Two came back to school after a month — of their own accord."
         }
       ],
       "fallback": "c"
@@ -414,7 +414,7 @@
     {
       "id": "civic_mine_accident",
       "kind": "civic",
-      "title": "Ulykken i minen",
+      "title": "The mine accident",
       "biome": "",
       "critical": true,
       "trigger": {
@@ -427,12 +427,12 @@
       },
       "warning_days": 0,
       "warning": "",
-      "text": "En gang i minen er styrtet sammen. Ravi på femten var derinde med en drone. Dronerne fik ham ud. Han lever, men benet er knust, og hele kolonien så ham blive båret op.",
+      "text": "A tunnel in the mine has collapsed. Ravi, fifteen, was inside with a drone. The drones got him out. He's alive, but his leg is crushed, and the whole colony watched him being carried up.",
       "options": [
         {
           "id": "a",
-          "label": "Luk minen, til den er sikret",
-          "description": "Minen lukker, indtil gangene er afstivet. Koster byggemateriale og stopper udvindingen en måned.",
+          "label": "Close the mine until it's secured",
+          "description": "The mine closes until the tunnels are shored up. Costs building material and halts extraction for a month.",
           "cost": {
             "alloy": 25,
             "components": 0,
@@ -454,12 +454,12 @@
             "power_kw_days": 0,
             "solar_penalty_days": 0
           },
-          "result": "Minen var lukket i en måned. Ravi var den første, der gik derind igen — på krykker, for at se afstivningen."
+          "result": "The mine was closed for a month. Ravi was the first to go back in — on crutches, to see the shoring."
         },
         {
           "id": "b",
-          "label": "Kun droner under jorden",
-          "description": "Ingen mennesker i minen. Dronerne overtager arbejdet og slides hurtigere.",
+          "label": "Drones only underground",
+          "description": "No people in the mine. The drones take over the work and wear out faster.",
           "cost": {
             "alloy": 0,
             "components": 0,
@@ -481,12 +481,12 @@
             "power_kw_days": 0,
             "solar_penalty_days": 0
           },
-          "result": "Minen blev dronernes. De unge stod ved indgangen og så dem forsvinde ned i mørket."
+          "result": "The mine became the drones' domain. The young stood at the entrance and watched them vanish into the dark."
         },
         {
           "id": "c",
-          "label": "Lad minearbejderne beslutte",
-          "description": "De unge, der arbejder i minen, skriver selv de nye regler.",
+          "label": "Let the miners decide",
+          "description": "The young who work in the mine write the new rules themselves.",
           "cost": {
             "alloy": 0,
             "components": 0,
@@ -508,7 +508,7 @@
             "power_kw_days": 0,
             "solar_penalty_days": 0
           },
-          "result": "De skrev syv regler på en plade ved indgangen. Den første lød: Ingen går alene."
+          "result": "They wrote seven rules on a plaque by the entrance. The first read: No one goes alone."
         }
       ],
       "fallback": "c"
@@ -516,7 +516,7 @@
     {
       "id": "civic_youth_vote",
       "kind": "civic",
-      "title": "De unge vil stemme",
+      "title": "The young want to vote",
       "biome": "",
       "critical": false,
       "trigger": {
@@ -529,12 +529,12 @@
       },
       "warning_days": 0,
       "warning": "",
-      "text": "Rådet består af de ældste. Nu står en flok sekstenårige i døren til skolehallen. »Vi arbejder. Vi lever med jeres beslutninger. Vi vil stemme.«",
+      "text": "The council is made up of the eldest. Now a group of sixteen-year-olds stands in the doorway of the school hall. “We work. We live with your decisions. We want to vote.”",
       "options": [
         {
           "id": "a",
-          "label": "Stemmeret fra seksten",
-          "description": "Rådet udvides. Flere stemmer, langsommere beslutninger.",
+          "label": "Vote at sixteen",
+          "description": "The council grows. More voices, slower decisions.",
           "cost": {
             "alloy": 0,
             "components": 0,
@@ -556,12 +556,12 @@
             "power_kw_days": 0,
             "solar_penalty_days": 0
           },
-          "result": "Det første møde varede fem timer. Ingen gik før tid."
+          "result": "The first meeting lasted five hours. No one left early."
         },
         {
           "id": "b",
-          "label": "Hold fast ved atten",
-          "description": "Reglen står. Nogle bliver skuffede.",
+          "label": "Keep it at eighteen",
+          "description": "The rule stands. Some are disappointed.",
           "cost": {
             "alloy": 0,
             "components": 0,
@@ -583,12 +583,12 @@
             "power_kw_days": 0,
             "solar_penalty_days": 0
           },
-          "result": "De unge gik. Ugen efter kom de igen — med et skriftligt forslag."
+          "result": "The young left. A week later they came back — with a written proposal."
         },
         {
           "id": "c",
-          "label": "Taleret uden stemmeret",
-          "description": "De unge får en repræsentant i rådet, som må tale, men ikke stemme.",
+          "label": "A voice, but no vote",
+          "description": "The young get a representative on the council who may speak but not vote.",
           "cost": {
             "alloy": 0,
             "components": 0,
@@ -610,7 +610,7 @@
             "power_kw_days": 0,
             "solar_penalty_days": 0
           },
-          "result": "Repræsentanten talte ved hvert møde. Efter et år huskede ingen, at hun ikke måtte stemme."
+          "result": "The representative spoke at every meeting. After a year, no one remembered she wasn't allowed to vote."
         }
       ],
       "fallback": "c"

@@ -4,25 +4,25 @@
       "id": "ARK",
       "name": "ARK",
       "perspective": "",
-      "bio": "Arkens skibsintelligens. Rolig, præcis og mere omsorgsfuld, end den selv vil indrømme. Den lægger mulighederne frem, men vælger ikke for dig."
+      "bio": "The Ark's ship intelligence. Calm, precise and more caring than it would admit. It lays out the options, but doesn't choose for you."
     },
     {
       "id": "noor",
       "name": "Noor Vestergaard",
       "perspective": "expansion",
-      "bio": "Født i den første kohorte. Kortlægger dalene bag horisonten og tegner byer, der endnu ikke findes. Hun vil videre."
+      "bio": "Born in the first cohort. Maps the valleys beyond the horizon and draws towns that don't exist yet. She wants to go further."
     },
     {
       "id": "elias",
       "name": "Elias Brandt",
       "perspective": "safety",
-      "bio": "Født i den første kohorte. Passer vandanlægget og kender hver ventil. Han husker feberen og vil aldrig opleve den igen."
+      "bio": "Born in the first cohort. Tends the water plant and knows every valve. He remembers the fever and never wants to live through it again."
     },
     {
       "id": "sana",
       "name": "Sana Holm",
       "perspective": "self_determination",
-      "bio": "Født i den første kohorte. Underviser de yngste og stiller de spørgsmål, andre undgår. Hun mener, kolonien skal kunne sige nej — også til arken."
+      "bio": "Born in the first cohort. Teaches the youngest and asks the questions others avoid. She believes the colony must be able to say no — even to the Ark."
     }
   ],
   "scenes": [
@@ -32,27 +32,27 @@
       "lines": [
         {
           "speaker": "NARRATOR",
-          "text": "Kulde. Så lyden af ventilatorer, der starter én efter én."
+          "text": "Cold. Then the sound of fans starting up, one by one."
         },
         {
           "speaker": "ARK",
-          "text": "Kaptajn. Du er vågen. Godt."
+          "text": "Captain. You're awake. Good."
         },
         {
           "speaker": "ARK",
-          "text": "Nødstrømmen er nede på elleve procent. Jeg har vækket dig, fordi jeg ikke kan reparere koblingen alene."
+          "text": "Emergency power is down to eleven percent. I woke you because I can't repair the coupling alone."
         },
         {
           "speaker": "CAPTAIN",
-          "text": "Hvor er de andre?"
+          "text": "Where are the others?"
         },
         {
           "speaker": "ARK",
-          "text": "Der er ingen andre vågne. Kun dig."
+          "text": "No one else is awake. Only you."
         },
         {
           "speaker": "ARK",
-          "text": "Værkstedet ligger agter. Jeg tænder lyset foran dig."
+          "text": "The workshop is aft. I'll light the way for you."
         }
       ]
     },
@@ -62,19 +62,19 @@
       "lines": [
         {
           "speaker": "NARRATOR",
-          "text": "Koblingen klikker på plads. Et øjeblik sker der ingenting."
+          "text": "The coupling clicks into place. For a moment, nothing happens."
         },
         {
           "speaker": "NARRATOR",
-          "text": "Så tændes gangen, sektion for sektion, helt frem til broen."
+          "text": "Then the corridor lights up, section by section, all the way to the bridge."
         },
         {
           "speaker": "ARK",
-          "text": "Nødstrømmen er stabil. Vi har tid nu. Ikke meget, men noget."
+          "text": "Emergency power is stable. We have time now. Not much, but some."
         },
         {
           "speaker": "ARK",
-          "text": "Der er noget, du bør se. Embryobanken ligger midtskibs."
+          "text": "There's something you should see. The embryo bank is amidships."
         }
       ]
     },
@@ -84,23 +84,23 @@
       "lines": [
         {
           "speaker": "NARRATOR",
-          "text": "Rækker af kolde beholdere. Et svagt, blåt lys. Ingen lyd ud over kølingen."
+          "text": "Rows of cold containers. A faint blue light. No sound but the cooling."
         },
         {
           "speaker": "NARRATOR",
-          "text": "På væggen står et tal: 50.000."
+          "text": "There is a number on the wall: 50,000."
         },
         {
           "speaker": "ARK",
-          "text": "Det er ikke last. Det er alle, der endnu kan blive til nogen."
+          "text": "It isn't cargo. It's everyone who can still become someone."
         },
         {
           "speaker": "CAPTAIN",
-          "text": "Og de venter på et sted at bo."
+          "text": "And they're waiting for a place to live."
         },
         {
           "speaker": "ARK",
-          "text": "De venter på, at du finder det."
+          "text": "They're waiting for you to find it."
         }
       ]
     },
@@ -110,23 +110,23 @@
       "lines": [
         {
           "speaker": "ARK",
-          "text": "Jorden kan ikke længere hjælpe os. Det her er, hvad vi har."
+          "text": "Earth can no longer help us. This is what we have."
         },
         {
           "speaker": "ARK",
-          "text": "Seks verdener inden for rækkevidde. Ingen af dem er perfekte. Alle kan bebos — med det rette arbejde."
+          "text": "Six worlds within reach. None of them is perfect. All of them can be lived on — with the right work."
         },
         {
           "speaker": "ARK",
-          "text": "Det, vi ved, står i hvidt. Det, vi gætter på, står i gult."
+          "text": "What we know is in white. What we're guessing is in yellow."
         },
         {
           "speaker": "CAPTAIN",
-          "text": "Og det, vi ikke ved?"
+          "text": "And what we don't know?"
         },
         {
           "speaker": "ARK",
-          "text": "Det må vi finde ud af. Det koster noget hver gang."
+          "text": "We'll have to work that out. It costs something every time."
         }
       ]
     },
@@ -136,19 +136,19 @@
       "lines": [
         {
           "speaker": "ARK",
-          "text": "Proben har sendt data. Et af spørgsmålene er besvaret."
+          "text": "The probe has sent data. One of the questions is answered."
         },
         {
           "speaker": "ARK",
-          "text": "Det gør ikke valget lettere. Kun mere dit eget."
+          "text": "That doesn't make the choice easier. Only more your own."
         },
         {
           "speaker": "CAPTAIN",
-          "text": "Hvad ville du vælge?"
+          "text": "What would you choose?"
         },
         {
           "speaker": "ARK",
-          "text": "Jeg har tal, kaptajn. Du har ansvaret. Det er ikke det samme."
+          "text": "I have numbers, captain. You have the responsibility. It's not the same."
         }
       ]
     },
@@ -158,19 +158,19 @@
       "lines": [
         {
           "speaker": "NARRATOR",
-          "text": "Planeten fylder hele vinduet. Skyer, skygger, en tynd blå kant."
+          "text": "The planet fills the whole window. Clouds, shadows, a thin blue rim."
         },
         {
           "speaker": "ARK",
-          "text": "Kredsløbet er stabilt. Scanningen kan begynde."
+          "text": "Orbit is stable. The scan can begin."
         },
         {
           "speaker": "CAPTAIN",
-          "text": "Den er smukkere, end jeg troede."
+          "text": "It's more beautiful than I thought."
         },
         {
           "speaker": "ARK",
-          "text": "Det kan jeg ikke måle. Men jeg har noteret det."
+          "text": "I can't measure that. But I have noted it."
         }
       ]
     },
@@ -180,19 +180,19 @@
       "lines": [
         {
           "speaker": "NARRATOR",
-          "text": "Landerens luge glider op. Vind. Den første vind, du har hørt i meget lang tid."
+          "text": "The lander's hatch slides open. Wind. The first wind you've heard in a very long time."
         },
         {
           "speaker": "ARK",
-          "text": "Dragten har energi til omkring et kvarter. Jeg holder øje med den."
+          "text": "The suit has energy for about fifteen minutes. I'm keeping an eye on it."
         },
         {
           "speaker": "ARK",
-          "text": "Prøvestedet er markeret. Der er to veje derhen. Den korte er ikke den sikre."
+          "text": "The sample site is marked. There are two ways there. The short one isn't the safe one."
         },
         {
           "speaker": "CAPTAIN",
-          "text": "Det er de korte veje sjældent."
+          "text": "The short ones rarely are."
         }
       ]
     },
@@ -202,19 +202,19 @@
       "lines": [
         {
           "speaker": "ARK",
-          "text": "Kaptajn, dragtens energi er under tredive procent."
+          "text": "Captain, the suit's energy is below thirty percent."
         },
         {
           "speaker": "ARK",
-          "text": "Du har tid til at komme tilbage. Ikke til meget andet."
+          "text": "You have time to get back. Not for much else."
         },
         {
           "speaker": "CAPTAIN",
-          "text": "Én prøve mere."
+          "text": "One more sample."
         },
         {
           "speaker": "ARK",
-          "text": "Jeg kan ikke forhindre dig i det. Jeg kan bede dig om at lade være."
+          "text": "I can't stop you. I can ask you not to."
         }
       ]
     },
@@ -224,23 +224,23 @@
       "lines": [
         {
           "speaker": "NARRATOR",
-          "text": "Lugen lukker. Trykket udlignes med et suk. Så stilhed."
+          "text": "The hatch closes. The pressure equalizes with a sigh. Then silence."
         },
         {
           "speaker": "ARK",
-          "text": "Prøverne er analyseret. Planetdata er opdateret."
+          "text": "The samples are analyzed. Planet data has been updated."
         },
         {
           "speaker": "ARK",
-          "text": "Vi ved mere nu. Ikke alt. Det gør vi aldrig."
+          "text": "We know more now. Not everything. We never will."
         },
         {
           "speaker": "CAPTAIN",
-          "text": "Er det godt nok?"
+          "text": "Is that good enough?"
         },
         {
           "speaker": "ARK",
-          "text": "Det er dig, der skal svare på det."
+          "text": "That's for you to answer."
         }
       ]
     },
@@ -250,23 +250,23 @@
       "lines": [
         {
           "speaker": "ARK",
-          "text": "Før du bekræfter: Arken kan ikke lette igen. Det her bliver vores hjem."
+          "text": "Before you confirm: the Ark cannot lift off again. This will be our home."
         },
         {
           "speaker": "ARK",
-          "text": "Arken bliver koloniens base. Nødstrømmen, dronerne, dig."
+          "text": "The Ark becomes the colony's base. The emergency power, the drones, you."
         },
         {
           "speaker": "CAPTAIN",
-          "text": "Og embryonerne?"
+          "text": "And the embryos?"
         },
         {
           "speaker": "ARK",
-          "text": "De bliver her sammen med os. Uanset hvad."
+          "text": "They stay here with us. Whatever happens."
         },
         {
           "speaker": "NARRATOR",
-          "text": "Motorerne brøler en sidste gang. Så bliver der stille. En ny slags stille."
+          "text": "The engines roar one last time. Then it goes quiet. A new kind of quiet."
         }
       ]
     },
@@ -276,23 +276,23 @@
       "lines": [
         {
           "speaker": "NARRATOR",
-          "text": "Kablet er lagt. Habitatet står mørkt et sidste sekund."
+          "text": "The cable is laid. The habitat stands dark for one last second."
         },
         {
           "speaker": "NARRATOR",
-          "text": "Så tændes lyset i vinduerne. Varmt, gult lys på en fremmed planet."
+          "text": "Then the lights come on in the windows. Warm, yellow light on an alien planet."
         },
         {
           "speaker": "ARK",
-          "text": "Første habitat har strøm. Luft og temperatur er stabile."
+          "text": "The first habitat has power. Air and temperature are stable."
         },
         {
           "speaker": "CAPTAIN",
-          "text": "Det ligner et hjem."
+          "text": "It looks like a home."
         },
         {
           "speaker": "ARK",
-          "text": "Det er en begyndelse. Hjem kommer senere."
+          "text": "It's a beginning. Home comes later."
         }
       ]
     },
@@ -302,27 +302,27 @@
       "lines": [
         {
           "speaker": "ARK",
-          "text": "Forsyningen har været stabil i syv dage. Reserven holder. Omsorgscentret er klar."
+          "text": "Supply has been stable for seven days. The reserve holds. The care center is ready."
         },
         {
           "speaker": "ARK",
-          "text": "Ti embryoner kan begynde inkubationen. Det er dig, der starter den."
+          "text": "Ten embryos can begin incubation. You are the one who starts it."
         },
         {
           "speaker": "CAPTAIN",
-          "text": "Hvorfor ikke dig?"
+          "text": "Why not you?"
         },
         {
           "speaker": "ARK",
-          "text": "Fordi nogen bør huske, at det var et valg."
+          "text": "Because someone should remember that it was a choice."
         },
         {
           "speaker": "NARRATOR",
-          "text": "Ti lys skifter fra koldt blåt til varmt rav."
+          "text": "Ten lights change from cold blue to warm amber."
         },
         {
           "speaker": "ARK",
-          "text": "49.990 tilbage i banken. Ti på vej."
+          "text": "49,990 left in the bank. Ten on the way."
         }
       ]
     },
@@ -332,35 +332,35 @@
       "lines": [
         {
           "speaker": "NARRATOR",
-          "text": "Omsorgscentret. Nat. Kun ventilationen og et svagt, regelmæssigt bip."
+          "text": "The care center. Night. Only the ventilation and a faint, steady beep."
         },
         {
           "speaker": "NARRATOR",
-          "text": "Bippet bliver hurtigere."
+          "text": "The beeping speeds up."
         },
         {
           "speaker": "ARK",
-          "text": "Kaptajn. Du skal komme nu."
+          "text": "Captain. You need to come now."
         },
         {
           "speaker": "NARRATOR",
-          "text": "Lyset over en af kapslerne skifter fra rav til hvidt."
+          "text": "The light above one of the capsules changes from amber to white."
         },
         {
           "speaker": "NARRATOR",
-          "text": "Så en lyd, ingen har hørt på denne planet før. Lille, vred og levende."
+          "text": "Then a sound no one has heard on this planet before. Small, angry and alive."
         },
         {
           "speaker": "ARK",
-          "text": "Første fødsel. En pige. 3.120 gram. Alle værdier normale."
+          "text": "First birth. A girl. 3,120 grams. All readings normal."
         },
         {
           "speaker": "ARK",
-          "text": "Jeg har ingen protokol for, hvad man siger nu."
+          "text": "I have no protocol for what to say now."
         },
         {
           "speaker": "CAPTAIN",
-          "text": "Velkommen."
+          "text": "Welcome."
         }
       ]
     },
@@ -370,19 +370,19 @@
       "lines": [
         {
           "speaker": "ARK",
-          "text": "Kohorten er stabil. Robotterne og jeg kan klare dagligdagen."
+          "text": "The cohort is stable. The robots and I can handle the daily routine."
         },
         {
           "speaker": "ARK",
-          "text": "Du har været vågen længe, kaptajn. Stasis giver dig flere år sammen med dem senere."
+          "text": "You've been awake a long time, captain. Stasis gives you more years with them later."
         },
         {
           "speaker": "CAPTAIN",
-          "text": "Væk mig, hvis de får brug for mig."
+          "text": "Wake me if they need me."
         },
         {
           "speaker": "ARK",
-          "text": "Det gør jeg. Og når de har noget at vise dig."
+          "text": "I do. And when they have something to show you."
         }
       ]
     },
@@ -392,19 +392,19 @@
       "lines": [
         {
           "speaker": "NARRATOR",
-          "text": "Alarmen slukker. For første gang i dagevis er der stille i kontrolrummet."
+          "text": "The alarm goes quiet. For the first time in days, the control room is silent."
         },
         {
           "speaker": "ARK",
-          "text": "Krisen er overstået. Skaderne er registreret."
+          "text": "The crisis is over. The damage has been recorded."
         },
         {
           "speaker": "CAPTAIN",
-          "text": "Og menneskene?"
+          "text": "And the people?"
         },
         {
           "speaker": "ARK",
-          "text": "De er trætte. De er her alle sammen."
+          "text": "They're tired. They're all here."
         }
       ]
     },
@@ -414,31 +414,31 @@
       "lines": [
         {
           "speaker": "NARRATOR",
-          "text": "Tyve år. Kaptajnen vågner af stasis til lyden af stemmer udenfor."
+          "text": "Twenty years. The captain wakes from stasis to the sound of voices outside."
         },
         {
           "speaker": "ARK",
-          "text": "Velkommen tilbage, kaptajn. Der er sket meget."
+          "text": "Welcome back, captain. A lot has happened."
         },
         {
           "speaker": "noor",
-          "text": "Kaptajn! Vi har kortlagt dalen mod nord. Der er plads til to nye bydele."
+          "text": "Captain! We've mapped the valley to the north. There's room for two new districts."
         },
         {
           "speaker": "elias",
-          "text": "Der er plads til to nye fejl. Vandanlægget kører på sidste reserve hver vinter."
+          "text": "There's room for two new mistakes. The water plant runs on its last reserve every winter."
         },
         {
           "speaker": "sana",
-          "text": "Det handler ikke om dalen eller vandet. Det handler om, hvem der bestemmer."
+          "text": "It isn't about the valley or the water. It's about who decides."
         },
         {
           "speaker": "ARK",
-          "text": "De har ventet på dig. Jeg tror, de venter på et svar."
+          "text": "They've been waiting for you. I think they're waiting for an answer."
         },
         {
           "speaker": "CAPTAIN",
-          "text": "Så lad os høre jer alle tre."
+          "text": "Then let's hear all three of you."
         }
       ]
     },
@@ -448,27 +448,27 @@
       "lines": [
         {
           "speaker": "NARRATOR",
-          "text": "Skolehallen er fuld. Stolene er for små. De blev bygget til børn."
+          "text": "The school hall is full. The chairs are too small. They were built for children."
         },
         {
           "speaker": "sana",
-          "text": "Første punkt på dagsordenen: Hvem sidder for bordenden?"
+          "text": "First item on the agenda: who sits at the head of the table?"
         },
         {
           "speaker": "elias",
-          "text": "Ingen. Vi går på skift."
+          "text": "No one. We take turns."
         },
         {
           "speaker": "noor",
-          "text": "Og kaptajnen?"
+          "text": "And the captain?"
         },
         {
           "speaker": "CAPTAIN",
-          "text": "Kaptajnen sidder nede blandt jer."
+          "text": "The captain sits down among you."
         },
         {
           "speaker": "ARK",
-          "text": "Rådet er registreret som koloniens højeste myndighed. Også over mig."
+          "text": "The council is registered as the colony's highest authority. Over me as well."
         }
       ]
     },
@@ -478,27 +478,27 @@
       "lines": [
         {
           "speaker": "NARRATOR",
-          "text": "Fyrre år. Kolonien lyser i mørket, tydelig helt oppe fra kredsløb."
+          "text": "Forty years. The colony shines in the dark, visible all the way from orbit."
         },
         {
           "speaker": "ARK",
-          "text": "Kaptajn, rådet har bedt om et møde. Det handler om nødstrømmen."
+          "text": "Captain, the council has asked for a meeting. It's about the emergency power."
         },
         {
           "speaker": "elias",
-          "text": "Vi har regnet på det. Vi kan klare os uden — næsten."
+          "text": "We've run the numbers. We can manage without — almost."
         },
         {
           "speaker": "noor",
-          "text": "Næsten er nok til at begynde."
+          "text": "Almost is enough to begin."
         },
         {
           "speaker": "sana",
-          "text": "Det er ikke dit valg længere, kaptajn. Men vi vil gerne have, at du er her, når vi træffer det."
+          "text": "It's not your choice anymore, captain. But we'd like you to be here when we make it."
         },
         {
           "speaker": "CAPTAIN",
-          "text": "Jeg er her."
+          "text": "I'm here."
         }
       ]
     }

@@ -48,17 +48,17 @@ func _main() -> void:
 	_panel.visible = true
 	UiKit.clear(_body)
 	_body.add_child(UiKit.heading(Loc.t("Pause")))
-	_body.add_child(UiKit.button(Loc.t("Fortsæt"), close))
-	_body.add_child(UiKit.button(Loc.t("Gem spil"), _save_menu))
-	_body.add_child(UiKit.button(Loc.t("Indlæs spil"), _load_menu))
-	_body.add_child(UiKit.button(Loc.t("Indstillinger"), func() -> void:
+	_body.add_child(UiKit.button(Loc.t("Continue"), close))
+	_body.add_child(UiKit.button(Loc.t("Save game"), _save_menu))
+	_body.add_child(UiKit.button(Loc.t("Load game"), _load_menu))
+	_body.add_child(UiKit.button(Loc.t("Settings"), func() -> void:
 		_panel.visible = false
 		settings.open()))
-	_body.add_child(UiKit.button(Loc.t("Hovedmenu"), func() -> void:
+	_body.add_child(UiKit.button(Loc.t("Main menu"), func() -> void:
 		GameSession.autosave()
 		close()
 		AppFlow.goto("menu")))
-	_body.add_child(UiKit.button(Loc.t("Afslut spillet"), func() -> void:
+	_body.add_child(UiKit.button(Loc.t("Quit game"), func() -> void:
 		GameSession.autosave()
 		get_tree().quit()))
 	(_body.get_child(1) as Button).grab_focus.call_deferred()
@@ -66,25 +66,25 @@ func _main() -> void:
 
 func _save_menu() -> void:
 	UiKit.clear(_body)
-	_body.add_child(UiKit.heading(Loc.t("Gem spil")))
+	_body.add_child(UiKit.heading(Loc.t("Save game")))
 	for slot: String in ["manual_1", "manual_2", "manual_3"]:
 		var sm := SaveService.summary(slot)
 		var txt := "%s — %s" % [Loc.t(str(SaveService.SLOT_LABELS[slot])), _describe(sm)]
 		_body.add_child(UiKit.button(txt, func() -> void:
 			var r := GameSession.save_to(slot)
-			_status(Loc.t("Gemt i %s.") % Loc.t(str(SaveService.SLOT_LABELS[slot])) if r["ok"] else Loc.t("Gemning fejlede: ") + str(r["error"]))))
-	_body.add_child(UiKit.button(Loc.t("Tilbage"), _main))
+			_status(Loc.t("Saved to %s.") % Loc.t(str(SaveService.SLOT_LABELS[slot])) if r["ok"] else Loc.t("Save failed: ") + str(r["error"]))))
+	_body.add_child(UiKit.button(Loc.t("Back"), _main))
 
 
 func _load_menu() -> void:
 	UiKit.clear(_body)
-	_body.add_child(UiKit.heading(Loc.t("Indlæs spil")))
+	_body.add_child(UiKit.heading(Loc.t("Load game")))
 	for slot: String in SaveService.SLOTS:
 		if not SaveService.store.exists(slot):
 			continue
 		var sm := SaveService.summary(slot)
 		_body.add_child(UiKit.button("%s — %s" % [Loc.t(str(SaveService.SLOT_LABELS[slot])), _describe(sm)], func() -> void: _load(slot, false)))
-	_body.add_child(UiKit.button(Loc.t("Tilbage"), _main))
+	_body.add_child(UiKit.button(Loc.t("Back"), _main))
 
 
 func _load(slot: String, backup: bool) -> void:
@@ -94,11 +94,11 @@ func _load(slot: String, backup: bool) -> void:
 		AppFlow.continue_game()
 		return
 	UiKit.clear(_body)
-	_body.add_child(UiKit.heading(Loc.t("Kunne ikke indlæse")))
+	_body.add_child(UiKit.heading(Loc.t("Could not load")))
 	_body.add_child(UiKit.label(str(r["error"]), 17, UiKit.WARN, true))
 	if r["backup_available"] and not backup:
-		_body.add_child(UiKit.button(Loc.t("Indlæs seneste gyldige backup"), func() -> void: _load(slot, true)))
-	_body.add_child(UiKit.button(Loc.t("Tilbage"), _main))
+		_body.add_child(UiKit.button(Loc.t("Load latest valid backup"), func() -> void: _load(slot, true)))
+	_body.add_child(UiKit.button(Loc.t("Back"), _main))
 
 
 func _status(text: String) -> void:
@@ -108,9 +108,9 @@ func _status(text: String) -> void:
 
 static func _describe(sm: Dictionary) -> String:
 	if sm.is_empty():
-		return Loc.t("tomt")
+		return Loc.t("empty")
 	var phase := str(sm.get("phase", ""))
-	var where := Loc.t("Rejse") if phase in ["ARK", "VOYAGE"] else Loc.t("Koloni dag %d") % int(sm.get("colony_day", 0))
+	var where := Loc.t("Voyage") if phase in ["ARK", "VOYAGE"] else Loc.t("Colony day %d") % int(sm.get("colony_day", 0))
 	return "%s · %s" % [where, str(sm.get("saved_at", "")).replace("T", " ").substr(0, 16)]
 
 

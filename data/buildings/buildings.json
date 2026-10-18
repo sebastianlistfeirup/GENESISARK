@@ -9,7 +9,7 @@
   "buildings": [
     {
       "id": "ark_core",
-      "name": "Arkens kerne",
+      "name": "Ark core",
       "category": "core",
       "buildable": false,
       "footprint": [
@@ -28,12 +28,12 @@
         "salvage_pool": 300,
         "fuel_per_day": 0.1
       },
-      "description": "Arken er nu koloniens base: nødstrøm, robotdepot og kaptajnens bolig. Den kan skilles ad til materialer — langsomt.",
+      "description": "The Ark is now the colony's base: emergency power, drone depot and the captain's quarters. It can be taken apart for materials — slowly.",
       "visual_slot": "building.ark_core"
     },
     {
       "id": "solar_array",
-      "name": "Solpanelfelt",
+      "name": "Solar array",
       "category": "power",
       "footprint": [
         6,
@@ -47,12 +47,12 @@
       "power_kw": 12,
       "power_source": "solar",
       "priority": "production",
-      "description": "Billig, pålidelig strøm — hvis solen skinner.",
+      "description": "Cheap, reliable power — if the sun shines.",
       "visual_slot": "building.solar_array"
     },
     {
       "id": "geothermal_generator",
-      "name": "Geotermisk generator",
+      "name": "Geothermal generator",
       "category": "power",
       "footprint": [
         6,
@@ -68,12 +68,12 @@
       "power_source": "geothermal",
       "vent_bonus": 0.5,
       "priority": "production",
-      "description": "Stabil strøm dag og nat. Ydelsen afhænger af planetens indre varme.",
+      "description": "Steady power day and night. Output depends on the planet's inner heat.",
       "visual_slot": "building.geothermal_generator"
     },
     {
       "id": "battery",
-      "name": "Batteribank",
+      "name": "Battery bank",
       "category": "power",
       "footprint": [
         4,
@@ -90,12 +90,12 @@
       "provides": {
         "battery_kwh": 120
       },
-      "description": "Lagrer overskudsstrøm til nat, storme og nedbrud.",
+      "description": "Stores surplus power for night, storms and breakdowns.",
       "visual_slot": "building.battery"
     },
     {
       "id": "water_plant",
-      "name": "Vandanlæg",
+      "name": "Water plant",
       "category": "supply",
       "footprint": [
         6,
@@ -111,12 +111,12 @@
       "output": {
         "water": 30
       },
-      "description": "Udvinder, renser og lagrer vand. Måles i persondøgn.",
+      "description": "Extracts, purifies and stores water. Measured in person-days.",
       "visual_slot": "building.water_plant"
     },
     {
       "id": "greenhouse",
-      "name": "Væksthus",
+      "name": "Greenhouse",
       "category": "supply",
       "footprint": [
         8,
@@ -136,7 +136,7 @@
       "input": {
         "water": 4
       },
-      "description": "Lukket dyrkning. Mad måles i persondøgn.",
+      "description": "Closed cultivation. Food is measured in person-days.",
       "visual_slot": "building.greenhouse"
     },
     {
@@ -158,12 +158,12 @@
       "output": {
         "alloy": 6
       },
-      "description": "Udvinder malm til byggemateriale. Skal ligge i ressourceområdet.",
+      "description": "Extracts ore for building material. Must be placed in the resource area.",
       "visual_slot": "building.mine"
     },
     {
       "id": "workshop",
-      "name": "Værksted",
+      "name": "Workshop",
       "category": "industry",
       "footprint": [
         8,
@@ -183,12 +183,12 @@
       "input": {
         "alloy": 2
       },
-      "description": "Raffinerer byggemateriale til reservedele og komponenter.",
+      "description": "Refines building material into spare parts and components.",
       "visual_slot": "building.workshop"
     },
     {
       "id": "drone_hub",
-      "name": "Dronehub",
+      "name": "Drone hub",
       "category": "industry",
       "footprint": [
         6,
@@ -206,7 +206,7 @@
         "drones": 3,
         "network_node": true
       },
-      "description": "Flere byggedroner og et nyt knudepunkt i forsyningsnettet.",
+      "description": "More construction drones and a new node in the supply network.",
       "visual_slot": "building.drone_hub"
     },
     {
@@ -229,30 +229,30 @@
       },
       "modules": {
         "filter": {
-          "name": "Filtermodul",
+          "name": "Filter module",
           "cost": {
             "alloy": 10,
             "components": 2
           },
           "power_kw": -1,
-          "description": "Holder sporer og støv ude."
+          "description": "Keeps spores and dust out."
         },
         "heater": {
-          "name": "Varmemodul",
+          "name": "Heating module",
           "cost": {
             "alloy": 10,
             "components": 2
           },
           "power_kw": -2,
-          "description": "Holder boligen beboelig i frost."
+          "description": "Keeps housing habitable through the frost."
         }
       },
-      "description": "Beskyttet bolig og livsstøtte.",
+      "description": "Sheltered housing and life support.",
       "visual_slot": "building.habitat"
     },
     {
       "id": "care_center",
-      "name": "Omsorgs- og inkubationscenter",
+      "name": "Care and incubation center",
       "category": "care",
       "footprint": [
         10,
@@ -270,12 +270,12 @@
         "incubation_slots": 20,
         "care_capacity": 30
       },
-      "description": "Kunstig gestation og robotomsorg. Her bliver embryoner til børn.",
+      "description": "Artificial gestation and robotic care. This is where embryos become children.",
       "visual_slot": "building.care_center"
     },
     {
       "id": "clinic",
-      "name": "Klinik",
+      "name": "Clinic",
       "category": "care",
       "footprint": [
         8,
@@ -293,12 +293,12 @@
         "health_per_day": 0.3,
         "care_capacity": 10
       },
-      "description": "Behandling og forebyggelse. Holder kohorterne sunde.",
+      "description": "Treatment and prevention. Keeps the cohorts healthy.",
       "visual_slot": "building.clinic"
     },
     {
       "id": "school_hall",
-      "name": "Skole og rådhus",
+      "name": "School and town hall",
       "category": "society",
       "footprint": [
         10,
@@ -317,7 +317,7 @@
         "council_seat": true,
         "education_capacity": 60
       },
-      "description": "Undervisning for børn og et sted, hvor samfundet kan træffe beslutninger.",
+      "description": "A school for the children, and a place where the community makes its decisions.",
       "visual_slot": "building.school_hall"
     }
   ]

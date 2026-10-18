@@ -24,7 +24,7 @@ shutil.copy(os.path.join(SRC, "index.pck"), os.path.join(OUT, "index.pck.wasm"))
 cfg["mainPack"] = "index.pck.wasm"
 cfg["fileSizes"]["index.pck.wasm"] = cfg["fileSizes"].pop("index.pck")
 engine_js = open(os.path.join(SRC, "index.js"), encoding="utf-8").read().replace("</script>", "<\\/script>")
-page = """<title>Genesis Ark Spiltest</title>
+page = """<title>Genesis Ark Playtest</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <style>
 [hidden] { display: none !important; }
@@ -42,13 +42,13 @@ button { font: 600 18px system-ui, sans-serif; color: var(--fg); background: var
 button:focus-visible { outline: 2px solid var(--amber); outline-offset: 2px; }
 #err { color: var(--amber); white-space: pre-wrap; text-align: left; font-size: 13px; }
 </style>
-<canvas id="canvas" tabindex="0">Din browser understøtter ikke canvas.</canvas>
+<canvas id="canvas" tabindex="0">Your browser does not support canvas.</canvas>
 <div id="overlay"><div class="box">
   <h1>GENESIS ARK</h1>
-  <p>Greybox-testversion. Hold telefonen vandret. Sæt tommelfingeren hvor som helst i venstre side: let skub = gå, helt ud = løb. Træk i højre side: kig rundt. Knapperne er E (brug), Byg, II (pause) og Log (journal).</p>
+  <p>Greybox test build. Hold the phone sideways. Put your thumb anywhere on the left: a light push walks, all the way runs. Drag on the right to look around. Buttons: E (use), Build, II (pause) and Log.</p>
   <div id="bar"><div id="fill"></div></div>
-  <p id="status">Indlæser spillet (ca. 40 MB)…</p>
-  <button id="start" hidden>Start spillet</button>
+  <p id="status">Loading the game (about 40 MB)…</p>
+  <button id="start" hidden>Start the game</button>
   <div id="err"></div>
 </div></div>
 <script>
@@ -77,17 +77,17 @@ const fill = document.getElementById("fill");
 const startBtn = document.getElementById("start");
 const errEl = document.getElementById("err");
 function fail(e) { statusEl.textContent = "Spillet kunne ikke starte i denne browser."; errEl.textContent = String(e && e.message || e); }
-if (!Engine.isWebGLAvailable(2)) { fail("WebGL 2 er ikke tilgængeligt."); }
+if (!Engine.isWebGLAvailable(2)) { fail("WebGL 2 is not available."); }
 else {
   engine.init("index").then(() => {
-    statusEl.textContent = "Klar.";
+    statusEl.textContent = "Ready.";
     fill.style.width = "100%";
     startBtn.hidden = false;
   }).catch(fail);
 }
 startBtn.addEventListener("click", () => {
   startBtn.hidden = true;
-  statusEl.textContent = "Starter…";
+  statusEl.textContent = "Starting…";
   engine.startGame({
     onProgress: (cur, total) => { if (total > 0) fill.style.width = Math.round(100 * cur / total) + "%"; },
   }).then(() => { document.getElementById("overlay").hidden = true; document.getElementById("canvas").focus(); }).catch(fail);

@@ -1,9 +1,9 @@
 {
   "id": "survey_nivalis",
   "planet_id": "nivalis",
-  "title": "Dampen i isen",
-  "briefing": "Hvid stilhed, så langt sensorerne rækker. Mod nordøst stiger damp fra en sprække. Hvis varmen er stabil, kan den holde liv i en koloni. Hvis ikke, fryser vi.",
-  "goal": "Mål varmen i dampsprækken, og placér et relæ på isryggen.",
+  "title": "Steam in the ice",
+  "briefing": "White silence as far as the sensors reach. To the northeast, steam rises from a fissure. If the heat is stable, it can keep a colony alive. If not, we freeze.",
+  "goal": "Measure the heat in the steam fissure and place a relay on the ice ridge.",
   "points": {
     "lander": [
       0,
@@ -14,7 +14,7 @@
         36,
         30
       ],
-      "label": "Dampsprækken",
+      "label": "The Steam Fissure",
       "reveals": [
         "geothermal_factor"
       ],
@@ -22,35 +22,35 @@
         "water_distance_m",
         "vent"
       ],
-      "text": "Varmen er stabil og kommer dybt nedefra. En generator her kan give strøm dag og nat — og vandet ligger lige under isen."
+      "text": "The heat is stable and comes from deep below. A generator here can give power day and night — and the water lies just under the ice."
     },
     "risk_sample": {
       "pos": [
         14,
         18
       ],
-      "label": "Moræneblokken",
+      "label": "The Moraine Block",
       "reveals": [
         "mineral_yield"
       ],
       "site_facts": [
         "flatness"
       ],
-      "text": "Isen har skubbet blokken op fra dybet. Den er rig på jern og lidt nikkel. Ikke meget, men nok til at begynde."
+      "text": "The ice has pushed the block up from the depths. It's rich in iron and a little nickel. Not much, but enough to begin."
     },
     "relay": {
       "pos": [
         44,
         -4
       ],
-      "label": "Isryggen"
+      "label": "The Ice Ridge"
     }
   },
   "routes": [
     {
       "id": "safe",
-      "label": "Ad isryggen",
-      "description": "Længere, men i sol. Dragten holder varmen.",
+      "label": "Along the ice ridge",
+      "description": "Longer, but in the sun. The suit keeps warm.",
       "waypoints": [
         [
           0,
@@ -72,8 +72,8 @@
     },
     {
       "id": "short",
-      "label": "Over skyggebassinet",
-      "description": "Den direkte vej — gennem en lomme af kold, stillestående luft.",
+      "label": "Across the shadow basin",
+      "description": "The direct route — through a pocket of cold, still air.",
       "waypoints": [
         [
           0,
@@ -98,13 +98,13 @@
       ],
       "radius": 10,
       "hazard_id": "cold",
-      "label": "Kuldelomme"
+      "label": "Cold pocket"
     }
   ],
-  "evacuation": "Dragten bruger al sin strøm på at holde dig varm. ARK: »Bliv i bevægelse, kaptajn. Hold dig i solen. Landerens varmekabine er tændt.«",
+  "evacuation": "The suit spends all its power keeping you warm. ARK: “Keep moving, captain. Stay in the sun. The lander's heated cabin is on.”",
   "findings": {
-    "main": "Nivalis: Dampsprækken er stabil. Geotermi først, så habitat.",
-    "risk": "Nivalis: Mineralerne er sparsomme, men de er der.",
-    "relay": "Nivalis: Relæet på isryggen fanger den lave sol."
+    "main": "Nivalis: The steam fissure is stable. Geothermal first, then habitat.",
+    "risk": "Nivalis: The minerals are sparse, but they are there.",
+    "relay": "Nivalis: The relay on the ice ridge catches the low sun."
   }
 }

@@ -36,21 +36,21 @@ static func checksum(payload: Variant) -> String:
 static func decode(envelope: Variant, content: ContentDB) -> Dictionary:
 	var out := {"ok": false, "error": "", "state": null, "migrated_from": 0}
 	if not envelope is Dictionary:
-		out["error"] = Loc.t("Filen er ikke et gyldigt save (forventede et objekt).")
+		out["error"] = Loc.t("The file is not a valid save (expected an object).")
 		return out
 	var env: Dictionary = envelope
 	if str(env.get("game_id", "")) != GAME_ID:
-		out["error"] = Loc.t("Filen tilhører ikke Genesis Ark.")
+		out["error"] = Loc.t("The file does not belong to Genesis Ark.")
 		return out
 	if not env.get("payload") is Dictionary:
-		out["error"] = Loc.t("Savet mangler sin payload.")
+		out["error"] = Loc.t("The save is missing its payload.")
 		return out
 	if str(env.get("checksum", "")) != checksum(env["payload"]):
-		out["error"] = Loc.t("Checksum passer ikke: filen er beskadiget eller ændret.")
+		out["error"] = Loc.t("Checksum mismatch: the file is damaged or altered.")
 		return out
 	var version := int(env.get("schema_version", 0))
 	if version > CURRENT_SCHEMA:
-		out["error"] = Loc.t("Savet er fra en nyere version (%d > %d).") % [version, CURRENT_SCHEMA]
+		out["error"] = Loc.t("The save is from a newer version (%d > %d).") % [version, CURRENT_SCHEMA]
 		return out
 	var payload: Dictionary = (env["payload"] as Dictionary).duplicate(true)
 	if version < CURRENT_SCHEMA:
@@ -63,7 +63,7 @@ static func decode(envelope: Variant, content: ContentDB) -> Dictionary:
 	var gs := GameState.from_dict(payload)
 	var errs := gs.validation_errors(content)
 	if not errs.is_empty():
-		out["error"] = Loc.t("Ugyldig tilstand: ") + "; ".join(errs)
+		out["error"] = Loc.t("Invalid state: ") + "; ".join(errs)
 		return out
 	out["ok"] = true
 	out["state"] = gs
@@ -87,7 +87,7 @@ static func migrate(payload_in: Dictionary, from_version: int) -> Dictionary:
 					p["society"] = SocietyState.new().to_dict()
 				p["schema_version"] = 2
 			_:
-				return {"ok": false, "error": Loc.t("Ingen migrering fra schema %d.") % v}
+				return {"ok": false, "error": Loc.t("No migration from schema %d.") % v}
 		v += 1
 	return {"ok": true, "payload": p}
 

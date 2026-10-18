@@ -1,9 +1,9 @@
 {
   "id": "survey_umbra",
   "planet_id": "umbra",
-  "title": "Varme i mørket",
-  "briefing": "Solen gik ned for elleve dage siden og står først op om tre uger. Stjernerne er skarpe, og kulden er tålmodig. Et sted mod sydvest er fjeldet varmt indefra.",
-  "goal": "Mål varmen i fjeldet, og placér et relæ, landeren kan se.",
+  "title": "Heat in the dark",
+  "briefing": "The sun set eleven days ago and won't rise for three weeks. The stars are sharp, and the cold is patient. Somewhere to the southwest, the fell is warm from within.",
+  "goal": "Measure the heat in the fell and place a relay the lander can see.",
   "points": {
     "lander": [
       0,
@@ -14,7 +14,7 @@
         -30,
         -42
       ],
-      "label": "Det varme fjeld",
+      "label": "The Warm Fell",
       "reveals": [
         "geothermal_factor"
       ],
@@ -22,35 +22,35 @@
         "water_distance_m",
         "vent"
       ],
-      "text": "Klippen er lun at røre ved. Varmen kommer dybt nedefra og er ligeglad med nat og dag. Den kan bære os gennem mørket."
+      "text": "The rock is warm to the touch. The heat comes from deep below and doesn't care about night or day. It can carry us through the dark."
     },
     "risk_sample": {
       "pos": [
         -10,
         -24
       ],
-      "label": "Malmblotningen",
+      "label": "The Ore Outcrop",
       "reveals": [
         "mineral_yield"
       ],
       "site_facts": [
         "shelter"
       ],
-      "text": "Lygten fanger en stribe metal i klippen. Ren, tæt malm — det bedste, vi har set."
+      "text": "The lamp catches a streak of metal in the rock. Clean, dense ore — the best we've seen."
     },
     "relay": {
       "pos": [
         -40,
         -6
       ],
-      "label": "Udsigtspunktet"
+      "label": "The Lookout"
     }
   },
   "routes": [
     {
       "id": "safe",
-      "label": "Langs fjeldfoden",
-      "description": "Længere, men lygten når klippevæggen hele vejen.",
+      "label": "Along the foot of the fell",
+      "description": "Longer, but the lamp reaches the rock wall the whole way.",
       "waypoints": [
         [
           0,
@@ -72,8 +72,8 @@
     },
     {
       "id": "short",
-      "label": "Gennem skyggedalen",
-      "description": "Den korte vej. Her er så mørkt og koldt, at dragten tømmes dobbelt så hurtigt.",
+      "label": "Through the shadow valley",
+      "description": "The short route. It's so dark and cold here that the suit drains twice as fast.",
       "waypoints": [
         [
           0,
@@ -98,13 +98,13 @@
       ],
       "radius": 12,
       "hazard_id": "long_night",
-      "label": "Mørkezone"
+      "label": "Dark zone"
     }
   ],
-  "evacuation": "Dragten slukker alt, der ikke holder dig i live. ARK: »Jeg tænder landerens projektører. Gå mod lyset, kaptajn. Bare mod lyset.«",
+  "evacuation": "The suit shuts down everything that isn't keeping you alive. ARK: “I'm switching on the lander's floodlights. Walk toward the light, captain. Just toward the light.”",
   "findings": {
-    "main": "Umbra: Fjeldets varme er stabil. Med to generatorer klarer vi natten.",
-    "risk": "Umbra: Malmen er rig og ren.",
-    "relay": "Umbra: Relæet blinker i mørket. Landeren kan se det."
+    "main": "Umbra: The fell's heat is stable. With two generators we'll get through the night.",
+    "risk": "Umbra: The ore is rich and clean.",
+    "relay": "Umbra: The relay blinks in the dark. The lander can see it."
   }
 }

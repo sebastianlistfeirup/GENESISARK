@@ -4,9 +4,9 @@
       "id": "obj_wake",
       "order": 1,
       "phase": "ARK",
-      "title": "Gå til værkstedet",
-      "description": "Arken er mørk, og nødstrømmen svigter. Find vej til værkstedet.",
-      "hint": "Følg de gule servicelys gennem gangen. Værkstedet ligger agter.",
+      "title": "Go to the workshop",
+      "description": "The Ark is dark, and the emergency power is failing. Find your way to the workshop.",
+      "hint": "Follow the yellow service lights down the corridor. The workshop is aft.",
       "targets": {
         "ship": "power_coupling"
       }
@@ -15,9 +15,9 @@
       "id": "obj_restore_power",
       "order": 2,
       "phase": "ARK",
-      "title": "Genopret nødstrømmen",
-      "description": "Nødstrømskoblingen i værkstedet er gået løs. Sæt den i igen.",
-      "hint": "Find koblingen på værkstedets bagvæg, og tryk E.",
+      "title": "Restore emergency power",
+      "description": "The emergency power coupling in the workshop has come loose. Reconnect it.",
+      "hint": "Find the coupling on the workshop's back wall and press E.",
       "targets": {
         "ship": "power_coupling"
       }
@@ -26,9 +26,9 @@
       "id": "obj_check_embryo_bank",
       "order": 3,
       "phase": "ARK",
-      "title": "Besøg embryobanken",
-      "description": "50.000 embryoner sover i kulden. Se dem med egne øjne.",
-      "hint": "Embryobanken ligger midtskibs. Gå hen til tavlen med tallet.",
+      "title": "Visit the embryo bank",
+      "description": "50,000 embryos sleep in the cold. See them with your own eyes.",
+      "hint": "The embryo bank is amidships. Go to the board with the number.",
       "targets": {
         "ship": "embryo_bank"
       }
@@ -37,9 +37,9 @@
       "id": "obj_open_starmap",
       "order": 4,
       "phase": "ARK",
-      "title": "Åbn stjernekortet",
-      "description": "Se, hvor arken kan tage hen.",
-      "hint": "Gå op på broen, og brug stjernekortet ved kommandopulten.",
+      "title": "Open the star map",
+      "description": "See where the Ark can go.",
+      "hint": "Go up to the bridge and use the star map at the command console.",
       "targets": {
         "ship": "starmap"
       }
@@ -48,9 +48,9 @@
       "id": "obj_choose_probe",
       "order": 5,
       "phase": "VOYAGE",
-      "title": "Sammenlign kandidaterne",
-      "description": "Send en langdistanceprobe, eller sammenlign de kendte verdener.",
-      "hint": "En probe koster komponenter, men fjerner en vigtig usikkerhed.",
+      "title": "Compare the candidates",
+      "description": "Send a remote probe, or compare the known worlds.",
+      "hint": "A probe costs components, but resolves an important uncertainty.",
       "targets": {
         "ship": "starmap"
       }
@@ -59,9 +59,9 @@
       "id": "obj_travel",
       "order": 6,
       "phase": "VOYAGE",
-      "title": "Rejs til en kandidat",
-      "description": "Vælg en verden, og sæt kurs.",
-      "hint": "Vælg en planet på stjernekortet. Ruten viser brændstof og slid.",
+      "title": "Travel to a candidate",
+      "description": "Choose a world and set a course.",
+      "hint": "Choose a planet on the star map. The route shows fuel and wear.",
       "targets": {
         "ship": "starmap"
       }
@@ -70,9 +70,9 @@
       "id": "obj_orbital_scan",
       "order": 7,
       "phase": "VOYAGE",
-      "title": "Scan planeten fra kredsløb",
-      "description": "Find klima, tyngde og mulige landingspladser.",
-      "hint": "Start orbitalscanningen fra broen. Den koster lidt brændstof.",
+      "title": "Scan the planet from orbit",
+      "description": "Find climate, gravity and possible landing sites.",
+      "hint": "Start the orbital scan from the bridge. It costs a little fuel.",
       "targets": {
         "ship": "orbit_terminal"
       }
@@ -81,9 +81,9 @@
       "id": "obj_expedition",
       "order": 8,
       "phase": "VOYAGE",
-      "title": "Gennemfør en ekspedition",
-      "description": "Tag prøver på overfladen, og placér et relæ.",
-      "hint": "Vælg en landingsplads, og flyv landeren ned. Hold øje med dragtens energi.",
+      "title": "Complete an expedition",
+      "description": "Take surface samples and place a relay.",
+      "hint": "Choose a landing site and fly the lander down. Watch the suit's energy.",
       "targets": {
         "ship": "orbit_terminal"
       }
@@ -92,9 +92,9 @@
       "id": "obj_commit_landing",
       "order": 9,
       "phase": "VOYAGE",
-      "title": "Bekræft landingen",
-      "description": "Arken lander for sidste gang. Det kan ikke gøres om.",
-      "hint": "Gennemgå koloniplanen på broen, og bekræft, når du er sikker.",
+      "title": "Confirm the landing",
+      "description": "The Ark lands for the last time. It cannot be undone.",
+      "hint": "Review the colony plan on the bridge and confirm when you are sure.",
       "targets": {
         "ship": "orbit_terminal"
       }
@@ -103,89 +103,89 @@
       "id": "obj_build_power",
       "order": 10,
       "phase": "SETTLED",
-      "title": "Byg strømforsyning",
-      "description": "Byg et solpanelfelt eller en geotermisk generator.",
-      "hint": "Tryk B for kolonitilstand. Vælg en strømkilde, der passer til planeten."
+      "title": "Build a power supply",
+      "description": "Build a solar array or a geothermal generator.",
+      "hint": "Press B for colony mode. Choose a power source that suits the planet."
     },
     {
       "id": "obj_build_water",
       "order": 11,
       "phase": "SETTLED",
-      "title": "Byg et vandanlæg",
-      "description": "Kolonien skal have rent vand.",
-      "hint": "Placér vandanlægget tæt på vand og inden for netværkets rækkevidde."
+      "title": "Build a water plant",
+      "description": "The colony needs clean water.",
+      "hint": "Place the water plant close to water and within range of the supply network."
     },
     {
       "id": "obj_build_habitat",
       "order": 12,
       "phase": "SETTLED",
-      "title": "Byg et habitat",
-      "description": "Mennesker skal have et sted at bo.",
-      "hint": "Byg habitatet i boligzonen. Tjek, om planeten kræver et modul."
+      "title": "Build a habitat",
+      "description": "People need a place to live.",
+      "hint": "Build the habitat in the living zone. Check whether the planet requires a module."
     },
     {
       "id": "obj_stable_supply",
       "order": 13,
       "phase": "SETTLED",
-      "title": "Stabilisér forsyningen",
-      "description": "Hold strøm og vand i overskud i syv dage i træk.",
-      "hint": "Se forsyningsbalancen øverst. Et batteri hjælper gennem nat og uvejr."
+      "title": "Stabilize supply",
+      "description": "Keep a power and water surplus for seven days in a row.",
+      "hint": "The supply balance is shown at the top. A battery helps through night and bad weather."
     },
     {
       "id": "obj_care_center",
       "order": 14,
       "phase": "SETTLED",
-      "title": "Byg omsorgscentret",
-      "description": "Nyt liv kræver et sted at blive passet.",
-      "hint": "Omsorgscentret skal stå i boligzonen med stabil strøm."
+      "title": "Build the care center",
+      "description": "New life needs a place to be cared for.",
+      "hint": "The care center must stand in the living zone with stable power."
     },
     {
       "id": "obj_first_cohort",
       "order": 15,
       "phase": "SETTLED",
-      "title": "Start den første kohorte",
-      "description": "Begynd inkubationen af ti embryoner.",
-      "hint": "Åbn omsorgscentret. Kravene vises, før du kan starte."
+      "title": "Start the first cohort",
+      "description": "Begin incubating ten embryos.",
+      "hint": "Open the care center. The requirements are shown before you can start."
     },
     {
       "id": "obj_first_birth",
       "order": 16,
       "phase": "SETTLED",
-      "title": "Vent på den første fødsel",
-      "description": "Hold kolonien stabil, mens den første kohorte vokser.",
-      "hint": "Inkubationen tager 270 dage. Hold reserverne oppe."
+      "title": "Wait for the first birth",
+      "description": "Keep the colony stable while the first cohort grows.",
+      "hint": "Incubation takes 270 days. Keep the reserves up."
     },
     {
       "id": "obj_school",
       "order": 17,
       "phase": "SETTLED",
-      "title": "Byg skolen",
-      "description": "Børnene skal lære mere, end robotterne kan lære dem.",
-      "hint": "Byg skole/rådshus i boligzonen, når den første kohorte er født."
+      "title": "Build the school",
+      "description": "The children must learn more than the robots can teach them.",
+      "hint": "Build a school/town hall in the living zone once the first cohort is born."
     },
     {
       "id": "obj_council",
       "order": 18,
       "phase": "SETTLED",
-      "title": "Dan et råd",
-      "description": "Lad kolonien begynde at styre sig selv.",
-      "hint": "Rådet samles i skole/rådshuset, når de første er voksne."
+      "title": "Form a council",
+      "description": "Let the colony begin to govern itself.",
+      "hint": "The council gathers in the school/town hall once the first are adults."
     },
     {
       "id": "obj_year_20",
       "order": 19,
       "phase": "SETTLED",
-      "title": "Nå år 20",
-      "description": "Før kolonien sikkert gennem de første tyve år.",
-      "hint": "Brug tidsspringet. Det stopper ved uløste kriser."
+      "title": "Reach year 20",
+      "description": "Guide the colony safely through its first twenty years.",
+      "hint": "Use the time leap. It stops at unresolved crises."
     },
     {
       "id": "obj_year_40_500",
       "order": 20,
       "phase": "SETTLED",
-      "title": "År 40: 500 mennesker",
-      "description": "Et selvforsynende samfund med mindst 500 indbyggere og et råd.",
-      "hint": "Byg reserver, flere kohorter og mindre afhængighed af arken."
+      "title": "Year 40: 500 people",
+      "description": "A self-sufficient community of at least 500 inhabitants and a council.",
+      "hint": "Build reserves, more cohorts and less dependence on the Ark."
     }
   ],
   "_note_targets": "targets: scene key -> interactable/marker id the waypoint marker points at while this objective is current (WaypointLayer)."

@@ -95,19 +95,19 @@ func _ready() -> void:
 
 func _spawn_interactables() -> void:
 	var defs := {
-		"power_coupling": [Loc.t("nødstrømskoblingen"), Loc.t("Tilslut"), Loc.t("Genstarter nødstrømmen. Broen, embryobanken og stjernekortet kommer online.")],
-		"workbench": [Loc.t("værkstedsbænken"), Loc.t("Brug"), Loc.t("Reparér skroget med komponenter. Det, du bruger her, mangler i kolonien.")],
-		"embryo_bank": [Loc.t("embryobanken"), Loc.t("Undersøg"), Loc.t("Se lagerstatus og redundans for de 50.000.")],
-		"starmap": [Loc.t("stjernekortet"), Loc.t("Åbn"), Loc.t("Sammenlign kandidatverdener, send sonder og vælg rute.")],
-		"bridge_terminal": [Loc.t("planetsammenligningen"), Loc.t("Åbn"), Loc.t("Kendt og manglende viden om alle seks verdener.")],
-		"orbit_terminal": [Loc.t("kredsløbsterminalen"), Loc.t("Åbn"), Loc.t("Scanning, sitesonder, ekspedition og landing.")],
+		"power_coupling": [Loc.t("the emergency power coupling"), Loc.t("Connect"), Loc.t("Restarts emergency power. The bridge, the embryo bank and the star map come online.")],
+		"workbench": [Loc.t("the workbench"), Loc.t("Use"), Loc.t("Repair the hull with components. What you use here will be missing in the colony.")],
+		"embryo_bank": [Loc.t("the embryo bank"), Loc.t("Examine"), Loc.t("View storage status and redundancy for the 50,000.")],
+		"starmap": [Loc.t("the star map"), Loc.t("Open"), Loc.t("Compare candidate worlds, send probes and choose a route.")],
+		"bridge_terminal": [Loc.t("the planet comparison"), Loc.t("Open"), Loc.t("Known and missing knowledge about all six worlds.")],
+		"orbit_terminal": [Loc.t("the orbital terminal"), Loc.t("Open"), Loc.t("Scanning, site probes, expedition and landing.")],
 	}
 	for m: Dictionary in builder.interact_markers:
 		var id := str(m["id"])
 		var it := Interactable.new()
 		it.name = "I_" + id
 		it.interact_id = id
-		var d: Array = defs.get(id, [id, Loc.t("Brug"), ""])
+		var d: Array = defs.get(id, [id, Loc.t("Use"), ""])
 		it.title = d[0]
 		it.verb = d[1]
 		it.consequence = d[2]
@@ -141,7 +141,7 @@ func _spawn_display() -> void:
 	_display.position = builder.embryo_display_pos + Vector3(0, 2.4, 0.2)
 	add_child(_display)
 	var sub := Label3D.new()
-	sub.text = Loc.t("LEVEDYGTIGE EMBRYONER · KRYOBEVARING STABIL")
+	sub.text = Loc.t("VIABLE EMBRYOS · CRYOPRESERVATION STABLE")
 	sub.font_size = 48
 	sub.pixel_size = 0.01
 	sub.modulate = Color("8fa3ad")
@@ -168,15 +168,15 @@ func _on_state(_kind: String) -> void:
 		var it: Interactable = interactables.get(id)
 		if it:
 			it.locked = not powered
-			it.locked_reason = Loc.t("ingen strøm — genopret nødstrømmen i værkstedet")
+			it.locked_reason = Loc.t("no power — restore emergency power in the workshop")
 	var orbit_it: Interactable = interactables.get("orbit_terminal")
 	if orbit_it and powered:
 		var pid := GameSession.sim.travel.current_planet_id(gs)
 		orbit_it.locked = pid.is_empty()
-		orbit_it.locked_reason = Loc.t("arken er ikke i kredsløb om en planet")
+		orbit_it.locked_reason = Loc.t("the Ark is not in orbit around a planet")
 	var loc: Dictionary = GameSession.content.locations.get(gs.campaign.location_id, {})
-	_voyage_label.text = Loc.t("%s\nBrændstof %d · Skrog %d%% · Ilt %d%% · Komp. %d\nEmbryoner %s · Stasis %.1f år") % [
-		str(loc.get("name", "")) + (Loc.t("  (kredsløb)") if loc.has("planet_id") else ""), int(gs.ark.fuel), int(gs.ark.integrity),
+	_voyage_label.text = Loc.t("%s\nFuel %d · Hull %d%% · Oxygen %d%% · Comp. %d\nEmbryos %s · Stasis %.1f yrs") % [
+		str(loc.get("name", "")) + (Loc.t("  (orbit)") if loc.has("planet_id") else ""), int(gs.ark.fuel), int(gs.ark.integrity),
 		int(gs.ark.oxygen), gs.ark.components, UiKit.thousands(gs.ark.embryo_viable), gs.campaign.captain_stasis_years]
 	# NAV's standing alerts (fuel, oxygen, hull): said once per change, never spammed.
 	for alert: Dictionary in GameSession.sim.nav.status(gs):
@@ -185,7 +185,7 @@ func _on_state(_kind: String) -> void:
 	var pc: Interactable = interactables.get("power_coupling")
 	if pc:
 		pc.locked = powered
-		pc.locked_reason = Loc.t("nødstrømmen kører")
+		pc.locked_reason = Loc.t("emergency power is running")
 	UiKit.clear(_window_planet)
 	var pid2 := GameSession.sim.travel.current_planet_id(gs)
 	if not pid2.is_empty():

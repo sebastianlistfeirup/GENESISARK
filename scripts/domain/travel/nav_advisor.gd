@@ -4,7 +4,7 @@ extends RefCounted
 ## reports (data/story/nav.json). Pure domain: no nodes, deterministic, tested.
 ## Severity: "info" | "warning" | "critical".
 
-const SIDE_TEXT := {"left": "bagbord", "right": "styrbord", "up": "op", "down": "ned"}
+const SIDE_TEXT := {"left": "port", "right": "starboard", "up": "up", "down": "down"}
 
 var content: ContentDB
 

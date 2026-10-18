@@ -63,7 +63,7 @@ func tick_day(gs: GameState) -> Dictionary:
 			b["state"] = ColonyState.B_ACTIVE
 			b["blocked_reason"] = ""
 			c.network_dirty = true
-			gs.log_journal(Loc.t("%s er færdigbygget.") % content.building(str(b.def_id)).get("name"), "build")
+			gs.log_journal(Loc.t("%s is complete.") % content.building(str(b.def_id)).get("name"), "build")
 	if c.network_dirty:
 		colony_sim.recompute_network(gs)
 

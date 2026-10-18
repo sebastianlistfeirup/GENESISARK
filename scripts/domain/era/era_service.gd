@@ -14,12 +14,12 @@ const STOP_INCUBATION := "incubation_stalled"
 const STOP_LIMIT := "day_limit"
 
 const STOP_TEXT := {
-	"target_reached": "Målet er nået.",
-	"critical_event": "Stoppede før en uafklaret kritisk hændelse.",
-	"supply_shortage": "Stoppede: vand eller mad slipper op.",
-	"critical_power_cut": "Stoppede: livsstøtte eller omsorg mister strøm.",
-	"incubation_stalled": "Stoppede: inkubationen står stille.",
-	"day_limit": "Stoppede ved sikkerhedsgrænsen for et spring.",
+	"target_reached": "The goal has been reached.",
+	"critical_event": "Stopped before an unresolved critical event.",
+	"supply_shortage": "Stopped: water or food is running out.",
+	"critical_power_cut": "Stopped: life support or care is losing power.",
+	"incubation_stalled": "Stopped: incubation has stalled.",
+	"day_limit": "Stopped at the safety limit for a single leap.",
 }
 
 var content: ContentDB
@@ -57,7 +57,7 @@ func forecast(gs: GameState, plan: Dictionary) -> Dictionary:
 
 func commit(gs: GameState, plan: Dictionary, txn: String) -> CommandResult:
 	if gs.is_applied(txn):
-		return CommandResult.fail("duplicate_txn", Loc.t("Springet er allerede gennemført."))
+		return CommandResult.fail("duplicate_txn", Loc.t("The leap has already been made."))
 	var blockers := leap_blockers(gs)
 	if not blockers.is_empty():
 		return CommandResult.fail("leap_blocked", " ".join(blockers), {"blockers": blockers})
@@ -71,7 +71,7 @@ func commit(gs: GameState, plan: Dictionary, txn: String) -> CommandResult:
 	_last = {}
 	gs.mark_applied(txn)
 	gs.campaign.captain_stasis_years += float(res["days"]) / 365.0
-	gs.log_journal(Loc.t("Tidsspring: %d år. %s") % [int(float(res["days"]) / 365.0), Loc.t(str(STOP_TEXT.get(res["stop_reason"], "")))], "era")
+	gs.log_journal(Loc.t("Time leap: %d years. %s") % [int(float(res["days"]) / 365.0), Loc.t(str(STOP_TEXT.get(res["stop_reason"], "")))], "era")
 	res["end_checksum"] = world_checksum(gs)
 	return CommandResult.success(res)
 
@@ -87,13 +87,13 @@ static func world_checksum(gs: GameState) -> String:
 func leap_blockers(gs: GameState) -> Array:
 	var out: Array = []
 	if gs.colony == null:
-		out.append(Loc.t("Der er ingen koloni."))
+		out.append(Loc.t("There is no colony."))
 		return out
 	var ev := events.blocking_event(gs)
 	if not ev.is_empty():
-		out.append(Loc.t("Løs først: %s.") % ev.get("title", ev.get("id")))
+		out.append(Loc.t("Resolve first: %s.") % ev.get("title", ev.get("id")))
 	if gs.ark.embryo_born == 0 and gs.ark.embryo_incubating == 0:
-		out.append(Loc.t("Det første generationsspring kræver en stabil omsorgsperiode med den første kohorte."))
+		out.append(Loc.t("The first generation leap requires a stable period of care with the first cohort."))
 	return out
 
 

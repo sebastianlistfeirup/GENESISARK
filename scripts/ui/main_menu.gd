@@ -38,7 +38,7 @@ func _ready() -> void:
 	root.add_child(col)
 	var t := UiKit.label("GENESIS ARK", 76, UiKit.TEXT)
 	col.add_child(t)
-	col.add_child(UiKit.label(Loc.t("Du er det sidste menneske, der kan give menneskeheden en fremtid."), 22, UiKit.MUTED))
+	col.add_child(UiKit.label(Loc.t("You are the last human who can give humanity a future."), 22, UiKit.MUTED))
 	var sp := Control.new()
 	sp.custom_minimum_size = Vector2(0, 30)
 	col.add_child(sp)
@@ -46,7 +46,7 @@ func _ready() -> void:
 	_body.custom_minimum_size = Vector2(360, 0)
 	_body.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
 	col.add_child(_body)
-	var foot := UiKit.label(Loc.t("50.000 embryoner. Seks mulige verdener. Ét valg, du skal leve med."), 16, UiKit.AMBER)
+	var foot := UiKit.label(Loc.t("50,000 embryos. Six possible worlds. One choice you must live with."), 16, UiKit.AMBER)
 	foot.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_LEFT)
 	foot.position = Vector2(110, -70)
 	root.add_child(foot)
@@ -66,19 +66,19 @@ func _ready() -> void:
 func _build() -> void:
 	UiKit.clear(_body)
 	if SaveService.has_any():
-		var cont := UiKit.button(Loc.t("Fortsæt"), _continue)
+		var cont := UiKit.button(Loc.t("Continue"), _continue)
 		_body.add_child(cont)
 		cont.grab_focus.call_deferred()
-	var nb := UiKit.button(Loc.t("Ny kampagne"), _new)
+	var nb := UiKit.button(Loc.t("New campaign"), _new)
 	_body.add_child(nb)
 	if not SaveService.has_any():
 		nb.grab_focus.call_deferred()
 	if SaveService.has_any():
-		_body.add_child(UiKit.button(Loc.t("Indlæs"), _load_list))
-	_body.add_child(UiKit.button(Loc.t("Indstillinger"), func() -> void: _settings.open()))
-	_body.add_child(UiKit.button(Loc.t("Krediteringer"), func() -> void: _credits.open()))
+		_body.add_child(UiKit.button(Loc.t("Load"), _load_list))
+	_body.add_child(UiKit.button(Loc.t("Settings"), func() -> void: _settings.open()))
+	_body.add_child(UiKit.button(Loc.t("Credits"), func() -> void: _credits.open()))
 	if OS.get_name() != "Web":
-		_body.add_child(UiKit.button(Loc.t("Afslut"), func() -> void: get_tree().quit()))
+		_body.add_child(UiKit.button(Loc.t("Quit"), func() -> void: get_tree().quit()))
 
 
 func _new() -> void:
@@ -96,7 +96,7 @@ func _load_list() -> void:
 	for slot: String in SaveService.SLOTS:
 		if SaveService.store.exists(slot):
 			_body.add_child(UiKit.button("%s — %s" % [Loc.t(str(SaveService.SLOT_LABELS[slot])), PauseMenu._describe(SaveService.summary(slot))], func() -> void: _try_load(slot, false)))
-	_body.add_child(UiKit.button(Loc.t("Tilbage"), _build))
+	_body.add_child(UiKit.button(Loc.t("Back"), _build))
 
 
 func _try_load(slot: String, backup: bool) -> void:
@@ -105,10 +105,10 @@ func _try_load(slot: String, backup: bool) -> void:
 		AppFlow.continue_game()
 		return
 	UiKit.clear(_body)
-	_body.add_child(UiKit.label(Loc.t("Kunne ikke indlæse: ") + str(r["error"]), 17, UiKit.WARN, true))
+	_body.add_child(UiKit.label(Loc.t("Could not load: ") + str(r["error"]), 17, UiKit.WARN, true))
 	if r["backup_available"] and not backup:
-		_body.add_child(UiKit.button(Loc.t("Indlæs seneste gyldige backup"), func() -> void: _try_load(slot, true)))
-	_body.add_child(UiKit.button(Loc.t("Tilbage"), _build))
+		_body.add_child(UiKit.button(Loc.t("Load latest valid backup"), func() -> void: _try_load(slot, true)))
+	_body.add_child(UiKit.button(Loc.t("Back"), _build))
 
 
 func _process(delta: float) -> void:

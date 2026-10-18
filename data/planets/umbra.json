@@ -4,31 +4,174 @@
   "family": "ice",
   "biome_id": "ice",
   "order": 6,
-  "tagline": "Lav biologisk risiko og godt mineralgrundlag.",
-  "advantage": "Næsten ingen biologisk risiko og et godt mineralgrundlag.",
-  "price": "Lang nat kræver geotermi og redundans.",
-  "description": "En mørk isverden med en langsom rotation. Natten varer i uger, og stjernerne er klare.",
-  "palette": { "nature": "#7d8fa6", "danger": "#e8a33d", "sky": "#2b3448" },
-  "hazard_ids": ["long_night"],
-  "site_templates": ["ice_a", "ice_b", "ice_c"],
-  "properties": {
-    "gravity_multiplier": { "type": "number", "unit": "g", "truth": 1.0,
-      "levels": { "archive": {"status": "estimated", "min": 0.85, "max": 1.15}, "orbital": {"status": "known"} } },
-    "mean_temperature_c": { "type": "number", "unit": "°C", "truth": -22,
-      "levels": { "archive": {"status": "estimated", "min": -50, "max": 0}, "orbital": {"status": "estimated", "min": -30, "max": -15}, "probe": {"status": "known"} } },
-    "atmosphere_class": { "type": "category", "truth": "inert_thin",
-      "levels": { "archive": {"status": "estimated", "candidates": ["thin_cold", "inert_thin"]}, "orbital": {"status": "known"} } },
-    "water_access": { "type": "number", "unit": "indeks", "truth": 0.6,
-      "levels": { "archive": {"status": "estimated", "min": 0.3, "max": 0.9}, "orbital": {"status": "estimated", "min": 0.5, "max": 0.75}, "probe": {"status": "known"} } },
-    "mineral_yield": { "type": "number", "unit": "x", "truth": 1.25,
-      "levels": { "archive": {"status": "estimated", "min": 0.7, "max": 1.4}, "orbital": {"status": "estimated", "min": 1.0, "max": 1.4}, "probe": {"status": "known"} } },
-    "solar_factor": { "type": "number", "unit": "x", "truth": 0.35,
-      "levels": { "archive": {"status": "estimated", "min": 0.2, "max": 0.8}, "orbital": {"status": "known"} } },
-    "geothermal_factor": { "type": "number", "unit": "x", "truth": 0.6,
-      "levels": { "archive": {"status": "unknown"}, "probe": {"status": "estimated", "min": 0.4, "max": 0.8}, "expedition": {"status": "known"} } },
-    "biological_risk": { "type": "number", "unit": "indeks", "truth": 0.0,
-      "levels": { "archive": {"status": "estimated", "min": 0.0, "max": 0.1}, "orbital": {"status": "known"} } }
+  "tagline": "Low biological risk and a good mineral base.",
+  "advantage": "Almost no biological risk and a good mineral base.",
+  "price": "The long night demands geothermal power and redundancy.",
+  "description": "A dark ice world with a slow rotation. Night lasts for weeks, and the stars are clear.",
+  "palette": {
+    "nature": "#7d8fa6",
+    "danger": "#e8a33d",
+    "sky": "#2b3448"
   },
-  "colony_modifiers": { "solar": 0.35, "water": 1.0, "food": 0.75, "mine": 1.25, "geothermal": 0.6, "heating_kw_per_habitat": 1, "build_cost": 1.0, "drone_efficiency": 0.9, "requires_module": "" },
-  "robust_plan": "To geotermiske generatorer for redundans og et batteri til natten; solpaneler er kun et supplement."
+  "hazard_ids": [
+    "long_night"
+  ],
+  "site_templates": [
+    "ice_a",
+    "ice_b",
+    "ice_c"
+  ],
+  "properties": {
+    "gravity_multiplier": {
+      "type": "number",
+      "unit": "g",
+      "truth": 1.0,
+      "levels": {
+        "archive": {
+          "status": "estimated",
+          "min": 0.85,
+          "max": 1.15
+        },
+        "orbital": {
+          "status": "known"
+        }
+      }
+    },
+    "mean_temperature_c": {
+      "type": "number",
+      "unit": "°C",
+      "truth": -22,
+      "levels": {
+        "archive": {
+          "status": "estimated",
+          "min": -50,
+          "max": 0
+        },
+        "orbital": {
+          "status": "estimated",
+          "min": -30,
+          "max": -15
+        },
+        "probe": {
+          "status": "known"
+        }
+      }
+    },
+    "atmosphere_class": {
+      "type": "category",
+      "truth": "inert_thin",
+      "levels": {
+        "archive": {
+          "status": "estimated",
+          "candidates": [
+            "thin_cold",
+            "inert_thin"
+          ]
+        },
+        "orbital": {
+          "status": "known"
+        }
+      }
+    },
+    "water_access": {
+      "type": "number",
+      "unit": "index",
+      "truth": 0.6,
+      "levels": {
+        "archive": {
+          "status": "estimated",
+          "min": 0.3,
+          "max": 0.9
+        },
+        "orbital": {
+          "status": "estimated",
+          "min": 0.5,
+          "max": 0.75
+        },
+        "probe": {
+          "status": "known"
+        }
+      }
+    },
+    "mineral_yield": {
+      "type": "number",
+      "unit": "x",
+      "truth": 1.25,
+      "levels": {
+        "archive": {
+          "status": "estimated",
+          "min": 0.7,
+          "max": 1.4
+        },
+        "orbital": {
+          "status": "estimated",
+          "min": 1.0,
+          "max": 1.4
+        },
+        "probe": {
+          "status": "known"
+        }
+      }
+    },
+    "solar_factor": {
+      "type": "number",
+      "unit": "x",
+      "truth": 0.35,
+      "levels": {
+        "archive": {
+          "status": "estimated",
+          "min": 0.2,
+          "max": 0.8
+        },
+        "orbital": {
+          "status": "known"
+        }
+      }
+    },
+    "geothermal_factor": {
+      "type": "number",
+      "unit": "x",
+      "truth": 0.6,
+      "levels": {
+        "archive": {
+          "status": "unknown"
+        },
+        "probe": {
+          "status": "estimated",
+          "min": 0.4,
+          "max": 0.8
+        },
+        "expedition": {
+          "status": "known"
+        }
+      }
+    },
+    "biological_risk": {
+      "type": "number",
+      "unit": "index",
+      "truth": 0.0,
+      "levels": {
+        "archive": {
+          "status": "estimated",
+          "min": 0.0,
+          "max": 0.1
+        },
+        "orbital": {
+          "status": "known"
+        }
+      }
+    }
+  },
+  "colony_modifiers": {
+    "solar": 0.35,
+    "water": 1.0,
+    "food": 0.75,
+    "mine": 1.25,
+    "geothermal": 0.6,
+    "heating_kw_per_habitat": 1,
+    "build_cost": 1.0,
+    "drone_efficiency": 0.9,
+    "requires_module": ""
+  },
+  "robust_plan": "Two geothermal generators for redundancy and a battery for the night; solar panels are only a supplement."
 }

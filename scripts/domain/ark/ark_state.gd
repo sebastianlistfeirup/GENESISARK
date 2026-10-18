@@ -55,12 +55,12 @@ static func from_dict(d: Dictionary) -> ArkState:
 func invariant_errors() -> PackedStringArray:
 	var out: PackedStringArray = []
 	if fuel < 0.0: out.append(Loc.t("fuel < 0"))
-	if integrity < 0.0 or integrity > 100.0: out.append(Loc.t("integrity uden for [0,100]"))
+	if integrity < 0.0 or integrity > 100.0: out.append(Loc.t("integrity outside [0,100]"))
 	if components < 0: out.append(Loc.t("components < 0"))
-	if oxygen < 0.0 or oxygen > 100.0: out.append(Loc.t("oxygen uden for [0,100]"))
+	if oxygen < 0.0 or oxygen > 100.0: out.append(Loc.t("oxygen outside [0,100]"))
 	for k: String in ["viable", "incubating", "born", "lost"]:
 		if int(ledger()[k]) < 0:
 			out.append(Loc.t("embryo %s < 0") % k)
 	if embryo_sum() != EMBRYO_TOTAL:
-		out.append(Loc.t("embryosum %d != %d") % [embryo_sum(), EMBRYO_TOTAL])
+		out.append(Loc.t("embryo sum %d != %d") % [embryo_sum(), EMBRYO_TOTAL])
 	return out

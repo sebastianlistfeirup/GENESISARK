@@ -24,14 +24,14 @@ func test_interval_must_contain_truth() -> void:
 	var p: Dictionary = content.planet("ferrum").duplicate(true)
 	p["properties"]["water_access"]["levels"]["orbital"] = {"status": "estimated", "min": 0.5, "max": 0.9}
 	var errs := content.validate_planet(p)
-	check(" ".join(errs).contains("indeholder ikke sandheden"), "fanger interval uden sandhed: %s" % str(errs))
+	check(" ".join(errs).contains("does not contain the truth"), "fanger interval uden sandhed: %s" % str(errs))
 
 
 func test_knowledge_cannot_widen() -> void:
 	var p: Dictionary = content.planet("ferrum").duplicate(true)
 	p["properties"]["water_access"]["levels"]["probe"] = {"status": "estimated", "min": 0.0, "max": 0.5}
 	var errs := content.validate_planet(p)
-	check(" ".join(errs).contains("udvider"), "fanger udvidet interval: %s" % str(errs))
+	check(" ".join(errs).contains("widens"), "fanger udvidet interval: %s" % str(errs))
 
 
 func test_no_planet_universally_best() -> void:

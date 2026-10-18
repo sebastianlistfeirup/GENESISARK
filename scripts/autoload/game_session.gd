@@ -66,10 +66,10 @@ func _wire() -> void:
 	sim.expedition.reserve_warning.connect(func() -> void:
 		AudioService.alarm(false)
 		trigger_story("expedition_suit_low")
-		notice.emit(Loc.t("Dragtens energi er under reserve. Vend tilbage til landeren."), "warning"))
+		notice.emit(Loc.t("Suit energy is below reserve. Return to the lander."), "warning"))
 	sim.expedition.suit_depleted.connect(func() -> void:
 		AudioService.alarm(true)
-		notice.emit(Loc.t("Dragten er tom. ARK fører dig tilbage til landeren."), "critical"))
+		notice.emit(Loc.t("The suit is drained. ARK is guiding you back to the lander."), "critical"))
 
 
 func txn(prefix: String) -> String:
@@ -360,7 +360,7 @@ func autosave() -> void:
 	if has_game():
 		var r := SaveService.save_state("auto", state, content)
 		if not r["ok"]:
-			notice.emit(Loc.t("Autogem fejlede: ") + str(r["error"]), "critical")
+			notice.emit(Loc.t("Autosave failed: ") + str(r["error"]), "critical")
 
 
 func save_to(slot: String) -> Dictionary:

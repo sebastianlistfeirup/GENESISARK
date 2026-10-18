@@ -190,13 +190,13 @@ func _run() -> void:
 	# Language switch mid-campaign: content reloads translated, the domain state is untouched.
 	DebugFixtures.prepare("fresh")
 	var lang_before := SaveCodec.checksum(GameSession.state.to_dict())
-	Loc.set_language("en")
+	Loc.set_language("da")
 	GameSession.reload_content()
-	var en_name := str(GameSession.content.building("water_plant").get("name"))
+	var da_name := str(GameSession.content.building("water_plant").get("name"))
 	var lang_after := SaveCodec.checksum(GameSession.state.to_dict())
 	Loc.set_language(Loc.SOURCE)
 	GameSession.reload_content()
-	check("language_switch_keeps_state", lang_before == lang_after and en_name == "Water plant" and str(GameSession.content.building("water_plant").get("name")) == "Vandanlæg", en_name)
+	check("language_switch_keeps_state", lang_before == lang_after and da_name == "Vandanlæg" and str(GameSession.content.building("water_plant").get("name")) == "Water plant", da_name)
 
 	# Ship: dark start, captain route x10, power coupling, starmap
 	DebugFixtures.prepare("fresh")

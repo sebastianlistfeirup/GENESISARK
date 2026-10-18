@@ -1,9 +1,9 @@
 {
   "id": "survey_viridia",
   "planet_id": "viridia",
-  "title": "Lavningens ånde",
-  "briefing": "Tæt svampeskov omkranser landingsstedet. I lavningen mod øst står sporerne som tåge over jorden. Vi skal vide, om luften kan filtreres, før nogen skal trække vejret her.",
-  "goal": "Tag en vævsprøve ved svamperanden, og placér et relæ på højdedraget.",
+  "title": "Breath of the Hollow",
+  "briefing": "Dense fungal forest encircles the landing site. In the hollow to the east, the spores hang like fog over the ground. We need to know whether the air can be filtered before anyone has to breathe here.",
+  "goal": "Take a tissue sample at the fungal rim and place a relay on the high ridge.",
   "points": {
     "lander": [
       0,
@@ -14,7 +14,7 @@
         42,
         18
       ],
-      "label": "Svamperanden",
+      "label": "The Fungal Rim",
       "reveals": [
         "biological_risk"
       ],
@@ -22,35 +22,35 @@
         "water_distance_m",
         "shelter"
       ],
-      "text": "Prøven er levende. Sporerne binder sig til fugt, ikke til metal — et finmasket filter holder dem ude. Rent vand løber tæt på lysningen."
+      "text": "The sample is alive. The spores bind to moisture, not metal — a fine-mesh filter keeps them out. Clean water runs close to the clearing."
     },
     "risk_sample": {
       "pos": [
         18,
         12
       ],
-      "label": "Sporekapslen",
+      "label": "The Spore Capsule",
       "reveals": [
         "atmosphere_class"
       ],
       "site_facts": [
         "exposure"
       ],
-      "text": "Kapslen sprækker i handsken. Luften her er mættet, men måleren viser ilt nok. Næsten åndbar. Næsten."
+      "text": "The capsule cracks open in the glove. The air here is saturated, but the meter shows enough oxygen. Almost breathable. Almost."
     },
     "relay": {
       "pos": [
         -22,
         30
       ],
-      "label": "Højdedraget"
+      "label": "The High Ridge"
     }
   },
   "routes": [
     {
       "id": "safe",
-      "label": "Ad skovbrynet",
-      "description": "Længere, men over sporeniveau. Dragten klarer sig fint.",
+      "label": "Along the forest edge",
+      "description": "Longer, but above spore level. The suit copes fine.",
       "waypoints": [
         [
           0,
@@ -76,8 +76,8 @@
     },
     {
       "id": "short",
-      "label": "Gennem lavningen",
-      "description": "Halvdelen af vejen. Sporerne tærer hårdt på dragtens filtre.",
+      "label": "Through the hollow",
+      "description": "Half the distance. The spores are hard on the suit's filters.",
       "waypoints": [
         [
           0,
@@ -102,13 +102,13 @@
       ],
       "radius": 10,
       "hazard_id": "spores",
-      "label": "Sporetåge"
+      "label": "Spore Haze"
     }
   ],
-  "evacuation": "Dragtens filtre er mættede, og energien falder. ARK: »Vend om nu, kaptajn. Landeren tænder sit fyr — følg lyset hjem. Prøverne, du har, er gemt.«",
+  "evacuation": "The suit's filters are saturated, and energy is falling. ARK: “Turn back now, captain. The lander is lighting its beacon — follow the light home. The samples you have are saved.”",
   "findings": {
-    "main": "Viridia: Sporerne kan filtreres. Væksthuse skal stå adskilt fra boligerne.",
-    "risk": "Viridia: Luften er næsten åndbar. Sporerne er ikke giftige — der er bare alt for mange.",
-    "relay": "Viridia: Relæet på højdedraget dækker hele lysningen."
+    "main": "Viridia: The spores can be filtered. Greenhouses must stand apart from the housing.",
+    "risk": "Viridia: The air is almost breathable. The spores aren't toxic — there are just far too many of them.",
+    "relay": "Viridia: The relay on the high ridge covers the whole clearing."
   }
 }

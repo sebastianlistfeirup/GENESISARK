@@ -1,12 +1,13 @@
 class_name Loc
 extends RefCounted
-## Localization helper (GA-33 groundwork, D-017). Danish source text is the
-## translation key; localization/translations.csv holds the other languages and
-## tools/loc_extract.py keeps it in sync with code and data. Static so domain
+## Localization helper (GA-33, D-017, D-025). The game is written in English:
+## English source text is the translation key; localization/translations.csv
+## holds the other languages (Danish) and tools/loc_extract.py keeps it in sync
+## with code and data. Static so domain
 ## code can use it: TranslationServer is an engine singleton, not an autoload.
 
-const SOURCE := "da"
-const LANGUAGES := {"da": "Dansk", "en": "English"}
+const SOURCE := "en"
+const LANGUAGES := {"en": "English", "da": "Dansk"}
 
 
 static func t(text: String) -> String:
@@ -23,9 +24,9 @@ static func is_source() -> bool:
 	return lang() == SOURCE
 
 
-## Grouped integer in the active language's style: 50.000 (da), 50,000 (en).
+## Grouped integer in the active language's style: 50,000 (en), 50.000 (da).
 static func group(n: int) -> String:
-	var sep := "." if is_source() else ","
+	var sep := "." if lang() == "da" else ","
 	var s := str(absi(n))
 	var out := ""
 	while s.length() > 3:

@@ -6,6 +6,9 @@ signal changed
 signal input_device_changed(pad: bool)
 
 const PATH := "user://settings.cfg"
+## 2 = English became the game's language (D-025): older files had Danish as the
+## default, so their saved "da" is reset to English once.
+const SETTINGS_VERSION := 2
 
 ## action -> [default keys]. Mouse buttons are prefixed "mouse:".
 const ACTIONS := {
@@ -17,13 +20,13 @@ const ACTIONS := {
 	"zoom_in": ["Equal"], "zoom_out": ["Minus"], "build_confirm": ["Enter"],
 }
 const ACTION_LABELS := {
-	"move_forward": "Frem", "move_back": "Tilbage", "move_left": "Venstre", "move_right": "Højre",
-	"sprint": "Løb", "interact": "Interagér", "journal": "Journal", "pause": "Pause / tilbage",
-	"colony_mode": "Kolonitilstand", "rotate_cam_left": "Drej kamera venstre", "rotate_cam_right": "Drej kamera højre",
-	"rotate_building": "Drej bygning", "confirm": "Bekræft", "cancel": "Fortryd", "autopilot": "Autopilot",
-	"speed_pause": "Pause tid", "speed_1": "Hastighed 1x", "speed_3": "Hastighed 3x", "drone_refill": "Dronereserve",
-	"ascend": "Stig (flyvning)", "descend": "Dyk (flyvning)",
-	"zoom_in": "Zoom ind", "zoom_out": "Zoom ud", "build_confirm": "Byg her",
+	"move_forward": "Forward", "move_back": "Back", "move_left": "Left", "move_right": "Right",
+	"sprint": "Run", "interact": "Interact", "journal": "Journal", "pause": "Pause / back",
+	"colony_mode": "Colony mode", "rotate_cam_left": "Rotate camera left", "rotate_cam_right": "Rotate camera right",
+	"rotate_building": "Rotate building", "confirm": "Confirm", "cancel": "Cancel", "autopilot": "Autopilot",
+	"speed_pause": "Pause time", "speed_1": "Speed 1x", "speed_3": "Speed 3x", "drone_refill": "Drone reserve",
+	"ascend": "Ascend (flight)", "descend": "Descend (flight)",
+	"zoom_in": "Zoom in", "zoom_out": "Zoom out", "build_confirm": "Build here",
 }
 
 ## Controller layout (Xbox naming; Godot JoyButton/JoyAxis indices). Tokens:
@@ -52,7 +55,7 @@ var using_pad := false
 var values := {
 	"master_volume": 0.9, "music_volume": 0.6, "sfx_volume": 0.9, "ambience_volume": 0.7, "ui_volume": 0.8,
 	"ui_scale": 1.0, "subtitle_size": 22, "subtitles": true, "reduced_motion": false, "mouse_sensitivity": 0.25,
-	"invert_y": false, "fullscreen": false, "camera_shake": true, "language": "da", "pad_look_speed": 2.4, "touch_look_sensitivity": 1.0,
+	"invert_y": false, "fullscreen": false, "camera_shake": true, "language": "en", "pad_look_speed": 2.4, "touch_look_sensitivity": 1.0,
 }
 var remaps: Dictionary = {}  # action -> [key names]
 
@@ -189,7 +192,7 @@ static func event_label(ev: InputEvent) -> String:
 	if ev is InputEventKey:
 		return OS.get_keycode_string((ev as InputEventKey).physical_keycode)
 	if ev is InputEventMouseButton:
-		return {1: Loc.t("Venstre klik"), 2: Loc.t("Højre klik"), 3: Loc.t("Midterklik")}.get((ev as InputEventMouseButton).button_index, Loc.t("Mus"))
+		return {1: Loc.t("Left click"), 2: Loc.t("Right click"), 3: Loc.t("Middle click")}.get((ev as InputEventMouseButton).button_index, Loc.t("Mouse"))
 	return "?"
 
 
@@ -199,7 +202,7 @@ func binding_text(action: String) -> String:
 	var parts: Array = []
 	for k: String in keys_for(action):
 		if k.begins_with("mouse:"):
-			parts.append({"1": Loc.t("Venstre klik"), "2": Loc.t("Højre klik")}.get(k.substr(6), Loc.t("Mus")))
+			parts.append({"1": Loc.t("Left click"), "2": Loc.t("Right click")}.get(k.substr(6), Loc.t("Mouse")))
 		else:
 			parts.append(k)
 	return " / ".join(parts)
@@ -211,6 +214,8 @@ func load_settings() -> void:
 		return
 	for k: String in values.keys():
 		values[k] = cfg.get_value("settings", k, values[k])
+	if int(cfg.get_value("meta", "version", 1)) < 2:
+		values["language"] = Loc.SOURCE
 	for a: String in ACTIONS.keys():
 		if cfg.has_section_key("input", a):
 			remaps[a] = cfg.get_value("input", a)
@@ -218,6 +223,7 @@ func load_settings() -> void:
 
 func save_settings() -> void:
 	var cfg := ConfigFile.new()
+	cfg.set_value("meta", "version", SETTINGS_VERSION)
 	for k: String in values.keys():
 		cfg.set_value("settings", k, values[k])
 	for a: String in remaps.keys():

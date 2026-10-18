@@ -64,11 +64,11 @@ func profile_for(m: Dictionary) -> String:
 
 func handover(gs: GameState, txn: String) -> CommandResult:
 	if gs.campaign.phase == CampaignState.PHASE_ENDED:
-		return CommandResult.fail("already_ended", Loc.t("Overdragelsen er allerede sket."))
+		return CommandResult.fail("already_ended", Loc.t("The handover has already taken place."))
 	if gs.colony == null:
-		return CommandResult.fail("no_colony", Loc.t("Der er ingen koloni at overdrage."))
+		return CommandResult.fail("no_colony", Loc.t("There is no colony to hand over."))
 	if gs.is_applied(txn):
-		return CommandResult.fail("duplicate_txn", Loc.t("Allerede behandlet."))
+		return CommandResult.fail("duplicate_txn", Loc.t("Already processed."))
 	var m := metrics(gs)
 	var id := profile_for(m)
 	gs.campaign.ending_id = id
@@ -76,7 +76,7 @@ func handover(gs: GameState, txn: String) -> CommandResult:
 	gs.campaign.phase = CampaignState.PHASE_ENDED
 	gs.campaign.act = 3
 	gs.mark_applied(txn)
-	gs.log_journal(Loc.t("Kaptajnen overdrager kolonien. Profil: %s.") % content.endings.get(id, {}).get("title", id), "ending")
+	gs.log_journal(Loc.t("The captain hands over the colony. Profile: %s.") % content.endings.get(id, {}).get("title", id), "ending")
 	return CommandResult.success({"ending_id": id, "metrics": m})
 
 
@@ -88,7 +88,7 @@ func epilogue(gs: GameState) -> Array:
 	var vars := {
 		"planet": str(p.get("name", "")), "site": str(site.get("name", "")),
 		"population": str(m.get("population", 0)), "years": str(int(float(m.get("years", 0.0)))),
-		"crises": str(m.get("crises_resolved", 0)), "council": str(clampi(int(m.get("adults", 0)) / 25, 5, 15)) if m.get("council", false) else Loc.t("ingen"),
+		"crises": str(m.get("crises_resolved", 0)), "council": str(clampi(int(m.get("adults", 0)) / 25, 5, 15)) if m.get("council", false) else Loc.t("none"),
 		"captain_years": str(int(gs.campaign.captain_stasis_years)),
 		"settlement": gs.society.settlement_name if not gs.society.settlement_name.is_empty() else "kolonien",
 	}
@@ -100,7 +100,7 @@ func epilogue(gs: GameState) -> Array:
 
 func summary(gs: GameState) -> String:
 	var def: Dictionary = content.endings.get(gs.campaign.ending_id, {})
-	return fill(str(def.get("summary", "")), {"settlement": gs.society.settlement_name if not gs.society.settlement_name.is_empty() else Loc.t("Kolonien"),
+	return fill(str(def.get("summary", "")), {"settlement": gs.society.settlement_name if not gs.society.settlement_name.is_empty() else Loc.t("The colony"),
 		"planet": str(content.planet(gs.campaign.selected_planet_id).get("name", ""))})
 
 

@@ -9,11 +9,11 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT = os.path.join(ROOT, "docs", "VO_SCRIPT.csv")
 VOICES = {"NAV": "nav_computer", "ARK": "ark_ai", "CAPTAIN": "captain", "NARRATOR": "narrator", "noor": "noor", "elias": "elias", "sana": "sana"}
 DIRECTION = {
-    "NAV": "Navigationscomputer: tør, nøgtern, helt uden følelser, jævnt tempo, tal udtales tydeligt. Ingen varme, ingen humor i stemmen (tørheden ligger i ordene).",
-    "ARK": "Rolig, præcis, varm under overfladen. Lav dynamik, ingen robotfilter i optagelsen (tilføjes i Godot).",
-    "CAPTAIN": "Træt, ensom, lavmælt. Kønsneutral rolle: vælg stemme bevidst og hold den hele spillet.",
-    "NARRATOR": "Valgfri. Anbefaling: kun undertekst (bibel s. 13). Indtal kun hvis playtest viser behov.",
-    "noor": "Ung voksen, fremadlænet, nysgerrig.", "elias": "Ung voksen, forsigtig, eftertænksom.", "sana": "Ung voksen, rolig og bestemt.",
+    "NAV": "Navigation computer: dry, matter-of-fact, entirely without emotion, even pace, numbers clearly spoken. No warmth, no humor in the voice (the dryness is in the words).",
+    "ARK": "Calm, precise, warm underneath. Low dynamics, no robot filter in the recording (added in Godot).",
+    "CAPTAIN": "Tired, lonely, quiet. Gender-neutral role: choose the voice deliberately and keep it for the whole game.",
+    "NARRATOR": "Optional. Recommendation: subtitles only (bible p.13). Record only if playtests show a need.",
+    "noor": "Young adult, forward-leaning, curious.", "elias": "Young adult, cautious, thoughtful.", "sana": "Young adult, calm and firm.",
 }
 old = {}
 if os.path.exists(OUT):
@@ -27,7 +27,7 @@ for sc in scenes:
         sp = line["speaker"]
         prev = old.get(lid, {})
         rows.append({"line_id": lid, "scene": sc["id"], "trigger": sc.get("trigger", ""), "speaker": sp,
-                     "voice_id": VOICES.get(sp, sp), "text_da": line["text"], "chars": len(line["text"]),
+                     "voice_id": VOICES.get(sp, sp), "text": line["text"], "chars": len(line["text"]),
                      "direction": DIRECTION.get(sp, ""), "status": prev.get("status", "NEEDED"),
                      "take": prev.get("take", ""), "tool": prev.get("tool", ""), "license": prev.get("license", "")})
 # NAV (data/story/nav.json): lines with {numbers} are filled in at runtime. Record the
@@ -38,8 +38,8 @@ for nid, nl in nav.items():
     lid = "nav_" + nid
     prev = old.get(lid, {})
     dyn = "{" in nl["text"]
-    rows.append({"line_id": lid, "scene": "nav", "trigger": nid, "speaker": "NAV", "voice_id": VOICES["NAV"], "text_da": nl["text"],
-                 "chars": len(nl["text"]), "direction": DIRECTION["NAV"] + (" DYNAMISK: tal indsættes i spillet." if dyn else ""),
+    rows.append({"line_id": lid, "scene": "nav", "trigger": nid, "speaker": "NAV", "voice_id": VOICES["NAV"], "text": nl["text"],
+                 "chars": len(nl["text"]), "direction": DIRECTION["NAV"] + (" DYNAMIC: numbers are filled in by the game." if dyn else ""),
                  "status": prev.get("status", "DYNAMIC" if dyn else "NEEDED"), "take": prev.get("take", ""), "tool": prev.get("tool", ""),
                  "license": prev.get("license", "")})
 with open(OUT, "w", encoding="utf-8", newline="") as f:

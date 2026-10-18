@@ -1,21 +1,153 @@
 {
   "biome_id": "ice",
-  "map": { "name": "Isbiomekort", "size_m": 260, "terrain_seed": 3303, "height_scale": 10.0, "base_color": "#c9d8df", "rock_color": "#6f7f8c", "water_level": -100.0 },
+  "map": {
+    "name": "Ice biome map",
+    "size_m": 260,
+    "terrain_seed": 3303,
+    "height_scale": 10.0,
+    "base_color": "#c9d8df",
+    "rock_color": "#6f7f8c",
+    "water_level": -100.0
+  },
   "sites": [
-    { "id": "ice_a", "name": "Dampsprækken", "center": [-50, -45],
-      "description": "Varm damp stiger fra en revne i isen. Geotermi tæt på — og ustabil is omkring den.",
-      "districts": { "landing": {"center": [0, 0], "radius": 24}, "resource": {"center": [30, 26], "radius": 20}, "living": {"center": [-30, 20], "radius": 22} },
-      "blocked": [ {"center": [16, -16], "radius": 9} ],
-      "facts": { "water_distance_m": 10, "flatness": 0.6, "shelter": 0.5, "vent": true, "exposure": 0.6, "landing_quality": 0.65 } },
-    { "id": "ice_b", "name": "Gletsjerranden", "center": [55, 10],
-      "description": "Kanten af en enorm gletsjer. Masser af vand og mineraler i moræneaflejringerne.",
-      "districts": { "landing": {"center": [0, 0], "radius": 28}, "resource": {"center": [-40, -28], "radius": 24}, "living": {"center": [26, -38], "radius": 22} },
-      "blocked": [ {"center": [-20, 20], "radius": 11} ],
-      "facts": { "water_distance_m": 15, "flatness": 0.7, "shelter": 0.35, "vent": false, "exposure": 0.65, "landing_quality": 0.8 } },
-    { "id": "ice_c", "name": "Krateret", "center": [-5, 70],
-      "description": "Et gammelt nedslagskrater. Kraterkanten skærmer for vind, og bunden er flad.",
-      "districts": { "landing": {"center": [0, 0], "radius": 30}, "resource": {"center": [38, 14], "radius": 22}, "living": {"center": [-34, 18], "radius": 24} },
+    {
+      "id": "ice_a",
+      "name": "The Steam Fissure",
+      "center": [
+        -50,
+        -45
+      ],
+      "description": "Warm steam rises from a crack in the ice. Geothermal close by — and unstable ice around it.",
+      "districts": {
+        "landing": {
+          "center": [
+            0,
+            0
+          ],
+          "radius": 24
+        },
+        "resource": {
+          "center": [
+            30,
+            26
+          ],
+          "radius": 20
+        },
+        "living": {
+          "center": [
+            -30,
+            20
+          ],
+          "radius": 22
+        }
+      },
+      "blocked": [
+        {
+          "center": [
+            16,
+            -16
+          ],
+          "radius": 9
+        }
+      ],
+      "facts": {
+        "water_distance_m": 10,
+        "flatness": 0.6,
+        "shelter": 0.5,
+        "vent": true,
+        "exposure": 0.6,
+        "landing_quality": 0.65
+      }
+    },
+    {
+      "id": "ice_b",
+      "name": "The Glacier Edge",
+      "center": [
+        55,
+        10
+      ],
+      "description": "The edge of a vast glacier. Plenty of water and minerals in the moraine deposits.",
+      "districts": {
+        "landing": {
+          "center": [
+            0,
+            0
+          ],
+          "radius": 28
+        },
+        "resource": {
+          "center": [
+            -40,
+            -28
+          ],
+          "radius": 24
+        },
+        "living": {
+          "center": [
+            26,
+            -38
+          ],
+          "radius": 22
+        }
+      },
+      "blocked": [
+        {
+          "center": [
+            -20,
+            20
+          ],
+          "radius": 11
+        }
+      ],
+      "facts": {
+        "water_distance_m": 15,
+        "flatness": 0.7,
+        "shelter": 0.35,
+        "vent": false,
+        "exposure": 0.65,
+        "landing_quality": 0.8
+      }
+    },
+    {
+      "id": "ice_c",
+      "name": "The Crater",
+      "center": [
+        -5,
+        70
+      ],
+      "description": "An old impact crater. The rim shields against wind, and the floor is flat.",
+      "districts": {
+        "landing": {
+          "center": [
+            0,
+            0
+          ],
+          "radius": 30
+        },
+        "resource": {
+          "center": [
+            38,
+            14
+          ],
+          "radius": 22
+        },
+        "living": {
+          "center": [
+            -34,
+            18
+          ],
+          "radius": 24
+        }
+      },
       "blocked": [],
-      "facts": { "water_distance_m": 50, "flatness": 0.9, "shelter": 0.8, "vent": false, "exposure": 0.3, "landing_quality": 0.9 } }
+      "facts": {
+        "water_distance_m": 50,
+        "flatness": 0.9,
+        "shelter": 0.8,
+        "vent": false,
+        "exposure": 0.3,
+        "landing_quality": 0.9
+      }
+    }
   ]
 }

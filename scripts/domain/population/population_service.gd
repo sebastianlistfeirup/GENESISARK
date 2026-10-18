@@ -38,20 +38,20 @@ func reserve_days(gs: GameState, extra_people: int = 0) -> float:
 func incubation_blockers(gs: GameState, count: int) -> Array:
 	var out: Array = []
 	if gs.colony == null:
-		return [Loc.t("Der er ingen koloni.")]
+		return [Loc.t("There is no colony.")]
 	var inc: Dictionary = content.bal("incubation", {})
 	if gs.ark.embryo_viable < count:
-		out.append(Loc.t("Ikke nok levedygtige embryoner."))
+		out.append(Loc.t("Not enough viable embryos."))
 	if gs.colony.count_active("care_center") == 0:
-		out.append(Loc.t("Kræver et færdigt omsorgs- og inkubationscenter."))
+		out.append(Loc.t("Requires a completed care and incubation center."))
 	elif incubation_slots(gs) - gs.ark.embryo_incubating < count:
-		out.append(Loc.t("Ikke nok ledige inkubationspladser (%d ledige).") % maxi(0, incubation_slots(gs) - gs.ark.embryo_incubating))
+		out.append(Loc.t("Not enough free incubation slots (%d free).") % maxi(0, incubation_slots(gs) - gs.ark.embryo_incubating))
 	var surplus := float(gs.colony.last_report.get("power", {}).get("surplus_kw", 0.0))
 	if surplus < float(inc.get("required_surplus_kw", 5)):
-		out.append(Loc.t("Kræver mindst +%d kW strømoverskud (nu %+.1f kW).") % [int(inc.get("required_surplus_kw", 5)), surplus])
+		out.append(Loc.t("Requires at least +%d kW power surplus (now %+.1f kW).") % [int(inc.get("required_surplus_kw", 5)), surplus])
 	var rd := reserve_days(gs, count + gs.ark.embryo_incubating)
 	if rd < float(inc.get("required_reserve_days", 30)):
-		out.append(Loc.t("Kræver vand- og madreserve til %d dage for de kommende børn (nu %.0f).") % [int(inc.get("required_reserve_days", 30)), rd])
+		out.append(Loc.t("Requires water and food reserves for %d days for the coming children (now %.0f).") % [int(inc.get("required_reserve_days", 30)), rd])
 	var req := colony_sim.requires_module(gs)
 	if not req.is_empty():
 		var any_ok := false
@@ -59,17 +59,17 @@ func incubation_blockers(gs: GameState, count: int) -> Array:
 			if b.get("def_id") == "habitat" and b.get("state") == ColonyState.B_ACTIVE and colony_sim.habitat_ok(gs, b):
 				any_ok = true
 		if not any_ok:
-			out.append(Loc.t("Planeten kræver et habitat med %s.") % ("filtermodul" if req == "filter" else "varmemodul"))
+			out.append(Loc.t("The planet requires a habitat with %s.") % ("filtermodul" if req == "filter" else "varmemodul"))
 	if capacity(gs, "residents") < gs.population.alive_count() + gs.ark.embryo_incubating + count:
-		out.append(Loc.t("Ikke nok boligpladser til de kommende børn."))
+		out.append(Loc.t("Not enough housing for the coming children."))
 	return out
 
 
 func start_incubation(gs: GameState, count: int, txn: String) -> CommandResult:
 	if gs.is_applied(txn):
-		return CommandResult.fail("duplicate_txn", Loc.t("Inkubationen er allerede startet."))
+		return CommandResult.fail("duplicate_txn", Loc.t("Incubation has already started."))
 	if count <= 0:
-		return CommandResult.fail("invalid_count", Loc.t("Antallet skal være positivt."))
+		return CommandResult.fail("invalid_count", Loc.t("The number must be positive."))
 	var blockers := incubation_blockers(gs, count)
 	if not blockers.is_empty():
 		return CommandResult.fail("incubation_blocked", " ".join(blockers), {"blockers": blockers})
@@ -83,7 +83,7 @@ func start_incubation(gs: GameState, count: int, txn: String) -> CommandResult:
 	gs.population.next_cohort_id += 1
 	gs.population.cohorts.append(c)
 	gs.mark_applied(txn)
-	gs.log_journal(Loc.t("Inkubation af kohorte %d startet: %d embryoner.") % [c["id"], count], "population")
+	gs.log_journal(Loc.t("Incubation of cohort %d started: %d embryos.") % [c["id"], count], "population")
 	return CommandResult.success({"cohort_id": c["id"]})
 
 
@@ -108,7 +108,7 @@ func tick_day(gs: GameState, report: Dictionary) -> Dictionary:
 					c["stalled_days"] = 0
 				else:
 					c["stalled_days"] = int(c.get("stalled_days", 0)) + 1
-					out["alerts"].append(Loc.t("Inkubation af kohorte %d står stille: %s") % [c["id"], Loc.t("ingen strøm til omsorgscentret") if not care_ok else "forsyningsmangel"])
+					out["alerts"].append(Loc.t("Incubation of cohort %d has stalled: %s") % [c["id"], Loc.t("no power to the care center") if not care_ok else "forsyningsmangel"])
 				if int(c["gestation_days"]) >= gestation:
 					c["stage"] = "child"
 					c["age_days"] = 0
@@ -138,7 +138,7 @@ func tick_day(gs: GameState, report: Dictionary) -> Dictionary:
 				# No silent loss: health has a floor; deaths only come from resolved events.
 				c["health"] = clampf(h, 0.15, 1.0)
 	for cid: int in out["births"]:
-		gs.log_journal(Loc.t("Kohorte %d er født. %d nye mennesker.") % [cid, int(gs.population.cohort_by_id(cid).get("size", 0))], "birth")
+		gs.log_journal(Loc.t("Cohort %d is born. %d new people.") % [cid, int(gs.population.cohort_by_id(cid).get("size", 0))], "birth")
 	return out
 
 

@@ -97,9 +97,9 @@ func _ground(p: Vector2) -> Vector3:
 func _place_lander() -> void:
 	var lander := Interactable.new()
 	lander.interact_id = "lander"
-	lander.title = Loc.t("landeren")
-	lander.verb = Loc.t("Vend tilbage til")
-	lander.consequence = Loc.t("Afslutter ekspeditionen. Prøver og relæ bliver til viden om planeten.")
+	lander.title = Loc.t("the lander")
+	lander.verb = Loc.t("Return to")
+	lander.consequence = Loc.t("Ends the expedition. Samples and relay become knowledge of the planet.")
 	lander.radius = 3.5
 	add_child(lander)
 	lander.global_position = _ground(Vector2.ZERO)
@@ -127,12 +127,12 @@ func _place_points(pts: Dictionary) -> void:
 		it.title = str(d.get("label", key))
 		it.radius = 2.4
 		if key == "relay":
-			it.verb = Loc.t("Placér relæ ved")
-			it.consequence = Loc.t("Relæet sikrer data og vurderer landingspladsen.")
+			it.verb = Loc.t("Place relay at")
+			it.consequence = Loc.t("The relay secures data and assesses the landing site.")
 		else:
-			it.verb = Loc.t("Tag prøve:")
+			it.verb = Loc.t("Take sample:")
 			it.hold_time = float(GameSession.content.bal("suit.sample_time_s", 8.0))
-			it.consequence = Loc.t("Hold [%s] i %d sekunder.%s") % [SettingsService.binding_text("interact"), int(it.hold_time), Loc.t(" Valgfri risikoprøve.") if key == "risk_sample" else ""]
+			it.consequence = Loc.t("Hold [%s] for %d seconds.%s") % [SettingsService.binding_text("interact"), int(it.hold_time), Loc.t(" Optional risk sample.") if key == "risk_sample" else ""]
 		add_child(it)
 		it.global_position = _ground(_pt(d))
 		var marker := VisualSlot.make("surface.sample_marker" if key != "relay" else "surface.relay_beacon")
@@ -224,7 +224,7 @@ func _place_hazards() -> void:
 func _build_suit_hud() -> void:
 	var p := UiKit.panel(Vector2(340, 0))
 	var v := UiKit.vbox(4)
-	v.add_child(UiKit.title(Loc.t("Dragt")))
+	v.add_child(UiKit.title(Loc.t("Suit")))
 	_suit_bar = UiKit.bar(100, 100, UiKit.PETROL, 18)
 	v.add_child(_suit_bar)
 	_suit_label = UiKit.label("", 16)
@@ -241,13 +241,13 @@ func _update_waypoint(ex: ExpeditionState) -> void:
 	if waypoints == null:
 		return
 	var key := "lander"
-	var label := Loc.t("Vend tilbage til landeren")
+	var label := Loc.t("Return to the lander")
 	if not "main_sample" in ex.samples and _markers.has("main_sample"):
 		key = "main_sample"
-		label = Loc.t("Tag hovedprøven")
+		label = Loc.t("Take the main sample")
 	elif not ex.relay_placed and _markers.has("relay"):
 		key = "relay"
-		label = Loc.t("Placér relæet")
+		label = Loc.t("Place the relay")
 	waypoints.set_objective(_markers.get(key), label, 3.6 if key != "lander" else 4.2)
 
 
@@ -273,24 +273,24 @@ func _physics_process(delta: float) -> void:
 	var fill := UiKit.DANGER if ex.suit_energy <= reserve else (UiKit.WARN if hm[0] > 1.0 else UiKit.PETROL)
 	(_suit_bar.get_theme_stylebox("fill") as StyleBoxFlat).bg_color = fill
 	var drain := float(GameSession.content.bal("suit.drain_per_s", 0.12)) * float(hm[0])
-	_suit_label.text = Loc.t("%s %d%%  (−%.2f/s · ~%d s tilbage)") % [UiKit.status_icon("critical" if ex.suit_energy <= reserve else "ok"), int(ex.suit_energy), drain, int(ex.suit_energy / maxf(drain, 0.01))]
+	_suit_label.text = Loc.t("%s %d%%  (−%.2f/s · ~%d s left)") % [UiKit.status_icon("critical" if ex.suit_energy <= reserve else "ok"), int(ex.suit_energy), drain, int(ex.suit_energy / maxf(drain, 0.01))]
 	var lines: Array = []
 	if hm[0] > 1.0:
-		lines.append(Loc.t("▲ I fareområde: %s (×%.1f forbrug)") % [hm[1], hm[0]])
-	lines.append(Loc.t("Prøver: %d/2 · Relæ: %s") % [ex.samples.size(), Loc.t("placeret") if ex.relay_placed else Loc.t("mangler")])
+		lines.append(Loc.t("▲ In hazard zone: %s (×%.1f consumption)") % [hm[1], hm[0]])
+	lines.append(Loc.t("Samples: %d/2 · Relay: %s") % [ex.samples.size(), Loc.t("placed") if ex.relay_placed else Loc.t("missing")])
 	if ex.drone_refill_available and not ex.drone_refill_used:
-		lines.append(Loc.t("[%s] Kald dronereserve (+%d%%)") % [SettingsService.binding_text("drone_refill"), int(GameSession.content.bal("suit.drone_refill", 35.0))])
+		lines.append(Loc.t("[%s] Call drone reserve (+%d%%)") % [SettingsService.binding_text("drone_refill"), int(GameSession.content.bal("suit.drone_refill", 35.0))])
 	var lander: Node3D = _markers.get("lander")
 	if lander:
-		lines.append(Loc.t("Landeren: %d m") % int(captain.global_position.distance_to(lander.global_position)))
+		lines.append(Loc.t("Lander: %d m") % int(captain.global_position.distance_to(lander.global_position)))
 	_status.text = "\n".join(lines)
 	for key: String in ["main_sample", "risk_sample"]:
 		if _markers.has(key) and key in ex.samples:
 			(_markers[key] as Interactable).locked = true
-			(_markers[key] as Interactable).locked_reason = Loc.t("prøven er taget")
+			(_markers[key] as Interactable).locked_reason = Loc.t("the sample is taken")
 	if _markers.has("relay") and ex.relay_placed:
 		(_markers["relay"] as Interactable).locked = true
-		(_markers["relay"] as Interactable).locked_reason = Loc.t("relæet står her")
+		(_markers["relay"] as Interactable).locked_reason = Loc.t("the relay is here")
 	if ex.status == ExpeditionState.STATUS_RECALLED:
 		_finish(true)
 
@@ -299,7 +299,7 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("drone_refill"):
 		var r := GameSession.cmd_drone_refill()
 		if r.ok:
-			hud.toast(Loc.t("Dronen leverer en energicelle."), "ok")
+			hud.toast(Loc.t("The drone delivers an energy cell."), "ok")
 
 
 func _on_use(it: Interactable) -> void:
@@ -308,14 +308,14 @@ func _on_use(it: Interactable) -> void:
 		"main_sample", "risk_sample":
 			var r := GameSession.cmd_take_sample(it.interact_id)
 			if r.ok:
-				hud.toast(str(r.data.get("text", Loc.t("Prøve taget."))), "ok", 8.0)
+				hud.toast(str(r.data.get("text", Loc.t("Sample taken."))), "ok", 8.0)
 		"relay":
 			if GameSession.cmd_place_relay().ok:
-				hud.toast(str(DictUtil.get_dict(survey, "findings").get("relay", Loc.t("Relæet sender."))), "ok")
+				hud.toast(str(DictUtil.get_dict(survey, "findings").get("relay", Loc.t("The relay is transmitting."))), "ok")
 		"lander":
 			if gs.expedition.samples.is_empty() and not it.has_meta("confirmed"):
 				it.set_meta("confirmed", true)
-				hud.toast(Loc.t("Du har ingen prøver endnu. Tryk igen for at vende tilbage alligevel."), "warning")
+				hud.toast(Loc.t("You have no samples yet. Press again to return anyway."), "warning")
 				return
 			_finish(false)
 
@@ -326,7 +326,7 @@ func _finish(recalled: bool) -> void:
 	_finishing = true
 	captain.set_active(false)
 	if recalled:
-		hud.toast(str(survey.get("evacuation", Loc.t("ARK fører dig tilbage."))), "critical", 6.0)
+		hud.toast(str(survey.get("evacuation", Loc.t("ARK is guiding you back."))), "critical", 6.0)
 		await get_tree().create_timer(2.5).timeout
 	GameSession.cmd_finish_expedition()
 	await get_tree().create_timer(1.0).timeout

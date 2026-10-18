@@ -46,8 +46,8 @@ func _unhandled_input(event: InputEvent) -> void:
 
 func _build() -> void:
 	UiKit.clear(_body)
-	var close_btn := UiKit.button(Loc.t("Luk"), close)
-	_body.add_child(UiKit.heading(Loc.t("Krediteringer")))
+	var close_btn := UiKit.button(Loc.t("Close"), close)
+	_body.add_child(UiKit.heading(Loc.t("Credits")))
 	for section: Dictionary in GameSession.content.credits:
 		_body.add_child(UiKit.title(str(section.get("title", ""))))
 		for e: Dictionary in DictUtil.get_arr(section, "entries"):
@@ -57,17 +57,17 @@ func _build() -> void:
 			role.custom_minimum_size = Vector2(380, 0)
 			role.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 			row.add_child(role)
-			var who := UiKit.label(str(e.get("name", "")) + (Loc.t("  (planlagt)") if planned else ""), 15,
+			var who := UiKit.label(str(e.get("name", "")) + (Loc.t("  (planned)") if planned else ""), 15,
 				UiKit.MUTED.darkened(0.2) if planned else UiKit.TEXT, true)
 			who.custom_minimum_size = Vector2(300, 0)
 			row.add_child(who)
 			_body.add_child(row)
 			if e.has("text"):
 				_body.add_child(UiKit.label(str(e["text"]), 13, UiKit.MUTED, true))
-	_body.add_child(UiKit.title(Loc.t("Licenser")))
-	_body.add_child(UiKit.label(Loc.t("Spillet bruger Godot Engine, udgivet under MIT-licensen:"), 14, UiKit.MUTED, true))
+	_body.add_child(UiKit.title(Loc.t("Licenses")))
+	_body.add_child(UiKit.label(Loc.t("The game uses Godot Engine, released under the MIT license:"), 14, UiKit.MUTED, true))
 	_body.add_child(_mono(Engine.get_license_text()))
-	_body.add_child(UiKit.label(Loc.t("Tredjepartskomponenter i Godot Engine:"), 14, UiKit.MUTED, true))
+	_body.add_child(UiKit.label(Loc.t("Third-party components in Godot Engine:"), 14, UiKit.MUTED, true))
 	_body.add_child(_mono(_third_party_text()))
 	_body.add_child(close_btn)
 	close_btn.grab_focus.call_deferred()

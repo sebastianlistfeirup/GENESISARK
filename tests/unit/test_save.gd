@@ -61,7 +61,7 @@ func test_interrupted_write_offers_backup() -> void:
 	f.store_string("{\"game_id\": \"gen")
 	f.close()
 	var res := store.read("t", content)
-	check(not res["ok"] and str(res["error"]).contains("afbrudt"), "afbrudt skrivning erkendes: " + str(res["error"]))
+	check(not res["ok"] and str(res["error"]).contains("interrupted"), "interrupted write recognized: " + str(res["error"]))
 	check(res["backup_available"], "backup tilbydes")
 
 

@@ -3,45 +3,98 @@
   "sections": [
     {
       "id": "team",
-      "title": "Holdet",
+      "title": "The team",
       "entries": [
-        {"role": "Idé, spildesign og produktion", "name": "Sebastian Listfeirup", "status": "in_use"},
-        {"role": "Programmering og værktøjer", "name": "Sebastian Listfeirup med Claude Code", "status": "in_use"}
+        {
+          "role": "Concept, game design and production",
+          "name": "Sebastian Listfeirup",
+          "status": "in_use"
+        },
+        {
+          "role": "Programming and tools",
+          "name": "Sebastian Listfeirup with Claude Code",
+          "status": "in_use"
+        }
       ]
     },
     {
       "id": "art",
-      "title": "Grafik",
+      "title": "Art",
       "entries": [
-        {"role": "Greybox-proxies og procedurelt terræn", "name": "GENESIS ARK", "status": "in_use"},
-        {"role": "POLYGON Sci-Fi Space, Sci-Fi Worlds, Sci-Fi City, Sci-Fi Cyber City, Sci-Fi Outpost", "name": "Synty Studios", "status": "planned", "text": "Bruges under Synty Studios' licens. Pakkerne ligger ikke i kildekoden."},
-        {"role": "POLYGON Particle FX", "name": "Synty Studios", "status": "planned"},
-        {"role": "Sidekick Modular Characters", "name": "Synty Studios", "status": "planned"},
-        {"role": "INTERFACE Sci-Fi Menus og Sci-Fi Soldier HUD", "name": "Synty Studios", "status": "planned"}
+        {
+          "role": "Greybox proxies and procedural terrain",
+          "name": "GENESIS ARK",
+          "status": "in_use"
+        },
+        {
+          "role": "POLYGON Sci-Fi Space, Sci-Fi Worlds, Sci-Fi City, Sci-Fi Cyber City, Sci-Fi Outpost",
+          "name": "Synty Studios",
+          "status": "planned",
+          "text": "Used under license from Synty Studios. The packs are not included in the source code."
+        },
+        {
+          "role": "POLYGON Particle FX",
+          "name": "Synty Studios",
+          "status": "planned"
+        },
+        {
+          "role": "Sidekick Modular Characters",
+          "name": "Synty Studios",
+          "status": "planned"
+        },
+        {
+          "role": "INTERFACE Sci-Fi Menus and Sci-Fi Soldier HUD",
+          "name": "Synty Studios",
+          "status": "planned"
+        }
       ]
     },
     {
       "id": "audio",
-      "title": "Lyd og stemmer",
+      "title": "Sound and voices",
       "entries": [
-        {"role": "Pladsholderlyde", "name": "Genereret procedurelt til prototypen", "status": "in_use"},
-        {"role": "Lydeffekter, stemning og stemmer", "name": "ElevenLabs", "status": "planned"},
-        {"role": "Musik", "name": "Komponist eller licenseret musik", "status": "planned"}
+        {
+          "role": "Placeholder sounds",
+          "name": "Generated procedurally for the prototype",
+          "status": "in_use"
+        },
+        {
+          "role": "Sound effects, ambience and voices",
+          "name": "ElevenLabs",
+          "status": "planned"
+        },
+        {
+          "role": "Music",
+          "name": "Composer or licensed music",
+          "status": "planned"
+        }
       ]
     },
     {
       "id": "video",
       "title": "Film",
       "entries": [
-        {"role": "Mellemsekvenser og trailer", "name": "Gemini, Grok og HeyGen", "status": "planned"}
+        {
+          "role": "Cutscenes and trailer",
+          "name": "Gemini, Grok and HeyGen",
+          "status": "planned"
+        }
       ]
     },
     {
       "id": "thanks",
-      "title": "Tak",
+      "title": "Thanks",
       "entries": [
-        {"role": "Spilmotor", "name": "Godot Engine og dets bidragydere", "status": "in_use"},
-        {"role": "Og til de 50.000, der venter.", "name": "", "status": "in_use"}
+        {
+          "role": "Game engine",
+          "name": "Godot Engine and its contributors",
+          "status": "in_use"
+        },
+        {
+          "role": "And to the 50,000 who are waiting.",
+          "name": "",
+          "status": "in_use"
+        }
       ]
     }
   ]
