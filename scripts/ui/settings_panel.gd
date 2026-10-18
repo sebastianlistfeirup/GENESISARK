@@ -66,6 +66,8 @@ func _build() -> void:
 	_body.add_child(UiKit.title(Loc.t("Mus")))
 	_slider("mouse_sensitivity", Loc.t("Følsomhed"), 0.05, 1.0, 0.05)
 	_toggle("invert_y", Loc.t("Invertér lodret akse"))
+	if TouchControls.enabled:
+		_slider("touch_look_sensitivity", Loc.t("Kamera ved træk (touch)"), 0.4, 2.0, 0.05)
 	_body.add_child(UiKit.title(Loc.t("Taster")))
 	for action: String in SettingsService.ACTIONS.keys():
 		var h := UiKit.hbox(8)

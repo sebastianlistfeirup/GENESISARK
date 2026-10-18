@@ -9,8 +9,11 @@ signal hold_progress(fraction: float)
 
 @export var walk_speed: float = 3.0
 @export var run_speed: float = 5.0
-@export var acceleration: float = 18.0
-@export var turn_speed: float = 10.0
+## Calm, weighty feel (no twitch): ~0.3 s to full walk, slightly faster stop,
+## body turns over ~0.25 s instead of snapping to the stick.
+@export var acceleration: float = 10.0
+@export var deceleration: float = 14.0
+@export var turn_speed: float = 8.0
 @export var gravity_scale: float = 1.0
 
 var input_enabled := true
@@ -67,20 +70,24 @@ func _physics_process(delta: float) -> void:
 		velocity += get_gravity() * gravity_scale * delta
 	var dir := Vector3.ZERO
 	if input_enabled:
-		var iv := Input.get_vector("move_left", "move_right", "move_forward", "move_back")
+		var touch := is_instance_valid(TouchControls) and TouchControls.joy_active()
+		var iv := TouchControls.move_vector() if touch else Input.get_vector("move_left", "move_right", "move_forward", "move_back")
 		var basis_y := Basis(Vector3.UP, camera_rig.yaw)
 		dir = (basis_y * Vector3(iv.x, 0, iv.y))
 		if dir.length() > 1.0:
 			dir = dir.normalized()
-	var speed := run_speed if Input.is_action_pressed("sprint") else walk_speed
+	var running := Input.is_action_pressed("sprint") or (is_instance_valid(TouchControls) and TouchControls.wants_run())
+	var speed := run_speed if running else walk_speed
 	var target := dir * speed
-	var hv := Vector3(velocity.x, 0, velocity.z).move_toward(target, acceleration * delta)
+	var cur := Vector3(velocity.x, 0, velocity.z)
+	var rate := acceleration if target.length() > cur.length() else deceleration
+	var hv := cur.move_toward(target, rate * delta)
 	velocity.x = hv.x
 	velocity.z = hv.z
 	move_and_slide()
 	if hv.length() > 0.2:
 		var want := atan2(-hv.x, -hv.z)
-		visual_pivot.rotation.y = lerp_angle(visual_pivot.rotation.y, want, clampf(turn_speed * delta, 0, 1))
+		visual_pivot.rotation.y = lerp_angle(visual_pivot.rotation.y, want, 1.0 - exp(-turn_speed * delta))
 		_probe.rotation.y = visual_pivot.rotation.y
 		_step_accum += hv.length() * delta
 		if _step_accum > 1.6 and is_on_floor():
@@ -162,4 +169,5 @@ func teleport(pos: Vector3, yaw: float = 0.0) -> void:
 	global_position = pos
 	velocity = Vector3.ZERO
 	camera_rig.yaw = yaw
+	camera_rig.snap()
 	visual_pivot.rotation.y = yaw

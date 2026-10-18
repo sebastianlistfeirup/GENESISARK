@@ -138,6 +138,16 @@ func _run() -> void:
 	check("riglab_runs", lab_moved > 0.05 and lab.slot_index == 1, "moved=%.2f" % lab_moved)
 	await unload(lab)
 
+	# Touch joystick: dead zone swallows jitter, small throws stay slow, curve is monotonic, full throw = 1.
+	var sh_ok := TouchControls.shape(Vector2(0.1, 0.0)) == Vector2.ZERO and TouchControls.shape(Vector2(0.0, -1.0)).is_equal_approx(Vector2(0, -1))
+	var prev := 0.0
+	for i: int in range(17, 101):
+		var m := TouchControls.shape(Vector2(i / 100.0, 0.0)).length()
+		sh_ok = sh_ok and m >= prev
+		prev = m
+	sh_ok = sh_ok and TouchControls.shape(Vector2(0.4, 0.0)).length() < 0.3
+	check("touch_stick_curve", sh_ok)
+
 	# Language switch mid-campaign: content reloads translated, the domain state is untouched.
 	DebugFixtures.prepare("fresh")
 	var lang_before := SaveCodec.checksum(GameSession.state.to_dict())

@@ -1,0 +1,35 @@
+{
+  "checks": [
+    {
+      "detail": "start med -- --touch",
+      "name": "touch_enabled",
+      "ok": true
+    },
+    {
+      "detail": "0.000 m/s",
+      "name": "jitter_ignored",
+      "ok": true
+    },
+    {
+      "detail": "1.08 m/s (gang 3.0)",
+      "name": "half_throw_walks_slowly",
+      "ok": true
+    },
+    {
+      "detail": "5.00 m/s (løb 5.0)",
+      "name": "full_throw_runs",
+      "ok": true
+    },
+    {
+      "detail": "max 0.167 m/s pr. frame (grænse 0.243)",
+      "name": "speed_never_jumps",
+      "ok": true
+    },
+    {
+      "detail": "0.42 s, max 0.233 m/s pr. frame",
+      "name": "release_eases_to_stop",
+      "ok": true
+    }
+  ],
+  "status": "PASS"
+}

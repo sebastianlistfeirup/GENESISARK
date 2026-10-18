@@ -184,12 +184,5 @@ static func fmt(v: float, decimals: int = 0) -> String:
 	return ("%." + str(decimals) + "f") % v
 
 
-## Grouped integer in the active language's style: 50.000 (da), 50,000 (en).
 static func thousands(n: int) -> String:
-	var sep := "." if Loc.is_source() else ","
-	var s := str(absi(n))
-	var out := ""
-	while s.length() > 3:
-		out = sep + s.substr(s.length() - 3) + out
-		s = s.substr(0, s.length() - 3)
-	return ("-" if n < 0 else "") + s + out
+	return Loc.group(n)

@@ -17,7 +17,7 @@
 | Lag | Kommando | Resultat |
 |---|---|---|
 | 1 · Domæne | `godot --headless --path . --script res://tests/run_tests.gd` | **54 tests, 0 fejl** → `evidence/test_report.json` |
-| 2 · Scener (rigtigt input) | `godot --headless --path . res://scenes/tests/scene_smoke.tscn` | **36 checks, 0 fejl** → `evidence/scene_smoke.json` |
+| 2 · Scener (rigtigt input) | `godot --headless --path . res://scenes/tests/scene_smoke.tscn` | **37 checks, 0 fejl** + touch-føling 6/6 → `evidence/scene_smoke.json` |
 | Parse-tjek | `godot --headless --path . res://scenes/tests/compile_all.tscn` | 87 scripts, 0 fejl |
 | Balance | `godot --headless --path . --script res://tools/balance/run_balance.gd` | 18 kørsler til år 40 → `evidence/balance/` |
 | 3 · Optaget gameplay | — | NOT_RUN (kræver menneske) |
@@ -42,6 +42,7 @@
 | Lyd | Alle 22 planlagte cues hooket (52/53 i alt) med 28 nye proxy-lyde: embryobank-lag, døre, fareområder, jordtrin med varianter, borelyd, relæ, drone, ring, landing, positionel byggeplads, nedrivning, strømudfald, inkubation, krisestinger, epilogmusik pr. slutning. | `AudioService`, `docs/AUDIO_LEDGER.csv` |
 | Krediteringer | Menuknap; hold, Synty-pakker (planlagt), lyd, film, Godots MIT-licens og tredjepartskomponenter læst fra motoren. | `data/credits/credits.json`, `scripts/ui/credits_panel.gd` |
 | RigLab | Testscene til figurer: 1 m-gitter, 1,8 m-stang, terminal i 1,05 m, prøvepunkt, alle animationstilstande, cirkelbevægelse mod fodglid, audit af skala/fødder/clips. | `scenes/tests/RigLab.tscn` |
+| Touch-styring | Rolig, flydende joystick som i Honkai: Star Rail: dødzone, blød kurve, filter, helt ud = løb, dæmpet kamera der glider ind bag kaptajnen. Målt af `tests/touch_feel.gd`. | `TouchControls`, D-019 |
 | Robusthed | `check.sh` parse-tjekker først og har timeout på scenetest (en parsefejl kan ikke længere hænge kørslen). | `tools/check.sh` |
 
 ## Balance (fase 3-forløber, `evidence/balance/balance_table.txt`)

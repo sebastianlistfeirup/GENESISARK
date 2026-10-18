@@ -45,7 +45,7 @@ button:focus-visible { outline: 2px solid var(--amber); outline-offset: 2px; }
 <canvas id="canvas" tabindex="0">Din browser understøtter ikke canvas.</canvas>
 <div id="overlay"><div class="box">
   <h1>GENESIS ARK</h1>
-  <p>Greybox-testversion. Hold telefonen vandret. Venstre side: joystick. Træk i højre side: kig rundt. Knapperne er E (brug), Løb, Byg, II (pause) og Log (journal).</p>
+  <p>Greybox-testversion. Hold telefonen vandret. Sæt tommelfingeren hvor som helst i venstre side: let skub = gå, helt ud = løb. Træk i højre side: kig rundt. Knapperne er E (brug), Byg, II (pause) og Log (journal).</p>
   <div id="bar"><div id="fill"></div></div>
   <p id="status">Indlæser spillet (ca. 40 MB)…</p>
   <button id="start" hidden>Start spillet</button>

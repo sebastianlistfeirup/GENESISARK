@@ -24,9 +24,9 @@ func test_english_translation_loaded() -> void:
 	Loc.set_language("en")
 	eq(Loc.t("Fortsæt"), "Continue", "Fortsæt -> Continue")
 	eq(Loc.t(str(ColonySimulation.RES_LABELS["water"])), "water", "ressourcelabel")
-	eq(UiKit.thousands(50000), "50,000", "engelsk tusindtalsskilletegn")
+	eq(Loc.group(50000), "50,000", "engelsk tusindtalsskilletegn")
 	Loc.set_language(Loc.SOURCE)
-	eq(UiKit.thousands(-1234567), "-1.234.567", "dansk tusindtalsskilletegn")
+	eq(Loc.group(-1234567), "-1.234.567", "dansk tusindtalsskilletegn")
 
 
 func test_every_key_translated_with_same_placeholders() -> void:

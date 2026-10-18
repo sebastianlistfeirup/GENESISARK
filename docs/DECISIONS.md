@@ -2,6 +2,9 @@
 
 Biblen er baseline. Her står begrundede valg og afvigelser. Nyeste øverst.
 
+### D-019 · Rolig touch-styring som i Honkai: Star Rail
+Sebastians feedback fra telefonen: joysticket var "alt for levende". Nu: flydende stik under tommelfingeren (vises svagt i hvile), radius 150 px, radial dødzone 16 %, smoothstep-kurve (let skub = langsom gang, helt ud = løb, ingen løbeknap), lavpasfilter (~100 ms) mod rystelser, og basen følger med, hvis tommelfingeren glider ud. Kaptajnen accelererer over ~0,3 s, bremser blødt og drejer kroppen over ~0,25 s. Kameraet dæmpes (touch), drejer ~180° pr. skærmbredde og glider langsomt ind bag kaptajnen ved sidelæns gang, når man ikke selv styrer det. `tests/touch_feel.gd` måler det (rystelser ignoreres, halvt skub ≈ 1 m/s, fuldt = løb, ingen fartspring, stop på ~0,4 s) og kører i `tools/check.sh`.
+
 ### D-018 · Controller-understøttelse ved siden af tastaturet
 `SettingsService.PAD` lægger joypad-hændelser (Xbox-navngivning) på de samme actions som tastaturet, plus `look_*` til højre stik. Tasteomlægning rører kun tastaturet, så controlleren kan ikke "mistes". Controller-knapper kan ikke omlægges i v1 (bevidst: færre tilstande at teste). Første knaptryk uden fokus giver fokus til øverste synlige knap, så menuer kan betjenes. I kolonien er byggemarkøren skærmens midte, når sidste input kom fra en controller (`SettingsService.using_pad`). Tastaturhints skifter til controllerens navne.
 
