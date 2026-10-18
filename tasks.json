@@ -18,7 +18,7 @@
       "acceptance": "Ren opstart uden parserfejl; exit fungerer; version og faktisk kørsel er dokumenteret. Ingen eksisterende projekter overskrives.",
       "fallback": "Hvis engine mangler: dokumentér installation/fejl og fortsæt kun med data og tooling; spilbarhed er BLOCKED_ENVIRONMENT.",
       "evidence": "evidence/GA-01/result.json",
-      "last_commit": "c644629"
+      "last_commit": "f614ade"
     },
     {
       "id": "GA-02",
@@ -38,7 +38,7 @@
       "acceptance": "10 gennemløb af samme rute uden væggennemgang eller mistet figur. Kameraskift giver ingen dobbelt input eller teleport.",
       "fallback": "Reducer kamerafunktioner til én stabil mode ad gangen; rig må være en kapsel indtil import er afklaret. Aflevering: commit + faktiske testresultater + relevant billede/video + opdateret STATUS. Porten til næste fase skal være bestået.",
       "evidence": "evidence/GA-02/result.json",
-      "last_commit": "c644629"
+      "last_commit": "f614ade"
     },
     {
       "id": "GA-03",
@@ -58,7 +58,7 @@
       "acceptance": "Ny spiller kan starte strøm og åbne planetskærm uden debug. Objective kan ikke belønnes to gange ved gentaget interaktion.",
       "fallback": "Skær pynt og ekstra korridorer; behold rumfunktioner og læsbare skiltning.",
       "evidence": "evidence/GA-03/result.json",
-      "last_commit": "c644629"
+      "last_commit": "f614ade"
     },
     {
       "id": "GA-04",
@@ -78,7 +78,7 @@
       "acceptance": "Ugyldig planet afvises med præcis årsag. Embryosum er 50.000 og negative ressourcer afvises. Samme fixture giver samme state.",
       "fallback": "Brug statiske Resources og korte tabeller; procedurale planeter indføres ikke. Aflevering: commit + faktiske testresultater + relevant billede/video + opdateret STATUS. Porten til næste fase skal være bestået.",
       "evidence": "evidence/GA-04/result.json",
-      "last_commit": "c644629"
+      "last_commit": "f614ade"
     },
     {
       "id": "GA-05",
@@ -98,7 +98,7 @@
       "acceptance": "Dobbelklik og load ved ankomst kan ikke bruge fuel to gange. Utilstrækkelig reserve giver forklaring før valg. Spilleren kan assistere flyvesegmentet.",
       "fallback": "Er manuel flyvning ustabil, behold en kontrolleret orbital tilgang og den fulde rejsebeslutning.",
       "evidence": "evidence/GA-05/result.json",
-      "last_commit": "c644629"
+      "last_commit": "f614ade"
     },
     {
       "id": "GA-06",
@@ -119,7 +119,7 @@
       "acceptance": "Scouting indsnævrer et interval og betaler én gang. Udtømt dragt udløser varslet tilbagevending/checkpoint, ikke en tavs kampagnelås.",
       "fallback": "Fjern tilfældige hændelser; bevar én forståelig fare og én værdifuld observation. Aflevering: commit + faktiske testresultater + relevant billede/video + opdateret STATUS. Porten til næste fase skal være bestået.",
       "evidence": "evidence/GA-06/result.json",
-      "last_commit": "c644629"
+      "last_commit": "f614ade"
     },
     {
       "id": "GA-07",
@@ -140,7 +140,7 @@
       "acceptance": "Gentagen landing giver ikke dobbelt ressourcer eller ekstra ark. Tilbage/annuller ændrer ingen state. Den valgte planet bestemmer biomeparametre.",
       "fallback": "Brug en kort skærmovergang; dyr landingscinematic er ikke en afhængighed.",
       "evidence": "evidence/GA-07/result.json",
-      "last_commit": "c644629"
+      "last_commit": "f614ade"
     },
     {
       "id": "GA-08",
@@ -160,7 +160,7 @@
       "acceptance": "Tre bygninger kan opføres, nedrives og gemmes uden resource exploit. Et afbrudt strømnet stopper korrekt output og viser årsagen.",
       "fallback": "Start med et enkelt energinet og fælles lager; transportgrafen kan være en simpel valideret afstand. Aflevering: commit + faktiske testresultater + relevant billede/video + opdateret STATUS. Porten til næste fase skal være bestået.",
       "evidence": "evidence/GA-08/result.json",
-      "last_commit": "c644629"
+      "last_commit": "f614ade"
     },
     {
       "id": "GA-09",
@@ -181,7 +181,7 @@
       "acceptance": "Alle overgangsforløb bevarer 50.000-summen. En børnekohorte leverer ingen voksenarbejdskraft. Gentaget completion-event giver ingen ekstra fødsel.",
       "fallback": "Hold tidsacceleration i testværktøj med tydelig debugmærkning; opfind ikke øjeblikkeligt voksne borgere.",
       "evidence": "evidence/GA-09/result.json",
-      "last_commit": "c644629"
+      "last_commit": "f614ade"
     },
     {
       "id": "GA-10",
@@ -204,7 +204,7 @@
       "acceptance": "Roundtrip bevarer alle nøgletal og IDs. Korrupt hovedfil tilbyder gyldig backup. Restore affyrer ingen incubation-, landing- eller rewardevents igen.",
       "fallback": "Gem kun på konsistente checkpoints før frie mid-action saves; dokumentér begrænsningen. Aflevering: commit + faktiske testresultater + relevant billede/video + opdateret STATUS. Porten til næste fase skal være bestået.",
       "evidence": "evidence/GA-10/result.json",
-      "last_commit": "c644629"
+      "last_commit": "f614ade"
     },
     {
       "id": "GA-11",
@@ -230,7 +230,7 @@
       "acceptance": "Hele demoen kan afsluttes og load fortsætter korrekt. Alle kritiske beslutninger viser pris og konsekvens. Ingen P0/P1-fejl er åbne.",
       "fallback": "Skær ekstra prøver og dekoration, ikke rejsevalg eller koloniens forsyningsfeedback.",
       "evidence": "evidence/GA-11/result.json",
-      "last_commit": "c644629",
+      "last_commit": "f614ade",
       "notes": "Hele kæden ark→stjernekort→indflyvning→ekspedition→landing→robotkoloni→save/load er implementeret og kørt automatisk (scene_smoke). Mangler: én optaget menneskelig 20-min gennemspilning og retning af de tre største friktioner."
     },
     {
@@ -261,7 +261,7 @@
       "acceptance": "Gate 1 opfyldt med build-ID og faktiske beviser. Hvis eksport eller visuel test mangler, er porten ikke DONE, og årsagen er eksplicit.",
       "fallback": "Fortsæt mulige datatests ved miljøstop; markér ikke en scriptsamling som spilbar demo. Aflevering: commit + faktiske testresultater + relevant billede/video + opdateret STATUS. Porten til næste fase skal være bestået.",
       "evidence": "evidence/GA-12/result.json",
-      "last_commit": "c644629",
+      "last_commit": "f614ade",
       "notes": "Linux- og Windows-eksport lykkedes; Linux-build kørt under Xvfb (screenshot). Mangler: Windows-build kørt på referencemaskinen, visuel kontrol og GA-11 DONE før fase 1-tag."
     },
     {
@@ -283,7 +283,7 @@
       "fallback": "Ret import i isoleret RigLab; behold proxyversion som rollback.",
       "evidence": "evidence/GA-13/result.json",
       "last_commit": "",
-      "notes": "Klar: VisualSlot-registret (81 slots), wrapper-regler, ledger og samleguide (docs/SCENE_ASSEMBLY.md). Kræver de købte Synty-filer."
+      "notes": "Klar: VisualSlot-registret (81 slots), automatisk Synty-import (tools/synty: pak ud, match, stage, wrappers med tilpasning og atlas, varianter), editor-panelet Asset-slots, samleguide. Selftest 10/10 med falsk pakke. Kræver de købte Synty-filer."
     },
     {
       "id": "GA-14",
@@ -304,7 +304,7 @@
       "fallback": "Skær kompleks hånd-IK; ret clip, rig og socket før mere avanceret runtimekorrektion. Aflevering: commit + faktiske testresultater + relevant billede/video + opdateret STATUS. Porten til næste fase skal være bestået.",
       "evidence": "evidence/GA-14/result.json",
       "last_commit": "",
-      "notes": "Klar: CharacterAnimator + data/art/animation_map.json (in-place, hastighedsskaleret) og scenes/tests/RigLab.tscn med audit af skala/fødder/clips (evidence/GA-14/groundwork.json). Kræver rig og klip."
+      "notes": "Klar: CharacterAnimator med bibliotek pr. figur, automatisk humanoid retarget (Synty- og Mixamo-navne) og in-place-klip (D-023), RigLab med audit (evidence/GA-14/groundwork.json). Kræver rig og klip."
     },
     {
       "id": "GA-15",
@@ -326,7 +326,7 @@
       "acceptance": "Ingen universel bedste planet i alle felter. Alle kandidater har en mulig landings-/koloniplan; surveykilde og usikkerhed fremgår.",
       "fallback": "Balancer ud fra data; lav ikke seks unikke open worlds for at skabe forskel.",
       "evidence": "evidence/GA-15/result.json",
-      "last_commit": "c644629",
+      "last_commit": "f614ade",
       "notes": "Implementeret før porten: seks planeter, 3 sites pr. biome, viden i fire niveauer med validator, sammenligning kendt/skøn/ukendt, balance-harness viser levedygtig plan pr. planet."
     },
     {
@@ -348,7 +348,7 @@
       "acceptance": "Ingen negativ lagerbeholdning eller uendelig genbrugsgevinst. Kritiske systemer prioriteres korrekt. Hver bygning har én tydelig nødvendig funktion.",
       "fallback": "Fjern overflødige varianter; behold klare basiskæder og målbare biomeforskelle. Aflevering: commit + faktiske testresultater + relevant billede/video + opdateret STATUS. Porten til næste fase skal være bestået.",
       "evidence": "evidence/GA-16/result.json",
-      "last_commit": "c644629",
+      "last_commit": "f614ade",
       "notes": "Implementeret før porten: 12 byggeklasser, moduler, workforce, vedligehold, batteri, biomemodifikatorer, prioriteret strøm, cancel/refusion."
     },
     {
@@ -371,7 +371,7 @@
       "acceptance": "Spilleren kan forklare kravene til første fødsel. Forsyningssvigt stopper farlige fremskridt med forklaring. Cohortstatus overlever save/load.",
       "fallback": "Brug lys, lyd og tekst frem for ansigtsrig og lange cinematics.",
       "evidence": "evidence/GA-17/result.json",
-      "last_commit": "c644629",
+      "last_commit": "f614ade",
       "notes": "Implementeret: kohorter, omsorg/uddannelse/helbred, krav til første fødsel, første-fødsel-scene (lys/lyd/tekst)."
     },
     {
@@ -394,7 +394,7 @@
       "acceptance": "Spore, støv og kulde giver forskellige beslutninger. Alle sites kan navigeres og landes på uden skjulte dead ends. Fare er synlig uden lyd.",
       "fallback": "Genbrug modulære terrænelementer; fokuser på forskellige funktionelle layouts. Aflevering: commit + faktiske testresultater + relevant billede/video + opdateret STATUS. Porten til næste fase skal være bestået.",
       "evidence": "evidence/GA-18/result.json",
-      "last_commit": "c644629",
+      "last_commit": "f614ade",
       "notes": "Greybox: tre biome-terræner, farezoner og en kolonifare pr. biome (moduler/storme/nat). Synty-dressing mangler."
     },
     {
@@ -466,7 +466,7 @@
       "acceptance": "År 20/40 kan nås uden dag-for-dag scene-simulation. Samme fixture giver samme resultat. Simulatoren springer ikke over en uløst kritisk krise.",
       "fallback": "Brug kohorter og analytiske intervaller; simuler ikke alle fremtidige mennesker individuelt.",
       "evidence": "evidence/GA-21/result.json",
-      "last_commit": "c644629",
+      "last_commit": "f614ade",
       "notes": "Implementeret: deterministisk dag-simulator, prognose→godkend, stop ved krise/underskud, institutioner efter plan; test viser prognose == resultat."
     },
     {
@@ -486,7 +486,7 @@
       "acceptance": "Alle surveys afsluttes, afbrydes og genoptages lovligt. Valgfrie prøver ændrer faktisk viden, ikke kun journaltekst.",
       "fallback": "Genbrug korttopologi med nye mål; undgå seks uafhængige store baner. Aflevering: commit + faktiske testresultater + relevant billede/video + opdateret STATUS. Porten til næste fase skal være bestået.",
       "evidence": "evidence/GA-22/result.json",
-      "last_commit": "c644629",
+      "last_commit": "f614ade",
       "notes": "Seks håndskrevne scoutingproblemer i data/surveys med to ruter, risikoprøve og evakuering."
     },
     {
@@ -508,7 +508,7 @@
       "acceptance": "Ingen event kræver en tabt engangsressource uden alternativ. Hver løsning har et synligt resultat og anvendes højst én gang.",
       "fallback": "Reducer tekstmængde, ikke konsekvens. Uafklarede events skal standse tidsspring.",
       "evidence": "evidence/GA-23/result.json",
-      "last_commit": "c644629",
+      "last_commit": "f614ade",
       "notes": "Tre biomekriser + seks borgerhændelser med pris, krav, konsekvens og gratis fallback."
     },
     {
@@ -529,7 +529,7 @@
       "acceptance": "Råd kan ikke opstå før voksne kohorter. Samfundets behov og overdragelseskriterier er forklaret. Ingen usynlig moralsk score styrer slutningen alene.",
       "fallback": "Hold dialogsystemet lineært med dataforgreninger; ingen generativ NPC-chat som runtimekrav. Aflevering: commit + faktiske testresultater + relevant billede/video + opdateret STATUS. Porten til næste fase skal være bestået.",
       "evidence": "evidence/GA-24/result.json",
-      "last_commit": "c644629",
+      "last_commit": "f614ade",
       "notes": "Råd (kræver voksne + skole), tre unge stemmer ved år 20, tillid/selvbestemmelse."
     },
     {
@@ -550,7 +550,7 @@
       "acceptance": "Tre målrettede fixtures udløser hver sin korrekte profil. Samme save giver samme epilog; ingen modstridende planet- eller befolkningstal.",
       "fallback": "Brug stærk art/lyd/tekst og ingamekamera frem for store specialproducerede film.",
       "evidence": "evidence/GA-25/result.json",
-      "last_commit": "c644629",
+      "last_commit": "f614ade",
       "notes": "Tre slutprofiler fra faktiske målinger, epilog med planet/kriser/kohorter, final_state og fortsæt fra backup."
     },
     {
@@ -618,7 +618,7 @@
       "acceptance": "Alle seks kan gennemføres på standard. Ingen kandidat dominerer alle strategier. Ingen skjult ressourcefælde før nødvendig teknologi.",
       "fallback": "Skift én variabelgruppe ad gangen og behold baselinefixtures til sammenligning. Aflevering: commit + faktiske testresultater + relevant billede/video + opdateret STATUS. Porten til næste fase skal være bestået.",
       "evidence": "evidence/GA-28/result.json",
-      "last_commit": "c644629",
+      "last_commit": "f614ade",
       "notes": "tools/balance/run_balance.gd: 6 planeter × 3 strategier til år 40; se evidence/balance."
     },
     {
@@ -641,7 +641,7 @@
       "acceptance": "Referencebudget er opfyldt eller ærligt revideret med dokumenteret lav profil. Ingen tab af data ved migration, og kritiske alarmer har visuelle alternativer.",
       "fallback": "Optimer målt flaskehals; undgå ny engineversion eller threading midt i contentlås.",
       "evidence": "evidence/GA-29/result.json",
-      "last_commit": "c644629",
+      "last_commit": "f614ade",
       "notes": "Tasteomlægning, controller (D-018), UI-skala, reduceret bevægelse, undertekster, touch; profilering af dagstick (tools/balance/profile_tick.gd)."
     },
     {
@@ -729,7 +729,7 @@
       "acceptance": "Ingen rå købte sourcepakker følger offentlig levering. Alle shipped assets har kilde og afklaret brug. Indstillinger overlever restart.",
       "fallback": "Erstat et uafklaret asset med et allerede godkendt alternativ; stop ikke hele projektet unødigt.",
       "evidence": "evidence/GA-33/result.json",
-      "last_commit": "c644629",
+      "last_commit": "f614ade",
       "notes": "Grundlag: lokalisering da/en (D-017, tools/loc_extract.py), krediteringer + licenser, indstillinger gemmes (evidence/GA-33/groundwork.json). Mangler ledger-kontrol mod build og platformliste."
     },
     {

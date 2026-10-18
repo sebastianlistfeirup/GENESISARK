@@ -10,8 +10,8 @@ d = json.load(open(path, encoding="utf-8"))
 NOTES = {
     "GA-11": ("VERIFYING", "Hele kæden ark→stjernekort→indflyvning→ekspedition→landing→robotkoloni→save/load er implementeret og kørt automatisk (scene_smoke). Mangler: én optaget menneskelig 20-min gennemspilning og retning af de tre største friktioner."),
     "GA-12": ("VERIFYING", "Linux- og Windows-eksport lykkedes; Linux-build kørt under Xvfb (screenshot). Mangler: Windows-build kørt på referencemaskinen, visuel kontrol og GA-11 DONE før fase 1-tag."),
-    "GA-13": ("TODO", "Klar: VisualSlot-registret (81 slots), wrapper-regler, ledger og samleguide (docs/SCENE_ASSEMBLY.md). Kræver de købte Synty-filer."),
-    "GA-14": ("TODO", "Klar: CharacterAnimator + data/art/animation_map.json (in-place, hastighedsskaleret) og scenes/tests/RigLab.tscn med audit af skala/fødder/clips (evidence/GA-14/groundwork.json). Kræver rig og klip."),
+    "GA-13": ("TODO", "Klar: VisualSlot-registret (81 slots), automatisk Synty-import (tools/synty: pak ud, match, stage, wrappers med tilpasning og atlas, varianter), editor-panelet Asset-slots, samleguide. Selftest 10/10 med falsk pakke. Kræver de købte Synty-filer."),
+    "GA-14": ("TODO", "Klar: CharacterAnimator med bibliotek pr. figur, automatisk humanoid retarget (Synty- og Mixamo-navne) og in-place-klip (D-023), RigLab med audit (evidence/GA-14/groundwork.json). Kræver rig og klip."),
     "GA-15": ("IN_PROGRESS", "Implementeret før porten: seks planeter, 3 sites pr. biome, viden i fire niveauer med validator, sammenligning kendt/skøn/ukendt, balance-harness viser levedygtig plan pr. planet."),
     "GA-16": ("IN_PROGRESS", "Implementeret før porten: 12 byggeklasser, moduler, workforce, vedligehold, batteri, biomemodifikatorer, prioriteret strøm, cancel/refusion."),
     "GA-17": ("IN_PROGRESS", "Implementeret: kohorter, omsorg/uddannelse/helbred, krav til første fødsel, første-fødsel-scene (lys/lyd/tekst)."),

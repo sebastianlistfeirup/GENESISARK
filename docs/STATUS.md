@@ -17,7 +17,7 @@
 | Lag | Kommando | Resultat |
 |---|---|---|
 | 1 · Domæne | `godot --headless --path . --script res://tests/run_tests.gd` | **54 tests, 0 fejl** → `evidence/test_report.json` |
-| 2 · Scener (rigtigt input) | `godot --headless --path . res://scenes/tests/scene_smoke.tscn` | **41 checks, 0 fejl** + touch-føling 6/6 → `evidence/scene_smoke.json` |
+| 2 · Scener (rigtigt input) | `godot --headless --path . res://scenes/tests/scene_smoke.tscn` | **43 checks, 0 fejl** + touch-føling 6/6 → `evidence/scene_smoke.json` |
 | Parse-tjek | `godot --headless --path . res://scenes/tests/compile_all.tscn` | 87 scripts, 0 fejl |
 | Balance | `godot --headless --path . --script res://tools/balance/run_balance.gd` | 18 kørsler til år 40 → `evidence/balance/` |
 | 3 · Optaget gameplay | — | NOT_RUN (kræver menneske) |
@@ -45,6 +45,16 @@
 | Touch-styring | Rolig, flydende joystick som i Honkai: Star Rail: dødzone, blød kurve, filter, helt ud = løb, dæmpet kamera der glider ind bag kaptajnen. Målt af `tests/touch_feel.gd`. | `TouchControls`, D-019 |
 | Vejvisning og fart | Aktuelt mål vises som markør med afstand (pil ved skærmkanten) og lyssøjle; nærliggende steder får navn. Gang 4,2 / løb 7,0 m/s. | `scripts/ui/waypoint_layer.gd`, D-020 |
 | Robusthed | `check.sh` parse-tjekker først og har timeout på scenetest (en parsefejl kan ikke længere hænge kørslen). | `tools/check.sh` |
+
+## Nyt i session 3 (18.10.2026): Synty-klar
+
+| Område | Hvad | Hvor |
+|---|---|---|
+| Synty-import | Pak ud (unitypackage/zip/mappe) → match modeller til 81 slots → kopiér kun valgte → wrapper-scener med tilpasning pr. slot-type og pakkens atlas via importindstillinger. Én kommando: `tools/synty/build.sh`. | `tools/synty/`, D-021 |
+| Varianter | Sten, træer, planter, is, kasser, borgere får op til 6 modeller; spillet vælger stabilt pr. placering. | `VisualSlot.variant` |
+| Editor-panel | Fanen **Asset-slots** i Godot: status for alle slots, forslag, ét-klik-mapping, drej, åbn wrapper, RigLab. | `addons/genesis_slots/`, D-022 |
+| Animationer | Automatisk humanoid retarget (Synty- og Mixamo-navne), klip pr. tilstand samlet i et bibliotek, in-place, afspilles af `CharacterAnimator`. | D-023 |
+| Bevis | `tools/synty/selftest.sh`: falsk pakke med modeller, cm-model, hjørne-pivot, rig og Mixamo-klip → hele kæden → 10/10 → oprydning. | `evidence/synty_selftest.json` |
 
 ## Balance (fase 3-forløber, `evidence/balance/balance_table.txt`)
 

@@ -39,6 +39,38 @@ VARIANT_SLOTS = ("surface.rock_small", "surface.rock_large", "surface.tree_green
 MAX_VARIANTS = 6
 
 
+HUMANOIDS = ("char.captain", "char.citizen_adult", "char.citizen_child")
+# State -> words in animation file names (first hit wins). Synty/Sidekick/Mixamo style names.
+ANIM_STATES = {"idle": ["idle", "stand"], "walk": ["walk"], "run": ["run", "jog", "sprint"],
+               "interact": ["interact", "use", "button", "press", "pickup", "pick"], "sample": ["kneel", "crouch", "dig", "gather", "sample"],
+               "build": ["build", "hammer", "work", "weld", "repair"]}
+
+
+def is_animation(rel):
+    stem = os.path.splitext(os.path.basename(rel))[0].lower()
+    return rel.lower().endswith(MODEL_EXT) and ("/anim" in "/" + rel.lower() or stem.startswith(("a_", "anim_", "anim")))
+
+
+def propose_animations(inv, previous):
+    """Humanoid slot -> {state: file}. Approved entries are kept."""
+    anims = [(p, r, s) for p, r, s in inv if is_animation(r)]
+    out = {}
+    for slot in HUMANOIDS:
+        prev = previous.get(slot, {})
+        if prev.get("status") == "approved":
+            out[slot] = prev
+            continue
+        states = {}
+        for state, words_ in ANIM_STATES.items():
+            for pack, rel, stem in sorted(anims, key=lambda t: t[2]):
+                if any(w in words(stem) or stem.lower().startswith("a_" + w) for w in words_):
+                    states[state] = pack + "/" + rel
+                    break
+        if states:
+            out[slot] = {"status": "auto", "states": states}
+    return out
+
+
 def family(src):
     return re.sub(r"_?\d+$", "", os.path.splitext(os.path.basename(src))[0].lower())
 
@@ -133,19 +165,25 @@ def main() -> int:
     if os.path.exists(a.out):
         previous = json.load(open(a.out, encoding="utf-8")).get("choices", {})
     inv = inventory(a.packs)
-    choices = propose(slots, inv, previous)
+    # Animation files are not candidates for model slots.
+    model_inv = [t for t in inv if not is_animation(t[1])]
+    choices = propose(slots, model_inv, previous)
+    prev_anims = json.load(open(a.out, encoding="utf-8")).get("animations", {}) if os.path.exists(a.out) else {}
+    animations = propose_animations(inv, prev_anims)
     counts = {}
     for c in choices.values():
         counts[c["status"]] = counts.get(c["status"], 0) + 1
     for slot, c in choices.items():
         if c.get("source"):
             print("%-28s %-9s %s" % (slot, c["status"], c["source"]))
+    for slot, an in animations.items():
+        print("%-28s anim      %s" % (slot, ", ".join(sorted(an["states"]))))
     print("packs: %d · models/images: %d · %s" % (len({p for p, _r, _s in inv}), len(inv), counts))
     if not a.report:
         doc = {"_note": "Slot -> chosen Synty file (path inside assets/quarantine). Set status to approved/manual to lock a choice, "
                         "skip to keep the proxy. Then: python3 tools/synty/stage.py && godot --headless --path . --import "
                         "&& godot --headless --path . --script res://tools/synty/build_wrappers.gd",
-               "choices": choices}
+               "choices": choices, "animations": animations}
         with open(a.out, "w", encoding="utf-8") as fh:
             json.dump(doc, fh, indent=1, ensure_ascii=False)
             fh.write("\n")

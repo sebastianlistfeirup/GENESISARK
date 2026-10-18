@@ -2,6 +2,9 @@
 
 Biblen er baseline. Her står begrundede valg og afvigelser. Nyeste øverst.
 
+### D-023 · Automatisk retarget og animationsbibliotek
+Animationer er biblens største visuelle risiko (GA-14). Godots løsning er en humanoid BoneMap (SkeletonProfileHumanoid) i importindstillingerne på både figur og klip; normalt sættes den i hånden pr. fil. `HumanoidBoneMapper` bygger den ud fra knoglenavne (Synty, Mixamo, Blender/Unreal-stil; side via Left/Right/_L/.L), `AnimationLibraryBuilder` samler klippene pr. tilstand og fjerner hoftens vandrette fremdrift (in-place, bibel s. 24-25), og `CharacterAnimator` sætter biblioteket på enhver figur med `GeneralSkeleton`. Bevist med en genereret Synty-navngiven figur og Mixamo-navngivne klip (selftest 10/10). Synty-/Sidekick-navnene er konventioner, ikke verificeret mod de købte filer; rapporten lister manglende kerneknogler.
+
 ### D-022 · Eget editor-plugin: Asset-slots-panelet
 Undtagelse fra "ingen addons" (CLAUDE.md), fordi gevinsten er direkte: at sætte 81 slots på plads er ellers JSON-redigering. `addons/genesis_slots/` er vores eget, uden tredjepartskode, og bruger samme `SyntyWrapperBuilder` som kommandolinjen. Panelet viser status for alle slots, Synty-forslag og valg, og mapper den fil, der er markeret i FileSystem, med ét klik (genimporterer selv, når atlas-materialet sættes). Spillet indlæser aldrig plugin'et.
 

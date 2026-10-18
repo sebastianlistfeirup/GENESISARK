@@ -28,6 +28,9 @@ Et komplet, spilbart **greybox-spil** fra vågen kaptajn til overdragelse af kol
 
 ## 3. Næste skridt: Synty (GA-13 →)
 
+**Hurtigst (anbefalet):** følg "Hurtig vej" øverst i `docs/SYNTY_INTEGRATION.md`: `unpack.py` for hver pakke → `match.py` → kig `data/art/synty_choices.json` igennem → `tools/synty/build.sh` → F5. I editoren viser fanen **Asset-slots** hvilke slots der mangler, og mapper en markeret model med ét klik. Figurer og Mixamo-animationer retargetes automatisk.
+
+
 Spillet er bygget, så du **kun skal samle grafik**:
 - `docs/SCENE_ASSEMBLY.md` — hvad der skal ind i hvilken scene (arken, rummet, tre biomer, kolonien, UI), med slot-navne og pakkeforslag.
 - `docs/SYNTY_INTEGRATION.md` — trin for trin: download → karantæne → FBX-import → wrapper → slot → ledger.

@@ -109,6 +109,14 @@ func build_one(slot: String, c: Dictionary, prefab_dir: String, suffix: String =
 	var shift := Vector3(target_center.x - scaled.get_center().x, proxy.position.y - scaled.position.y, target_center.z - scaled.get_center().z)
 	model.position += shift
 	var final := AssetSlots.aabb_of(model, model.transform)
+	var rig := {}
+	if slot.begins_with("char.") and not model.find_children("*", "Skeleton3D", true, false).is_empty():
+		# Humanoid: import with the shared bone map so any retargeted animation plays on it.
+		rig = HumanoidBoneMapper.apply_retarget(model_path)
+		if rig.get("changed", false):
+			notes.append("retarget bone map set (re-import)")
+		if not Array(rig.get("missing_core", [])).is_empty():
+			notes.append("bone map missing: " + ", ".join(rig["missing_core"]))
 	var need: Dictionary = {}
 	_untextured_materials(model, need)
 	var uses_atlas := _uses_material_dir(model, MATERIALS)
@@ -140,7 +148,8 @@ func build_one(slot: String, c: Dictionary, prefab_dir: String, suffix: String =
 	return {"slot": slot, "ok": true, "scene": scene_path, "source": src, "fit": mode, "scale": snappedf(s, 0.0001),
 		"size_m": [snappedf(final.size.x, 0.01), snappedf(final.size.y, 0.01), snappedf(final.size.z, 0.01)],
 		"proxy_m": [snappedf(proxy.size.x, 0.01), snappedf(proxy.size.y, 0.01), snappedf(proxy.size.z, 0.01)],
-		"atlas_materials": mat_count, "uses_atlas": uses_atlas, "reimport": reimport, "notes": notes, "warnings": warn,
+		"atlas_materials": mat_count, "uses_atlas": uses_atlas, "reimport": reimport or bool(rig.get("changed", false)),
+		"rig": rig.get("skeleton", ""), "notes": notes, "warnings": warn,
 		"summary": "%s x%.3f -> %.1fx%.1fx%.1f m (proxy %.1fx%.1fx%.1f)%s" % [mode, s, final.size.x, final.size.y, final.size.z,
 			proxy.size.x, proxy.size.y, proxy.size.z, ("  ▲ " + "; ".join(warn)) if not warn.is_empty() else ""]}
 

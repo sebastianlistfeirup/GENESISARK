@@ -169,6 +169,24 @@ func _run() -> void:
 	AssetSlots.reload()
 	check("synty_variants_spread_and_stable", stable and seen.has("a") and seen.has("b") and not seen.has("proxy"), str(seen.keys()))
 
+	# Animation library (tools/synty retarget pipeline): states play as ga/<state>, missing states fall back to idle.
+	var lib := AnimationLibrary.new()
+	for st: String in ["idle", "walk"]:
+		var an := Animation.new()
+		an.length = 1.0
+		lib.add_animation(st, an)
+	var ca := CharacterAnimator.new()
+	ca.player = AnimationPlayer.new()
+	add_child(ca.player)
+	ca.player.add_animation_library(CharacterAnimator.LIB_NAME, lib)
+	ca.prefix = CharacterAnimator.LIB_NAME + "/"
+	ca.cfg = {"idle": {}, "walk": {"speed_ref": 1.5}, "blend_s": 0.1}
+	ca.update("walk", 3.0)
+	var walk_ok := ca.current == "ga/walk" and is_equal_approx(ca.player.speed_scale, 1.8)
+	ca.update("sample", 0.0)
+	check("anim_library_states", walk_ok and ca.current == "ga/idle", "%s %.2f" % [ca.current, ca.player.speed_scale])
+	ca.player.queue_free()
+
 	# Language switch mid-campaign: content reloads translated, the domain state is untouched.
 	DebugFixtures.prepare("fresh")
 	var lang_before := SaveCodec.checksum(GameSession.state.to_dict())

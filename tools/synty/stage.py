@@ -56,6 +56,17 @@ def main() -> int:
                 bin_rel = os.path.splitext(vrel)[0] + ".bin"
                 if os.path.exists(os.path.join(Q, vpack, bin_rel)):
                     copy(vpack, bin_rel)
+    anims = json.load(open(a.choices, encoding="utf-8")).get("animations", {})
+    for slot, an in sorted(anims.items()):
+        if an.get("status") not in BUILD_STATUS:
+            continue
+        for state, src in an.get("states", {}).items():
+            vpack, vrel = src.split("/", 1)
+            if os.path.exists(os.path.join(Q, vpack, vrel)):
+                files = staged.setdefault(vpack, {"models": {}, "atlas": []})
+                files.setdefault("animations", {}).setdefault(slot, {})[state] = copy(vpack, vrel)
+            else:
+                print("  missing in quarantine:", src)
     for pack, files in staged.items():
         files["atlas"] = [copy(pack, rel) for rel in atlas_files(pack)]
         with open(os.path.join(IMPORTED, pack, "staged.json"), "w", encoding="utf-8") as fh:

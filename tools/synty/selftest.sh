@@ -12,22 +12,26 @@ CHOICES=res://assets/imported/$PACK.choices.json
 cleanup() {
 	rm -rf "assets/quarantine/$PACK" "assets/imported/$PACK" "assets/imported/$PACK.choices.json"* \
 		art/prefabs/_selftest "art/materials/$(echo $PACK | sed -E 's/([a-z])([A-Z])/\1_\2/g' | tr A-Z a-z)_atlas.tres"* \
-		data/art/_selftest_slot_scenes.json* "$TMP"
-	rmdir art/prefabs art/materials art 2>/dev/null || true
+		data/art/_selftest_slot_scenes.json* data/art/_selftest_animation_libraries.json* art/animations/_selftest \
+		art/rigs/${PACK}__* "$TMP"
+	rmdir art/prefabs art/materials art/rigs art/animations art 2>/dev/null || true
 }
 trap cleanup EXIT
 python3 tools/synty/make_test_pack.py "$TMP/$PACK.unitypackage" >/dev/null
 python3 tools/synty/unpack.py "$TMP/$PACK.unitypackage" --pack $PACK
 python3 tools/synty/match.py --packs $PACK --out "assets/imported/$PACK.choices.json" | tail -1
 python3 tools/synty/stage.py --choices "assets/imported/$PACK.choices.json"
-ARGS=(--choices=$CHOICES --prefabs=res://art/prefabs/_selftest --slot-scenes=res://data/art/_selftest_slot_scenes.json)
-for pass in 1 2; do
+ARGS=(--choices=$CHOICES --prefabs=res://art/prefabs/_selftest --slot-scenes=res://data/art/_selftest_slot_scenes.json
+	--libraries=res://data/art/_selftest_animation_libraries.json --anim-dir=res://art/animations/_selftest)
+for pass in 1 2 3; do
 	"$GODOT" --headless --path . --import --quit-after 3000 >/dev/null 2>&1
 	"$GODOT" --headless --path . --script res://tools/synty/build_wrappers.gd -- "${ARGS[@]}" 2>&1 | grep -E "wrappers:|FAIL|import settings"
 done
 python3 - <<'PY'
 import json, sys
-r = {s["slot"]: s for s in json.load(open("evidence/synty_build.json"))["slots"]}
+rep = json.load(open("evidence/synty_build.json"))
+r = {s["slot"]: s for s in rep["slots"]}
+anim = {a["slot"]: a for a in rep["animations"] if a.get("ok")}
 checks = {
     "all built": all(s["ok"] for s in r.values()) and len(r) >= 10,
     "crate cm -> m": abs(r["ship.crate"]["scale"] - 0.01) < 1e-6 and abs(r["ship.crate"]["size_m"][1] - 1.2) < 0.02,
@@ -36,6 +40,10 @@ checks = {
     "atlas material in use": all(s["uses_atlas"] for s in r.values()),
     "too-small rock flagged": bool(r["surface.desert_rock"]["warnings"]),
     "rock variants built": len(r["surface.rock_small"].get("scenes", [])) == 3,
+    "captain retargeted (Synty names)": r["char.captain"].get("rig", "").endswith("GeneralSkeleton"),
+    "Mixamo clips -> library": set(anim.get("char.captain", {}).get("clips", {})) >= {"idle", "walk", "run"}
+        and all(c["retargeted"] for c in anim["char.captain"]["clips"].values()),
+    "walk made in-place": abs(anim.get("char.captain", {}).get("clips", {}).get("walk", {}).get("removed_travel_m", 0) - 1.5) < 0.01,
 }
 for k, v in checks.items():
     print(("PASS " if v else "FAIL ") + k)

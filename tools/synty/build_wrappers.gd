@@ -27,6 +27,8 @@ func _init() -> void:
 	var choices_path := CHOICES
 	var prefab_dir := SyntyWrapperBuilder.PREFABS
 	var scenes_path := SyntyWrapperBuilder.SLOT_SCENES
+	var libs_path := AnimationLibraryBuilder.LIBRARIES
+	var lib_dir := AnimationLibraryBuilder.LIB_DIR
 	for a: String in OS.get_cmdline_user_args():
 		if a.begins_with("--choices="):
 			choices_path = a.substr(10)
@@ -34,6 +36,10 @@ func _init() -> void:
 			prefab_dir = a.substr(10)
 		elif a.begins_with("--slot-scenes="):
 			scenes_path = a.substr(14)
+		elif a.begins_with("--libraries="):
+			libs_path = a.substr(12)
+		elif a.begins_with("--anim-dir="):
+			lib_dir = a.substr(11)
 	var doc: Variant = DictUtil.load_json(choices_path)
 	if not doc is Dictionary:
 		push_error("build_wrappers: cannot read " + choices_path)
@@ -56,9 +62,38 @@ func _init() -> void:
 			failed += 1
 		print("%-28s %s %s" % [slot, "OK  " if r["ok"] else "FAIL", r.get("summary", r.get("error", ""))])
 	SyntyWrapperBuilder.save_mappings(mapped, scenes_path)
+	# Animations: retarget each clip file (first pass), then build one library per humanoid slot.
+	var libs := AnimationLibraryBuilder.load_mappings(libs_path)
+	var anim_reports: Array = []
+	var anims: Dictionary = DictUtil.get_dict(doc, "animations")
+	for slot: String in anims.keys():
+		var an: Dictionary = anims[slot]
+		if not str(an.get("status", "")) in SyntyWrapperBuilder.BUILD_STATUS:
+			continue
+		var states: Dictionary = {}
+		var pending := false
+		for state: String in DictUtil.get_dict(an, "states").keys():
+			var src := str(an["states"][state])
+			var mp := src if src.begins_with("res://") else "res://assets/imported/" + src
+			var rt := HumanoidBoneMapper.apply_retarget(mp)
+			if not rt.get("ok", false):
+				anim_reports.append({"slot": slot, "state": state, "ok": false, "error": rt.get("error", "")})
+				continue
+			pending = pending or bool(rt.get("changed", false))
+			states[state] = mp
+		if pending:
+			report.append({"slot": slot + " (animations)", "ok": true, "reimport": true, "summary": "retarget set on clips"})
+			print("%-28s anim retarget set on %d clips (re-import, then build again)" % [slot, states.size()])
+			continue
+		var lr := AnimationLibraryBuilder.build(slot, states, lib_dir)
+		anim_reports.append(lr)
+		if lr["ok"]:
+			libs[slot] = lr["library"]
+		print("%-28s %s library %s" % [slot, "OK  " if lr["ok"] else "FAIL", ", ".join((lr["clips"] as Dictionary).keys())])
+	AnimationLibraryBuilder.save_mappings(libs, libs_path)
 	DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path("res://evidence"))
 	var ev := FileAccess.open("res://evidence/synty_build.json", FileAccess.WRITE)
-	ev.store_string(JSON.stringify({"built": report.size() - failed, "failed": failed, "slots": report}, "  "))
+	ev.store_string(JSON.stringify({"built": report.size() - failed, "failed": failed, "slots": report, "animations": anim_reports}, "  "))
 	ev.close()
 	print("wrappers: %d built, %d failed -> %s" % [report.size() - failed, failed, scenes_path])
 	if report.any(func(r: Dictionary) -> bool: return r.get("reimport", false)):

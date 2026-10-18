@@ -45,6 +45,8 @@ Hvad byggeren gør med størrelse og placering:
 
 Alt kan overstyres pr. slot i `synty_choices.json`: `"fit"`, `"extra_scale"`, `"rotation_y"`. Slots, der optræder mange gange (sten, træer, planter, is, kasser, rør, borgere, asteroider), får op til seks varianter af samme familie (`"variants"`); spillet vælger én pr. placering, altid den samme på samme sted. Particle FX er Unity-partikelsystemer og bygges i Godot med pakkens teksturer (status `manual`). Kollision ejes altid af spillets egne noder, aldrig af wrapperen.
 
+**Figurer og animationer (retarget):** Humanoide figurer (`char.captain`, `char.citizen_*`) og animationsfiler (mapper med "Anim" eller navne som `A_Walk_01`) får automatisk Godots humanoide bone map i importindstillingerne. Både Synty-navne (`Hips, Spine_01, Clavicle_L, Shoulder_L, Elbow_L…`) og Mixamo-navne (`mixamorig:Hips, LeftArm, LeftUpLeg…`) genkendes, så en Mixamo-gang spiller på en Synty-figur. `match.py` foreslår klip pr. tilstand (idle, walk, run, interact, sample, build) under `"animations"` i `synty_choices.json`; byggeren samler dem i ét `AnimationLibrary` pr. figur (`art/animations/<slot>.res`), gør gang/løb in-place (fjerner hoftens fremdrift) og `CharacterAnimator` bruger det automatisk. Rapporten viser hvilke kerneknogler der evt. mangler. Kontrollér i RigLab bagefter.
+
 **I Godot-editoren:** fanen **Asset-slots** (ved siden af Inspector) viser alle 81 slots, om de stadig er proxy, Synty-forslaget og matcherens valg. Markér en model i FileSystem-panelet og tryk **Brug valgt fil**, eller tryk på et af alternativerne. "Drej model" retter facing; **Åbn wrapper** og **RigLab** åbner scenerne.
 
 Afprøv selve værktøjskæden uden købte filer: `tools/synty/selftest.sh` (falsk pakke → hele kæden → kontrol → oprydning).
