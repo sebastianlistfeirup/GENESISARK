@@ -2,6 +2,9 @@
 
 Biblen er baseline. Her står begrundede valg og afvigelser. Nyeste øverst.
 
+### D-024 · Indflyvning gennem asteroider, iltlager og NAV
+Sebastians ønske: ingen ringe, men asteroider/bælter at undgå, og en tør, følelsesløs navigationscomputer (TARS-agtig rolle, egne replikker). Hver rute har en fare i data (`none/field/debris/belt` + tæthed). Rejsen bogføres som før; derefter venter en indflyvning (`campaign.pending_approach`), som bogføres præcis én gang: nedslag koster skrog, kraftige nedslag lækker ilt, undvigemanøvrer og autopilot koster brændstof (tal i `balance.approach`). Ny ressource: kaptajnens iltlager (`ark.oxygen`, %), bruges i stasis pr. rejsedag, repareres i værkstedet med komponenter, blokerer rejser, der ikke kan gennemføres. Gamle saves får fuldt lager. NAV (`NavAdvisor`, `data/story/nav.json`) vurderer ruten på stjernekortet før valget og melder kollisionskurs, nedslag, brændstof og ilt under flyvningen. Målt: autopilot giver 0-2 nedslag, passiv flyvning 1-5, i tråd med NAV's skøn. Bevidst ikke kopieret: TARS' replikker, humorindstilling og navn.
+
 ### D-023 · Automatisk retarget og animationsbibliotek
 Animationer er biblens største visuelle risiko (GA-14). Godots løsning er en humanoid BoneMap (SkeletonProfileHumanoid) i importindstillingerne på både figur og klip; normalt sættes den i hånden pr. fil. `HumanoidBoneMapper` bygger den ud fra knoglenavne (Synty, Mixamo, Blender/Unreal-stil; side via Left/Right/_L/.L), `AnimationLibraryBuilder` samler klippene pr. tilstand og fjerner hoftens vandrette fremdrift (in-place, bibel s. 24-25), og `CharacterAnimator` sætter biblioteket på enhver figur med `GeneralSkeleton`. Bevist med en genereret Synty-navngiven figur og Mixamo-navngivne klip (selftest 10/10). Synty-/Sidekick-navnene er konventioner, ikke verificeret mod de købte filer; rapporten lister manglende kerneknogler.
 

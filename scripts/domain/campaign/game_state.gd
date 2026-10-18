@@ -31,6 +31,7 @@ static func create_new(content: ContentDB, new_seed: int, id: String = "") -> Ga
 	gs.ark.fuel = DictUtil.get_float(start, "fuel", 100.0)
 	gs.ark.integrity = DictUtil.get_float(start, "integrity", 100.0)
 	gs.ark.components = DictUtil.get_int(start, "components", 40)
+	gs.ark.oxygen = DictUtil.get_float(start, "oxygen", 100.0)
 	for pid: String in content.planet_ids_sorted():
 		gs.knowledge[pid] = PlanetKnowledge.create(content.planet(pid))
 	gs.population = PopulationState.new()

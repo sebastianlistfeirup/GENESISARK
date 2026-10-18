@@ -8,6 +8,7 @@ var state: GameState
 var objectives: ObjectiveService
 var ark: ArkService
 var travel: TravelService
+var nav: NavAdvisor
 var survey: SurveyService
 var expedition: ExpeditionService
 var landing: LandingService
@@ -26,6 +27,7 @@ func _init(db: ContentDB, gs: GameState = null) -> void:
 	objectives = ObjectiveService.new(db)
 	ark = ArkService.new(db)
 	travel = TravelService.new(db)
+	nav = NavAdvisor.new(db)
 	survey = SurveyService.new(db)
 	expedition = ExpeditionService.new(db)
 	landing = LandingService.new(db)

@@ -130,6 +130,18 @@ func cmd_repair(components: int) -> CommandResult:
 	return _after(sim.ark.repair(state, components, txn("repair")), "ark")
 
 
+func cmd_repair_oxygen(components: int) -> CommandResult:
+	return _after(sim.ark.repair_life_support(state, components, txn("oxygen")), "ark")
+
+
+## Books the approach flight once (hits, severe hits, seconds of evasive burn, autopilot used).
+func cmd_resolve_approach(hits: int, severe: int, burn_s: float, autopilot_used: bool) -> CommandResult:
+	var r := _after(sim.travel.resolve_approach(state, hits, severe, burn_s, autopilot_used), "travel")
+	if r.ok:
+		autosave()
+	return r
+
+
 func cmd_travel(dest: String, confirm_risky: bool, travel_txn: String = "") -> CommandResult:
 	var t := travel_txn if not travel_txn.is_empty() else txn("travel")
 	var r := _after(sim.travel.request_travel(state, dest, t, confirm_risky), "travel")

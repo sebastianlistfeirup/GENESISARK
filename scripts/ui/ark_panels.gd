@@ -36,7 +36,7 @@ class WorkshopPanel extends OverlayPanel:
 		UiKit.clear(body)
 		var gs: GameState = GameSession.state
 		header(Loc.t("Værkstedet"), Loc.t("Robotter, komponenter og reparationer."))
-		body.add_child(UiKit.label(Loc.t("Skrog %d%% · Komponenter %d · Brændstof %d") % [int(gs.ark.integrity), gs.ark.components, int(gs.ark.fuel)], 20))
+		body.add_child(UiKit.label(Loc.t("Skrog %d%% · Ilt %d%% · Komponenter %d · Brændstof %d") % [int(gs.ark.integrity), int(gs.ark.oxygen), gs.ark.components, int(gs.ark.fuel)], 20))
 		body.add_child(UiKit.label(Loc.t("Hver komponent, du bruger her, mangler senere i kolonien. Sonder koster 3, en dronereserve 2. Det, der er tilbage ved landing, bliver koloniens startlager."), 16, UiKit.MUTED, true))
 		var row := UiKit.hbox(10)
 		for n: int in [1, 3, 5]:
@@ -46,5 +46,14 @@ class WorkshopPanel extends OverlayPanel:
 			b.disabled = gs.ark.components < n or gs.ark.integrity >= 100.0 or gs.campaign.phase == CampaignState.PHASE_SETTLED
 			row.add_child(b)
 		body.add_child(row)
+		var orow := UiKit.hbox(10)
+		var per := float(GameSession.content.bal("oxygen", {}).get("repair_per_component", 4.0))
+		for n: int in [1, 3, 5]:
+			var ob := UiKit.button(Loc.t("Reparér iltrensere: %d komp. → +%d%%") % [n, int(n * per)], func() -> void:
+				GameSession.cmd_repair_oxygen(n)
+				refresh())
+			ob.disabled = gs.ark.components < n or gs.ark.oxygen >= 100.0 or gs.campaign.phase == CampaignState.PHASE_SETTLED
+			orow.add_child(ob)
+		body.add_child(orow)
 		if gs.ark.integrity < 50.0:
 			body.add_child(UiKit.label(Loc.t("▲ Under 50% skrog giver arken kun 60% nødstrøm efter landing."), 16, UiKit.WARN, true))

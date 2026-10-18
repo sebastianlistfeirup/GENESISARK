@@ -82,6 +82,8 @@ func scene_for_state() -> String:
 		_:
 			if gs.expedition != null and gs.expedition.status == ExpeditionState.STATUS_ACTIVE:
 				return "surface"
+			if not gs.campaign.pending_approach.is_empty():
+				return "flight"  # saved mid-approach: fly it (or let NAV fly it)
 			return "ship"
 
 

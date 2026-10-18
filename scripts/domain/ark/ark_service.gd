@@ -39,6 +39,22 @@ func spend_components(gs: GameState, amount: int) -> CommandResult:
 
 
 ## Repair hull integrity with components in the workshop: 1 component -> +4 integrity.
+## Workbench: repair the oxygen scrubbers with components (bible p.8: what is used here is missing in the colony).
+func repair_life_support(gs: GameState, components: int, txn: String) -> CommandResult:
+	if gs.is_applied(txn):
+		return CommandResult.fail("duplicate_txn", Loc.t("Reparationen er allerede udført."))
+	if gs.campaign.phase != CampaignState.PHASE_VOYAGE and gs.campaign.phase != CampaignState.PHASE_ARK:
+		return CommandResult.fail("wrong_phase", Loc.t("Arken er landet; livsstøtten drives nu af kolonien."))
+	if gs.ark.oxygen >= 100.0:
+		return CommandResult.fail("full_oxygen", Loc.t("Iltlageret er fuldt."))
+	var r := spend_components(gs, components)
+	if not r.ok:
+		return r
+	gs.ark.oxygen = minf(100.0, gs.ark.oxygen + DictUtil.get_float(content.bal("oxygen", {}), "repair_per_component", 4.0) * components)
+	gs.mark_applied(txn)
+	return CommandResult.success({"oxygen": gs.ark.oxygen})
+
+
 func repair(gs: GameState, components: int, txn: String) -> CommandResult:
 	if gs.is_applied(txn):
 		return CommandResult.fail("duplicate_txn", Loc.t("Reparationen er allerede udført."))

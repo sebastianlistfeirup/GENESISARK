@@ -5,7 +5,8 @@
   "ark_start": {
     "fuel": 100,
     "integrity": 100,
-    "components": 40
+    "components": 40,
+    "oxygen": 100.0
   },
   "probe_component_cost": 3,
   "orbital_scan_fuel_cost": 1,
@@ -79,5 +80,23 @@
     "components": 300,
     "supply_days": 365,
     "supply_min": 1500
+  },
+  "oxygen": {
+    "_note": "Captain life support reserve in % (scrubbers + tank). Stasis uses a little per travel day; severe impacts leak; the workbench repairs scrubbers with components.",
+    "stasis_per_day": 0.12,
+    "low": 30.0,
+    "critical": 15.0,
+    "repair_per_component": 4.0
+  },
+  "approach": {
+    "_note": "Approach flight after a journey: hazards per route (data/routes). Each impact costs hull; a severe one also leaks oxygen. Evasive burns cost fuel; the NAV autopilot flies cautiously (fewer impacts) but burns more.",
+    "hit_integrity": 1.5,
+    "severe_integrity": 3.0,
+    "severe_oxygen": 2.5,
+    "burn_fuel_per_s": 0.06,
+    "autopilot_fuel_per_density": 2.0,
+    "max_hits": 12,
+    "expected_hits_manual": 6.0,
+    "expected_hits_autopilot": 1.5
   }
 }

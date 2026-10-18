@@ -299,7 +299,9 @@ Sporebelastning kræver filtre og adskilte væksthuse.,Spore load demands filter
 Viridia,Viridia
 Arkens nuværende position — et tomt punkt mellem stjernerne.,The Ark's current position — an empty point between the stars.
 Driftpunktet,The Drift Point
-Ruten passerer et asteroidebælte.,The route passes through an asteroid belt.
+Ruten krydser et asteroidebælte.,The route crosses an asteroid belt.
+Ruten passerer et felt af vragrester og småsten.,The route passes a field of debris and small rocks.
+Spredte asteroider på indflyvningen.,Scattered asteroids on the approach.
 En kløft med blottede malmårer. Skygge om eftermiddagen og en dyb akvifer under bunden.,A ravine with exposed ore veins. Shade in the afternoon and a deep aquifer beneath the floor.
 "En naturlig klippebue danner læ. Lidt plads, men en svag varmekilde under klipperne.","A natural rock arch provides shelter. Little space, but a faint heat source beneath the rocks."
 Glassletten,The Glass Plain
@@ -347,6 +349,32 @@ Tyve år. De er voksne nu. De har meninger. Gode meninger.,Twenty years. They're
 Vi er landet. Arken flyver ikke igen. Nu er det her hjem.,We've landed. The Ark won't fly again. This is home now.
 "Vi kom igennem. Ikke uden skrammer, men alle var her stadig bagefter.","We made it through. Not without scars, but everyone was still here afterwards."
 "Viridia. Grøn som en drøm, men luften er fuld af sporer. Vi får brug for filtre.","Viridia. Green as a dream, but the air is full of spores. We'll need filters."
+Autopilot aktiv. Ekstra brændstofforbrug: {fuel} enheder.,Autopilot engaged. Additional fuel use: {fuel} units.
+Brændstof ved ankomst: {fuel_after} enheder.,Fuel on arrival: {fuel_after} units.
+Brændstof: {fuel} enheder. Det rækker til {reachable} af {routes} kendte ruter herfra.,Fuel: {fuel} units. Enough for {reachable} of {routes} known routes from here.
+Brændstof: {fuel} enheder. Ingen kendt rute er inden for rækkevidde. Næste beslutning er landing.,Fuel: {fuel} units. No known route is within range. The next decision is landing.
+Forhindringerne er passeret. {hits} nedslag.,Obstacles passed. {hits} impacts.
+Iltforbrug i stasis: {oxygen} procent. Iltlager ved ankomst: {oxygen_after} procent.,Oxygen used in stasis: {oxygen} percent. Oxygen reserve on arrival: {oxygen_after} percent.
+Iltlager ved ankomst: {oxygen_after} procent. Det er under anbefalet minimum på {low} procent.,Oxygen reserve on arrival: {oxygen_after} percent. That is below the recommended minimum of {low} percent.
+Iltlager: {oxygen} procent. Kritisk. Ved stasisforbrug rækker det {days_left} dage.,Oxygen reserve: {oxygen} percent. Critical. At stasis consumption it lasts {days_left} days.
+Iltlager: {oxygen} procent. Under anbefalet minimum. Iltrenserne kan repareres i værkstedet.,Oxygen reserve: {oxygen} percent. Below recommended minimum. The scrubbers can be repaired in the workshop.
+"Indflyvning påbegyndt. Asteroidebæltet begynder om {distance} meter. Jeg anbefaler autopilot. Det er en anbefaling, ikke en ordre.","Approach initiated. The asteroid belt begins in {distance} metres. I recommend autopilot. That is a recommendation, not an order."
+Indflyvning påbegyndt. Ingen objekter på kursen. Det sker sjældent.,Approach initiated. No objects on course. That is rare.
+"Indflyvning påbegyndt. Spredte asteroider forude. Hold farten nede, så har du tid til at dreje.",Approach initiated. Scattered asteroids ahead. Keep the speed down and you will have time to turn.
+Indflyvning påbegyndt. Vragrester forude. De er små. Det gør dem ikke ufarlige.,Approach initiated. Debris ahead. It is small. That does not make it harmless.
+"Indflyvningen til {dest} har spredte asteroider. Forventet: {hits_manual} nedslag ved manuel styring, {hits_auto} med autopilot. Autopiloten bruger {fuel_auto} enheder brændstof ekstra.","The approach to {dest} has scattered asteroids. Expected: {hits_manual} impacts on manual control, {hits_auto} on autopilot. The autopilot uses {fuel_auto} extra units of fuel."
+"Indflyvningen til {dest} passerer et felt af vragrester. Forventet skrogtab: {integ_manual} procent manuelt, {integ_auto} procent med autopilot.","The approach to {dest} passes a debris field. Expected hull loss: {integ_manual} percent manual, {integ_auto} percent on autopilot."
+Kraftigt nedslag. Trykfald i sektion {section}. Iltlager {oxygen} procent.,Severe impact. Pressure loss in section {section}. Oxygen reserve {oxygen} percent.
+Kredsløb om {dest} etableret. Skrog {integrity} procent. Brændstof {fuel}. Ilt {oxygen} procent.,Orbit around {dest} established. Hull {integrity} percent. Fuel {fuel}. Oxygen {oxygen} percent.
+Manuel styring.,Manual control.
+NAV,NAV
+"Navigationscomputeren. Taler i tal og sandsynligheder. Har ingen mening om, hvorvidt du bør være bange.",The navigation computer. Speaks in numbers and probabilities. Has no opinion on whether you should be afraid.
+Nedslag. Skrogintegritet {integrity} procent.,Impact. Hull integrity {integrity} percent.
+Objekt på kollisionskurs. {seconds} sekunder. Korrektion: {side}.,Object on collision course. {seconds} seconds. Correction: {side}.
+Reserven efter ankomst er {fuel_after}. For at nå {reserve_target} kræves {reserve_needed}. Landingen bliver i praksis endelig.,Reserve after arrival is {fuel_after}. Reaching {reserve_target} requires {reserve_needed}. Landing becomes final in practice.
+Rute til {dest}: {days} dage i stasis. Ingen kendte forhindringer på indflyvningen.,Route to {dest}: {days} days in stasis. No known obstacles on the approach.
+"Ruten krydser et asteroidebælte. Tæthed: {density} procent. Forventet skrogtab: {integ_manual} procent manuelt, {integ_auto} procent med autopilot. Jeg anbefaler autopilot.","The route crosses an asteroid belt. Density: {density} percent. Expected hull loss: {integ_manual} percent manual, {integ_auto} percent on autopilot. I recommend autopilot."
+Skrogintegritet: {integrity} procent. Yderligere nedslag øger risikoen for trykfald.,Hull integrity: {integrity} percent. Further impacts increase the risk of pressure loss.
 49.990 tilbage i banken. Ti på vej.,"49,990 left in the bank. Ten on the way."
 ARK,ARK
 Alarmen slukker. For første gang i dagevis er der stille i kontrolrummet.,"The alarm goes quiet. For the first time in days, the control room is silent."
@@ -587,9 +615,12 @@ Drej telefonen til liggende format,Rotate your phone to landscape
 Drone,Drone
 Log,Log
 Tid,Time
+Undvig,Evade
 Allerede registreret.,Already registered.
+Arken er landet; livsstøtten drives nu af kolonien.,The Ark has landed; life support is now run by the colony.
 Arken er landet; reparationer sker nu i kolonien.,The Ark has landed; repairs now take place in the colony.
 "Ikke nok komponenter (har %d, kræver %d).","Not enough components (have %d, need %d)."
+Iltlageret er fuldt.,The oxygen reserve is full.
 Negativ mængde.,Negative amount.
 Nødstrøm genoprettet. Broen og stjernekortet er online igen.,Emergency power restored. The bridge and the star map are back online.
 Nødstrømmen kører allerede.,Emergency power is already running.
@@ -600,6 +631,7 @@ embryo %s < 0,embryo %s < 0
 embryosum %d != %d,embryo sum %d != %d
 fuel < 0,fuel < 0
 "integrity uden for [0,100]","integrity outside [0,100]"
+"oxygen uden for [0,100]","oxygen outside [0,100]"
 befolkning (%d) + døde overstiger fødte (%d),population (%d) + dead exceeds born (%d)
 fase SETTLED uden koloni,phase SETTLED without colony
 inkuberende kohorter (%d) != ledger incubating (%d),incubating cohorts (%d) != ledger incubating (%d)
@@ -751,11 +783,20 @@ Mineraludbytte,Mineral yield
 Solenergi,Solar energy
 Tyngde,Gravity
 Vandadgang,Water access
+bagbord,port
+ned,down
+op,up
+styrbord,starboard
 Ankommet til %s efter %d dage i stasis.,Arrived at %s after %d days in stasis.
 Arken er allerede her.,The Ark is already here.
 Arken er landet. Rejsen er slut.,The Ark has landed. The voyage is over.
 Efter rejsen kan arken ikke nå videre til %s (kræver %.0f brændstof). Landing bliver i praksis endelig.,"After this voyage, the Ark cannot go on to %s (requires %.0f fuel). Landing will in practice be final."
 Ikke nok brændstof (%.0f / %.0f).,Not enough fuel (%.0f / %.0f).
+Iltlageret er under %.0f %% ved ankomst. Reparér iltrenserne i værkstedet.,The oxygen reserve is below %.0f %% on arrival. Repair the scrubbers in the workshop.
+Iltlageret rækker ikke til rejsen (%.0f %% / %.0f %%).,The oxygen reserve will not last the journey (%.0f %% / %.0f %%).
+"Indflyvning til %s: %d nedslag, skrog −%.1f %%, ilt −%.1f %%, brændstof −%.1f.","Approach to %s: %d impacts, hull −%.1f %%, oxygen −%.1f %%, fuel −%.1f."
+Indflyvningen er allerede gennemført.,The approach has already been completed.
+Ingen indflyvning venter.,No approach is pending.
 Ingen kendt rute.,No known route.
 Nødstrømmen skal genoprettes først.,Emergency power must be restored first.
 Rejsen er allerede gennemført.,The voyage has already been completed.
@@ -815,20 +856,22 @@ Ressourceområde,Resource area
 ","Content error — see log:
 "
 låst,locked
-AUTOPILOT,AUTOPILOT
+AUTOPILOT (NAV),AUTOPILOT (NAV)
 "Indflyvning: %s
-Korridor %d / %d
-Fart %d · %s","Approach: %s
-Corridor %d / %d
-Speed %d · %s"
+Kredsløb om %d m · fart %d
+Skrog %d %% · Ilt %d %% · nedslag %d
+%s","Approach: %s
+Orbit in %d m · speed %d
+Hull %d %% · Oxygen %d %% · impacts %d
+%s"
 Kredsløb etableret.,Orbit established.
-W/S gas · A/D drej · Mellemrum/Ctrl op/ned · [F] autopilot,W/S throttle · A/D turn · Space/Ctrl up/down · [F] autopilot
+W/S fart · A/D sideværts · Mellemrum/Ctrl op/ned · [Shift] undvigemanøvre · [F] autopilot,W/S speed · A/D sideways · Space/Ctrl up/down · [Shift] evasive burn · [F] autopilot
 manuel,manual
   (kredsløb),  (orbit)
 "%s
-Brændstof %d · Skrog %d%% · Komp. %d
+Brændstof %d · Skrog %d%% · Ilt %d%% · Komp. %d
 Embryoner %s · Stasis %.1f år","%s
-Fuel %d · Hull %d%% · Comp. %d
+Fuel %d · Hull %d%% · Oxygen %d%% · Comp. %d
 Embryos %s · Stasis %.1f yrs"
 Brug,Use
 "Genstarter nødstrømmen. Broen, embryobanken og stjernekortet kommer online.","Restarts emergency power. The bridge, the embryo bank and the star map come online."
@@ -883,9 +926,10 @@ I inkubation,In incubation
 "Lagerstatus, redundans og den senere omsorgsplan.","Storage status, redundancy and the later care plan."
 Levedygtige i kryo,Viable in cryo
 "Redundans: fire uafhængige kølesløjfer, alle stabile på nødstrøm. Inkubation kræver et omsorgscenter, stabil forsyning og +5 kW på en ny verden.","Redundancy: four independent cooling loops, all stable on emergency power. Incubation requires a care centre, stable supply and +5 kW on a new world."
+Reparér iltrensere: %d komp. → +%d%%,Repair scrubbers: %d comp. → +%d%%
 Reparér skroget: %d komp. → +%d%%,Repair the hull: %d comp. → +%d%%
 "Robotter, komponenter og reparationer.","Robots, components and repairs."
-Skrog %d%% · Komponenter %d · Brændstof %d,Hull %d%% · Components %d · Fuel %d
+Skrog %d%% · Ilt %d%% · Komponenter %d · Brændstof %d,Hull %d%% · Oxygen %d%% · Components %d · Fuel %d
 Tabt,Lost
 "Tallet er ikke en score. Det er alle, der endnu kan blive til nogen.",The number is not a score. It is everyone who may yet become someone.
 Værkstedet,The workshop

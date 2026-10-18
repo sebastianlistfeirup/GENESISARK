@@ -7,8 +7,9 @@ Usage: python3 tools/export_vo_script.py"""
 import csv, json, os
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT = os.path.join(ROOT, "docs", "VO_SCRIPT.csv")
-VOICES = {"ARK": "ark_ai", "CAPTAIN": "captain", "NARRATOR": "narrator", "noor": "noor", "elias": "elias", "sana": "sana"}
+VOICES = {"NAV": "nav_computer", "ARK": "ark_ai", "CAPTAIN": "captain", "NARRATOR": "narrator", "noor": "noor", "elias": "elias", "sana": "sana"}
 DIRECTION = {
+    "NAV": "Navigationscomputer: tør, nøgtern, helt uden følelser, jævnt tempo, tal udtales tydeligt. Ingen varme, ingen humor i stemmen (tørheden ligger i ordene).",
     "ARK": "Rolig, præcis, varm under overfladen. Lav dynamik, ingen robotfilter i optagelsen (tilføjes i Godot).",
     "CAPTAIN": "Træt, ensom, lavmælt. Kønsneutral rolle: vælg stemme bevidst og hold den hele spillet.",
     "NARRATOR": "Valgfri. Anbefaling: kun undertekst (bibel s. 13). Indtal kun hvis playtest viser behov.",
@@ -29,6 +30,18 @@ for sc in scenes:
                      "voice_id": VOICES.get(sp, sp), "text_da": line["text"], "chars": len(line["text"]),
                      "direction": DIRECTION.get(sp, ""), "status": prev.get("status", "NEEDED"),
                      "take": prev.get("take", ""), "tool": prev.get("tool", ""), "license": prev.get("license", "")})
+# NAV (data/story/nav.json): lines with {numbers} are filled in at runtime. Record the
+# number-free ones as nav_<id>; the dynamic ones play with subtitle + computer tick
+# until a runtime TTS or number splicing is chosen (docs/PRODUCTION_PLAN.md §5).
+nav = json.load(open(os.path.join(ROOT, "data", "story", "nav.json"), encoding="utf-8"))["lines"]
+for nid, nl in nav.items():
+    lid = "nav_" + nid
+    prev = old.get(lid, {})
+    dyn = "{" in nl["text"]
+    rows.append({"line_id": lid, "scene": "nav", "trigger": nid, "speaker": "NAV", "voice_id": VOICES["NAV"], "text_da": nl["text"],
+                 "chars": len(nl["text"]), "direction": DIRECTION["NAV"] + (" DYNAMISK: tal indsættes i spillet." if dyn else ""),
+                 "status": prev.get("status", "DYNAMIC" if dyn else "NEEDED"), "take": prev.get("take", ""), "tool": prev.get("tool", ""),
+                 "license": prev.get("license", "")})
 with open(OUT, "w", encoding="utf-8", newline="") as f:
     w = csv.DictWriter(f, fieldnames=list(rows[0].keys()))
     w.writeheader(); w.writerows(rows)

@@ -72,6 +72,9 @@ func _show_detail(loc: String) -> void:
 		detail.add_child(UiKit.rich(Loc.t("Brændstof [b]%d[/b] (efter: %d) · Skrog −%d%% · %d dage i stasis\nReserve til nærmeste alternativ: %s") % [
 			int(q["fuel"]), int(q["fuel_after"]), int(q["integrity"]), int(q["days"]),
 			(Loc.t("[color=#5fae6e]● ok (%d krævet)[/color]") % int(q["reserve_needed"])) if q["reserve_ok"] else (Loc.t("[color=#e8a33d]▲ for lav (%d krævet)[/color]") % int(q["reserve_needed"]))]))
+	var brief := GameSession.sim.nav.route_brief(gs, q)
+	if not brief.is_empty():
+		detail.add_child(nav_block(brief))
 	for reason: Variant in q.get("reasons", []):
 		detail.add_child(UiKit.label("■ " + str(reason), 16, UiKit.DANGER, true))
 	for reason: Variant in q.get("risk_reasons", []):
@@ -108,6 +111,25 @@ func _travel(loc: String, q: Dictionary) -> void:
 		travel_committed.emit(loc)
 	elif r.code != "duplicate_txn":
 		_pending_txn = ""
+
+
+## NAV's assessment of the route: terminal-style block, one line per item.
+static func nav_block(items: Array) -> PanelContainer:
+	var p := PanelContainer.new()
+	var sb := StyleBoxFlat.new()
+	sb.bg_color = Color(0.02, 0.05, 0.06, 0.9)
+	sb.border_color = UiKit.PETROL
+	sb.border_width_left = 3
+	sb.set_content_margin_all(10)
+	p.add_theme_stylebox_override("panel", sb)
+	var lines: Array = []
+	for it: Dictionary in items:
+		var col: String = {"critical": "#d25b4c", "warning": "#e8a33d"}.get(str(it.get("severity", "")), "#9fb4bd")
+		lines.append("[color=%s]%s[/color]" % [col, str(it["text"])])
+	var r := UiKit.rich("[color=#7fd6d0][b]NAV[/b][/color]\n" + "\n".join(lines))
+	r.custom_minimum_size = Vector2(0, 0)
+	p.add_child(r)
+	return p
 
 
 ## Known / estimated / unknown, each with its source (bible p.7, p.13).

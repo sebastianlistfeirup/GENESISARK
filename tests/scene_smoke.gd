@@ -271,10 +271,30 @@ func _run() -> void:
 	var r2 := GameSession.cmd_travel("viridia", false, "smoke:trip")
 	check("ga05_double_click_rejected", not r2.ok and GameSession.state.ark.fuel == 88.0, "fuel=%s" % GameSession.state.ark.fuel)
 	AppFlow.params = {"destination": "viridia"}
+	check("approach_pending_after_travel", GameSession.state.campaign.pending_approach.get("destination") == "viridia")
 	var flight := await load_scene("res://scenes/flight/flight.tscn")
+	var rocks: Array = flight.get("_rocks")
+	var hazard_rocks := rocks.filter(func(rk: Dictionary) -> bool: return not rk["scenery"])
+	check("approach_hazard_spawned", str(flight.get("_hazard")["type"]) == "field" and hazard_rocks.size() > 20, "%d sten" % hazard_rocks.size())
 	flight.set("autopilot", true)
-	await frames(420)
-	check("flight_autopilot_progresses", int(flight.get("next_ring")) >= 1, "ring=%s" % flight.get("next_ring"))
+	flight.set("autopilot_used", true)
+	var fship: Node3D = flight.get("ship")
+	await frames(90)
+	check("flight_autopilot_progresses", fship.position.z < -20.0, "z=%.1f" % fship.position.z)
+	flight.set("autopilot", false)
+	var target_rock: Node3D = hazard_rocks[0]["node"]
+	fship.position = target_rock.position
+	await frames(3)
+	check("approach_collision_registered", int(flight.get("hits")) >= 1 and (flight.get("hud") as GameHud).nav.busy(), "hits=%d" % flight.get("hits"))
+	var integ_before := GameSession.state.ark.integrity
+	var fuel_before := GameSession.state.ark.fuel
+	fship.position = Vector3(0, 0, -1099.5)
+	for rk: Dictionary in rocks:
+		(rk["node"] as Node3D).position.x += 500.0  # clear the last metres
+	await frames(20)
+	check("approach_booked_once", GameSession.state.campaign.pending_approach.is_empty() and GameSession.state.ark.integrity < integ_before
+		and GameSession.state.ark.fuel < fuel_before and not GameSession.cmd_resolve_approach(1, 0, 0.0, false).ok,
+		"skrog %.1f -> %.1f, brændstof %.1f -> %.1f" % [integ_before, GameSession.state.ark.integrity, fuel_before, GameSession.state.ark.fuel])
 	await unload(flight)
 
 	# Expedition scene

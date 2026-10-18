@@ -15,6 +15,7 @@ var bottom: HBoxContainer
 var story: StoryPlayer
 var journal: JournalPanel
 var pause_menu: PauseMenu
+var nav: NavComms  # NAV, the navigation computer's channel (top centre; silent in the colony)
 var _prompt_panel: PanelContainer
 
 
@@ -70,6 +71,11 @@ func _ready() -> void:
 	bottom.position.y -= 20
 	root.add_child(bottom)
 	# Toasts (left, under objective)
+	nav = NavComms.new()
+	nav.set_anchors_and_offsets_preset(Control.PRESET_CENTER_TOP)
+	nav.grow_horizontal = Control.GROW_DIRECTION_BOTH
+	nav.position.y = 18
+	root.add_child(nav)
 	toasts = UiKit.vbox(6)
 	toasts.position = Vector2(24, 170)
 	toasts.custom_minimum_size = Vector2(420, 0)

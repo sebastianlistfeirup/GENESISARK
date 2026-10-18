@@ -22,6 +22,9 @@ var journal: Array = []               # [{day, text, kind}]
 var visited: Array = []               # location ids
 var ending_id: String = ""
 var final_state: Dictionary = {}
+## Set when a journey is committed and the approach flight is still to be flown:
+## {txn, destination, hazard: {type, density}}. Cleared once the approach is resolved.
+var pending_approach: Dictionary = {}
 
 
 func colony_year() -> float:
@@ -36,6 +39,7 @@ func to_dict() -> Dictionary:
 		"landing_txn": landing_txn, "completed_objectives": completed_objectives.duplicate(),
 		"event_ids": event_ids.duplicate(), "journal": journal.duplicate(true),
 		"visited": visited.duplicate(), "ending_id": ending_id, "final_state": final_state.duplicate(true),
+		"pending_approach": pending_approach.duplicate(true),
 	}
 
 
@@ -56,4 +60,5 @@ static func from_dict(d: Dictionary) -> CampaignState:
 	s.visited = DictUtil.get_arr(d, "visited").duplicate()
 	s.ending_id = DictUtil.get_str(d, "ending_id")
 	s.final_state = DictUtil.get_dict(d, "final_state").duplicate(true)
+	s.pending_approach = DictUtil.get_dict(d, "pending_approach").duplicate(true)
 	return s

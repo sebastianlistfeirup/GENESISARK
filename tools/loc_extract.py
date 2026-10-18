@@ -19,7 +19,7 @@ LANGS = ["en"]
 LOC_CALL = re.compile(r'Loc\.t\("((?:[^"\\]|\\.)*)"\)')
 STR = re.compile(r'"((?:[^"\\]|\\.)*)"\s*:\s*"((?:[^"\\]|\\.)*)"')
 DICT_CONSTS = ["ACTION_LABELS", "PROPERTY_LABELS", "ATMOSPHERE_LABELS", "PRIORITY_LABELS", "REASONS", "STOP_TEXT",
-               "FACT_LABELS", "SLOT_LABELS", "RES_LABELS"]
+               "FACT_LABELS", "SLOT_LABELS", "RES_LABELS", "SIDE_TEXT"]
 # Keep in sync with ContentDB.TEXT_KEYS.
 TEXT_KEYS = {"name", "description", "label", "result", "settlement_name", "text", "title", "warning", "criteria_text",
              "epilogue", "summary", "advantage", "briefing", "evacuation", "goal", "main", "price", "relay", "risk",

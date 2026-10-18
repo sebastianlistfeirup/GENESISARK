@@ -1,0 +1,30 @@
+{
+  "_note": "NAV, the ark's navigation computer: dry, factual, no feelings (a TARS-like role, its own lines). Numbers in {braces} are filled in by NavAdvisor. Line ids are fixed; the text may be rewritten freely. Voice: assets/audio/vo/nav_<id>.ogg (optional).",
+  "character": {"id": "nav", "name": "NAV", "bio": "Navigationscomputeren. Taler i tal og sandsynligheder. Har ingen mening om, hvorvidt du bør være bange."},
+  "lines": {
+    "route_clear": {"text": "Rute til {dest}: {days} dage i stasis. Ingen kendte forhindringer på indflyvningen."},
+    "route_field": {"text": "Indflyvningen til {dest} har spredte asteroider. Forventet: {hits_manual} nedslag ved manuel styring, {hits_auto} med autopilot. Autopiloten bruger {fuel_auto} enheder brændstof ekstra."},
+    "route_debris": {"text": "Indflyvningen til {dest} passerer et felt af vragrester. Forventet skrogtab: {integ_manual} procent manuelt, {integ_auto} procent med autopilot."},
+    "route_belt": {"text": "Ruten krydser et asteroidebælte. Tæthed: {density} procent. Forventet skrogtab: {integ_manual} procent manuelt, {integ_auto} procent med autopilot. Jeg anbefaler autopilot."},
+    "route_fuel": {"text": "Brændstof ved ankomst: {fuel_after} enheder."},
+    "route_reserve_breach": {"text": "Reserven efter ankomst er {fuel_after}. For at nå {reserve_target} kræves {reserve_needed}. Landingen bliver i praksis endelig."},
+    "route_oxygen": {"text": "Iltforbrug i stasis: {oxygen} procent. Iltlager ved ankomst: {oxygen_after} procent."},
+    "route_oxygen_low": {"text": "Iltlager ved ankomst: {oxygen_after} procent. Det er under anbefalet minimum på {low} procent."},
+    "status_fuel_low": {"text": "Brændstof: {fuel} enheder. Det rækker til {reachable} af {routes} kendte ruter herfra."},
+    "status_fuel_none": {"text": "Brændstof: {fuel} enheder. Ingen kendt rute er inden for rækkevidde. Næste beslutning er landing."},
+    "status_oxygen_low": {"text": "Iltlager: {oxygen} procent. Under anbefalet minimum. Iltrenserne kan repareres i værkstedet."},
+    "status_oxygen_critical": {"text": "Iltlager: {oxygen} procent. Kritisk. Ved stasisforbrug rækker det {days_left} dage."},
+    "status_hull_low": {"text": "Skrogintegritet: {integrity} procent. Yderligere nedslag øger risikoen for trykfald."},
+    "approach_clear": {"text": "Indflyvning påbegyndt. Ingen objekter på kursen. Det sker sjældent."},
+    "approach_field": {"text": "Indflyvning påbegyndt. Spredte asteroider forude. Hold farten nede, så har du tid til at dreje."},
+    "approach_debris": {"text": "Indflyvning påbegyndt. Vragrester forude. De er små. Det gør dem ikke ufarlige."},
+    "approach_belt": {"text": "Indflyvning påbegyndt. Asteroidebæltet begynder om {distance} meter. Jeg anbefaler autopilot. Det er en anbefaling, ikke en ordre."},
+    "collision_course": {"text": "Objekt på kollisionskurs. {seconds} sekunder. Korrektion: {side}."},
+    "impact": {"text": "Nedslag. Skrogintegritet {integrity} procent."},
+    "impact_severe": {"text": "Kraftigt nedslag. Trykfald i sektion {section}. Iltlager {oxygen} procent."},
+    "autopilot_on": {"text": "Autopilot aktiv. Ekstra brændstofforbrug: {fuel} enheder."},
+    "autopilot_off": {"text": "Manuel styring."},
+    "hazard_cleared": {"text": "Forhindringerne er passeret. {hits} nedslag."},
+    "arrival": {"text": "Kredsløb om {dest} etableret. Skrog {integrity} procent. Brændstof {fuel}. Ilt {oxygen} procent."}
+  }
+}

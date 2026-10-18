@@ -133,6 +133,8 @@ Regenerér listen med `python3 tools/gen_audio_ledger.py` (bevarer status/licens
 4. Lyt i kontekst; ret udtale (navne: Viridia, Pelagos, Nivalis…) med fonetisk stavning i prompten, ikke i underteksten.
 5. Engelsk version efter lokalisering (§9) med samme stemmer, gemmes i `assets/audio/vo/en/<line_id>.ogg` — **kodet**: på engelsk spilles `vo/en/` først, ellers den danske optagelse.
 
+**NAV** (navigationscomputeren, 24 replikker i `data/story/nav.json`): tør, følelsesløs, tydelige tal. Linjer uden tal indtales som `nav_<id>.ogg`; linjer med tal (markeret DYNAMIC i `VO_SCRIPT.csv`) vises som undertekst med computerlyd, indtil vi vælger enten realtids-TTS eller sammensatte tal-optagelser.
+
 Ingen læbesynk nødvendig: spillet har bevidst ingen ansigtsanimation (bibel s. 13, 38). Regenerér manuskriptet efter tekstændringer: `python3 tools/export_vo_script.py`.
 
 ---

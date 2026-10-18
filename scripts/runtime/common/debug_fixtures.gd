@@ -21,6 +21,10 @@ static func prepare(setup: String) -> void:
 		sim.update_objectives()
 		return
 	sim.travel.request_travel(gs, pid, "dbg:travel", true)
+	if kind == "approach":  # journey committed, approach flight not yet flown
+		sim.update_objectives()
+		return
+	sim.travel.resolve_approach(gs, 0, 0, 0.0, true)
 	sim.survey.orbital_scan(gs, pid)
 	if kind == "orbit":
 		sim.update_objectives()

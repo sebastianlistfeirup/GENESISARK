@@ -8,6 +8,9 @@ const EMBRYO_TOTAL := 50000
 var fuel: float = 100.0
 var integrity: float = 100.0
 var components: int = 40
+## Captain life support reserve in % (scrubbers + tank). Travel in stasis uses a
+## little per day; severe impacts leak; the workbench repairs it.
+var oxygen: float = 100.0
 ## Ship systems: power ("offline" | "emergency" | "restored"), plus discovered terminals.
 var systems: Dictionary = {"power": "offline", "starmap": false, "embryo_bank_checked": false, "workshop_checked": false}
 var embryo_viable: int = EMBRYO_TOTAL
@@ -26,7 +29,7 @@ func ledger() -> Dictionary:
 
 func to_dict() -> Dictionary:
 	return {
-		"fuel": fuel, "integrity": integrity, "components": components, "systems": systems.duplicate(true),
+		"fuel": fuel, "integrity": integrity, "components": components, "oxygen": oxygen, "systems": systems.duplicate(true),
 		"embryo_ledger": ledger(),
 	}
 
@@ -36,6 +39,7 @@ static func from_dict(d: Dictionary) -> ArkState:
 	s.fuel = DictUtil.get_float(d, "fuel", 100.0)
 	s.integrity = DictUtil.get_float(d, "integrity", 100.0)
 	s.components = DictUtil.get_int(d, "components", 40)
+	s.oxygen = DictUtil.get_float(d, "oxygen", 100.0)  # saves before v0.2 had no oxygen: full tank
 	var sys: Dictionary = DictUtil.get_dict(d, "systems")
 	for k: String in sys.keys():
 		s.systems[k] = sys[k]
@@ -53,6 +57,7 @@ func invariant_errors() -> PackedStringArray:
 	if fuel < 0.0: out.append(Loc.t("fuel < 0"))
 	if integrity < 0.0 or integrity > 100.0: out.append(Loc.t("integrity uden for [0,100]"))
 	if components < 0: out.append(Loc.t("components < 0"))
+	if oxygen < 0.0 or oxygen > 100.0: out.append(Loc.t("oxygen uden for [0,100]"))
 	for k: String in ["viable", "incubating", "born", "lost"]:
 		if int(ledger()[k]) < 0:
 			out.append(Loc.t("embryo %s < 0") % k)

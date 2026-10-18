@@ -8,7 +8,7 @@ Et komplet, spilbart **greybox-spil** fra vågen kaptajn til overdragelse af kol
 
 1. **Arken** (3. person): mørkt skib med nødlys → genopret nødstrøm i værkstedet → embryobanken viser 50.000 → broen.
 2. **Stjernekort**: seks kandidatverdener, ruter med brændstof/skrog/dage, minimumsreserve, fjernsonder (3 komp.), sammenligning af *kendt/skøn/ukendt* viden.
-3. **Indflyvning**: kort assisteret pilotsegment (gas, drej, autopilot `F`).
+3. **Indflyvning**: undvig asteroider og bælter (W/S fart, A/D sideværts, Shift undvigemanøvre, `F` lader navigationscomputeren NAV flyve). NAV vurderer hver rute på stjernekortet og melder farer, brændstof og ilt.
 4. **Kredsløb**: orbital scanning, sitesonder, ekspedition og landingspreview med kendte risici, startlager og energiplan. Landing kan kun ske én gang (pre-landing-save).
 5. **Ekspedition**: biome-terræn, to ruter, fareområde, dragtenergi (0,12/s, varsel ved 30), 8 s prøvetagning, relæ, dronereserve, varslet tilbagekaldelse.
 6. **Kolonien**: overheadkamera (WASD, hjul, Q/E), 12 byggeklasser med ghost-placering og årsager, distrikter, forsyningsnet, strømprioritet, flaskehalse, moduler (filter/varme), vedligehold, pause/1x/3x.

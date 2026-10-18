@@ -1,36 +1,313 @@
 {
-  "_note": "Fuel/integrity/day costs between locations. Bible p.29: prototype routes 12/18/24 fuel. Symmetric matrix.",
+  "_note": "Fuel/integrity/day costs between locations. Bible p.29: prototype routes 12/18/24 fuel. Symmetric matrix. hazard: approach hazard after arrival (type none|field|debris|belt, density 0-1), flown in the approach scene.",
   "start_location": "drift",
   "locations": {
-    "drift": { "name": "Driftpunktet", "description": "Arkens nuværende position — et tomt punkt mellem stjernerne.", "star_position": [0.0, 0.0] },
-    "viridia": { "name": "Viridia", "planet_id": "viridia", "star_position": [-0.55, -0.35] },
-    "pelagos": { "name": "Pelagos", "planet_id": "pelagos", "star_position": [-0.8, 0.15] },
-    "ferrum": { "name": "Ferrum", "planet_id": "ferrum", "star_position": [0.45, -0.5] },
-    "sere": { "name": "Sere", "planet_id": "sere", "star_position": [0.7, 0.05] },
-    "nivalis": { "name": "Nivalis", "planet_id": "nivalis", "star_position": [0.1, 0.75] },
-    "umbra": { "name": "Umbra", "planet_id": "umbra", "star_position": [0.55, 0.8] }
+    "drift": {
+      "name": "Driftpunktet",
+      "description": "Arkens nuværende position — et tomt punkt mellem stjernerne.",
+      "star_position": [
+        0.0,
+        0.0
+      ]
+    },
+    "viridia": {
+      "name": "Viridia",
+      "planet_id": "viridia",
+      "star_position": [
+        -0.55,
+        -0.35
+      ]
+    },
+    "pelagos": {
+      "name": "Pelagos",
+      "planet_id": "pelagos",
+      "star_position": [
+        -0.8,
+        0.15
+      ]
+    },
+    "ferrum": {
+      "name": "Ferrum",
+      "planet_id": "ferrum",
+      "star_position": [
+        0.45,
+        -0.5
+      ]
+    },
+    "sere": {
+      "name": "Sere",
+      "planet_id": "sere",
+      "star_position": [
+        0.7,
+        0.05
+      ]
+    },
+    "nivalis": {
+      "name": "Nivalis",
+      "planet_id": "nivalis",
+      "star_position": [
+        0.1,
+        0.75
+      ]
+    },
+    "umbra": {
+      "name": "Umbra",
+      "planet_id": "umbra",
+      "star_position": [
+        0.55,
+        0.8
+      ]
+    }
   },
   "routes": [
-    { "a": "drift", "b": "viridia", "fuel": 12, "integrity": 2, "days": 40 },
-    { "a": "drift", "b": "ferrum", "fuel": 16, "integrity": 3, "days": 55 },
-    { "a": "drift", "b": "sere", "fuel": 18, "integrity": 3, "days": 60 },
-    { "a": "drift", "b": "pelagos", "fuel": 20, "integrity": 4, "days": 70 },
-    { "a": "drift", "b": "nivalis", "fuel": 24, "integrity": 5, "days": 85 },
-    { "a": "drift", "b": "umbra", "fuel": 28, "integrity": 7, "days": 100, "risk_note": "Ruten passerer et asteroidebælte." },
-    { "a": "viridia", "b": "pelagos", "fuel": 8, "integrity": 2, "days": 25 },
-    { "a": "viridia", "b": "ferrum", "fuel": 14, "integrity": 3, "days": 45 },
-    { "a": "viridia", "b": "sere", "fuel": 18, "integrity": 4, "days": 60 },
-    { "a": "viridia", "b": "nivalis", "fuel": 22, "integrity": 4, "days": 75 },
-    { "a": "viridia", "b": "umbra", "fuel": 26, "integrity": 6, "days": 90 },
-    { "a": "pelagos", "b": "ferrum", "fuel": 20, "integrity": 4, "days": 70 },
-    { "a": "pelagos", "b": "sere", "fuel": 22, "integrity": 4, "days": 75 },
-    { "a": "pelagos", "b": "nivalis", "fuel": 18, "integrity": 4, "days": 60 },
-    { "a": "pelagos", "b": "umbra", "fuel": 24, "integrity": 6, "days": 85 },
-    { "a": "ferrum", "b": "sere", "fuel": 7, "integrity": 2, "days": 22 },
-    { "a": "ferrum", "b": "nivalis", "fuel": 20, "integrity": 4, "days": 70 },
-    { "a": "ferrum", "b": "umbra", "fuel": 18, "integrity": 5, "days": 62 },
-    { "a": "sere", "b": "nivalis", "fuel": 16, "integrity": 3, "days": 55 },
-    { "a": "sere", "b": "umbra", "fuel": 14, "integrity": 4, "days": 48 },
-    { "a": "nivalis", "b": "umbra", "fuel": 9, "integrity": 3, "days": 30 }
+    {
+      "a": "drift",
+      "b": "viridia",
+      "fuel": 12,
+      "integrity": 2,
+      "days": 40,
+      "hazard": {
+        "type": "field",
+        "density": 0.25
+      },
+      "risk_note": "Spredte asteroider på indflyvningen."
+    },
+    {
+      "a": "drift",
+      "b": "ferrum",
+      "fuel": 16,
+      "integrity": 3,
+      "days": 55,
+      "hazard": {
+        "type": "debris",
+        "density": 0.35
+      },
+      "risk_note": "Ruten passerer et felt af vragrester og småsten."
+    },
+    {
+      "a": "drift",
+      "b": "sere",
+      "fuel": 18,
+      "integrity": 3,
+      "days": 60,
+      "hazard": {
+        "type": "field",
+        "density": 0.3
+      },
+      "risk_note": "Spredte asteroider på indflyvningen."
+    },
+    {
+      "a": "drift",
+      "b": "pelagos",
+      "fuel": 20,
+      "integrity": 4,
+      "days": 70,
+      "hazard": {
+        "type": "none",
+        "density": 0.0
+      }
+    },
+    {
+      "a": "drift",
+      "b": "nivalis",
+      "fuel": 24,
+      "integrity": 5,
+      "days": 85,
+      "hazard": {
+        "type": "field",
+        "density": 0.45
+      },
+      "risk_note": "Spredte asteroider på indflyvningen."
+    },
+    {
+      "a": "drift",
+      "b": "umbra",
+      "fuel": 28,
+      "integrity": 7,
+      "days": 100,
+      "risk_note": "Ruten krydser et asteroidebælte.",
+      "hazard": {
+        "type": "belt",
+        "density": 0.85
+      }
+    },
+    {
+      "a": "viridia",
+      "b": "pelagos",
+      "fuel": 8,
+      "integrity": 2,
+      "days": 25,
+      "hazard": {
+        "type": "none",
+        "density": 0.0
+      }
+    },
+    {
+      "a": "viridia",
+      "b": "ferrum",
+      "fuel": 14,
+      "integrity": 3,
+      "days": 45,
+      "hazard": {
+        "type": "field",
+        "density": 0.3
+      },
+      "risk_note": "Spredte asteroider på indflyvningen."
+    },
+    {
+      "a": "viridia",
+      "b": "sere",
+      "fuel": 18,
+      "integrity": 4,
+      "days": 60,
+      "hazard": {
+        "type": "debris",
+        "density": 0.4
+      },
+      "risk_note": "Ruten passerer et felt af vragrester og småsten."
+    },
+    {
+      "a": "viridia",
+      "b": "nivalis",
+      "fuel": 22,
+      "integrity": 4,
+      "days": 75,
+      "hazard": {
+        "type": "field",
+        "density": 0.4
+      },
+      "risk_note": "Spredte asteroider på indflyvningen."
+    },
+    {
+      "a": "viridia",
+      "b": "umbra",
+      "fuel": 26,
+      "integrity": 6,
+      "days": 90,
+      "hazard": {
+        "type": "belt",
+        "density": 0.8
+      },
+      "risk_note": "Ruten krydser et asteroidebælte."
+    },
+    {
+      "a": "pelagos",
+      "b": "ferrum",
+      "fuel": 20,
+      "integrity": 4,
+      "days": 70,
+      "hazard": {
+        "type": "field",
+        "density": 0.35
+      },
+      "risk_note": "Spredte asteroider på indflyvningen."
+    },
+    {
+      "a": "pelagos",
+      "b": "sere",
+      "fuel": 22,
+      "integrity": 4,
+      "days": 75,
+      "hazard": {
+        "type": "debris",
+        "density": 0.45
+      },
+      "risk_note": "Ruten passerer et felt af vragrester og småsten."
+    },
+    {
+      "a": "pelagos",
+      "b": "nivalis",
+      "fuel": 18,
+      "integrity": 4,
+      "days": 60,
+      "hazard": {
+        "type": "field",
+        "density": 0.3
+      },
+      "risk_note": "Spredte asteroider på indflyvningen."
+    },
+    {
+      "a": "pelagos",
+      "b": "umbra",
+      "fuel": 24,
+      "integrity": 6,
+      "days": 85,
+      "hazard": {
+        "type": "belt",
+        "density": 0.75
+      },
+      "risk_note": "Ruten krydser et asteroidebælte."
+    },
+    {
+      "a": "ferrum",
+      "b": "sere",
+      "fuel": 7,
+      "integrity": 2,
+      "days": 22,
+      "hazard": {
+        "type": "none",
+        "density": 0.0
+      }
+    },
+    {
+      "a": "ferrum",
+      "b": "nivalis",
+      "fuel": 20,
+      "integrity": 4,
+      "days": 70,
+      "hazard": {
+        "type": "field",
+        "density": 0.35
+      },
+      "risk_note": "Spredte asteroider på indflyvningen."
+    },
+    {
+      "a": "ferrum",
+      "b": "umbra",
+      "fuel": 18,
+      "integrity": 5,
+      "days": 62,
+      "hazard": {
+        "type": "belt",
+        "density": 0.65
+      },
+      "risk_note": "Ruten krydser et asteroidebælte."
+    },
+    {
+      "a": "sere",
+      "b": "nivalis",
+      "fuel": 16,
+      "integrity": 3,
+      "days": 55,
+      "hazard": {
+        "type": "field",
+        "density": 0.3
+      },
+      "risk_note": "Spredte asteroider på indflyvningen."
+    },
+    {
+      "a": "sere",
+      "b": "umbra",
+      "fuel": 14,
+      "integrity": 4,
+      "days": 48,
+      "hazard": {
+        "type": "belt",
+        "density": 0.6
+      },
+      "risk_note": "Ruten krydser et asteroidebælte."
+    },
+    {
+      "a": "nivalis",
+      "b": "umbra",
+      "fuel": 9,
+      "integrity": 3,
+      "days": 30,
+      "hazard": {
+        "type": "debris",
+        "density": 0.5
+      },
+      "risk_note": "Ruten passerer et felt af vragrester og småsten."
+    }
   ]
 }

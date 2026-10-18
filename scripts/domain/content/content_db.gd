@@ -23,6 +23,7 @@ var objectives: Dictionary = {}
 var story: Dictionary = {}         # scene_id -> scene
 var journal_entries: Array = []    # [{id, trigger, text}]
 var characters: Dictionary = {}    # id -> {name, perspective, bio}
+var nav_lines: Dictionary = {}    # id -> {text}  (NAV, data/story/nav.json)
 var credits: Array = []            # [{id, title, entries:[{role, name, status, text?}]}]
 var errors: PackedStringArray = []
 var content_version: String = "0"
@@ -89,6 +90,10 @@ func load_all(root: String) -> bool:
 		for ch: Dictionary in DictUtil.get_arr(sv2, "characters"):
 			characters[str(ch.get("id"))] = ch
 	credits = DictUtil.get_arr(_load_dict(root + "/credits/credits.json"), "sections")
+	var nav := _load_dict(root + "/story/nav.json")
+	nav_lines = DictUtil.get_dict(nav, "lines")
+	if nav.has("character"):
+		characters["nav"] = DictUtil.get_dict(nav, "character")
 	validate()
 	if not Loc.is_source():
 		localize()
@@ -100,7 +105,7 @@ func load_all(root: String) -> bool:
 func localize() -> int:
 	var n := 0
 	for d: Variant in [planets, biome_maps, sites, hazards, locations, routes, buildings, surveys, events, endings,
-			objectives, story, journal_entries, characters, credits]:
+			objectives, story, journal_entries, characters, credits, nav_lines]:
 		n += _localize_node(d)
 	return n
 

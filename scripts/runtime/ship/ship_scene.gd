@@ -175,9 +175,12 @@ func _on_state(_kind: String) -> void:
 		orbit_it.locked = pid.is_empty()
 		orbit_it.locked_reason = Loc.t("arken er ikke i kredsløb om en planet")
 	var loc: Dictionary = GameSession.content.locations.get(gs.campaign.location_id, {})
-	_voyage_label.text = Loc.t("%s\nBrændstof %d · Skrog %d%% · Komp. %d\nEmbryoner %s · Stasis %.1f år") % [
+	_voyage_label.text = Loc.t("%s\nBrændstof %d · Skrog %d%% · Ilt %d%% · Komp. %d\nEmbryoner %s · Stasis %.1f år") % [
 		str(loc.get("name", "")) + (Loc.t("  (kredsløb)") if loc.has("planet_id") else ""), int(gs.ark.fuel), int(gs.ark.integrity),
-		gs.ark.components, UiKit.thousands(gs.ark.embryo_viable), gs.campaign.captain_stasis_years]
+		int(gs.ark.oxygen), gs.ark.components, UiKit.thousands(gs.ark.embryo_viable), gs.campaign.captain_stasis_years]
+	# NAV's standing alerts (fuel, oxygen, hull): said once per change, never spammed.
+	for alert: Dictionary in GameSession.sim.nav.status(gs):
+		hud.nav.say(alert)
 	_update_waypoint()
 	var pc: Interactable = interactables.get("power_coupling")
 	if pc:

@@ -51,7 +51,7 @@ func _ready() -> void:
 	_root.add_child(_base)
 	_root.add_child(_knob)
 	var defs := [
-		["interact", "E", Vector2(-120, -150), 64.0], ["sprint", Loc.t("Løb"), Vector2(-260, -110), 48.0],
+		["interact", "E", Vector2(-120, -150), 64.0], ["sprint", Loc.t("Undvig"), Vector2(-260, -110), 48.0],
 		["build_confirm", Loc.t("Byg"), Vector2(-120, -210), 64.0], ["cancel", Loc.t("Fortryd"), Vector2(-270, -180), 48.0],
 		["rotate_building", Loc.t("Drej"), Vector2(-390, -160), 42.0], ["zoom_in", "+", Vector2(-120, -330), 40.0],
 		["zoom_out", "−", Vector2(-220, -330), 40.0], ["rotate_cam_left", "⟲", Vector2(-320, -330), 40.0],
@@ -137,7 +137,7 @@ func _update_visibility() -> void:
 	var sets := {
 		"ship": ["interact", "journal", "pause"],  # run = push the stick all the way
 		"surface": ["interact", "journal", "pause", "drone_refill"],
-		"flight": ["autopilot", "ascend", "descend", "pause"],
+		"flight": ["autopilot", "ascend", "descend", "sprint", "pause"],
 		"colony": ["build_confirm", "cancel", "rotate_building", "zoom_in", "zoom_out", "rotate_cam_left", "rotate_cam_right", "colony_mode", "journal", "pause", "speed_pause"],
 	}
 	var show: Array = sets.get(key, [])

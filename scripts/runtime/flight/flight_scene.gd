@@ -1,33 +1,56 @@
 extends Node3D
-## Short, bounded orbital approach (bible p.6): throttle, turn, autopilot.
-## The journey is already committed in the domain; this is pilot feel, not a
-## second chance to spend fuel. Autopilot can fly it entirely (assisted).
+## Approach to the destination after a committed journey (bible p.6: short,
+## bounded, assisted). The route's hazard (data/routes: none / field / debris /
+## belt) fills the corridor with drifting asteroids; NAV warns about collision
+## courses and reports impacts. The domain books the result exactly once
+## (GameSession.cmd_resolve_approach): impacts cost hull, severe ones leak
+## oxygen, evasive burns and the autopilot cost fuel. Autopilot = NAV flies:
+## cautious, fewer impacts, more fuel.
+## Controls: W/S speed · A/D sideways · Space/Ctrl up/down · Shift evasive burn · F autopilot.
 
-const RING_COUNT := 8
+const LENGTH := 1100.0      # metres from the start to orbit insertion
+const SHIP_R := 6.0         # collision radius of the ark
+const LANE := Vector2(90, 45)  # half-width / half-height of the approach corridor
+const SEVERE_R := 7.0       # asteroids this big (or hits this fast) are severe
+const SEVERE_SPEED := 45.0
 
 var ship: Node3D
 var cam: Camera3D
-var rings: Array[Node3D] = []
-var next_ring := 0
-var speed := 0.0
+var speed := 26.0
+var lateral := Vector2.ZERO  # sideways/vertical velocity (m/s)
 var autopilot := false
+var autopilot_used := false
+var hits := 0
+var severe := 0
+var burn_s := 0.0
 var hud: GameHud
 var _info: Label
 var _done := false
 var _shake := 0.0
 var _dest := ""
-var _asteroids: Array[Node3D] = []
+var _hazard: Dictionary = {"type": "none", "density": 0.0}
+var _rocks: Array = []  # [{node, r, vel, hit, warned}]
 var _thruster: AudioStreamPlayer
+var _warn_t := 0.0
+var _cleared := false
+var _start_integrity := 100.0
+var _start_oxygen := 100.0
 
 
 func _ready() -> void:
-	_dest = str(AppFlow.params.get("destination", GameSession.state.campaign.location_id if GameSession.has_game() else "viridia"))
+	var gs: GameState = GameSession.state if GameSession.has_game() else null
+	var pa: Dictionary = gs.campaign.pending_approach if gs else {}
+	_dest = str(pa.get("destination", AppFlow.params.get("destination", gs.campaign.location_id if gs else "viridia")))
+	_hazard = DictUtil.get_dict(pa, "hazard") if not pa.is_empty() else _route_hazard(gs)
+	if gs:
+		_start_integrity = gs.ark.integrity
+		_start_oxygen = gs.ark.oxygen
 	add_child(SpaceBackdrop.new())
 	var pid := str(GameSession.content.locations.get(_dest, {}).get("planet_id", "viridia"))
 	var p := GameSession.content.planet(pid)
 	var planet := VisualSlot.make("space.planet_" + str(p.get("biome_id", "green")), str(p.get("palette", {}).get("nature", "")))
 	planet.scale = Vector3.ONE * 3.0
-	planet.position = Vector3(0, -120, -900)
+	planet.position = Vector3(0, -120, -LENGTH - 300.0)
 	add_child(planet)
 	ship = Node3D.new()
 	ship.add_child(VisualSlot.make("space.ark_exterior"))
@@ -39,27 +62,15 @@ func _ready() -> void:
 	cam.far = 5000
 	cam.fov = 70
 	add_child(cam)
-	var rng := RandomNumberGenerator.new()
-	rng.seed = hash(_dest)
-	for i: int in RING_COUNT:
-		var ring := VisualSlot.make("space.approach_ring")
-		ring.scale = Vector3.ONE * 2.2
-		ring.position = Vector3(sin(i * 0.9) * 40.0, cos(i * 0.6) * 18.0 - i * 6.0, -80.0 - i * 90.0)
-		add_child(ring)
-		rings.append(ring)
-	for i: int in 26:
-		var a := VisualSlot.make("space.asteroid")
-		a.position = Vector3(rng.randf_range(-120, 120), rng.randf_range(-60, 40), rng.randf_range(-100, -760))
-		a.scale = Vector3.ONE * rng.randf_range(1.0, 4.0)
-		add_child(a)
-		_asteroids.append(a)
+	cam.global_position = Vector3(0, 9, 34)
+	_spawn_hazard(hash(str(pa.get("txn", _dest))))
 	hud = GameHud.new()
 	add_child(hud)
-	_info = UiKit.label("", 18)
+	_info = UiKit.label("", 17)
 	var panel := UiKit.panel()
 	panel.add_child(_info)
 	hud.top_right.add_child(panel)
-	hud.set_prompt(Loc.t("W/S gas · A/D drej · Mellemrum/Ctrl op/ned · [F] autopilot"))
+	hud.set_prompt(Loc.t("W/S fart · A/D sideværts · Mellemrum/Ctrl op/ned · [Shift] undvigemanøvre · [F] autopilot"))
 	AudioService.set_ambience("amb_space")
 	_thruster = AudioStreamPlayer.new()
 	_thruster.stream = AudioService.stream("sfx_thruster")
@@ -68,6 +79,57 @@ func _ready() -> void:
 	add_child(_thruster)
 	_thruster.play()
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+	if GameSession.has_game():
+		hud.nav.say(GameSession.sim.nav.approach_start(_hazard, _belt_start()))
+
+
+func _route_hazard(gs: GameState) -> Dictionary:
+	# Debug/legacy entry without a pending approach: show the route's hazard, book nothing.
+	if gs == null:
+		return {"type": "field", "density": 0.3}
+	for r: Dictionary in GameSession.content.routes:
+		if (r.get("a") == _dest or r.get("b") == _dest) and (r.get("a") == "drift" or r.get("b") == "drift"):
+			return DictUtil.get_dict(r, "hazard")
+	return {"type": "none", "density": 0.0}
+
+
+func _belt_start() -> float:
+	return 420.0 if str(_hazard.get("type")) == "belt" else 150.0
+
+
+## Deterministic per journey (seeded by the approach txn): reloading shows the same field.
+func _spawn_hazard(seed_value: int) -> void:
+	var rng := RandomNumberGenerator.new()
+	rng.seed = seed_value
+	var t := str(_hazard.get("type", "none"))
+	var dens := float(_hazard.get("density", 0.0))
+	var groups: Array = []  # [count, z_from, z_to, r_min, r_max, drift]
+	match t:
+		"field":
+			groups.append([int(25 + dens * 70), 150.0, LENGTH - 80.0, 2.0, 7.0, 3.0])
+		"debris":
+			groups.append([int(60 + dens * 160), 150.0, LENGTH - 80.0, 0.7, 2.6, 5.0])
+			groups.append([int(6 + dens * 10), 200.0, LENGTH - 120.0, 4.0, 6.5, 2.0])
+		"belt":
+			groups.append([int(10 + dens * 20), 150.0, 400.0, 2.0, 6.0, 2.0])
+			groups.append([int(70 + dens * 160), 420.0, 720.0, 2.0, 8.0, 1.5])  # the belt itself
+			groups.append([int(10 + dens * 20), 740.0, LENGTH - 80.0, 2.0, 6.0, 2.0])
+	# Scenery outside the corridor so space never looks empty.
+	groups.append([30, 0.0, LENGTH, 6.0, 18.0, 0.5, true])
+	for g: Array in groups:
+		var outside: bool = g.size() > 6
+		for i: int in int(g[0]):
+			var r := rng.randf_range(float(g[3]), float(g[4]))
+			var pos := Vector3(rng.randf_range(-LANE.x, LANE.x), rng.randf_range(-LANE.y, LANE.y), -rng.randf_range(float(g[1]), float(g[2])))
+			if outside:
+				pos.x = signf(rng.randf() - 0.5) * rng.randf_range(LANE.x + 40.0, LANE.x + 260.0)
+			var a := VisualSlot.make("space.asteroid")
+			a.position = pos
+			a.scale = Vector3(r, r * rng.randf_range(0.7, 1.0), r * rng.randf_range(0.8, 1.2)) / 2.0  # proxy radius is 2 m
+			a.rotation = Vector3(rng.randf() * TAU, rng.randf() * TAU, 0)
+			add_child(a)
+			var vel := Vector3(rng.randf_range(-1, 1), rng.randf_range(-0.5, 0.5), 0) * float(g[5])
+			_rocks.append({"node": a, "r": r, "vel": vel, "hit": false, "warned": false, "spin": rng.randf_range(-0.4, 0.4), "scenery": outside})
 
 
 func _physics_process(delta: float) -> void:
@@ -75,56 +137,169 @@ func _physics_process(delta: float) -> void:
 		return
 	if Input.is_action_just_pressed("autopilot"):
 		autopilot = not autopilot
+		autopilot_used = autopilot_used or autopilot
 		AudioService.ui("ui_confirm")
+		if GameSession.has_game():
+			var est: Dictionary = GameSession.sim.travel.approach_estimate(_hazard)
+			hud.nav.say({"id": "autopilot_on" if autopilot else "autopilot_off", "severity": "info", "speaker": "NAV",
+				"text": GameSession.sim.nav.line("autopilot_on" if autopilot else "autopilot_off", {"fuel": float(est["approach_fuel_autopilot"])})})
 	var throttle := Input.get_axis("move_back", "move_forward")
-	var turn := Input.get_axis("move_right", "move_left")
-	var lift := (1.0 if Input.is_action_pressed("ascend") else 0.0) - (1.0 if Input.is_action_pressed("descend") else 0.0)
-	if next_ring < rings.size():
-		var target := rings[next_ring].global_position
-		var to := (target - ship.global_position)
-		if autopilot:
-			var local := ship.global_transform.basis.inverse() * to.normalized()
-			turn = clampf(-local.x * 3.0, -1, 1)
-			lift = clampf(local.y * 3.0, -1, 1)
-			throttle = 1.0
-		if to.length() < 14.0:
-			next_ring += 1
-			AudioService.play("sfx_ring_pass", "SFX", -3.0)
-	else:
-		throttle = 1.0
-		if not _done:
-			_arrive()
-	speed = clampf(speed + throttle * 30.0 * delta - 6.0 * delta, 8.0, 70.0)
-	ship.rotation.y += turn * 0.9 * delta
-	ship.rotation.z = lerpf(ship.rotation.z, turn * 0.35, delta * 3.0)
-	ship.position += -ship.global_transform.basis.z * speed * delta + Vector3(0, lift * 18.0 * delta, 0)
-	for a: Node3D in _asteroids:
-		if a.global_position.distance_to(ship.global_position) < 8.0 * a.scale.x:
-			var away := (ship.global_position - a.global_position).normalized()
-			ship.position += away * 3.0
-			speed *= 0.6
-			if SettingsService.get_value("camera_shake", true) and not SettingsService.get_value("reduced_motion", false):
-				_shake = 0.4
-	var behind := ship.global_transform.basis.z * 34.0 + Vector3(0, 9, 0)
-	cam.global_position = cam.global_position.lerp(ship.global_position + behind, clampf(delta * 4.0, 0, 1))
+	var steer := Vector2(Input.get_axis("move_left", "move_right"), Input.get_axis("descend", "ascend"))
+	var burning := Input.is_action_pressed("sprint") and steer != Vector2.ZERO
+	if autopilot:
+		var plan := _autopilot_plan()
+		steer = plan[0]
+		throttle = plan[1]
+		burning = false
+	var target_speed := clampf(speed + throttle * 30.0 * delta, 12.0, 60.0)
+	speed = target_speed if not autopilot else move_toward(speed, 24.0, 20.0 * delta)
+	var accel := 34.0 if burning else 16.0
+	lateral = lateral.move_toward(steer * (26.0 if burning else 14.0), accel * delta)
+	if burning:
+		burn_s += delta
+	ship.position += Vector3(lateral.x, lateral.y, -speed) * delta
+	ship.position.x = clampf(ship.position.x, -LANE.x - 20.0, LANE.x + 20.0)
+	ship.position.y = clampf(ship.position.y, -LANE.y - 15.0, LANE.y + 15.0)
+	ship.rotation.z = lerpf(ship.rotation.z, -lateral.x * 0.02, clampf(delta * 4.0, 0, 1))
+	ship.rotation.x = lerpf(ship.rotation.x, lateral.y * 0.012, clampf(delta * 4.0, 0, 1))
+	_update_rocks(delta)
+	_warn_t -= delta
+	if _warn_t <= 0.0:
+		_warn_t = 0.4
+		_collision_warnings()
+	var behind := Vector3(0, 9, 34)
+	cam.global_position = cam.global_position.lerp(ship.global_position + behind, clampf(delta * 5.0, 0, 1))
 	if _shake > 0.0:
 		_shake -= delta
-		cam.global_position += Vector3(randf_range(-0.4, 0.4), randf_range(-0.4, 0.4), 0)
-	cam.look_at(ship.global_position + -ship.global_transform.basis.z * 20.0)
-	_thruster.pitch_scale = 0.7 + speed / 100.0
-	_info.text = Loc.t("Indflyvning: %s\nKorridor %d / %d\nFart %d · %s") % [GameSession.content.locations.get(_dest, {}).get("name", _dest),
-		mini(next_ring + 1, RING_COUNT), RING_COUNT, int(speed), Loc.t("AUTOPILOT") if autopilot else Loc.t("manuel")]
+		cam.global_position += Vector3(randf_range(-0.5, 0.5), randf_range(-0.5, 0.5), 0)
+	cam.look_at(ship.global_position + Vector3(0, 2, -40))
+	_thruster.pitch_scale = 0.7 + speed / 100.0 + (0.2 if burning else 0.0)
+	var progress := -ship.position.z
+	if not _cleared and progress > _belt_start() + 330.0 and str(_hazard.get("type")) != "none":
+		_cleared = true
+		if GameSession.has_game():
+			hud.nav.say({"id": "hazard_cleared", "severity": "info", "speaker": "NAV", "text": GameSession.sim.nav.line("hazard_cleared", {"hits": hits})})
+	_info.text = Loc.t("Indflyvning: %s\nKredsløb om %d m · fart %d\nSkrog %d %% · Ilt %d %% · nedslag %d\n%s") % [
+		GameSession.content.locations.get(_dest, {}).get("name", _dest), int(maxf(0.0, LENGTH - progress)), int(speed),
+		int(_projected_integrity()), int(_projected_oxygen()), hits, Loc.t("AUTOPILOT (NAV)") if autopilot else Loc.t("manuel")]
+	if progress >= LENGTH:
+		_arrive()
+
+
+func _update_rocks(delta: float) -> void:
+	var sp := ship.global_position
+	for rk: Dictionary in _rocks:
+		var n: Node3D = rk["node"]
+		n.position += (rk["vel"] as Vector3) * delta
+		n.rotation.y += float(rk["spin"]) * delta
+		# Rocks already passed would sit between camera and ark: hide them.
+		n.visible = rk["scenery"] or n.position.z < sp.z + float(rk["r"]) + 4.0
+		if rk["hit"] or rk["scenery"]:
+			continue
+		var r := float(rk["r"])
+		if n.position.distance_to(sp) < r + SHIP_R:
+			rk["hit"] = true
+			_impact(r)
+			var away := (sp - n.position).normalized()
+			lateral += Vector2(away.x, away.y) * 12.0
+			speed *= 0.75
+
+
+func _impact(r: float) -> void:
+	var is_severe := r >= SEVERE_R or speed >= SEVERE_SPEED
+	hits += 1
+	if is_severe:
+		severe += 1
+	AudioService.play("alarm_warning" if not is_severe else "alarm_critical", "SFX", -6.0)
+	if SettingsService.get_value("camera_shake", true) and not SettingsService.get_value("reduced_motion", false):
+		_shake = 0.6 if is_severe else 0.35
+	if GameSession.has_game():
+		var item := GameSession.sim.nav.impact(GameSession.state, is_severe, ["A", "B", "C", "D", "E"][hits % 5])
+		# The domain books impacts on arrival; show NAV the projected values now.
+		item["text"] = GameSession.sim.nav.line(item["id"], {"integrity": _projected_integrity(), "oxygen": _projected_oxygen(), "section": ["A", "B", "C", "D", "E"][hits % 5]})
+		hud.nav.say(item)
+
+
+func _projected_integrity() -> float:
+	var ap: Dictionary = GameSession.content.bal("approach", {})
+	return maxf(0.0, _start_integrity - hits * float(ap.get("hit_integrity", 1.5)) - severe * (float(ap.get("severe_integrity", 3.0)) - float(ap.get("hit_integrity", 1.5))))
+
+
+func _projected_oxygen() -> float:
+	return maxf(0.0, _start_oxygen - severe * float(GameSession.content.bal("approach", {}).get("severe_oxygen", 2.5)))
+
+
+## Rocks that will pass within reach in the next few seconds, nearest first: [{rk, t, miss}].
+func _threats(horizon: float) -> Array:
+	var out: Array = []
+	var sp := ship.global_position
+	var sv := Vector3(lateral.x, lateral.y, -speed)
+	for rk: Dictionary in _rocks:
+		if rk["hit"] or rk["scenery"]:
+			continue
+		var n: Node3D = rk["node"]
+		var rel := n.position - sp
+		var rv := (rk["vel"] as Vector3) - sv
+		var t := -rel.dot(rv) / maxf(rv.length_squared(), 0.001)
+		if t < 0.0 or t > horizon:
+			continue
+		var miss := (rel + rv * t).length()
+		if miss < float(rk["r"]) + SHIP_R + 3.0:
+			out.append({"rk": rk, "t": t, "miss": miss, "rel": rel})
+	out.sort_custom(func(a: Dictionary, b: Dictionary) -> bool: return a["t"] < b["t"])
+	return out
+
+
+func _collision_warnings() -> void:
+	if not GameSession.has_game() or autopilot:
+		return
+	for th: Dictionary in _threats(4.0):
+		var rk: Dictionary = th["rk"]
+		if rk["warned"]:
+			continue
+		rk["warned"] = true
+		var rel: Vector3 = th["rel"]
+		var side := "right" if rel.x <= 0.0 else "left"
+		if absf(rel.y) > absf(rel.x) * 1.5:
+			side = "down" if rel.y > 0.0 else "up"
+		hud.nav.say(GameSession.sim.nav.collision_course(float(th["t"]), side))
+		break
+
+
+## NAV's flying: steer away from the nearest predicted collision, otherwise
+## drift back to the corridor centre; slow and steady. Returns [steer, throttle].
+func _autopilot_plan() -> Array:
+	var steer := Vector2(-ship.position.x, -ship.position.y) * 0.02
+	var threats := _threats(5.0)
+	if not threats.is_empty():
+		var th: Dictionary = threats[0]
+		var rel: Vector3 = th["rel"]
+		var away := Vector2(-rel.x, -rel.y)
+		if away.length() < 0.5:
+			away = Vector2(1.0 if ship.position.x <= 0.0 else -1.0, 0.0)
+		steer = away.normalized()
+	return [steer.limit_length(1.0), 0.0]
 
 
 func _arrive() -> void:
 	_done = true
+	if GameSession.has_game() and not GameSession.state.campaign.pending_approach.is_empty():
+		var r := GameSession.cmd_resolve_approach(hits, severe, burn_s, autopilot_used)
+		if r.ok:
+			hud.nav.say(GameSession.sim.nav.arrival(GameSession.state))
 	hud.set_prompt(Loc.t("Kredsløb etableret."))
-	await get_tree().create_timer(1.2).timeout
+	await get_tree().create_timer(2.5).timeout
 	AppFlow.goto("ship", {"spawn": "orbit_terminal"})
 
 
 func debug_action(action: String) -> void:
-	if action == "autopilot":
-		autopilot = true
-		for i: int in 200:
-			_physics_process(1.0 / 60.0)
+	match action:
+		"autopilot":
+			autopilot = true
+			autopilot_used = true
+			for i: int in 200:
+				_physics_process(1.0 / 60.0)
+		"belt":
+			ship.position.z = -_belt_start() + 40.0
+			for i: int in 60:
+				_physics_process(1.0 / 60.0)

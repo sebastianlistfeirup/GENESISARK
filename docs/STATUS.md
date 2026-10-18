@@ -16,8 +16,8 @@
 
 | Lag | Kommando | Resultat |
 |---|---|---|
-| 1 · Domæne | `godot --headless --path . --script res://tests/run_tests.gd` | **54 tests, 0 fejl** → `evidence/test_report.json` |
-| 2 · Scener (rigtigt input) | `godot --headless --path . res://scenes/tests/scene_smoke.tscn` | **43 checks, 0 fejl** + touch-føling 6/6 → `evidence/scene_smoke.json` |
+| 1 · Domæne | `godot --headless --path . --script res://tests/run_tests.gd` | **63 tests, 0 fejl** → `evidence/test_report.json` |
+| 2 · Scener (rigtigt input) | `godot --headless --path . res://scenes/tests/scene_smoke.tscn` | **47 checks, 0 fejl** + touch-føling 6/6 → `evidence/scene_smoke.json` |
 | Parse-tjek | `godot --headless --path . res://scenes/tests/compile_all.tscn` | 87 scripts, 0 fejl |
 | Balance | `godot --headless --path . --script res://tools/balance/run_balance.gd` | 18 kørsler til år 40 → `evidence/balance/` |
 | 3 · Optaget gameplay | — | NOT_RUN (kræver menneske) |
@@ -55,6 +55,14 @@
 | Editor-panel | Fanen **Asset-slots** i Godot: status for alle slots, forslag, ét-klik-mapping, drej, åbn wrapper, RigLab. | `addons/genesis_slots/`, D-022 |
 | Animationer | Automatisk humanoid retarget (Synty- og Mixamo-navne), klip pr. tilstand samlet i et bibliotek, in-place, afspilles af `CharacterAnimator`. | D-023 |
 | Bevis | `tools/synty/selftest.sh`: falsk pakke med modeller, cm-model, hjørne-pivot, rig og Mixamo-klip → hele kæden → 10/10 → oprydning. | `evidence/synty_selftest.json` |
+
+## Nyt i session 4: indflyvning og NAV
+
+| Område | Hvad | Hvor |
+|---|---|---|
+| Indflyvning | Ringene er væk: hver rute har spredte asteroider, vragrester eller et asteroidebælte. Undvig sideværts, undvigemanøvre (Shift), eller lad NAV flyve (F). Nedslag koster skrog, kraftige lækker ilt. Bogføres én gang, også efter load midt i flyvningen. | `scripts/runtime/flight/flight_scene.gd`, D-024 |
+| Iltlager | Ny ressource: forbruges i stasis, lækker ved kraftige nedslag, repareres i værkstedet. Kan blokere en rejse. | `ArkState.oxygen`, `ArkService.repair_life_support` |
+| NAV | Tør, følelsesløs navigationscomputer: vurderer ruten før valget (nedslag, skrogtab, brændstof, ilt, reserve) og melder kollisionskurs og nedslag. 24 replikker i data, oversat, i stemmemanuskriptet. | `NavAdvisor`, `data/story/nav.json`, `NavComms` |
 
 ## Balance (fase 3-forløber, `evidence/balance/balance_table.txt`)
 
