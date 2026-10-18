@@ -105,3 +105,61 @@ func impact(gs: GameState, severe: bool, section: String = "C") -> Dictionary:
 func arrival(gs: GameState) -> Dictionary:
 	return _item("arrival", "info", {"dest": str(content.locations.get(gs.campaign.location_id, {}).get("name", "")),
 		"integrity": gs.ark.integrity, "fuel": gs.ark.fuel, "oxygen": gs.ark.oxygen})
+
+
+## Planet surface: opening brief for an expedition. ctx: see surface_update().
+func surface_brief(ex: ExpeditionState, ctx: Dictionary) -> Dictionary:
+	var drain := DictUtil.get_float(ctx, "base_drain", 0.12)
+	return _item("surface_brief", "info", {"energy": ex.suit_energy, "minutes": ex.suit_energy / maxf(drain, 0.001) / 60.0,
+		"objective": str(ctx.get("next_label", "")), "dist": DictUtil.get_float(ctx, "next_dist", 0.0)})
+
+
+## Seconds NAV budgets for walking back to the lander (walk speed, 20% terrain margin).
+static func return_seconds(dist_m: float, walk_speed: float) -> float:
+	return dist_m / maxf(walk_speed, 0.5) * 1.2
+
+
+## Planet surface: lines due this frame. Deterministic given (ex, ctx, said);
+## `said` is the caller's memory of what NAV has already reported (mutated here,
+## never saved). ctx: {dist_lander, walk_speed, drain (current, per s),
+## base_drain, hazard_id, hazard_label, mult, next_key, next_label, next_dist}.
+func surface_update(ex: ExpeditionState, ctx: Dictionary, said: Dictionary) -> Array:
+	var out: Array = []
+	if ex.status != ExpeditionState.STATUS_ACTIVE:
+		return out
+	var drain := maxf(DictUtil.get_float(ctx, "drain", 0.12), 0.001)
+	var endurance := ex.suit_energy / drain
+	var dist := DictUtil.get_float(ctx, "dist_lander", 0.0)
+	var ret := return_seconds(dist, DictUtil.get_float(ctx, "walk_speed", 4.2))
+	var p := {"energy": ex.suit_energy, "seconds": endurance, "return_s": ret, "dist": dist,
+		"hazard": str(ctx.get("hazard_label", "")), "mult": DictUtil.get_float(ctx, "mult", 1.0),
+		"objective": str(ctx.get("next_label", "")), "next_dist": DictUtil.get_float(ctx, "next_dist", 0.0)}
+	# Hazard zones: report entry once per zone visit, and the exit.
+	var hz := str(ctx.get("hazard_id", ""))
+	var was := str(said.get("hazard", ""))
+	if hz != was:
+		said["hazard"] = hz
+		if hz != "":
+			out.append(_item("surface_hazard_enter", "warning", p))
+		elif was != "":
+			out.append(_item("surface_hazard_exit", "info", p))
+	# Progress: a finished objective moves the objective on.
+	var key := str(ctx.get("next_key", ""))
+	if said.has("objective") and str(said["objective"]) != key:
+		out.append(_item("surface_all_done" if key == "lander" else "surface_next", "info", p))
+	said["objective"] = key
+	# Energy: half-way mark, then the return window.
+	if ex.suit_energy <= 50.0 and not said.get("half", false):
+		said["half"] = true
+		out.append(_item("surface_energy_half", "info", p))
+	if endurance > ret * 3.0 + 30.0:
+		said.erase("margin")  # drone refill / walked closer: re-arm
+		said.erase("now")
+	if key != "lander" and endurance < ret * 2.0 + 20.0 and not said.get("margin", false):
+		said["margin"] = true
+		out.append(_item("surface_return_margin", "warning", p))
+	if endurance < ret * 1.25 + 10.0 and not said.get("now", false):
+		said["now"] = true
+		said["margin"] = true
+		out.append(_item("surface_return_now", "critical", p))
+	return out

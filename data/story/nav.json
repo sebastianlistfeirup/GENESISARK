@@ -77,6 +77,30 @@
     },
     "arrival": {
       "text": "Orbit around {dest} established. Hull {integrity} percent. Fuel {fuel}. Oxygen {oxygen} percent."
+    },
+    "surface_brief": {
+      "text": "Suit at {energy} percent. Endurance at normal draw: {minutes} minutes. Objective: {objective}, {dist} meters."
+    },
+    "surface_hazard_enter": {
+      "text": "Entering {hazard}. Suit draw multiplied by {mult}. Endurance: {seconds} seconds."
+    },
+    "surface_hazard_exit": {
+      "text": "Hazard zone cleared. Suit draw nominal."
+    },
+    "surface_next": {
+      "text": "Objective complete. Next: {objective}, {next_dist} meters."
+    },
+    "surface_all_done": {
+      "text": "Objectives complete. Lander: {dist} meters. Suit: {energy} percent."
+    },
+    "surface_energy_half": {
+      "text": "Suit at {energy} percent. Lander: {dist} meters. Walking back takes {return_s} seconds."
+    },
+    "surface_return_margin": {
+      "text": "Return margin is narrowing. Endurance {seconds} seconds. Return requires {return_s}. Consider your priorities."
+    },
+    "surface_return_now": {
+      "text": "Endurance {seconds} seconds. Return requires {return_s}. Turn back now."
     }
   }
 }

@@ -1,6 +1,6 @@
 {
   "content_errors": [],
-  "elapsed_ms": 1962,
+  "elapsed_ms": 1851,
   "engine_version": "4.5.1-stable (official)",
   "failures": [],
   "files": {
@@ -9,12 +9,12 @@
     "test_content.gd": 6,
     "test_era_endings.gd": 7,
     "test_localization.gd": 5,
-    "test_navigation.gd": 9,
+    "test_navigation.gd": 10,
     "test_population.gd": 5,
     "test_save.gd": 7,
     "test_survey_expedition.gd": 6
   },
   "status": "PASS",
-  "tests": 63,
-  "timestamp": "2026-10-18T15:25:46"
+  "tests": 64,
+  "timestamp": "2026-10-18T15:50:55"
 }

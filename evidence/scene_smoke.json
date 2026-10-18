@@ -6,7 +6,7 @@
       "ok": true
     },
     {
-      "detail": "@Button@45:<Button#99656664688>",
+      "detail": "@Button@45:<Button#99891545712>",
       "name": "pad_focuses_menu",
       "ok": true
     },
@@ -36,7 +36,7 @@
       "ok": true
     },
     {
-      "detail": "moved=0.36",
+      "detail": "moved=0.39",
       "name": "riglab_runs",
       "ok": true
     },
@@ -66,7 +66,7 @@
       "ok": true
     },
     {
-      "detail": "Go to the workshop, 6 steder",
+      "detail": "Go to the workshop, 6 places",
       "name": "waypoint_points_to_objective",
       "ok": true
     },
@@ -86,12 +86,12 @@
       "ok": true
     },
     {
-      "detail": "dyaw=-0.61",
+      "detail": "dyaw=-0.60",
       "name": "pad_look_turns_camera",
       "ok": true
     },
     {
-      "detail": "I_power_coupling:<Area3D#203323086058>",
+      "detail": "I_power_coupling:<Area3D#203557967082>",
       "name": "prompt_targets_coupling",
       "ok": true
     },
@@ -239,5 +239,5 @@
   "engine_version": "4.5.1-stable (official)",
   "failures": [],
   "status": "PASS",
-  "timestamp": "2026-10-18T15:26:45"
+  "timestamp": "2026-10-18T15:51:54"
 }

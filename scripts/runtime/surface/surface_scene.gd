@@ -24,6 +24,9 @@ var _status: Label
 var _finishing := false
 var _markers: Dictionary = {}
 var waypoints: WaypointLayer
+var _nav_said: Dictionary = {}  # what NAV has reported this expedition (UI memory, not saved)
+var _objective_key := ""
+var _nav_t := 0.0
 
 
 func _ready() -> void:
@@ -83,6 +86,8 @@ func _ready() -> void:
 	AudioService.set_ambience_any(["amb_surface_" + str(planet.get("biome_id")), "amb_colony_wind"])
 	GameSession.trigger_story("expedition_start")
 	hud.toast(str(survey.get("goal", "")), "info", 9.0)
+	_update_waypoint(ex)
+	hud.nav.say(GameSession.sim.nav.surface_brief(ex, _nav_context(ex, [1.0, "", "", ""])))
 
 
 func _pt(v: Variant) -> Vector2:
@@ -176,7 +181,11 @@ func _place_routes() -> void:
 		lbl.font_size = 48
 		lbl.pixel_size = 0.01
 		lbl.modulate = Color(col)
-		var first: Array = DictUtil.get_arr(r, "waypoints")[0] if not DictUtil.get_arr(r, "waypoints").is_empty() else [0, 0]
+		lbl.outline_size = 10
+		lbl.outline_modulate = Color(0.02, 0.05, 0.06, 0.85)
+		# Label at the route's first bend (waypoint 0 is the lander, shared by every route).
+		var bends: Array = DictUtil.get_arr(r, "waypoints").filter(func(w: Variant) -> bool: return Vector2(float(w[0]), float(w[1])).length() > 3.0)
+		var first: Array = bends[0] if not bends.is_empty() else [0, 0]
 		lbl.position = _ground(Vector2(float(first[0]), float(first[1]))) + Vector3(0, 2.0, 0)
 		add_child(lbl)
 
@@ -218,7 +227,7 @@ func _place_hazards() -> void:
 		lbl.modulate = Color(str(hdef.get("color", "#d6c447")))
 		area.add_child(lbl)
 		hazard_areas.append({"area": area, "mult": DictUtil.get_float(DictUtil.get_dict(hdef, "expedition"), "suit_drain_multiplier", 2.0),
-			"label": str(hz.get("label", "")), "sound": str(HAZARD_SOUND.get(hid, ""))})
+			"label": str(hz.get("label", hdef.get("name", hid))), "sound": str(HAZARD_SOUND.get(hid, "")), "id": hid + "@" + str(hazard_areas.size())})
 
 
 func _build_suit_hud() -> void:
@@ -248,14 +257,15 @@ func _update_waypoint(ex: ExpeditionState) -> void:
 	elif not ex.relay_placed and _markers.has("relay"):
 		key = "relay"
 		label = Loc.t("Place the relay")
+	_objective_key = key
 	waypoints.set_objective(_markers.get(key), label, 3.6 if key != "lander" else 4.2)
 
 
 func _hazard_mult() -> Array:
 	for h: Dictionary in hazard_areas:
 		if (h["area"] as Area3D).overlaps_body(captain):
-			return [float(h["mult"]), str(h["label"]), str(h["sound"])]
-	return [1.0, "", ""]
+			return [float(h["mult"]), str(h["label"]), str(h["sound"]), str(h["id"])]
+	return [1.0, "", "", ""]
 
 
 func _physics_process(delta: float) -> void:
@@ -284,6 +294,11 @@ func _physics_process(delta: float) -> void:
 	if lander:
 		lines.append(Loc.t("Lander: %d m") % int(captain.global_position.distance_to(lander.global_position)))
 	_status.text = "\n".join(lines)
+	_nav_t -= delta
+	if _nav_t <= 0.0:
+		_nav_t = 0.5
+		for item: Dictionary in GameSession.sim.nav.surface_update(ex, _nav_context(ex, hm), _nav_said):
+			hud.nav.say(item)
 	for key: String in ["main_sample", "risk_sample"]:
 		if _markers.has(key) and key in ex.samples:
 			(_markers[key] as Interactable).locked = true
@@ -293,6 +308,17 @@ func _physics_process(delta: float) -> void:
 		(_markers["relay"] as Interactable).locked_reason = Loc.t("the relay is here")
 	if ex.status == ExpeditionState.STATUS_RECALLED:
 		_finish(true)
+
+
+func _nav_context(ex: ExpeditionState, hm: Array) -> Dictionary:
+	var base := float(GameSession.content.bal("suit.drain_per_s", 0.12))
+	var lander: Node3D = _markers.get("lander")
+	var target: Node3D = _markers.get(_objective_key)
+	return {"dist_lander": captain.global_position.distance_to(lander.global_position) if lander else 0.0,
+		"walk_speed": captain.walk_speed, "drain": base * maxf(1.0, float(hm[0])), "base_drain": base,
+		"hazard_id": str(hm[3]), "hazard_label": str(hm[1]), "mult": float(hm[0]),
+		"next_key": _objective_key, "next_label": waypoints.objective_label if waypoints else "",
+		"next_dist": captain.global_position.distance_to(target.global_position) if target else 0.0}
 
 
 func _unhandled_input(event: InputEvent) -> void:

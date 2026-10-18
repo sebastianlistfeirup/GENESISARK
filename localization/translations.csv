@@ -358,14 +358,19 @@ Approach initiated. Debris ahead. Fragments are small. Small is not harmless.,In
 Approach initiated. No objects on course. This is rare.,Indflyvning påbegyndt. Ingen objekter på kursen. Det sker sjældent.
 Approach initiated. Scattered asteroids ahead. Reduce speed to allow time to turn.,"Indflyvning påbegyndt. Spredte asteroider forude. Hold farten nede, så har du tid til at dreje."
 Autopilot engaged. Additional fuel consumption: {fuel} units.,Autopilot aktiv. Ekstra brændstofforbrug: {fuel} enheder.
+Endurance {seconds} seconds. Return requires {return_s}. Turn back now.,Udholdenhed {seconds} sekunder. Hjemturen kræver {return_s}. Vend om nu.
+Entering {hazard}. Suit draw multiplied by {mult}. Endurance: {seconds} seconds.,Går ind i {hazard}. Dragtens forbrug ganget med {mult}. Udholdenhed: {seconds} sekunder.
 Fuel on arrival: {fuel_after} units.,Brændstof ved ankomst: {fuel_after} enheder.
 Fuel: {fuel} units. Enough for {reachable} of {routes} known routes from here.,Brændstof: {fuel} enheder. Det rækker til {reachable} af {routes} kendte ruter herfra.
 Fuel: {fuel} units. No known route is within range. The next decision is landing.,Brændstof: {fuel} enheder. Ingen kendt rute er inden for rækkevidde. Næste beslutning er landing.
+Hazard zone cleared. Suit draw nominal.,Farezone forladt. Dragtens forbrug normalt.
 Hull integrity: {integrity} percent. Further impacts increase the risk of pressure loss.,Skrogintegritet: {integrity} procent. Yderligere nedslag øger risikoen for trykfald.
 Impact. Hull integrity {integrity} percent.,Nedslag. Skrogintegritet {integrity} procent.
 Manual control.,Manuel styring.
 NAV,NAV
 Object on collision course. {seconds} seconds. Correction: {side}.,Objekt på kollisionskurs. {seconds} sekunder. Korrektion: {side}.
+"Objective complete. Next: {objective}, {next_dist} meters.","Mål fuldført. Næste: {objective}, {next_dist} meter."
+Objectives complete. Lander: {dist} meters. Suit: {energy} percent.,Mål fuldført. Landeren: {dist} meter. Dragt: {energy} procent.
 Obstacles cleared. {hits} impacts.,Forhindringerne er passeret. {hits} nedslag.
 Orbit around {dest} established. Hull {integrity} percent. Fuel {fuel}. Oxygen {oxygen} percent.,Kredsløb om {dest} etableret. Skrog {integrity} procent. Brændstof {fuel}. Ilt {oxygen} procent.
 Oxygen reserve on arrival: {oxygen_after} percent. That is below the recommended minimum of {low} percent.,Iltlager ved ankomst: {oxygen_after} procent. Det er under anbefalet minimum på {low} procent.
@@ -373,8 +378,11 @@ Oxygen reserve: {oxygen} percent. Below recommended minimum. The scrubbers can b
 "Oxygen reserve: {oxygen} percent. Critical. At stasis consumption, reserve lasts {days_left} days.",Iltlager: {oxygen} procent. Kritisk. Ved stasisforbrug rækker det {days_left} dage.
 Oxygen used in stasis: {oxygen} percent. Oxygen reserve on arrival: {oxygen_after} percent.,Iltforbrug i stasis: {oxygen} procent. Iltlager ved ankomst: {oxygen_after} procent.
 Reserve after arrival: {fuel_after}. To reach {reserve_target}: {reserve_needed} required. Landing is effectively final.,Reserven efter ankomst er {fuel_after}. For at nå {reserve_target} kræves {reserve_needed}. Landingen bliver i praksis endelig.
+Return margin is narrowing. Endurance {seconds} seconds. Return requires {return_s}. Consider your priorities.,Margenen for hjemturen bliver mindre. Udholdenhed {seconds} sekunder. Hjemturen kræver {return_s}. Overvej dine prioriteter.
 Route to {dest}: {days} days in stasis. No known obstacles on the approach.,Rute til {dest}: {days} dage i stasis. Ingen kendte forhindringer på indflyvningen.
 Severe impact. Pressure loss in section {section}. Oxygen reserve {oxygen} percent.,Kraftigt nedslag. Trykfald i sektion {section}. Iltlager {oxygen} procent.
+"Suit at {energy} percent. Endurance at normal draw: {minutes} minutes. Objective: {objective}, {dist} meters.","Dragt på {energy} procent. Udholdenhed ved normalt forbrug: {minutes} minutter. Mål: {objective}, {dist} meter."
+Suit at {energy} percent. Lander: {dist} meters. Walking back takes {return_s} seconds.,Dragt på {energy} procent. Landeren: {dist} meter. Gåturen tilbage tager {return_s} sekunder.
 "The approach to {dest} has scattered asteroids. Expected: {hits_manual} impacts on manual control, {hits_auto} on autopilot. The autopilot uses {fuel_auto} extra units of fuel.","Indflyvningen til {dest} har spredte asteroider. Forventet: {hits_manual} nedslag ved manuel styring, {hits_auto} med autopilot. Autopiloten bruger {fuel_auto} enheder brændstof ekstra."
 "The approach to {dest} passes a debris field. Expected hull loss: {integ_manual} percent manual, {integ_auto} percent on autopilot.","Indflyvningen til {dest} passerer et felt af vragrester. Forventet skrogtab: {integ_manual} procent manuelt, {integ_auto} procent med autopilot."
 The navigation computer. Speaks in numbers and probabilities. Has no opinion on whether you should be afraid.,"Navigationscomputeren. Taler i tal og sandsynligheder. Har ingen mening om, hvorvidt du bør være bange."

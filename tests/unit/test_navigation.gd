@@ -107,5 +107,43 @@ func test_nav_lines_cover_every_id_used() -> void:
 	for id: String in ["route_clear", "route_field", "route_debris", "route_belt", "route_fuel", "route_reserve_breach", "route_oxygen",
 			"route_oxygen_low", "status_fuel_low", "status_fuel_none", "status_oxygen_low", "status_oxygen_critical", "status_hull_low",
 			"approach_clear", "approach_field", "approach_debris", "approach_belt", "collision_course", "impact", "impact_severe",
-			"autopilot_on", "autopilot_off", "hazard_cleared", "arrival"]:
+			"autopilot_on", "autopilot_off", "hazard_cleared", "arrival", "surface_brief", "surface_hazard_enter",
+			"surface_hazard_exit", "surface_next", "surface_all_done", "surface_energy_half", "surface_return_margin", "surface_return_now"]:
 		check(content.nav_lines.has(id), "NAV-linje findes: " + id)
+
+
+func _surface_ctx(dist: float, hazard: String = "", key: String = "main_sample") -> Dictionary:
+	return {"dist_lander": dist, "walk_speed": 4.2, "drain": 0.12 * (2.0 if hazard != "" else 1.0), "base_drain": 0.12,
+		"hazard_id": hazard, "hazard_label": "Spore field", "mult": 2.0 if hazard != "" else 1.0,
+		"next_key": key, "next_label": "Take the main sample", "next_dist": 40.0}
+
+
+func test_nav_surface_callouts_fire_once_in_order() -> void:
+	var ex := ExpeditionState.new()
+	var nav := NavAdvisor.new(content)
+	var said := {}
+	var brief := nav.surface_brief(ex, _surface_ctx(0.0))
+	check(str(brief["text"]).contains("13.9 minutes") or str(brief["text"]).contains("14 minutes"), "brief states endurance: " + str(brief["text"]))
+	check(nav.surface_update(ex, _surface_ctx(10.0), said).is_empty(), "nothing to report at full suit")
+	var enter := nav.surface_update(ex, _surface_ctx(30.0, "spores@0"), said)
+	eq(enter.size(), 1, "hazard entry reported")
+	eq(enter[0]["id"], "surface_hazard_enter", "entry line")
+	check(nav.surface_update(ex, _surface_ctx(31.0, "spores@0"), said).is_empty(), "not repeated inside the zone")
+	eq(nav.surface_update(ex, _surface_ctx(35.0), said)[0]["id"], "surface_hazard_exit", "exit reported")
+	eq(nav.surface_update(ex, _surface_ctx(35.0, "", "relay"), said)[0]["id"], "surface_next", "objective progress")
+	ex.suit_energy = 48.0
+	eq(nav.surface_update(ex, _surface_ctx(35.0, "", "relay"), said)[0]["id"], "surface_energy_half", "half-way mark")
+	check(nav.surface_update(ex, _surface_ctx(35.0, "", "relay"), said).is_empty(), "half-way said once")
+	# 6 % suit = 50 s endurance; 150 m back = ~43 s walk: margin, then turn back.
+	ex.suit_energy = 6.0
+	var ids: Array = nav.surface_update(ex, _surface_ctx(150.0, "", "relay"), said).map(func(i: Dictionary) -> String: return i["id"])
+	check("surface_return_now" in ids, "turn back now: " + str(ids))
+	check(nav.surface_update(ex, _surface_ctx(150.0, "", "relay"), said).is_empty(), "critical said once")
+	ex.suit_energy = 40.0  # drone refill re-arms the warning
+	nav.surface_update(ex, _surface_ctx(20.0, "", "relay"), said)
+	ex.suit_energy = 6.0
+	ids = nav.surface_update(ex, _surface_ctx(150.0, "", "relay"), said).map(func(i: Dictionary) -> String: return i["id"])
+	check("surface_return_now" in ids, "re-armed after refill")
+	for item: Dictionary in nav.surface_update(ex, _surface_ctx(150.0, "", "lander"), said):
+		check(not str(item["text"]).contains("{"), "filled: " + str(item["id"]))
+		eq(item["id"], "surface_all_done", "all done when only the lander is left")

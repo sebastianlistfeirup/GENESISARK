@@ -2,6 +2,9 @@
 
 Biblen er baseline. Her står begrundede valg og afvigelser. Nyeste øverst.
 
+### D-027 · NAV på planeten
+NAV følger nu også kaptajnen på ekspeditioner (`NavAdvisor.surface_brief/surface_update`, rent domæne, testet): brief ved landing (dragtens udholdenhed og første mål), farezone ind/ud med forbrugsfaktor, delmål klaret, halv dragt, og to hjemturs-varsler beregnet ud fra afstanden til landeren ved gåfart + 20 % (margen bliver mindre / vend om nu). Hver linje siges én gang; drone-påfyldning genåbner varslerne. ARK's personlige replikker er uændrede; NAV taler kun tal. Rutelabels på overfladen står nu ved rutens første knæk i stedet for oven i hinanden ved landeren.
+
 ### D-026 · Lys pr. planet som data
 Biblen beder om tydelige biomer og læsbarhed (s. 11-12). Lys, himmel, tåge, eksponering, glød og SSAO ligger nu i `data/art/lighting.json` (standard ← biom ← planet) og bygges af `Lighting.build()`; `TerrainBuilder.environment_for()` delegerer dertil. Himlen er en `ProceduralSkyMaterial`-gradient, så Synty-skyboxe kan sættes ind senere uden kodeændring. Justeret på skærmbilleder pr. planet (Nivalis var overeksponeret). Vejvisningsmarkøren holder sig nu fri af undertekster og knapprompter (sikkert område + bundmargin; mål bag kameraet vises i siden).
 
