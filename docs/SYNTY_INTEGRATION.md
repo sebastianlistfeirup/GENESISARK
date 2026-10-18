@@ -346,6 +346,20 @@ Sæt kryds, når slotsene er mappet, og ledgeren er udfyldt. Udskift altid **ét
 
 ---
 
+## 11b. Partikeleffekter (fx.*) og Synty Particle FX
+
+Synty Particle FX findes kun til Unity (Shuriken-systemer kan ikke importeres). Derfor er de 10 `fx.*`-slots bygget direkte i Godot som `art/fx/<navn>.tscn` (D-029), med procedurale teksturer, så de virker uden pakken. Pakkens **teksturer** (røgpust, gnist, flare, støv-ark) kan bruges direkte:
+
+1. Læg de valgte PNG/TGA-filer i `assets/quarantine/` og kopiér kun de brugte til `assets/imported/fx/` (samme regel som modeller: aldrig rå pakker i repoet; mappen er ignoreret, så filerne bliver lokale).
+2. Åbn fx. `art/fx/steam_vent.tscn`, vælg partikelnoden (`Steam`) → *Draw Passes → Pass 1 (QuadMesh) → Material → Albedo → Texture* og erstat `GradientTexture2D` med Synty-teksturen. Farven kommer fra partiklernes farverampe (vertex color), så hvide/grå Synty-teksturer farves rigtigt automatisk.
+3. **Flipbook-ark** (fx. 4×4 røg): materialets *Billboard Mode* er allerede *Particle Billboard*; sæt *Particles Anim → H Frames/V Frames* til arkets opdeling, og i ParticleProcessMaterial *Animation → Speed* = 1 (eller tilfældig *Offset* 0-1 for variation).
+4. Additive effekter (gnister, thruster, strømstød, scanner) bruger *Blend Mode = Add*: Synty-teksturer med sort baggrund og uden alfa virker direkte dér. Røg/støv/sne/sporer bruger *Mix* og kræver alfa i teksturen.
+5. Tjek i begge renderere: `godot --path . --rendering-method gl_compatibility -- --capture=evidence/shots/fx_x.png --scene=fxlab --fx=steam_vent --wait=150` og samme uden `--rendering-method`. Ingen collision/turbulence/trails (virker ikke i Compatibility).
+
+`tools/fx/build_fx_scenes.gd` kan genskabe scenerne fra koden, men overskriver kun med `--force` (så håndretninger og Synty-teksturer ikke forsvinder). Fjern `"scene"` i `asset_slots.json` for at falde tilbage til den gamle generiske proxy.
+
+---
+
 ## 12. Hvis noget går galt
 
 | Problem | Løsning |

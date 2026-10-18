@@ -1,0 +1,118 @@
+[gd_scene load_steps=16 format=3]
+
+[ext_resource type="Script" path="res://scripts/runtime/visual/fx/fx_effect.gd" id="1_2xw8n"]
+[ext_resource type="Script" path="res://scripts/runtime/visual/fx/fx_scan_ring.gd" id="2_a883p"]
+
+[sub_resource type="Gradient" id="Gradient_2odmb"]
+offsets = PackedFloat32Array(0, 0.72, 0.88, 0.95, 1)
+colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0.55, 1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_j71vg"]
+gradient = SubResource("Gradient_2odmb")
+width = 256
+height = 256
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(1, 0.5)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hpkgn"]
+transparency = 1
+blend_mode = 1
+cull_mode = 2
+shading_mode = 0
+albedo_color = Color(0.5, 0.84, 0.82, 0.9)
+albedo_texture = SubResource("GradientTexture2D_j71vg")
+disable_receive_shadows = true
+billboard_keep_scale = true
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_qvo56"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_m5tll"]
+transparency = 1
+blend_mode = 1
+cull_mode = 2
+shading_mode = 0
+albedo_color = Color(0.5, 0.84, 0.82, 0.9)
+albedo_texture = SubResource("GradientTexture2D_j71vg")
+disable_receive_shadows = true
+billboard_keep_scale = true
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_nm248"]
+
+[sub_resource type="Gradient" id="Gradient_8eeu2"]
+offsets = PackedFloat32Array(0, 0.2, 1)
+colors = PackedColorArray(0.5, 0.84, 0.82, 0, 0.6, 0.92, 0.9, 0.9, 0.12, 0.44, 0.47, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_b4qgn"]
+gradient = SubResource("Gradient_8eeu2")
+width = 128
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_f5535"]
+emission_shape_offset = Vector3(0, 0.2, 0)
+emission_shape = 1
+emission_sphere_radius = 0.4
+direction = Vector3(0, 1, 0)
+spread = 10.0
+initial_velocity_min = 0.6
+initial_velocity_max = 1.2
+gravity = Vector3(0, 0, 0)
+scale_min = 0.6
+scale_max = 1.2
+color_ramp = SubResource("GradientTexture1D_b4qgn")
+
+[sub_resource type="Gradient" id="Gradient_yprbi"]
+offsets = PackedFloat32Array(0, 0.18, 0.45, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0.9, 1, 1, 1, 0.3, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_aeoas"]
+gradient = SubResource("Gradient_yprbi")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(1, 0.5)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_uytwb"]
+transparency = 1
+blend_mode = 1
+cull_mode = 2
+shading_mode = 0
+vertex_color_use_as_albedo = true
+albedo_texture = SubResource("GradientTexture2D_aeoas")
+disable_receive_shadows = true
+billboard_mode = 3
+billboard_keep_scale = true
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="QuadMesh" id="QuadMesh_66a42"]
+material = SubResource("StandardMaterial3D_uytwb")
+size = Vector2(0.12, 0.12)
+
+[node name="fx_scan_pulse" type="Node3D"]
+script = ExtResource("1_2xw8n")
+
+[node name="Ring1" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.15, 0)
+material_override = SubResource("StandardMaterial3D_hpkgn")
+cast_shadow = 0
+mesh = SubResource("PlaneMesh_qvo56")
+script = ExtResource("2_a883p")
+
+[node name="Ring2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.15, 0)
+material_override = SubResource("StandardMaterial3D_m5tll")
+cast_shadow = 0
+mesh = SubResource("PlaneMesh_nm248")
+script = ExtResource("2_a883p")
+phase = 0.5
+
+[node name="Motes" type="GPUParticles3D" parent="."]
+cast_shadow = 0
+amount = 24
+lifetime = 2.5
+preprocess = 2.5
+visibility_aabb = AABB(-2, -1, -2, 4, 6, 4)
+local_coords = true
+draw_order = 3
+process_material = SubResource("ParticleProcessMaterial_f5535")
+draw_pass_1 = SubResource("QuadMesh_66a42")

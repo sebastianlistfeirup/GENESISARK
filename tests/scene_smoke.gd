@@ -138,6 +138,39 @@ func _run() -> void:
 	check("riglab_runs", lab_moved > 0.05 and lab.slot_index == 1, "moved=%.2f" % lab_moved)
 	await unload(lab)
 
+	# FX library (art/fx/): every fx.* slot is a real particle scene, not the proxy, and runs.
+	var fx_bad: Array = []
+	var fx_root := Node3D.new()
+	add_child(fx_root)
+	for sid: String in FxLab.SLOTS:
+		var fx := VisualSlot.make(sid)
+		fx_root.add_child(fx)
+		var asset := fx.get_node_or_null("Asset")
+		var parts := asset.find_children("*", "GPUParticles3D", true, false) if asset else []
+		var animated := asset is FxEffect
+		for n: Node in (asset.find_children("*", "", true, false) if asset else []):
+			animated = animated or n is FxScanRing or n is AnimationPlayer
+		if not fx.using_asset or asset == null or (parts.is_empty() and not animated):
+			fx_bad.append(sid)
+			continue
+		for gp: GPUParticles3D in parts:
+			if gp.process_material == null or gp.draw_pass_1 == null or gp.amount > 300:
+				fx_bad.append("%s/%s" % [sid, gp.name])
+	await frames(90)  # long enough for every BURSTS effect to fire at least once
+	for fx: Node in fx_root.get_children():
+		var a := fx.get_node_or_null("Asset")
+		if not is_instance_valid(a) or (a is FxEffect and (a as FxEffect).mode == FxEffect.Mode.BURSTS and (a as FxEffect)._timer > (a as FxEffect).burst_interval.y):
+			fx_bad.append(str(fx.name) + " stalled")
+	var rm_before: Variant = SettingsService.values.get("reduced_motion", false)
+	SettingsService.values["reduced_motion"] = true
+	var calm_fx := VisualSlot.make("fx.spores")
+	fx_root.add_child(calm_fx)
+	var calm_ok := (calm_fx.get_node("Asset") as FxEffect).calm and is_equal_approx((calm_fx.get_node("Asset/Motes") as GPUParticles3D).amount_ratio, 0.5)
+	SettingsService.values["reduced_motion"] = rm_before
+	check("fx_library_particles", fx_bad.is_empty() and calm_ok, "%s calm=%s" % [fx_bad, calm_ok])
+	fx_root.queue_free()
+	await frames(2)
+
 	# Touch joystick: dead zone swallows jitter, small throws stay slow, curve is monotonic, full throw = 1.
 	var sh_ok := TouchControls.shape(Vector2(0.1, 0.0)) == Vector2.ZERO and TouchControls.shape(Vector2(0.0, -1.0)).is_equal_approx(Vector2(0, -1))
 	var prev := 0.0
