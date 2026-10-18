@@ -88,19 +88,19 @@ func _ready() -> void:
 
 func _spawn_interactables() -> void:
 	var defs := {
-		"power_coupling": ["nødstrømskoblingen", "Tilslut", "Genstarter nødstrømmen. Broen, embryobanken og stjernekortet kommer online."],
-		"workbench": ["værkstedsbænken", "Brug", "Reparér skroget med komponenter. Det, du bruger her, mangler i kolonien."],
-		"embryo_bank": ["embryobanken", "Undersøg", "Se lagerstatus og redundans for de 50.000."],
-		"starmap": ["stjernekortet", "Åbn", "Sammenlign kandidatverdener, send sonder og vælg rute."],
-		"bridge_terminal": ["planetsammenligningen", "Åbn", "Kendt og manglende viden om alle seks verdener."],
-		"orbit_terminal": ["kredsløbsterminalen", "Åbn", "Scanning, sitesonder, ekspedition og landing."],
+		"power_coupling": [Loc.t("nødstrømskoblingen"), Loc.t("Tilslut"), Loc.t("Genstarter nødstrømmen. Broen, embryobanken og stjernekortet kommer online.")],
+		"workbench": [Loc.t("værkstedsbænken"), Loc.t("Brug"), Loc.t("Reparér skroget med komponenter. Det, du bruger her, mangler i kolonien.")],
+		"embryo_bank": ["embryobanken", Loc.t("Undersøg"), Loc.t("Se lagerstatus og redundans for de 50.000.")],
+		"starmap": ["stjernekortet", Loc.t("Åbn"), Loc.t("Sammenlign kandidatverdener, send sonder og vælg rute.")],
+		"bridge_terminal": ["planetsammenligningen", Loc.t("Åbn"), Loc.t("Kendt og manglende viden om alle seks verdener.")],
+		"orbit_terminal": [Loc.t("kredsløbsterminalen"), Loc.t("Åbn"), Loc.t("Scanning, sitesonder, ekspedition og landing.")],
 	}
 	for m: Dictionary in builder.interact_markers:
 		var id := str(m["id"])
 		var it := Interactable.new()
 		it.name = "I_" + id
 		it.interact_id = id
-		var d: Array = defs.get(id, [id, "Brug", ""])
+		var d: Array = defs.get(id, [id, Loc.t("Brug"), ""])
 		it.title = d[0]
 		it.verb = d[1]
 		it.consequence = d[2]
@@ -134,7 +134,7 @@ func _spawn_display() -> void:
 	_display.position = builder.embryo_display_pos + Vector3(0, 2.4, 0.2)
 	add_child(_display)
 	var sub := Label3D.new()
-	sub.text = "LEVEDYGTIGE EMBRYONER · KRYOBEVARING STABIL"
+	sub.text = Loc.t("LEVEDYGTIGE EMBRYONER · KRYOBEVARING STABIL")
 	sub.font_size = 48
 	sub.pixel_size = 0.01
 	sub.modulate = Color("8fa3ad")
@@ -161,20 +161,20 @@ func _on_state(_kind: String) -> void:
 		var it: Interactable = interactables.get(id)
 		if it:
 			it.locked = not powered
-			it.locked_reason = "ingen strøm — genopret nødstrømmen i værkstedet"
+			it.locked_reason = Loc.t("ingen strøm — genopret nødstrømmen i værkstedet")
 	var orbit_it: Interactable = interactables.get("orbit_terminal")
 	if orbit_it and powered:
 		var pid := GameSession.sim.travel.current_planet_id(gs)
 		orbit_it.locked = pid.is_empty()
-		orbit_it.locked_reason = "arken er ikke i kredsløb om en planet"
+		orbit_it.locked_reason = Loc.t("arken er ikke i kredsløb om en planet")
 	var loc: Dictionary = GameSession.content.locations.get(gs.campaign.location_id, {})
-	_voyage_label.text = "%s\nBrændstof %d · Skrog %d%% · Komp. %d\nEmbryoner %s · Stasis %.1f år" % [
-		str(loc.get("name", "")) + ("  (kredsløb)" if loc.has("planet_id") else ""), int(gs.ark.fuel), int(gs.ark.integrity),
+	_voyage_label.text = Loc.t("%s\nBrændstof %d · Skrog %d%% · Komp. %d\nEmbryoner %s · Stasis %.1f år") % [
+		str(loc.get("name", "")) + (Loc.t("  (kredsløb)") if loc.has("planet_id") else ""), int(gs.ark.fuel), int(gs.ark.integrity),
 		gs.ark.components, UiKit.thousands(gs.ark.embryo_viable), gs.campaign.captain_stasis_years]
 	var pc: Interactable = interactables.get("power_coupling")
 	if pc:
 		pc.locked = powered
-		pc.locked_reason = "nødstrømmen kører"
+		pc.locked_reason = Loc.t("nødstrømmen kører")
 	UiKit.clear(_window_planet)
 	var pid2 := GameSession.sim.travel.current_planet_id(gs)
 	if not pid2.is_empty():

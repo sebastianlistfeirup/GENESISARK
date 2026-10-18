@@ -37,11 +37,11 @@ func refresh() -> void:
 	if not GameSession.has_game():
 		return
 	var gs: GameState = GameSession.state
-	_body.add_child(UiKit.heading("Journal"))
+	_body.add_child(UiKit.heading(Loc.t("Journal")))
 	var l := gs.ark.ledger()
-	_body.add_child(UiKit.rich("[color=#8fa3ad]Embryoregnskab:[/color] %s levedygtige · %s i inkubation · %s født · %s tabt   [color=#8fa3ad](i alt %s)[/color]" % [
+	_body.add_child(UiKit.rich(Loc.t("[color=#8fa3ad]Embryoregnskab:[/color] %s levedygtige · %s i inkubation · %s født · %s tabt   [color=#8fa3ad](i alt %s)[/color]") % [
 		UiKit.thousands(l["viable"]), UiKit.thousands(l["incubating"]), UiKit.thousands(l["born"]), UiKit.thousands(l["lost"]), UiKit.thousands(gs.ark.embryo_sum())]))
-	_body.add_child(UiKit.title("Mål"))
+	_body.add_child(UiKit.title(Loc.t("Mål")))
 	var ids: Array = GameSession.content.objectives.keys()
 	ids.sort_custom(func(a: String, b: String) -> bool: return int(GameSession.content.objectives[a].get("order", 0)) < int(GameSession.content.objectives[b].get("order", 0)))
 	var shown := 0
@@ -54,9 +54,9 @@ func refresh() -> void:
 		if shown > 3:
 			continue
 		_body.add_child(UiKit.rich("%s %s" % ["[color=#5fae6e]✔[/color]" if done else ("[color=#e8a33d]▶[/color]" if cur else "[color=#8fa3ad]○[/color]"), o.get("title", id)]))
-	_body.add_child(UiKit.title("Logbog"))
+	_body.add_child(UiKit.title(Loc.t("Logbog")))
 	var entries: Array = gs.campaign.journal.duplicate()
 	entries.reverse()
 	for e: Dictionary in entries.slice(0, 40):
-		_body.add_child(UiKit.rich("[color=#8fa3ad]Dag %d[/color]  %s" % [int(e.get("day", 0)), e.get("text", "")]))
+		_body.add_child(UiKit.rich(Loc.t("[color=#8fa3ad]Dag %d[/color]  %s") % [int(e.get("day", 0)), e.get("text", "")]))
 

@@ -21,21 +21,21 @@ func _ready() -> void:
 	col.position = Vector2(160, 90)
 	col.custom_minimum_size = Vector2(1100, 0)
 	add_child(col)
-	col.add_child(UiKit.label("EPILOG", 18, UiKit.PETROL.lightened(0.3)))
+	col.add_child(UiKit.label(Loc.t("EPILOG"), 18, UiKit.PETROL.lightened(0.3)))
 	col.add_child(UiKit.label(str(def.get("title", gs.campaign.ending_id)), 54, UiKit.TEXT))
 	col.add_child(UiKit.label(GameSession.sim.endings.summary(gs), 20, UiKit.AMBER, true))
 	for para: String in GameSession.sim.endings.epilogue(gs):
 		col.add_child(UiKit.label(para, 19, UiKit.TEXT, true))
 	var m: Dictionary = gs.campaign.final_state
-	col.add_child(UiKit.label("%d mennesker · %s · egen strøm %.0f / %.0f kW · reserve %s dage · %d kriser løst · kaptajnen i stasis i %d år" % [
-		int(m.get("population", 0)), "råd" if m.get("council", false) else "intet råd", float(m.get("own_power_kw", 0)), float(m.get("demand_kw", 0)),
+	col.add_child(UiKit.label(Loc.t("%d mennesker · %s · egen strøm %.0f / %.0f kW · reserve %s dage · %d kriser løst · kaptajnen i stasis i %d år") % [
+		int(m.get("population", 0)), Loc.t("råd") if m.get("council", false) else Loc.t("intet råd"), float(m.get("own_power_kw", 0)), float(m.get("demand_kw", 0)),
 		"∞" if float(m.get("reserve_days", 0)) >= 9999 else str(int(float(m.get("reserve_days", 0)))), int(m.get("crises_resolved", 0)), int(gs.campaign.captain_stasis_years)], 15, UiKit.MUTED, true))
 	var row := UiKit.hbox(12)
-	row.add_child(UiKit.button("Hovedmenu", func() -> void: AppFlow.goto("menu")))
-	var pre := UiKit.button("Fortsæt fra seneste save før overdragelsen", func() -> void:
+	row.add_child(UiKit.button(Loc.t("Hovedmenu"), func() -> void: AppFlow.goto("menu")))
+	var pre := UiKit.button(Loc.t("Fortsæt fra seneste save før overdragelsen"), func() -> void:
 		var r := GameSession.load_from("auto", true)
 		if r["ok"]:
 			AppFlow.continue_game())
-	pre.tooltip_text = "Indlæser backuppen fra før slutningen."
+	pre.tooltip_text = Loc.t("Indlæser backuppen fra før slutningen.")
 	row.add_child(pre)
 	col.add_child(row)

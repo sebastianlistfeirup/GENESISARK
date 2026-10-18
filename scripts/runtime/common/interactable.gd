@@ -39,7 +39,7 @@ func _has_shape() -> bool:
 
 func prompt_text() -> String:
 	if locked:
-		return "%s — %s" % [title, locked_reason if not locked_reason.is_empty() else "låst"]
+		return "%s — %s" % [title, locked_reason if not locked_reason.is_empty() else Loc.t("låst")]
 	return "[%s] %s %s" % [SettingsService.binding_text("interact"), verb, title]
 
 

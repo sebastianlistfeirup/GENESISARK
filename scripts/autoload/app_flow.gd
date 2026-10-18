@@ -62,6 +62,11 @@ func goto(key: String, p: Dictionary = {}) -> void:
 	scene_changed.emit(key)
 
 
+## Rebuilds the current scene in place (used after a language change).
+func reload_current() -> void:
+	goto(current_key if not current_key.is_empty() else "menu", params)
+
+
 ## Where a campaign in its current phase belongs.
 func scene_for_state() -> String:
 	if not GameSession.has_game():

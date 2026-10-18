@@ -29,6 +29,17 @@ func _ready() -> void:
 			push_error("Indholdsfejl: " + e)
 
 
+## Reloads content for the active language and rebinds the running campaign to
+## it. The domain state holds only ids and numbers, so nothing else changes.
+func reload_content() -> void:
+	content = ContentDB.load_default()
+	if has_game():
+		var gs := sim.state
+		sim = Simulation.new(content, gs)
+		_wire()
+		state_changed.emit("language")
+
+
 func has_game() -> bool:
 	return sim != null and sim.state != null
 
@@ -54,10 +65,10 @@ func _wire() -> void:
 	sim.expedition.reserve_warning.connect(func() -> void:
 		AudioService.alarm(false)
 		trigger_story("expedition_suit_low")
-		notice.emit("Dragtens energi er under reserve. Vend tilbage til landeren.", "warning"))
+		notice.emit(Loc.t("Dragtens energi er under reserve. Vend tilbage til landeren."), "warning"))
 	sim.expedition.suit_depleted.connect(func() -> void:
 		AudioService.alarm(true)
-		notice.emit("Dragten er tom. ARK fører dig tilbage til landeren.", "critical"))
+		notice.emit(Loc.t("Dragten er tom. ARK fører dig tilbage til landeren."), "critical"))
 
 
 func txn(prefix: String) -> String:
@@ -316,7 +327,7 @@ func autosave() -> void:
 	if has_game():
 		var r := SaveService.save_state("auto", state, content)
 		if not r["ok"]:
-			notice.emit("Autogem fejlede: " + str(r["error"]), "critical")
+			notice.emit(Loc.t("Autogem fejlede: ") + str(r["error"]), "critical")
 
 
 func save_to(slot: String) -> Dictionary:

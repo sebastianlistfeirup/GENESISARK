@@ -52,6 +52,9 @@ func _process(delta: float) -> void:
 	var iv := Input.get_vector("move_left", "move_right", "move_forward", "move_back")
 	var move := Basis(Vector3.UP, rotation.y) * Vector3(iv.x, 0, iv.y) * zoom * 0.9 * delta
 	position += move
+	var look := Input.get_axis("look_left", "look_right")
+	if absf(look) > 0.0:
+		target_yaw -= look * delta * 1.8
 	position.x = clampf(position.x, -bounds, bounds)
 	position.z = clampf(position.z, -bounds, bounds)
 	var fast := bool(SettingsService.get_value("reduced_motion", false))

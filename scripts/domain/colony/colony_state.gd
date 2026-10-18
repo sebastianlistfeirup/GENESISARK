@@ -84,11 +84,11 @@ func invariant_errors() -> PackedStringArray:
 	var out: PackedStringArray = []
 	for k: String in inventory.keys():
 		if float(inventory[k]) < -0.0001:
-			out.append("inventory.%s < 0" % k)
-	if battery_kwh < -0.0001: out.append("battery < 0")
+			out.append(Loc.t("inventory.%s < 0") % k)
+	if battery_kwh < -0.0001: out.append(Loc.t("battery < 0"))
 	var ids := {}
 	for b: Dictionary in buildings:
 		if ids.has(b.get("id")):
-			out.append("dubleret bygnings-id %s" % b.get("id"))
+			out.append(Loc.t("dubleret bygnings-id %s") % b.get("id"))
 		ids[b.get("id")] = true
 	return out

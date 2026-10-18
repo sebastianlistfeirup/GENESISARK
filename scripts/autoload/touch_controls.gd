@@ -39,19 +39,19 @@ func _ready() -> void:
 	_base.visible = false
 	_knob.visible = false
 	var defs := [
-		["interact", "E", Vector2(-120, -150), 64.0], ["sprint", "Løb", Vector2(-260, -110), 48.0],
-		["build_confirm", "Byg", Vector2(-120, -210), 64.0], ["cancel", "Fortryd", Vector2(-270, -180), 48.0],
-		["rotate_building", "Drej", Vector2(-390, -160), 42.0], ["zoom_in", "+", Vector2(-120, -330), 40.0],
+		["interact", "E", Vector2(-120, -150), 64.0], ["sprint", Loc.t("Løb"), Vector2(-260, -110), 48.0],
+		["build_confirm", Loc.t("Byg"), Vector2(-120, -210), 64.0], ["cancel", Loc.t("Fortryd"), Vector2(-270, -180), 48.0],
+		["rotate_building", Loc.t("Drej"), Vector2(-390, -160), 42.0], ["zoom_in", "+", Vector2(-120, -330), 40.0],
 		["zoom_out", "−", Vector2(-220, -330), 40.0], ["rotate_cam_left", "⟲", Vector2(-320, -330), 40.0],
 		["rotate_cam_right", "⟳", Vector2(-420, -330), 40.0], ["colony_mode", "B", Vector2(-120, -460), 40.0],
-		["autopilot", "Auto", Vector2(-120, -150), 64.0], ["drone_refill", "Drone", Vector2(-260, -250), 44.0],
+		["autopilot", Loc.t("Auto"), Vector2(-120, -150), 64.0], ["drone_refill", Loc.t("Drone"), Vector2(-260, -250), 44.0],
 		["ascend", "▲", Vector2(-380, -150), 42.0], ["descend", "▼", Vector2(-380, -60), 42.0],
-		["journal", "Log", Vector2(170, 180), 40.0], ["pause", "II", Vector2(70, 180), 40.0],
-		["speed_pause", "Tid", Vector2(-220, -460), 40.0],
+		["journal", Loc.t("Log"), Vector2(170, 180), 40.0], ["pause", "II", Vector2(70, 180), 40.0],
+		["speed_pause", Loc.t("Tid"), Vector2(-220, -460), 40.0],
 	]
 	for d: Array in defs:
 		_add_button(str(d[0]), str(d[1]), d[2], float(d[3]))
-	_portrait = UiKit.label("Drej telefonen til liggende format", 34, UiKit.AMBER)
+	_portrait = UiKit.label(Loc.t("Drej telefonen til liggende format"), 34, UiKit.AMBER)
 	_portrait.set_anchors_and_offsets_preset(Control.PRESET_CENTER)
 	_portrait.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_root.add_child(_portrait)

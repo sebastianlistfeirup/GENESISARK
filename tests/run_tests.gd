@@ -8,6 +8,7 @@ func _init() -> void:
 	for a: String in OS.get_cmdline_user_args():
 		if a.begins_with("--filter="):
 			filter = a.substr(9)
+	Loc.set_language(Loc.SOURCE)  # tests assert on Danish source text, independent of OS locale
 	var content := ContentDB.load_default()
 	var total := 0
 	var failed: Array = []

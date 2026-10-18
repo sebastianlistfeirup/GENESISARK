@@ -63,3 +63,8 @@ renderer/rendering_method.web="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
 anti_aliasing/quality/msaa_3d=1
 environment/defaults/default_clear_color=Color(0.043, 0.071, 0.098, 1)
+
+[internationalization]
+
+locale/translations=PackedStringArray("res://localization/translations.en.translation")
+locale/fallback="da"

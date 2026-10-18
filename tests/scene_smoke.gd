@@ -59,6 +59,28 @@ func _run() -> void:
 	check("menu_loads", is_instance_valid(menu))
 	await unload(menu)
 
+	# Controller: every pad binding is in the input map (keyboard remaps never remove it).
+	var pad_missing: Array = []
+	for action: String in SettingsService.PAD.keys():
+		var has_pad := false
+		if InputMap.has_action(action):
+			for e: InputEvent in InputMap.action_get_events(action):
+				has_pad = has_pad or e is InputEventJoypadButton or e is InputEventJoypadMotion
+		if not has_pad:
+			pad_missing.append(action)
+	check("pad_bindings_complete", pad_missing.is_empty(), str(pad_missing))
+
+	# Language switch mid-campaign: content reloads translated, the domain state is untouched.
+	DebugFixtures.prepare("fresh")
+	var lang_before := SaveCodec.checksum(GameSession.state.to_dict())
+	Loc.set_language("en")
+	GameSession.reload_content()
+	var en_name := str(GameSession.content.building("water_plant").get("name"))
+	var lang_after := SaveCodec.checksum(GameSession.state.to_dict())
+	Loc.set_language(Loc.SOURCE)
+	GameSession.reload_content()
+	check("language_switch_keeps_state", lang_before == lang_after and en_name == "Water plant" and str(GameSession.content.building("water_plant").get("name")) == "Vandanlæg", en_name)
+
 	# Ship: dark start, captain route x10, power coupling, starmap
 	DebugFixtures.prepare("fresh")
 	var ship := await load_scene("res://scenes/ship/ship.tscn")
@@ -91,6 +113,12 @@ func _run() -> void:
 	var arm: SpringArm3D = captain.camera_rig.arm
 	check("ga02_camera_never_passes_hull", arm.get_hit_length() < arm.spring_length - 0.5 and captain.camera_rig.camera.global_position.z < 30.0,
 		"hit=%.2f cam_z=%.2f" % [arm.get_hit_length(), captain.camera_rig.camera.global_position.z])
+	# Controller right stick turns the camera.
+	var yaw0: float = captain.camera_rig.yaw
+	Input.action_press("look_right", 1.0)
+	await frames(15)
+	Input.action_release("look_right")
+	check("pad_look_turns_camera", absf(captain.camera_rig.yaw - yaw0) > 0.2, "dyaw=%.2f" % (captain.camera_rig.yaw - yaw0))
 	var coupling: Interactable = ship.get("interactables")["power_coupling"]
 	captain.teleport(coupling.global_position + Vector3(1.6, 0.1, 0), PI * 0.5)
 	await frames(8)

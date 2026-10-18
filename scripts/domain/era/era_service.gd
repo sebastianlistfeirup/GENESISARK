@@ -57,7 +57,7 @@ func forecast(gs: GameState, plan: Dictionary) -> Dictionary:
 
 func commit(gs: GameState, plan: Dictionary, txn: String) -> CommandResult:
 	if gs.is_applied(txn):
-		return CommandResult.fail("duplicate_txn", "Springet er allerede gennemført.")
+		return CommandResult.fail("duplicate_txn", Loc.t("Springet er allerede gennemført."))
 	var blockers := leap_blockers(gs)
 	if not blockers.is_empty():
 		return CommandResult.fail("leap_blocked", " ".join(blockers), {"blockers": blockers})
@@ -71,7 +71,7 @@ func commit(gs: GameState, plan: Dictionary, txn: String) -> CommandResult:
 	_last = {}
 	gs.mark_applied(txn)
 	gs.campaign.captain_stasis_years += float(res["days"]) / 365.0
-	gs.log_journal("Tidsspring: %d år. %s" % [int(float(res["days"]) / 365.0), STOP_TEXT.get(res["stop_reason"], "")], "era")
+	gs.log_journal(Loc.t("Tidsspring: %d år. %s") % [int(float(res["days"]) / 365.0), Loc.t(str(STOP_TEXT.get(res["stop_reason"], "")))], "era")
 	res["end_checksum"] = world_checksum(gs)
 	return CommandResult.success(res)
 
@@ -87,13 +87,13 @@ static func world_checksum(gs: GameState) -> String:
 func leap_blockers(gs: GameState) -> Array:
 	var out: Array = []
 	if gs.colony == null:
-		out.append("Der er ingen koloni.")
+		out.append(Loc.t("Der er ingen koloni."))
 		return out
 	var ev := events.blocking_event(gs)
 	if not ev.is_empty():
-		out.append("Løs først: %s." % ev.get("title", ev.get("id")))
+		out.append(Loc.t("Løs først: %s.") % ev.get("title", ev.get("id")))
 	if gs.ark.embryo_born == 0 and gs.ark.embryo_incubating == 0:
-		out.append("Det første generationsspring kræver en stabil omsorgsperiode med den første kohorte.")
+		out.append(Loc.t("Det første generationsspring kræver en stabil omsorgsperiode med den første kohorte."))
 	return out
 
 
@@ -133,7 +133,7 @@ func _simulate(gs: GameState, plan: Dictionary) -> Dictionary:
 		if stop == STOP_INCUBATION:
 			break
 	return {
-		"stop_reason": stop, "stop_text": STOP_TEXT.get(stop, stop), "stop_detail": stop_detail,
+		"stop_reason": stop, "stop_text": Loc.t(str(STOP_TEXT.get(stop, stop))), "stop_detail": stop_detail,
 		"start_day": start_day, "end_day": gs.campaign.colony_day, "days": gs.campaign.colony_day - start_day,
 		"end_year": snappedf(gs.campaign.colony_year(), 0.1),
 		"population_start": start_pop, "population_end": gs.population.alive_count(),

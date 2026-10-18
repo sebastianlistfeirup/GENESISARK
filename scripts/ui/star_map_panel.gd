@@ -21,13 +21,13 @@ func _init() -> void:
 func refresh() -> void:
 	UiKit.clear(body)
 	var gs: GameState = GameSession.state
-	header("Stjernekort", "Brændstof %d · Skrog %d%% · Komponenter %d · Position: %s" % [
+	header(Loc.t("Stjernekort"), Loc.t("Brændstof %d · Skrog %d%% · Komponenter %d · Position: %s") % [
 		int(gs.ark.fuel), int(gs.ark.integrity), gs.ark.components, GameSession.content.locations.get(gs.campaign.location_id, {}).get("name", "")])
 	tabs = TabContainer.new()
 	tabs.custom_minimum_size = Vector2(1200, 640)
 	body.add_child(tabs)
 	var map_tab := UiKit.hbox(14)
-	map_tab.name = "Rejse"
+	map_tab.name = Loc.t("Rejse")
 	map_view = StarMapView.new()
 	map_view.planet_selected.connect(func(loc: String) -> void:
 		_confirming = false
@@ -42,15 +42,15 @@ func refresh() -> void:
 	map_tab.add_child(scroll)
 	tabs.add_child(map_tab)
 	var cmp_scroll := ScrollContainer.new()
-	cmp_scroll.name = "Sammenligning"
+	cmp_scroll.name = Loc.t("Sammenligning")
 	compare_box = UiKit.vbox(6)
 	compare_box.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	cmp_scroll.add_child(compare_box)
 	tabs.add_child(cmp_scroll)
 	_build_compare()
 	if map_view.selected.is_empty():
-		detail.add_child(UiKit.label("Vælg en verden på kortet.", 18, UiKit.MUTED))
-		detail.add_child(UiKit.label("Kendte værdier og usikkerheder vises separat. En sonde koster 3 komponenter og indsnævrer arkivets skøn. At rejse koster brændstof og slider på skroget.", 16, UiKit.MUTED, true))
+		detail.add_child(UiKit.label(Loc.t("Vælg en verden på kortet."), 18, UiKit.MUTED))
+		detail.add_child(UiKit.label(Loc.t("Kendte værdier og usikkerheder vises separat. En sonde koster 3 komponenter og indsnævrer arkivets skøn. At rejse koster brændstof og slider på skroget."), 16, UiKit.MUTED, true))
 	else:
 		_show_detail(map_view.selected)
 
@@ -63,34 +63,34 @@ func _show_detail(loc: String) -> void:
 	var p := content.planet(pid)
 	detail.add_child(UiKit.heading(str(p.get("name", loc))))
 	detail.add_child(UiKit.label(str(p.get("description", "")), 16, UiKit.MUTED, true))
-	detail.add_child(UiKit.rich("[color=#5fae6e]+[/color] %s\n[color=#e8a33d]−[/color] %s" % [p.get("advantage", ""), p.get("price", "")]))
-	detail.add_child(UiKit.title("Viden"))
+	detail.add_child(UiKit.rich(Loc.t("[color=#5fae6e]+[/color] %s\n[color=#e8a33d]−[/color] %s") % [p.get("advantage", ""), p.get("price", "")]))
+	detail.add_child(UiKit.title(Loc.t("Viden")))
 	detail.add_child(knowledge_grid(pid))
-	detail.add_child(UiKit.title("Rute"))
+	detail.add_child(UiKit.title(Loc.t("Rute")))
 	var q := GameSession.sim.travel.quote(gs, loc)
 	if q.has("fuel"):
-		detail.add_child(UiKit.rich("Brændstof [b]%d[/b] (efter: %d) · Skrog −%d%% · %d dage i stasis\nReserve til nærmeste alternativ: %s" % [
+		detail.add_child(UiKit.rich(Loc.t("Brændstof [b]%d[/b] (efter: %d) · Skrog −%d%% · %d dage i stasis\nReserve til nærmeste alternativ: %s") % [
 			int(q["fuel"]), int(q["fuel_after"]), int(q["integrity"]), int(q["days"]),
-			("[color=#5fae6e]● ok (%d krævet)[/color]" % int(q["reserve_needed"])) if q["reserve_ok"] else ("[color=#e8a33d]▲ for lav (%d krævet)[/color]" % int(q["reserve_needed"]))]))
+			(Loc.t("[color=#5fae6e]● ok (%d krævet)[/color]") % int(q["reserve_needed"])) if q["reserve_ok"] else (Loc.t("[color=#e8a33d]▲ for lav (%d krævet)[/color]") % int(q["reserve_needed"]))]))
 	for reason: Variant in q.get("reasons", []):
 		detail.add_child(UiKit.label("■ " + str(reason), 16, UiKit.DANGER, true))
 	for reason: Variant in q.get("risk_reasons", []):
 		detail.add_child(UiKit.label("▲ " + str(reason), 16, UiKit.WARN, true))
 	var row := UiKit.hbox(10)
 	var k := gs.knowledge_of(pid)
-	var probe := UiKit.button("Send fjernsonde (3 komponenter)", func() -> void:
+	var probe := UiKit.button(Loc.t("Send fjernsonde (3 komponenter)"), func() -> void:
 		if GameSession.cmd_probe(pid, "").ok:
 			_show_detail(loc)
 			_build_compare(),
-		"Indsnævrer arkivets skøn om %s uden at rejse." % p.get("name"))
+		Loc.t("Indsnævrer arkivets skøn om %s uden at rejse.") % p.get("name"))
 	probe.disabled = k.level_reached.has("orbital") or gs.ark.components < 3 or gs.campaign.phase != CampaignState.PHASE_VOYAGE
 	row.add_child(probe)
-	var travel := UiKit.button("Bekræft risikabel rejse" if _confirming else "Rejs hertil", func() -> void: _travel(loc, q))
+	var travel := UiKit.button(Loc.t("Bekræft risikabel rejse") if _confirming else Loc.t("Rejs hertil"), func() -> void: _travel(loc, q))
 	travel.disabled = not q["ok"]
 	row.add_child(travel)
 	detail.add_child(row)
 	if _confirming:
-		detail.add_child(UiKit.label("Tryk igen for at bekræfte. Rejsen kan ikke fortrydes.", 15, UiKit.WARN, true))
+		detail.add_child(UiKit.label(Loc.t("Tryk igen for at bekræfte. Rejsen kan ikke fortrydes."), 15, UiKit.WARN, true))
 
 
 func _travel(loc: String, q: Dictionary) -> void:
@@ -123,13 +123,13 @@ static func knowledge_grid(pid: String) -> GridContainer:
 		var r: Dictionary = rows[prop]
 		var status := str(r["status"])
 		var kind: String = {"known": "ok", "estimated": "warning", "unknown": "locked"}[status]
-		var l1 := UiKit.label(SurveyService.PROPERTY_LABELS[prop], 15, UiKit.MUTED)
+		var l1 := UiKit.label(Loc.t(str(SurveyService.PROPERTY_LABELS[prop])), 15, UiKit.MUTED)
 		l1.custom_minimum_size = Vector2(170, 0)
 		g.add_child(l1)
 		var l2 := UiKit.label("%s %s" % [UiKit.status_icon(kind), r["text"]], 16, UiKit.status_color(kind))
 		l2.custom_minimum_size = Vector2(220, 0)
 		g.add_child(l2)
-		g.add_child(UiKit.label({"known": "kendt", "estimated": "skøn", "unknown": "ukendt"}[status] + ("" if str(r["source"]).is_empty() else " · " + str(r["source"])), 13, UiKit.MUTED))
+		g.add_child(UiKit.label({"known": Loc.t("kendt"), "estimated": Loc.t("skøn"), "unknown": Loc.t("ukendt")}[status] + ("" if str(r["source"]).is_empty() else " · " + str(r["source"])), 13, UiKit.MUTED))
 	return g
 
 
@@ -138,12 +138,12 @@ func _build_compare() -> void:
 		return
 	UiKit.clear(compare_box)
 	var content := GameSession.content
-	compare_box.add_child(UiKit.label("Kendt viden og manglende viden vises i hver sin kolonne. Ingen verden er bedst i alt.", 16, UiKit.MUTED, true))
+	compare_box.add_child(UiKit.label(Loc.t("Kendt viden og manglende viden vises i hver sin kolonne. Ingen verden er bedst i alt."), 16, UiKit.MUTED, true))
 	var g := GridContainer.new()
 	g.columns = 4
 	g.add_theme_constant_override("h_separation", 18)
 	g.add_theme_constant_override("v_separation", 10)
-	for h: String in ["Verden", "Kendt", "Skøn", "Mangler"]:
+	for h: String in [Loc.t("Verden"), Loc.t("Kendt"), Loc.t("Skøn"), Loc.t("Mangler")]:
 		g.add_child(UiKit.title(h))
 	for pid: String in content.planet_ids_sorted():
 		var cmp := GameSession.sim.survey.comparison(GameSession.state, pid)
@@ -152,11 +152,11 @@ func _build_compare() -> void:
 		var unk: Array = []
 		for prop: String in (cmp["rows"] as Dictionary).keys():
 			var r: Dictionary = cmp["rows"][prop]
-			var lbl := "%s: %s" % [SurveyService.PROPERTY_LABELS.get(prop, prop), r["text"]]
+			var lbl := "%s: %s" % [Loc.t(str(SurveyService.PROPERTY_LABELS.get(prop, prop))), r["text"]]
 			match str(r["status"]):
 				"known": known.append(lbl)
 				"estimated": est.append(lbl)
-				_: unk.append(SurveyService.PROPERTY_LABELS.get(prop, prop))
+				_: unk.append(Loc.t(str(SurveyService.PROPERTY_LABELS.get(prop, prop))))
 		var p := content.planet(pid)
 		var name_box := UiKit.vbox(2)
 		name_box.add_child(UiKit.label(str(p.get("name")), 20, Color(str(p.get("palette", {}).get("nature", "#ffffff")))))

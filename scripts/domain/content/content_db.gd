@@ -23,6 +23,7 @@ var objectives: Dictionary = {}
 var story: Dictionary = {}         # scene_id -> scene
 var journal_entries: Array = []    # [{id, trigger, text}]
 var characters: Dictionary = {}    # id -> {name, perspective, bio}
+var credits: Array = []            # [{id, title, entries:[{role, name, status, text?}]}]
 var errors: PackedStringArray = []
 var content_version: String = "0"
 
@@ -31,6 +32,10 @@ const NUMBER_PROPS := ["gravity_multiplier", "mean_temperature_c", "water_access
 const CATEGORY_PROPS := ["atmosphere_class"]
 const LEVEL_ORDER := ["archive", "orbital", "probe", "expedition"]
 const BIOMES := ["green", "desert", "ice"]
+## Player-facing text fields. Keep in sync with tools/loc_extract.py TEXT_KEYS.
+const TEXT_KEYS := ["name", "description", "label", "result", "settlement_name", "text", "title", "warning",
+	"criteria_text", "epilogue", "summary", "advantage", "briefing", "evacuation", "goal", "main", "price", "relay",
+	"risk", "robust_plan", "tagline", "hint", "bio", "zone_label", "risk_note", "short", "subtitle", "role"]
 
 
 static func load_default() -> ContentDB:
@@ -83,8 +88,41 @@ func load_all(root: String) -> bool:
 	if sv2 is Dictionary:
 		for ch: Dictionary in DictUtil.get_arr(sv2, "characters"):
 			characters[str(ch.get("id"))] = ch
+	credits = DictUtil.get_arr(_load_dict(root + "/credits/credits.json"), "sections")
 	validate()
+	if not Loc.is_source():
+		localize()
 	return errors.is_empty()
+
+
+## Replaces every text field with its translation for the active language.
+## Ids, numbers and enum values are untouched, so saves stay language-neutral.
+func localize() -> int:
+	var n := 0
+	for d: Variant in [planets, biome_maps, sites, hazards, locations, routes, buildings, surveys, events, endings,
+			objectives, story, journal_entries, characters, credits]:
+		n += _localize_node(d)
+	return n
+
+
+static func _localize_node(node: Variant) -> int:
+	var n := 0
+	if node is Dictionary:
+		var d: Dictionary = node
+		for k: Variant in d.keys():
+			var v: Variant = d[k]
+			if v is String and str(k) in TEXT_KEYS:
+				var tr := Loc.t(v)
+				if tr != v:
+					d[k] = tr
+					n += 1
+			elif v is Dictionary or v is Array:
+				n += _localize_node(v)
+	elif node is Array:
+		for v: Variant in node:
+			if v is Dictionary or v is Array:
+				n += _localize_node(v)
+	return n
 
 
 func _load_keyed(dir: String, list_key: String, target: Dictionary) -> void:

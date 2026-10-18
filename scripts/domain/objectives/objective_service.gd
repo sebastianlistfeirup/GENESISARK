@@ -11,10 +11,10 @@ func _init(db: ContentDB) -> void:
 
 func complete(gs: GameState, objective_id: String) -> CommandResult:
 	if objective_id in gs.campaign.completed_objectives:
-		return CommandResult.fail("already_completed", "Målet er allerede fuldført.")
+		return CommandResult.fail("already_completed", Loc.t("Målet er allerede fuldført."))
 	gs.campaign.completed_objectives.append(objective_id)
 	var def: Dictionary = content.objectives.get(objective_id, {})
-	gs.log_journal("Mål fuldført: %s" % def.get("title", objective_id), "objective")
+	gs.log_journal(Loc.t("Mål fuldført: %s") % def.get("title", objective_id), "objective")
 	return CommandResult.success({"objective_id": objective_id})
 
 

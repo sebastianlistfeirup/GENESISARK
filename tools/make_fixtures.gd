@@ -3,6 +3,7 @@ extends SceneTree
 ## godot --headless --path . --script res://tools/make_fixtures.gd
 
 func _init() -> void:
+	Loc.set_language(Loc.SOURCE)
 	var content := ContentDB.load_default()
 	DirAccess.make_dir_recursive_absolute("res://fixtures/saves")
 	# v1 fixture: mid-voyage, after one probe and one journey.

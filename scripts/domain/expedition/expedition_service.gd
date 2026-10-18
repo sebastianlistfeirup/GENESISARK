@@ -19,19 +19,19 @@ func survey_for(planet_id: String) -> Dictionary:
 
 func start(gs: GameState, site_id: String, plan_drone_reserve: bool) -> CommandResult:
 	if gs.campaign.phase != CampaignState.PHASE_VOYAGE:
-		return CommandResult.fail("wrong_phase", "Ekspeditioner kræver, at arken er i kredsløb før landing.")
+		return CommandResult.fail("wrong_phase", Loc.t("Ekspeditioner kræver, at arken er i kredsløb før landing."))
 	if gs.expedition != null and gs.expedition.status == ExpeditionState.STATUS_ACTIVE:
-		return CommandResult.fail("already_active", "En ekspedition er allerede i gang.")
+		return CommandResult.fail("already_active", Loc.t("En ekspedition er allerede i gang."))
 	var pid := str(content.locations.get(gs.campaign.location_id, {}).get("planet_id", ""))
 	if pid.is_empty():
-		return CommandResult.fail("not_in_orbit", "Arken er ikke i kredsløb om en planet.")
+		return CommandResult.fail("not_in_orbit", Loc.t("Arken er ikke i kredsløb om en planet."))
 	if not site_id in DictUtil.get_arr(content.planet(pid), "site_templates"):
-		return CommandResult.fail("unknown_site", "Sitet findes ikke på denne planet.")
+		return CommandResult.fail("unknown_site", Loc.t("Sitet findes ikke på denne planet."))
 	if pid in _done_planets(gs) and site_id in gs.knowledge_of(pid).expedition_sites:
-		return CommandResult.fail("already_explored", "Dette site er allerede udforsket.")
+		return CommandResult.fail("already_explored", Loc.t("Dette site er allerede udforsket."))
 	var reserve_cost := 2 if plan_drone_reserve else 0
 	if gs.ark.components < reserve_cost:
-		return CommandResult.fail("insufficient_components", "Dronereserven kræver %d komponenter." % reserve_cost)
+		return CommandResult.fail("insufficient_components", Loc.t("Dronereserven kræver %d komponenter.") % reserve_cost)
 	gs.ark.components -= reserve_cost
 	var ex := ExpeditionState.new()
 	ex.planet_id = pid
@@ -68,9 +68,9 @@ func tick(gs: GameState, dt: float, hazard_multiplier: float = 1.0) -> void:
 func use_drone_refill(gs: GameState) -> CommandResult:
 	var ex := gs.expedition
 	if ex == null or ex.status != ExpeditionState.STATUS_ACTIVE:
-		return CommandResult.fail("no_expedition", "Ingen aktiv ekspedition.")
+		return CommandResult.fail("no_expedition", Loc.t("Ingen aktiv ekspedition."))
 	if not ex.drone_refill_available or ex.drone_refill_used:
-		return CommandResult.fail("no_refill", "Ingen planlagt dronereserve tilbage.")
+		return CommandResult.fail("no_refill", Loc.t("Ingen planlagt dronereserve tilbage."))
 	ex.drone_refill_used = true
 	ex.suit_energy = minf(float(content.bal("suit.max_energy", 100.0)), ex.suit_energy + float(content.bal("suit.drone_refill", 35.0)))
 	ex.warned_reserve = ex.suit_energy <= float(content.bal("suit.reserve_warning", 30.0))
@@ -81,13 +81,13 @@ func use_drone_refill(gs: GameState) -> CommandResult:
 func take_sample(gs: GameState, point_id: String) -> CommandResult:
 	var ex := gs.expedition
 	if ex == null or ex.status != ExpeditionState.STATUS_ACTIVE:
-		return CommandResult.fail("no_expedition", "Ingen aktiv ekspedition.")
+		return CommandResult.fail("no_expedition", Loc.t("Ingen aktiv ekspedition."))
 	var sv := survey_for(ex.planet_id)
 	var point: Dictionary = DictUtil.get_dict(DictUtil.get_dict(sv, "points"), point_id)
 	if point.is_empty() or not point_id.ends_with("sample"):
-		return CommandResult.fail("unknown_point", "Ukendt prøvepunkt '%s'." % point_id)
+		return CommandResult.fail("unknown_point", Loc.t("Ukendt prøvepunkt '%s'.") % point_id)
 	if point_id in ex.samples:
-		return CommandResult.fail("already_sampled", "Prøven er allerede taget.")
+		return CommandResult.fail("already_sampled", Loc.t("Prøven er allerede taget."))
 	ex.samples.append(point_id)
 	if point_id == "risk_sample":
 		ex.risk_sample_taken = true
@@ -101,9 +101,9 @@ func take_sample(gs: GameState, point_id: String) -> CommandResult:
 func place_relay(gs: GameState) -> CommandResult:
 	var ex := gs.expedition
 	if ex == null or ex.status != ExpeditionState.STATUS_ACTIVE:
-		return CommandResult.fail("no_expedition", "Ingen aktiv ekspedition.")
+		return CommandResult.fail("no_expedition", Loc.t("Ingen aktiv ekspedition."))
 	if ex.relay_placed:
-		return CommandResult.fail("already_placed", "Relæet står der allerede.")
+		return CommandResult.fail("already_placed", Loc.t("Relæet står der allerede."))
 	ex.relay_placed = true
 	ex.extracted.append("fact:landing_quality")
 	return CommandResult.success({})
@@ -113,9 +113,9 @@ func place_relay(gs: GameState) -> CommandResult:
 func finish(gs: GameState, txn: String) -> CommandResult:
 	var ex := gs.expedition
 	if ex == null:
-		return CommandResult.fail("no_expedition", "Ingen ekspedition.")
+		return CommandResult.fail("no_expedition", Loc.t("Ingen ekspedition."))
 	if gs.is_applied(txn):
-		return CommandResult.fail("duplicate_txn", "Ekspeditionen er allerede afsluttet.")
+		return CommandResult.fail("duplicate_txn", Loc.t("Ekspeditionen er allerede afsluttet."))
 	if ex.status == ExpeditionState.STATUS_ACTIVE:
 		ex.status = ExpeditionState.STATUS_RETURNED
 	var applied := _apply_results(gs, ex)
@@ -138,7 +138,7 @@ func _recall(gs: GameState) -> void:
 			if not e in lost:
 				kept.append(e)
 		ex.extracted = kept
-	gs.log_journal("Dragtens energi slap op. ARK trak kaptajnen tilbage til landeren.", "warning")
+	gs.log_journal(Loc.t("Dragtens energi slap op. ARK trak kaptajnen tilbage til landeren."), "warning")
 	suit_depleted.emit()
 
 
@@ -153,16 +153,16 @@ func _apply_results(gs: GameState, ex: ExpeditionState) -> Array:
 		if s.begins_with("prop:"):
 			var prop := s.substr(5)
 			if props.has(prop) and k.status_of(prop) != "known":
-				k.observations[prop] = {"status": "known", "value": props[prop].get("truth"), "confidence": 1.0, "source": "Ekspedition: " + site_name}
+				k.observations[prop] = {"status": "known", "value": props[prop].get("truth"), "confidence": 1.0, "source": Loc.t("Ekspedition: ") + site_name}
 				changed.append(prop)
 		elif s.begins_with("fact:"):
 			var fact := s.substr(5)
 			var facts: Dictionary = DictUtil.get_dict(content.site(ex.site_id), "facts")
-			if k.reveal_site_fact(ex.site_id, fact, facts.get(fact), "Ekspedition"):
+			if k.reveal_site_fact(ex.site_id, fact, facts.get(fact), Loc.t("Ekspedition")):
 				changed.append("site:" + fact)
 	if ex.status == ExpeditionState.STATUS_RETURNED and ex.samples.size() > 0:
-		changed.append_array(k.apply_level(p, "expedition", "Ekspedition: " + site_name))
+		changed.append_array(k.apply_level(p, "expedition", Loc.t("Ekspedition: ") + site_name))
 	if not ex.site_id in k.expedition_sites:
 		k.expedition_sites.append(ex.site_id)
-	gs.log_journal("Ekspedition på %s afsluttet: %d nye oplysninger." % [site_name, changed.size()], "survey")
+	gs.log_journal(Loc.t("Ekspedition på %s afsluttet: %d nye oplysninger.") % [site_name, changed.size()], "survey")
 	return changed

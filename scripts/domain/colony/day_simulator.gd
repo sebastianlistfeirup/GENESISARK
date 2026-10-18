@@ -63,7 +63,7 @@ func tick_day(gs: GameState) -> Dictionary:
 			b["state"] = ColonyState.B_ACTIVE
 			b["blocked_reason"] = ""
 			c.network_dirty = true
-			gs.log_journal("%s er færdigbygget." % content.building(str(b.def_id)).get("name"), "build")
+			gs.log_journal(Loc.t("%s er færdigbygget.") % content.building(str(b.def_id)).get("name"), "build")
 	if c.network_dirty:
 		colony_sim.recompute_network(gs)
 
@@ -107,7 +107,7 @@ func tick_day(gs: GameState) -> Dictionary:
 		if b.def_id != "ark_core" and b.get("state") == ColonyState.B_ACTIVE:
 			b["blocked_reason"] = reason
 			if not reason.is_empty():
-				bottlenecks.append({"id": b.id, "def_id": b.def_id, "reason": reason, "text": ColonySimulation.REASONS.get(reason, reason)})
+				bottlenecks.append({"id": b.id, "def_id": b.def_id, "reason": reason, "text": Loc.t(str(ColonySimulation.REASONS.get(reason, reason)))})
 	# Ark salvage and fuel burn
 	var ark_def: Dictionary = DictUtil.get_dict(content.building("ark_core"), "provides")
 	if c.salvage_left > 0.0:
@@ -156,7 +156,7 @@ func tick_day(gs: GameState) -> Dictionary:
 				b["efficiency"] = DictUtil.get_float(maint, "degraded_output", 0.5)
 				if b.get("blocked_reason", "") == "":
 					b["blocked_reason"] = "maintenance"
-					bottlenecks.append({"id": b.id, "def_id": b.def_id, "reason": "maintenance", "text": ColonySimulation.REASONS["maintenance"]})
+					bottlenecks.append({"id": b.id, "def_id": b.def_id, "reason": "maintenance", "text": Loc.t(str(ColonySimulation.REASONS["maintenance"]))})
 
 	var report := {
 		"day": day, "power": power, "produced": produced, "need": need, "shortage": shortage,

@@ -16,11 +16,11 @@ func quote(gs: GameState, destination: String) -> Dictionary:
 	var from := gs.campaign.location_id
 	var q := {"from": from, "to": destination, "ok": false, "reasons": [], "risky": false, "risk_reasons": []}
 	if destination == from:
-		q["reasons"].append("Arken er allerede her.")
+		q["reasons"].append(Loc.t("Arken er allerede her."))
 		return q
 	var route: Dictionary = content.route_between(from, destination)
 	if route.is_empty():
-		q["reasons"].append("Ingen kendt rute.")
+		q["reasons"].append(Loc.t("Ingen kendt rute."))
 		return q
 	var fuel := float(route.get("fuel", 0))
 	var integ := float(route.get("integrity", 0))
@@ -31,13 +31,13 @@ func quote(gs: GameState, destination: String) -> Dictionary:
 	q["integrity_after"] = gs.ark.integrity - integ
 	q["risk_note"] = str(route.get("risk_note", ""))
 	if gs.campaign.phase == CampaignState.PHASE_SETTLED:
-		q["reasons"].append("Arken er landet. Rejsen er slut.")
+		q["reasons"].append(Loc.t("Arken er landet. Rejsen er slut."))
 	elif gs.campaign.phase == CampaignState.PHASE_ARK:
-		q["reasons"].append("Nødstrømmen skal genoprettes først.")
+		q["reasons"].append(Loc.t("Nødstrømmen skal genoprettes først."))
 	if gs.ark.fuel < fuel:
-		q["reasons"].append("Ikke nok brændstof (%.0f / %.0f)." % [gs.ark.fuel, fuel])
+		q["reasons"].append(Loc.t("Ikke nok brændstof (%.0f / %.0f).") % [gs.ark.fuel, fuel])
 	if gs.ark.integrity - integ <= 0.0:
-		q["reasons"].append("Skroget vil ikke holde til rejsen.")
+		q["reasons"].append(Loc.t("Skroget vil ikke holde til rejsen."))
 	# Minimum reserve: from the destination, can we still reach the nearest other candidate?
 	var nearest := INF
 	var nearest_id := ""
@@ -55,25 +55,25 @@ func quote(gs: GameState, destination: String) -> Dictionary:
 	q["reserve_ok"] = float(q["fuel_after"]) >= float(q["reserve_needed"])
 	if not q["reserve_ok"]:
 		q["risky"] = true
-		q["risk_reasons"].append("Efter rejsen kan arken ikke nå videre til %s (kræver %.0f brændstof). Landing bliver i praksis endelig." % [
+		q["risk_reasons"].append(Loc.t("Efter rejsen kan arken ikke nå videre til %s (kræver %.0f brændstof). Landing bliver i praksis endelig.") % [
 			content.locations.get(nearest_id, {}).get("name", nearest_id), nearest])
 	if integ >= float(content.bal("risky_route_integrity_threshold", 6)):
 		q["risky"] = true
-		q["risk_reasons"].append("Ruten slider hårdt på skroget (-%.0f integritet)." % integ)
+		q["risk_reasons"].append(Loc.t("Ruten slider hårdt på skroget (-%.0f integritet).") % integ)
 	q["ok"] = (q["reasons"] as Array).is_empty()
 	return q
 
 
 func request_travel(gs: GameState, destination: String, txn: String, confirm_risky: bool = false) -> CommandResult:
 	if txn.is_empty():
-		return CommandResult.fail("missing_txn", "Rejsen mangler et transaktions-id.")
+		return CommandResult.fail("missing_txn", Loc.t("Rejsen mangler et transaktions-id."))
 	if gs.is_applied(txn):
-		return CommandResult.fail("duplicate_txn", "Rejsen er allerede gennemført.", {"location": gs.campaign.location_id})
+		return CommandResult.fail("duplicate_txn", Loc.t("Rejsen er allerede gennemført."), {"location": gs.campaign.location_id})
 	var q := quote(gs, destination)
 	if not q["ok"]:
 		return CommandResult.fail("travel_blocked", "; ".join(q["reasons"]), q)
 	if q["risky"] and not confirm_risky:
-		return CommandResult.fail("needs_confirmation", "Risikabel rute kræver bekræftelse: " + " ".join(q["risk_reasons"]), q)
+		return CommandResult.fail("needs_confirmation", Loc.t("Risikabel rute kræver bekræftelse: ") + " ".join(q["risk_reasons"]), q)
 	# Single commit point.
 	gs.ark.fuel = maxf(0.0, gs.ark.fuel - float(q["fuel"]))
 	gs.ark.integrity = maxf(0.0, gs.ark.integrity - float(q["integrity"]))
@@ -83,7 +83,7 @@ func request_travel(gs: GameState, destination: String, txn: String, confirm_ris
 	if not destination in gs.campaign.visited:
 		gs.campaign.visited.append(destination)
 	gs.mark_applied(txn)
-	gs.log_journal("Ankommet til %s efter %d dage i stasis." % [content.locations[destination].get("name", destination), int(q["days"])], "travel")
+	gs.log_journal(Loc.t("Ankommet til %s efter %d dage i stasis.") % [content.locations[destination].get("name", destination), int(q["days"])], "travel")
 	return CommandResult.success({"location": destination, "quote": q})
 
 

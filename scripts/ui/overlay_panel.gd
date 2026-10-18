@@ -50,7 +50,7 @@ func header(text: String, sub: String = "") -> void:
 		v.add_child(UiKit.label(sub, 15, UiKit.MUTED, true))
 	v.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	h.add_child(v)
-	h.add_child(UiKit.button("Luk  [Esc]", close))
+	h.add_child(UiKit.button(Loc.t("Luk  [Esc]"), close))
 	body.add_child(h)
 
 

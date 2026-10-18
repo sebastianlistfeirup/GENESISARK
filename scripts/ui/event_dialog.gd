@@ -24,7 +24,7 @@ func refresh() -> void:
 	body.add_child(h)
 	body.add_child(UiKit.label(str(event_def.get("text", "")), 18, UiKit.TEXT, true))
 	if crit:
-		body.add_child(UiKit.label("Tiden står stille, til du har valgt. Tidsspring stopper ved uafklarede kriser.", 14, UiKit.MUTED, true))
+		body.add_child(UiKit.label(Loc.t("Tiden står stille, til du har valgt. Tidsspring stopper ved uafklarede kriser."), 14, UiKit.MUTED, true))
 	var gs: GameState = GameSession.state
 	for o: Dictionary in DictUtil.get_arr(event_def, "options"):
 		var blockers := GameSession.sim.events.option_blockers(gs, event_def, o)
@@ -35,7 +35,7 @@ func refresh() -> void:
 				parts.append("%d %s" % [int(cost[k]), ColonySimulation._res_label(k)])
 		var p := UiKit.panel()
 		var v := UiKit.vbox(4)
-		var b := UiKit.button(str(o.get("label", "")) + ("  (" + ", ".join(parts) + ")" if not parts.is_empty() else "  (gratis)"), func() -> void:
+		var b := UiKit.button(str(o.get("label", "")) + ("  (" + ", ".join(parts) + ")" if not parts.is_empty() else Loc.t("  (gratis)")), func() -> void:
 			var r := GameSession.cmd_resolve_event(str(event_def.get("id")), str(o.get("id")))
 			if r.ok:
 				event_def = {}

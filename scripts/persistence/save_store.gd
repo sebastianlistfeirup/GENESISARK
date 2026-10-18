@@ -23,23 +23,23 @@ func write(slot: String, envelope: Dictionary, content: ContentDB) -> Dictionary
 	var bak := path + ".bak"
 	var f := FileAccess.open(tmp, FileAccess.WRITE)
 	if f == null:
-		return {"ok": false, "error": "Kan ikke skrive midlertidig fil (%s)." % error_string(FileAccess.get_open_error())}
+		return {"ok": false, "error": Loc.t("Kan ikke skrive midlertidig fil (%s).") % error_string(FileAccess.get_open_error())}
 	f.store_string(JSON.stringify(envelope, "\t"))
 	f.close()
 	# Re-read and validate what actually landed on disk before trusting it.
 	var check := SaveCodec.decode(DictUtil.load_json(tmp), content)
 	if not check["ok"]:
 		DirAccess.remove_absolute(tmp)
-		return {"ok": false, "error": "Verificering af ny save fejlede: " + str(check["error"])}
+		return {"ok": false, "error": Loc.t("Verificering af ny save fejlede: ") + str(check["error"])}
 	if FileAccess.file_exists(path):
 		if FileAccess.file_exists(bak):
 			DirAccess.remove_absolute(bak)
 		var err := DirAccess.rename_absolute(path, bak)
 		if err != OK:
-			return {"ok": false, "error": "Kunne ikke lave backup (%s)." % error_string(err)}
+			return {"ok": false, "error": Loc.t("Kunne ikke lave backup (%s).") % error_string(err)}
 	var err2 := DirAccess.rename_absolute(tmp, path)
 	if err2 != OK:
-		return {"ok": false, "error": "Kunne ikke erstatte save (%s)." % error_string(err2)}
+		return {"ok": false, "error": Loc.t("Kunne ikke erstatte save (%s).") % error_string(err2)}
 	return {"ok": true, "path": path}
 
 
@@ -55,13 +55,13 @@ func read(slot: String, content: ContentDB, prefer_backup: bool = false) -> Dict
 	var target := bak if prefer_backup else path
 	if not FileAccess.file_exists(target):
 		if FileAccess.file_exists(path + ".tmp") and not prefer_backup:
-			res["error"] = "Den seneste gemning blev afbrudt." + (" En backup er tilgængelig." if bak_ok else "")
+			res["error"] = Loc.t("Den seneste gemning blev afbrudt.") + (Loc.t(" En backup er tilgængelig.") if bak_ok else "")
 		else:
-			res["error"] = "Ingen save i dette slot."
+			res["error"] = Loc.t("Ingen save i dette slot.")
 		return res
 	var dec := SaveCodec.decode(DictUtil.load_json(target), content)
 	if not dec["ok"]:
-		res["error"] = str(dec["error"]) + (" En backup er tilgængelig." if bak_ok and not prefer_backup else "")
+		res["error"] = str(dec["error"]) + (Loc.t(" En backup er tilgængelig.") if bak_ok and not prefer_backup else "")
 		return res
 	res["ok"] = true
 	res["state"] = dec["state"]

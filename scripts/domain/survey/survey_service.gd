@@ -13,22 +13,22 @@ func _init(db: ContentDB) -> void:
 
 func orbital_scan(gs: GameState, planet_id: String) -> CommandResult:
 	if not content.planets.has(planet_id):
-		return CommandResult.fail("unknown_planet", "Ukendt planet '%s'." % planet_id)
+		return CommandResult.fail("unknown_planet", Loc.t("Ukendt planet '%s'.") % planet_id)
 	var here := str(content.locations.get(gs.campaign.location_id, {}).get("planet_id", ""))
 	if here != planet_id:
-		return CommandResult.fail("not_in_orbit", "Orbital scanning kræver, at arken er i kredsløb om %s." % content.planet(planet_id).get("name"))
+		return CommandResult.fail("not_in_orbit", Loc.t("Orbital scanning kræver, at arken er i kredsløb om %s.") % content.planet(planet_id).get("name"))
 	var k := gs.knowledge_of(planet_id)
 	if k.level_reached.get("orbital_scan_done", false):
-		return CommandResult.fail("already_scanned", "Planeten er allerede scannet fra kredsløb.")
-	var changed := k.apply_level(content.planet(planet_id), "orbital", "Orbital scanning")
+		return CommandResult.fail("already_scanned", Loc.t("Planeten er allerede scannet fra kredsløb."))
+	var changed := k.apply_level(content.planet(planet_id), "orbital", Loc.t("Orbital scanning"))
 	k.level_reached["orbital_scan_done"] = true
 	# Coarse terrain for every candidate site: enough to choose where to probe.
 	for sid: Variant in DictUtil.get_arr(content.planet(planet_id), "site_templates"):
 		var facts: Dictionary = DictUtil.get_dict(content.site(str(sid)), "facts")
-		if k.reveal_site_fact(str(sid), "flatness", facts.get("flatness"), "Orbital scanning"):
+		if k.reveal_site_fact(str(sid), "flatness", facts.get("flatness"), Loc.t("Orbital scanning")):
 			changed.append("site:%s:flatness" % sid)
 	gs.campaign.elapsed_days += 1
-	gs.log_journal("Orbital scanning af %s: %d egenskaber præciseret." % [content.planet(planet_id).get("name"), changed.size()], "survey")
+	gs.log_journal(Loc.t("Orbital scanning af %s: %d egenskaber præciseret.") % [content.planet(planet_id).get("name"), changed.size()], "survey")
 	return CommandResult.success({"changed": changed})
 
 
@@ -36,42 +36,42 @@ func orbital_scan(gs: GameState, planet_id: String) -> CommandResult:
 ## site_id set = site probe; requires orbit; reveals probe-level data + site facts.
 func launch_probe(gs: GameState, planet_id: String, site_id: String, txn: String) -> CommandResult:
 	if gs.is_applied(txn):
-		return CommandResult.fail("duplicate_txn", "Sonden er allerede sendt.")
+		return CommandResult.fail("duplicate_txn", Loc.t("Sonden er allerede sendt."))
 	if gs.campaign.phase != CampaignState.PHASE_VOYAGE:
-		return CommandResult.fail("wrong_phase", "Sonder kan kun sendes under rejsen.")
+		return CommandResult.fail("wrong_phase", Loc.t("Sonder kan kun sendes under rejsen."))
 	var p := content.planet(planet_id)
 	if p.is_empty():
-		return CommandResult.fail("unknown_planet", "Ukendt planet '%s'." % planet_id)
+		return CommandResult.fail("unknown_planet", Loc.t("Ukendt planet '%s'.") % planet_id)
 	var k := gs.knowledge_of(planet_id)
 	var cost := int(content.bal("probe_component_cost", 3))
 	var here := str(content.locations.get(gs.campaign.location_id, {}).get("planet_id", ""))
 	if site_id.is_empty():
 		if k.level_reached.has("orbital"):
-			return CommandResult.fail("no_new_knowledge", "En fjernsonde vil ikke lære os mere om %s. Rejs dertil for en sitesonde." % p.get("name"))
+			return CommandResult.fail("no_new_knowledge", Loc.t("En fjernsonde vil ikke lære os mere om %s. Rejs dertil for en sitesonde.") % p.get("name"))
 	else:
 		if not site_id in DictUtil.get_arr(p, "site_templates"):
-			return CommandResult.fail("unknown_site", "Sitet '%s' findes ikke på %s." % [site_id, p.get("name")])
+			return CommandResult.fail("unknown_site", Loc.t("Sitet '%s' findes ikke på %s.") % [site_id, p.get("name")])
 		if here != planet_id:
-			return CommandResult.fail("not_in_orbit", "En sitesonde kræver, at arken er i kredsløb.")
+			return CommandResult.fail("not_in_orbit", Loc.t("En sitesonde kræver, at arken er i kredsløb."))
 		if site_id in k.probed_sites:
-			return CommandResult.fail("already_probed", "Der står allerede en sonde på dette site.")
+			return CommandResult.fail("already_probed", Loc.t("Der står allerede en sonde på dette site."))
 	if gs.ark.components < cost:
-		return CommandResult.fail("insufficient_components", "Sonden kræver %d komponenter (har %d)." % [cost, gs.ark.components])
+		return CommandResult.fail("insufficient_components", Loc.t("Sonden kræver %d komponenter (har %d).") % [cost, gs.ark.components])
 	gs.ark.components -= cost
 	var changed: Array = []
 	if site_id.is_empty():
-		changed = k.apply_level(p, "orbital", "Fjernsonde")
+		changed = k.apply_level(p, "orbital", Loc.t("Fjernsonde"))
 	else:
-		changed = k.apply_level(p, "probe", "Sonde: " + str(content.site(site_id).get("name", site_id)))
+		changed = k.apply_level(p, "probe", Loc.t("Sonde: ") + str(content.site(site_id).get("name", site_id)))
 		k.probed_sites.append(site_id)
 		var facts: Dictionary = DictUtil.get_dict(content.site(site_id), "facts")
 		for f: String in ["water_distance_m", "vent"]:
-			if k.reveal_site_fact(site_id, f, facts.get(f), "Sonde"):
+			if k.reveal_site_fact(site_id, f, facts.get(f), Loc.t("Sonde")):
 				changed.append("site:%s" % f)
 		# One site-specific risk signal.
-		k.reveal_site_fact(site_id, "exposure", facts.get("exposure"), "Sonde")
+		k.reveal_site_fact(site_id, "exposure", facts.get("exposure"), Loc.t("Sonde"))
 	gs.mark_applied(txn)
-	gs.log_journal("Sonde til %s%s: %d nye oplysninger." % [p.get("name"), "" if site_id.is_empty() else " (" + str(content.site(site_id).get("name")) + ")", changed.size()], "survey")
+	gs.log_journal(Loc.t("Sonde til %s%s: %d nye oplysninger.") % [p.get("name"), "" if site_id.is_empty() else " (" + str(content.site(site_id).get("name")) + ")", changed.size()], "survey")
 	return CommandResult.success({"changed": changed, "components": gs.ark.components})
 
 
@@ -98,16 +98,16 @@ static func format_observation(pdef: Dictionary, obs: Dictionary) -> String:
 			var v: Variant = obs.get("value")
 			if v is float or v is int:
 				return "%s %s" % [_fmt(float(v)), unit]
-			return ATMOSPHERE_LABELS.get(str(v), str(v))
+			return Loc.t(str(ATMOSPHERE_LABELS.get(str(v), str(v))))
 		"estimated":
 			if obs.has("candidates"):
 				var labels: Array = []
 				for c: Variant in obs.get("candidates"):
-					labels.append(ATMOSPHERE_LABELS.get(str(c), str(c)))
+					labels.append(Loc.t(str(ATMOSPHERE_LABELS.get(str(c), str(c)))))
 				return " / ".join(labels) + " ?"
 			return "%s – %s %s" % [_fmt(float(obs.get("min"))), _fmt(float(obs.get("max"))), unit]
 		_:
-			return "ukendt"
+			return Loc.t("ukendt")
 
 
 static func _fmt(v: float) -> String:

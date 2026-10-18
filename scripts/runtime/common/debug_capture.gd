@@ -4,13 +4,14 @@ extends Node
 ## player flow. Prepares a named fixture state through real domain commands,
 ## opens a scene, waits, saves a screenshot and quits.
 ## Example (needs a display; use xvfb-run on Linux):
-##   godot --path . -- --capture=evidence/shots/ship.png --setup=power --scene=ship --wait=90
+##   godot --path . -- --capture=evidence/shots/ship.png --setup=power --scene=ship --wait=90 [--lang=en]
 
 var out_path := ""
 var setup := "fresh"
 var scene_key := "menu"
 var wait_frames := 90
 var extra: Dictionary = {}
+var lang := ""  # --lang=en: capture in another language without touching saved settings
 
 
 static func requested() -> bool:
@@ -30,11 +31,15 @@ func _ready() -> void:
 				"setup": setup = kv[1]
 				"scene": scene_key = kv[1]
 				"wait": wait_frames = int(kv[1])
+				"lang": lang = kv[1]
 				_: extra[kv[0]] = kv[1]
 	_run.call_deferred()
 
 
 func _run() -> void:
+	if not lang.is_empty():
+		Loc.set_language(lang)
+		GameSession.reload_content()
 	DebugFixtures.prepare(setup)
 	if scene_key != "menu" and not extra.has("no_scene"):
 		AppFlow.params = extra

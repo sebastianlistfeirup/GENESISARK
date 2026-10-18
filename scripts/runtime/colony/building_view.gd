@@ -85,10 +85,10 @@ func refresh(b: Dictionary) -> void:
 		_status.text = "⚙ %d%%" % int(float(b.get("progress", 0.0)) * 100.0)
 		_status.modulate = UiKit.AMBER
 		if reason == "no_access" or reason == "no_workforce":
-			_status.text += "\n▲ " + ("ingen adgang" if reason == "no_access" else "venter på droner")
+			_status.text += "\n▲ " + (Loc.t("ingen adgang") if reason == "no_access" else Loc.t("venter på droner"))
 	elif not reason.is_empty():
-		_status.text = "▲ " + {"no_power": "ingen strøm", "no_access": "ingen adgang", "no_workforce": "mangler arbejdskraft",
-			"maintenance": "vedligehold", "input_missing": "mangler råvarer", "module_missing": "mangler modul"}.get(reason, reason)
+		_status.text = "▲ " + {"no_power": Loc.t("ingen strøm"), "no_access": Loc.t("ingen adgang"), "no_workforce": Loc.t("mangler arbejdskraft"),
+			"maintenance": "vedligehold", "input_missing": Loc.t("mangler råvarer"), "module_missing": Loc.t("mangler modul")}.get(reason, reason)
 		_status.modulate = UiKit.DANGER if reason in ["no_power", "no_access", "module_missing"] else UiKit.WARN
 	else:
 		_status.text = ""

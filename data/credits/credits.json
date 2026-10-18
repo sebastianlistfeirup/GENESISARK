@@ -1,0 +1,48 @@
+{
+  "_note": "Credits and licence notices shown from the main menu. 'status': in_use = shipped in this build, planned = listed in docs/PRODUCTION_PLAN.md, not yet in the build. Update when a pack or tool goes in (docs/ASSET_LEDGER.csv is the source of truth for art). Godot's own licence and third-party notices are read from the engine at runtime.",
+  "sections": [
+    {
+      "id": "team",
+      "title": "Holdet",
+      "entries": [
+        {"role": "Idé, spildesign og produktion", "name": "Sebastian Listfeirup", "status": "in_use"},
+        {"role": "Programmering og værktøjer", "name": "Sebastian Listfeirup med Claude Code", "status": "in_use"}
+      ]
+    },
+    {
+      "id": "art",
+      "title": "Grafik",
+      "entries": [
+        {"role": "Greybox-proxies og procedurelt terræn", "name": "GENESIS ARK", "status": "in_use"},
+        {"role": "POLYGON Sci-Fi Space, Sci-Fi Worlds, Sci-Fi City, Sci-Fi Cyber City, Sci-Fi Outpost", "name": "Synty Studios", "status": "planned", "text": "Bruges under Synty Studios' licens. Pakkerne ligger ikke i kildekoden."},
+        {"role": "POLYGON Particle FX", "name": "Synty Studios", "status": "planned"},
+        {"role": "Sidekick Modular Characters", "name": "Synty Studios", "status": "planned"},
+        {"role": "INTERFACE Sci-Fi Menus og Sci-Fi Soldier HUD", "name": "Synty Studios", "status": "planned"}
+      ]
+    },
+    {
+      "id": "audio",
+      "title": "Lyd og stemmer",
+      "entries": [
+        {"role": "Pladsholderlyde", "name": "Genereret procedurelt til prototypen", "status": "in_use"},
+        {"role": "Lydeffekter, stemning og stemmer", "name": "ElevenLabs", "status": "planned"},
+        {"role": "Musik", "name": "Komponist eller licenseret musik", "status": "planned"}
+      ]
+    },
+    {
+      "id": "video",
+      "title": "Film",
+      "entries": [
+        {"role": "Mellemsekvenser og trailer", "name": "Gemini, Grok og HeyGen", "status": "planned"}
+      ]
+    },
+    {
+      "id": "thanks",
+      "title": "Tak",
+      "entries": [
+        {"role": "Spilmotor", "name": "Godot Engine og dets bidragydere", "status": "in_use"},
+        {"role": "Og til de 50.000, der venter.", "name": "", "status": "in_use"}
+      ]
+    }
+  ]
+}

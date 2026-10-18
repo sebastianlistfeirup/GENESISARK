@@ -28,4 +28,4 @@ static func fail(error_code: String, message: String, payload: Dictionary = {}) 
 
 
 func _to_string() -> String:
-	return "CommandResult(%s, %s, %s)" % [ok, code, reason]
+	return Loc.t("CommandResult(%s, %s, %s)") % [ok, code, reason]

@@ -50,12 +50,12 @@ static func from_dict(d: Dictionary) -> ArkState:
 ## Returns reasons the state breaks domain invariants (empty = valid).
 func invariant_errors() -> PackedStringArray:
 	var out: PackedStringArray = []
-	if fuel < 0.0: out.append("fuel < 0")
-	if integrity < 0.0 or integrity > 100.0: out.append("integrity uden for [0,100]")
-	if components < 0: out.append("components < 0")
+	if fuel < 0.0: out.append(Loc.t("fuel < 0"))
+	if integrity < 0.0 or integrity > 100.0: out.append(Loc.t("integrity uden for [0,100]"))
+	if components < 0: out.append(Loc.t("components < 0"))
 	for k: String in ["viable", "incubating", "born", "lost"]:
 		if int(ledger()[k]) < 0:
-			out.append("embryo %s < 0" % k)
+			out.append(Loc.t("embryo %s < 0") % k)
 	if embryo_sum() != EMBRYO_TOTAL:
-		out.append("embryosum %d != %d" % [embryo_sum(), EMBRYO_TOTAL])
+		out.append(Loc.t("embryosum %d != %d") % [embryo_sum(), EMBRYO_TOTAL])
 	return out

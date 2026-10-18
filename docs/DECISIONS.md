@@ -2,6 +2,12 @@
 
 Biblen er baseline. Her står begrundede valg og afvigelser. Nyeste øverst.
 
+### D-018 · Controller-understøttelse ved siden af tastaturet
+`SettingsService.PAD` lægger joypad-hændelser (Xbox-navngivning) på de samme actions som tastaturet, plus `look_*` til højre stik. Tasteomlægning rører kun tastaturet, så controlleren kan ikke "mistes". Controller-knapper kan ikke omlægges i v1 (bevidst: færre tilstande at teste). Første knaptryk uden fokus giver fokus til øverste synlige knap, så menuer kan betjenes. I kolonien er byggemarkøren skærmens midte, når sidste input kom fra en controller (`SettingsService.using_pad`). Tastaturhints skifter til controllerens navne.
+
+### D-017 · Lokalisering: dansk kildetekst er nøglen
+Al spillertekst går gennem `Loc.t()` (statisk, bruger `TranslationServer`, som er en motor-singleton, ikke en autoload, så domænet forbliver node-frit). Dansk kildetekst er nøglen, så koden kan læses uden opslag. `tools/loc_extract.py` samler kode-literaler, label-ordbøger og datafelter (`ContentDB.TEXT_KEYS`) i `localization/translations.csv`; `--check` fejler i `tools/check.sh`, hvis en nøgle mangler oversættelse eller placeholders (`%d`, `{settlement}`) afviger. `ContentDB.localize()` oversætter kun tekstfelter ved indlæsning; id'er og tal røres ikke, så saves er sproguafhængige (testet: samme checksum på dansk og engelsk). Sprogskift genindlæser indhold og scene. Tests kører altid på kildesproget. Afvigelse fra bibel s. 26 (sprog først i GA-33): grundlaget er lagt nu, fordi det er billigst, før indholdet vokser.
+
 ### D-015 · Prognose genbruges ved godkendelse af tidsspring
 Simulationen er deterministisk, så et godkendt spring overtager prognosens sluttilstand, hvis startilstand og plan er identiske (checksum). Ellers simuleres der forfra. En separat test viser, at uafhængig simulering giver samme verden (`test_commit_without_forecast_matches_forecast`).
 

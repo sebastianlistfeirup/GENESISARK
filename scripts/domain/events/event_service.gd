@@ -59,7 +59,7 @@ func tick_day(gs: GameState, _report: Dictionary) -> Dictionary:
 			if roll < chance * 2.0:
 				gs.events.warnings.append(id)
 				gs.events.active.append({"id": id, "day_started": gs.campaign.colony_day + DictUtil.get_int(def, "warning_days", 3), "phase": "warning"})
-				gs.log_journal("Varsel: %s" % def.get("warning", def.get("title")), "warning")
+				gs.log_journal(Loc.t("Varsel: %s") % def.get("warning", def.get("title")), "warning")
 				out["warned"].append(id)
 	# Promote warnings to active events when their day arrives.
 	for a: Dictionary in gs.events.active:
@@ -92,11 +92,11 @@ func option_blockers(gs: GameState, def: Dictionary, option: Dictionary) -> Arra
 	var cost: Dictionary = DictUtil.get_dict(option, "cost")
 	for k: String in cost.keys():
 		if float(cost[k]) > 0.0 and float(gs.colony.inventory.get(k, 0.0)) < float(cost[k]):
-			out.append("Mangler %s." % ColonySimulation._res_label(k))
+			out.append(Loc.t("Mangler %s.") % ColonySimulation._res_label(k))
 	var req: Dictionary = DictUtil.get_dict(option, "requires")
 	var rb := DictUtil.get_str(req, "building")
 	if not rb.is_empty() and gs.colony.count_active(rb) == 0:
-		out.append("Kræver %s." % content.building(rb).get("name", rb))
+		out.append(Loc.t("Kræver %s.") % content.building(rb).get("name", rb))
 	var rm := DictUtil.get_str(req, "module")
 	if not rm.is_empty():
 		var found := false
@@ -104,26 +104,26 @@ func option_blockers(gs: GameState, def: Dictionary, option: Dictionary) -> Arra
 			if rm in b.get("modules", []):
 				found = true
 		if not found:
-			out.append("Kræver %s." % ("filtermodul" if rm == "filter" else "varmemodul"))
+			out.append(Loc.t("Kræver %s.") % ("filtermodul" if rm == "filter" else "varmemodul"))
 	return out
 
 
 func resolve(gs: GameState, event_id: String, option_id: String) -> CommandResult:
 	if gs.events.resolved.has(event_id):
-		return CommandResult.fail("already_resolved", "Hændelsen er allerede løst.")
+		return CommandResult.fail("already_resolved", Loc.t("Hændelsen er allerede løst."))
 	var active_entry: Dictionary = {}
 	for a: Dictionary in gs.events.active:
 		if a.get("id") == event_id and a.get("phase") == "active":
 			active_entry = a
 	if active_entry.is_empty():
-		return CommandResult.fail("not_active", "Hændelsen er ikke aktiv.")
+		return CommandResult.fail("not_active", Loc.t("Hændelsen er ikke aktiv."))
 	var def: Dictionary = content.events.get(event_id, {})
 	var option: Dictionary = {}
 	for o: Dictionary in DictUtil.get_arr(def, "options"):
 		if o.get("id") == option_id:
 			option = o
 	if option.is_empty():
-		return CommandResult.fail("unknown_option", "Ukendt valg.")
+		return CommandResult.fail("unknown_option", Loc.t("Ukendt valg."))
 	var blockers := option_blockers(gs, def, option)
 	if not blockers.is_empty():
 		return CommandResult.fail("option_blocked", " ".join(blockers), {"blockers": blockers})
@@ -183,13 +183,13 @@ func validate_events() -> PackedStringArray:
 				found = true
 				for k: Variant in DictUtil.get_dict(o, "cost").values():
 					if float(k) > 0.0:
-						out.append("event %s: fallback '%s' har en pris" % [id, fb])
+						out.append(Loc.t("event %s: fallback '%s' har en pris") % [id, fb])
 				var req: Dictionary = DictUtil.get_dict(o, "requires")
 				if not DictUtil.get_str(req, "building").is_empty() or not DictUtil.get_str(req, "module").is_empty():
-					out.append("event %s: fallback '%s' har krav" % [id, fb])
+					out.append(Loc.t("event %s: fallback '%s' har krav") % [id, fb])
 		if not found:
-			out.append("event %s: mangler gyldig fallback" % id)
+			out.append(Loc.t("event %s: mangler gyldig fallback") % id)
 		for bid: Variant in DictUtil.get_arr(DictUtil.get_dict(def, "trigger"), "requires_buildings"):
 			if not content.buildings.has(str(bid)):
-				out.append("event %s: ukendt bygning %s" % [id, bid])
+				out.append(Loc.t("event %s: ukendt bygning %s") % [id, bid])
 	return out

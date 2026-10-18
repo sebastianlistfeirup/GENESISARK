@@ -59,7 +59,7 @@ func _ready() -> void:
 	var panel := UiKit.panel()
 	panel.add_child(_info)
 	hud.top_right.add_child(panel)
-	hud.set_prompt("W/S gas · A/D drej · Mellemrum/Ctrl op/ned · [F] autopilot")
+	hud.set_prompt(Loc.t("W/S gas · A/D drej · Mellemrum/Ctrl op/ned · [F] autopilot"))
 	AudioService.set_ambience("amb_space")
 	_thruster = AudioStreamPlayer.new()
 	_thruster.stream = AudioService.stream("sfx_thruster")
@@ -112,13 +112,13 @@ func _physics_process(delta: float) -> void:
 		cam.global_position += Vector3(randf_range(-0.4, 0.4), randf_range(-0.4, 0.4), 0)
 	cam.look_at(ship.global_position + -ship.global_transform.basis.z * 20.0)
 	_thruster.pitch_scale = 0.7 + speed / 100.0
-	_info.text = "Indflyvning: %s\nKorridor %d / %d\nFart %d · %s" % [GameSession.content.locations.get(_dest, {}).get("name", _dest),
-		mini(next_ring + 1, RING_COUNT), RING_COUNT, int(speed), "AUTOPILOT" if autopilot else "manuel"]
+	_info.text = Loc.t("Indflyvning: %s\nKorridor %d / %d\nFart %d · %s") % [GameSession.content.locations.get(_dest, {}).get("name", _dest),
+		mini(next_ring + 1, RING_COUNT), RING_COUNT, int(speed), Loc.t("AUTOPILOT") if autopilot else Loc.t("manuel")]
 
 
 func _arrive() -> void:
 	_done = true
-	hud.set_prompt("Kredsløb etableret.")
+	hud.set_prompt(Loc.t("Kredsløb etableret."))
 	await get_tree().create_timer(1.2).timeout
 	AppFlow.goto("ship", {"spawn": "orbit_terminal"})
 

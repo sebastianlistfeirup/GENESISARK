@@ -119,26 +119,26 @@ func validation_errors(content: ContentDB) -> PackedStringArray:
 	var out: PackedStringArray = []
 	out.append_array(ark.invariant_errors())
 	if not content.locations.has(campaign.location_id):
-		out.append("ukendt location_id '%s'" % campaign.location_id)
+		out.append(Loc.t("ukendt location_id '%s'") % campaign.location_id)
 	if not campaign.selected_planet_id.is_empty() and not content.planets.has(campaign.selected_planet_id):
-		out.append("ukendt planet '%s'" % campaign.selected_planet_id)
+		out.append(Loc.t("ukendt planet '%s'") % campaign.selected_planet_id)
 	if not campaign.phase in [CampaignState.PHASE_ARK, CampaignState.PHASE_VOYAGE, CampaignState.PHASE_SETTLED, CampaignState.PHASE_ENDED]:
-		out.append("ukendt fase '%s'" % campaign.phase)
+		out.append(Loc.t("ukendt fase '%s'") % campaign.phase)
 	for pid: String in knowledge.keys():
 		if not content.planets.has(pid):
-			out.append("viden om ukendt planet '%s'" % pid)
+			out.append(Loc.t("viden om ukendt planet '%s'") % pid)
 	if campaign.phase == CampaignState.PHASE_SETTLED and colony == null:
-		out.append("fase SETTLED uden koloni")
+		out.append(Loc.t("fase SETTLED uden koloni"))
 	if colony:
 		out.append_array(colony.invariant_errors())
 		if not content.sites.has(colony.site_id):
-			out.append("koloni på ukendt site '%s'" % colony.site_id)
+			out.append(Loc.t("koloni på ukendt site '%s'") % colony.site_id)
 		for b: Dictionary in colony.buildings:
 			if not content.buildings.has(str(b.get("def_id"))):
-				out.append("ukendt bygning '%s'" % b.get("def_id"))
+				out.append(Loc.t("ukendt bygning '%s'") % b.get("def_id"))
 	# Born is historical; population is alive. Born must cover everyone who ever lived.
 	if population.alive_count() + population.deaths > ark.embryo_born:
-		out.append("befolkning (%d) + døde overstiger fødte (%d)" % [population.alive_count(), ark.embryo_born])
+		out.append(Loc.t("befolkning (%d) + døde overstiger fødte (%d)") % [population.alive_count(), ark.embryo_born])
 	if population.count_stage("incubating") != ark.embryo_incubating:
-		out.append("inkuberende kohorter (%d) != ledger incubating (%d)" % [population.count_stage("incubating"), ark.embryo_incubating])
+		out.append(Loc.t("inkuberende kohorter (%d) != ledger incubating (%d)") % [population.count_stage("incubating"), ark.embryo_incubating])
 	return out

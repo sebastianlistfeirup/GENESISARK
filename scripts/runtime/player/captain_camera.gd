@@ -60,11 +60,19 @@ func _unhandled_input(event: InputEvent) -> void:
 func _process(delta: float) -> void:
 	if target == null:
 		return
-	var td: Vector2 = TouchControls.consume_look() if TouchControls.enabled else Vector2.ZERO
+	# Autoloads are freed before top-level nodes at quit; never touch a freed TouchControls.
+	var td: Vector2 = TouchControls.consume_look() if is_instance_valid(TouchControls) and TouchControls.enabled else Vector2.ZERO
 	if active and td != Vector2.ZERO:
 		var sens := float(SettingsService.get_value("mouse_sensitivity", 0.25)) * 0.012
 		yaw -= td.x * sens
 		pitch = clampf(pitch - td.y * sens, -1.2, 0.5)
+	if active:
+		var pv := Input.get_vector("look_left", "look_right", "look_up", "look_down")
+		if pv != Vector2.ZERO:
+			var ps := float(SettingsService.get_value("pad_look_speed", 2.4)) * delta
+			var pinv := -1.0 if SettingsService.get_value("invert_y", false) else 1.0
+			yaw -= pv.x * ps
+			pitch = clampf(pitch - pv.y * ps * 0.7 * pinv, -1.2, 0.5)
 	var want := target.global_position + Vector3(0, 1.55, 0)
 	global_position = global_position.lerp(want, clampf(delta * 14.0, 0, 1)) if global_position.distance_to(want) < 3.0 else want
 	rotation = Vector3(pitch, yaw, 0)
