@@ -10,6 +10,11 @@ export_credentials.cfg
 /assets/quarantine/
 /assets/synty_raw/
 *.unitypackage
+# The repository is PUBLIC: purchased models/textures copied in by tools/synty/stage.py
+# stay local too. Rebuild on any machine with tools/synty/build.sh from
+# data/art/synty_choices.json (file names only) and the packs in quarantine.
+/assets/imported/*
+!/assets/imported/README.md
 
 # OS / editor
 .DS_Store

@@ -77,7 +77,7 @@ Gem den originale zip et sikkert sted uden for repositoryet (fx `D:\SyntyArkiv\`
   - Windows PowerShell: `Get-FileHash .\fil.fbx -Algorithm SHA256`
   - macOS/Linux: `shasum -a 256 fil.fbx`
 
-> **Licens:** Vi går ud fra, at de importerede filer må ligge i et **privat** repository til udvikling. Hvis repositoryet nogensinde bliver offentligt, skal `assets/imported/` fjernes eller gøres privat først. **(skal verificeres i Syntys licens)**
+> **Licens:** Repositoryet er **offentligt** (tjekket 18.10.2026). Derfor er også `assets/imported/` udelukket fra git: købte filer ligger kun på din maskine. Wrappers, materialer, bone maps og valglisten committes (ingen Synty-data i dem), og `tools/synty/build.sh` genskaber det hele fra karantænen på enhver maskine.
 
 ---
 
