@@ -57,7 +57,41 @@ func _run() -> void:
 	# Main menu
 	var menu := await load_scene("res://scenes/menu/main_menu.tscn")
 	check("menu_loads", is_instance_valid(menu))
+	# Controller in menus: a pad button with nothing focused focuses the first button.
+	var fo := get_viewport().gui_get_focus_owner()
+	if fo:
+		fo.release_focus()
+	var jb := InputEventJoypadButton.new()
+	jb.button_index = JOY_BUTTON_DPAD_DOWN
+	jb.pressed = true
+	Input.parse_input_event(jb)
+	await frames(2)
+	check("pad_focuses_menu", get_viewport().gui_get_focus_owner() is Button and SettingsService.using_pad, str(get_viewport().gui_get_focus_owner()))
+	var jr := InputEventJoypadButton.new()
+	jr.button_index = JOY_BUTTON_DPAD_DOWN
+	Input.parse_input_event(jr)
+	var mk := InputEventKey.new()
+	mk.physical_keycode = KEY_SHIFT
+	mk.pressed = true
+	Input.parse_input_event(mk)
+	mk.pressed = false
+	Input.parse_input_event(mk)
+	await frames(1)
 	await unload(menu)
+
+	# Settings survive a restart (GA-33): written to disk and read back by a fresh loader.
+	var old_lang: Variant = SettingsService.get_value("language")
+	var old_scale: Variant = SettingsService.get_value("ui_scale")
+	SettingsService.values["ui_scale"] = 1.15
+	SettingsService.values["language"] = "en"
+	SettingsService.save_settings()
+	var cfg := ConfigFile.new()
+	var loaded := cfg.load(SettingsService.PATH) == OK
+	check("settings_persist", loaded and is_equal_approx(float(cfg.get_value("settings", "ui_scale", 0.0)), 1.15) and cfg.get_value("settings", "language", "") == "en")
+	SettingsService.values["ui_scale"] = old_scale
+	SettingsService.values["language"] = old_lang
+	SettingsService.save_settings()
+	SettingsService.apply()
 
 	# Controller: every pad binding is in the input map (keyboard remaps never remove it).
 	var pad_missing: Array = []

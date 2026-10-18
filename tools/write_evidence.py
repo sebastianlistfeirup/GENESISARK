@@ -55,6 +55,36 @@ TASKS = {
               "expected": "Roundtrip bevarer nøgletal og id'er; korrupt fil tilbyder backup; restore affyrer ingen events igen; v1-fixture migreres."},
 }
 
+# Groundwork laid ahead of a task's gate: checks that pass now, written to
+# evidence/<id>/groundwork.json (never result.json, so update_tasks.py cannot mark DONE).
+GROUNDWORK = {
+    "GA-14": {"smoke": ["riglab_audit_all_slots", "riglab_runs"], "shots": ["riglab.png"],
+              "covers": "RigLab-scene, audit af skala/fødder/AnimationPlayer/clips for alle char.*-slots, tilstandscykler og cirkelbevægelse.",
+              "open": "Rig, clips, AnimationTree, kontaktpunkter og pause/restore-test kræver de importerede Sidekick-figurer."},
+    "GA-19": {"smoke": ["audio_cues_load", "audio_layer_set"],
+              "covers": "Alle 53 lyd-cues i AUDIO_LEDGER har kodehook (52 HOOKED + alarm-varianten); 42 har proxy-lyd; lag, varianter, stingers og positionel byggelyd.",
+              "open": "Endelige lyde (ElevenLabs/komponist) og 45-minutters spiltest med eksterne testere."},
+    "GA-29": {"smoke": ["pad_bindings_complete", "pad_look_turns_camera", "pad_focuses_menu", "settings_persist"],
+              "covers": "Controller (Xbox-layout) ved siden af tastatur, højre stik til kamera, fokus i menuer, controllernavne i hints, indstillinger gemmes.",
+              "open": "Performance-mål på referencemaskine og fuld accessibility-gennemgang."},
+    "GA-33": {"unit": ["test_localization"], "smoke": ["language_switch_keeps_state", "settings_persist"],
+              "shots": ["en_menu.png", "en_colony.png", "settings_en.png", "credits_da.png"],
+              "covers": "Lokalisering da/en (1069 nøgler, alle oversat, placeholder-tjek), sprogskift uden at røre domænet, krediteringer + Godot-licenser fra motoren, indstillinger overlever genstart.",
+              "open": "Ledger-kontrol mod faktisk build, platformliste og kendte begrænsninger, endelig credits når Synty/lyd er inde."},
+}
+for tid, spec in GROUNDWORK.items():
+    oks, notes = [], []
+    if "unit" in spec:
+        ok, f = unit_ok(spec["unit"]); oks.append(ok); notes += f
+    if "smoke" in spec:
+        ok, f = smoke_ok(spec["smoke"]); oks.append(ok); notes += f
+    shots = [s for s in spec.get("shots", []) if os.path.exists(os.path.join(EV, "shots", s))]
+    os.makedirs(os.path.join(EV, tid), exist_ok=True)
+    json.dump({"task_id": tid, "commit": commit, "kind": "groundwork", "engine_version": unit.get("engine_version") or smoke.get("engine_version"),
+               "command": "tools/check.sh", "status": "PASS" if oks and all(oks) else "FAIL", "covers": spec["covers"], "open": spec["open"],
+               "failed_checks": notes, "artifacts": ["evidence/test_report.json", "evidence/scene_smoke.json"] + ["evidence/shots/" + s for s in shots]},
+              open(os.path.join(EV, tid, "groundwork.json"), "w", encoding="utf-8"), indent=2, ensure_ascii=False)
+
 now = datetime.datetime.now(datetime.timezone.utc).isoformat(timespec="seconds")
 summary = {}
 for tid, spec in TASKS.items():
