@@ -8,7 +8,7 @@ extends CanvasLayer
 ##     closer and hides when the interaction prompt takes over
 ## Presentation only: scenes tell it which nodes matter; it never touches state.
 
-const BOTTOM_EDGE := 190.0     # keep edge markers above subtitles and prompts
+const BOTTOM_EDGE := 230.0     # keep edge markers above subtitles and prompts
 const EDGE := 84.0           # px kept free at the screen edge
 const PLACE_RANGE := 28.0    # m: places further away stay hidden
 const PROMPT_RANGE := 2.6    # m: inside this the interaction prompt speaks instead
@@ -117,13 +117,16 @@ func _draw_markers() -> void:
 		_text(font, pos + Vector2(0, 40), dist_txt, 16, Color(UiKit.AMBER, 0.95), true)
 		return
 	# Off-screen or behind: pin to the edge in the direction of the target.
-	var center := rect.size * 0.5
+	var center := inner.get_center()  # centre of the safe area, not the screen
 	var dir := pos - center
 	if behind:
 		dir = -dir  # unproject mirrors points behind the camera
 	if dir.length() < 1.0:
 		dir = Vector2(0, 1)
 	dir = dir.normalized()
+	# Behind/below: go to the lower left/right side, never bottom centre (prompt + subtitles live there).
+	if dir.y > 0.4:
+		dir = Vector2(signf(dir.x) if absf(dir.x) > 0.01 else 1.0, 0.4).normalized()
 	var half := inner.size * 0.5
 	var scale := minf(half.x / maxf(absf(dir.x), 0.001), half.y / maxf(absf(dir.y), 0.001))
 	var edge := center + dir * scale

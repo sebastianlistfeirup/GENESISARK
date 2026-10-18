@@ -2,6 +2,9 @@
 
 Biblen er baseline. Her står begrundede valg og afvigelser. Nyeste øverst.
 
+### D-026 · Lys pr. planet som data
+Biblen beder om tydelige biomer og læsbarhed (s. 11-12). Lys, himmel, tåge, eksponering, glød og SSAO ligger nu i `data/art/lighting.json` (standard ← biom ← planet) og bygges af `Lighting.build()`; `TerrainBuilder.environment_for()` delegerer dertil. Himlen er en `ProceduralSkyMaterial`-gradient, så Synty-skyboxe kan sættes ind senere uden kodeændring. Justeret på skærmbilleder pr. planet (Nivalis var overeksponeret). Vejvisningsmarkøren holder sig nu fri af undertekster og knapprompter (sikkert område + bundmargin; mål bag kameraet vises i siden).
+
 ### D-025 · Spillet er på engelsk: engelsk er kildesproget
 Sebastian: "Spillet er 100% på engelsk." Engelsk er nu kildesproget i kode (`Loc.t("…")`) og data; dansk er en valgfri oversættelse (`localization/translations.csv`: keys = engelsk, da = dansk). Omlægningen er lavet maskinelt (`tools/loc_flip_source.py`) efter en sprogvask af al engelsk tekst (amerikansk stavning, fast ordliste, tørre NAV-linjer); 1.124 tekster, 0 uden match. Standardsprog er engelsk; gamle indstillinger med dansk som standard nulstilles én gang (settings version 2). Stemmemanuskriptet er på engelsk med engelsk regi. Docs til Sebastian forbliver på dansk; testbeskeder og udviklerværktøjer (RigLab, Asset-slots) må være danske. Ny regel for agenter: al spillertekst skrives på engelsk, og `tools/loc_extract.py` tilføjer den til oversættelsen.
 

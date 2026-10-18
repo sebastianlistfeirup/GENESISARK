@@ -205,7 +205,7 @@ func _run() -> void:
 	check("ship_captain_spawned", captain != null and captain.is_on_floor() or captain.global_position.y > -0.5, str(captain.global_position))
 	var wl: WaypointLayer = ship.get("waypoints")
 	check("waypoint_points_to_objective", wl != null and wl.objective == ship.get("interactables")["power_coupling"] and wl.places.size() >= 6,
-		"%s, %d steder" % [wl.objective_label if wl else "-", wl.places.size() if wl else 0])
+		"%s, %d places" % [wl.objective_label if wl else "-", wl.places.size() if wl else 0])
 	var start := captain.global_position
 	var bounds: ShipBuilder = ship.get("builder")
 	var escaped := 0

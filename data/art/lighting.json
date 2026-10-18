@@ -1,0 +1,132 @@
+{
+  "_note": "Light and atmosphere per world (surface + colony). defaults <- biomes[biome] <- planets[id]. Colours are hex; sun angles in degrees (pitch below horizon is negative). Tune here, no code changes. Preview: DebugCapture --setup=expedition:<planet> --scene=surface.",
+  "defaults": {
+    "sky_top": "#5d8fb0",
+    "sky_horizon": "#b9d3d6",
+    "ground_horizon": "#8a9a90",
+    "ground_bottom": "#3a4038",
+    "sun_color": "#fff1d6",
+    "sun_energy": 1.25,
+    "sun_pitch": -48,
+    "sun_yaw": 30,
+    "shadow_distance": 140,
+    "ambient_color": "#c8dcdc",
+    "ambient_energy": 0.45,
+    "sky_contribution": 0.4,
+    "fog_color": "#b9d3d6",
+    "fog_density": 0.0022,
+    "fog_sun_scatter": 0.15,
+    "fog_aerial": 0.25,
+    "exposure": 1.0,
+    "white": 1.4,
+    "glow": 0.55,
+    "glow_bloom": 0.03,
+    "ssao": true,
+    "adjust_saturation": 1.0
+  },
+  "biomes": {
+    "green": {
+      "ground_horizon": "#6f8f5a",
+      "ground_bottom": "#2f3d28"
+    },
+    "desert": {
+      "sun_energy": 1.45,
+      "sun_pitch": -60,
+      "fog_density": 0.0018,
+      "ground_horizon": "#b49068",
+      "ground_bottom": "#5b4532",
+      "adjust_saturation": 1.05
+    },
+    "ice": {
+      "sun_color": "#e6f2ff",
+      "ambient_energy": 0.6,
+      "ground_horizon": "#c8d6de",
+      "ground_bottom": "#7d8c96",
+      "exposure": 0.88
+    }
+  },
+  "planets": {
+    "viridia": {
+      "sky_top": "#5e9aa8",
+      "sky_horizon": "#c4dcc0",
+      "sun_color": "#ffe9c4",
+      "sun_energy": 1.2,
+      "fog_color": "#b6d0b0",
+      "fog_density": 0.0032,
+      "fog_sun_scatter": 0.3,
+      "ambient_color": "#cfe0c4",
+      "glow": 0.7
+    },
+    "pelagos": {
+      "sky_top": "#6a7f90",
+      "sky_horizon": "#a9b8c0",
+      "sun_color": "#e8eef2",
+      "sun_energy": 0.75,
+      "sun_pitch": -55,
+      "ambient_energy": 0.65,
+      "ambient_color": "#b8c6cc",
+      "fog_color": "#9fb0b8",
+      "fog_density": 0.0042,
+      "glow": 0.4,
+      "adjust_saturation": 0.85
+    },
+    "ferrum": {
+      "sky_top": "#8fb6d6",
+      "sky_horizon": "#f0d9b0",
+      "sun_color": "#fffaf0",
+      "sun_energy": 1.6,
+      "sun_pitch": -66,
+      "fog_color": "#e8cfa8",
+      "fog_density": 0.0015,
+      "ambient_color": "#f0dcc0",
+      "exposure": 0.92,
+      "glow": 0.45
+    },
+    "sere": {
+      "sky_top": "#9fa8a0",
+      "sky_horizon": "#e2cda6",
+      "sun_color": "#ffd9a8",
+      "sun_energy": 1.1,
+      "sun_pitch": -40,
+      "fog_color": "#d8c09a",
+      "fog_density": 0.0048,
+      "fog_sun_scatter": 0.35,
+      "ambient_color": "#e0cfb0",
+      "adjust_saturation": 0.9
+    },
+    "nivalis": {
+      "sky_top": "#6f9cc4",
+      "sky_horizon": "#dde8ef",
+      "sun_color": "#fff0dc",
+      "sun_energy": 1.0,
+      "sun_pitch": -16,
+      "sun_yaw": 70,
+      "fog_color": "#dfe9ef",
+      "fog_density": 0.003,
+      "fog_sun_scatter": 0.4,
+      "ambient_color": "#d6e4ee",
+      "glow": 0.75,
+      "exposure": 0.82,
+      "ambient_energy": 0.45,
+      "white": 1.8
+    },
+    "umbra": {
+      "sky_top": "#0b1020",
+      "sky_horizon": "#2b3448",
+      "ground_horizon": "#1f2632",
+      "ground_bottom": "#0c1016",
+      "sun_color": "#9fb4d8",
+      "sun_energy": 0.32,
+      "sun_pitch": -9,
+      "sun_yaw": 60,
+      "ambient_color": "#41506a",
+      "ambient_energy": 0.28,
+      "fog_color": "#1c2433",
+      "fog_density": 0.004,
+      "fog_sun_scatter": 0.0,
+      "exposure": 1.15,
+      "glow": 1.1,
+      "glow_bloom": 0.08
+    }
+  }
+}
