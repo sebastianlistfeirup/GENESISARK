@@ -338,6 +338,13 @@ func debug_action(action: String) -> void:
 		"at_sample":
 			var m: Node3D = _markers.get("main_sample")
 			captain.teleport(m.global_position + Vector3(-4, 0.5, 5), -0.6)
+		"hazard":  # evidence: look at the first hazard zone and its fx.* particles
+			if not hazard_areas.is_empty():
+				var c: Vector3 = (hazard_areas[0]["area"] as Area3D).global_position
+				var at := Vector2(c.x, c.z + 16.0)
+				captain.teleport(Vector3(at.x, terrain.height_at(at.x, at.y) + 0.5, at.y), 0.0)
+				captain.camera_rig.pitch = -0.2
+				captain.camera_rig.distance = 6.0
 		"overview":
 			captain.teleport(Vector3(0, terrain.height_at(0, 12) + 0.5, 12), 0.0)
 			captain.camera_rig.pitch = -0.6

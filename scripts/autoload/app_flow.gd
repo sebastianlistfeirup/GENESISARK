@@ -12,6 +12,7 @@ const SCENES := {
 	"colony": "res://scenes/colony/colony.tscn",
 	"ending": "res://scenes/story/ending.tscn",
 	"riglab": "res://scenes/tests/RigLab.tscn",  # developer tool (GA-14)
+	"fxlab": "res://scenes/tests/FxLab.tscn",  # developer tool: fx.* particle library
 }
 
 var current_key := ""

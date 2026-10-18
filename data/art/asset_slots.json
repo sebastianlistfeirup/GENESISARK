@@ -2353,7 +2353,7 @@
    ]
   },
   "fx.spores": {
-   "scene": "",
+   "scene": "res://art/fx/spores.tscn",
    "scale": 1.0,
    "offset": [
     0,
@@ -2375,7 +2375,7 @@
    ]
   },
   "fx.dust": {
-   "scene": "",
+   "scene": "res://art/fx/dust.tscn",
    "scale": 1.0,
    "offset": [
     0,
@@ -2397,7 +2397,7 @@
    ]
   },
   "fx.snow": {
-   "scene": "",
+   "scene": "res://art/fx/snow.tscn",
    "scale": 1.0,
    "offset": [
     0,
@@ -2419,7 +2419,7 @@
    ]
   },
   "fx.storm": {
-   "scene": "",
+   "scene": "res://art/fx/storm.tscn",
    "scale": 1.0,
    "offset": [
     0,
@@ -2441,7 +2441,7 @@
    ]
   },
   "fx.steam_vent": {
-   "scene": "",
+   "scene": "res://art/fx/steam_vent.tscn",
    "scale": 1.0,
    "offset": [
     0,
@@ -2463,7 +2463,7 @@
    ]
   },
   "fx.thruster": {
-   "scene": "",
+   "scene": "res://art/fx/thruster.tscn",
    "scale": 1.0,
    "offset": [
     0,
@@ -2485,7 +2485,7 @@
    ]
   },
   "fx.construction_sparks": {
-   "scene": "",
+   "scene": "res://art/fx/construction_sparks.tscn",
    "scale": 1.0,
    "offset": [
     0,
@@ -2507,7 +2507,7 @@
    ]
   },
   "fx.power_surge": {
-   "scene": "",
+   "scene": "res://art/fx/power_surge.tscn",
    "scale": 1.0,
    "offset": [
     0,
@@ -2529,7 +2529,7 @@
    ]
   },
   "fx.scan_pulse": {
-   "scene": "",
+   "scene": "res://art/fx/scan_pulse.tscn",
    "scale": 1.0,
    "offset": [
     0,
@@ -2551,7 +2551,7 @@
    ]
   },
   "fx.landing_dust": {
-   "scene": "",
+   "scene": "res://art/fx/landing_dust.tscn",
    "scale": 1.0,
    "offset": [
     0,

@@ -499,6 +499,15 @@ func debug_action(action: String) -> void:
 			var lc: Array = site["districts"]["living"]["center"]
 			ghost_pos = Vector2(float(lc[0]), float(lc[1]))
 			ghost.position = Vector3(ghost_pos.x, terrain.height_at(ghost_pos.x, ghost_pos.y), ghost_pos.y)
+		"construct":  # evidence: a construction site close up (fx.construction_sparks)
+			var lc: Array = site["districts"]["living"]["center"]
+			for i: int in 24:
+				var p := Vector2(float(lc[0]), float(lc[1])) + Vector2.from_angle(i * 0.9) * (4.0 + i * 1.5)
+				if GameSession.cmd_place_building("habitat", p, 0).ok:
+					_sync()
+					cam_rig.position = Vector3(p.x, terrain.height_at(p.x, p.y), p.y)
+					cam_rig.zoom = 24.0
+					break
 		"select_ark":
 			selected_id = 1
 			_refresh_info()
