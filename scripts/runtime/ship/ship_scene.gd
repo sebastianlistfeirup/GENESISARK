@@ -14,6 +14,7 @@ var _display: Label3D
 var _ai: Node3D
 var _ai_t := 0.0
 var _zone := ""
+var waypoints: WaypointLayer
 var _window_planet: Node3D
 var _voyage_label: Label
 
@@ -57,6 +58,11 @@ func _ready() -> void:
 		captain.teleport(it.global_position + Vector3(0, 0.1, 3.0), 0.0)
 	hud = GameHud.new()
 	add_child(hud)
+	waypoints = WaypointLayer.new()
+	add_child(waypoints)
+	for id: String in interactables.keys():
+		var wit: Interactable = interactables[id]
+		waypoints.add_place(wit, WaypointLayer.nice(wit.title), 2.4 if id != "embryo_bank" else 3.8)
 	captain.interact_target_changed.connect(func(t: Interactable) -> void: hud.set_prompt(t.prompt_text() + ("" if t.consequence.is_empty() or t.locked else "\n" + t.consequence) if t else ""))
 	captain.hold_progress.connect(hud.set_hold)
 	var vp := UiKit.panel(Vector2(300, 0))
@@ -91,9 +97,9 @@ func _spawn_interactables() -> void:
 	var defs := {
 		"power_coupling": [Loc.t("nødstrømskoblingen"), Loc.t("Tilslut"), Loc.t("Genstarter nødstrømmen. Broen, embryobanken og stjernekortet kommer online.")],
 		"workbench": [Loc.t("værkstedsbænken"), Loc.t("Brug"), Loc.t("Reparér skroget med komponenter. Det, du bruger her, mangler i kolonien.")],
-		"embryo_bank": ["embryobanken", Loc.t("Undersøg"), Loc.t("Se lagerstatus og redundans for de 50.000.")],
-		"starmap": ["stjernekortet", Loc.t("Åbn"), Loc.t("Sammenlign kandidatverdener, send sonder og vælg rute.")],
-		"bridge_terminal": ["planetsammenligningen", Loc.t("Åbn"), Loc.t("Kendt og manglende viden om alle seks verdener.")],
+		"embryo_bank": [Loc.t("embryobanken"), Loc.t("Undersøg"), Loc.t("Se lagerstatus og redundans for de 50.000.")],
+		"starmap": [Loc.t("stjernekortet"), Loc.t("Åbn"), Loc.t("Sammenlign kandidatverdener, send sonder og vælg rute.")],
+		"bridge_terminal": [Loc.t("planetsammenligningen"), Loc.t("Åbn"), Loc.t("Kendt og manglende viden om alle seks verdener.")],
 		"orbit_terminal": [Loc.t("kredsløbsterminalen"), Loc.t("Åbn"), Loc.t("Scanning, sitesonder, ekspedition og landing.")],
 	}
 	for m: Dictionary in builder.interact_markers:
@@ -172,6 +178,7 @@ func _on_state(_kind: String) -> void:
 	_voyage_label.text = Loc.t("%s\nBrændstof %d · Skrog %d%% · Komp. %d\nEmbryoner %s · Stasis %.1f år") % [
 		str(loc.get("name", "")) + (Loc.t("  (kredsløb)") if loc.has("planet_id") else ""), int(gs.ark.fuel), int(gs.ark.integrity),
 		gs.ark.components, UiKit.thousands(gs.ark.embryo_viable), gs.campaign.captain_stasis_years]
+	_update_waypoint()
 	var pc: Interactable = interactables.get("power_coupling")
 	if pc:
 		pc.locked = powered
@@ -240,6 +247,17 @@ func _update_zone_audio() -> void:
 	_zone = z
 	if z != "D":
 		AudioService.set_layer("amb_embryo_bank" if z == "E" else "", -4.0)
+
+
+## The objective marker points at the interactable named in objectives.json
+## (targets.ship) for the current objective; nothing when it lives elsewhere.
+func _update_waypoint() -> void:
+	if waypoints == null:
+		return
+	var o := GameSession.sim.objectives.current(GameSession.state)
+	var id := str(DictUtil.get_dict(o, "targets").get("ship", ""))
+	var it: Interactable = interactables.get(id)
+	waypoints.set_objective(it, str(o.get("title", "")) if it else "", 2.4 if id != "embryo_bank" else 3.8)
 
 
 func _any_panel() -> bool:

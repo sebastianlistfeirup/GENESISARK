@@ -841,10 +841,13 @@ Se lagerstatus og redundans for de 50.000.,"View storage status and redundancy f
 Tilslut,Connect
 Undersøg,Examine
 arken er ikke i kredsløb om en planet,the Ark is not in orbit around a planet
+embryobanken,the embryo bank
 ingen strøm — genopret nødstrømmen i værkstedet,no power — restore emergency power in the workshop
 kredsløbsterminalen,the orbital terminal
 nødstrømmen kører,emergency power is running
 nødstrømskoblingen,the emergency power coupling
+planetsammenligningen,the planet comparison
+stjernekortet,the star map
 værkstedsbænken,the workbench
 Åbn,Open
  Valgfri risikoprøve., Optional risk sample.
@@ -857,13 +860,17 @@ Du har ingen prøver endnu. Tryk igen for at vende tilbage alligevel.,You have n
 Hold [%s] i %d sekunder.%s,Hold [%s] for %d seconds.%s
 Landeren: %d m,Lander: %d m
 Placér relæ ved,Place relay at
+Placér relæet,Place the relay
 Prøve taget.,Sample taken.
 Prøver: %d/2 · Relæ: %s,Samples: %d/2 · Relay: %s
 Relæet sender.,The relay is transmitting.
 Relæet sikrer data og vurderer landingspladsen.,The relay secures data and assesses the landing site.
+Tag hovedprøven,Take the main sample
 Tag prøve:,Take sample:
 Vend tilbage til,Return to
+Vend tilbage til landeren,Return to the lander
 [%s] Kald dronereserve (+%d%%),[%s] Call drone reserve (+%d%%)
+landeren,the lander
 mangler,missing
 placeret,placed
 prøven er taget,the sample is taken

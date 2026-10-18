@@ -2,6 +2,9 @@
 
 Biblen er baseline. Her står begrundede valg og afvigelser. Nyeste øverst.
 
+### D-020 · Hurtigere bevægelse og vejvisning som i HSR
+Feedback: kaptajnen skal bevæge sig hurtigere, og vigtige steder skal være markeret. Gang 3,0 → 4,2 m/s og løb 5,0 → 7,0 m/s (`data/balance/baseline.json`); acceleration/bremse hævet (14/19), så det stadig føles roligt (~0,3 s til fuld gang). `WaypointLayer` viser det aktuelle mål som pulserende markør med navn og afstand, fastgjort til skærmkanten med pil, når det er bag dig, plus en blød lyssøjle på stedet; andre brugbare steder får en lille prik og navn, der toner frem inden for 28 m og forsvinder, når interaktionsprompten tager over. Målet for hvert opgavetrin står som data (`targets` i `objectives.json`); på overfladen følger det rækkefølgen hovedprøve → relæ → landeren. Rent præsentationslag.
+
 ### D-019 · Rolig touch-styring som i Honkai: Star Rail
 Sebastians feedback fra telefonen: joysticket var "alt for levende". Nu: flydende stik under tommelfingeren (vises svagt i hvile), radius 150 px, radial dødzone 16 %, smoothstep-kurve (let skub = langsom gang, helt ud = løb, ingen løbeknap), lavpasfilter (~100 ms) mod rystelser, og basen følger med, hvis tommelfingeren glider ud. Kaptajnen accelererer over ~0,3 s, bremser blødt og drejer kroppen over ~0,25 s. Kameraet dæmpes (touch), drejer ~180° pr. skærmbredde og glider langsomt ind bag kaptajnen ved sidelæns gang, når man ikke selv styrer det. `tests/touch_feel.gd` måler det (rystelser ignoreres, halvt skub ≈ 1 m/s, fuldt = løb, ingen fartspring, stop på ~0,4 s) og kører i `tools/check.sh`.
 

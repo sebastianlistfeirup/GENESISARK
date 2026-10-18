@@ -23,6 +23,7 @@ var _suit_label: Label
 var _status: Label
 var _finishing := false
 var _markers: Dictionary = {}
+var waypoints: WaypointLayer
 
 
 func _ready() -> void:
@@ -71,6 +72,11 @@ func _ready() -> void:
 		captain.visual_pivot.add_child(lamp)
 	hud = GameHud.new()
 	add_child(hud)
+	waypoints = WaypointLayer.new()
+	add_child(waypoints)
+	for key: String in _markers.keys():
+		var m: Interactable = _markers[key]
+		waypoints.add_place(m, WaypointLayer.nice(m.title), 3.6 if key != "lander" else 4.2)
 	captain.interact_target_changed.connect(func(t: Interactable) -> void: hud.set_prompt(t.prompt_text() + ("\n" + t.consequence if t and not t.consequence.is_empty() else "") if t else ""))
 	captain.hold_progress.connect(hud.set_hold)
 	_build_suit_hud()
@@ -91,7 +97,7 @@ func _ground(p: Vector2) -> Vector3:
 func _place_lander() -> void:
 	var lander := Interactable.new()
 	lander.interact_id = "lander"
-	lander.title = "landeren"
+	lander.title = Loc.t("landeren")
 	lander.verb = Loc.t("Vend tilbage til")
 	lander.consequence = Loc.t("Afslutter ekspeditionen. Prøver og relæ bliver til viden om planeten.")
 	lander.radius = 3.5
@@ -229,6 +235,22 @@ func _build_suit_hud() -> void:
 	hud.top_right.add_child(p)
 
 
+## Expedition order: main sample -> relay -> back to the lander (the risk
+## sample is optional, so it is a place, never the objective).
+func _update_waypoint(ex: ExpeditionState) -> void:
+	if waypoints == null:
+		return
+	var key := "lander"
+	var label := Loc.t("Vend tilbage til landeren")
+	if not "main_sample" in ex.samples and _markers.has("main_sample"):
+		key = "main_sample"
+		label = Loc.t("Tag hovedprøven")
+	elif not ex.relay_placed and _markers.has("relay"):
+		key = "relay"
+		label = Loc.t("Placér relæet")
+	waypoints.set_objective(_markers.get(key), label, 3.6 if key != "lander" else 4.2)
+
+
 func _hazard_mult() -> Array:
 	for h: Dictionary in hazard_areas:
 		if (h["area"] as Area3D).overlaps_body(captain):
@@ -241,6 +263,7 @@ func _physics_process(delta: float) -> void:
 	if gs == null or gs.expedition == null or _finishing:
 		return
 	var ex := gs.expedition
+	_update_waypoint(ex)
 	var hm := _hazard_mult()
 	AudioService.set_layer(hm[2], -4.0)
 	if not hud.any_modal_open():

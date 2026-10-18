@@ -6,7 +6,7 @@
       "ok": true
     },
     {
-      "detail": "@Button@45:<Button#91821704810>",
+      "detail": "@Button@45:<Button#92257912427>",
       "name": "pad_focuses_menu",
       "ok": true
     },
@@ -36,7 +36,7 @@
       "ok": true
     },
     {
-      "detail": "moved=0.37",
+      "detail": "moved=0.36",
       "name": "riglab_runs",
       "ok": true
     },
@@ -56,6 +56,11 @@
       "ok": true
     },
     {
+      "detail": "Gå til værkstedet, 6 steder",
+      "name": "waypoint_points_to_objective",
+      "ok": true
+    },
+    {
       "detail": "escapes=0",
       "name": "ga02_route_10_runs_no_wall_pass",
       "ok": true
@@ -71,18 +76,23 @@
       "ok": true
     },
     {
-      "detail": "dyaw=-0.60",
+      "detail": "dyaw=-0.61",
       "name": "pad_look_turns_camera",
       "ok": true
     },
     {
-      "detail": "I_power_coupling:<Area3D#195504903410>",
+      "detail": "I_power_coupling:<Area3D#196276655347>",
       "name": "prompt_targets_coupling",
       "ok": true
     },
     {
       "detail": "",
       "name": "ga03_power_restored_by_interaction",
+      "ok": true
+    },
+    {
+      "detail": "obj_choose_probe → Sammenlign kandidaterne",
+      "name": "waypoint_follows_next_objective",
       "ok": true
     },
     {
@@ -126,8 +136,18 @@
       "ok": true
     },
     {
+      "detail": "Tag hovedprøven",
+      "name": "waypoint_surface_main_sample",
+      "ok": true
+    },
+    {
       "detail": "",
       "name": "ga06_sample_recorded",
+      "ok": true
+    },
+    {
+      "detail": "Placér relæet",
+      "name": "waypoint_surface_then_relay",
       "ok": true
     },
     {
@@ -189,5 +209,5 @@
   "engine_version": "4.5.1-stable (official)",
   "failures": [],
   "status": "PASS",
-  "timestamp": "2026-10-18T11:13:00"
+  "timestamp": "2026-10-18T11:27:26"
 }

@@ -7,12 +7,12 @@ extends CharacterBody3D
 signal interact_target_changed(target: Interactable)
 signal hold_progress(fraction: float)
 
-@export var walk_speed: float = 3.0
-@export var run_speed: float = 5.0
+@export var walk_speed: float = 4.2
+@export var run_speed: float = 7.0
 ## Calm, weighty feel (no twitch): ~0.3 s to full walk, slightly faster stop,
 ## body turns over ~0.25 s instead of snapping to the stick.
-@export var acceleration: float = 10.0
-@export var deceleration: float = 14.0
+@export var acceleration: float = 14.0
+@export var deceleration: float = 19.0
 @export var turn_speed: float = 8.0
 @export var gravity_scale: float = 1.0
 
@@ -31,6 +31,7 @@ var _slot: VisualSlot
 
 
 func _ready() -> void:
+	add_to_group("player")  # WaypointLayer measures distances from here
 	collision_layer = 2
 	collision_mask = 1 | 16 | 8
 	var shape := CollisionShape3D.new()

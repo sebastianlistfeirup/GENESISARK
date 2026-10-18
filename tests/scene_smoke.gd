@@ -164,6 +164,9 @@ func _run() -> void:
 	var ship := await load_scene("res://scenes/ship/ship.tscn")
 	var captain: Captain = ship.get("captain")
 	check("ship_captain_spawned", captain != null and captain.is_on_floor() or captain.global_position.y > -0.5, str(captain.global_position))
+	var wl: WaypointLayer = ship.get("waypoints")
+	check("waypoint_points_to_objective", wl != null and wl.objective == ship.get("interactables")["power_coupling"] and wl.places.size() >= 6,
+		"%s, %d steder" % [wl.objective_label if wl else "-", wl.places.size() if wl else 0])
 	var start := captain.global_position
 	var bounds: ShipBuilder = ship.get("builder")
 	var escaped := 0
@@ -209,6 +212,10 @@ func _run() -> void:
 	await frames(4)
 	Input.action_release("interact")
 	check("ga03_power_restored_by_interaction", GameSession.state.ark.systems["power"] != "offline")
+	await frames(2)
+	var cur_obj := GameSession.sim.objectives.current(GameSession.state)
+	var want_it: Variant = ship.get("interactables").get(str(DictUtil.get_dict(cur_obj, "targets").get("ship", "")))
+	check("waypoint_follows_next_objective", wl.objective != ship.get("interactables")["power_coupling"] and wl.objective == want_it, "%s → %s" % [cur_obj.get("id"), wl.objective_label])
 	coupling.use()
 	await frames(2)
 	check("ga03_objective_not_rewarded_twice", GameSession.state.campaign.completed_objectives.count("obj_restore_power") == 1)
@@ -242,10 +249,13 @@ func _run() -> void:
 	await frames(60)
 	check("ga06_suit_drains_in_scene", GameSession.state.expedition.suit_energy < e0)
 	var markers: Dictionary = surf.get("_markers")
+	var swl: WaypointLayer = surf.get("waypoints")
+	check("waypoint_surface_main_sample", swl.objective == markers["main_sample"], swl.objective_label)
 	var sample: Interactable = markers["main_sample"]
 	sample.use()
 	await frames(2)
 	check("ga06_sample_recorded", "main_sample" in GameSession.state.expedition.samples)
+	check("waypoint_surface_then_relay", swl.objective == markers.get("relay", markers["lander"]), swl.objective_label)
 	(markers["lander"] as Interactable).use()
 	await frames(150)
 	check("ga06_expedition_finished", GameSession.state.knowledge_of("viridia").expedition_sites.has("green_a"))
