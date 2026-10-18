@@ -16,6 +16,39 @@ Spillet viser en grå "proxy"-figur for hvert visuelt slot, indtil du mapper slo
 
 ---
 
+## Hurtig vej: automatisk import (anbefalet)
+
+Værktøjerne i `tools/synty/` gør trin 3-9 nedenfor for dig. Kræver Python 3 og Godot 4.5.1 (eller bed agenten køre dem).
+
+```bash
+# 1. Pak hver købt pakke ud i karantæne (Unity-pakke, zip eller mappe; kommer aldrig i git)
+python3 tools/synty/unpack.py "D:/SyntyArkiv/POLYGON_SciFi_Space.unitypackage"
+python3 tools/synty/unpack.py "D:/SyntyArkiv/POLYGON_SciFi_Worlds_SourceFiles.zip"
+# 2. Foreslå en model pr. slot ud fra navnemønstre -> data/art/synty_choices.json
+python3 tools/synty/match.py
+# 3. Kig listen igennem: ret "source", sæt "status": "approved" (lås), "skip" (behold proxy).
+#    "weak" bygges først, når du har godkendt den. "rotation_y": 180 vender en model.
+# 4. Byg: kopierer kun de valgte filer ind, importerer, sætter pakkens atlas-materiale
+#    i importindstillingerne, laver wrapper-scener og mapper slottene.
+tools/synty/build.sh
+# 5. Start spillet (F5). Rapport: evidence/synty_build.json. Figurer: scenes/tests/RigLab.tscn.
+```
+
+Hvad byggeren gør med størrelse og placering:
+
+| Slot-type | Tilpasning |
+|---|---|
+| Skibsmoduler (`ship.floor/wall/door/pillar/pipe/window…`) | Skaleres ensartet, så de passer præcist i 4 m-gitteret |
+| Kolonibygninger (`building.*`) | Skaleres ned/op til at stå inden for spillets fodaftryk, centreret, bund på jorden |
+| Rum (`space.*`) | Skaleres til proxyens største mål |
+| Figurer, rekvisitter, sten, køretøjer | Ægte størrelse; kun cm→m-fejl rettes (×0,01). Advarsel, hvis højden er under 50 % eller over 200 % af proxyen |
+
+Alt kan overstyres pr. slot i `synty_choices.json`: `"fit"`, `"extra_scale"`, `"rotation_y"`. Particle FX er Unity-partikelsystemer og bygges i Godot med pakkens teksturer (status `manual`). Kollision ejes altid af spillets egne noder, aldrig af wrapperen.
+
+Afprøv selve værktøjskæden uden købte filer: `tools/synty/selftest.sh` (falsk pakke → hele kæden → kontrol → oprydning).
+
+---
+
 ## 1. Download — hvilken version?
 
 Synty sælger hver pakke med flere downloads (fx Unity-pakke, Unreal, "Source Files"/FBX). **(skal verificeres ved import — se Synty FAQ, biblen R7)**

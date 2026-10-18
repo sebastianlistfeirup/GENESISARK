@@ -82,20 +82,7 @@ static func audit(slot_id: String) -> Dictionary:
 
 
 static func _aabb(n: Node, xf: Transform3D) -> AABB:
-	var out := AABB()
-	var first := true
-	var here := xf * (n as Node3D).transform if n is Node3D else xf
-	if n is VisualInstance3D:
-		var b: AABB = here * (n as VisualInstance3D).get_aabb()
-		out = b
-		first = false
-	for c: Node in n.get_children():
-		var cb := _aabb(c, here)
-		if cb.size == Vector3.ZERO:
-			continue
-		out = cb if first else out.merge(cb)
-		first = false
-	return out
+	return AssetSlots.aabb_of(n, xf * (n as Node3D).transform if n is Node3D else xf)
 
 
 # ---------------------------------------------------------------- world

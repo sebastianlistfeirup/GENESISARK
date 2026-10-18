@@ -2,6 +2,9 @@
 
 Biblen er baseline. Her står begrundede valg og afvigelser. Nyeste øverst.
 
+### D-021 · Automatisk Synty-import
+Det dyre ved hjemkomsten er håndarbejdet pr. model. `tools/synty/`: `unpack.py` (unitypackage/zip/mappe → karantæne, kun modeller og teksturer, manifest med sha256), `match.py` (navnemønstre fra `synty_suggestions.json` → `data/art/synty_choices.json`; svage match bygges ikke uden godkendelse), `stage.py` (kun valgte filer ind i projektet), `build_wrappers.gd` (wrapper-scene pr. slot med tilpasning efter slot-type; atlas sættes via importindstillingen "Use External", så wrappers forbliver små og følger kildefilen). Byggede mappinger står i `data/art/slot_scenes.json`; en håndsat `scene` i `asset_slots.json` vinder altid. `selftest.sh` beviser hele kæden med en falsk pakke. Antagelser om Synty-navne og -mapper er ikke verificeret mod de købte filer.
+
 ### D-020 · Hurtigere bevægelse og vejvisning som i HSR
 Feedback: kaptajnen skal bevæge sig hurtigere, og vigtige steder skal være markeret. Gang 3,0 → 4,2 m/s og løb 5,0 → 7,0 m/s (`data/balance/baseline.json`); acceleration/bremse hævet (14/19), så det stadig føles roligt (~0,3 s til fuld gang). `WaypointLayer` viser det aktuelle mål som pulserende markør med navn og afstand, fastgjort til skærmkanten med pil, når det er bag dig, plus en blød lyssøjle på stedet; andre brugbare steder får en lille prik og navn, der toner frem inden for 28 m og forsvinder, når interaktionsprompten tager over. Målet for hvert opgavetrin står som data (`targets` i `objectives.json`); på overfladen følger det rækkefølgen hovedprøve → relæ → landeren. Rent præsentationslag.
 

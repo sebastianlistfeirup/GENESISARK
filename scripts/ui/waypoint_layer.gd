@@ -8,6 +8,7 @@ extends CanvasLayer
 ##     closer and hides when the interaction prompt takes over
 ## Presentation only: scenes tell it which nodes matter; it never touches state.
 
+const BOTTOM_EDGE := 190.0     # keep edge markers above subtitles and prompts
 const EDGE := 84.0           # px kept free at the screen edge
 const PLACE_RANGE := 28.0    # m: places further away stay hidden
 const PROMPT_RANGE := 2.6    # m: inside this the interaction prompt speaks instead
@@ -105,7 +106,7 @@ func _draw_markers() -> void:
 		return
 	var behind := cam.is_position_behind(owp)
 	var pos := cam.unproject_position(owp)
-	var inner := rect.grow(-EDGE)
+	var inner := rect.grow_individual(-EDGE, -EDGE, -EDGE, -BOTTOM_EDGE)
 	var on_screen := not behind and inner.has_point(pos)
 	var pulse := 1.0 if bool(SettingsService.get_value("reduced_motion", false)) else 0.85 + sin(_t * 3.0) * 0.15
 	var col := Color(UiKit.AMBER, pulse)

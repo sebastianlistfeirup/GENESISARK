@@ -4,11 +4,15 @@ extends RefCounted
 ## greybox proxy until the owner maps it to an imported Synty wrapper scene.
 
 const PATH := "res://data/art/asset_slots.json"
+## Mappings written by tools/synty/build_wrappers.gd. A hand-set "scene" in
+## asset_slots.json always wins over this file.
+const BUILT_PATH := "res://data/art/slot_scenes.json"
 
 static var _slots: Dictionary = {}
 static var _loaded := false
 static var _materials: Dictionary = {}
 static var _scenes: Dictionary = {}
+static var _built: Dictionary = {}
 
 
 static func slots() -> Dictionary:
@@ -17,7 +21,21 @@ static func slots() -> Dictionary:
 		var v: Variant = DictUtil.load_json(PATH)
 		if v is Dictionary:
 			_slots = DictUtil.get_dict(v, "slots")
+		var b: Variant = DictUtil.load_json(BUILT_PATH) if FileAccess.file_exists(BUILT_PATH) else null
+		_built = DictUtil.get_dict(b, "scenes") if b is Dictionary else {}
 	return _slots
+
+
+## The wrapper scene path for a slot ("" = proxy): asset_slots.json, else slot_scenes.json.
+static func scene_path(id: String) -> String:
+	var p := str(slot(id).get("scene", ""))
+	return p if not p.is_empty() else str(_built.get(id, ""))
+
+
+## Forget cached registry data (after the Synty builder wrote new mappings).
+static func reload() -> void:
+	_loaded = false
+	_scenes.clear()
 
 
 static func slot(id: String) -> Dictionary:
@@ -25,12 +43,12 @@ static func slot(id: String) -> Dictionary:
 
 
 static func has_scene(id: String) -> bool:
-	var p := str(slot(id).get("scene", ""))
+	var p := scene_path(id)
 	return not p.is_empty() and ResourceLoader.exists(p)
 
 
 static func scene_for(id: String) -> PackedScene:
-	var p := str(slot(id).get("scene", ""))
+	var p := scene_path(id)
 	if p.is_empty():
 		return null
 	if not _scenes.has(p):
@@ -59,6 +77,24 @@ static func material(hex: String, emissive: float = 0.0, alpha: float = 1.0) -> 
 
 
 ## Builds the proxy node tree for a slot (also used by the editor via @tool).
+## Bounding box of all visible geometry under `n`, in the space `xf` maps to.
+## Works on nodes that are not in the scene tree (tools, audits).
+static func aabb_of(n: Node, xf: Transform3D) -> AABB:
+	var out := AABB()
+	var first := true
+	if n is VisualInstance3D:
+		out = xf * (n as VisualInstance3D).get_aabb()
+		first = false
+	for c: Node in n.get_children():
+		var cxf := xf * (c as Node3D).transform if c is Node3D else xf
+		var cb := aabb_of(c, cxf)
+		if cb.size == Vector3.ZERO:
+			continue
+		out = cb if first else out.merge(cb)
+		first = false
+	return out
+
+
 static func build_proxy(id: String, tint: String = "") -> Node3D:
 	var root := Node3D.new()
 	root.name = "Proxy"
