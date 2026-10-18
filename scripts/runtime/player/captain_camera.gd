@@ -34,7 +34,7 @@ func set_active(on: bool) -> void:
 	active = on
 	if camera:
 		camera.current = on or camera.current
-	if on and DisplayServer.get_name() != "headless":
+	if on and DisplayServer.get_name() != "headless" and not TouchControls.enabled:
 		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	elif not on:
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
@@ -53,13 +53,18 @@ func _unhandled_input(event: InputEvent) -> void:
 		yaw -= (event as InputEventMouseMotion).relative.x * sens
 		pitch = clampf(pitch - (event as InputEventMouseMotion).relative.y * sens * inv, -1.2, 0.5)
 	elif event is InputEventMouseButton and (event as InputEventMouseButton).pressed and Input.mouse_mode != Input.MOUSE_MODE_CAPTURED:
-		if DisplayServer.get_name() != "headless" and not get_viewport().gui_get_hovered_control():
+		if DisplayServer.get_name() != "headless" and not TouchControls.enabled and not get_viewport().gui_get_hovered_control():
 			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
 
 func _process(delta: float) -> void:
 	if target == null:
 		return
+	var td: Vector2 = TouchControls.consume_look() if TouchControls.enabled else Vector2.ZERO
+	if active and td != Vector2.ZERO:
+		var sens := float(SettingsService.get_value("mouse_sensitivity", 0.25)) * 0.012
+		yaw -= td.x * sens
+		pitch = clampf(pitch - td.y * sens, -1.2, 0.5)
 	var want := target.global_position + Vector3(0, 1.55, 0)
 	global_position = global_position.lerp(want, clampf(delta * 14.0, 0, 1)) if global_position.distance_to(want) < 3.0 else want
 	rotation = Vector3(pitch, yaw, 0)

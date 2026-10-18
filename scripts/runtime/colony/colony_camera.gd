@@ -36,6 +36,10 @@ func _unhandled_input(event: InputEvent) -> void:
 			zoom = clampf(zoom - 5.0, 18.0, 150.0)
 		elif mb.button_index == MOUSE_BUTTON_WHEEL_DOWN:
 			zoom = clampf(zoom + 5.0, 18.0, 150.0)
+	if event.is_action_pressed("zoom_in"):
+		zoom = clampf(zoom - 10.0, 18.0, 150.0)
+	elif event.is_action_pressed("zoom_out"):
+		zoom = clampf(zoom + 10.0, 18.0, 150.0)
 	if event.is_action_pressed("rotate_cam_left"):
 		target_yaw += PI * 0.5
 	elif event.is_action_pressed("rotate_cam_right"):

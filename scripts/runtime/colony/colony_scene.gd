@@ -340,6 +340,9 @@ func _unhandled_input(event: InputEvent) -> void:
 		GameSession.set_colony_speed(1)
 	elif event.is_action_pressed("speed_3"):
 		GameSession.set_colony_speed(3)
+	elif event.is_action_pressed("build_confirm") and not build_def.is_empty():
+		_confirm_build()
+		get_viewport().set_input_as_handled()
 	elif event.is_action_pressed("rotate_building") and not build_def.is_empty():
 		build_rot = (build_rot + 1) % 4
 	elif event.is_action_pressed("cancel") and not build_def.is_empty():
@@ -347,7 +350,9 @@ func _unhandled_input(event: InputEvent) -> void:
 		get_viewport().set_input_as_handled()
 	elif event is InputEventMouseButton and (event as InputEventMouseButton).pressed and (event as InputEventMouseButton).button_index == MOUSE_BUTTON_LEFT:
 		if not build_def.is_empty():
-			_confirm_build()
+			# On touch a tap moves the ghost; the "Byg" button confirms.
+			if not TouchControls.enabled:
+				_confirm_build()
 		else:
 			_pick((event as InputEventMouseButton).position)
 		get_viewport().set_input_as_handled()

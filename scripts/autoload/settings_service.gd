@@ -13,6 +13,7 @@ const ACTIONS := {
 	"colony_mode": ["B"], "rotate_cam_left": ["Q"], "rotate_cam_right": ["E"], "rotate_building": ["R"],
 	"confirm": ["mouse:1"], "cancel": ["mouse:2"], "autopilot": ["F"], "speed_pause": ["Space"],
 	"speed_1": ["1"], "speed_3": ["3"], "drone_refill": ["G"], "ascend": ["Space"], "descend": ["Ctrl"],
+	"zoom_in": ["Equal"], "zoom_out": ["Minus"], "build_confirm": ["Enter"],
 }
 const ACTION_LABELS := {
 	"move_forward": "Frem", "move_back": "Tilbage", "move_left": "Venstre", "move_right": "Højre",
@@ -21,6 +22,7 @@ const ACTION_LABELS := {
 	"rotate_building": "Drej bygning", "confirm": "Bekræft", "cancel": "Fortryd", "autopilot": "Autopilot",
 	"speed_pause": "Pause tid", "speed_1": "Hastighed 1x", "speed_3": "Hastighed 3x", "drone_refill": "Dronereserve",
 	"ascend": "Stig (flyvning)", "descend": "Dyk (flyvning)",
+	"zoom_in": "Zoom ind", "zoom_out": "Zoom ud", "build_confirm": "Byg her",
 }
 
 var values := {

@@ -21,6 +21,7 @@ AudioService="*res://scripts/autoload/audio_service.gd"
 SaveService="*res://scripts/autoload/save_service.gd"
 GameSession="*res://scripts/autoload/game_session.gd"
 AppFlow="*res://scripts/autoload/app_flow.gd"
+TouchControls="*res://scripts/autoload/touch_controls.gd"
 
 [debug]
 
@@ -58,5 +59,7 @@ common/physics_ticks_per_second=60
 [rendering]
 
 rendering_device/fallback_to_opengl3=true
+renderer/rendering_method.web="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"
 anti_aliasing/quality/msaa_3d=1
 environment/defaults/default_clear_color=Color(0.043, 0.071, 0.098, 1)
