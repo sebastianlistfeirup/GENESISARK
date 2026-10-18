@@ -83,6 +83,27 @@ func _run() -> void:
 	check("audio_layer_set", AudioService.layer_slot() == "amb_embryo_bank")
 	AudioService.set_layer("")
 
+	# RigLab (GA-14 prep): every character slot audits clean and the lab scene runs all states.
+	var rig_bad: Array = []
+	for sid: String in RigLab.SLOTS:
+		var au := RigLab.audit(sid)
+		if not au["ok"]:
+			rig_bad.append("%s: %s" % [sid, au["issues"]])
+	check("riglab_audit_all_slots", rig_bad.is_empty(), str(rig_bad))
+	var lab: RigLab = await load_scene("res://scenes/tests/RigLab.tscn")
+	lab.moving = true
+	var lab_moved := 0.0
+	for st: String in RigLab.STATES:
+		lab._set_state(st)
+		var p0: Vector3 = lab._pivot.position
+		await frames(5)
+		if st == "run":
+			lab_moved = p0.distance_to(lab._pivot.position)
+	lab._cycle(1)
+	await frames(3)
+	check("riglab_runs", lab_moved > 0.05 and lab.slot_index == 1, "moved=%.2f" % lab_moved)
+	await unload(lab)
+
 	# Language switch mid-campaign: content reloads translated, the domain state is untouched.
 	DebugFixtures.prepare("fresh")
 	var lang_before := SaveCodec.checksum(GameSession.state.to_dict())

@@ -11,6 +11,7 @@ const SCENES := {
 	"surface": "res://scenes/surface/surface.tscn",
 	"colony": "res://scenes/colony/colony.tscn",
 	"ending": "res://scenes/story/ending.tscn",
+	"riglab": "res://scenes/tests/RigLab.tscn",  # developer tool (GA-14)
 }
 
 var current_key := ""

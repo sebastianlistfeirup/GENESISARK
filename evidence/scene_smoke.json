@@ -21,6 +21,16 @@
       "ok": true
     },
     {
+      "detail": "[]",
+      "name": "riglab_audit_all_slots",
+      "ok": true
+    },
+    {
+      "detail": "moved=0.36",
+      "name": "riglab_runs",
+      "ok": true
+    },
+    {
       "detail": "Water plant",
       "name": "language_switch_keeps_state",
       "ok": true
@@ -51,7 +61,7 @@
       "ok": true
     },
     {
-      "detail": "I_power_coupling:<Area3D#184197059761>",
+      "detail": "I_power_coupling:<Area3D#193474860270>",
       "name": "prompt_targets_coupling",
       "ok": true
     },
@@ -164,5 +174,5 @@
   "engine_version": "4.5.1-stable (official)",
   "failures": [],
   "status": "PASS",
-  "timestamp": "2026-10-18T07:58:04"
+  "timestamp": "2026-10-18T08:01:28"
 }
