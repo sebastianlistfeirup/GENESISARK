@@ -35,7 +35,32 @@ static func fit_mode(slot: String) -> String:
 	return "natural"
 
 
-func build_one(slot: String, c: Dictionary, prefab_dir: String) -> Dictionary:
+## Builds the slot's wrapper, or one per entry in c["variants"] (slot.tscn,
+## slot__2.tscn, ...). Returns the first result with "scenes" listing all.
+func build_slot(slot: String, c: Dictionary, prefab_dir: String) -> Dictionary:
+	var sources: Array = Array(c.get("variants", []))
+	if sources.size() < 2:
+		return build_one(slot, c, prefab_dir)
+	var first: Dictionary = {}
+	var scenes: Array = []
+	var reimport := false
+	for i: int in sources.size():
+		var vc := c.duplicate()
+		vc["source"] = str(sources[i])
+		var r := build_one(slot, vc, prefab_dir, "" if i == 0 else "__%d" % (i + 1))
+		if not r["ok"]:
+			return r
+		reimport = reimport or bool(r.get("reimport", false))
+		scenes.append(r["scene"])
+		if first.is_empty():
+			first = r
+	first["scenes"] = scenes
+	first["reimport"] = reimport
+	first["summary"] = "%s  (+%d varianter)" % [first["summary"], scenes.size() - 1]
+	return first
+
+
+func build_one(slot: String, c: Dictionary, prefab_dir: String, suffix: String = "") -> Dictionary:
 	var src := str(c["source"])
 	var pack := src.trim_prefix("res://assets/imported/").get_slice("/", 0)
 	var model_path := src if src.begins_with("res://") else "res://assets/imported/" + src
@@ -96,7 +121,7 @@ func build_one(slot: String, c: Dictionary, prefab_dir: String) -> Dictionary:
 		else:
 			notes.append("no atlas texture staged for " + pack)
 	DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path(prefab_dir))
-	var scene_path := prefab_dir.path_join(slot + ".tscn")
+	var scene_path := prefab_dir.path_join(slot + suffix + ".tscn")
 	root.set_meta("synty_source", src)
 	root.set_meta("synty_fit", mode)
 	var packed := PackedScene.new()

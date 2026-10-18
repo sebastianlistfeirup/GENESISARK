@@ -48,10 +48,10 @@ func _init() -> void:
 		var c: Dictionary = choices[slot]
 		if not str(c.get("status", "")) in SyntyWrapperBuilder.BUILD_STATUS or str(c.get("source", "")).is_empty():
 			continue
-		var r := builder.build_one(slot, c, prefab_dir)
+		var r := builder.build_slot(slot, c, prefab_dir)
 		report.append(r)
 		if r["ok"]:
-			mapped[slot] = r["scene"]
+			mapped[slot] = r["scenes"] if r.has("scenes") else r["scene"]
 		else:
 			failed += 1
 		print("%-28s %s %s" % [slot, "OK  " if r["ok"] else "FAIL", r.get("summary", r.get("error", ""))])

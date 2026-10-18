@@ -14,6 +14,9 @@ extends Node3D
 @export var tint: String = ""
 ## Stretch the proxy (not imported scenes) to a footprint, e.g. building sizes.
 @export var proxy_scale: Vector3 = Vector3.ONE
+## Which imported variant to show when a slot has several (Rock_01..Rock_06).
+## -1 = pick from the world position: varied, but the same spot always gets the same model.
+@export var variant: int = -1
 
 var using_asset := false
 
@@ -29,7 +32,12 @@ func rebuild() -> void:
 			c.queue_free()
 	if slot_id.is_empty():
 		return
-	var ps := AssetSlots.scene_for(slot_id)
+	var n := AssetSlots.variant_count(slot_id)
+	var idx := variant
+	if idx < 0 and n > 1:
+		var at := global_position if is_inside_tree() else position
+		idx = absi(hash(Vector3i(roundi(at.x * 2.0), roundi(at.y * 2.0), roundi(at.z * 2.0))))
+	var ps := AssetSlots.scene_for(slot_id, maxi(idx, 0))
 	if ps:
 		var inst: Node3D = ps.instantiate()
 		inst.name = "Asset"

@@ -1,0 +1,4 @@
+[gd_scene format=3]
+
+[node name="Varianta" type="Node3D"]
+metadata/variant = "a"

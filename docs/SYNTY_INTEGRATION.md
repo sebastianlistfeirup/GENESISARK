@@ -43,7 +43,7 @@ Hvad byggeren gør med størrelse og placering:
 | Rum (`space.*`) | Skaleres til proxyens største mål |
 | Figurer, rekvisitter, sten, køretøjer | Ægte størrelse; kun cm→m-fejl rettes (×0,01). Advarsel, hvis højden er under 50 % eller over 200 % af proxyen |
 
-Alt kan overstyres pr. slot i `synty_choices.json`: `"fit"`, `"extra_scale"`, `"rotation_y"`. Particle FX er Unity-partikelsystemer og bygges i Godot med pakkens teksturer (status `manual`). Kollision ejes altid af spillets egne noder, aldrig af wrapperen.
+Alt kan overstyres pr. slot i `synty_choices.json`: `"fit"`, `"extra_scale"`, `"rotation_y"`. Slots, der optræder mange gange (sten, træer, planter, is, kasser, rør, borgere, asteroider), får op til seks varianter af samme familie (`"variants"`); spillet vælger én pr. placering, altid den samme på samme sted. Particle FX er Unity-partikelsystemer og bygges i Godot med pakkens teksturer (status `manual`). Kollision ejes altid af spillets egne noder, aldrig af wrapperen.
 
 **I Godot-editoren:** fanen **Asset-slots** (ved siden af Inspector) viser alle 81 slots, om de stadig er proxy, Synty-forslaget og matcherens valg. Markér en model i FileSystem-panelet og tryk **Brug valgt fil**, eller tryk på et af alternativerne. "Drej model" retter facing; **Åbn wrapper** og **RigLab** åbner scenerne.
 

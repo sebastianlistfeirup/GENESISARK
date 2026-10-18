@@ -26,10 +26,28 @@ static func slots() -> Dictionary:
 	return _slots
 
 
-## The wrapper scene path for a slot ("" = proxy): asset_slots.json, else slot_scenes.json.
-static func scene_path(id: String) -> String:
+## All wrapper scenes for a slot: the hand-set "scene" in asset_slots.json, else
+## the builder's entry in slot_scenes.json (a path or a list of variants).
+static func scene_paths(id: String) -> Array:
 	var p := str(slot(id).get("scene", ""))
-	return p if not p.is_empty() else str(_built.get(id, ""))
+	if not p.is_empty():
+		return [p]
+	var b: Variant = _built.get(id, "")
+	if b is Array:
+		return (b as Array).filter(func(x: Variant) -> bool: return not str(x).is_empty())
+	return [str(b)] if not str(b).is_empty() else []
+
+
+## The (first) wrapper scene path for a slot, "" = proxy.
+static func scene_path(id: String) -> String:
+	slots()
+	var all := scene_paths(id)
+	return str(all[0]) if not all.is_empty() else ""
+
+
+static func variant_count(id: String) -> int:
+	slots()
+	return scene_paths(id).size()
 
 
 ## Forget cached registry data (after the Synty builder wrote new mappings).
@@ -47,8 +65,10 @@ static func has_scene(id: String) -> bool:
 	return not p.is_empty() and ResourceLoader.exists(p)
 
 
-static func scene_for(id: String) -> PackedScene:
-	var p := scene_path(id)
+static func scene_for(id: String, variant: int = 0) -> PackedScene:
+	slots()
+	var all := scene_paths(id)
+	var p := str(all[posmod(variant, all.size())]) if not all.is_empty() else ""
 	if p.is_empty():
 		return null
 	if not _scenes.has(p):

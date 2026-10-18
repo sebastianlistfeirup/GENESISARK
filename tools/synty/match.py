@@ -10,6 +10,8 @@ get distinct models where possible.
 Writes data/art/synty_choices.json (slot -> chosen file + 4 alternatives). Only
 file NAMES go in git, never the files. Entries you set to "status": "approved"
 or "manual" are kept as they are on re-runs; "skip" leaves a slot on its proxy.
+"variants" (rocks, trees, crates, citizens...) lists several models of one
+family; the game picks one per placement. Edit or remove the list freely.
 "auto" = confident name match (built), "weak" = one shared word only (listed,
 not built until you approve it), "none" = nothing found.
 
@@ -29,6 +31,16 @@ KEEP_STATUS = ("approved", "manual", "skip")
 # They are rebuilt in Godot (GPUParticles3D) using the pack's textures.
 MANUAL_CATEGORIES = ("fx.",)
 WEAK_BELOW = 50   # scores under this are "weak": listed, but not built until approved
+# Slots shown many times in a scene get up to MAX_VARIANTS models of the same
+# family (SM_Env_Rock_01.._06), so no two rocks or trees in a row look alike.
+VARIANT_SLOTS = ("surface.rock_small", "surface.rock_large", "surface.tree_green", "surface.plant_green", "surface.crystal_ice",
+                 "surface.ice_spire", "surface.desert_rock", "ship.crate", "ship.pipe", "char.citizen_adult", "char.citizen_child",
+                 "space.asteroid")
+MAX_VARIANTS = 6
+
+
+def family(src):
+    return re.sub(r"_?\d+$", "", os.path.splitext(os.path.basename(src))[0].lower())
 
 
 def inventory(only=None):
@@ -102,6 +114,10 @@ def propose(slots, inv, previous):
         # A name-pattern hit is trusted; a single shared word is only a suggestion.
         status = "auto" if ranked[0][0] >= WEAK_BELOW else "weak"
         out[slot] = {"source": src, "score": ranked[0][0], "status": status, "alternatives": [r[1] for r in ranked[1:5]]}
+        if slot in VARIANT_SLOTS:
+            fam = [r[1] for r in ranked if family(r[1]) == family(src) and r[0] >= WEAK_BELOW - 10]
+            if len(fam) > 1:
+                out[slot]["variants"] = sorted(fam)[:MAX_VARIANTS]
     return out
 
 

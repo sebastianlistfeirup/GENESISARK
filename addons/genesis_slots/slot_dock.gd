@@ -198,25 +198,30 @@ func _use_choice() -> void:
 	if str(c.get("source", "")).is_empty():
 		_status.text = "Intet valg for %s i synty_choices.json (kør tools/synty/match.py)." % _selected
 		return
-	_build(str(c["source"]))
+	_build(str(c["source"]), true)
 
 
-func _build(source: String) -> void:
+## Builds the selected slot from `source` (with the choice's variants when asked).
+func _build(source: String, with_variants: bool = false) -> void:
 	if _selected.is_empty():
 		return
 	var c: Dictionary = (_choices.get(_selected, {}) as Dictionary).duplicate()
 	c["source"] = source
 	c["rotation_y"] = _rot.value
-	var r := _builder.build_one(_selected, c, SyntyWrapperBuilder.PREFABS)
+	if not with_variants:
+		c.erase("variants")
+	var r := _builder.build_slot(_selected, c, SyntyWrapperBuilder.PREFABS)
 	if r.get("reimport", false):
 		# The atlas material was attached in the import settings: re-import, then build on the new import.
-		var mp := source if source.begins_with("res://") else "res://assets/imported/" + source
-		EditorInterface.get_resource_filesystem().reimport_files(PackedStringArray([mp]))
-		r = _builder.build_one(_selected, c, SyntyWrapperBuilder.PREFABS)
+		var files := PackedStringArray()
+		for src: Variant in [source] + Array(c.get("variants", [])):
+			files.append(str(src) if str(src).begins_with("res://") else "res://assets/imported/" + str(src))
+		EditorInterface.get_resource_filesystem().reimport_files(files)
+		r = _builder.build_slot(_selected, c, SyntyWrapperBuilder.PREFABS)
 	if not r["ok"]:
 		_status.text = "✕ " + str(r.get("error", ""))
 		return
-	_mapped[_selected] = r["scene"]
+	_mapped[_selected] = r["scenes"] if r.has("scenes") else r["scene"]
 	SyntyWrapperBuilder.save_mappings(_mapped)
 	EditorInterface.get_resource_filesystem().scan()
 	_status.text = "✓ " + str(r.get("summary", ""))

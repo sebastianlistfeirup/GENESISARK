@@ -35,6 +35,7 @@ checks = {
     "habitat inside footprint": r["building.habitat"]["size_m"][0] <= r["building.habitat"]["proxy_m"][0] + 0.01,
     "atlas material in use": all(s["uses_atlas"] for s in r.values()),
     "too-small rock flagged": bool(r["surface.desert_rock"]["warnings"]),
+    "rock variants built": len(r["surface.rock_small"].get("scenes", [])) == 3,
 }
 for k, v in checks.items():
     print(("PASS " if v else "FAIL ") + k)

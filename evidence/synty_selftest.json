@@ -233,6 +233,11 @@
       "reimport": false,
       "scale": 1.0,
       "scene": "res://art/prefabs/_selftest/surface.rock_small.tscn",
+      "scenes": [
+        "res://art/prefabs/_selftest/surface.rock_small.tscn",
+        "res://art/prefabs/_selftest/surface.rock_small__2.tscn",
+        "res://art/prefabs/_selftest/surface.rock_small__3.tscn"
+      ],
       "size_m": [
         2.0,
         1.4,
@@ -240,7 +245,7 @@
       ],
       "slot": "surface.rock_small",
       "source": "SelfTestSyntyPack/PolygonSciFiSpace/Models/SM_Env_Rock_01.gltf",
-      "summary": "natural x1.000 -> 2.0x1.4x1.8 m (proxy 1.6x1.6x1.6)",
+      "summary": "natural x1.000 -> 2.0x1.4x1.8 m (proxy 1.6x1.6x1.6)  (+2 varianter)",
       "uses_atlas": true,
       "warnings": []
     },
@@ -281,6 +286,11 @@
       "reimport": false,
       "scale": 1.0,
       "scene": "res://art/prefabs/_selftest/surface.desert_rock.tscn",
+      "scenes": [
+        "res://art/prefabs/_selftest/surface.desert_rock.tscn",
+        "res://art/prefabs/_selftest/surface.desert_rock__2.tscn",
+        "res://art/prefabs/_selftest/surface.desert_rock__3.tscn"
+      ],
       "size_m": [
         2.0,
         1.4,
@@ -288,7 +298,7 @@
       ],
       "slot": "surface.desert_rock",
       "source": "SelfTestSyntyPack/PolygonSciFiSpace/Models/SM_Env_Rock_01.gltf",
-      "summary": "natural x1.000 -> 2.0x1.4x1.8 m (proxy 5.2x6.7x4.0)  ▲ height 21% of the proxy: check the scale or choose another model",
+      "summary": "natural x1.000 -> 2.0x1.4x1.8 m (proxy 5.2x6.7x4.0)  ▲ height 21% of the proxy: check the scale or choose another model  (+2 varianter)",
       "uses_atlas": true,
       "warnings": [
         "height 21% of the proxy: check the scale or choose another model"

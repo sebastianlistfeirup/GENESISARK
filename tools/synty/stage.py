@@ -44,16 +44,18 @@ def main() -> int:
     for slot, c in sorted(choices.items()):
         if c.get("status") not in BUILD_STATUS or not c.get("source"):
             continue
-        pack, rel = c["source"].split("/", 1)
-        if not os.path.exists(os.path.join(Q, pack, rel)):
-            print("  missing in quarantine:", c["source"])
-            continue
-        files = staged.setdefault(pack, {"models": {}, "atlas": []})
-        files["models"][slot] = copy(pack, rel)
-        if rel.lower().endswith(".gltf"):
-            bin_rel = os.path.splitext(rel)[0] + ".bin"
-            if os.path.exists(os.path.join(Q, pack, bin_rel)):
-                copy(pack, bin_rel)
+        for src in [c["source"]] + [v for v in c.get("variants", []) if v != c["source"]]:
+            vpack, vrel = src.split("/", 1)
+            if not os.path.exists(os.path.join(Q, vpack, vrel)):
+                print("  missing in quarantine:", src)
+                continue
+            files = staged.setdefault(vpack, {"models": {}, "atlas": []})
+            files["models"].setdefault(slot, [])
+            files["models"][slot].append(copy(vpack, vrel))
+            if vrel.lower().endswith(".gltf"):
+                bin_rel = os.path.splitext(vrel)[0] + ".bin"
+                if os.path.exists(os.path.join(Q, vpack, bin_rel)):
+                    copy(vpack, bin_rel)
     for pack, files in staged.items():
         files["atlas"] = [copy(pack, rel) for rel in atlas_files(pack)]
         with open(os.path.join(IMPORTED, pack, "staged.json"), "w", encoding="utf-8") as fh:

@@ -148,6 +148,27 @@ func _run() -> void:
 	sh_ok = sh_ok and TouchControls.shape(Vector2(0.4, 0.0)).length() < 0.3
 	check("touch_stick_curve", sh_ok)
 
+	# Synty variants: a slot with several wrappers picks one per placement, stable for the same spot.
+	AssetSlots.slots()
+	AssetSlots._built["surface.rock_small"] = ["res://tests/fixtures/variant_a.tscn", "res://tests/fixtures/variant_b.tscn"]
+	AssetSlots._scenes.clear()
+	var seen := {}
+	var stable := true
+	for i: int in 24:
+		var at := Vector3(i * 3.7, 0, i * -2.3)
+		var picks: Array = []
+		for k: int in 2:
+			var vs := VisualSlot.make("surface.rock_small")
+			vs.position = at
+			add_child(vs)
+			var asset := vs.get_node_or_null("Asset")
+			picks.append(str(asset.get_meta("variant")) if asset else "proxy")
+			vs.free()
+		stable = stable and picks[0] == picks[1]
+		seen[picks[0]] = true
+	AssetSlots.reload()
+	check("synty_variants_spread_and_stable", stable and seen.has("a") and seen.has("b") and not seen.has("proxy"), str(seen.keys()))
+
 	# Language switch mid-campaign: content reloads translated, the domain state is untouched.
 	DebugFixtures.prepare("fresh")
 	var lang_before := SaveCodec.checksum(GameSession.state.to_dict())
