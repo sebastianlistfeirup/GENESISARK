@@ -2,6 +2,9 @@
 
 Biblen er baseline. Her står begrundede valg og afvigelser. Nyeste øverst.
 
+### D-028 · Bygningskollision følger modellen
+Før: én usynlig boks på hele footprintet (4 m høj), som kaptajnen gik ind i. Nu: `ShapeCollider` bygger bokse ud fra den viste models mesh-dele (proxy i dag, Synty-wrapper senere) på laget "world"; klik-boksen på lag "buildings" er kun til valg i overbliksvisningen, og kaptajn/kamera kolliderer ikke længere med den. Pr.-slot-undtagelse `"collision"` i asset_slots.json. Statusmærket placeres over modellens faktiske top. Røgtest: bokse findes for alle bygninger, ligger inden for footprint + 1,5 m, vandanlægget får flere bokse, og fysikken er massiv i dem. `tools/check.sh` fejler nu også på SCRIPT ERROR i røg- og touchtests.
+
 ### D-027 · NAV på planeten
 NAV følger nu også kaptajnen på ekspeditioner (`NavAdvisor.surface_brief/surface_update`, rent domæne, testet): brief ved landing (dragtens udholdenhed og første mål), farezone ind/ud med forbrugsfaktor, delmål klaret, halv dragt, og to hjemturs-varsler beregnet ud fra afstanden til landeren ved gåfart + 20 % (margen bliver mindre / vend om nu). Hver linje siges én gang; drone-påfyldning genåbner varslerne. ARK's personlige replikker er uændrede; NAV taler kun tal. Rutelabels på overfladen står nu ved rutens første knæk i stedet for oven i hinanden ved landeren.
 

@@ -21,9 +21,13 @@ T=$?
 echo "$T_OUT" | grep -E "FAIL|SCRIPT ERROR|tests,|Indholdsfejl"
 # A script error inside a test aborts that test silently; treat it as a failure.
 if echo "$T_OUT" | grep -q "SCRIPT ERROR"; then T=1; fi
-timeout 300 "$GODOT" --headless --path . res://scenes/tests/scene_smoke.tscn 2>&1 | grep -E "SMOKE|FAIL|SCRIPT ERROR|ERROR" | sort -u | head -120
-S=${PIPESTATUS[0]}
-timeout 120 "$GODOT" --headless --path . res://scenes/tests/touch_feel.tscn -- --touch 2>&1 | grep -E "^TOUCH|SCRIPT ERROR"
-F=${PIPESTATUS[0]}
+S_OUT=$(timeout 300 "$GODOT" --headless --path . res://scenes/tests/scene_smoke.tscn 2>&1)
+S=$?
+echo "$S_OUT" | grep -E "SMOKE|FAIL|SCRIPT ERROR|ERROR" | sort -u | head -120
+if echo "$S_OUT" | grep -q "SCRIPT ERROR"; then S=1; fi
+F_OUT=$(timeout 120 "$GODOT" --headless --path . res://scenes/tests/touch_feel.tscn -- --touch 2>&1)
+F=$?
+echo "$F_OUT" | grep -E "^TOUCH|SCRIPT ERROR"
+if echo "$F_OUT" | grep -q "SCRIPT ERROR"; then F=1; fi
 echo "loc_exit=$L tests_exit=$T smoke_exit=$S touch_exit=$F"
 exit $(( L | T | S | F ))

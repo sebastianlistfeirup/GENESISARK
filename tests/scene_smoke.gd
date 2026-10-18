@@ -356,6 +356,32 @@ func _run() -> void:
 	var views: Dictionary = col.get("views")
 	check("ga08_building_views_synced", views.size() == GameSession.state.colony.buildings.size(), "%d vs %d" % [views.size(), GameSession.state.colony.buildings.size()])
 	check("ga08_habitat_active", GameSession.state.colony.count_active("habitat") == 1)
+	# Walkable collision follows the model (ShapeCollider), not the whole footprint.
+	var shape_ok := true
+	var shape_detail := ""
+	var multi_box := false
+	var solid := true
+	for bid: Variant in views.keys():
+		var bv: BuildingView = views[bid]
+		var boxes: Array[AABB] = bv.collision_boxes()
+		if boxes.is_empty():
+			shape_ok = false
+			shape_detail += "%s: none; " % bv.def_id
+			continue
+		var fp := ColonySimulation.footprint_size(GameSession.content.building(bv.def_id), 0)
+		for bb: AABB in boxes:
+			if absf(bb.position.x) > fp.x * 0.5 + 1.5 or absf(bb.end.x) > fp.x * 0.5 + 1.5 or absf(bb.position.z) > fp.y * 0.5 + 1.5 or absf(bb.end.z) > fp.y * 0.5 + 1.5:
+				shape_ok = false
+				shape_detail += "%s: box outside footprint; " % bv.def_id
+		if bv.def_id == "water_plant" and boxes.size() > 1:
+			multi_box = true
+		var probe := PhysicsPointQueryParameters3D.new()
+		probe.position = bv.to_global(boxes[0].get_center())
+		probe.collision_mask = 1
+		if col.get_world_3d().direct_space_state.intersect_point(probe).is_empty():
+			solid = false
+	check("building_collision_follows_shape", shape_ok and multi_box and solid,
+		"%s multi_box=%s solid=%s" % [shape_detail, multi_box, solid])
 	# Save -> load roundtrip through the live session
 	var before := GameSession.sim.checksum()
 	var sv := GameSession.save_to("manual_3")

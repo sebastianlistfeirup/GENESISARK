@@ -2,7 +2,9 @@ class_name BuildingView
 extends Node3D
 ## Presentation of one colony building: its VisualSlot, a construction frame
 ## while building, module add-ons and a status marker with icon + text (never
-## colour alone). Owns a pick collider on layer "buildings".
+## colour alone). Owns a pick collider on layer "buildings" (overhead clicks)
+## and a walkable ShapeCollider body on "world" that follows the model's shape
+## (scaffold footprint while under construction).
 
 var building_id := 0
 var def_id := ""
@@ -14,6 +16,9 @@ var _size := Vector2(4, 4)
 var _height := 3.0
 var _last_state := ""
 var _fx: Node3D
+var _body: StaticBody3D
+var _constructing := false
+var _body_for := ""  # "frame" | "shape": what the walkable body currently follows
 
 
 func setup(b: Dictionary, terrain_height: float) -> void:
@@ -24,6 +29,10 @@ func setup(b: Dictionary, terrain_height: float) -> void:
 	position = Vector3(float(b["x"]), terrain_height, float(b["z"]))
 	rotation.y = float(int(b.get("rot", 0))) * PI * 0.5
 	_visual = VisualSlot.make(str(def.get("visual_slot", "building." + def_id)))
+	_visual.rebuilt.connect(func() -> void:
+		_body_for = ""
+		if is_inside_tree():
+			_fit_body(_constructing))
 	add_child(_visual)
 	_frame = Node3D.new()
 	add_child(_frame)
@@ -59,9 +68,46 @@ func setup(b: Dictionary, terrain_height: float) -> void:
 	refresh(b)
 
 
+## Walkable collision: the scaffold footprint while building, then the model's shape.
+func _fit_body(constructing: bool) -> void:
+	var want := "frame" if constructing else "shape"
+	if want == _body_for:
+		return
+	_body_for = want
+	if _body:
+		remove_child(_body)
+		_body.queue_free()
+	var boxes: Array[AABB] = [AABB(Vector3(-_size.x * 0.5, 0, -_size.y * 0.5), Vector3(_size.x, 4.0, _size.y))]
+	if not constructing:
+		boxes = ShapeCollider.boxes_for(_visual, _visual.slot_id, _size, _height)
+	_body = ShapeCollider.body(boxes)
+	_body.set_meta("building_id", building_id)
+	add_child(_body)
+	var top := 0.0
+	for bb: AABB in boxes:
+		top = maxf(top, bb.end.y)
+	if top > 0.5 and _status:
+		_status.position.y = top + 2.0
+
+
+## Walkable collision boxes (building space), for tests and debug views.
+func collision_boxes() -> Array[AABB]:
+	var out: Array[AABB] = []
+	if _body:
+		for cs: Node in _body.get_children():
+			var bs := (cs as CollisionShape3D).shape as BoxShape3D
+			out.append(AABB((cs as Node3D).position - bs.size * 0.5, bs.size))
+	return out
+
+
 func refresh(b: Dictionary) -> void:
 	var state := str(b.get("state"))
 	var constructing := state == ColonyState.B_CONSTRUCTING
+	_constructing = constructing
+	if _visual.is_inside_tree():
+		_fit_body(constructing)
+	else:
+		_fit_body.call_deferred(constructing)
 	_visual.visible = not constructing or float(b.get("progress", 0.0)) > 0.66
 	_visual.scale = Vector3.ONE if not constructing else Vector3(1, maxf(0.15, float(b.get("progress", 0.0))), 1)
 	if constructing != (_frame.get_child_count() > 0):

@@ -33,7 +33,7 @@ var _slot: VisualSlot
 func _ready() -> void:
 	add_to_group("player")  # WaypointLayer measures distances from here
 	collision_layer = 2
-	collision_mask = 1 | 16 | 8
+	collision_mask = 1 | 16  # buildings: ShapeCollider bodies on "world"; layer 8 is click-picking only
 	var shape := CollisionShape3D.new()
 	var cap := CapsuleShape3D.new()
 	cap.radius = 0.35

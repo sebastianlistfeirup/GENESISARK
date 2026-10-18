@@ -25,7 +25,7 @@ func _ready() -> void:
 	top_level = true
 	arm = SpringArm3D.new()
 	arm.spring_length = distance
-	arm.collision_mask = 1 | 16 | 8
+	arm.collision_mask = 1 | 16
 	arm.margin = 0.25
 	var sh := SphereShape3D.new()
 	sh.radius = 0.25

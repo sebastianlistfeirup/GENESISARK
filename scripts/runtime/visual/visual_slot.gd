@@ -20,6 +20,9 @@ extends Node3D
 
 var using_asset := false
 
+## Emitted after the proxy or asset is (re)built, e.g. to refit collision.
+signal rebuilt
+
 
 func _ready() -> void:
 	rebuild()
@@ -55,6 +58,7 @@ func rebuild() -> void:
 		p.scale = proxy_scale
 		add_child(p)
 		using_asset = false
+	rebuilt.emit()
 
 
 static func make(id: String, color_tint: String = "", stretch: Vector3 = Vector3.ONE) -> VisualSlot:

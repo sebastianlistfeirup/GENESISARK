@@ -158,6 +158,8 @@ Biblen s. 23: *"Miljøprops får simple collision proxies; små pynteting får o
 
 Brug aldrig "Trimesh" collision på hele detaljerede modeller — det er langsomt og giver fastlåsning.
 
+**Bygninger klarer sig selv (D-028).** `ShapeCollider` læser modellens mesh-dele og bygger én boks pr. del (flade dele < 0,25 m og tynde master springes over; højst 12 bokse, de billigste slås sammen). Kaptajnen går derfor tæt på tanke og vægge og kan gå mellem dem, i stedet for at ramme en usynlig footprint-boks. Under byggeri bruges stilladsets footprint. Passer det ikke for en model, sæt `"collision"` på slottet i `data/art/asset_slots.json`: `"footprint"` (én boks), `"none"`, eller håndplacerede bokse `[{"size": [x, y, z], "pos": [x, y, z]}]`. Klik i overbliksvisningen bruger stadig en separat footprint-boks (lag 4 "buildings"), så det er nemt at ramme bygningen.
+
 ---
 
 ## 7. Wrapper-scene `art/prefabs/<slot>.tscn`
@@ -173,7 +175,7 @@ ship_terminal (Node3D)               <- rod, står på (0,0,0) = gulvniveau
 ```
 
 Regler (gælder for dette projekts VisualSlot-system):
-- **Kun visuelt indhold.** Spillet ejer allerede kollision, interaktion og navigation for alle slots: skibets vægge/gulve/døre (`ShipBuilder`), interaktive objekter (`Interactable`), bygninger (pick-kollider pr. footprint), kaptajnen (kapsel) og terrænet. Læg derfor **ingen** StaticBody/CollisionShape i wrappere for `ship.*`, `building.*`, `char.*`, `surface.lander`, `surface.sample_marker`, `surface.relay_beacon`. Rene pynte-props, du selv placerer i scenen (se `docs/SCENE_ASSEMBLY.md`), må få en simpel kollisionsproxy.
+- **Kun visuelt indhold.** Spillet ejer allerede kollision, interaktion og navigation for alle slots: skibets vægge/gulve/døre (`ShipBuilder`), interaktive objekter (`Interactable`), bygninger (pick-kollider pr. footprint + `ShapeCollider` efter modellens form), kaptajnen (kapsel) og terrænet. Læg derfor **ingen** StaticBody/CollisionShape i wrappere for `ship.*`, `building.*`, `char.*`, `surface.lander`, `surface.sample_marker`, `surface.relay_beacon`. Rene pynte-props, du selv placerer i scenen (se `docs/SCENE_ASSEMBLY.md`), må få en simpel kollisionsproxy.
 - Samme **footprint og størrelse som proxyen** (bibel s. 9 og 19), så gameplay ikke ændrer sig. Proxyens mål står i `data/art/asset_slots.json` (`proxy`-listen) og bygningernes footprint i `data/buildings/buildings.json`.
 - Ingen scripts fra Unity/vendor. Ingen gameplaylogik i wrapperen.
 - Filnavn = slot-id + `.tscn` (fx `art/prefabs/building.habitat.tscn`).
