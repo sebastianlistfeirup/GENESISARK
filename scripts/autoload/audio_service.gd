@@ -15,6 +15,10 @@ var _cache: Dictionary = {}
 var _overrides: Dictionary = {}
 var _last_alarm: Dictionary = {}
 var _voice: AudioStreamPlayer
+var _layer: AudioStreamPlayer   # second ambience bed (embryo bank, hazard zone, colony people)
+var _layer_slot := ""
+var _stinger: AudioStreamPlayer
+var _rng := RandomNumberGenerator.new()
 
 
 func _ready() -> void:
@@ -39,6 +43,12 @@ func _ready() -> void:
 	_music = AudioStreamPlayer.new()
 	_music.bus = "Music"
 	add_child(_music)
+	_layer = AudioStreamPlayer.new()
+	_layer.bus = "Ambience"
+	add_child(_layer)
+	_stinger = AudioStreamPlayer.new()
+	_stinger.bus = "Music"
+	add_child(_stinger)
 	SettingsService.changed.connect(apply_volumes)
 	apply_volumes()
 
@@ -69,11 +79,11 @@ func stream(slot: String) -> AudioStream:
 				path = cand
 				break
 	var s: AudioStream = load(path) if not path.is_empty() and ResourceLoader.exists(path) else null
-	if s is AudioStreamOggVorbis and (slot.begins_with("amb_") or slot.begins_with("music_") or slot.ends_with("_loop") or slot == "sfx_thruster"):
+	if s is AudioStreamOggVorbis and loops(slot):
 		var o := (s as AudioStreamOggVorbis).duplicate() as AudioStreamOggVorbis
 		o.loop = true
 		s = o
-	if s is AudioStreamWAV and (slot.begins_with("amb_") or slot.begins_with("music_") or slot.ends_with("_loop") or slot == "sfx_thruster"):
+	if s is AudioStreamWAV and loops(slot):
 		var w := (s as AudioStreamWAV).duplicate() as AudioStreamWAV
 		w.loop_mode = AudioStreamWAV.LOOP_FORWARD
 		w.loop_end = int(w.get_length() * w.mix_rate)
@@ -82,7 +92,14 @@ func stream(slot: String) -> AudioStream:
 	return s
 
 
-func play(slot: String, bus: String = "SFX", volume_db: float = 0.0) -> void:
+## Beds and music loop; endings, stingers and one-shots play once.
+static func loops(slot: String) -> bool:
+	if slot.begins_with("music_ending_"):
+		return false
+	return slot.begins_with("amb_") or slot.begins_with("music_") or slot.ends_with("_loop") or slot == "sfx_thruster"
+
+
+func play(slot: String, bus: String = "SFX", volume_db: float = 0.0, pitch: float = 1.0) -> void:
 	var s := stream(slot)
 	if s == null:
 		return
@@ -91,8 +108,81 @@ func play(slot: String, bus: String = "SFX", volume_db: float = 0.0) -> void:
 			p.stream = s
 			p.bus = bus
 			p.volume_db = volume_db
+			p.pitch_scale = pitch
 			p.play()
 			return
+
+
+## Random take among <slot>, <slot>_01 ... <slot>_06 that exist, with a small
+## pitch spread, so repeated sounds (footsteps) never machine-gun.
+func play_variant(slot: String, bus: String = "SFX", volume_db: float = 0.0) -> void:
+	var takes: Array = variants(slot)
+	if takes.is_empty():
+		return
+	play(str(takes[_rng.randi() % takes.size()]), bus, volume_db, _rng.randf_range(0.94, 1.06))
+
+
+func variants(slot: String) -> Array:
+	var key := "#variants:" + slot
+	if not _cache.has(key):
+		var out: Array = []
+		for sl: String in [slot] + range(1, 7).map(func(i: int) -> String: return "%s_%02d" % [slot, i]):
+			if stream(sl) != null:
+				out.append(sl)
+		_cache[key] = out
+	return _cache[key]
+
+
+## Second ambience bed on top of the main one, crossfaded. "" fades it out.
+func set_layer(slot: String, volume_db: float = -6.0) -> void:
+	if slot == _layer_slot:
+		return
+	_layer_slot = slot
+	var s := stream(slot) if not slot.is_empty() else null
+	var fast := bool(SettingsService.get_value("reduced_motion", false))
+	var t := create_tween()
+	if _layer.playing:
+		t.tween_property(_layer, "volume_db", -40.0, 0.1 if fast else 0.8)
+	t.tween_callback(func() -> void:
+		_layer.stream = s
+		if s:
+			_layer.volume_db = -40.0
+			_layer.play()
+		else:
+			_layer.stop())
+	if s:
+		t.tween_property(_layer, "volume_db", volume_db, 0.1 if fast else 1.2)
+
+
+func layer_slot() -> String:
+	return _layer_slot
+
+
+## Short musical sting over the music bed (critical events). Never stacks.
+func stinger(slot: String) -> void:
+	var s := stream(slot)
+	if s == null or _stinger.playing:
+		return
+	_stinger.stream = s
+	_stinger.volume_db = -4.0
+	_stinger.play()
+
+
+## Positional loop/one-shot attached to a 3D node (construction sites). The
+## caller owns the returned player; it frees with its parent.
+func play_at(slot: String, parent: Node3D, volume_db: float = 0.0, max_distance: float = 60.0) -> AudioStreamPlayer3D:
+	var s := stream(slot)
+	if s == null or parent == null:
+		return null
+	var p := AudioStreamPlayer3D.new()
+	p.stream = s
+	p.bus = "SFX"
+	p.volume_db = volume_db
+	p.max_distance = max_distance
+	p.unit_size = 8.0
+	parent.add_child(p)
+	p.play()
+	return p
 
 
 func ui(slot: String) -> void:

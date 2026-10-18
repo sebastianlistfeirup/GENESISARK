@@ -70,6 +70,19 @@ func _run() -> void:
 			pad_missing.append(action)
 	check("pad_bindings_complete", pad_missing.is_empty(), str(pad_missing))
 
+	# Audio: every cue with a placeholder loads, loops follow the ledger rule, footsteps have takes.
+	var bad_audio: Array = []
+	for f: String in DirAccess.get_files_at("res://assets/audio/placeholder"):
+		if f.ends_with(".wav"):
+			var cue := f.get_basename()
+			var st := AudioService.stream(cue)
+			if st == null or (st is AudioStreamWAV and ((st as AudioStreamWAV).loop_mode != AudioStreamWAV.LOOP_DISABLED) != AudioService.loops(cue)):
+				bad_audio.append(cue)
+	check("audio_cues_load", bad_audio.is_empty() and AudioService.variants("sfx_footstep").size() >= 4 and AudioService.variants("sfx_footstep_soil").size() >= 4, str(bad_audio))
+	AudioService.set_layer("amb_embryo_bank")
+	check("audio_layer_set", AudioService.layer_slot() == "amb_embryo_bank")
+	AudioService.set_layer("")
+
 	# Language switch mid-campaign: content reloads translated, the domain state is untouched.
 	DebugFixtures.prepare("fresh")
 	var lang_before := SaveCodec.checksum(GameSession.state.to_dict())

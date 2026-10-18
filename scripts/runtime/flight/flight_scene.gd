@@ -89,7 +89,7 @@ func _physics_process(delta: float) -> void:
 			throttle = 1.0
 		if to.length() < 14.0:
 			next_ring += 1
-			AudioService.ui("ui_confirm")
+			AudioService.play("sfx_ring_pass", "SFX", -3.0)
 	else:
 		throttle = 1.0
 		if not _done:

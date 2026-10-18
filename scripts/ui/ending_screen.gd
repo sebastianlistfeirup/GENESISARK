@@ -7,7 +7,6 @@ func _ready() -> void:
 	set_anchors_preset(Control.PRESET_FULL_RECT)
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	AudioService.set_ambience("")
-	AudioService.set_music("music_hope")
 	var bg := ColorRect.new()
 	bg.color = UiKit.BG
 	bg.set_anchors_preset(Control.PRESET_FULL_RECT)
@@ -17,6 +16,7 @@ func _ready() -> void:
 		GameSession.cmd_handover()
 	var gs: GameState = GameSession.state
 	var def: Dictionary = GameSession.content.endings.get(gs.campaign.ending_id, {})
+	AudioService.set_music_any(["music_ending_" + gs.campaign.ending_id, "music_hope"])
 	var col := UiKit.vbox(16)
 	col.position = Vector2(160, 90)
 	col.custom_minimum_size = Vector2(1100, 0)

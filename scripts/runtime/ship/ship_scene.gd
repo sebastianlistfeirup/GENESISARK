@@ -13,6 +13,7 @@ var interactables: Dictionary = {}
 var _display: Label3D
 var _ai: Node3D
 var _ai_t := 0.0
+var _zone := ""
 var _window_planet: Node3D
 var _voyage_label: Label
 
@@ -80,7 +81,7 @@ func _ready() -> void:
 	GameSession.state_changed.connect(_on_state)
 	_on_state("init")
 	AudioService.set_ambience_any(["amb_ship_dark" if GameSession.state.ark.systems.get("power") == "offline" else "amb_ship_powered", "amb_ship_hum"])
-	AudioService.set_music("")
+	AudioService.set_music_any(["music_ark_alone"])
 	GameSession.trigger_story("intro_wakeup")
 	if GameSession.state.campaign.location_id != GameSession.content.start_location:
 		GameSession.trigger_story("arrival_" + GameSession.state.campaign.location_id)
@@ -217,12 +218,28 @@ func _panel_closed() -> void:
 
 func _process(delta: float) -> void:
 	_ai_t += delta
+	_update_zone_audio()
 	if _ai:
 		_ai.position.y = builder.ai_pos.y + sin(_ai_t * 1.3) * 0.08
 	if hud.any_modal_open() and captain.input_enabled:
 		captain.set_active(false)
 	elif not hud.any_modal_open() and not captain.input_enabled and not _any_panel():
 		captain.set_active(true)
+
+
+## Doorways hiss as the captain passes ('D' cells are where door modules go);
+## the embryo bank adds its own quiet bed on top of the ship ambience.
+func _update_zone_audio() -> void:
+	if captain == null:
+		return
+	var z := builder.zone_at(captain.global_position)
+	if z == _zone:
+		return
+	if z == "D":
+		AudioService.play("sfx_door", "SFX", -8.0)
+	_zone = z
+	if z != "D":
+		AudioService.set_layer("amb_embryo_bank" if z == "E" else "", -4.0)
 
 
 func _any_panel() -> bool:

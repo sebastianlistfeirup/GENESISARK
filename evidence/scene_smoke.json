@@ -11,6 +11,16 @@
       "ok": true
     },
     {
+      "detail": "[]",
+      "name": "audio_cues_load",
+      "ok": true
+    },
+    {
+      "detail": "",
+      "name": "audio_layer_set",
+      "ok": true
+    },
+    {
       "detail": "Water plant",
       "name": "language_switch_keeps_state",
       "ok": true
@@ -36,12 +46,12 @@
       "ok": true
     },
     {
-      "detail": "dyaw=-0.61",
+      "detail": "dyaw=-0.60",
       "name": "pad_look_turns_camera",
       "ok": true
     },
     {
-      "detail": "I_power_coupling:<Area3D#168007046265>",
+      "detail": "I_power_coupling:<Area3D#184197059761>",
       "name": "prompt_targets_coupling",
       "ok": true
     },
@@ -154,5 +164,5 @@
   "engine_version": "4.5.1-stable (official)",
   "failures": [],
   "status": "PASS",
-  "timestamp": "2026-10-18T07:49:34"
+  "timestamp": "2026-10-18T07:58:04"
 }

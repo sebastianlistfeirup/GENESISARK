@@ -18,6 +18,9 @@ var current_target: Interactable = null
 var camera_rig: CaptainCamera
 var visual_pivot: Node3D
 var _hold := 0.0
+var _hold_audio: AudioStreamPlayer3D
+## Footstep cue family; outdoor scenes switch to "sfx_footstep_soil".
+var footstep_slot := "sfx_footstep"
 var _probe: Area3D
 var _step_accum := 0.0
 var _anim: CharacterAnimator
@@ -82,7 +85,7 @@ func _physics_process(delta: float) -> void:
 		_step_accum += hv.length() * delta
 		if _step_accum > 1.6 and is_on_floor():
 			_step_accum = 0.0
-			AudioService.play("sfx_footstep", "SFX", -14.0)
+			AudioService.play_variant(footstep_slot, "SFX", -14.0)
 	_update_target()
 	_update_hold(delta)
 	if _anim.active():
@@ -119,15 +122,25 @@ func _update_hold(delta: float) -> void:
 	if current_target.hold_time <= 0.0:
 		return
 	if Input.is_action_pressed("interact") and not current_target.locked:
+		if _hold == 0.0 and _hold_audio == null:
+			_hold_audio = AudioService.play_at("sfx_sample_loop", self, -6.0)
 		_hold += delta
 		hold_progress.emit(clampf(_hold / current_target.hold_time, 0, 1))
 		if _hold >= current_target.hold_time:
 			_hold = 0.0
+			_stop_hold_audio()
 			hold_progress.emit(0.0)
 			current_target.use()
 	elif _hold > 0.0:
 		_hold = 0.0
+		_stop_hold_audio()
 		hold_progress.emit(0.0)
+
+
+func _stop_hold_audio() -> void:
+	if _hold_audio:
+		_hold_audio.queue_free()
+		_hold_audio = null
 
 
 func _unhandled_input(event: InputEvent) -> void:

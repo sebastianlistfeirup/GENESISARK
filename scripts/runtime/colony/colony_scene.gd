@@ -71,6 +71,7 @@ func _ready() -> void:
 	cam_rig.position = Vector3(float(lc[0]), 0, float(lc[1]) + 8)
 	cam_rig.make_current()
 	captain = Captain.new()
+	captain.footstep_slot = "sfx_footstep_soil"
 	add_child(captain)
 	captain.teleport(Vector3(float(lc[0]) + 10, terrain.height_at(float(lc[0]) + 10, float(lc[1]) + 9) + 0.5, float(lc[1]) + 9))
 	captain.set_active(false)
@@ -189,6 +190,7 @@ func _sync() -> void:
 		return
 	UiKit.clear(_res_box)
 	_res_box.add_child(ColonyUi.resource_bar(gs))
+	AudioService.set_layer("amb_colony_people" if gs.population.alive_count() > 0 else "", -10.0)
 	_speed_label.text = Loc.t("År %d · dag %d   %s") % [int(gs.campaign.colony_year()), gs.campaign.colony_day % 365, [Loc.t("Pause"), "1x", "", "3x"][clampi(GameSession.colony_speed, 0, 3)]]
 	var seen := {}
 	for b: Dictionary in gs.colony.buildings:

@@ -52,6 +52,7 @@ func goto(key: String, p: Dictionary = {}) -> void:
 	t.tween_property(_fade, "modulate:a", 1.0, 0.05 if fast else 0.35)
 	await t.finished
 	GameSession.colony_clock_active = false
+	AudioService.set_layer("")
 	get_tree().change_scene_to_file(SCENES[key])
 	current_key = key
 	await get_tree().process_frame

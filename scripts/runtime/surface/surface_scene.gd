@@ -14,6 +14,9 @@ var captain: Captain
 var hud: GameHud
 var survey: Dictionary = {}
 var planet: Dictionary = {}
+## Hazard id -> ambience layer cue (docs/AUDIO_LEDGER.csv).
+const HAZARD_SOUND := {"spores": "amb_hazard_spores", "storms": "amb_hazard_storm", "heat": "amb_hazard_dust",
+	"dust": "amb_hazard_dust", "cold": "amb_hazard_cold", "long_night": "amb_hazard_cold"}
 var hazard_areas: Array = []  # [{area: Area3D, mult: float, label: String}]
 var _suit_bar: ProgressBar
 var _suit_label: Label
@@ -57,6 +60,7 @@ func _ready() -> void:
 	_place_routes()
 	_place_hazards()
 	captain = Captain.new()
+	captain.footstep_slot = "sfx_footstep_soil"
 	add_child(captain)
 	captain.teleport(Vector3(4, terrain.height_at(4, 4) + 0.3, 4), PI * 0.25)
 	if str(planet.get("id")) == "umbra":
@@ -207,7 +211,8 @@ func _place_hazards() -> void:
 		lbl.position.y = 6.5
 		lbl.modulate = Color(str(hdef.get("color", "#d6c447")))
 		area.add_child(lbl)
-		hazard_areas.append({"area": area, "mult": DictUtil.get_float(DictUtil.get_dict(hdef, "expedition"), "suit_drain_multiplier", 2.0), "label": str(hz.get("label", ""))})
+		hazard_areas.append({"area": area, "mult": DictUtil.get_float(DictUtil.get_dict(hdef, "expedition"), "suit_drain_multiplier", 2.0),
+			"label": str(hz.get("label", "")), "sound": str(HAZARD_SOUND.get(hid, ""))})
 
 
 func _build_suit_hud() -> void:
@@ -227,8 +232,8 @@ func _build_suit_hud() -> void:
 func _hazard_mult() -> Array:
 	for h: Dictionary in hazard_areas:
 		if (h["area"] as Area3D).overlaps_body(captain):
-			return [float(h["mult"]), str(h["label"])]
-	return [1.0, ""]
+			return [float(h["mult"]), str(h["label"]), str(h["sound"])]
+	return [1.0, "", ""]
 
 
 func _physics_process(delta: float) -> void:
@@ -237,6 +242,7 @@ func _physics_process(delta: float) -> void:
 		return
 	var ex := gs.expedition
 	var hm := _hazard_mult()
+	AudioService.set_layer(hm[2], -4.0)
 	if not hud.any_modal_open():
 		GameSession.sim.expedition.tick(gs, delta, hm[0])
 	var reserve := float(GameSession.content.bal("suit.reserve_warning", 30.0))
@@ -248,7 +254,7 @@ func _physics_process(delta: float) -> void:
 	var lines: Array = []
 	if hm[0] > 1.0:
 		lines.append(Loc.t("▲ I fareområde: %s (×%.1f forbrug)") % [hm[1], hm[0]])
-	lines.append(Loc.t("Prøver: %d/2 · Relæ: %s") % [ex.samples.size(), "placeret" if ex.relay_placed else "mangler"])
+	lines.append(Loc.t("Prøver: %d/2 · Relæ: %s") % [ex.samples.size(), Loc.t("placeret") if ex.relay_placed else Loc.t("mangler")])
 	if ex.drone_refill_available and not ex.drone_refill_used:
 		lines.append(Loc.t("[%s] Kald dronereserve (+%d%%)") % [SettingsService.binding_text("drone_refill"), int(GameSession.content.bal("suit.drone_refill", 35.0))])
 	var lander: Node3D = _markers.get("lander")

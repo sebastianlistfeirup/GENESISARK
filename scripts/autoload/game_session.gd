@@ -19,6 +19,7 @@ var colony_speed: int = 0
 var colony_clock_active := false
 var _accum := 0.0
 var _txn_counter := 0
+var _unpowered: Dictionary = {}  # presentation only: building ids without power last tick
 
 
 func _ready() -> void:
@@ -168,11 +169,17 @@ func cmd_take_sample(point_id: String) -> CommandResult:
 
 
 func cmd_place_relay() -> CommandResult:
-	return _after(sim.expedition.place_relay(state), "expedition")
+	var r := _after(sim.expedition.place_relay(state), "expedition")
+	if r.ok:
+		AudioService.play("sfx_relay_place")
+	return r
 
 
 func cmd_drone_refill() -> CommandResult:
-	return _after(sim.expedition.use_drone_refill(state), "expedition")
+	var r := _after(sim.expedition.use_drone_refill(state), "expedition")
+	if r.ok:
+		AudioService.play("sfx_drone_refill")
+	return r
 
 
 func cmd_finish_expedition() -> CommandResult:
@@ -188,6 +195,7 @@ func cmd_commit_landing(site_id: String, landing_txn: String = "") -> CommandRes
 	SaveService.save_state("pre_landing", state, content)
 	var r := _after(sim.landing.commit_landing(state, site_id, landing_txn if not landing_txn.is_empty() else txn("landing")), "landing")
 	if r.ok:
+		AudioService.play("sfx_landing", "SFX", -2.0)
 		trigger_story("landing_commit")
 		autosave()
 	return r
@@ -203,7 +211,10 @@ func cmd_place_building(def_id: String, pos: Vector2, rot: int) -> CommandResult
 
 
 func cmd_demolish(building_id: int) -> CommandResult:
-	return _after(sim.colony.demolish(state, building_id), "colony")
+	var r := _after(sim.colony.demolish(state, building_id), "colony")
+	if r.ok:
+		AudioService.play("sfx_demolish")
+	return r
 
 
 func cmd_add_module(building_id: int, module_id: String) -> CommandResult:
@@ -213,6 +224,7 @@ func cmd_add_module(building_id: int, module_id: String) -> CommandResult:
 func cmd_start_incubation(count: int) -> CommandResult:
 	var r := _after(sim.population.start_incubation(state, count, txn("incubation")), "population")
 	if r.ok:
+		AudioService.play("sfx_incubation_start", "SFX", -4.0)
 		trigger_story("incubation_start")
 		autosave()
 	return r
@@ -287,10 +299,17 @@ func advance_colony_day() -> Dictionary:
 		trigger_story("first_light")
 	if "obj_stable_supply" in done:
 		trigger_story("stable_supply")
+	var unpowered := {}
 	for b: Dictionary in rep.get("bottlenecks", []):
 		if b.get("reason") == "no_power":
-			AudioService.alarm(false)
+			unpowered[int(b.get("id", -1))] = true
+	if not unpowered.is_empty():
+		AudioService.alarm(false)
+	for id: int in unpowered.keys():
+		if not _unpowered.has(id):
+			AudioService.play("sfx_power_cut", "SFX", -4.0)  # once per tick, only for newly cut buildings
 			break
+	_unpowered = unpowered
 	colony_ticked.emit(rep)
 	_check_new_events()
 	if posmod(state.campaign.colony_day, 30) == 0:
@@ -305,6 +324,8 @@ func _check_new_events() -> void:
 			var def: Dictionary = content.events.get(str(a.get("id")), {})
 			set_colony_speed(0)  # Decisions are made in paused time
 			AudioService.alarm(bool(def.get("critical", false)))
+			if str(def.get("kind")) == "crisis" or bool(def.get("critical", false)):
+				AudioService.stinger("stinger_crisis")
 			event_started.emit(def)
 
 

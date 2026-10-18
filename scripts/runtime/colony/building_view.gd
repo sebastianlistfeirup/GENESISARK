@@ -73,6 +73,7 @@ func refresh(b: Dictionary) -> void:
 				_frame.add_child(post)
 			_fx = VisualSlot.make("fx.construction_sparks")
 			_frame.add_child(_fx)
+			AudioService.play_at("sfx_build_loop", _frame, -12.0, 45.0)  # freed with the frame
 	UiKit.clear(_modules)
 	var i := 0
 	for m: Variant in b.get("modules", []):
@@ -88,7 +89,7 @@ func refresh(b: Dictionary) -> void:
 			_status.text += "\n▲ " + (Loc.t("ingen adgang") if reason == "no_access" else Loc.t("venter på droner"))
 	elif not reason.is_empty():
 		_status.text = "▲ " + {"no_power": Loc.t("ingen strøm"), "no_access": Loc.t("ingen adgang"), "no_workforce": Loc.t("mangler arbejdskraft"),
-			"maintenance": "vedligehold", "input_missing": Loc.t("mangler råvarer"), "module_missing": Loc.t("mangler modul")}.get(reason, reason)
+			"maintenance": Loc.t("vedligehold"), "input_missing": Loc.t("mangler råvarer"), "module_missing": Loc.t("mangler modul")}.get(reason, reason)
 		_status.modulate = UiKit.DANGER if reason in ["no_power", "no_access", "module_missing"] else UiKit.WARN
 	else:
 		_status.text = ""

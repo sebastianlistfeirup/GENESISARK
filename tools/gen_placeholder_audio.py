@@ -400,6 +400,227 @@ def stinger_birth():
     return fade(mix(s, bell), 0.01, 0.3)
 
 
+# ---------------------------------------------------------------- v2 cues (AUDIO_LEDGER PLANNED -> HOOKED)
+# Appended after the originals so the shared RNG leaves the first 20 files byte-identical.
+def _place(out, sig, t, g=1.0):
+    off = n_samples(t)
+    for i, v in enumerate(sig):
+        if off + i < len(out):
+            out[off + i] += v * g
+
+
+def amb_embryo_bank():
+    T, X = 8.0, 1.0
+    L = T + X
+    hum = mix(sine(loop_freq(73.4, T), L, 0.3), sine(loop_freq(146.8, T), L, 0.08))
+    flow = mul(lowpass(white(L), 600), lfo(loop_freq(0.5, T), L, 0.25, 0.7))
+    glass = mul(mix(sine(loop_freq(1174.7, T), L, 0.03), sine(loop_freq(1760.0, T), L, 0.02)),
+                lfo(loop_freq(0.125, T), L, 0.0, 1.0))
+    return make_loop(mix(hum, flow, glass), X)
+
+
+def amb_colony_people():
+    T, X = 8.0, 1.0
+    L = T + X
+    murmur = lowpass(highpass(white(L), 250), lfo(loop_freq(0.75, T), L, 700, 1500))
+    murmur = mul(murmur, lfo(loop_freq(2.25, T), L, 0.35, 0.9))
+    out = mix(gain(murmur, 0.8), silence(L))
+    for k in range(6):  # distant voices / children calling: soft vowel-like tones
+        d = 0.5 + rng.random() * 0.4
+        f = 380 + rng.random() * 320
+        v = mul(mix(sweep(f, f * (1.1 + rng.random() * 0.2), d, 0.06), sine(f * 2.01, d, 0.02)), env_adsr(d, 0.06, 0.1, 0.6, 0.25))
+        _place(out, lowpass(v, 1800), 0.4 + k * 1.3 + rng.random() * 0.3)
+    return make_loop(out, X)
+
+
+def amb_hazard_spores():
+    T, X = 6.0, 1.0
+    L = T + X
+    hiss = mul(lowpass(highpass(white(L), 900), 3000), lfo(loop_freq(0.66, T), L, 0.1, 0.35))
+    out = list(hiss)
+    for k in range(14):
+        puff = mul(lowpass(white(0.18), 1200), env_exp(0.18, 0.05))
+        _place(out, puff, 0.2 + k * 0.42 + rng.random() * 0.15, 0.5)
+    return make_loop(out, X)
+
+
+def amb_hazard_storm():
+    T, X = 6.0, 1.0
+    L = T + X
+    wind = mul(lowpass(white(L), lfo(loop_freq(0.33, T), L, 300, 1600)), lfo(loop_freq(0.5, T), L, 0.5, 1.0, 0.7))
+    rain = gain(highpass(white(L), 2500), 0.25)
+    rumble = mul(lowpass(white(L), 90), lfo(loop_freq(0.17, T), L, 0.2, 0.9))
+    return make_loop(mix(gain(wind, 1.2), rain, gain(rumble, 2.0)), X)
+
+
+def amb_hazard_dust():
+    T, X = 6.0, 1.0
+    L = T + X
+    grit = mul(highpass(white(L), 1500), lfo(loop_freq(1.5, T), L, 0.25, 0.6))
+    roar = gain(lowpass(white(L), 400), 1.4)
+    return make_loop(mix(grit, roar), X)
+
+
+def amb_hazard_cold():
+    T, X = 6.0, 1.0
+    L = T + X
+    howl = mul(lowpass(highpass(white(L), 500), lfo(loop_freq(0.25, T), L, 900, 2200)), lfo(loop_freq(0.33, T), L, 0.3, 0.9))
+    whistle = mul(sine(loop_freq(1318.5, T), L, 0.05), lfo(loop_freq(0.5, T), L, 0.0, 1.0))
+    heater = sine(loop_freq(120, T), L, 0.06)
+    return make_loop(mix(howl, whistle, heater), X)
+
+
+def _step(f_thud, cut, crunch):
+    thud = mul(sine(f_thud, 0.16, 0.6), env_exp(0.16, 0.03))
+    scr = mul(lowpass(highpass(white(0.16), 300), cut), env_exp(0.16, 0.025 + crunch))
+    return fade(mix(thud, gain(scr, 0.8)), 0.001, 0.02)
+
+
+def sfx_footstep_soil(): return _step(80, 1800, 0.01)
+def sfx_footstep_soil_01(): return _step(76, 1600, 0.012)
+def sfx_footstep_soil_02(): return _step(86, 2100, 0.008)
+def sfx_footstep_soil_03(): return _step(72, 1400, 0.015)
+def sfx_footstep_01(): return fade(mix(mul(sine(95, 0.14, 0.7), env_exp(0.14, 0.03)), gain(mul(highpass(white(0.14), 2000), env_exp(0.14, 0.015)), 0.4)), 0.001, 0.02)
+def sfx_footstep_02(): return fade(mix(mul(sine(84, 0.14, 0.7), env_exp(0.14, 0.03)), gain(mul(highpass(white(0.14), 2600), env_exp(0.14, 0.012)), 0.4)), 0.001, 0.02)
+def sfx_footstep_03(): return fade(mix(mul(sine(100, 0.14, 0.7), env_exp(0.14, 0.028)), gain(mul(highpass(white(0.14), 1700), env_exp(0.14, 0.018)), 0.4)), 0.001, 0.02)
+
+
+def sfx_door():
+    d = 1.0
+    hiss = mul(lowpass(highpass(white(d), 1500), 6000), env_adsr(d, 0.02, 0.15, 0.4, 0.5))
+    slide = mul(mix(sweep(140, 90, d, 0.4), lowpass(white(d), 300)), env_adsr(d, 0.1, 0.2, 0.7, 0.3))
+    clunk = concat(silence(0.8), mul(sine(60, 0.2, 0.8), env_exp(0.2, 0.05)))
+    return fade(mix(hiss, slide, clunk), 0.002, 0.05)
+
+
+def sfx_sample_loop():
+    T, X = 2.0, 0.3
+    L = T + X
+    drill = mix(sine(loop_freq(220, T), L, 0.25), sine(loop_freq(440, T), L, 0.1), gain(lowpass(white(L), 2200), 0.6))
+    return make_loop(mul(drill, lfo(loop_freq(24, T), L, 0.6, 1.0)), X)
+
+
+def sfx_relay_place():
+    out = silence(1.8)
+    for k in range(3):
+        _place(out, mul(highpass(white(0.12), 1500), env_exp(0.12, 0.03)), 0.05 + k * 0.22, 0.5)
+        _place(out, mul(sine(160 + k * 30, 0.2, 0.5), env_exp(0.2, 0.05)), 0.05 + k * 0.22)
+    _place(out, mul(sweep(300, 900, 0.5, 0.25), env_adsr(0.5, 0.05, 0.1, 0.6, 0.2)), 0.75)
+    for k in range(3):
+        _place(out, mul(sine(note(88 + 2 * k), 0.08, 0.3), env_exp(0.08, 0.03)), 1.3 + k * 0.1)
+    return fade(out, 0.001, 0.05)
+
+
+def sfx_drone_refill():
+    d = 2.6
+    buzz = mul(mix(sine(180, d, 0.2), sine(183, d, 0.2), gain(lowpass(white(d), 900), 0.4)),
+               env_adsr(d, 0.6, 0.2, 0.8, 0.9))
+    drop = concat(silence(1.2), mul(sine(70, 0.3, 0.8), env_exp(0.3, 0.06)))
+    return fade(mix(buzz, drop), 0.01, 0.2)
+
+
+def sfx_ring_pass():
+    d = 1.0
+    whoosh = mul(lowpass(white(d), lfo(1.0 / d, d, 400, 3000, -math.pi / 2)), env_adsr(d, 0.25, 0.2, 0.4, 0.5))
+    chime = mul(mix(sine(note(84), d, 0.25), sine(note(91), d, 0.12), sine(note(96), d, 0.06)), env_exp(d, 0.35))
+    return fade(mix(whoosh, concat(silence(0.25), chime)), 0.005, 0.1)
+
+
+def sfx_landing():
+    d = 7.0
+    roar = mul(lowpass(white(d), lfo(0.5 / d, d, 1400, 250, 0.0)), env_adsr(d, 0.8, 1.0, 0.8, 1.5))
+    rumble = mul(sine(38, d, 0.5), env_adsr(d, 1.0, 1.0, 0.9, 1.8))
+    out = mix(gain(roar, 1.4), rumble)
+    _place(out, mul(mix(sine(45, 0.8, 1.0), lowpass(white(0.8), 300)), env_exp(0.8, 0.2)), 4.6)
+    for k in range(3):
+        _place(out, mul(sweep(220 - k * 30, 150 - k * 20, 0.6, 0.15), env_adsr(0.6, 0.1, 0.1, 0.6, 0.3)), 5.3 + k * 0.5)
+    return fade(out, 0.05, 0.4)
+
+
+def sfx_build_loop():
+    T, X = 4.0, 0.5
+    L = T + X
+    out = gain(lowpass(white(L), 500), 0.3)
+    for k in range(10):
+        _place(out, mul(highpass(white(0.05), 2500), env_exp(0.05, 0.01)), 0.15 + k * 0.38, 0.6)
+    weld = mul(highpass(white(1.2), 3000), lfo(30, 1.2, 0.3, 1.0))
+    _place(out, mul(weld, env_adsr(1.2, 0.05, 0.1, 0.8, 0.2)), 1.8, 0.3)
+    return make_loop(out, X)
+
+
+def sfx_demolish():
+    out = silence(1.8)
+    for k in range(4):
+        _place(out, mul(mix(sine(110 - k * 12, 0.3, 0.5), highpass(white(0.3), 1200)), env_exp(0.3, 0.05)), k * 0.33, 0.7)
+    _place(out, mul(lowpass(white(0.6), 500), env_exp(0.6, 0.15)), 1.2)
+    return fade(out, 0.001, 0.08)
+
+
+def sfx_power_cut():
+    d = 1.3
+    fall = mul(mix(sweep(420, 60, d, 0.5, 0.6), sweep(840, 120, d, 0.15, 0.6)), env_adsr(d, 0.01, 0.2, 0.8, 0.5))
+    clack = mul(highpass(white(0.06), 1500), env_exp(0.06, 0.01))
+    return fade(mix(concat(clack, silence(d - 0.06)), fall), 0.001, 0.1)
+
+
+def sfx_incubation_start():
+    d = 3.6
+    pad = mul(mix(sine(note(60), d, 0.15), sine(note(67), d, 0.12), sine(note(72), d, 0.08)), env_adsr(d, 1.0, 0.5, 0.8, 1.2))
+    out = list(pad)
+    for k in range(4):  # heartbeat-like double pulse
+        _place(out, mul(sine(62, 0.12, 0.6), env_exp(0.12, 0.03)), 0.6 + k * 0.75)
+        _place(out, mul(sine(55, 0.12, 0.4), env_exp(0.12, 0.03)), 0.78 + k * 0.75)
+    return fade(out, 0.01, 0.3)
+
+
+def music_ark_alone():
+    # sparse, lonely: Dm add9 drone, long gaps, single cello-like line
+    chords = [[38, 50, 57, 64], [38, 50, 55, 62], [34, 50, 57, 62], [36, 48, 55, 62]]
+    seg, ov = 6.0, 2.0
+    out = [0.0] * n_samples(seg * len(chords) + ov)
+    for k, ch in enumerate(chords):
+        _place(out, gain(pad_chord(ch, seg, ov), 0.7), k * seg)
+    for t, m in [(1.0, 62), (4.5, 60), (9.0, 57), (14.0, 58), (18.5, 57)]:
+        d = 3.0
+        cello = mul(mix(sine(note(m - 12), d, 0.12), sine(note(m - 12) * 2, d, 0.04), sine(note(m - 12) * 3, d, 0.015)),
+                    mul(env_adsr(d, 0.6, 0.4, 0.8, 1.2), lfo(5.0, d, 0.9, 1.0)))
+        _place(out, cello, t)
+    return make_loop(out, ov)
+
+
+def stinger_crisis():
+    d = 4.5
+    low = mul(mix(sine(note(38), d, 0.3), sine(note(39), d, 0.2), sine(note(50), d, 0.12)), env_adsr(d, 1.8, 0.5, 0.9, 1.5))
+    swell = mul(lowpass(mix(sine(note(62), d, 0.1), sine(note(63), d, 0.08)), 1200), env_adsr(d, 2.2, 0.3, 0.8, 1.4))
+    return fade(mix(low, swell), 0.01, 0.3)
+
+
+def _ending(chords, mel, seg, warmth):
+    ov = 2.0
+    out = [0.0] * n_samples(seg * len(chords) + ov + 2.0)
+    for k, ch in enumerate(chords):
+        _place(out, pad_chord(ch, seg, ov), k * seg)
+    for t, m in mel:
+        b = mul(mix(sine(note(m + 12), 2.5, 0.09), sine(note(m + 24), 2.5, 0.02 * warmth)), env_exp(2.5, 0.8))
+        _place(out, b, t)
+    return fade(out, 0.05, 2.0)
+
+
+def music_ending_independent():
+    return _ending([[48, 55, 60, 64], [41, 57, 60, 65], [45, 57, 60, 64], [43, 55, 59, 62], [48, 55, 64, 72]],
+                   [(0.5, 72), (3.0, 76), (5.5, 79), (10.5, 81), (13.0, 79), (16.0, 76), (20.5, 84)], 4.5, 1.5)
+
+
+def music_ending_shielded():
+    return _ending([[45, 57, 60, 64], [41, 57, 60, 65], [48, 55, 60, 64], [43, 55, 59, 62], [48, 55, 60, 67]],
+                   [(1.0, 69), (5.0, 72), (9.5, 71), (14.0, 72), (19.0, 76)], 4.5, 1.0)
+
+
+def music_ending_fragile():
+    return _ending([[45, 57, 60, 64], [41, 53, 57, 60], [43, 55, 58, 62], [45, 57, 60, 66]],
+                   [(1.0, 69), (6.5, 67), (12.0, 65), (17.5, 66)], 5.0, 0.5)
+
+
 SOUNDS = [
     ("amb_ship_hum", amb_ship_hum, -6.0),
     ("amb_colony_wind", amb_colony_wind, -6.0),
@@ -421,7 +642,13 @@ SOUNDS = [
     ("sfx_scan", sfx_scan, -6.0),
     ("music_hope", music_hope, -9.0),
     ("stinger_birth", stinger_birth, -6.0),
-]
+] + [(fn.__name__, fn, -9.0 if fn.__name__.startswith("music_") else -6.0) for fn in [
+    amb_embryo_bank, amb_colony_people, amb_hazard_spores, amb_hazard_storm, amb_hazard_dust, amb_hazard_cold,
+    sfx_footstep_soil, sfx_footstep_soil_01, sfx_footstep_soil_02, sfx_footstep_soil_03,
+    sfx_footstep_01, sfx_footstep_02, sfx_footstep_03, sfx_door, sfx_sample_loop, sfx_relay_place,
+    sfx_drone_refill, sfx_ring_pass, sfx_landing, sfx_build_loop, sfx_demolish, sfx_power_cut,
+    sfx_incubation_start, music_ark_alone, stinger_crisis, music_ending_independent, music_ending_shielded,
+    music_ending_fragile]]
 
 
 def main():
