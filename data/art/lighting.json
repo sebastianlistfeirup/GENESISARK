@@ -22,7 +22,9 @@
     "glow": 0.55,
     "glow_bloom": 0.03,
     "ssao": true,
-    "adjust_saturation": 1.0
+    "adjust_saturation": 1.0,
+    "fog_height": 2.0,
+    "fog_height_density": 0.06
   },
   "biomes": {
     "green": {

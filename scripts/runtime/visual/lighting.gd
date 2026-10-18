@@ -49,6 +49,9 @@ static func build(planet: Dictionary) -> Array:
 	e.fog_sun_scatter = float(p["fog_sun_scatter"])
 	e.fog_aerial_perspective = float(p["fog_aerial"])
 	e.fog_sky_affect = 0.6
+	# Height fog: ground-level haze for the captain, clear air for the overhead colony camera.
+	e.fog_height = float(p.get("fog_height", 2.0))
+	e.fog_height_density = float(p.get("fog_height_density", 0.06))
 	e.glow_enabled = float(p["glow"]) > 0.0
 	e.glow_intensity = float(p["glow"])
 	e.glow_bloom = float(p["glow_bloom"])
