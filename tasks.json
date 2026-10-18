@@ -283,7 +283,7 @@
       "fallback": "Ret import i isoleret RigLab; behold proxyversion som rollback.",
       "evidence": "evidence/GA-13/result.json",
       "last_commit": "",
-      "notes": "Klar: VisualSlot-registret (81 slots), automatisk Synty-import (tools/synty: pak ud, match, stage, wrappers med tilpasning og atlas, varianter), editor-panelet Asset-slots, samleguide. Selftest 10/10 med falsk pakke. Kræver de købte Synty-filer."
+      "notes": "Klar: VisualSlot-registret (81 slots), automatisk Synty-import (tools/synty: pak ud, match, stage, wrappers med tilpasning og atlas, varianter), editor-panelet Asset-slots, samleguide. Selftest 10/10 med falsk pakke. Kræver de købte Synty-filer. Forberedt: bygningskollision følger importerede modeller automatisk (ShapeCollider, D-028)."
     },
     {
       "id": "GA-14",
@@ -395,7 +395,7 @@
       "fallback": "Genbrug modulære terrænelementer; fokuser på forskellige funktionelle layouts. Aflevering: commit + faktiske testresultater + relevant billede/video + opdateret STATUS. Porten til næste fase skal være bestået.",
       "evidence": "evidence/GA-18/result.json",
       "last_commit": "f614ade",
-      "notes": "Greybox: tre biome-terræner, farezoner og en kolonifare pr. biome (moduler/storme/nat). Synty-dressing mangler."
+      "notes": "Greybox: tre biome-terræner, farezoner og en kolonifare pr. biome (moduler/storme/nat). Synty-dressing mangler. Session 5: NAV-varsler i farezoner og hjemturs-vindue på overfladen (D-027)."
     },
     {
       "id": "GA-19",
@@ -573,7 +573,8 @@
       "acceptance": "Alle ni sites understøtter startbygninger og levedygtig progression. Ingen pynt blokerer kritiske paths eller skjuler interaktion.",
       "fallback": "Reducer propdensitet og genbrug materialer, før performance kræver store systemomskrivninger. Aflevering: commit + faktiske testresultater + relevant billede/video + opdateret STATUS. Porten til næste fase skal være bestået.",
       "evidence": "evidence/GA-26/result.json",
-      "last_commit": ""
+      "last_commit": "",
+      "notes": "Session 5: lys pr. planet som data (D-026) + partikelbibliotek for alle 10 fx-slots (D-029). Grundlag, ikke art-pass."
     },
     {
       "id": "GA-27",
@@ -642,7 +643,7 @@
       "fallback": "Optimer målt flaskehals; undgå ny engineversion eller threading midt i contentlås.",
       "evidence": "evidence/GA-29/result.json",
       "last_commit": "f614ade",
-      "notes": "Tasteomlægning, controller (D-018), UI-skala, reduceret bevægelse, undertekster, touch; profilering af dagstick (tools/balance/profile_tick.gd)."
+      "notes": "Tasteomlægning, controller (D-018), UI-skala, reduceret bevægelse, undertekster, touch; profilering af dagstick (tools/balance/profile_tick.gd). Session 5: check.sh fejler på SCRIPT ERROR i alle trin; FX har reduceret-bevægelse-tilstand."
     },
     {
       "id": "GA-30",

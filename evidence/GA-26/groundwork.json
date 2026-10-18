@@ -1,0 +1,17 @@
+{
+  "task_id": "GA-26",
+  "commit": "e10e3fc",
+  "engine_version": "4.5.1-stable (official)",
+  "command": "tools/check.sh; xvfb-run -a godot --path . --rendering-method gl_compatibility -- --capture=evidence/shots/planets/<p>.png --scene=colony --setup=grown:<p> --wait=90",
+  "exit_code": 0,
+  "expected": "Lighting presets for all six planets load from data; ten fx.* slots resolve to own particle scenes; smoke checks fx_library_particles and building_collision_follows_shape pass",
+  "observed": "check.sh: 64 tests, 49 smoke checks, 6 touch checks, 0 failures; six colony captures + contact sheet; FX captures in evidence/shots/fx_*.png",
+  "fixture": "grown:<planet>, expedition:<planet>, approach:umbra",
+  "status": "PASS",
+  "kind": "groundwork (does not set DONE; art pass needs Synty assets)",
+  "artifacts": [
+    "evidence/shots/planets/contact_sheet.png",
+    "evidence/shots/fx_lab_all.png",
+    "evidence/shots/nav_surface.png"
+  ]
+}

@@ -9,20 +9,20 @@
 | current_phase | 1 · Fundament (port ikke bestået endnu) |
 | last_passed_gate | — (fase 1-porten kræver GA-11 og GA-12 DONE) |
 | active_task | GA-11 / GA-12 (VERIFYING) · grundlag lagt for GA-14, 19, 29, 33 |
-| last_commit | se `git log -1` (session 2: lokalisering, controller, lyd, krediteringer, RigLab) |
+| last_commit | se `git log -1` (session 5: engelsk kildesprog, lys, FX, NAV på planeten, bygningskollision) |
 | next_command | `tools/check.sh` og derefter `godot --path .` |
 
 ## Tests kørt (faktiske resultater på dette commit)
 
 | Lag | Kommando | Resultat |
 |---|---|---|
-| 1 · Domæne | `godot --headless --path . --script res://tests/run_tests.gd` | **63 tests, 0 fejl** → `evidence/test_report.json` |
-| 2 · Scener (rigtigt input) | `godot --headless --path . res://scenes/tests/scene_smoke.tscn` | **47 checks, 0 fejl** + touch-føling 6/6 → `evidence/scene_smoke.json` |
-| Parse-tjek | `godot --headless --path . res://scenes/tests/compile_all.tscn` | 87 scripts, 0 fejl |
+| 1 · Domæne | `godot --headless --path . --script res://tests/run_tests.gd` | **64 tests, 0 fejl** → `evidence/test_report.json` |
+| 2 · Scener (rigtigt input) | `godot --headless --path . res://scenes/tests/scene_smoke.tscn` | **49 checks, 0 fejl** + touch-føling 6/6 → `evidence/scene_smoke.json` |
+| Parse-tjek | `godot --headless --path . res://scenes/tests/compile_all.tscn` | 107 scripts, 0 fejl |
 | Balance | `godot --headless --path . --script res://tools/balance/run_balance.gd` | 18 kørsler til år 40 → `evidence/balance/` |
 | 3 · Optaget gameplay | — | NOT_RUN (kræver menneske) |
 | 4 · Eksport | Windows + Linux eksporteret; Linux-build kørt under Xvfb | Windows-build NOT_RUN |
-| Oversættelse | `python3 tools/loc_extract.py --check` | 1069 nøgler, 0 mangler (da → en) |
+| Oversættelse | `python3 tools/loc_extract.py --check` | 1136 nøgler, 0 mangler (en → da) |
 | Plan | `python3 tools/validate_plan.py` | OK · 10 DONE · 2 VERIFYING · 12 IN_PROGRESS · 12 TODO |
 
 ## Opgaver
@@ -64,6 +64,18 @@
 | Iltlager | Ny ressource: forbruges i stasis, lækker ved kraftige nedslag, repareres i værkstedet. Kan blokere en rejse. | `ArkState.oxygen`, `ArkService.repair_life_support` |
 | NAV | Tør, følelsesløs navigationscomputer: vurderer ruten før valget (nedslag, skrogtab, brændstof, ilt, reserve) og melder kollisionskurs og nedslag. 24 replikker i data, oversat, i stemmemanuskriptet. | `NavAdvisor`, `data/story/nav.json`, `NavComms` |
 
+## Nyt i session 5: engelsk spil, lys, effekter, NAV på planeten
+
+| Område | Hvad | Hvor |
+|---|---|---|
+| Sprog | Spillet er 100 % engelsk; engelsk er kildesproget i kode og data, dansk er en valgfri oversættelse (1136 nøgler, alle oversat). Gamle indstillinger med dansk nulstilles én gang. | D-025, `localization/translations.csv` |
+| Lys | Himmel, sol, tåge (højdetåge: klart overblik, dis ved jorden), eksponering, glød og SSAO pr. biom/planet i data. Kontaktark over alle seks verdener. | `data/art/lighting.json`, `Lighting`, D-026, `evidence/shots/planets/contact_sheet.png` |
+| Effekter | Ti partikeleffekter bygget i Godot (sporer, støv, sne, storm, damp, motor, gnister, strømstød, scanning, landingsstøv), lette nok til mobil, rolig udgave ved "reduceret bevægelse". Fremviser: `--scene=fxlab`. | `art/fx/`, D-029 |
+| NAV på planeten | Brief ved landing, farezoner ind/ud, delmål, halv dragt, og hjemturs-varsler beregnet ud fra afstand og gåfart. Testet i domænet. | `NavAdvisor.surface_update`, D-027 |
+| Kollision | Bygninger kolliderer efter modellens form (bokse pr. mesh-del), ikke en usynlig footprint-boks. Virker automatisk med Synty-modeller; undtagelser pr. slot. | `ShapeCollider`, D-028 |
+| Rettelser | Vejvisningsmarkøren går ikke længere ind over undertekster; rutelabels på overfladen ligger ikke oven i hinanden; `check.sh` fejler på enhver SCRIPT ERROR. | — |
+| Web | Mobil-build genbygget med alt ovenstående. | Artifact "Genesis Ark Playtest" |
+
 ## Balance (fase 3-forløber, `evidence/balance/balance_table.txt`)
 
 Alle seks verdener kan føres til år 40 og en *selvstændig* profil med mindst to af tre strategier (15 af 18 kørsler). Ferrum er sværest (vand, 560 indbyggere); tre strategier kollapser (Viridia power_first, Pelagos lean, Nivalis lean). Lagre har loft (1 års forbrug). Ingen planet dominerer alle felter (test). Fødselsplanen (16/år) gør, at gode strategier lander omkring 650 indbyggere ved år 40. Tuningen er foreløbig.
@@ -85,4 +97,4 @@ Alle seks verdener kan føres til år 40 og en *selvstændig* profil med mindst 
 
 ## Reproduktion
 
-Fixtures: `fixtures/saves/v1_voyage.json` (seed 4242, migreringstest), `fixtures/saves/v2_colony_start.json` (seed 777). Screenshots: `evidence/shots/` (genskab med `DebugCapture`, se AGENTS.md).
+Fixtures: `approach:<planet>` (indflyvning) er ny. `fixtures/saves/v1_voyage.json` (seed 4242, migreringstest), `fixtures/saves/v2_colony_start.json` (seed 777). Screenshots: `evidence/shots/` (genskab med `DebugCapture`, se AGENTS.md).
