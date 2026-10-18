@@ -45,6 +45,8 @@ Hvad byggeren gør med størrelse og placering:
 
 Alt kan overstyres pr. slot i `synty_choices.json`: `"fit"`, `"extra_scale"`, `"rotation_y"`. Particle FX er Unity-partikelsystemer og bygges i Godot med pakkens teksturer (status `manual`). Kollision ejes altid af spillets egne noder, aldrig af wrapperen.
 
+**I Godot-editoren:** fanen **Asset-slots** (ved siden af Inspector) viser alle 81 slots, om de stadig er proxy, Synty-forslaget og matcherens valg. Markér en model i FileSystem-panelet og tryk **Brug valgt fil**, eller tryk på et af alternativerne. "Drej model" retter facing; **Åbn wrapper** og **RigLab** åbner scenerne.
+
 Afprøv selve værktøjskæden uden købte filer: `tools/synty/selftest.sh` (falsk pakke → hele kæden → kontrol → oprydning).
 
 ---

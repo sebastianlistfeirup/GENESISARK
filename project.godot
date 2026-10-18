@@ -68,3 +68,7 @@ environment/defaults/default_clear_color=Color(0.043, 0.071, 0.098, 1)
 
 locale/translations=PackedStringArray("res://localization/translations.en.translation")
 locale/fallback="da"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/genesis_slots/plugin.cfg")

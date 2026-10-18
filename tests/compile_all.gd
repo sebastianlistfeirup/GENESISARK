@@ -1,6 +1,6 @@
 extends Node
 ## Run as a scene so autoloads exist: godot --headless --path . res://scenes/tests/compile_all.tscn
-## Loads every GDScript under res://scripts and res://tests to surface parse
+## Loads every GDScript under res://scripts, tests, tools and addons to surface parse
 ## errors in one pass. Exit code 1 if any script fails to load.
 
 func _ready() -> void:
@@ -8,6 +8,8 @@ func _ready() -> void:
 	var files: Array = []
 	_collect("res://scripts", files)
 	_collect("res://tests", files)
+	_collect("res://tools", files)
+	_collect("res://addons", files)
 	for f: String in files:
 		var s: Variant = load(f)
 		if s == null or not (s as GDScript).can_instantiate():

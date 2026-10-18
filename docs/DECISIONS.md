@@ -2,6 +2,9 @@
 
 Biblen er baseline. Her står begrundede valg og afvigelser. Nyeste øverst.
 
+### D-022 · Eget editor-plugin: Asset-slots-panelet
+Undtagelse fra "ingen addons" (CLAUDE.md), fordi gevinsten er direkte: at sætte 81 slots på plads er ellers JSON-redigering. `addons/genesis_slots/` er vores eget, uden tredjepartskode, og bruger samme `SyntyWrapperBuilder` som kommandolinjen. Panelet viser status for alle slots, Synty-forslag og valg, og mapper den fil, der er markeret i FileSystem, med ét klik (genimporterer selv, når atlas-materialet sættes). Spillet indlæser aldrig plugin'et.
+
 ### D-021 · Automatisk Synty-import
 Det dyre ved hjemkomsten er håndarbejdet pr. model. `tools/synty/`: `unpack.py` (unitypackage/zip/mappe → karantæne, kun modeller og teksturer, manifest med sha256), `match.py` (navnemønstre fra `synty_suggestions.json` → `data/art/synty_choices.json`; svage match bygges ikke uden godkendelse), `stage.py` (kun valgte filer ind i projektet), `build_wrappers.gd` (wrapper-scene pr. slot med tilpasning efter slot-type; atlas sættes via importindstillingen "Use External", så wrappers forbliver små og følger kildefilen). Byggede mappinger står i `data/art/slot_scenes.json`; en håndsat `scene` i `asset_slots.json` vinder altid. `selftest.sh` beviser hele kæden med en falsk pakke. Antagelser om Synty-navne og -mapper er ikke verificeret mod de købte filer.
 
