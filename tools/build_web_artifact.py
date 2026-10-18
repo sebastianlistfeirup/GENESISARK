@@ -14,11 +14,15 @@ cfg = json.loads(re.search(r"const GODOT_CONFIG = (\{.*?\});", html).group(1))
 wasm = open(os.path.join(SRC, "index.wasm"), "rb").read()
 parts = []
 for i in range(0, len(wasm), PART):
-    name = f"index.wasm.part{len(parts)}"
+    name = f"index.part{len(parts)}.wasm"  # host serves .wasm; the shim reassembles
     open(os.path.join(OUT, name), "wb").write(wasm[i:i + PART])
     parts.append(name)
-for f in ["index.pck", "index.audio.worklet.js", "index.audio.position.worklet.js"]:
+for f in ["index.audio.worklet.js", "index.audio.position.worklet.js"]:
     shutil.copy(os.path.join(SRC, f), os.path.join(OUT, f))
+# The game data pack travels with a served extension and is pointed to explicitly.
+shutil.copy(os.path.join(SRC, "index.pck"), os.path.join(OUT, "index.pck.wasm"))
+cfg["mainPack"] = "index.pck.wasm"
+cfg["fileSizes"]["index.pck.wasm"] = cfg["fileSizes"].pop("index.pck")
 engine_js = open(os.path.join(SRC, "index.js"), encoding="utf-8").read().replace("</script>", "<\\/script>")
 page = """<title>Genesis Ark Spiltest</title>
 <meta name="claude:viewport-fit-sides" content="cover">
