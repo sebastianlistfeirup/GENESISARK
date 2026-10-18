@@ -15,12 +15,16 @@ Et komplet, spilbart **greybox-spil** fra vågen kaptajn til overdragelse af kol
 7. **Befolkning**: inkubation med synlige krav, 270 dages gestation, kohorter, børn → voksne ved 18 år, embryoregnskab altid 50.000.
 8. **Generationsspring**: prognose → godkend → spring til år 20/40; stopper før uafklarede kriser. Valg ved år 20 (tre unge stemmer), råd, ni hændelser, tre slutprofiler og epilog.
 9. **Save/load**: kuvert med checksum, sikker skrivning, backup, korrupt-/afbrudt-gendannelse, v1→v2-migrering. Pausemenu, journal (`Tab`), indstillinger med tasteomlægning, undertekster, UI-skala, reduceret bevægelse.
+10. **Sprog, controller og krediteringer** (session 2): dansk/engelsk (Indstillinger → Sprog), Xbox-controller i hele spillet, krediteringer med licenser i hovedmenuen.
+11. **Lyd overalt**: alle 53 lydcues er koblet på (52 + alarmvarianten); 42 har midlertidige proxy-lyde. Rigtige lyde erstatter dem automatisk.
 
 ## 2. Spil det
 
 1. Installér **Godot 4.5.1-stable** (samme version — se `docs/VERSION_MATRIX.md`).
 2. Åbn mappen i Godot → **F5**. Eller kør den eksporterede build i `builds/` (se `docs/STATUS.md`).
 3. Taster: WASD, mus, `E` interagér, `Shift` løb, `Tab` journal, `Esc` pause, `B` kaptajn/overhead i kolonien, `R` drej bygning, `Mellemrum/1/3` tid.
+4. Controller: venstre stik/D-pad bevæg, højre stik kamera, `A` interagér/bekræft, `B` fortryd, `X` drej bygning/dronereserve, `Y` kolonitilstand/autopilot, `LB/RB` drej kamera, `LT/RT` zoom/højde, `Start` pause, `Back` journal, `L3` løb, `R3` pause tid.
+5. Telefon: web-buildet med touch (se `docs/STATUS.md`).
 
 ## 3. Næste skridt: Synty (GA-13 →)
 
@@ -29,6 +33,7 @@ Spillet er bygget, så du **kun skal samle grafik**:
 - `docs/SYNTY_INTEGRATION.md` — trin for trin: download → karantæne → FBX-import → wrapper → slot → ledger.
 - `data/art/asset_slots.json` — 81 slots. Skriv stien til en wrapper i `"scene"`, og proxyen skiftes overalt.
 - `data/art/synty_suggestions.json` — forslag til pakke og navnemønstre pr. slot (ikke verificeret mod filerne).
+- `scenes/tests/RigLab.tscn` — åbn med **F6**, når kaptajnen/Sidekick er importeret: auditten siger med det samme, om skala, fødder og clips passer, og du kan se fodglid mod 1 m-gitteret.
 
 ## 3b. Hele produktionsplanen
 
@@ -36,10 +41,15 @@ Spillet er bygget, så du **kun skal samle grafik**:
 - `docs/AUDIO_LEDGER.csv` — 53 lydcues med prompts til ElevenLabs. Læg færdige filer i `assets/audio/final/<cue_id>.ogg`, så bruger spillet dem automatisk.
 - `docs/VO_SCRIPT.csv` — alle 92 replikker til stemmer. Læg filer i `assets/audio/vo/<line_id>.ogg`, så afspilles de med underteksten.
 
+## 3c. Tekst og oversættelse
+
+Al tekst skrives på dansk i koden (`Loc.t("...")`) eller i `data/*.json`. Kør `python3 tools/loc_extract.py` → nye linjer lander i `localization/translations.csv` med tom engelsk kolonne; udfyld dem (eller lad en agent gøre det). `tools/check.sh` fejler, til alt er oversat, og tjekker at `%d`/`{settlement}` følger med. Nyt sprog = ny kolonne + `Loc.LANGUAGES`.
+
 ## 4. Kvalitet og beviser
 
 | Lag | Kommando | Resultat |
 |---|---|---|
+| Alt i ét | `tools/check.sh` | parse-tjek, oversættelse, 54 tests, 36 scenechecks |
 | Domænetests | `godot --headless --path . --script res://tests/run_tests.gd` | se `evidence/test_report.json` |
 | Scenetests (rigtigt input) | `godot --headless --path . res://scenes/tests/scene_smoke.tscn` | se `evidence/scene_smoke.json` |
 | Balance 6 × 3 | `godot --headless --path . --script res://tools/balance/run_balance.gd` | se `evidence/balance/` |

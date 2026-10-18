@@ -8,28 +8,41 @@
 | profile | HOLIDAY (cloud-container, headless + Xvfb; ingen Synty-filer, ingen Windows-maskine) |
 | current_phase | 1 · Fundament (port ikke bestået endnu) |
 | last_passed_gate | — (fase 1-porten kræver GA-11 og GA-12 DONE) |
-| active_task | GA-11 / GA-12 (VERIFYING) |
-| last_commit | 83f12d9 (+ statuscommit) |
+| active_task | GA-11 / GA-12 (VERIFYING) · grundlag lagt for GA-14, 19, 29, 33 |
+| last_commit | se `git log -1` (session 2: lokalisering, controller, lyd, krediteringer, RigLab) |
 | next_command | `tools/check.sh` og derefter `godot --path .` |
 
 ## Tests kørt (faktiske resultater på dette commit)
 
 | Lag | Kommando | Resultat |
 |---|---|---|
-| 1 · Domæne | `godot --headless --path . --script res://tests/run_tests.gd` | **49 tests, 0 fejl** → `evidence/test_report.json` |
-| 2 · Scener (rigtigt input) | `godot --headless --path . res://scenes/tests/scene_smoke.tscn` | **27 checks, 0 fejl** → `evidence/scene_smoke.json` |
-| Parse-tjek | `godot --headless --path . res://scenes/tests/compile_all.tscn` | 82 scripts, 0 fejl |
+| 1 · Domæne | `godot --headless --path . --script res://tests/run_tests.gd` | **54 tests, 0 fejl** → `evidence/test_report.json` |
+| 2 · Scener (rigtigt input) | `godot --headless --path . res://scenes/tests/scene_smoke.tscn` | **36 checks, 0 fejl** → `evidence/scene_smoke.json` |
+| Parse-tjek | `godot --headless --path . res://scenes/tests/compile_all.tscn` | 87 scripts, 0 fejl |
 | Balance | `godot --headless --path . --script res://tools/balance/run_balance.gd` | 18 kørsler til år 40 → `evidence/balance/` |
 | 3 · Optaget gameplay | — | NOT_RUN (kræver menneske) |
 | 4 · Eksport | Windows + Linux eksporteret; Linux-build kørt under Xvfb | Windows-build NOT_RUN |
-| Plan | `python3 tools/validate_plan.py` | OK · 10 DONE · 2 VERIFYING · 11 IN_PROGRESS · 13 TODO |
+| Oversættelse | `python3 tools/loc_extract.py --check` | 1069 nøgler, 0 mangler (da → en) |
+| Plan | `python3 tools/validate_plan.py` | OK · 10 DONE · 2 VERIFYING · 12 IN_PROGRESS · 12 TODO |
 
 ## Opgaver
 
 - **DONE (med beviser i `evidence/GA-xx/result.json`)**: GA-01, GA-02, GA-03, GA-04, GA-05, GA-06, GA-07, GA-08, GA-09, GA-10.
 - **VERIFYING**: GA-11 (automatiseret kæde grøn; mangler optaget menneskelig gennemspilning), GA-12 (eksport OK; mangler Windows-kørsel + visuel kontrol + fase 1-tag).
-- **IN_PROGRESS — bygget før porten** (data + domæne + UI + tests, ikke kvalitetsgodkendt): GA-15, 16, 17, 18, 21, 22, 23, 24, 25, 28, 29. Se `notes` i `tasks.json`.
+- **IN_PROGRESS — bygget før porten** (data + domæne + UI + tests, ikke kvalitetsgodkendt): GA-15, 16, 17, 18, 21, 22, 23, 24, 25, 28, 29, 33. Se `notes` i `tasks.json`.
+- **Grundlag med beviser** (`evidence/GA-xx/groundwork.json`, sætter aldrig DONE): GA-14 (RigLab), GA-19 (alle lyd-cues hooket), GA-29 (controller, settings), GA-33 (lokalisering, krediteringer).
 - **TODO**: GA-13/14 (kræver Synty-filer og rig), GA-19 (spiltestere), GA-20, GA-26/27 (art/lyd-pass), GA-30-36 (fase 3-4 porte, beta, release).
+
+## Nyt i session 2 (18.10.2026)
+
+| Område | Hvad | Hvor |
+|---|---|---|
+| Lokalisering | Dansk/engelsk, sprogvalg i Indstillinger, live genindlæsning. 1069 nøgler, alle oversat. `check.sh` fejler ved manglende nøgle eller afvigende `%d`/`{settlement}`. Saves er sproguafhængige (test). | `scripts/core/loc.gd`, `localization/translations.csv`, `tools/loc_extract.py`, D-017 |
+| Controller | Xbox-layout ved siden af tastatur, højre stik = kamera, D-pad/A/B i menuer, byggemarkør i skærmcentrum, hints viser controllerknapper. | `SettingsService.PAD`, D-018 |
+| Lyd | Alle 22 planlagte cues hooket (52/53 i alt) med 28 nye proxy-lyde: embryobank-lag, døre, fareområder, jordtrin med varianter, borelyd, relæ, drone, ring, landing, positionel byggeplads, nedrivning, strømudfald, inkubation, krisestinger, epilogmusik pr. slutning. | `AudioService`, `docs/AUDIO_LEDGER.csv` |
+| Krediteringer | Menuknap; hold, Synty-pakker (planlagt), lyd, film, Godots MIT-licens og tredjepartskomponenter læst fra motoren. | `data/credits/credits.json`, `scripts/ui/credits_panel.gd` |
+| RigLab | Testscene til figurer: 1 m-gitter, 1,8 m-stang, terminal i 1,05 m, prøvepunkt, alle animationstilstande, cirkelbevægelse mod fodglid, audit af skala/fødder/clips. | `scenes/tests/RigLab.tscn` |
+| Robusthed | `check.sh` parse-tjekker først og har timeout på scenetest (en parsefejl kan ikke længere hænge kørslen). | `tools/check.sh` |
 
 ## Balance (fase 3-forløber, `evidence/balance/balance_table.txt`)
 
@@ -48,6 +61,7 @@ Alle seks verdener kan føres til år 40 og en *selvstændig* profil med mindst 
 1. **GA-11**: spil hele demoen (~20 min) på din maskine, optag den, ret de tre største friktioner.
 2. **GA-12**: kør `builds/windows/GenesisArk.exe` (eller eksportér selv), bekræft visuelt, tag `phase-1`.
 3. **GA-13**: importér ét skibsmodul, kaptajnen og én terrænprøve via `docs/SCENE_ASSEMBLY.md` → sammenlign med greybox.
+4. **GA-14** (når kaptajnen er importeret): åbn `scenes/tests/RigLab.tscn` (F6), ret `scale`/`offset` i `asset_slots.json` til auditten er grøn, og omdøb clips i `animation_map.json`.
 
 ## Reproduktion
 

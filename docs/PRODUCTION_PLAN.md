@@ -91,12 +91,13 @@ Detaljeret scene-for-scene samleguide: `docs/SCENE_ASSEMBLY.md`. Importtrin: `do
 | Voice | Replikker (ARK får robot-effekt via AudioEffect på bussen) | ca. −18 LUFS dialog |
 | Music | Musik og stingers | ca. −23 LUFS |
 
-Format: optag/generér i WAV 48 kHz, redigér, eksportér **OGG Vorbis** (q6) til `assets/audio/final/<cue_id>.ogg`. Loops får rene loop-punkter (krydsfade i redigeringen). Variationer (fx 6 fodtrin) navngives `<cue_id>_01…06` — en lille kodeudvidelse vælger tilfældigt (opgave i M4).
+Format: optag/generér i WAV 48 kHz, redigér, eksportér **OGG Vorbis** (q6) til `assets/audio/final/<cue_id>.ogg`. Loops får rene loop-punkter (krydsfade i redigeringen). Variationer (fx 6 fodtrin) navngives `<cue_id>_01…06` — **kodet**: `AudioService.play_variant` vælger tilfældigt med ±6 % tonehøjde.
 
 ### 4.3 Komplet cue-liste
 `docs/AUDIO_LEDGER.csv` — **53 cues** med trigger, bus, loop, længde, loudness-mål og en klar engelsk prompt til ElevenLabs. Kolonnen `code_hook`:
-- **HOOKED** (31): koden kalder allerede navnet. Læg filen i `assets/audio/final/` — færdigt.
-- **PLANNED** (22): lyden er designet; koden skal have en lille krog (dør, byggeplads-loop, landing, farezoner, epilog-musik osv.). Laves i M4/M6.
+- **HOOKED** (alle 53 siden session 2): koden kalder navnet. Læg filen i `assets/audio/final/` — færdigt; den slår proxyen ud.
+- Kolonnen `status`: `NEEDED` → `PLACEHOLDER` (proxy findes, 42 cues) → `FINAL` (fil i `final/`) sættes automatisk; `APPROVED` sætter du selv.
+- Lag: embryobank, fareområder og kolonifolk spiller som et ekstra lag oven på grundstemningen med krydsfade (`AudioService.set_layer`). Byggepladsen er positionel (3D).
 
 Regenerér listen med `python3 tools/gen_audio_ledger.py` (bevarer status/licens).
 
@@ -130,7 +131,7 @@ Regenerér listen med `python3 tools/gen_audio_ledger.py` (bevarer status/licens
 2. Lås stemme + indstillinger pr. rolle (notér i `VO_SCRIPT.csv → tool`).
 3. Generér alle replikker, gem som `assets/audio/vo/<line_id>.ogg` — **spillet afspiller dem automatisk** med underteksten og forlænger visningstiden til replikken er færdig.
 4. Lyt i kontekst; ret udtale (navne: Viridia, Pelagos, Nivalis…) med fonetisk stavning i prompten, ikke i underteksten.
-5. Engelsk version efter lokalisering (§9) med samme stemmer, gemmes i `assets/audio/vo/en/` (kodekrog i GA-33).
+5. Engelsk version efter lokalisering (§9) med samme stemmer, gemmes i `assets/audio/vo/en/<line_id>.ogg` — **kodet**: på engelsk spilles `vo/en/` først, ellers den danske optagelse.
 
 Ingen læbesynk nødvendig: spillet har bevidst ingen ansigtsanimation (bibel s. 13, 38). Regenerér manuskriptet efter tekstændringer: `python3 tools/export_vo_script.py`.
 
@@ -166,7 +167,7 @@ Månedlig devlog: 60-120 s ægte gameplay (A) + evt. HeyGen-præsentator i intro
 ## 7. Animation
 
 Plan efter bibel s. 24-25 og `docs/ANIMATION_LEDGER.csv` (15 klip).
-1. **RigLab** (`scenes/tests/RigLab.tscn`, GA-14): én autoritativ humanoid, BoneMap/SkeletonProfileHumanoid, dokumentér facing.
+1. **RigLab** (`scenes/tests/RigLab.tscn`, GA-14) — **findes**: 1 m-gitter, 1,8 m-stang, terminal i 1,05 m, prøvepunkt, alle tilstande, cirkelbevægelse mod fodglid og audit (skala, fødder, AnimationPlayer, manglende clips). Brug den til én autoritativ humanoid, BoneMap/SkeletonProfileHumanoid, dokumentér facing (−Z = fremad).
 2. **Kilder:** Synty/Sidekick-klip først; Mixamo kun til konkrete huller efter rig-kontrol.
 3. **In-place** locomotion; `CharacterAnimator` + `data/art/animation_map.json` er allerede koblet (afspilningshastighed følger faktisk fart).
 4. **Godkendelsesmatrix:** idle→gang→stop, gang→løb, interaktion ved terminal, 8 s prøvetagning, pause/restore. Video i 1x og langsom. Først derefter `review_status = APPROVED`.
@@ -177,7 +178,7 @@ Plan efter bibel s. 24-25 og `docs/ANIMATION_LEDGER.csv` (15 klip).
 ## 8. Narrativ og tekst
 
 - **Findes:** 18 scener / 92 replikker, 26 journallinjer, 6 scoutingproblemer, 9 hændelser, 3 epiloger, 20 mål — alt på dansk i `data/`.
-- **Mangler (fase 3):** flere korte borgerscener til år 20-40, journallinjer pr. planet-ankomst for alle seks, epilog-varianter pr. biome, credits.
+- **Mangler (fase 3):** flere korte borgerscener til år 20-40, journallinjer pr. planet-ankomst for alle seks, epilog-varianter pr. biome. Krediteringer findes (`data/credits/credits.json`); opdatér `status` fra `planned` til `in_use`, når en pakke/lyd kommer i buildet.
 - **Proces:** skriv i data → kør `tools/export_vo_script.py` → læs højt i spillet → ret. Gemini/Grok/Kimi må give kritik og alternativer; den kanoniske tekst godkendes af dig.
 - **Tone:** varmt menneskeligt håb i kold teknologi; korte, konkrete, håndskrevne linjer; ingen generativ NPC-chat (bibel s. 12, 41).
 
@@ -185,9 +186,9 @@ Plan efter bibel s. 24-25 og `docs/ANIMATION_LEDGER.csv` (15 klip).
 
 ## 9. Lokalisering (GA-33)
 
-1. Udtræk alle tekster til en Godot-CSV (`localization/strings.csv`: key, da, en) — kodeopgave.
-2. Ordliste (glossary) først: ARK, embryobank, kohorte, persondøgn, forsyningsnet, råd…
-3. Engelsk udkast via Gemini/Claude → gennemlæsning af et menneske med engelsk som modersmål (eller grundig selvreview).
+1. ✅ **Kodet (session 2, D-017):** dansk kildetekst er nøglen; `tools/loc_extract.py` samler kode + data i `localization/translations.csv` (keys, en); sprogvalg i Indstillinger; `check.sh` fejler ved manglende oversættelse eller afvigende placeholders.
+2. ✅ Ordliste brugt til første engelske udkast: ARK, the Ark, embryo bank, cohort, drone depot, relay, living zone, resource area, time leap, generation leap, New Ark (britisk stavning).
+3. ✅ Engelsk udkast for alle 1069 nøgler. **Tilbage:** gennemlæsning af et menneske med engelsk som modersmål; bevidste valg at tage stilling til: "Morgendal" → "Morningdale", stednavne med "The …", britisk vs. amerikansk stavning.
 4. Engelske stemmer efter tekstlås (§5).
 5. Test UI med de længste strenge i 1280×720 og 1920×1080 (bibel s. 26).
 
@@ -197,7 +198,8 @@ Plan efter bibel s. 24-25 og `docs/ANIMATION_LEDGER.csv` (15 klip).
 
 - **Skin:** INTERFACE Sci-Fi Menus (paneler, knapper, menuer) + Soldier HUD (dragtmåler, alarmer, ikoner). Ét samlet HUD-sprog, ikke tre stilarter (bibel s. 23).
 - **Findes:** tasteomlægning, UI-skala, undertekster med størrelse, reduceret bevægelse, kamerarystelser fra/til, ikon+tekst+farve på alle statusser, pausemenu overalt.
-- **Mangler:** controller-understøttelse (valgfri), farveblind-gennemgang af alle farver, test af alle skærme i 1280×720, lydløst-spil-test (alle alarmer har visuelt modstykke) — GA-29.
+- **Findes også (session 2):** controller (Xbox-layout, fokus i menuer, controllerknapper i hints, D-018) og touch til web/telefon.
+- **Mangler:** controller-omlægning (bevidst udeladt i v1), farveblind-gennemgang af alle farver, test af alle skærme i 1280×720, lydløst-spil-test (alle alarmer har visuelt modstykke) — GA-29.
 
 ---
 

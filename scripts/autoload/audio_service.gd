@@ -219,11 +219,14 @@ func set_music_any(slots: Array) -> void:
 			return
 
 
-## Voice-over for one story line (assets/audio/vo/<line_id>.ogg|.wav).
+## Voice-over for one story line (assets/audio/vo/<line_id>.ogg|.wav; other
+## languages in assets/audio/vo/<lang>/, falling back to the Danish recording).
 ## Returns its length in seconds, or 0 if no recording exists (subtitles only).
 func play_voice(line_id: String) -> float:
-	for ext: String in [".ogg", ".wav", ".mp3"]:
-		var path := "res://assets/audio/vo/" + line_id + ext
+	var dirs: Array = ["res://assets/audio/vo/"]
+	if not Loc.is_source():
+		dirs.push_front("res://assets/audio/vo/%s/" % Loc.lang())
+	for path: String in voice_candidates(line_id, dirs):
 		if ResourceLoader.exists(path):
 			var st: AudioStream = load(path)
 			if _voice == null:
@@ -234,6 +237,14 @@ func play_voice(line_id: String) -> float:
 			_voice.play()
 			return st.get_length()
 	return 0.0
+
+
+static func voice_candidates(line_id: String, dirs: Array) -> Array:
+	var out: Array = []
+	for d: String in dirs:
+		for ext: String in [".ogg", ".wav", ".mp3"]:
+			out.append(d + line_id + ext)
+	return out
 
 
 func stop_voice() -> void:

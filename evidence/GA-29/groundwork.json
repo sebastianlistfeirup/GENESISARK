@@ -1,0 +1,15 @@
+{
+  "task_id": "GA-29",
+  "commit": "c644629",
+  "kind": "groundwork",
+  "engine_version": "4.5.1-stable (official)",
+  "command": "tools/check.sh",
+  "status": "PASS",
+  "covers": "Controller (Xbox-layout) ved siden af tastatur, højre stik til kamera, fokus i menuer, controllernavne i hints, indstillinger gemmes.",
+  "open": "Performance-mål på referencemaskine og fuld accessibility-gennemgang.",
+  "failed_checks": [],
+  "artifacts": [
+    "evidence/test_report.json",
+    "evidence/scene_smoke.json"
+  ]
+}

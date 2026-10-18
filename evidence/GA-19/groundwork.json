@@ -1,0 +1,15 @@
+{
+  "task_id": "GA-19",
+  "commit": "c644629",
+  "kind": "groundwork",
+  "engine_version": "4.5.1-stable (official)",
+  "command": "tools/check.sh",
+  "status": "PASS",
+  "covers": "Alle 53 lyd-cues i AUDIO_LEDGER har kodehook (52 HOOKED + alarm-varianten); 42 har proxy-lyd; lag, varianter, stingers og positionel byggelyd.",
+  "open": "Endelige lyde (ElevenLabs/komponist) og 45-minutters spiltest med eksterne testere.",
+  "failed_checks": [],
+  "artifacts": [
+    "evidence/test_report.json",
+    "evidence/scene_smoke.json"
+  ]
+}

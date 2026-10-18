@@ -1,0 +1,19 @@
+{
+  "task_id": "GA-33",
+  "commit": "c644629",
+  "kind": "groundwork",
+  "engine_version": "4.5.1-stable (official)",
+  "command": "tools/check.sh",
+  "status": "PASS",
+  "covers": "Lokalisering da/en (1069 nøgler, alle oversat, placeholder-tjek), sprogskift uden at røre domænet, krediteringer + Godot-licenser fra motoren, indstillinger overlever genstart.",
+  "open": "Ledger-kontrol mod faktisk build, platformliste og kendte begrænsninger, endelig credits når Synty/lyd er inde.",
+  "failed_checks": [],
+  "artifacts": [
+    "evidence/test_report.json",
+    "evidence/scene_smoke.json",
+    "evidence/shots/en_menu.png",
+    "evidence/shots/en_colony.png",
+    "evidence/shots/settings_en.png",
+    "evidence/shots/credits_da.png"
+  ]
+}

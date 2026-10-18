@@ -782,6 +782,7 @@ ingen strøm,no power
 mangler arbejdskraft,lacks labour
 mangler modul,missing module
 mangler råvarer,missing raw materials
+vedligehold,maintenance
 venter på droner,waiting for drones
  + %d komp., + %d comp.
  og inkubationscenter, and incubation centre
@@ -863,6 +864,8 @@ Relæet sikrer data og vurderer landingspladsen.,The relay secures data and asse
 Tag prøve:,Take sample:
 Vend tilbage til,Return to
 [%s] Kald dronereserve (+%d%%),[%s] Call drone reserve (+%d%%)
+mangler,missing
+placeret,placed
 prøven er taget,the sample is taken
 relæet står her,the relay is here
 ▲ I fareområde: %s (×%.1f forbrug),▲ In hazard zone: %s (×%.1f consumption)

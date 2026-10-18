@@ -1,0 +1,16 @@
+{
+  "task_id": "GA-14",
+  "commit": "c644629",
+  "kind": "groundwork",
+  "engine_version": "4.5.1-stable (official)",
+  "command": "tools/check.sh",
+  "status": "PASS",
+  "covers": "RigLab-scene, audit af skala/fødder/AnimationPlayer/clips for alle char.*-slots, tilstandscykler og cirkelbevægelse.",
+  "open": "Rig, clips, AnimationTree, kontaktpunkter og pause/restore-test kræver de importerede Sidekick-figurer.",
+  "failed_checks": [],
+  "artifacts": [
+    "evidence/test_report.json",
+    "evidence/scene_smoke.json",
+    "evidence/shots/riglab.png"
+  ]
+}
