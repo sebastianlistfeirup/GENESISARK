@@ -1,11 +1,11 @@
 {
   "task_id": "GA-28",
-  "commit": "83f12d9",
+  "commit": "e1df6de",
   "engine_version": "4.5.1-stable (official)",
   "command": "godot --headless --path . --script res://tools/balance/run_balance.gd",
   "exit_code": 0,
-  "expected": "Alle seks kan gennemføres på standard. Ingen kandidat dominerer alle strategier. Ingen skjult ressourcefælde.",
-  "observed": "15 af 18 kørsler når år 40 med selvstændig profil; alle seks planeter vindes med mindst to strategier. Ferrum topper ved 560 (vand). Kollaps: Viridia power_first, Pelagos lean, Nivalis lean. Lagre har loft (1 års forbrug).",
+  "expected": "Alle 18 kørsler (6 planeter × 3 strategier) undgår kollaps til år 40; Ferrum er sværest; ingen planet dominerer alle felter; gode strategier lander omkring 650 indbyggere.",
+  "observed": "18 af 18 kørsler når år 40 med selvstændig profil (baseline 15/18). Befolkning år 40: 650 på fem verdener, 560 på Ferrum; år 20: 330 overalt. Invarianter ok i alle kørsler: True. Årsag til de tre kollaps: institutionernes byggeplan lod miner+værksted bemande alle droner (0 byggekapacitet / ubemandet værksted) — rettet i EraService (D-030). Slutbefolkning er ens på tværs af strategier (fødselsplanen er loftet); strategier adskiller sig i åbningens længde og underskudsdage.",
   "by_planet": {
     "ferrum": {
       "best_pop": 560,
@@ -13,11 +13,11 @@
     },
     "nivalis": {
       "best_pop": 650,
-      "wins": 2
+      "wins": 3
     },
     "pelagos": {
       "best_pop": 650,
-      "wins": 2
+      "wins": 3
     },
     "sere": {
       "best_pop": 650,
@@ -29,15 +29,15 @@
     },
     "viridia": {
       "best_pop": 650,
-      "wins": 2
+      "wins": 3
     }
   },
   "fixture": "seeds 1001-1018",
   "status": "PASS",
-  "status_reason": "Foreløbig (tuning fortsætter i fase 3; afhænger af GA-21/23/25/26).",
   "artifacts": [
     "evidence/balance/balance_report.json",
-    "evidence/balance/balance_table.txt"
+    "evidence/balance/balance_table.txt",
+    "evidence/GA-28/iterations.md"
   ],
-  "timestamp": "2026-10-17T20:55:10+00:00"
+  "timestamp": "2026-10-19T20:21:42+00:00"
 }

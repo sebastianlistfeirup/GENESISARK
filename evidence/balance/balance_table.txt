@@ -1,21 +1,21 @@
 
-planet   strategy      year   pop  adult crisis reserve  ownkW   dmd profile      stops
-viridia  balanced      40.0   650    140     1     365  312.0 288.0 independent  critic,critic,critic
-viridia  power_first   12.7    40      0     1       0   40.0  34.0 fragile      critic,critic,supply,supply,supply,supply,supply,supply,supply,supply,supply,supply,supply,supply,supply,supply,supply,supply,supply,supply,supply,supply,supply,supply,supply,supply,supply,supply,supply,supply,supply,supply,supply,supply,supply,supply,supply,supply,supply,supply,supply,supply,supply,supply,supply,supply,supply,supply,supply,supply,supply,supply,supply,supply,supply,supply,supply,supply,supply,supply,supply,supply,supply,supply,supply,supply,supply,supply,supply,supply,supply,supply,supply,supply,supply,supply,supply,supply,supply,supply
-viridia  lean          40.0   650    360     1     365  312.0 284.0 independent  critic,critic,critic
-pelagos  balanced      40.0   650    360     0     365  268.8 247.0 independent  critic,critic
-pelagos  power_first   40.0   650    360     0     365  270.8 247.0 independent  critic,critic
-pelagos  lean           4.3    60      0     0       0   62.4  58.0 fragile      critic,supply,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba
-ferrum   balanced      40.0   560    360     1     365  577.2 557.0 independent  critic,critic,critic
-ferrum   power_first   40.0   560    360     1     365  567.6 554.0 independent  critic,critic,critic
-ferrum   lean          40.0   560    360     1     365  577.2 557.0 independent  critic,critic,critic
-sere     balanced      40.0   650    360     1     365  360.0 338.0 independent  critic,critic,critic
-sere     power_first   40.0   650    360     1     365  364.0 338.0 independent  critic,critic,critic
-sere     lean          40.0   650    360     1     365  360.0 335.0 independent  critic,critic,critic
-nivalis  balanced      40.0   650    360     1     365  398.4 375.0 independent  critic,critic,critic
-nivalis  power_first   40.0   650    360     1     365  415.2 379.0 independent  critic,critic,critic
-nivalis  lean           3.3    40      0     1       0   54.0  59.0 fragile      critic,critic,supply,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba,incuba
-umbra    balanced      40.0   650    360     1     365  378.0 344.0 independent  critic,critic,critic
-umbra    power_first   40.0   650    360     1     365  360.0 340.0 independent  critic,critic,critic
-umbra    lean          40.0   650    360     1     365  360.0 340.0 independent  critic,critic,critic
-by planet: {"ferrum":{"best_pop":560,"wins":3},"nivalis":{"best_pop":650,"wins":2},"pelagos":{"best_pop":650,"wins":2},"sere":{"best_pop":650,"wins":3},"umbra":{"best_pop":650,"wins":3},"viridia":{"best_pop":650,"wins":2}}
+planet   strategy      year open defic pop20   pop  adult crisis reserve  ownkW   dmd profile      stops
+viridia  balanced      40.0  116     0   330   650    360     1     365  312.0 290.0 independent  critic,critic,critic
+viridia  power_first   40.0  126     0   330   650    360     1     365  316.0 290.0 independent  critic,critic,critic
+viridia  lean          40.0   55     0   330   650    360     1     365  312.0 284.0 independent  critic,critic,critic
+pelagos  balanced      40.0  144  1446   330   650    360     0     365  278.4 249.0 independent  critic,critic
+pelagos  power_first   40.0  132  1446   330   650    360     0     365  270.8 249.0 independent  critic,critic
+pelagos  lean          40.0   57  1455   330   650    360     0     365  278.4 249.0 independent  critic,critic
+ferrum   balanced      40.0   77    18   330   560    360     1     365  577.2 557.0 independent  critic,critic,critic
+ferrum   power_first   40.0  114     0   330   560    360     1     365  567.6 554.0 independent  critic,critic,critic
+ferrum   lean          40.0   40     0   330   560    360     1     365  577.2 557.0 independent  critic,critic,critic
+sere     balanced      40.0   76     1   330   650    360     1     365  360.0 340.0 independent  critic,critic,critic
+sere     power_first   40.0   92    17   330   650    360     1     365  364.0 340.0 independent  critic,critic,critic
+sere     lean          40.0   36     4   330   650    360     1     365  360.0 338.0 independent  critic,critic,critic
+nivalis  balanced      40.0  171    10   330   650    360     1     365  398.4 377.0 independent  critic,critic,critic
+nivalis  power_first   40.0  157     9   330   650    360     1     365  415.2 377.0 independent  critic,critic,critic
+nivalis  lean          40.0   83    32   330   650    360     1     365  415.2 377.0 independent  critic,critic,critic
+umbra    balanced      40.0  141    79   330   650    360     1     365  378.0 346.0 independent  critic,critic,critic
+umbra    power_first   40.0  121     0   330   650    360     1     365  378.0 342.0 independent  critic,critic,critic
+umbra    lean          40.0   55    18   330   650    360     1     365  378.0 342.0 independent  critic,critic,critic
+by planet: {"ferrum":{"best_pop":560,"wins":3},"nivalis":{"best_pop":650,"wins":3},"pelagos":{"best_pop":650,"wins":3},"sere":{"best_pop":650,"wins":3},"umbra":{"best_pop":650,"wins":3},"viridia":{"best_pop":650,"wins":3}}

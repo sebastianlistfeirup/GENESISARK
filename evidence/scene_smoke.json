@@ -36,7 +36,7 @@
       "ok": true
     },
     {
-      "detail": "moved=0.36",
+      "detail": "moved=0.37",
       "name": "riglab_runs",
       "ok": true
     },
@@ -249,5 +249,5 @@
   "engine_version": "4.5.1-stable (official)",
   "failures": [],
   "status": "PASS",
-  "timestamp": "2026-10-18T16:22:47"
+  "timestamp": "2026-10-19T20:23:31"
 }

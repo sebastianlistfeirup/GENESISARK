@@ -1,13 +1,13 @@
 {
   "content_errors": [],
-  "elapsed_ms": 2124,
+  "elapsed_ms": 1787,
   "engine_version": "4.5.1-stable (official)",
   "failures": [],
   "files": {
     "test_ark_travel.gd": 9,
     "test_colony.gd": 9,
     "test_content.gd": 6,
-    "test_era_endings.gd": 7,
+    "test_era_endings.gd": 8,
     "test_localization.gd": 5,
     "test_navigation.gd": 10,
     "test_population.gd": 5,
@@ -15,6 +15,6 @@
     "test_survey_expedition.gd": 6
   },
   "status": "PASS",
-  "tests": 64,
-  "timestamp": "2026-10-18T16:21:47"
+  "tests": 65,
+  "timestamp": "2026-10-19T20:22:31"
 }
