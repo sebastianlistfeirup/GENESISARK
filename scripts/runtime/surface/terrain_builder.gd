@@ -24,6 +24,7 @@ func setup(p_biome: String, p_site: Dictionary, p_palette: Dictionary, p_size: f
 	site = p_site
 	palette = p_palette
 	size_m = p_size
+	step = Quality.value("terrain_step", step)
 	height_scale = DictUtil.get_float(map_def, "height_scale", 9.0)
 	water_level = DictUtil.get_float(map_def, "water_level", -100.0)
 	noise.seed = DictUtil.get_int(map_def, "terrain_seed", 1)
@@ -124,6 +125,7 @@ func build() -> void:
 
 
 func scatter(rng_seed: int, count: int, avoid: Array) -> void:
+	count = int(count * Quality.value("scatter_scale", 1.0))
 	var rng := RandomNumberGenerator.new()
 	rng.seed = rng_seed
 	var slots: Array = {"green": ["surface.tree_green", "surface.tree_green", "surface.plant_green", "surface.rock_small", "surface.rock_large"],

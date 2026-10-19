@@ -45,10 +45,11 @@ static func reduced_motion() -> bool:
 func _ready() -> void:
 	calm = reduced_motion()
 	_rng.seed = hash(get_instance_id())
+	var lean := Quality.value("fx_amount", 1.0)
 	for n: Node in find_children("*", "GPUParticles3D", true, false):
 		var gp := n as GPUParticles3D
+		gp.amount_ratio = (calm_amount if calm else 1.0) * lean
 		if calm:
-			gp.amount_ratio = calm_amount
 			gp.speed_scale *= calm_speed
 		if gp.one_shot:
 			gp.emitting = false

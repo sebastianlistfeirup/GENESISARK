@@ -80,6 +80,7 @@ func _run() -> void:
 		print("PERF %-16s p50 %5.1f  p95 %5.1f  p99 %5.1f ms | draws %5d  prims %8d  objs %5d  nodes %5d | load %5d ms  %s" % [c["id"],
 			r["frame_p50"], r["frame_p95"], r["frame_p99"], r["draw_calls_max"], r["primitives_max"], r["objects_max"], r["nodes_max"],
 			r["load_ms"], "OK" if fails.is_empty() else "OVER: " + ", ".join(fails)])
+		print("PERF   census %s" % JSON.stringify(r["census"]))
 	var report := {"engine_version": Engine.get_version_info().get("string"), "renderer": renderer, "device": device,
 		"cpu": OS.get_processor_name(), "os": OS.get_name(), "resolution": get_viewport().get_visible_rect().size,
 		"profile": profile, "limits": limits, "frame_times_judged": not software,
@@ -125,7 +126,11 @@ func _measure(c: Dictionary) -> Dictionary:
 			maxes["nodes"] = maxf(maxes["nodes"], Performance.get_monitor(Performance.OBJECT_NODE_COUNT))
 			mem_peak = maxf(mem_peak, Performance.get_monitor(Performance.MEMORY_STATIC))
 		await _frames(10)
-	return {"id": c["id"], "scene": c["scene"], "setup": c.get("setup", ""), "load_ms": int(load_ms),
+	# What is on screen: the usual suspects behind draw calls.
+	var census := {}
+	for t: String in ["MeshInstance3D", "MultiMeshInstance3D", "Label3D", "GPUParticles3D", "OmniLight3D", "SpotLight3D", "CollisionShape3D"]:
+		census[t] = get_tree().current_scene.find_children("*", t, true, false).size() if get_tree().current_scene else 0
+	return {"id": c["id"], "scene": c["scene"], "setup": c.get("setup", ""), "load_ms": int(load_ms), "census": census, "quality": Quality.name(),
 		"frame_p50": snappedf(percentile(frames, 0.5), 0.01), "frame_p95": snappedf(percentile(frames, 0.95), 0.01),
 		"frame_p99": snappedf(percentile(frames, 0.99), 0.01), "frames": frames.size(),
 		"draw_calls_max": int(maxes["draw_calls"]), "primitives_max": int(maxes["primitives"]),

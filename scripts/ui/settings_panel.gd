@@ -57,6 +57,18 @@ func _build() -> void:
 	for k: String in ["master_volume", "music_volume", "sfx_volume", "ambience_volume", "ui_volume"]:
 		_slider(k, {"master_volume": Loc.t("Master"), "music_volume": Loc.t("Music"), "sfx_volume": Loc.t("Effects"), "ambience_volume": Loc.t("Ambience"), "ui_volume": Loc.t("Interface")}[k], 0.0, 1.0, 0.05)
 	_body.add_child(UiKit.title(Loc.t("Display and accessibility")))
+	var q_row := UiKit.hbox(8)
+	var ql := UiKit.label(Loc.t("Graphics quality"), 16)
+	ql.custom_minimum_size = Vector2(300, 0)
+	q_row.add_child(ql)
+	for q: String in ["auto", "high", "low"]:
+		var qb := UiKit.button({"auto": Loc.t("Auto"), "high": Loc.t("High"), "low": Loc.t("Low")}[q], func() -> void:
+			SettingsService.set_value("graphics_quality", q)
+			_build())
+		qb.disabled = str(SettingsService.get_value("graphics_quality", "auto")) == q
+		q_row.add_child(qb)
+	q_row.add_child(UiKit.label(Loc.t("(now: %s, from the next area)") % (Loc.t("Low") if Quality.low() else Loc.t("High")), 14, UiKit.MUTED))
+	_body.add_child(q_row)
 	_slider("ui_scale", Loc.t("UI scale"), 0.75, 1.5, 0.05)
 	_slider("subtitle_size", Loc.t("Subtitle size"), 16, 34, 1)
 	_toggle("subtitles", Loc.t("Subtitles"))

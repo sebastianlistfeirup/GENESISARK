@@ -65,5 +65,7 @@ static func build(planet: Dictionary) -> Array:
 	sun.light_color = c.call("sun_color")
 	sun.light_energy = float(p["sun_energy"])
 	sun.shadow_enabled = true
-	sun.directional_shadow_max_distance = float(p["shadow_distance"])
+	sun.directional_shadow_max_distance = float(p["shadow_distance"]) * Quality.value("shadow_distance_scale", 1.0)
+	if Quality.value("shadow_single_cascade", 0.0) > 0.5:
+		sun.directional_shadow_mode = DirectionalLight3D.SHADOW_ORTHOGONAL  # one shadow pass instead of four
 	return [env, sun]

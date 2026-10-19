@@ -1124,6 +1124,7 @@ Save game,Gem spil
 Saved to %s.,Gemt i %s.
 Voyage,Rejse
 empty,tomt
+"(now: %s, from the next area)","(nu: %s, fra næste område)"
 Ambience,Stemning
 Audio,Lyd
 Camera drag (touch),Kamera ved træk (touch)
@@ -1132,9 +1133,12 @@ Controls,Taster
 Display and accessibility,Visning og tilgængelighed
 Effects,Effekter
 Fullscreen,Fuld skærm
+Graphics quality,Grafikkvalitet
+High,Høj
 Interface,Brugerflade
 Invert vertical axis,Invertér lodret akse
 Language,Sprog
+Low,Lav
 Master,Samlet
 Music,Musik
 Press a key...,Tryk en tast...

@@ -165,7 +165,7 @@ func _run() -> void:
 	SettingsService.values["reduced_motion"] = true
 	var calm_fx := VisualSlot.make("fx.spores")
 	fx_root.add_child(calm_fx)
-	var calm_ok := (calm_fx.get_node("Asset") as FxEffect).calm and is_equal_approx((calm_fx.get_node("Asset/Motes") as GPUParticles3D).amount_ratio, 0.5)
+	var calm_ok := (calm_fx.get_node("Asset") as FxEffect).calm and is_equal_approx((calm_fx.get_node("Asset/Motes") as GPUParticles3D).amount_ratio, 0.5 * Quality.value("fx_amount", 1.0))
 	SettingsService.values["reduced_motion"] = rm_before
 	check("fx_library_particles", fx_bad.is_empty() and calm_ok, "%s calm=%s" % [fx_bad, calm_ok])
 	fx_root.queue_free()
