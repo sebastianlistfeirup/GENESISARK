@@ -51,9 +51,9 @@ func _init() -> void:
 	var f := FileAccess.open("res://evidence/balance/balance_report.json", FileAccess.WRITE)
 	f.store_string(JSON.stringify(report, "  "))
 	f.close()
-	print("%-8s %-12s %5s %5s %6s %5s %7s %6s %5s %-12s %s" % ["planet", "strategy", "year", "pop", "adult", "crisis", "reserve", "ownkW", "dmd", "profile", "stops"])
+	print("%-8s %-12s %5s %4s %5s %5s %5s %6s %5s %7s %6s %5s %-12s %s" % ["planet", "strategy", "year", "open", "defic", "pop20", "pop", "adult", "crisis", "reserve", "ownkW", "dmd", "profile", "stops"])
 	for r: Dictionary in rows:
-		print("%-8s %-12s %5.1f %5d %6d %5d %7s %6.1f %5.1f %-12s %s" % [r["planet"], r["strategy"], r["year"], r["population"], r["adults"], r["crises"],
+		print("%-8s %-12s %5.1f %4d %5d %5d %5d %6d %5d %7s %6.1f %5.1f %-12s %s" % [r["planet"], r["strategy"], r["year"], r["opening_days"], r["deficit_days"], r["pop_y20"], r["population"], r["adults"], r["crises"],
 			str(int(r["reserve_days"])), r["own_kw"], r["demand_kw"], r["profile"], ",".join(r["stops"])])
 	print("by planet: ", JSON.stringify(by_planet))
 	quit(0)
@@ -66,6 +66,7 @@ func _run(pid: String, strat: String, seed_value: int) -> Dictionary:
 	var req := sim.colony.requires_module(gs)
 	var queue: Array = (STRATEGIES[strat] as Array).duplicate()
 	var stops: Array = []
+	var pop20 := -1  # Population at the year-20 hand-off: shows how fast a strategy grows
 	# Act II opening: the player builds by hand, day by day.
 	for day: int in 400:
 		if not queue.is_empty():
@@ -92,6 +93,7 @@ func _run(pid: String, strat: String, seed_value: int) -> Dictionary:
 		_resolve_events(sim)
 		if gs.ark.embryo_incubating > 0 and queue.is_empty():
 			break
+	var opening_days := gs.campaign.colony_day  # How long the hand-built opening took
 	# Era leaps with the institutions, resolving whatever stops the leap.
 	for i: int in 80:
 		if gs.campaign.colony_year() >= 40.0:
@@ -107,12 +109,15 @@ func _run(pid: String, strat: String, seed_value: int) -> Dictionary:
 		if reason != EraService.STOP_TARGET:
 			stops.append(reason.substr(0, 6))
 			_react(sim, reason)
+		if pop20 < 0 and gs.campaign.colony_year() >= 20.0:
+			pop20 = gs.population.alive_count()
 		if gs.campaign.colony_year() >= 20.0 and gs.society.decisions.is_empty():
 			sim.society.choose_priority(gs, "year_20", ["safety", "expansion", "self_determination"][seed_value % 3])
 		if not gs.society.council_formed and sim.society.council_blockers(gs).is_empty():
 			sim.society.form_council(gs, "bal:council")
 	var m := sim.endings.metrics(gs)
 	return {"planet": pid, "strategy": strat, "year": snappedf(gs.campaign.colony_year(), 0.1), "population": int(m.get("population", 0)),
+		"pop_y20": pop20, "opening_days": opening_days, "deficit_days": int(gs.colony.stats.get("deficit_days", 0)),
 		"adults": int(m.get("adults", 0)), "crises": int(m.get("crises_resolved", 0)), "reserve_days": float(m.get("reserve_days", 0)),
 		"own_kw": float(m.get("own_power_kw", 0)), "demand_kw": float(m.get("demand_kw", 0)), "council": m.get("council", false),
 		"profile": sim.endings.profile_for(m), "stops": stops, "buildings": gs.colony.buildings.size(), "ledger": gs.ark.ledger(),

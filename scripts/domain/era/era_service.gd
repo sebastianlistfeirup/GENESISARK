@@ -191,6 +191,11 @@ func _needs(gs: GameState, plan: Dictionary, report: Dictionary) -> Array:
 	var need := population.daily_need(gs, gs.ark.embryo_incubating + int(plan.get("cohort_size", 10)))
 	var prod: Dictionary = report.get("produced", {})
 	var gen := "geothermal_generator" if DictUtil.get_float(colony_sim.modifiers(gs), "geothermal", 0.0) >= 0.5 and float(c.inventory["components"]) >= 4.0 else "solar_array"
+	# Robot labor staffs mines and workshops before anything gets built. Below one
+	# free unit construction stalls (GA-28), so more drones come first.
+	var free_wf := free_workforce(gs)
+	if free_wf < 1.0:
+		out.append("drone_hub")
 	if surplus < 8.0:
 		out.append(gen)
 	if float(prod.get("water", 0.0)) < float(need["water"]) * 1.15 + 4.0 + float(c.count_active("greenhouse")) * 4.0:
@@ -200,9 +205,9 @@ func _needs(gs: GameState, plan: Dictionary, report: Dictionary) -> Array:
 	if population.capacity(gs, "residents") < pop_soon + 20:
 		out.append("habitat")
 	if float(c.inventory["alloy"]) < 120.0 and c.count_active("mine") < 2 + int(gs.campaign.colony_year() / 6.0):
-		out.append("mine")
+		_staffed_need(out, "mine", free_wf)
 	if float(c.inventory["components"]) < 8.0 and c.count_active("workshop") < 1 + int(gs.campaign.colony_year() / 15.0):
-		out.append("workshop")
+		_staffed_need(out, "workshop", free_wf)
 	if c.battery_kwh <= 0.0 and colony_sim.battery_capacity(gs) < 240.0:
 		out.append("battery")
 	if population.incubation_slots(gs) < 20 + gs.population.alive_count() / 12:
@@ -214,6 +219,26 @@ func _needs(gs: GameState, plan: Dictionary, report: Dictionary) -> Array:
 	if surplus < 20.0 and out.size() < 2:
 		out.append(gen)
 	return out
+
+
+## Robot labor left once every staffed building (active or under construction)
+## has its crew: what remains is construction capacity.
+func free_workforce(gs: GameState) -> float:
+	var free := colony_sim.drones(gs) + floorf(float(gs.population.adult_workforce()) / 4.0)
+	for b: Dictionary in gs.colony.buildings:
+		if b.get("state") == ColonyState.B_ACTIVE or b.get("state") == ColonyState.B_CONSTRUCTING:
+			free -= float(content.building(str(b.get("def_id"))).get("workforce", 0.0))
+	return free
+
+
+## A staffed building is only worth it if one unit of labor is left to build
+## with afterwards; otherwise the colony needs a drone hub first.
+func _staffed_need(out: Array, def_id: String, free_wf: float) -> void:
+	var need := float(content.building(def_id).get("workforce", 0.0))
+	if free_wf >= need + 1.0:
+		out.append(def_id)
+	elif not "drone_hub" in out:
+		out.append("drone_hub")
 
 
 func _auto_place(gs: GameState, def_id: String, actions: Array) -> int:

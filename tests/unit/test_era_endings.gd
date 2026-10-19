@@ -110,3 +110,20 @@ func test_epilogue_names_the_choices_made() -> void:
 	check(not "{" in text, "no unfilled placeholders")
 	var planet_close: String = DictUtil.get_arr(content.endings[sim.state.campaign.ending_id], "epilogue").back()
 	check(str(ep.back()).begins_with(EndingService.fill(planet_close, {}).left(12)), "the ending's own last line stays last")
+
+func test_institutions_keep_construction_labor() -> void:
+	# GA-28: mines + workshop could take every ark drone, freezing construction for
+	# years. Nivalis has 2.4 effective drones; the settled colony staffs 2 of them.
+	var sim := _settled("nivalis")
+	check(_free_labor(sim) < 1.0, "udgangspunkt: under én fri arbejdsenhed")
+	sim.era.commit(sim.state, EraService.default_plan(2), "l")
+	check(sim.state.colony.count_active("drone_hub") >= 1, "institutionerne bygger en dronehub")
+	check(_free_labor(sim) >= 1.0, "mindst én fri enhed til byggeri efter springet: %s" % _free_labor(sim))
+
+
+func _free_labor(sim: Simulation) -> float:
+	var free := sim.colony.drones(sim.state) + floorf(float(sim.state.population.adult_workforce()) / 4.0)
+	for b: Dictionary in sim.state.colony.buildings:
+		if b["state"] == ColonyState.B_ACTIVE or b["state"] == ColonyState.B_CONSTRUCTING:
+			free -= float(content.building(str(b["def_id"])).get("workforce", 0.0))
+	return free

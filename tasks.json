@@ -619,8 +619,8 @@
       "acceptance": "Alle seks kan gennemføres på standard. Ingen kandidat dominerer alle strategier. Ingen skjult ressourcefælde før nødvendig teknologi.",
       "fallback": "Skift én variabelgruppe ad gangen og behold baselinefixtures til sammenligning. Aflevering: commit + faktiske testresultater + relevant billede/video + opdateret STATUS. Porten til næste fase skal være bestået.",
       "evidence": "evidence/GA-28/result.json",
-      "last_commit": "f614ade",
-      "notes": "tools/balance/run_balance.gd: 6 planeter × 3 strategier til år 40; se evidence/balance."
+      "last_commit": "e1df6de",
+      "notes": "tools/balance/run_balance.gd: 6 planeter × 3 strategier til år 40; 18/18 selvstændige efter D-030 (institutionerne holder byggekapacitet fri); se evidence/balance og evidence/GA-28/iterations.md."
     },
     {
       "id": "GA-29",
