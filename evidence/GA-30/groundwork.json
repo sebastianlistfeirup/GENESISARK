@@ -1,0 +1,16 @@
+{
+  "task_id": "GA-30",
+  "commit": "af4af28",
+  "engine_version": "4.5.1-stable (official)",
+  "command": "godot --headless --path . --script res://tools/campaign/campaign_bot.gd",
+  "exit_code": 0,
+  "expected": "Every world x 4 play styles completes the campaign through player commands; invariants hold after every step; save->JSON->load identical at every phase boundary; same seed same result; all events/choices reachable",
+  "observed": "24 runs, 0 failures; endings {\"fragile\": 6, \"independent\": 18}; events 9/9; choices 27/27. Known P1 outside this matrix: R10 land lock (sere/middle seed 5014).",
+  "fixture": "seeds 5000 + planet_index*10 + policy_index",
+  "status": "PASS",
+  "kind": "groundwork (does not set DONE; gate 3 needs human playthrough)",
+  "artifacts": [
+    "evidence/campaign_bot.json",
+    "evidence/GA-28/land_lock.md"
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "task_id": "GA-29",
+  "commit": "af4af28",
+  "engine_version": "4.5.1-stable (official)",
+  "command": "xvfb-run -a godot --path . --rendering-method gl_compatibility -- --perf --profile=web --frames=20",
+  "exit_code": 0,
+  "expected": "All 7 cases within the web budget for draw calls, primitives and nodes (data/perf/budget.json)",
+  "observed": "7 cases, 0 over budget; device llvmpipe (LLVM 20.1.2, 256 bits); frame times not judged (software rendering)",
+  "fixture": "cases in data/perf/budget.json",
+  "status": "PASS",
+  "kind": "groundwork: desktop frame times NOT_RUN (needs reference PC)",
+  "artifacts": [
+    "evidence/perf/perf_web_container.json"
+  ]
+}
