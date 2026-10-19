@@ -28,6 +28,7 @@ func _init() -> void:
 	var only_planet := ""
 	var only_policy := ""
 	var quick := false
+	var seed_override := -1
 	for a: String in OS.get_cmdline_user_args():
 		if a.begins_with("--planet="):
 			only_planet = a.substr(9)
@@ -35,6 +36,8 @@ func _init() -> void:
 			only_policy = a.substr(9)
 		elif a == "--quick":
 			quick = true
+		elif a.begins_with("--seed="):
+			seed_override = int(a.substr(7))
 	var t0 := Time.get_ticks_msec()
 	var runs: Array = []
 	var seen_events := {}
@@ -49,7 +52,8 @@ func _init() -> void:
 				continue
 			idx += 1
 			var t1 := Time.get_ticks_msec()
-			var r := _play(pid, pol, 5000 + idx)
+			# Seed fixed per (planet, policy), so a filtered rerun reproduces a matrix run exactly.
+			var r := _play(pid, pol, seed_override if seed_override >= 0 else 5000 + content.planet_ids_sorted().find(pid) * 10 + POLICIES.find(pol))
 			r["ms"] = Time.get_ticks_msec() - t1
 			runs.append(r)
 			for e: String in r["events"].keys():
@@ -61,7 +65,7 @@ func _init() -> void:
 	# Determinism: the same seed and policy must give the same final checksum.
 	if only_planet.is_empty() or runs.size() > 0:
 		var p0: String = runs[0]["planet"] if not runs.is_empty() else "viridia"
-		var again := _play(p0, str(runs[0]["policy"]) if not runs.is_empty() else "middle", 5001, "determinism")
+		var again := _play(p0, str(runs[0]["policy"]) if not runs.is_empty() else "middle", int(runs[0]["seed"]) if not runs.is_empty() else 5001, "determinism")
 		failures = failures.filter(func(f: Dictionary) -> bool: return f["run"] != "determinism")
 		_run_id = "determinism"
 		_expect(again["checksum"] == runs[0]["checksum"], "determinism", "same seed/policy -> same final checksum")
@@ -206,9 +210,13 @@ func _play(pid: String, policy: String, seed_value: int, label: String = "") -> 
 			stops[why] = int(stops.get(why, 0)) + 1
 		shortage_run = shortage_run + 1 if why == EraService.STOP_SHORTAGE else 0
 		match "" if neglect else str(r.data["stop_reason"]):
-			EraService.STOP_SHORTAGE:
-				PlacementHelper.place_near(sim, "water_plant")
-				PlacementHelper.place_near(sim, "greenhouse")
+			EraService.STOP_SHORTAGE, EraService.STOP_INCUBATION:
+				# A player reads the blocker: empty stores mean more water and food.
+				for d: String in ["water_plant", "greenhouse"]:
+					var key := "placed_" + d if PlacementHelper.place_near(sim, d) > 0 else "no_room_" + d
+					stops[key] = int(stops.get(key, 0)) + 1
+				for k: int in 5:
+					sim.days.tick_day(gs)
 			EraService.STOP_POWER:
 				PlacementHelper.place_near(sim, "geothermal_generator" if DictUtil.get_float(sim.colony.modifiers(gs), "geothermal") >= 0.5 else "solar_array")
 				PlacementHelper.place_near(sim, "battery")
@@ -242,8 +250,35 @@ func _play(pid: String, policy: String, seed_value: int, label: String = "") -> 
 	return {"planet": pid, "policy": policy, "seed": seed_value, "probe": probe.ok, "year": snappedf(gs.campaign.colony_year(), 0.1),
 		"population": int(m.get("population", 0)), "ending": ending, "events": events, "roundtrips": trips, "stops": stops,
 		"decisions": gs.society.decisions.map(func(d: Dictionary) -> String: return "%s:%s" % [d["id"], d["choice"]]),
-		"council": gs.society.council_formed, "ledger": gs.ark.ledger(), "checksum": sim.checksum(),
+		"council": gs.society.council_formed, "ledger": gs.ark.ledger(),
+		"incubation_blockers_end": sim.population.incubation_blockers(gs, 10), "free_workforce_end": sim.era.free_workforce(gs),
+		"buildings_end": _building_counts(gs), "greenhouse_room_end": _room(sim, "greenhouse"), "checksum": sim.checksum(),
 		"failures": failures.filter(func(f: Dictionary) -> bool: return f["run"] == _run_id).size()}
+
+
+## Free spots (3 m grid) per district where this building could still go.
+func _room(sim: Simulation, def_id: String) -> Dictionary:
+	var gs := sim.state
+	var out := {}
+	for dk: String in DictUtil.get_dict(content.site(gs.colony.site_id), "districts").keys():
+		var d: Dictionary = content.site(gs.colony.site_id)["districts"][dk]
+		var c: Array = d["center"]
+		var rad := DictUtil.get_float(d, "radius") * sim.colony.district_scale(gs)
+		var n := 0
+		for ix: int in range(-int(rad / 3.0), int(rad / 3.0) + 1):
+			for iz: int in range(-int(rad / 3.0), int(rad / 3.0) + 1):
+				if sim.colony.check_placement(gs, def_id, float(c[0]) + ix * 3.0, float(c[1]) + iz * 3.0, 0)["ok"]:
+					n += 1
+		out[dk] = n
+	return out
+
+
+func _building_counts(gs: GameState) -> Dictionary:
+	var out := {}
+	for b: Dictionary in gs.colony.buildings:
+		var k := "%s%s" % [b["def_id"], "" if b["state"] == ColonyState.B_ACTIVE else "(" + str(b["state"]) + ")"]
+		out[k] = int(out.get(k, 0)) + 1
+	return out
 
 
 func _pick(n: int, policy: String) -> int:

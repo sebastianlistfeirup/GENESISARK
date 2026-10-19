@@ -98,5 +98,10 @@
     "max_hits": 12,
     "expected_hits_manual": 6.0,
     "expected_hits_autopilot": 1.5
+  },
+  "districts": {
+    "_note": "District radius multiplier = 1 + colony_year / growth_years, capped at max_scale (D-032).",
+    "growth_years": 25.0,
+    "max_scale": 2.2
   }
 }

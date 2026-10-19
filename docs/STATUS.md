@@ -16,13 +16,15 @@
 
 | Lag | Kommando | Resultat |
 |---|---|---|
-| 1 · Domæne | `godot --headless --path . --script res://tests/run_tests.gd` | **64 tests, 0 fejl** → `evidence/test_report.json` |
+| 1 · Domæne | `godot --headless --path . --script res://tests/run_tests.gd` | **66 tests, 0 fejl** → `evidence/test_report.json` |
 | 2 · Scener (rigtigt input) | `godot --headless --path . res://scenes/tests/scene_smoke.tscn` | **49 checks, 0 fejl** + touch-føling 6/6 → `evidence/scene_smoke.json` |
-| Parse-tjek | `godot --headless --path . res://scenes/tests/compile_all.tscn` | 107 scripts, 0 fejl |
+| Parse-tjek | `godot --headless --path . res://scenes/tests/compile_all.tscn` | 110 scripts, 0 fejl |
 | Balance | `godot --headless --path . --script res://tools/balance/run_balance.gd` | 18 kørsler til år 40 → `evidence/balance/` |
+| Hel kampagne (bot) | `godot --headless --path . --script res://tools/campaign/campaign_bot.gd` | 6 planeter × 4 spillestile → `evidence/campaign_bot.json` (se session 6) |
+| Ydelse | `godot --path . -- --perf [--profile=web]` | web-profil i containeren: 7/7 scener inden for budget (kun antal; frametider kræver rigtig hardware) → `evidence/perf/` |
 | 3 · Optaget gameplay | — | NOT_RUN (kræver menneske) |
 | 4 · Eksport | Windows + Linux eksporteret; Linux-build kørt under Xvfb | Windows-build NOT_RUN |
-| Oversættelse | `python3 tools/loc_extract.py --check` | 1136 nøgler, 0 mangler (en → da) |
+| Oversættelse | `python3 tools/loc_extract.py --check` | 1150 nøgler, 0 mangler (en → da) |
 | Plan | `python3 tools/validate_plan.py` | OK · 10 DONE · 2 VERIFYING · 12 IN_PROGRESS · 12 TODO |
 
 ## Opgaver
@@ -76,6 +78,17 @@
 | Rettelser | Vejvisningsmarkøren går ikke længere ind over undertekster; rutelabels på overfladen ligger ikke oven i hinanden; `check.sh` fejler på enhver SCRIPT ERROR. | — |
 | Web | Mobil-build genbygget med alt ovenstående. | Artifact "Genesis Ark Playtest" |
 
+## Nyt i session 6: klar til hjemkomst
+
+| Område | Hvad | Hvor |
+|---|---|---|
+| Kampagnebot | Spiller hele spillet headless på alle planeter med fire spillestile, tjekker invarianter efter hvert skridt og gem → indlæs ved hver fasegrænse. Alle 9 hændelser og 27 valg nås. Én kampagne kører i `check.sh`. | `tools/campaign/campaign_bot.gd`, D-031 |
+| Balance | Regelfejl rettet: tidsspringet bemandede miner, til intet kunne bygges. 18/18 balancekørsler når år 40. | D-030 |
+| Ydelse | `PerfProbe` måler hver hovedscene efter biblens metode mod `data/perf/budget.json`. Ny **grafikkvalitet** (Auto/Høj/Lav; Auto = Lav på telefon/web): én skyggekaskade, grovere terræn, færre sten og partikler. Telefonprofil: overflade 784k → 214k primitiver, koloni år 20 886 → 551 draw calls; 7/7 inden for budget. | `scripts/runtime/common/perf_probe.gd`, `Quality` |
+| Epilog | Nævner nu valgene ved år 20 og 40 og kolonistens tillid. | `data/endings/legacy.json` |
+| Rettelser | To danske ord i engelsk spillertekst; tydeligere vej ud af robotmangel; distrikternes vækst er nu data. | — |
+| Første dag hjemme | Ni trin med kommandoer øverst i `START_HERE.md`. | `START_HERE.md` |
+
 ## Balance (fase 3-forløber, `evidence/balance/balance_table.txt`)
 
 Alle 18 kørsler (6 verdener × 3 strategier) når år 40 med *selvstændig* profil (før 15 af 18). De tre kollaps skyldtes en regelfejl i tidsspringets institutioner: miner og værksted bemandede alle arkens droner, så intet kunne bygges, og maden løb tør (D-030). Gode strategier lander på 650 indbyggere ved år 40 (330 ved år 20); Ferrum er sværest (560, vand). Slutbefolkningen er ens på tværs af strategier, fordi fødselsplanen (16/år) er loftet; strategierne adskiller sig i åbningens længde (36-171 dage) og underskudsdage (Pelagos ~1450 pga. storme). Lagre har loft (1 års forbrug). Ingen planet dominerer alle felter (test). Tuningen er foreløbig.
@@ -86,7 +99,8 @@ Alle 18 kørsler (6 verdener × 3 strategier) når år 40 med *selvstændig* pro
 2. **Windows-build ikke kørt** (ingen Windows-maskine). Linux-build fra samme commit kører.
 3. **Generationsprognose** regnes dag for dag (~0,7-1 ms/dag): kører i baggrundstråd; godkendelse genbruger prognosen. Et 20-års spring tager få sekunder.
 4. **Ingen eksterne testere** i ferien; agentens gennemgang er ikke spillerbevis (bibel s. 15).
-5. Ingen P0/P1 kendt i den automatiserede kæde.
+5. **P1: kolonien kan bygge sig inde** (R10): én af 24 bot-kørsler (Sere, seed 5014) sidder fast i år 28, fordi tidsspringet har fyldt al jord med solpaneler og vandanlæg. Reproduktion og tre afprøvede hypoteser: `evidence/GA-28/land_lock.md`.
+6. **Valg ændrer ikke udfaldet** (R9): designbeslutning til dig.
 
 ## Næste tre opgaver
 

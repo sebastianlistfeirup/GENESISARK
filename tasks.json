@@ -551,7 +551,7 @@
       "fallback": "Brug stærk art/lyd/tekst og ingamekamera frem for store specialproducerede film.",
       "evidence": "evidence/GA-25/result.json",
       "last_commit": "f614ade",
-      "notes": "Tre slutprofiler fra faktiske målinger, epilog med planet/kriser/kohorter, final_state og fortsæt fra backup."
+      "notes": "Tre slutprofiler fra faktiske målinger, epilog med planet/kriser/kohorter, final_state og fortsæt fra backup. Session 6: epilogen nævner år 20/40-valg og tillid (data/endings/legacy.json, D-031)."
     },
     {
       "id": "GA-26",
@@ -643,7 +643,7 @@
       "fallback": "Optimer målt flaskehals; undgå ny engineversion eller threading midt i contentlås.",
       "evidence": "evidence/GA-29/result.json",
       "last_commit": "f614ade",
-      "notes": "Tasteomlægning, controller (D-018), UI-skala, reduceret bevægelse, undertekster, touch; profilering af dagstick (tools/balance/profile_tick.gd). Session 5: check.sh fejler på SCRIPT ERROR i alle trin; FX har reduceret-bevægelse-tilstand."
+      "notes": "Tasteomlægning, controller (D-018), UI-skala, reduceret bevægelse, undertekster, touch; profilering af dagstick (tools/balance/profile_tick.gd). Session 5: check.sh fejler på SCRIPT ERROR i alle trin; FX har reduceret-bevægelse-tilstand. Session 6: PerfProbe + data/perf/budget.json; grafikkvalitet Auto/Høj/Lav; web-profil 7/7 inden for budget i containeren (frametider NOT_RUN: kræver referencecomputer)."
     },
     {
       "id": "GA-30",
@@ -671,7 +671,8 @@
       "acceptance": "Gate 3 opfyldt med fuld kampagne, alle planeter/biomer og tre korrekt beregnede afslutninger. Ingen P0/P1.",
       "fallback": "Fjern ufærdige valgfri features i et dokumenteret cut; behold kampagnens hovedløfte. Aflevering: commit + faktiske testresultater + relevant billede/video + opdateret STATUS. Porten til næste fase skal være bestået.",
       "evidence": "evidence/GA-30/result.json",
-      "last_commit": ""
+      "last_commit": "",
+      "notes": "Grundlag (session 6): tools/campaign/campaign_bot.gd spiller hele kampagnen på alle planeter med invarianter og save-roundtrips (D-031). Kendt P1: R10 (land-lock på Sere seed 5014)."
     },
     {
       "id": "GA-31",

@@ -41,8 +41,10 @@ static func _rect_circle_overlap(r: Rect2, c: Vector2, radius: float) -> bool:
 	return closest.distance_to(c) < radius
 
 
+## Districts grow as the colony matures (balance.districts: growth_years, max_scale).
 func district_scale(gs: GameState) -> float:
-	return clampf(1.0 + gs.campaign.colony_year() / 25.0, 1.0, 2.2)
+	var d: Dictionary = content.bal("districts", {})
+	return clampf(1.0 + gs.campaign.colony_year() / DictUtil.get_float(d, "growth_years", 25.0), 1.0, DictUtil.get_float(d, "max_scale", 2.2))
 
 
 func modifiers(gs: GameState) -> Dictionary:
