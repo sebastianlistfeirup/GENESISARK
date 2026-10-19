@@ -21,3 +21,4 @@ export_credentials.cfg
 Thumbs.db
 *.tmp
 __pycache__/
+/.claude/worktrees/
