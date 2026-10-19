@@ -1018,7 +1018,7 @@ Emergency power %d kW · Fuel %d · Salvage material left %d,Nødstrøm %d kW ·
 Food in person-days (+%.0f/day),Mad i persondøgn (+%.0f/dag)
 Living population (cohorts),Levende befolkning (kohorter)
 NOT connected,IKKE forbundet
-Next step: build a drone hub — or wait for adult cohorts.,Næste skridt: byg en dronehub — eller vent på voksne kohorter.
+"Next step: build a drone hub — or wait for adult cohorts. Mines and workshops each keep one robot busy: if nothing gets built at all, demolish one to free a robot for construction.","Næste skridt: byg en dronehub – eller vent på voksne kohorter. Miner og værksteder binder hver én robot: bliver intet bygget, så nedriv én for at frigøre en robot til byggeri."
 Next step: build more power (solar/geothermal) or a battery. Life support and care get power first.,Næste skridt: byg mere strøm (sol/geotermi) eller et batteri. Livsstøtte og omsorg får strøm først.
 Next step: install the module the planet requires.,"Næste skridt: installér modulet, planeten kræver."
 Next step: obtain components (workshop) so the robots can do servicing.,Næste skridt: skaf komponenter (værksted) så robotterne kan servicere.

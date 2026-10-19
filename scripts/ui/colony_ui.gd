@@ -124,7 +124,7 @@ static func _fix_hint(reason: String) -> String:
 	match reason:
 		"no_power": return Loc.t("Next step: build more power (solar/geothermal) or a battery. Life support and care get power first.")
 		"no_access": return Loc.t("Next step: place a building or drone hub that connects it to the network.")
-		"no_workforce": return Loc.t("Next step: build a drone hub — or wait for adult cohorts.")
+		"no_workforce": return Loc.t("Next step: build a drone hub — or wait for adult cohorts. Mines and workshops each keep one robot busy: if nothing gets built at all, demolish one to free a robot for construction.")
 		"maintenance": return Loc.t("Next step: obtain components (workshop) so the robots can do servicing.")
 		"input_missing": return Loc.t("Next step: secure raw materials (building material or water).")
 		"module_missing": return Loc.t("Next step: install the module the planet requires.")
