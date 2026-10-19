@@ -59,7 +59,7 @@ func incubation_blockers(gs: GameState, count: int) -> Array:
 			if b.get("def_id") == "habitat" and b.get("state") == ColonyState.B_ACTIVE and colony_sim.habitat_ok(gs, b):
 				any_ok = true
 		if not any_ok:
-			out.append(Loc.t("The planet requires a habitat with %s.") % ("filtermodul" if req == "filter" else "varmemodul"))
+			out.append(Loc.t("The planet requires a habitat with a filter module.") if req == "filter" else Loc.t("The planet requires a habitat with a heater module."))
 	if capacity(gs, "residents") < gs.population.alive_count() + gs.ark.embryo_incubating + count:
 		out.append(Loc.t("Not enough housing for the coming children."))
 	return out

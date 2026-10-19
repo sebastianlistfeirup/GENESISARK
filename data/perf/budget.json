@@ -1,0 +1,20 @@
+{
+  "_note": "Performance budget (bible p.26, GA-29). Frame times are judged only on the reference PC (Forward+), never in the cloud container (software rendering). Draw calls, primitives and node counts are hardware-independent and are checked everywhere. Profiles: desktop = 1080p/60, web = phone browser (gl_compatibility).",
+  "frame_ms": {"p95": 16.7, "p99": 33.3},
+  "profiles": {
+    "desktop": {"draw_calls": 2500, "primitives": 3000000, "nodes": 12000, "load_ms": 4000},
+    "web": {"draw_calls": 600, "primitives": 600000, "nodes": 12000, "load_ms": 8000}
+  },
+  "warmup_frames": 90,
+  "rounds": 3,
+  "frames_per_round": 120,
+  "cases": [
+    {"id": "ship", "scene": "ship", "setup": "power"},
+    {"id": "flight_belt", "scene": "flight", "setup": "approach:umbra"},
+    {"id": "surface_viridia", "scene": "surface", "setup": "expedition:viridia"},
+    {"id": "surface_hazard", "scene": "surface", "setup": "expedition:ferrum", "action": "hazard"},
+    {"id": "colony_grown", "scene": "colony", "setup": "grown:pelagos"},
+    {"id": "colony_overview", "scene": "colony", "setup": "grown:umbra", "action": "zoomout"},
+    {"id": "colony_era20", "scene": "colony", "setup": "era:sere:20", "action": "zoomout"}
+  ]
+}

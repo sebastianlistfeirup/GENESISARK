@@ -78,6 +78,14 @@ The first cohort now teaches the fourth. The council has {council} members and m
 "{settlement} lives, but still in the Ark's shadow.","{settlement} lever, men stadig i arkens skygge."
 {settlement} needs more years before it can stand alone.,"{settlement} har brug for flere år, før byen kan stå alene."
 "{years} years after the landing on {planet}, the council of {settlement} switched off the Ark's emergency power. No lamps went out.",{years} år efter landingen på {planet} slukkede rådet i {settlement} for arkens nødstrøm. Ingen lamper gik ud.
+"At year 20 the captain chose safety. The stores stayed full, the walls stayed thick, and the young complained that nothing ever changed.","Ved år 20 valgte kaptajnen sikkerhed. Lagrene forblev fulde, væggene tykke, og de unge klagede over, at intet nogensinde ændrede sig."
+"At year 20 the captain gave the first generation a voice. They used it loudly, and mostly well.",Ved år 20 gav kaptajnen den første generation en stemme. De brugte den højlydt og for det meste godt.
+"At year 20 the first generation asked for more, and the captain chose expansion. {settlement} reached farther than it could always hold.","Ved år 20 bad den første generation om mere, og kaptajnen valgte ekspansion. {settlement} rakte længere ud, end det altid kunne holde."
+At year 40 came another round of reserves and repairs. The council inherited a colony that could survive a bad winter.,"Ved år 40 kom endnu en runde reserver og reparationer. Rådet arvede en koloni, der kunne klare en hård vinter."
+At year 40 the captain stepped back for good. The council had been making the real decisions for years already.,Ved år 40 trådte kaptajnen endegyldigt tilbage. Rådet havde allerede truffet de egentlige beslutninger i årevis.
+At year 40 there were new fields and new roads. The council inherited a large map and a short list of spare parts.,Ved år 40 var der nye marker og nye veje. Rådet arvede et stort kort og en kort liste over reservedele.
+"People trusted the hands that had held the colony. When the captain returned to stasis, nobody asked why.","Folk stolede på de hænder, der havde holdt kolonien. Da kaptajnen vendte tilbage til stasis, spurgte ingen hvorfor."
+"Trust had worn thin. Some still remembered the shortages, and said so at every meeting.",Tilliden var slidt tynd. Nogle huskede stadig manglen og sagde det ved hvert eneste møde.
 "A fever moves through the first cohort. ARK doesn't know the virus — it belongs to this planet. The youngest, a girl of seven months, won't eat.","En feber går gennem den første kohorte. ARK kender ikke virussen — den hører hjemme på denne planet. Den yngste, en pige på syv måneder, vil ikke spise."
 A name,Et navn
 "A name for what is to come: the next valleys, the next towns.","Et navn for det, der skal komme: de næste dale, de næste byer."
@@ -696,6 +704,7 @@ The colony,Kolonien
 The handover has already taken place.,Overdragelsen er allerede sket.
 There is no colony to hand over.,Der er ingen koloni at overdrage.
 none,ingen
+the colony,kolonien
 Resolve first: %s.,Løs først: %s.
 The first generation leap requires a stable period of care with the first cohort.,Det første generationsspring kræver en stabil omsorgsperiode med den første kohorte.
 The leap has already been made.,Springet er allerede gennemført.
@@ -755,7 +764,8 @@ Requires a completed care and incubation center.,Kræver et færdigt omsorgs- og
 Requires at least +%d kW power surplus (now %+.1f kW).,Kræver mindst +%d kW strømoverskud (nu %+.1f kW).
 Requires water and food reserves for %d days for the coming children (now %.0f).,Kræver vand- og madreserve til %d dage for de kommende børn (nu %.0f).
 The number must be positive.,Antallet skal være positivt.
-The planet requires a habitat with %s.,Planeten kræver et habitat med %s.
+The planet requires a habitat with a filter module.,Planeten kræver et habitat med filtermodul.
+The planet requires a habitat with a heater module.,Planeten kræver et habitat med varmemodul.
 no power to the care center,ingen strøm til omsorgscentret
 The colony's first council has convened.,Koloniens første råd er samlet.
 The council already exists.,Rådet findes allerede.

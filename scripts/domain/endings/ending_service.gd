@@ -90,11 +90,27 @@ func epilogue(gs: GameState) -> Array:
 		"population": str(m.get("population", 0)), "years": str(int(float(m.get("years", 0.0)))),
 		"crises": str(m.get("crises_resolved", 0)), "council": str(clampi(int(m.get("adults", 0)) / 25, 5, 15)) if m.get("council", false) else Loc.t("none"),
 		"captain_years": str(int(gs.campaign.captain_stasis_years)),
-		"settlement": gs.society.settlement_name if not gs.society.settlement_name.is_empty() else "kolonien",
+		"settlement": gs.society.settlement_name if not gs.society.settlement_name.is_empty() else Loc.t("the colony"),
 	}
 	var out: Array = []
 	for para: Variant in DictUtil.get_arr(def, "epilogue"):
 		out.append(fill(str(para), vars))
+	# The choices the player made, in the order they were made (bible: the epilogue names institutional choices).
+	var lines: Dictionary = DictUtil.get_dict(content.legacy, "lines")
+	var legacy: Array = []
+	for d: Dictionary in gs.society.decisions:
+		var key := "%s_%s" % [d.get("id"), d.get("choice")]
+		if lines.has(key):
+			legacy.append(fill(str(DictUtil.get_dict(lines, key).get("text", "")), vars))
+	var trust := float(m.get("trust", gs.society.trust))
+	if trust >= DictUtil.get_float(content.legacy, "trust_high", 65.0):
+		legacy.append(fill(str(DictUtil.get_dict(lines, "trust_high").get("text", "")), vars))
+	elif trust < DictUtil.get_float(content.legacy, "trust_low", 35.0):
+		legacy.append(fill(str(DictUtil.get_dict(lines, "trust_low").get("text", "")), vars))
+	if not legacy.is_empty() and out.size() > 1:
+		out = out.slice(0, out.size() - 1) + legacy + [out[out.size() - 1]]  # the planet's closing line stays last
+	else:
+		out += legacy
 	return out
 
 

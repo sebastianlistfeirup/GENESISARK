@@ -94,3 +94,19 @@ func test_commit_without_forecast_matches_forecast() -> void:
 	if ok(r, "commit uden prognose"):
 		check(not r.data.get("adopted_forecast", false), "simulerede selv")
 		eq(r.data["end_checksum"], fc["end_checksum"], "uafhængig simulering == prognose")
+
+
+func test_epilogue_names_the_choices_made() -> void:
+	var sim := _settled("sere")
+	ok(sim.society.choose_priority(sim.state, "year_20", "safety"), "year 20")
+	ok(sim.society.choose_priority(sim.state, "year_40", "self_determination"), "year 40")
+	sim.state.society.trust = 20.0
+	ok(sim.endings.handover(sim.state, "h"), "handover")
+	var ep := sim.endings.epilogue(sim.state)
+	var text := " ".join(ep)
+	check("chose safety" in text, "year-20 choice in the epilogue")
+	check("stepped back for good" in text, "year-40 choice in the epilogue")
+	check("Trust had worn thin" in text, "low trust is named")
+	check(not "{" in text, "no unfilled placeholders")
+	var planet_close: String = DictUtil.get_arr(content.endings[sim.state.campaign.ending_id], "epilogue").back()
+	check(str(ep.back()).begins_with(EndingService.fill(planet_close, {}).left(12)), "the ending's own last line stays last")

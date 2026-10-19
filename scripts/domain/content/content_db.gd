@@ -24,6 +24,7 @@ var story: Dictionary = {}         # scene_id -> scene
 var journal_entries: Array = []    # [{id, trigger, text}]
 var characters: Dictionary = {}    # id -> {name, perspective, bio}
 var nav_lines: Dictionary = {}    # id -> {text}  (NAV, data/story/nav.json)
+var legacy: Dictionary = {}       # epilogue lines for institutional choices (data/endings/legacy.json)
 var credits: Array = []            # [{id, title, entries:[{role, name, status, text?}]}]
 var errors: PackedStringArray = []
 var content_version: String = "0"
@@ -92,6 +93,7 @@ func load_all(root: String) -> bool:
 	credits = DictUtil.get_arr(_load_dict(root + "/credits/credits.json"), "sections")
 	var nav := _load_dict(root + "/story/nav.json")
 	nav_lines = DictUtil.get_dict(nav, "lines")
+	legacy = _load_dict(root + "/endings/legacy.json")
 	if nav.has("character"):
 		characters["nav"] = DictUtil.get_dict(nav, "character")
 	validate()
@@ -105,7 +107,7 @@ func load_all(root: String) -> bool:
 func localize() -> int:
 	var n := 0
 	for d: Variant in [planets, biome_maps, sites, hazards, locations, routes, buildings, surveys, events, endings,
-			objectives, story, journal_entries, characters, credits, nav_lines]:
+			objectives, story, journal_entries, characters, credits, nav_lines, legacy]:
 		n += _localize_node(d)
 	return n
 

@@ -1,0 +1,15 @@
+{
+  "_note": "Epilogue lines that follow the institutional choices (bible p.11, GA-25): one line per year-20 and year-40 decision, and one for how much the colony trusted its leadership. Placeholders: {settlement}, {planet}.",
+  "trust_high": 65,
+  "trust_low": 35,
+  "lines": {
+    "year_20_expansion": {"text": "At year 20 the first generation asked for more, and the captain chose expansion. {settlement} reached farther than it could always hold."},
+    "year_20_safety": {"text": "At year 20 the captain chose safety. The stores stayed full, the walls stayed thick, and the young complained that nothing ever changed."},
+    "year_20_self_determination": {"text": "At year 20 the captain gave the first generation a voice. They used it loudly, and mostly well."},
+    "year_40_expansion": {"text": "At year 40 there were new fields and new roads. The council inherited a large map and a short list of spare parts."},
+    "year_40_safety": {"text": "At year 40 came another round of reserves and repairs. The council inherited a colony that could survive a bad winter."},
+    "year_40_self_determination": {"text": "At year 40 the captain stepped back for good. The council had been making the real decisions for years already."},
+    "trust_high": {"text": "People trusted the hands that had held the colony. When the captain returned to stasis, nobody asked why."},
+    "trust_low": {"text": "Trust had worn thin. Some still remembered the shortages, and said so at every meeting."}
+  }
+}

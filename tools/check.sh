@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Fast local gate: re-import (refreshes class cache), parse-check every script,
-# translation sync, domain tests, scene smoke. Fails fast on parse errors so a
+# translation sync, domain tests, scene smoke, touch feel, one full campaign. Fails fast on parse errors so a
 # broken script can never hang the smoke run.
 # Usage: tools/check.sh   (GODOT_BIN overrides the binary)
 set -u
@@ -29,5 +29,14 @@ F_OUT=$(timeout 120 "$GODOT" --headless --path . res://scenes/tests/touch_feel.t
 F=$?
 echo "$F_OUT" | grep -E "^TOUCH|SCRIPT ERROR"
 if echo "$F_OUT" | grep -q "SCRIPT ERROR"; then F=1; fi
-echo "loc_exit=$L tests_exit=$T smoke_exit=$S touch_exit=$F"
-exit $(( L | T | S | F ))
+# One whole campaign (Sere, middle choices) with invariants and save round-trips.
+# Full matrix: godot --headless --path . --script res://tools/campaign/campaign_bot.gd  (~7 min). CHECK_FAST=1 skips.
+B=0
+if [ "${CHECK_FAST:-0}" != "1" ]; then
+	B_OUT=$(timeout 300 "$GODOT" --headless --path . --script res://tools/campaign/campaign_bot.gd -- --planet=sere --policy=middle 2>&1)
+	B=$?
+	echo "$B_OUT" | grep -E "^CAMPAIGN|^FAIL|SCRIPT ERROR"
+	if echo "$B_OUT" | grep -q "SCRIPT ERROR"; then B=1; fi
+fi
+echo "loc_exit=$L tests_exit=$T smoke_exit=$S touch_exit=$F campaign_exit=$B"
+exit $(( L | T | S | F | B ))

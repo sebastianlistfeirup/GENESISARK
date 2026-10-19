@@ -9,6 +9,9 @@ func _ready() -> void:
 		add_child(l)
 		return
 	await get_tree().process_frame
+	if PerfProbe.requested():
+		get_tree().root.add_child(PerfProbe.new())
+		return
 	if DebugCapture.requested():
 		get_tree().root.add_child(DebugCapture.new())
 		return
