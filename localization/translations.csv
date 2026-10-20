@@ -675,7 +675,6 @@ The terrain here is impassable.,Terrænet her er ufremkommeligt.
 There is no colony yet.,Der er ingen koloni endnu.
 Unknown or unbuildable building.,Ukendt eller ikke-byggelig bygning.
 one of the colony's districts,et af koloniens distrikter
-storm,storm
 the living zone,boligzonen
 the resource area,ressourceområdet
 Care,Omsorg
@@ -998,6 +997,7 @@ Year %.1f · day %d · %s,År %.1f · dag %d · %s
 adults,voksne
 children,børn
 not convened,ikke samlet
+storm,storm
 ● None. All completed buildings are running.,● Ingen. Alle færdige bygninger kører.
 "
 This planet requires the module before the habitat is safe.","
