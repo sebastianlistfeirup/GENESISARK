@@ -6,10 +6,10 @@
       "summary": "{settlement} can manage without the Ark's emergency power.",
       "criteria_text": "At least 500 inhabitants, a robust supply without the Ark's power, and a working council.",
       "epilogue": [
-        "{years} years after the landing on {planet}, the council of {settlement} switched off the Ark's emergency power. No lamps went out.",
-        "{population} people now live at {site}. They have come through {crises} crises and learned something from every one. The generators are tended by people who were born beside them.",
-        "The first cohort now teaches the fourth. The council has {council} members and meets in the old school hall. It is divided most of the time. As it should be.",
-        "The captain was awake for {captain_years} years in all. The Ark still stands at the landing site: museum, spare-parts store, a place for the children to climb.",
+        "{years} after the landing on {planet}, the council of {settlement} switched off the Ark's emergency power. No lamps went out.",
+        "{population} people now live at {site}. They have come through {crises} and learned something from every one. The generators are tended by people who were born beside them.",
+        "The first cohort now teaches the fourth. The council has {council} members and meets in the old school hall. It disagrees most of the time. As it should be.",
+        "The captain was awake for {captain_years} in all. The Ark still stands at the landing site: museum, spare-parts store, a place for the children to climb.",
         "ARK wrote a last line in the log: “There is still life in the embryo bank. It is no longer for me to decide when they wake.”"
       ]
     },
@@ -19,10 +19,10 @@
       "summary": "{settlement} lives, but still in the Ark's shadow.",
       "criteria_text": "The colony survives, but remains critically dependent on the Ark's emergency power, medical bay or reserves.",
       "epilogue": [
-        "After {years} years on {planet}, {settlement} is a real community: {population} people, a school, a clinic and a council of {council} members.",
-        "But every night the Ark's emergency power still flows into the grid. In {crises} crises it was the Ark that kept the lights on, and everyone knows it.",
-        "The council raises it every year. The young from the latest cohorts want to build more generators at {site}. The elders will risk nothing. Both sides are right.",
-        "The captain went into stasis after {captain_years} years on watch. ARK was given one order: “Stay until they no longer need you.” ARK stays."
+        "After {years} on {planet}, {settlement} is a real community: {population} people, a school, a clinic and a council of {council} members.",
+        "But every night the Ark's emergency power still flows into the grid. In {crises} it was the Ark that kept the lights on, and everyone knows it.",
+        "The council raises it every year. The young from the latest cohorts want to build more generators at {site}. The elders won't risk anything. Both sides are right.",
+        "The captain went into stasis after {captain_years} on watch. ARK was given one order: “Stay until they no longer need you.” ARK stays."
       ]
     },
     {
@@ -31,10 +31,10 @@
       "summary": "{settlement} needs more years before it can stand alone.",
       "criteria_text": "Supply or reserves are too weak for a handover. Stabilization comes first.",
       "epilogue": [
-        "{population} people live at {site} on {planet}. More than anyone dared hope when the Ark landed {years} years ago.",
-        "But the reserves are thin. After {crises} crises the stores are half empty and the machines worn. Those who meet in the school hall spend every meeting on the same question: how do we get through the next one?",
+        "{population} people live at {site} on {planet}. More than anyone dared hope when the Ark landed {years} ago.",
+        "But the reserves are thin. After {crises} the stores are half empty and the machines worn. Those who meet in the school hall spend every meeting on the same question: how do we get through the next one?",
         "The first cohort is grown now. They tend the water plant in shifts and teach the youngest to patch filters and pipes.",
-        "The captain stays awake a little longer. After {captain_years} years, the captain knows every pipe in {settlement}.",
+        "The captain stays awake a little longer. After {captain_years}, the captain knows every pipe in {settlement}.",
         "The handover will have to wait. Not because the people aren't ready, but because the colony isn't. It is not a failure. It is unfinished work."
       ]
     }

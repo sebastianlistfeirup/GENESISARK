@@ -87,9 +87,9 @@ func epilogue(gs: GameState) -> Array:
 	var site := content.site(gs.campaign.landing_site_id)
 	var vars := {
 		"planet": str(p.get("name", "")), "site": str(site.get("name", "")),
-		"population": str(m.get("population", 0)), "years": str(int(float(m.get("years", 0.0)))),
-		"crises": str(m.get("crises_resolved", 0)), "council": str(clampi(int(m.get("adults", 0)) / 25, 5, 15)) if m.get("council", false) else Loc.t("none"),
-		"captain_years": str(int(gs.campaign.captain_stasis_years)),
+		"population": str(m.get("population", 0)), "years": _count(int(float(m.get("years", 0.0))), Loc.t("%d year"), Loc.t("%d years")),
+		"crises": _count(int(m.get("crises_resolved", 0)), Loc.t("%d crisis"), Loc.t("%d crises")), "council": str(clampi(int(m.get("adults", 0)) / 25, 5, 15)) if m.get("council", false) else Loc.t("none"),
+		"captain_years": _count(int(gs.campaign.captain_stasis_years), Loc.t("%d year"), Loc.t("%d years")),
 		"settlement": gs.society.settlement_name if not gs.society.settlement_name.is_empty() else Loc.t("the colony"),
 	}
 	var out: Array = []
@@ -118,6 +118,11 @@ func summary(gs: GameState) -> String:
 	var def: Dictionary = content.endings.get(gs.campaign.ending_id, {})
 	return fill(str(def.get("summary", "")), {"settlement": gs.society.settlement_name if not gs.society.settlement_name.is_empty() else Loc.t("The colony"),
 		"planet": str(content.planet(gs.campaign.selected_planet_id).get("name", ""))})
+
+
+## "1 crisis" / "3 crises": numbers in prose carry their noun.
+static func _count(n: int, one: String, many: String) -> String:
+	return (one if n == 1 else many) % n
 
 
 static func fill(text: String, vars: Dictionary) -> String:

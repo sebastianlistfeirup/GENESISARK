@@ -101,6 +101,7 @@ func test_epilogue_names_the_choices_made() -> void:
 	ok(sim.society.choose_priority(sim.state, "year_20", "safety"), "year 20")
 	ok(sim.society.choose_priority(sim.state, "year_40", "self_determination"), "year 40")
 	sim.state.society.trust = 20.0
+	sim.state.colony.stats["crises_resolved"] = 1
 	ok(sim.endings.handover(sim.state, "h"), "handover")
 	var ep := sim.endings.epilogue(sim.state)
 	var text := " ".join(ep)
@@ -108,6 +109,7 @@ func test_epilogue_names_the_choices_made() -> void:
 	check("stepped back for good" in text, "year-40 choice in the epilogue")
 	check("Trust had worn thin" in text, "low trust is named")
 	check(not "{" in text, "no unfilled placeholders")
+	check("1 crisis" in text and not "1 crises" in text, "singular: " + text.left(200))
 	var planet_close: String = DictUtil.get_arr(content.endings[sim.state.campaign.ending_id], "epilogue").back()
 	check(str(ep.back()).begins_with(EndingService.fill(planet_close, {}).left(12)), "the ending's own last line stays last")
 

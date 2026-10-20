@@ -2,7 +2,7 @@
   "id": "survey_pelagos",
   "planet_id": "pelagos",
   "title": "Before the front",
-  "briefing": "A storm front is rolling in from the sea within hours. The coast is fertile, but we don't know what lives in the tidal zone. Find out before the weather closes in.",
+  "briefing": "A storm front is rolling in from the sea and will hit within hours. The coast is fertile, but we don't know what lives in the tidal zone. Find out before the weather closes in.",
   "goal": "Take a sample of the tidal mat and place a relay in the lee of the ridge.",
   "points": {
     "lander": [

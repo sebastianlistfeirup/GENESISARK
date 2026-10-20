@@ -48,7 +48,7 @@
     {
       "id": "journal_arrival_sere",
       "trigger": "arrival_sere",
-      "text": "Sere. Flat and friendly from orbit. The dust looks harmless from up here."
+      "text": "Sere. Flat and friendly. From up here, the dust looks harmless."
     },
     {
       "id": "journal_arrival_nivalis",
@@ -78,7 +78,7 @@
     {
       "id": "journal_expedition_complete",
       "trigger": "expedition_complete",
-      "text": "The samples are analyzed. We know more. We never know enough."
+      "text": "Back aboard. We know more than we did this morning. We'll never know enough."
     },
     {
       "id": "journal_landing_commit",

@@ -10,25 +10,25 @@
       "text": "Route to {dest}: {days} days in stasis. No known obstacles on the approach."
     },
     "route_field": {
-      "text": "The approach to {dest} has scattered asteroids. Expected: {hits_manual} impacts on manual control, {hits_auto} on autopilot. The autopilot uses {fuel_auto} extra units of fuel."
+      "text": "Approach to {dest}: scattered asteroids. Expected impacts: {hits_manual} manual, {hits_auto} on autopilot. Autopilot cost: {fuel_auto} additional fuel units."
     },
     "route_debris": {
-      "text": "The approach to {dest} passes a debris field. Expected hull loss: {integ_manual} percent manual, {integ_auto} percent on autopilot."
+      "text": "Approach to {dest}: debris field. Expected hull loss: {integ_manual} percent manual, {integ_auto} percent on autopilot."
     },
     "route_belt": {
-      "text": "The route crosses an asteroid belt. Density: {density} percent. Expected hull loss: {integ_manual} percent manual, {integ_auto} percent on autopilot. Autopilot recommended."
+      "text": "Approach to {dest}: asteroid belt, density {density} percent. Expected hull loss: {integ_manual} percent manual, {integ_auto} percent on autopilot. Autopilot recommended."
     },
     "route_fuel": {
       "text": "Fuel on arrival: {fuel_after} units."
     },
     "route_reserve_breach": {
-      "text": "Reserve after arrival: {fuel_after}. To reach {reserve_target}: {reserve_needed} required. Landing is effectively final."
+      "text": "Fuel after arrival: {fuel_after} units. Required to reach {reserve_target}: {reserve_needed}. Landing will be effectively final."
     },
     "route_oxygen": {
-      "text": "Oxygen used in stasis: {oxygen} percent. Oxygen reserve on arrival: {oxygen_after} percent."
+      "text": "Oxygen used in stasis: {oxygen} percent. Reserve on arrival: {oxygen_after} percent."
     },
     "route_oxygen_low": {
-      "text": "Oxygen reserve on arrival: {oxygen_after} percent. That is below the recommended minimum of {low} percent."
+      "text": "Oxygen reserve on arrival: {oxygen_after} percent. Recommended minimum: {low} percent."
     },
     "status_fuel_low": {
       "text": "Fuel: {fuel} units. Enough for {reachable} of {routes} known routes from here."
@@ -37,10 +37,10 @@
       "text": "Fuel: {fuel} units. No known route is within range. The next decision is landing."
     },
     "status_oxygen_low": {
-      "text": "Oxygen reserve: {oxygen} percent. Below recommended minimum. The scrubbers can be repaired in the workshop."
+      "text": "Oxygen reserve: {oxygen} percent. Below the recommended minimum. Scrubber repair available in the workshop."
     },
     "status_oxygen_critical": {
-      "text": "Oxygen reserve: {oxygen} percent. Critical. At stasis consumption, reserve lasts {days_left} days."
+      "text": "Oxygen reserve: {oxygen} percent. Critical. At stasis consumption, the reserve lasts {days_left} days."
     },
     "status_hull_low": {
       "text": "Hull integrity: {integrity} percent. Further impacts increase the risk of pressure loss."
@@ -49,7 +49,7 @@
       "text": "Approach initiated. No objects on course. This is rare."
     },
     "approach_field": {
-      "text": "Approach initiated. Scattered asteroids ahead. Reduce speed to allow time to turn."
+      "text": "Approach initiated. Scattered asteroids ahead. Reduce speed to increase reaction time."
     },
     "approach_debris": {
       "text": "Approach initiated. Debris ahead. Fragments are small. Small is not harmless."
@@ -76,7 +76,7 @@
       "text": "Obstacles cleared. {hits} impacts."
     },
     "arrival": {
-      "text": "Orbit around {dest} established. Hull {integrity} percent. Fuel {fuel}. Oxygen {oxygen} percent."
+      "text": "Orbit around {dest} established. Hull {integrity} percent. Fuel {fuel} units. Oxygen {oxygen} percent."
     },
     "surface_brief": {
       "text": "Suit at {energy} percent. Endurance at normal draw: {minutes} minutes. Objective: {objective}, {dist} meters."
@@ -97,10 +97,10 @@
       "text": "Suit at {energy} percent. Lander: {dist} meters. Walking back takes {return_s} seconds."
     },
     "surface_return_margin": {
-      "text": "Return margin is narrowing. Endurance {seconds} seconds. Return requires {return_s}. Consider your priorities."
+      "text": "Return margin is narrowing. Endurance: {seconds} seconds. Return requires {return_s} seconds. Consider your priorities."
     },
     "surface_return_now": {
-      "text": "Endurance {seconds} seconds. Return requires {return_s}. Turn back now."
+      "text": "Endurance: {seconds} seconds. Return requires {return_s} seconds. Turn back now."
     }
   }
 }
