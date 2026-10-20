@@ -33,8 +33,11 @@ func _ready() -> void:
 	root.set_anchors_preset(Control.PRESET_FULL_RECT)
 	root.theme = UiKit.theme()
 	layer.add_child(root)
+	# One column, centred vertically: title, menu and tagline never overlap at any UI scale.
 	var col := UiKit.vbox(14)
-	col.position = Vector2(110, 200)
+	col.set_anchors_and_offsets_preset(Control.PRESET_LEFT_WIDE)
+	col.offset_left = 110
+	col.alignment = BoxContainer.ALIGNMENT_CENTER
 	root.add_child(col)
 	var t := UiKit.label("GENESIS ARK", 76, UiKit.TEXT)
 	col.add_child(t)
@@ -46,10 +49,10 @@ func _ready() -> void:
 	_body.custom_minimum_size = Vector2(360, 0)
 	_body.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
 	col.add_child(_body)
-	var foot := UiKit.label(Loc.t("50,000 embryos. Six possible worlds. One choice you must live with."), 16, UiKit.AMBER)
-	foot.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_LEFT)
-	foot.position = Vector2(110, -70)
-	root.add_child(foot)
+	var sp2 := Control.new()
+	sp2.custom_minimum_size = Vector2(0, 16)
+	col.add_child(sp2)
+	col.add_child(UiKit.label(Loc.t("50,000 embryos. Six possible worlds. One choice you must live with."), 16, UiKit.AMBER))
 	var ver := UiKit.label(Loc.t("v%s · Godot %s · greybox-proxies") % [ProjectSettings.get_setting("application/config/version"), Engine.get_version_info().get("string")], 13, UiKit.MUTED)
 	ver.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_RIGHT)
 	ver.position = Vector2(-420, -40)

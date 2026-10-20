@@ -31,7 +31,7 @@ func refresh() -> void:
 		v.add_child(UiKit.label(str(ch.get("name")), 20, UiKit.TEXT))
 		v.add_child(UiKit.label(str(ch.get("bio", "")), 14, UiKit.MUTED, true))
 		v.add_child(UiKit.label("“%s”" % lines.get(persp, ""), 16, UiKit.TEXT, true))
-		v.add_child(UiKit.button(Loc.t("Support %s (%s)") % [str(ch.get("name")).split(" ")[0], {"expansion": "ekspansion", "safety": "sikkerhed", "self_determination": "selvbestemmelse"}[persp]], func() -> void:
+		v.add_child(UiKit.button(Loc.t("Support %s (%s)") % [str(ch.get("name")).split(" ")[0], {"expansion": Loc.t("expansion"), "safety": Loc.t("safety"), "self_determination": Loc.t("self-determination")}[persp]], func() -> void:
 			if GameSession.cmd_choose_priority(decision_id, persp).ok:
 				close()))
 		p.add_child(v)

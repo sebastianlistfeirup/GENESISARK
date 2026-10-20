@@ -26,11 +26,16 @@ func _ready() -> void:
 	_panel.add_child(scroll)
 	add_child(_panel)
 	visible = false
+	SettingsService.changed.connect(func() -> void:
+		if visible:
+			UiKit.fit_layer(self, _panel))
 
 
 func open() -> void:
 	visible = true
 	_build()
+	UiKit.fit_layer(self, _panel)
+	UiKit.fit_layer.call_deferred(self, _panel)
 
 
 func close() -> void:

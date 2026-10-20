@@ -12,6 +12,7 @@ var scene_key := "menu"
 var wait_frames := 90
 var extra: Dictionary = {}
 var lang := ""  # --lang=en: capture in another language without touching saved settings
+var ui_scale := 0.0  # --ui_scale=1.5: capture at another UI scale without touching saved settings
 
 
 static func requested() -> bool:
@@ -32,6 +33,7 @@ func _ready() -> void:
 				"scene": scene_key = kv[1]
 				"wait": wait_frames = int(kv[1])
 				"lang": lang = kv[1]
+				"ui_scale": ui_scale = float(kv[1])
 				_: extra[kv[0]] = kv[1]
 	_run.call_deferred()
 
@@ -40,6 +42,8 @@ func _run() -> void:
 	if not lang.is_empty():
 		Loc.set_language(lang)
 		GameSession.reload_content()
+	if ui_scale > 0.0:
+		get_tree().root.content_scale_factor = ui_scale  # never written to settings.cfg
 	DebugFixtures.prepare(setup)
 	if scene_key != "menu" and not extra.has("no_scene"):
 		AppFlow.params = extra
@@ -48,9 +52,18 @@ func _run() -> void:
 		await get_tree().process_frame
 	if extra.has("action"):
 		var sc := get_tree().current_scene
-		if sc and sc.has_method("debug_action"):
-			sc.call("debug_action", str(extra["action"]))
-		for i: int in 40:
+		var act := str(extra["action"])
+		var hud: Variant = sc.get("hud") if sc else null
+		if act == "alarm" and hud is GameHud:
+			AudioService.alarm_raised.emit(true)  # the HUD's visual twin of an alarm sound
+		elif act in ["pause", "pause_settings"] and hud is GameHud:
+			(hud as GameHud).pause_menu.open()
+			if act == "pause_settings":
+				(hud as GameHud).pause_menu.settings.open()
+		elif sc and sc.has_method("debug_action"):
+			sc.call("debug_action", act)
+		# The alarm banner hides after a few real seconds; software rendering is slow.
+		for i: int in (4 if act == "alarm" else 40):
 			await get_tree().process_frame
 	var img := get_viewport().get_texture().get_image()
 	var abs_path := ProjectSettings.globalize_path("res://" + out_path) if not out_path.begins_with("/") else out_path

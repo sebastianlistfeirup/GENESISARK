@@ -643,7 +643,7 @@
       "fallback": "Optimer målt flaskehals; undgå ny engineversion eller threading midt i contentlås.",
       "evidence": "evidence/GA-29/result.json",
       "last_commit": "f614ade",
-      "notes": "Tasteomlægning, controller (D-018), UI-skala, reduceret bevægelse, undertekster, touch; profilering af dagstick (tools/balance/profile_tick.gd). Session 5: check.sh fejler på SCRIPT ERROR i alle trin; FX har reduceret-bevægelse-tilstand. Session 6: PerfProbe + data/perf/budget.json; grafikkvalitet Auto/Høj/Lav; web-profil 7/7 inden for budget i containeren (frametider NOT_RUN: kræver referencecomputer)."
+      "notes": "Tasteomlægning, controller (D-018), UI-skala, reduceret bevægelse, undertekster, touch; profilering af dagstick (tools/balance/profile_tick.gd). Session 5: check.sh fejler på SCRIPT ERROR i alle trin; FX har reduceret-bevægelse-tilstand. Session 6: PerfProbe + data/perf/budget.json; grafikkvalitet Auto/Høj/Lav; web-profil 7/7 inden for budget i containeren (frametider NOT_RUN: kræver referencecomputer). Session 7: accessibility-gennemgang mod bibel s. 26 (evidence/a11y/audit.md, evidence/GA-29/a11y_result.json): UI passer i 1280x720 ved skala 1.5, alarm-banner, farve+symbol, ombindbar undertekst-skip/byg-videre, 5 a11y-smoketjek."
     },
     {
       "id": "GA-30",

@@ -614,6 +614,7 @@ Confirm,Bekræft
 Descend (flight),Dyk (flyvning)
 Drone reserve,Dronereserve
 Forward,Frem
+Hold: keep building,Hold: byg flere
 Interact,Interagér
 Journal,Journal
 Left,Venstre
@@ -624,6 +625,7 @@ Rotate building,Drej bygning
 Rotate camera left,Drej kamera venstre
 Rotate camera right,Drej kamera højre
 Run,Løb
+Skip subtitle line,Spring undertekstlinje over
 Speed 1x,Hastighed 1x
 Speed 3x,Hastighed 3x
 Zoom in,Zoom ind
@@ -862,14 +864,14 @@ waiting for drones,venter på droner
 %s
 [Venstre klik] byg · [%s] drej · [Højre klik/Esc] fortryd"
 Bottlenecks,Flaskehalse
-Captain [B],Kaptajn [B]
+Captain [%s],Kaptajn [%s]
 Colony overview,Koloni-overblik
 Cost: %d mat.%s · %+d kW,Pris: %d mat.%s · %+d kW
 Geothermal generator,Geotermisk generator
 Landing zone,Landingszone
 Living zone,Boligzone
 Pause,Pause
-"Pause / 1x / 3x (Space, 1, 3)","Pause / 1x / 3x (Mellemrum, 1, 3)"
+"Pause / 1x / 3x (%s, %s, %s)","Pause / 1x / 3x (%s, %s, %s)"
 Resource area,Ressourceområde
 "Supply, population, generation leap and council","Forsyning, befolkning, generationsspring og råd"
 "The Ark has landed. Build power, water and a habitat. Tap a building below.","Arken er landet. Byg strøm, vand og et habitat. Tryk på en bygning nederst."
@@ -881,6 +883,7 @@ Year %d · day %d   %s,År %d · dag %d   %s
 ","Indholdsfejl — se log:
 "
 locked,låst
+%s/%s speed · %s/%s sideways · %s/%s up/down · [%s] evasive burn · [%s] autopilot,%s/%s fart · %s/%s sideværts · %s/%s op/ned · [%s] undvigemanøvre · [%s] autopilot
 AUTOPILOT (NAV),AUTOPILOT (NAV)
 "Approach: %s
 Orbit in %d m · speed %d
@@ -890,7 +893,6 @@ Kredsløb om %d m · fart %d
 Skrog %d %% · Ilt %d %% · nedslag %d
 %s"
 Orbit established.,Kredsløb etableret.
-W/S speed · A/D sideways · Space/Ctrl up/down · [Shift] evasive burn · [F] autopilot,W/S fart · A/D sideværts · Mellemrum/Ctrl op/ned · [Shift] undvigemanøvre · [F] autopilot
 manual,manuel
   (orbit),  (kredsløb)
 "%s
@@ -1056,6 +1058,9 @@ We can't afford to lose anything. Reserves before everything else.,Vi har ikke r
 We have to move on. The valleys to the north could feed thousands.,Vi skal videre. Dalene mod nord kan brødføde tusinder.
 We want to decide for ourselves. Give the council the keys.,Vi vil selv bestemme. Giv rådet nøglerne.
 Year %d: the first generation speaks,År %d: den første generation taler
+expansion,ekspansion
+safety,sikkerhed
+self-determination,selvbestemmelse
 %d people · %s · own power %.0f / %.0f kW · reserve %s days · %d crises resolved · the captain in stasis for %d years,%d mennesker · %s · egen strøm %.0f / %.0f kW · reserve %s dage · %d kriser løst · kaptajnen i stasis i %d år
 Continue from the last save before the handover,Fortsæt fra seneste save før overdragelsen
 EPILOGUE,EPILOG
@@ -1065,6 +1070,8 @@ council,råd
 no council,intet råd
   (free),  (gratis)
 Time stands still until you have chosen. Time leaps stop at unresolved crises.,"Tiden står stille, til du har valgt. Tidsspring stopper ved uafklarede kriser."
+ALARM: critical,ALARM: kritisk
+ALARM: warning,ALARM: advarsel
 Objectives,Mål
 The colony is self-sufficient.,Kolonien klarer sig selv.
 Logbook,Logbog
@@ -1118,7 +1125,7 @@ flatness,fladhed
 heat source,varmekilde
 landing quality,landingskvalitet
 shelter,læ
-Close  [Esc],Luk  [Esc]
+Close  [%s],Luk  [%s]
 Colony day %d,Koloni dag %d
 Could not load,Kunne ikke indlæse
 Load game,Indlæs spil

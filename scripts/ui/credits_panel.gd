@@ -31,6 +31,8 @@ func _ready() -> void:
 func open() -> void:
 	visible = true
 	_build()
+	UiKit.fit_layer(self, _panel)
+	UiKit.fit_layer.call_deferred(self, _panel)
 
 
 func close() -> void:

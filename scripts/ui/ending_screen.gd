@@ -4,7 +4,7 @@ extends Control
 
 func _ready() -> void:
 	theme = UiKit.theme()
-	set_anchors_preset(Control.PRESET_FULL_RECT)
+	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	AudioService.set_ambience("")
 	var bg := ColorRect.new()
@@ -17,10 +17,25 @@ func _ready() -> void:
 	var gs: GameState = GameSession.state
 	var def: Dictionary = GameSession.content.endings.get(gs.campaign.ending_id, {})
 	AudioService.set_music_any(["music_ending_" + gs.campaign.ending_id, "music_hope"])
+	# Text scrolls, the buttons stay on screen: nothing is cut off at 1280x720
+	# with a large UI scale (bible p.26).
+	var vis := get_viewport().get_visible_rect().size
+	var frame := MarginContainer.new()
+	frame.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	frame.add_theme_constant_override("margin_left", 160)
+	frame.add_theme_constant_override("margin_right", int(maxf(60.0, vis.x - 160.0 - 1100.0)))
+	frame.add_theme_constant_override("margin_top", 90)
+	frame.add_theme_constant_override("margin_bottom", 40)
+	add_child(frame)
+	var outer := UiKit.vbox(16)
+	frame.add_child(outer)
+	var scroll := ScrollContainer.new()
+	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	outer.add_child(scroll)
 	var col := UiKit.vbox(16)
-	col.position = Vector2(160, 90)
-	col.custom_minimum_size = Vector2(1100, 0)
-	add_child(col)
+	col.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	scroll.add_child(col)
 	col.add_child(UiKit.label(Loc.t("EPILOGUE"), 18, UiKit.PETROL.lightened(0.3)))
 	col.add_child(UiKit.label(str(def.get("title", gs.campaign.ending_id)), 54, UiKit.TEXT))
 	col.add_child(UiKit.label(GameSession.sim.endings.summary(gs), 20, UiKit.AMBER, true))
@@ -38,4 +53,4 @@ func _ready() -> void:
 			AppFlow.continue_game())
 	pre.tooltip_text = Loc.t("Loading the backup from before the ending.")
 	row.add_child(pre)
-	col.add_child(row)
+	outer.add_child(row)

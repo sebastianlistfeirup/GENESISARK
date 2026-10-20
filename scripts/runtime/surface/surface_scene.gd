@@ -176,7 +176,8 @@ func _place_routes() -> void:
 				add_child(dot)
 			prev = p
 		var lbl := Label3D.new()
-		lbl.text = str(r.get("label", ""))
+		# Safe vs. risky route: symbol as well as colour.
+		lbl.text = UiKit.status_text("ok" if r.get("id") == "safe" else "warning", str(r.get("label", "")))
 		lbl.billboard = BaseMaterial3D.BILLBOARD_ENABLED
 		lbl.font_size = 48
 		lbl.pixel_size = 0.01

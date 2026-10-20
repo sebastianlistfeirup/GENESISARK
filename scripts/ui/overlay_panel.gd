@@ -14,6 +14,11 @@ func _init(size: Vector2 = Vector2(1100, 720)) -> void:
 	_dim = ColorRect.new()
 	_dim.color = Color(0, 0.02, 0.04, 0.6)
 	_dim.set_anchors_preset(Control.PRESET_FULL_RECT)
+	# Oversized so the dim still covers the screen when fit() scales the layer down.
+	_dim.offset_left = -4096
+	_dim.offset_top = -4096
+	_dim.offset_right = 4096
+	_dim.offset_bottom = 4096
 	add_child(_dim)
 	panel = UiKit.panel(size)
 	panel.set_anchors_and_offsets_preset(Control.PRESET_CENTER)
@@ -22,13 +27,27 @@ func _init(size: Vector2 = Vector2(1100, 720)) -> void:
 	body = UiKit.vbox(10)
 	panel.add_child(body)
 	add_child(panel)
+	panel.minimum_size_changed.connect(fit)
 	visible = false
+
+
+func _ready() -> void:
+	get_viewport().size_changed.connect(fit)
+	SettingsService.changed.connect(fit)
+
+
+## Keep the whole panel on screen at any window size and UI scale (bible p.26).
+func fit() -> void:
+	if visible:
+		UiKit.fit_layer(self, panel)
 
 
 func open() -> void:
 	visible = true
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	refresh()
+	fit()
+	fit.call_deferred()
 
 
 func close() -> void:
@@ -50,7 +69,7 @@ func header(text: String, sub: String = "") -> void:
 		v.add_child(UiKit.label(sub, 15, UiKit.MUTED, true))
 	v.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	h.add_child(v)
-	h.add_child(UiKit.button(Loc.t("Close  [Esc]"), close))
+	h.add_child(UiKit.button(Loc.t("Close  [%s]") % SettingsService.primary_key("pause"), close))
 	body.add_child(h)
 
 

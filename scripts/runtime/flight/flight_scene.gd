@@ -70,7 +70,9 @@ func _ready() -> void:
 	var panel := UiKit.panel()
 	panel.add_child(_info)
 	hud.top_right.add_child(panel)
-	hud.set_prompt(Loc.t("W/S speed · A/D sideways · Space/Ctrl up/down · [Shift] evasive burn · [F] autopilot"))
+	var k := SettingsService.primary_key
+	hud.set_prompt(Loc.t("%s/%s speed · %s/%s sideways · %s/%s up/down · [%s] evasive burn · [%s] autopilot") % [k.call("move_forward"), k.call("move_back"),
+		k.call("move_left"), k.call("move_right"), k.call("ascend"), k.call("descend"), k.call("sprint"), k.call("autopilot")])
 	AudioService.set_ambience("amb_space")
 	_thruster = AudioStreamPlayer.new()
 	_thruster.stream = AudioService.stream("sfx_thruster")
@@ -211,6 +213,7 @@ func _impact(r: float) -> void:
 	if is_severe:
 		severe += 1
 	AudioService.play("alarm_warning" if not is_severe else "alarm_critical", "SFX", -6.0)
+	AudioService.alarm_raised.emit(is_severe)
 	if SettingsService.get_value("camera_shake", true) and not SettingsService.get_value("reduced_motion", false):
 		_shake = 0.6 if is_severe else 0.35
 	if GameSession.has_game():

@@ -1,0 +1,24 @@
+{
+  "task_id": "GA-29",
+  "kind": "accessibility audit",
+  "commit": "ce43ca5+working tree (this commit)",
+  "engine_version": "4.5.1-stable (official)",
+  "command": "tools/check.sh; xvfb-run -a godot --path . --rendering-method gl_compatibility --resolution <1280x720|1920x1080> -- --capture=evidence/a11y/<before|after>/<screen>_<res>_s<scale>.jpg --scene=<scene> --setup=<fixture> [--action=<a>] --wait=90 --ui_scale=<1.0|1.5>",
+  "exit_code": 0,
+  "expected": "Bible p.26: all actions rebindable; UI tested at 1280x720 and 1920x1080 without clipped critical text; reduced shake/flash/motion; subtitles with speaker and adjustable size; colour never the only signal; critical sounds have visual signals; pause and settings reachable from gameplay.",
+  "observed": "7 requirements: 2 PASS, 5 FIXED (with remaining OPEN notes). At logical 1280x720 (UI scale 1.5) the main menu tagline overlapped Quit, all OverlayPanels (star map, orbit, overview, event, decision) were cut at top and bottom, the colony build bar ran off both edges and the resource bar covered the objectives, the ending pushed its buttons off screen; all fixed and verified in after/ screenshots. Two hard-coded keys (subtitle skip, keep-building) became rebindable actions; fixed-key prompts follow remaps. Six colour-only signals got symbols. Alarm sounds now raise a HUD banner (steady with reduced motion). Speaker and NAV text scale with subtitle size. tools/check.sh: loc_exit=0 tests_exit=0 smoke_exit=0 touch_exit=0 campaign_exit=0; scene smoke 54 checks, 0 failures, incl. 5 new a11y_* checks.",
+  "fixture": "fresh, power, orbit:viridia, approach:umbra, expedition:viridia, grown:pelagos, era:pelagos:200",
+  "status": "PASS",
+  "open": [
+    "Text is 9-10 px at 1280x720 with UI scale 1.0 (default scale does not adapt to window size)",
+    "Controller remapping not offered (D-018)",
+    "Rebind conflicts not detected",
+    "Subtitle toggle hides only narrator lines"
+  ],
+  "artifacts": [
+    "evidence/a11y/audit.md",
+    "evidence/a11y/before/",
+    "evidence/a11y/after/",
+    "evidence/scene_smoke.json"
+  ]
+}

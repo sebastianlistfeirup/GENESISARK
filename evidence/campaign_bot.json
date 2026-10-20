@@ -1,6 +1,6 @@
 {
   "content_version": "0.1.0",
-  "elapsed_ms": 37256,
+  "elapsed_ms": 40922,
   "endings": {
     "independent": 1
   },
@@ -56,7 +56,7 @@
         "water_plant": 38,
         "workshop": 3
       },
-      "checksum": "72a42da721b351be495e7625861a54cbdc464c91dcb2e24b91fab05c937cb876",
+      "checksum": "1a2042cd2dea40363dc442a176a19bea10615bbfb12b620c72a2440cda1af344",
       "council": true,
       "decisions": [
         "year_20:safety",
@@ -86,7 +86,7 @@
         "lost": 0,
         "viable": 49340
       },
-      "ms": 18210,
+      "ms": 21687,
       "planet": "sere",
       "policy": "middle",
       "population": 650,
@@ -100,5 +100,5 @@
       "year": 40.0
     }
   ],
-  "timestamp": "2026-10-20T11:31:21"
+  "timestamp": "2026-10-20T12:41:42"
 }

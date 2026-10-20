@@ -18,6 +18,7 @@ const ACTIONS := {
 	"confirm": ["mouse:1"], "cancel": ["mouse:2"], "autopilot": ["F"], "speed_pause": ["Space"],
 	"speed_1": ["1"], "speed_3": ["3"], "drone_refill": ["G"], "ascend": ["Space"], "descend": ["Ctrl"],
 	"zoom_in": ["Equal"], "zoom_out": ["Minus"], "build_confirm": ["Enter"],
+	"build_repeat": ["Shift"], "skip_line": ["Enter"],
 }
 const ACTION_LABELS := {
 	"move_forward": "Forward", "move_back": "Back", "move_left": "Left", "move_right": "Right",
@@ -27,6 +28,7 @@ const ACTION_LABELS := {
 	"speed_pause": "Pause time", "speed_1": "Speed 1x", "speed_3": "Speed 3x", "drone_refill": "Drone reserve",
 	"ascend": "Ascend (flight)", "descend": "Descend (flight)",
 	"zoom_in": "Zoom in", "zoom_out": "Zoom out", "build_confirm": "Build here",
+	"build_repeat": "Hold: keep building", "skip_line": "Skip subtitle line",
 }
 
 ## Controller layout (Xbox naming; Godot JoyButton/JoyAxis indices). Tokens:
@@ -207,6 +209,11 @@ func binding_text(action: String) -> String:
 		else:
 			parts.append(k)
 	return " / ".join(parts)
+
+
+## Just the first binding (short prompts like "W/S speed"); follows remaps and the pad.
+func primary_key(action: String) -> String:
+	return binding_text(action).split(" / ")[0]
 
 
 func load_settings() -> void:

@@ -8,6 +8,9 @@ const DEFAULT_DIR := "res://assets/audio/placeholder/"
 const FINAL_DIR := "res://assets/audio/final/"
 const ALARM_COOLDOWN_MS := 6000
 
+## Every alarm sound has a visual twin (bible p.26); GameHud shows it.
+signal alarm_raised(critical: bool)
+
 var _players: Array[AudioStreamPlayer] = []
 var _ambience: AudioStreamPlayer
 var _music: AudioStreamPlayer
@@ -197,6 +200,7 @@ func alarm(critical: bool) -> void:
 		return
 	_last_alarm[key] = now
 	play(key, "SFX", -2.0)
+	alarm_raised.emit(critical)
 
 
 func has_sound(slot: String) -> bool:

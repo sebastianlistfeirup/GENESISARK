@@ -44,7 +44,9 @@ func _draw() -> void:
 		var b := _pos(loc)
 		draw_dashed_line(a, b, Color(col, 0.7 if loc == selected else 0.35), 2.0 if loc == selected else 1.0, 6.0)
 		var mid := (a + b) * 0.5
-		draw_string(font, mid + Vector2(4, -4), "%d ⛽" % int(r.get("fuel", 0)), HORIZONTAL_ALIGNMENT_LEFT, -1, 13, Color(col, 0.9))
+		# Route risk is also a symbol, not only a colour: ▲ risky, ✕ not possible.
+		var mark := "" if q["ok"] and not q["risky"] else (" " + UiKit.status_icon("warning") if q["ok"] else " " + UiKit.status_icon("locked"))
+		draw_string(font, mid + Vector2(4, -4), "%d ⛽%s" % [int(r.get("fuel", 0)), mark], HORIZONTAL_ALIGNMENT_LEFT, -1, 13, Color(col, 0.9))
 	for loc: String in content.locations.keys():
 		var p := _pos(loc)
 		var pid := str(content.locations[loc].get("planet_id", ""))

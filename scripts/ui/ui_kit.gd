@@ -168,6 +168,26 @@ static func status_color(kind: String) -> Color:
 	return {"ok": OK, "warning": WARN, "critical": DANGER, "info": PETROL.lightened(0.3), "locked": MUTED}.get(kind, TEXT)
 
 
+## Shrinks a modal CanvasLayer (about the screen centre) until `panel` fits the
+## visible area with a margin. Large UI scales on small windows (e.g. 1.5 at
+## 1280x720) then still show the whole panel instead of clipping its header
+## and buttons; at normal sizes the scale stays 1.
+static func fit_layer(layer: CanvasLayer, panel: Control, margin: float = 12.0) -> void:
+	var vp := layer.get_viewport()
+	if vp == null or not is_instance_valid(panel):
+		return
+	var vis := vp.get_visible_rect().size
+	var need := panel.get_combined_minimum_size() + Vector2(margin, margin) * 2.0
+	var s := minf(1.0, minf(vis.x / maxf(need.x, 1.0), vis.y / maxf(need.y, 1.0)))
+	layer.scale = Vector2(s, s)
+	layer.offset = vis * (1.0 - s) * 0.5
+
+
+## Status text with its symbol in front: colour is never the only signal.
+static func status_text(kind: String, text: String) -> String:
+	return "%s %s" % [status_icon(kind), text]
+
+
 static func hex(c: Color) -> String:
 	return "#" + c.to_html(false)
 

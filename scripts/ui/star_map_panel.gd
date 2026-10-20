@@ -125,7 +125,8 @@ static func nav_block(items: Array) -> PanelContainer:
 	var lines: Array = []
 	for it: Dictionary in items:
 		var col: String = {"critical": "#d25b4c", "warning": "#e8a33d"}.get(str(it.get("severity", "")), "#9fb4bd")
-		lines.append("[color=%s]%s[/color]" % [col, str(it["text"])])
+		var sev := str(it.get("severity", ""))
+		lines.append("[color=%s]%s%s[/color]" % [col, (UiKit.status_icon(sev) + " ") if sev in ["critical", "warning"] else "", str(it["text"])])
 	var r := UiKit.rich("[color=#7fd6d0][b]NAV[/b][/color]\n" + "\n".join(lines))
 	r.custom_minimum_size = Vector2(0, 0)
 	p.add_child(r)

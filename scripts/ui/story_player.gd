@@ -35,6 +35,11 @@ func _ready() -> void:
 	add_child(_box)
 
 
+## Moves the subtitle box up by `px` (more when a scene's bottom bar grows).
+func shift_up(px: float) -> void:
+	_box.position.y -= px
+
+
 func play_scene(scene: Dictionary) -> void:
 	_queue.append(scene)
 	if _lines.is_empty():
@@ -69,7 +74,9 @@ func _show_line() -> void:
 	_speaker.text = name
 	_speaker.visible = not name.is_empty()
 	_text.text = str(line.get("text", ""))
-	_text.add_theme_font_size_override("font_size", int(SettingsService.get_value("subtitle_size", 22)))
+	var size := int(SettingsService.get_value("subtitle_size", 22))
+	_text.add_theme_font_size_override("font_size", size)
+	_speaker.add_theme_font_size_override("font_size", maxi(14, size - 6))  # the speaker scales with the subtitle
 	_box.visible = bool(SettingsService.get_value("subtitles", true)) or sp != "NARRATOR"
 	_timer = clampf(2.0 + _text.text.length() * 0.055, 3.0, 9.0)
 	# Line id = "<scene id>_<two-digit index>", matching docs/VO_SCRIPT.csv.
@@ -99,6 +106,6 @@ func is_playing() -> bool:
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	if is_playing() and event is InputEventKey and (event as InputEventKey).pressed and (event as InputEventKey).keycode == KEY_ENTER:
+	if is_playing() and event.is_action_pressed("skip_line"):
 		skip_line()
 		get_viewport().set_input_as_handled()

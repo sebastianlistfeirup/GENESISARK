@@ -430,3 +430,65 @@ func _run() -> void:
 	var end := await load_scene("res://scenes/story/ending.tscn")
 	check("ending_loads", is_instance_valid(end))
 	await unload(end)
+
+	await _check_a11y_fit()
+
+
+## GA-29: at UI scale 1.5 the logical screen is 1280x720 (the bible's smallest
+## tested size, at the largest scale). The colony HUD and its overlays must fit
+## inside it, the top bar must not cover the objective panel, and an alarm must
+## show a visual signal. Scale is set in memory only, never saved.
+func _check_a11y_fit() -> void:
+	var root := get_tree().root
+	var old_scale := root.content_scale_factor
+	var old_size := root.content_scale_size
+	var old_aspect := root.content_scale_aspect
+	# KEEP pins the logical screen to 1920x1080 / 1.5 = 1280x720 whatever the headless window is.
+	root.content_scale_size = Vector2i(1920, 1080)
+	root.content_scale_aspect = Window.CONTENT_SCALE_ASPECT_KEEP
+	root.content_scale_factor = 1.5
+	DebugFixtures.prepare("grown:pelagos")
+	var col: Node = await load_scene("res://scenes/colony/colony.tscn")
+	await frames(10)
+	var vis := get_viewport().get_visible_rect()
+	var hud: GameHud = col.get("hud")
+	var outside: Array = []
+	for c: Control in _visible_controls(hud.root):
+		var r := c.get_global_rect()
+		if r.size.x > 1.0 and r.size.y > 1.0 and not vis.grow(1.0).encloses(r):
+			outside.append("%s %s" % [c.get_class() if c.name.begins_with("@") else str(c.name), r])
+	check("a11y_hud_fits_1280x720_scale_1_5", outside.is_empty() and vis.size.is_equal_approx(Vector2(1280, 720)), "vis=%s %s" % [vis.size, outside.slice(0, 5)])
+	# The build bar wraps to at most two rows instead of running off the screen.
+	check("a11y_build_bar_wraps", hud.bottom.size.y <= 130.0, "bottom=%s" % hud.bottom.get_global_rect())
+	var top: Control = col.get("_top")
+	check("a11y_top_bar_clear_of_objectives", not top.get_global_rect().intersects(hud.objective_rect()), "%s vs %s" % [top.get_global_rect(), hud.objective_rect()])
+	var overlays: Array = [col.get("overview"), col.get("event_dialog"), col.get("decision")]
+	(overlays[0] as ColonyOverview).open()
+	for id: String in GameSession.content.events.keys():
+		(overlays[1] as EventDialog).show_event(GameSession.content.events[id])
+		break
+	(overlays[2] as DecisionDialog).ask("year_20")
+	await frames(4)
+	var clipped: Array = []
+	for o: OverlayPanel in overlays:
+		var r := Rect2(o.transform * o.panel.position, o.panel.size * o.scale)
+		if not vis.grow(1.0).encloses(r):
+			clipped.append("%s %s" % [o.get_class(), r])
+		o.close()
+	check("a11y_overlays_fit_1280x720_scale_1_5", clipped.is_empty(), str(clipped))
+	AudioService.alarm_raised.emit(true)
+	await frames(2)
+	check("a11y_alarm_has_visual_signal", hud.alarm_visible())
+	await unload(col)
+	root.content_scale_factor = old_scale
+	root.content_scale_size = old_size
+	root.content_scale_aspect = old_aspect
+
+
+func _visible_controls(n: Node) -> Array:
+	var out: Array = []
+	for c: Node in n.get_children():
+		if c is Control and (c as Control).is_visible_in_tree():
+			out.append(c)
+			out.append_array(_visible_controls(c))
+	return out

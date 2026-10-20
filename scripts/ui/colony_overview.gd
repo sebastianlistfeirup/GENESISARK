@@ -151,10 +151,10 @@ func _future_tab() -> Control:
 		var fp := UiKit.panel()
 		var fv := UiKit.vbox(4)
 		fv.add_child(UiKit.label(Loc.t("Forecast: year %.1f → year %.1f (%d days)") % [float(f["start_day"]) / 365.0, float(f["end_year"]), int(f["days"])], 18, UiKit.AMBER))
-		fv.add_child(UiKit.label(str(f["stop_text"]) + ("  " + str(f.get("stop_detail", "")) if not str(f.get("stop_detail", "")).is_empty() else ""), 16, UiKit.OK if f["stop_reason"] == EraService.STOP_TARGET else UiKit.WARN, true))
+		fv.add_child(UiKit.label(UiKit.status_icon("ok" if f["stop_reason"] == EraService.STOP_TARGET else "warning") + " " + str(f["stop_text"]) + ("  " + str(f.get("stop_detail", "")) if not str(f.get("stop_detail", "")).is_empty() else ""), 16, UiKit.OK if f["stop_reason"] == EraService.STOP_TARGET else UiKit.WARN, true))
 		fv.add_child(UiKit.label(Loc.t("Population %d → %d · births %d · adults %d · reserve %s days · Ark fuel %s") % [int(f["population_start"]), int(f["population_end"]), int(f["births"]), int(f["adults"]),
 			"∞" if float(f["reserve_days"]) >= 9999 else str(int(float(f["reserve_days"]))), str(f["ark_fuel"])], 16, UiKit.TEXT, true))
-		fv.add_child(UiKit.label(Loc.t("The plan: %d incubations · construction: %s") % [incs, ", ".join(bl) if not bl.is_empty() else "intet"], 15, UiKit.MUTED, true))
+		fv.add_child(UiKit.label(Loc.t("The plan: %d incubations · construction: %s") % [incs, ", ".join(bl) if not bl.is_empty() else Loc.t("none")], 15, UiKit.MUTED, true))
 		fv.add_child(UiKit.button(Loc.t("Approve the plan and leap"), func() -> void:
 			var r := GameSession.cmd_era_leap(_target)
 			_forecast = {}

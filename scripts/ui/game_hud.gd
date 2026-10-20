@@ -17,6 +17,12 @@ var journal: JournalPanel
 var pause_menu: PauseMenu
 var nav: NavComms  # NAV, the navigation computer's channel (top centre; silent in the colony)
 var _prompt_panel: PanelContainer
+var _objective: PanelContainer
+var _alarm: PanelContainer  # visual twin of every alarm sound (bible p.26)
+var _alarm_label: Label
+var _alarm_tween: Tween
+var _top_inset := 0.0
+var _bottom_inset := 0.0
 
 
 func _ready() -> void:
@@ -28,6 +34,7 @@ func _ready() -> void:
 	add_child(root)
 	# Objective (top-left)
 	var op := UiKit.panel()
+	_objective = op
 	op.position = Vector2(24, 20)
 	op.custom_minimum_size = Vector2(420, 0)
 	op.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -81,6 +88,16 @@ func _ready() -> void:
 	toasts.custom_minimum_size = Vector2(420, 0)
 	toasts.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	root.add_child(toasts)
+	_alarm = UiKit.panel()
+	_alarm.set_anchors_and_offsets_preset(Control.PRESET_CENTER_TOP)
+	_alarm.grow_horizontal = Control.GROW_DIRECTION_BOTH
+	_alarm.position.y = 150
+	_alarm.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_alarm_label = UiKit.label("", 22, UiKit.TEXT)
+	_alarm.add_child(_alarm_label)
+	_alarm.visible = false
+	root.add_child(_alarm)
+	AudioService.alarm_raised.connect(show_alarm)
 	story = StoryPlayer.new()
 	add_child(story)
 	journal = JournalPanel.new()
@@ -143,6 +160,55 @@ func toast(text: String, kind: String = "info", seconds: float = 5.0) -> void:
 	t.tween_interval(seconds)
 	t.tween_property(p, "modulate:a", 0.0, 0.6)
 	t.tween_callback(p.queue_free)
+
+
+## Visual signal for an alarm sound: symbol + text + coloured frame. Blinks
+## three times, or stays steady with reduced motion; hides after a few seconds.
+func show_alarm(critical: bool) -> void:
+	var kind := "critical" if critical else "warning"
+	_alarm_label.text = UiKit.status_text(kind, Loc.t("ALARM: critical") if critical else Loc.t("ALARM: warning"))
+	var sb := (UiKit.theme().get_stylebox("panel", "PanelContainer") as StyleBoxFlat).duplicate() as StyleBoxFlat
+	sb.border_color = UiKit.status_color(kind)
+	sb.set_border_width_all(3)
+	_alarm.add_theme_stylebox_override("panel", sb)
+	_alarm_label.add_theme_color_override("font_color", UiKit.status_color(kind))
+	_alarm.visible = true
+	_alarm.modulate.a = 1.0
+	if _alarm_tween:
+		_alarm_tween.kill()
+	_alarm_tween = _alarm.create_tween()
+	if not bool(SettingsService.get_value("reduced_motion", false)):
+		for i: int in 3:
+			_alarm_tween.tween_property(_alarm, "modulate:a", 0.35, 0.25)
+			_alarm_tween.tween_property(_alarm, "modulate:a", 1.0, 0.25)
+	_alarm_tween.tween_interval(3.5)
+	_alarm_tween.tween_callback(func() -> void: _alarm.visible = false)
+
+
+func alarm_visible() -> bool:
+	return _alarm.visible
+
+
+## Scenes with a full-width top bar or a tall bottom bar move the side columns
+## and the subtitle/prompt boxes out of the way, so nothing overlaps at large UI
+## scales (bible p.26: critical text is never clipped).
+func set_insets(top: float, bottom: float) -> void:
+	var dt := top - _top_inset
+	var db := bottom - _bottom_inset
+	if is_zero_approx(dt) and is_zero_approx(db):
+		return
+	_top_inset = top
+	_bottom_inset = bottom
+	_objective.position.y += dt
+	toasts.position.y += dt
+	top_right.position.y += dt
+	_alarm.position.y += dt
+	_prompt_panel.position.y -= db
+	story.shift_up(db)
+
+
+func objective_rect() -> Rect2:
+	return _objective.get_global_rect()
 
 
 func any_modal_open() -> bool:

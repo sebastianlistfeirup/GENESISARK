@@ -27,7 +27,8 @@ var _net: MeshInstance3D
 var _res_box: HBoxContainer
 var _speed_label: Label
 var _info_holder: VBoxContainer
-var _build_bar: HBoxContainer
+var _build_bar: HFlowContainer  # wraps to two rows when the screen is narrow (UI scale)
+var _top: VBoxContainer
 var _ghost_tip: Label
 var _people: Node3D
 var _people_nodes: Array[Node3D] = []
@@ -142,6 +143,7 @@ func _draw_districts() -> void:
 
 func _build_ui() -> void:
 	var top := UiKit.vbox(6)
+	_top = top
 	top.set_anchors_and_offsets_preset(Control.PRESET_CENTER_TOP)
 	top.grow_horizontal = Control.GROW_DIRECTION_BOTH
 	top.position.y = 16
@@ -155,13 +157,16 @@ func _build_ui() -> void:
 	sl.add_child(_speed_label)
 	sp.add_child(sl)
 	for s: Array in [[0, "❚❚"], [1, "▶ 1x"], [3, "▶▶ 3x"]]:
-		sp.add_child(UiKit.button(s[1], func() -> void: GameSession.set_colony_speed(int(s[0])), Loc.t("Pause / 1x / 3x (Space, 1, 3)")))
+		sp.add_child(UiKit.button(s[1], func() -> void: GameSession.set_colony_speed(int(s[0])), Loc.t("Pause / 1x / 3x (%s, %s, %s)") % [SettingsService.primary_key("speed_pause"), SettingsService.primary_key("speed_1"), SettingsService.primary_key("speed_3")]))
 	sp.add_child(UiKit.button(Loc.t("Colony overview"), func() -> void: _open_overview(), Loc.t("Supply, population, generation leap and council")))
-	sp.add_child(UiKit.button(Loc.t("Captain [B]"), _toggle_mode, Loc.t("Walk the colony as the captain")))
+	sp.add_child(UiKit.button(Loc.t("Captain [%s]") % SettingsService.primary_key("colony_mode"), _toggle_mode, Loc.t("Walk the colony as the captain")))
 	top.add_child(sp)
 	_info_holder = UiKit.vbox(6)
 	hud.top_right.add_child(_info_holder)
-	_build_bar = UiKit.hbox(6)
+	_build_bar = HFlowContainer.new()
+	_build_bar.alignment = FlowContainer.ALIGNMENT_CENTER
+	_build_bar.add_theme_constant_override("h_separation", 6)
+	_build_bar.add_theme_constant_override("v_separation", 6)
 	hud.bottom.add_child(_build_bar)
 	for def_id: String in ["solar_array", "geothermal_generator", "battery", "water_plant", "greenhouse", "habitat", "mine", "workshop", "drone_hub", "care_center", "clinic", "school_hall"]:
 		var def := GameSession.content.building(def_id)
@@ -303,6 +308,7 @@ func _sync_people() -> void:
 
 func _process(delta: float) -> void:
 	_t += delta
+	_layout_hud()
 	var gs: GameState = GameSession.state
 	if gs == null or gs.colony == null:
 		return
@@ -358,6 +364,26 @@ func _unhandled_input(event: InputEvent) -> void:
 		else:
 			_pick((event as InputEventMouseButton).position)
 		get_viewport().set_input_as_handled()
+
+
+## Narrow screens (1280x720, UI scale 1.5): the build bar wraps instead of
+## running off both edges, and the objective/info columns and the subtitles
+## make room for the top and bottom bars instead of overlapping them.
+func _layout_hud() -> void:
+	if hud == null or _build_bar == null:
+		return
+	var vis := get_viewport().get_visible_rect().size
+	var natural := 0.0
+	for b: Control in _build_bar.get_children():
+		natural += b.get_combined_minimum_size().x + 6.0
+	var w := minf(natural, vis.x - 48.0)
+	if not is_equal_approx(_build_bar.custom_minimum_size.x, w):
+		_build_bar.custom_minimum_size.x = w
+	var top_rect := _top.get_global_rect()
+	var side_w := maxf(hud.objective_rect().size.x, 380.0) + 24.0 + 12.0
+	var top_inset := top_rect.end.y + 8.0 - 20.0 if top_rect.position.x < side_w else 0.0
+	var bottom_h := hud.bottom.size.y if _build_bar.visible else 0.0
+	hud.set_insets(top_inset, maxf(0.0, bottom_h - 60.0))
 
 
 func _overlay_open() -> bool:
@@ -459,7 +485,7 @@ func _confirm_build() -> void:
 		AudioService.ui("ui_error")
 		return
 	var r := GameSession.cmd_place_building(build_def, ghost_pos, build_rot)
-	if r.ok and not Input.is_key_pressed(KEY_SHIFT):
+	if r.ok and not Input.is_action_pressed("build_repeat"):
 		_cancel_build()
 
 

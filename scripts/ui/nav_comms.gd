@@ -34,9 +34,17 @@ func _ready() -> void:
 	_label.scroll_active = false
 	_label.custom_minimum_size = Vector2(440, 0)
 	_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	_label.add_theme_font_size_override("normal_font_size", 17)
+	_apply_size()
+	SettingsService.changed.connect(_apply_size)
 	add_child(_label)
 	visible = false
+
+
+## NAV is a subtitle channel: it follows the subtitle size setting (default 22 -> 17).
+func _apply_size() -> void:
+	var s := maxi(14, int(SettingsService.get_value("subtitle_size", 22)) - 5)
+	_label.add_theme_font_size_override("normal_font_size", s)
+	_label.add_theme_font_size_override("bold_font_size", s)
 
 
 ## Queue a NAV line. Critical lines go first and cut the current line short.
@@ -80,4 +88,6 @@ func _process(delta: float) -> void:
 			_current = {}
 			return
 	var col: String = {"critical": "#d25b4c", "warning": "#e8a33d"}.get(str(_current.get("severity", "")), "#7fd6d0")
-	_label.text = "[color=%s][b]NAV[/b][/color]  %s" % [col, text.substr(0, int(_shown))]
+	var sev := str(_current.get("severity", ""))
+	var icon := (UiKit.status_icon(sev) + " ") if sev in ["critical", "warning"] else ""
+	_label.text = "[color=%s][b]%sNAV[/b][/color]  %s" % [col, icon, text.substr(0, int(_shown))]

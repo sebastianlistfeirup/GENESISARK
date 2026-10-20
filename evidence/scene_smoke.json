@@ -6,7 +6,7 @@
       "ok": true
     },
     {
-      "detail": "@Button@45:<Button#104152958582>",
+      "detail": "@Button@46:<Button#112659007101>",
       "name": "pad_focuses_menu",
       "ok": true
     },
@@ -96,7 +96,7 @@
       "ok": true
     },
     {
-      "detail": "I_power_coupling:<Area3D#217264952556>",
+      "detail": "I_power_coupling:<Area3D#225921996017>",
       "name": "prompt_targets_coupling",
       "ok": true
     },
@@ -244,10 +244,35 @@
       "detail": "",
       "name": "ending_loads",
       "ok": true
+    },
+    {
+      "detail": "vis=(1280.0, 720.0) []",
+      "name": "a11y_hud_fits_1280x720_scale_1_5",
+      "ok": true
+    },
+    {
+      "detail": "bottom=[P: (24.0, 586.0), S: (1232.0, 114.0)]",
+      "name": "a11y_build_bar_wraps",
+      "ok": true
+    },
+    {
+      "detail": "[P: (194.0, 16.0), S: (892.0, 93.0)] vs [P: (24.0, 117.0), S: (420.0, 123.0)]",
+      "name": "a11y_top_bar_clear_of_objectives",
+      "ok": true
+    },
+    {
+      "detail": "[]",
+      "name": "a11y_overlays_fit_1280x720_scale_1_5",
+      "ok": true
+    },
+    {
+      "detail": "",
+      "name": "a11y_alarm_has_visual_signal",
+      "ok": true
     }
   ],
   "engine_version": "4.5.1-stable (official)",
   "failures": [],
   "status": "PASS",
-  "timestamp": "2026-10-20T11:33:43"
+  "timestamp": "2026-10-20T12:40:56"
 }
