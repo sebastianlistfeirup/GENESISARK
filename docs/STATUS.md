@@ -16,15 +16,15 @@
 
 | Lag | Kommando | Resultat |
 |---|---|---|
-| 1 · Domæne | `godot --headless --path . --script res://tests/run_tests.gd` | **66 tests, 0 fejl** → `evidence/test_report.json` |
-| 2 · Scener (rigtigt input) | `godot --headless --path . res://scenes/tests/scene_smoke.tscn` | **49 checks, 0 fejl** + touch-føling 6/6 → `evidence/scene_smoke.json` |
+| 1 · Domæne | `godot --headless --path . --script res://tests/run_tests.gd` | **67 tests, 0 fejl** → `evidence/test_report.json` |
+| 2 · Scener (rigtigt input) | `godot --headless --path . res://scenes/tests/scene_smoke.tscn` | **54 checks, 0 fejl** + touch-føling 6/6 → `evidence/scene_smoke.json` |
 | Parse-tjek | `godot --headless --path . res://scenes/tests/compile_all.tscn` | 110 scripts, 0 fejl |
 | Balance | `godot --headless --path . --script res://tools/balance/run_balance.gd` | 18 kørsler til år 40 → `evidence/balance/` |
 | Hel kampagne (bot) | `godot --headless --path . --script res://tools/campaign/campaign_bot.gd` | 6 planeter × 4 spillestile → `evidence/campaign_bot.json` (se session 6) |
 | Ydelse | `godot --path . -- --perf [--profile=web]` | web-profil i containeren: 7/7 scener inden for budget (kun antal; frametider kræver rigtig hardware) → `evidence/perf/` |
 | 3 · Optaget gameplay | — | NOT_RUN (kræver menneske) |
 | 4 · Eksport | Windows + Linux eksporteret; Linux-build kørt under Xvfb | Windows-build NOT_RUN |
-| Oversættelse | `python3 tools/loc_extract.py --check` | 1150 nøgler, 0 mangler (en → da) |
+| Oversættelse | `python3 tools/loc_extract.py --check` | 1161 nøgler, 0 mangler (en → da) |
 | Plan | `python3 tools/validate_plan.py` | OK · 10 DONE · 2 VERIFYING · 12 IN_PROGRESS · 12 TODO |
 
 ## Opgaver
@@ -88,6 +88,10 @@
 | Epilog | Nævner nu valgene ved år 20 og 40 og kolonistens tillid. | `data/endings/legacy.json` |
 | Rettelser | To danske ord i engelsk spillertekst; tydeligere vej ud af robotmangel; distrikternes vækst er nu data. | — |
 | Første dag hjemme | Ni trin med kommandoer øverst i `START_HERE.md`. | `START_HERE.md` |
+| R10 løst | Kolonien byggede sig inde på Sere: værksteder følger nu vedligeholdelsesregningen. 24/24 kampagner, 18/18 balancekørsler. | D-032 |
+| Tekst | 63 linjer poleret (NAV-format, ARK's stemme, terminologi); "1 crisis"; børn arbejder ikke i historierne. | `evidence/text_pass/changes.md` |
+| Tilgængelighed | Alt kan ombindes, paneler og HUD passer i 1280×720 ved UI-skala 1,5, symboler ved siden af farver, visuel alarm, undertekststørrelse virker overalt; 5 nye scenetests. Åbent: lille tekst ved skala 1,0 i 1280×720 (standardskala er dit valg), ingen ombinding af controller (D-018), ingen advarsel ved dobbelt-bundne taster. | `evidence/a11y/audit.md` |
+| R9-forslag | Tre lag til valg med konsekvens, med målepunkter til kampagnebotten. | `docs/proposals/R9_valg_med_konsekvens.md` |
 
 ## Balance (fase 3-forløber, `evidence/balance/balance_table.txt`)
 
