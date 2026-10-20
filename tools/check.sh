@@ -29,11 +29,11 @@ F_OUT=$(timeout 120 "$GODOT" --headless --path . res://scenes/tests/touch_feel.t
 F=$?
 echo "$F_OUT" | grep -E "^TOUCH|SCRIPT ERROR"
 if echo "$F_OUT" | grep -q "SCRIPT ERROR"; then F=1; fi
-# One whole campaign (Sere, middle choices) with invariants and save round-trips.
+# One whole campaign (Sere, middle choices, seed 5014 = the R10 land-lock regression) with invariants and save round-trips.
 # Full matrix: godot --headless --path . --script res://tools/campaign/campaign_bot.gd  (~7 min). CHECK_FAST=1 skips.
 B=0
 if [ "${CHECK_FAST:-0}" != "1" ]; then
-	B_OUT=$(timeout 300 "$GODOT" --headless --path . --script res://tools/campaign/campaign_bot.gd -- --planet=sere --policy=middle 2>&1)
+	B_OUT=$(timeout 300 "$GODOT" --headless --path . --script res://tools/campaign/campaign_bot.gd -- --planet=sere --policy=middle --seed=5014 2>&1)
 	B=$?
 	echo "$B_OUT" | grep -E "^CAMPAIGN|^FAIL|SCRIPT ERROR"
 	if echo "$B_OUT" | grep -q "SCRIPT ERROR"; then B=1; fi

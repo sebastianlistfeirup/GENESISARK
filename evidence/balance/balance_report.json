@@ -1,7 +1,7 @@
 {
   "by_planet": {
     "ferrum": {
-      "best_pop": 560,
+      "best_pop": 600,
       "wins": 3
     },
     "nivalis": {
@@ -26,7 +26,7 @@
     }
   },
   "content_version": "0.1.0",
-  "elapsed_ms": 292459,
+  "elapsed_ms": 273279,
   "engine_version": "4.5.1-stable (official)",
   "runs": [
     {
@@ -45,7 +45,7 @@
         "lost": 0,
         "viable": 49340
       },
-      "ms": 13906,
+      "ms": 13093,
       "opening_days": 116,
       "own_kw": 312.0,
       "planet": "viridia",
@@ -79,7 +79,7 @@
         "lost": 0,
         "viable": 49340
       },
-      "ms": 15341,
+      "ms": 13029,
       "opening_days": 126,
       "own_kw": 316.0,
       "planet": "viridia",
@@ -113,7 +113,7 @@
         "lost": 0,
         "viable": 49340
       },
-      "ms": 12764,
+      "ms": 13103,
       "opening_days": 55,
       "own_kw": 312.0,
       "planet": "viridia",
@@ -147,7 +147,7 @@
         "lost": 0,
         "viable": 49340
       },
-      "ms": 13148,
+      "ms": 12974,
       "opening_days": 144,
       "own_kw": 278.4,
       "planet": "pelagos",
@@ -180,7 +180,7 @@
         "lost": 0,
         "viable": 49340
       },
-      "ms": 13092,
+      "ms": 12576,
       "opening_days": 132,
       "own_kw": 270.8,
       "planet": "pelagos",
@@ -213,7 +213,7 @@
         "lost": 0,
         "viable": 49340
       },
-      "ms": 12513,
+      "ms": 11758,
       "opening_days": 57,
       "own_kw": 278.4,
       "planet": "pelagos",
@@ -248,7 +248,7 @@
         "lost": 0,
         "viable": 49440
       },
-      "ms": 22014,
+      "ms": 20053,
       "opening_days": 77,
       "own_kw": 577.2,
       "planet": "ferrum",
@@ -284,7 +284,7 @@
         "lost": 0,
         "viable": 49440
       },
-      "ms": 23747,
+      "ms": 22210,
       "opening_days": 114,
       "own_kw": 567.6,
       "planet": "ferrum",
@@ -304,7 +304,7 @@
     },
     {
       "adults": 360,
-      "births": 560,
+      "births": 600,
       "blockers_end": [
         "Not enough housing for the coming children."
       ],
@@ -315,20 +315,20 @@
       "demand_kw": 557.0,
       "invariants_ok": true,
       "ledger": {
-        "born": 560,
+        "born": 600,
         "incubating": 0,
         "lost": 0,
-        "viable": 49440
+        "viable": 49400
       },
-      "ms": 21838,
+      "ms": 19977,
       "opening_days": 40,
       "own_kw": 577.2,
       "planet": "ferrum",
       "pop_y20": 330,
-      "population": 560,
+      "population": 600,
       "profile": "independent",
       "reserve_days": 365.0,
-      "residents": 561,
+      "residents": 601,
       "slots": 80,
       "stops": [
         "critic",
@@ -345,7 +345,7 @@
       "buildings": 140,
       "council": true,
       "crises": 1,
-      "deficit_days": 1,
+      "deficit_days": 0,
       "demand_kw": 340.0,
       "invariants_ok": true,
       "ledger": {
@@ -354,7 +354,7 @@
         "lost": 0,
         "viable": 49340
       },
-      "ms": 17136,
+      "ms": 15189,
       "opening_days": 76,
       "own_kw": 360.0,
       "planet": "sere",
@@ -388,7 +388,7 @@
         "lost": 0,
         "viable": 49340
       },
-      "ms": 17051,
+      "ms": 16314,
       "opening_days": 92,
       "own_kw": 364.0,
       "planet": "sere",
@@ -410,11 +410,11 @@
       "adults": 360,
       "births": 650,
       "blockers_end": [],
-      "buildings": 139,
+      "buildings": 140,
       "council": true,
       "crises": 1,
-      "deficit_days": 4,
-      "demand_kw": 338.0,
+      "deficit_days": 3,
+      "demand_kw": 340.0,
       "invariants_ok": true,
       "ledger": {
         "born": 650,
@@ -422,7 +422,7 @@
         "lost": 0,
         "viable": 49340
       },
-      "ms": 16259,
+      "ms": 15496,
       "opening_days": 36,
       "own_kw": 360.0,
       "planet": "sere",
@@ -456,7 +456,7 @@
         "lost": 0,
         "viable": 49340
       },
-      "ms": 14721,
+      "ms": 13619,
       "opening_days": 171,
       "own_kw": 398.4,
       "planet": "nivalis",
@@ -490,7 +490,7 @@
         "lost": 0,
         "viable": 49340
       },
-      "ms": 15393,
+      "ms": 14502,
       "opening_days": 157,
       "own_kw": 415.2,
       "planet": "nivalis",
@@ -524,7 +524,7 @@
         "lost": 0,
         "viable": 49340
       },
-      "ms": 16260,
+      "ms": 14604,
       "opening_days": 83,
       "own_kw": 415.2,
       "planet": "nivalis",
@@ -558,7 +558,7 @@
         "lost": 0,
         "viable": 49340
       },
-      "ms": 15531,
+      "ms": 16435,
       "opening_days": 141,
       "own_kw": 378.0,
       "planet": "umbra",
@@ -592,7 +592,7 @@
         "lost": 0,
         "viable": 49340
       },
-      "ms": 15143,
+      "ms": 14394,
       "opening_days": 121,
       "own_kw": 378.0,
       "planet": "umbra",
@@ -626,7 +626,7 @@
         "lost": 0,
         "viable": 49340
       },
-      "ms": 16602,
+      "ms": 13952,
       "opening_days": 55,
       "own_kw": 378.0,
       "planet": "umbra",
@@ -645,5 +645,5 @@
       "year": 40.0
     }
   ],
-  "timestamp": "2026-10-19T20:21:00"
+  "timestamp": "2026-10-20T11:26:10"
 }
