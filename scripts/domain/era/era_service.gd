@@ -12,6 +12,7 @@ const STOP_SHORTAGE := "supply_shortage"
 const STOP_POWER := "critical_power_cut"
 const STOP_INCUBATION := "incubation_stalled"
 const STOP_LIMIT := "day_limit"
+const MAX_WORKSHOPS := 6
 
 const STOP_TEXT := {
 	"target_reached": "The goal has been reached.",
@@ -206,7 +207,12 @@ func _needs(gs: GameState, plan: Dictionary, report: Dictionary) -> Array:
 		out.append("habitat")
 	if float(c.inventory["alloy"]) < 120.0 and c.count_active("mine") < 2 + int(gs.campaign.colony_year() / 6.0):
 		_staffed_need(out, "mine", free_wf)
-	if float(c.inventory["components"]) < 8.0 and c.count_active("workshop") < 1 + int(gs.campaign.colony_year() / 15.0):
+	# Workshops follow the maintenance bill, not the calendar: every active
+	# building needs one service per (threshold / wear) days. Too few workshops
+	# and wear halves output, the planner answers with more panels and pumps,
+	# and the land fills up until greenhouses have no room (R10, D-032).
+	var ws := c.count_active("workshop")
+	if ws < MAX_WORKSHOPS and float(c.inventory["components"]) < 60.0 and component_balance(gs) < 0.1:
 		_staffed_need(out, "workshop", free_wf)
 	if c.battery_kwh <= 0.0 and colony_sim.battery_capacity(gs) < 240.0:
 		out.append("battery")
@@ -219,6 +225,22 @@ func _needs(gs: GameState, plan: Dictionary, report: Dictionary) -> Array:
 	if surplus < 20.0 and out.size() < 2:
 		out.append(gen)
 	return out
+
+
+## Components made per day minus the average maintenance need per day
+## (current season's wear). Negative: the colony is wearing out faster than it repairs.
+func component_balance(gs: GameState) -> float:
+	var c := gs.colony
+	var maint: Dictionary = content.bal("maintenance", {})
+	var wear_day := DictUtil.get_float(maint, "wear_per_day", 0.4) * float(colony_sim.hazard_factors(gs, gs.campaign.colony_day)["wear"])
+	var per_service := DictUtil.get_float(maint, "component_per_service", 1.0)
+	var threshold := maxf(1.0, DictUtil.get_float(maint, "service_threshold", 60.0))
+	var active := 0
+	for b: Dictionary in c.buildings:
+		if b["state"] == ColonyState.B_ACTIVE and b["def_id"] != "ark_core":
+			active += 1
+	var made := float(DictUtil.get_dict(content.building("workshop"), "output").get("components", 1.0)) * c.count_active("workshop")
+	return made - active * wear_day / threshold * per_service
 
 
 ## Robot labor left once every staffed building (active or under construction)

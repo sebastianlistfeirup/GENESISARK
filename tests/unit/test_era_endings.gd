@@ -127,3 +127,21 @@ func _free_labor(sim: Simulation) -> float:
 		if b["state"] == ColonyState.B_ACTIVE or b["state"] == ColonyState.B_CONSTRUCTING:
 			free -= float(content.building(str(b["def_id"])).get("workforce", 0.0))
 	return free
+
+
+func test_workshops_follow_the_maintenance_bill() -> void:
+	# R10: a large colony on a high-wear world must not starve for components.
+	var sim := _settled("sere")
+	var bal_before := sim.era.component_balance(sim.state)
+	# Fixture: a grown colony (~100 finished buildings), as after a 20-year leap.
+	var proto: Dictionary = sim.state.colony.buildings.filter(func(b: Dictionary) -> bool: return b["def_id"] == "solar_array")[0]
+	for i: int in 70:
+		var b: Dictionary = proto.duplicate(true)
+		b["id"] = 1000 + i
+		b["state"] = ColonyState.B_ACTIVE
+		sim.state.colony.buildings.append(b)
+	check(sim.era.component_balance(sim.state) < bal_before, "more buildings, bigger maintenance bill")
+	check(sim.era.component_balance(sim.state) < 0.1, "one workshop cannot service the colony: %.2f/day, %d buildings, %d workshops" % [sim.era.component_balance(sim.state), sim.state.colony.buildings.size(), sim.state.colony.count_active("workshop")])
+	sim.state.colony.inventory["components"] = 20.0
+	var needs: Array = sim.era._needs(sim.state, EraService.default_plan(20), sim.state.colony.last_report)
+	check("workshop" in needs or "drone_hub" in needs, "planner asks for a workshop (or the labor to staff one): " + str(needs))

@@ -248,7 +248,7 @@ func hazard_factors(gs: GameState, day: int) -> Dictionary:
 					var shelter := DictUtil.get_float(site_facts, "shelter", 0.5)
 					f["solar"] *= 1.0 - DictUtil.get_float(col, "solar_penalty", 0.6) * (1.0 - shelter * 0.5)
 					f["wear"] *= DictUtil.get_float(col, "wear_multiplier", 1.5)
-					f[Loc.t("storm")] = true
+					f["storm"] = true
 			"dust":
 				f["wear"] *= DictUtil.get_float(col, "wear_multiplier", 2.0) * (0.6 + DictUtil.get_float(site_facts, "exposure", 0.5) * 0.6)
 			"long_night":
@@ -397,7 +397,7 @@ func allocate_power(gs: GameState, hz: Dictionary) -> Dictionary:
 	gs.colony.invalidate()  # Powered flags changed
 	return {"produced_kw": snappedf(produced, 0.01), "demand_kw": snappedf(demand, 0.01), "used_kw": snappedf(used, 0.01),
 		"surplus_kw": snappedf(produced - demand, 0.01), "battery_kwh": snappedf(gs.colony.battery_kwh, 0.01),
-		"battery_capacity": cap, "shed": shed, "ark_kw": float(ctx["ark"]), "night": hz["night"], "storm": hz[Loc.t("storm")]}
+		"battery_capacity": cap, "shed": shed, "ark_kw": float(ctx["ark"]), "night": hz["night"], "storm": hz["storm"]}
 
 
 func building_priorities_index(p: String) -> int:

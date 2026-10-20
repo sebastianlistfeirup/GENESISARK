@@ -19,6 +19,7 @@ const BUILD := ["solar_array", "water_plant", "habitat", "greenhouse", "solar_ar
 	"workshop", "care_center", "clinic", "school_hall"]
 
 var content: ContentDB
+var trace := false  # --trace: per-leap colony snapshot in the report (diagnosis)
 var failures: Array = []
 var _run_id := ""
 
@@ -34,6 +35,8 @@ func _init() -> void:
 			only_planet = a.substr(9)
 		elif a.begins_with("--policy="):
 			only_policy = a.substr(9)
+		elif a == "--trace":
+			trace = true
 		elif a == "--quick":
 			quick = true
 		elif a.begins_with("--seed="):
@@ -194,6 +197,7 @@ func _play(pid: String, policy: String, seed_value: int, label: String = "") -> 
 	trips += int(_roundtrip(sim, "save:colony"))
 	# Act III: generations. A neglectful player who keeps hitting shortages gives up and hands over early.
 	var shortage_run := 0
+	var snaps: Array = []
 	for i: int in 80:
 		if gs.campaign.colony_year() >= 40.0 or (neglect and shortage_run >= 3):
 			break
@@ -209,6 +213,21 @@ func _play(pid: String, policy: String, seed_value: int, label: String = "") -> 
 		if why != EraService.STOP_TARGET:
 			stops[why] = int(stops.get(why, 0)) + 1
 		shortage_run = shortage_run + 1 if why == EraService.STOP_SHORTAGE else 0
+		if trace:
+			var built := {}
+			for a: Dictionary in r.data.get("actions", []):
+				if a.get("action") == "build":
+					built[a["def_id"]] = int(built.get(a["def_id"], 0)) + 1
+			snaps.append("   built in leap: %s" % JSON.stringify(built))
+			var pw: Dictionary = gs.colony.last_report.get("power", {})
+			snaps.append("   power: produced %.0f demand %.0f surplus %.0f shed %d battery %.0f/%.0f" % [float(pw.get("produced_kw", 0)), float(pw.get("demand_kw", 0)),
+				float(pw.get("surplus_kw", 0)), (pw.get("shed", []) as Array).size(), gs.colony.battery_kwh, float(pw.get("battery_capacity", 0))])
+			snaps.append("   produced: %s" % JSON.stringify(gs.colony.last_report.get("produced", {})))
+			var inv: Dictionary = gs.colony.inventory
+			var bc := _building_counts(gs)
+			snaps.append("y%.1f %s comp=%d alloy=%d food=%d water=%d gh=%d wp=%d sol=%d hub=%d ws=%d mine=%d free_wf=%.1f pop=%d" % [gs.campaign.colony_year(), why.left(8),
+				int(inv["components"]), int(inv["alloy"]), int(inv["food"]), int(inv["water"]), int(bc.get("greenhouse", 0)), int(bc.get("water_plant", 0)),
+				int(bc.get("solar_array", 0)), int(bc.get("drone_hub", 0)), int(bc.get("workshop", 0)), int(bc.get("mine", 0)), sim.era.free_workforce(gs), gs.population.alive_count()])
 		match "" if neglect else str(r.data["stop_reason"]):
 			EraService.STOP_SHORTAGE, EraService.STOP_INCUBATION:
 				# A player reads the blocker: empty stores mean more water and food.
@@ -252,7 +271,7 @@ func _play(pid: String, policy: String, seed_value: int, label: String = "") -> 
 		"decisions": gs.society.decisions.map(func(d: Dictionary) -> String: return "%s:%s" % [d["id"], d["choice"]]),
 		"council": gs.society.council_formed, "ledger": gs.ark.ledger(),
 		"incubation_blockers_end": sim.population.incubation_blockers(gs, 10), "free_workforce_end": sim.era.free_workforce(gs),
-		"buildings_end": _building_counts(gs), "greenhouse_room_end": _room(sim, "greenhouse"), "checksum": sim.checksum(),
+		"buildings_end": _building_counts(gs), "trace": snaps, "greenhouse_room_end": _room(sim, "greenhouse"), "checksum": sim.checksum(),
 		"failures": failures.filter(func(f: Dictionary) -> bool: return f["run"] == _run_id).size()}
 
 
