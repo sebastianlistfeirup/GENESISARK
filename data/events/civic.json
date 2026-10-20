@@ -325,7 +325,7 @@
       },
       "warning_days": 0,
       "warning": "",
-      "text": "The oldest children are thirteen. The workshop is short of hands, and several of them would rather repair drones than sit in school. The teaching program thinks they are too young to choose.",
+      "text": "The oldest children are thirteen. Several of them spend every free hour in the workshop and would rather learn drones than sit in school. The teaching program thinks they are too young to choose.",
       "options": [
         {
           "id": "a",
@@ -357,7 +357,7 @@
         {
           "id": "b",
           "label": "Workshop apprenticeships",
-          "description": "Half school, half workshop. Construction goes faster, but some learning is lost.",
+          "description": "Half school, half apprenticeship. They learn the machines early, but some book learning is lost.",
           "cost": {
             "alloy": 0,
             "components": 0,
@@ -379,7 +379,7 @@
             "power_kw_days": 0,
             "solar_penalty_days": 0
           },
-          "result": "The workshop rang with young voices. The drones were repaired faster than ever."
+          "result": "The workshop rang with young voices. By sixteen, they knew every drone by its rattle."
         },
         {
           "id": "c",
@@ -427,7 +427,7 @@
       },
       "warning_days": 0,
       "warning": "",
-      "text": "A tunnel in the mine has collapsed. Ravi, fifteen, was inside with a drone. The drones got him out. He's alive, but his leg is crushed, and the whole colony watched him being carried up.",
+      "text": "A tunnel in the mine has collapsed. Ravi, fifteen, had slipped past the barrier to watch the drones work. They got him out. He's alive, but his leg is crushed, and the whole colony watched him being carried up.",
       "options": [
         {
           "id": "a",
@@ -529,7 +529,7 @@
       },
       "warning_days": 0,
       "warning": "",
-      "text": "The council is made up of the eldest. Now a group of sixteen-year-olds stands in the doorway of the school hall. “We work. We live with your decisions. We want to vote.”",
+      "text": "The council is made up of the eldest. Now a group of sixteen-year-olds stands in the doorway of the school hall. “In two years we carry the work. We already live with your decisions. We want to vote.”",
       "options": [
         {
           "id": "a",
