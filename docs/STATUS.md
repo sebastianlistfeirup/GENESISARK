@@ -99,7 +99,7 @@ Alle 18 kørsler (6 verdener × 3 strategier) når år 40 med *selvstændig* pro
 2. **Windows-build ikke kørt** (ingen Windows-maskine). Linux-build fra samme commit kører.
 3. **Generationsprognose** regnes dag for dag (~0,7-1 ms/dag): kører i baggrundstråd; godkendelse genbruger prognosen. Et 20-års spring tager få sekunder.
 4. **Ingen eksterne testere** i ferien; agentens gennemgang er ikke spillerbevis (bibel s. 15).
-5. **P1: kolonien kan bygge sig inde** (R10): én af 24 bot-kørsler (Sere, seed 5014) sidder fast i år 28, fordi tidsspringet har fyldt al jord med solpaneler og vandanlæg. Reproduktion og tre afprøvede hypoteser: `evidence/GA-28/land_lock.md`.
+5. ~~P1: kolonien kan bygge sig inde~~ (R10) løst i D-032; regressionsseedet kører i `check.sh`.
 6. **Valg ændrer ikke udfaldet** (R9): designbeslutning til dig.
 
 ## Næste tre opgaver

@@ -487,7 +487,7 @@
       "fallback": "Genbrug korttopologi med nye mål; undgå seks uafhængige store baner. Aflevering: commit + faktiske testresultater + relevant billede/video + opdateret STATUS. Porten til næste fase skal være bestået.",
       "evidence": "evidence/GA-22/result.json",
       "last_commit": "f614ade",
-      "notes": "Seks håndskrevne scoutingproblemer i data/surveys med to ruter, risikoprøve og evakuering."
+      "notes": "Seks håndskrevne scoutingproblemer i data/surveys med to ruter, risikoprøve og evakuering. Session 6: tekstgennemgang (63 linjer, evidence/text_pass/changes.md); børn arbejder ikke i historierne."
     },
     {
       "id": "GA-23",
@@ -672,7 +672,7 @@
       "fallback": "Fjern ufærdige valgfri features i et dokumenteret cut; behold kampagnens hovedløfte. Aflevering: commit + faktiske testresultater + relevant billede/video + opdateret STATUS. Porten til næste fase skal være bestået.",
       "evidence": "evidence/GA-30/result.json",
       "last_commit": "",
-      "notes": "Grundlag (session 6): tools/campaign/campaign_bot.gd spiller hele kampagnen på alle planeter med invarianter og save-roundtrips (D-031). Kendt P1: R10 (land-lock på Sere seed 5014)."
+      "notes": "Grundlag (session 6): tools/campaign/campaign_bot.gd spiller hele kampagnen på alle planeter med invarianter og save-roundtrips (D-031). R10 (land-lock på Sere) løst i D-032; seed 5014 i check.sh."
     },
     {
       "id": "GA-31",

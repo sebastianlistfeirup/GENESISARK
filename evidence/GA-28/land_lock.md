@@ -13,3 +13,9 @@ Found by `tools/campaign/campaign_bot.gd` after merging D-030 (era planner keeps
 | 3 | Districts stop growing too early (cap 2.2 at year 30) | Moved growth to data (`balance.districts`), tried cap 2.6 | Identical: the lock happens before the cap matters. Cap restored to 2.2; the data move is kept (no behavior change). |
 
 **Next hypothesis (not tried):** the planner should weigh output per square meter: prefer geothermal/batteries over more panels, add water plants only when food is not the bottleneck, and leave room for greenhouses. Run the full bot matrix after any change.
+
+## Resolved (D-032)
+
+| # | Hypothesis | Change | Result |
+|---|---|---|---|
+| 4 | Component starvation: wear (x2.4 on Sere) outpaces one workshop; worn buildings give half output, power sheds mine/workshop first, planner answers with more panels and pumps until land is full | `--trace` per leap confirmed components 0 from year ~20, shed 8 buildings, 47 panels at ~50 % output. Planner now sizes workshops to the maintenance bill (`EraService.component_balance`, max 6) | Seed 5014: year 40 / 650 / independent, components ~300. Full matrix 24/24, balance 18/18. Seed 5014 now runs in `tools/check.sh`. |
