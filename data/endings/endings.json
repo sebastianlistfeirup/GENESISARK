@@ -8,7 +8,7 @@
       "epilogue": [
         "{years} years after the landing on {planet}, the council of {settlement} switched off the Ark's emergency power. No lamps went out.",
         "{population} people now live at {site}. They have come through {crises} crises and learned something from every one. The generators are tended by people who were born beside them.",
-        "The first cohort now teaches the fourth. The council has {council} members and meets in the old school hall. It is divided most of the time. As it should be.",
+        "The first cohort now teaches the fourth. The council has {council} members and meets in the old school hall. It disagrees most of the time. As it should be.",
         "The captain was awake for {captain_years} years in all. The Ark still stands at the landing site: museum, spare-parts store, a place for the children to climb.",
         "ARK wrote a last line in the log: “There is still life in the embryo bank. It is no longer for me to decide when they wake.”"
       ]
@@ -21,7 +21,7 @@
       "epilogue": [
         "After {years} years on {planet}, {settlement} is a real community: {population} people, a school, a clinic and a council of {council} members.",
         "But every night the Ark's emergency power still flows into the grid. In {crises} crises it was the Ark that kept the lights on, and everyone knows it.",
-        "The council raises it every year. The young from the latest cohorts want to build more generators at {site}. The elders will risk nothing. Both sides are right.",
+        "The council raises it every year. The young from the latest cohorts want to build more generators at {site}. The elders won't risk anything. Both sides are right.",
         "The captain went into stasis after {captain_years} years on watch. ARK was given one order: “Stay until they no longer need you.” ARK stays."
       ]
     },

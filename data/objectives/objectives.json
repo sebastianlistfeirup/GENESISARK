@@ -83,7 +83,7 @@
       "phase": "VOYAGE",
       "title": "Complete an expedition",
       "description": "Take surface samples and place a relay.",
-      "hint": "Choose a landing site and fly the lander down. Watch the suit's energy.",
+      "hint": "Choose a landing site and take the lander down. Watch the suit's energy.",
       "targets": {
         "ship": "orbit_terminal"
       }
@@ -161,7 +161,7 @@
       "phase": "SETTLED",
       "title": "Build the school",
       "description": "The children must learn more than the robots can teach them.",
-      "hint": "Build a school/town hall in the living zone once the first cohort is born."
+      "hint": "Build the school and town hall in the living zone once the first cohort is born."
     },
     {
       "id": "obj_council",
@@ -169,7 +169,7 @@
       "phase": "SETTLED",
       "title": "Form a council",
       "description": "Let the colony begin to govern itself.",
-      "hint": "The council gathers in the school/town hall once the first are adults."
+      "hint": "The council meets in the school and town hall once the first cohort has grown up."
     },
     {
       "id": "obj_year_20",
@@ -185,7 +185,7 @@
       "phase": "SETTLED",
       "title": "Year 40: 500 people",
       "description": "A self-sufficient community of at least 500 inhabitants and a council.",
-      "hint": "Build reserves, more cohorts and less dependence on the Ark."
+      "hint": "Build up reserves, start more cohorts and reduce dependence on the Ark."
     }
   ],
   "_note_targets": "targets: scene key -> interactable/marker id the waypoint marker points at while this objective is current (WaypointLayer)."

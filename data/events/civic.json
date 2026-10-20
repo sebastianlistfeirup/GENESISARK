@@ -21,7 +21,7 @@
         {
           "id": "a",
           "label": "More drones for care",
-          "description": "Two drones move from construction to the center. The children do better, but construction slows.",
+          "description": "Two drones move from construction to the care center. The children settle, but construction slows.",
           "cost": {
             "alloy": 0,
             "components": 0,
@@ -43,7 +43,7 @@
             "power_kw_days": 0,
             "solar_penalty_days": 0
           },
-          "result": "The center fell quiet. Construction lost a week."
+          "result": "The care center fell quiet. Construction lost a week."
         },
         {
           "id": "b",
@@ -118,12 +118,12 @@
       },
       "warning_days": 1,
       "warning": "Three children in the first cohort are running a temperature.",
-      "text": "A fever moves through the first cohort. ARK doesn't know the virus — it belongs to this planet. The youngest, a girl of seven months, won't eat.",
+      "text": "A fever moves through the first cohort. ARK doesn't recognize the virus — it is native to this planet. The youngest, a girl of seven months, won't eat.",
       "options": [
         {
           "id": "a",
           "label": "Treat at the clinic",
-          "description": "The clinic isolates and treats. Safe, but it costs medical components.",
+          "description": "The clinic isolates and treats the sick. Safe, but it uses components for medical supplies.",
           "cost": {
             "alloy": 0,
             "components": 2,
@@ -458,7 +458,7 @@
         },
         {
           "id": "b",
-          "label": "Drones only underground",
+          "label": "Only drones underground",
           "description": "No people in the mine. The drones take over the work and wear out faster.",
           "cost": {
             "alloy": 0,

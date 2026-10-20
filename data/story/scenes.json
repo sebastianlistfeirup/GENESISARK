@@ -126,7 +126,7 @@
         },
         {
           "speaker": "ARK",
-          "text": "We'll have to work that out. It costs something every time."
+          "text": "We'll have to find out. And every answer costs something."
         }
       ]
     },
@@ -140,7 +140,7 @@
         },
         {
           "speaker": "ARK",
-          "text": "That doesn't make the choice easier. Only more your own."
+          "text": "That doesn't make the choice easier. Only more yours."
         },
         {
           "speaker": "CAPTAIN",
@@ -148,7 +148,7 @@
         },
         {
           "speaker": "ARK",
-          "text": "I have numbers, captain. You have the responsibility. It's not the same."
+          "text": "I have numbers, Captain. You have the responsibility. It's not the same."
         }
       ]
     },
@@ -170,7 +170,7 @@
         },
         {
           "speaker": "ARK",
-          "text": "I can't measure that. But I have noted it."
+          "text": "I can't measure that. But I've noted it."
         }
       ]
     },
@@ -188,7 +188,7 @@
         },
         {
           "speaker": "ARK",
-          "text": "The sample site is marked. There are two ways there. The short one isn't the safe one."
+          "text": "The sample site is marked. There are two routes. The short one isn't the safe one."
         },
         {
           "speaker": "CAPTAIN",
@@ -254,7 +254,7 @@
         },
         {
           "speaker": "ARK",
-          "text": "The Ark becomes the colony's base. The emergency power, the drones, you."
+          "text": "The Ark becomes the colony's base. Its emergency power, its drones. And you."
         },
         {
           "speaker": "CAPTAIN",
@@ -306,7 +306,7 @@
         },
         {
           "speaker": "ARK",
-          "text": "Ten embryos can begin incubation. You are the one who starts it."
+          "text": "Ten embryos are ready for incubation. You should be the one to start it."
         },
         {
           "speaker": "CAPTAIN",
@@ -374,7 +374,7 @@
         },
         {
           "speaker": "ARK",
-          "text": "You've been awake a long time, captain. Stasis gives you more years with them later."
+          "text": "You've been awake a long time, Captain. Stasis gives you more years with them later."
         },
         {
           "speaker": "CAPTAIN",
@@ -382,7 +382,7 @@
         },
         {
           "speaker": "ARK",
-          "text": "I do. And when they have something to show you."
+          "text": "I will. And when they have something to show you."
         }
       ]
     },
@@ -392,7 +392,7 @@
       "lines": [
         {
           "speaker": "NARRATOR",
-          "text": "The alarm goes quiet. For the first time in days, the control room is silent."
+          "text": "The alarm stops. For the first time in days, the control room is silent."
         },
         {
           "speaker": "ARK",
@@ -418,7 +418,7 @@
         },
         {
           "speaker": "ARK",
-          "text": "Welcome back, captain. A lot has happened."
+          "text": "Welcome back, Captain. A lot has happened."
         },
         {
           "speaker": "noor",
@@ -434,7 +434,7 @@
         },
         {
           "speaker": "ARK",
-          "text": "They've been waiting for you. I think they're waiting for an answer."
+          "text": "They've been waiting for you. I think what they want is an answer."
         },
         {
           "speaker": "CAPTAIN",
@@ -486,7 +486,7 @@
         },
         {
           "speaker": "elias",
-          "text": "We've run the numbers. We can manage without — almost."
+          "text": "We've run the numbers. We can manage without it. Almost."
         },
         {
           "speaker": "noor",
@@ -494,7 +494,7 @@
         },
         {
           "speaker": "sana",
-          "text": "It's not your choice anymore, captain. But we'd like you to be here when we make it."
+          "text": "It's not your choice anymore, Captain. But we'd like you to be here when we make it."
         },
         {
           "speaker": "CAPTAIN",

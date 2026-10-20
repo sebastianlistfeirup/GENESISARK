@@ -16,12 +16,12 @@
       },
       "warning_days": 5,
       "warning": "Spore counts in the hollows are rising. In five days the forest will bloom.",
-      "text": "The forest is blooming. A yellow haze drifts over the colony, and the spores settle in air intakes and greenhouses. Without protection we lose the harvest, and the air in the housing grows heavy.",
+      "text": "The forest is blooming. A yellow haze drifts over the colony, and the spores settle in air intakes and greenhouses. Without protection we lose the harvest, and the air in the habitats grows heavy.",
       "options": [
         {
           "id": "a",
-          "label": "Run the filters at full",
-          "description": "The filter module keeps the air clean in housing and greenhouses. Costs new filter bags. The harvest is saved.",
+          "label": "Run the filters at full power",
+          "description": "The filter modules keep the air clean in the habitats and greenhouses. New filter bags cost components. The harvest is saved.",
           "cost": {
             "alloy": 0,
             "components": 2,
@@ -48,7 +48,7 @@
         {
           "id": "b",
           "label": "Seal the greenhouses",
-          "description": "Build extra airlocks and keep the greenhouses separate. The food is saved, but the air in the housing turns bad for a week or so.",
+          "description": "Build extra airlocks and keep the greenhouses separate. The food is saved, but the air in the habitats turns stale for a week or so.",
           "cost": {
             "alloy": 15,
             "components": 0,
@@ -70,7 +70,7 @@
             "power_kw_days": 0,
             "solar_penalty_days": 0
           },
-          "result": "The airlocks kept the spores out of the greenhouses. In the housing, people coughed for a week."
+          "result": "The airlocks kept the spores out of the greenhouses. In the habitats, people coughed for a week."
         },
         {
           "id": "c",
@@ -152,8 +152,8 @@
         },
         {
           "id": "b",
-          "label": "Send out cleaning crews",
-          "description": "Drones and workshop keep the panels clean around the clock. Costs spare parts, but power holds.",
+          "label": "Send out the cleaning drones",
+          "description": "Drones from the workshop keep the panels clean around the clock. Costs components, but the power holds.",
           "cost": {
             "alloy": 0,
             "components": 3,
@@ -180,7 +180,7 @@
         {
           "id": "c",
           "label": "Wait out the storm",
-          "description": "Do nothing and save power. Free now, but the dust wears on everything, and the panels yield less for a long time.",
+          "description": "Do nothing and ride it out. Free now, but the dust wears on everything, and the panels yield less for a long time.",
           "cost": {
             "alloy": 0,
             "components": 0,
@@ -202,7 +202,7 @@
             "power_kw_days": 0,
             "solar_penalty_days": 14
           },
-          "result": "When the storm settled, the dust lay a hand's breadth thick. It took two weeks to get the panels clean."
+          "result": "When the storm passed, the dust lay a hand's breadth thick. It took two weeks to get the panels clean."
         }
       ],
       "fallback": "c",
@@ -227,12 +227,12 @@
       },
       "warning_days": 6,
       "warning": "The temperature is falling faster than forecast. In six days the coldest period of the year arrives.",
-      "text": "The cold comes in waves. The pipes creak, and the water in the lines begins to freeze. Housing uses twice the usual heat, and the night is long.",
+      "text": "The cold comes in waves. The pipes creak, and the water in the lines begins to freeze. The habitats need twice the usual heat, and the nights are long.",
       "options": [
         {
           "id": "a",
           "label": "Pipe in geothermal heat",
-          "description": "Heat from below ground is pumped straight into housing. Stable, but the generator wears.",
+          "description": "Heat from below ground is pumped straight into the habitats. Stable, but hard on the generator.",
           "cost": {
             "alloy": 0,
             "components": 0,
@@ -259,7 +259,7 @@
         {
           "id": "b",
           "label": "Turn up the heating modules",
-          "description": "The heating modules run at full power. Costs power from the reserve and a few spare parts.",
+          "description": "The heating modules run at full power. Costs power from the reserve and a few components.",
           "cost": {
             "alloy": 0,
             "components": 2,

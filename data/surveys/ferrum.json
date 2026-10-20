@@ -2,7 +2,7 @@
   "id": "survey_ferrum",
   "planet_id": "ferrum",
   "title": "Water under stone",
-  "briefing": "The rock glows in the midday sun, and the suit's cooling is already working. Somewhere beneath the ravine lies an aquifer. We need to know how deep it is before we build anything here.",
+  "briefing": "The rock glows in the midday sun, and the suit's cooling is already working hard. Somewhere beneath the ravine lies an aquifer. We need to know how deep it is before we build anything here.",
   "goal": "Drill a sample at the aquifer and place a relay on the ravine's edge.",
   "points": {
     "lander": [
@@ -97,12 +97,12 @@
       ],
       "radius": 11,
       "hazard_id": "heat",
-      "label": "Heat Flat"
+      "label": "Heat flat"
     }
   ],
-  "evacuation": "The suit's cooling is at its limit. ARK: “Find shade, captain, and walk slowly. The lander is waiting for you.”",
+  "evacuation": "The suit's cooling is at its limit. ARK: “Find shade, Captain, and walk slowly. The lander is waiting for you.”",
   "findings": {
-    "main": "Ferrum: The water lies deep. The water plant must be built first and have enough power.",
+    "main": "Ferrum: The water lies deep. Build the water plant first, and give it enough power.",
     "risk": "Ferrum: The ore lies at the surface. Building will be cheap here.",
     "relay": "Ferrum: The relay on the ravine edge looks out over the whole valley."
   }

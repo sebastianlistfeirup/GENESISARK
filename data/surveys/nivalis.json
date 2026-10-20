@@ -101,7 +101,7 @@
       "label": "Cold pocket"
     }
   ],
-  "evacuation": "The suit spends all its power keeping you warm. ARK: “Keep moving, captain. Stay in the sun. The lander's heated cabin is on.”",
+  "evacuation": "The suit spends all its power keeping you warm. ARK: “Keep moving, Captain. Stay in the sun. The lander's cabin heating is on.”",
   "findings": {
     "main": "Nivalis: The steam fissure is stable. Geothermal first, then habitat.",
     "risk": "Nivalis: The minerals are sparse, but they are there.",

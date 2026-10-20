@@ -1,7 +1,7 @@
 {
   "id": "survey_viridia",
   "planet_id": "viridia",
-  "title": "Breath of the Hollow",
+  "title": "Breath of the hollow",
   "briefing": "Dense fungal forest encircles the landing site. In the hollow to the east, the spores hang like fog over the ground. We need to know whether the air can be filtered before anyone has to breathe here.",
   "goal": "Take a tissue sample at the fungal rim and place a relay on the high ridge.",
   "points": {
@@ -102,10 +102,10 @@
       ],
       "radius": 10,
       "hazard_id": "spores",
-      "label": "Spore Haze"
+      "label": "Spore haze"
     }
   ],
-  "evacuation": "The suit's filters are saturated, and energy is falling. ARK: “Turn back now, captain. The lander is lighting its beacon — follow the light home. The samples you have are saved.”",
+  "evacuation": "The suit's filters are clogged, and energy is falling. ARK: “Turn back now, Captain. Follow the lander's beacon home. Your samples are safe.”",
   "findings": {
     "main": "Viridia: The spores can be filtered. Greenhouses must stand apart from the housing.",
     "risk": "Viridia: The air is almost breathable. The spores aren't toxic — there are just far too many of them.",
