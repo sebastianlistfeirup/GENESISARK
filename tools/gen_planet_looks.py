@@ -194,6 +194,67 @@ DESCENT = {
     "sere": {"canopy": "none", "rocks": True},
     "ferrum": {"canopy": "none", "rocks": True},
 }
+# Ground wildlife (GroundWildlife, D-053): animated Poly Perfect creatures
+# (tools/polyperfect/stage.py copies them locally) and two Synty Sci-Fi Worlds
+# aliens as rare giants (clips baked by tools/synty/bake_alien_clips.gd). Each
+# world recolours its species (skin: hue/sat/val shift, two-tone gradient map,
+# glowing texels/bands/emission map) so they read as alien fauna.
+# herds = groups on the expedition map, colony = groups around a colony,
+# herd = [min, max] animals, size = height in metres (horns/antlers included),
+# ring = [min, max] distance from the camp, flee = startle radius (0 = never),
+# habitat = land | shore.
+PP = "res://assets/imported/polyperfect/"
+SYN_CHR = "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Characters/"
+
+
+def wl(name, tex, herds, herd, size, skin, colony=None, walk=1.0, run=6.0, flee=11, habitat="land", ring=(22, 84), spread=7, emit=False, var=0.1, vis=170):
+    d = {"model": PP + "SKM_" + name + ".fbx", "tex": PP + tex + "_COL_2k.png", "herds": herds, "herd": list(herd), "size": size,
+         "var": var, "skin": skin, "walk": walk, "run": run, "flee": flee, "habitat": habitat, "ring": list(ring), "spread": spread, "vis": vis,
+         "colony": herds // 2 if colony is None else colony}
+    if emit:
+        d["emit_tex"] = PP + tex + "_EMIT_2k.png"
+    return d
+
+
+def giant(body, size, ring=(58, 84), colony=1):
+    return {"model": SYN_CHR + "SM_Chr_ScifiWorlds_" + body + ".tscn", "only_mesh": "SM_Chr_ScifiWorlds_" + body,
+            "library": "res://art/animations/beast." + body.lower() + ".res", "herds": 1, "herd": [1, 1], "size": size, "var": 0.05,
+            "walk": 2.2, "run": 2.2, "flee": 0, "habitat": "land", "ring": list(ring), "spread": 14, "vis": 600, "colony": colony}
+
+
+WILDLIFE = {
+    "viridia": [  # grazing herds of teal antlered striders, banded one-horn grazers and a titan
+        wl("Stag_Fantasy_Common", "Stag_Fantasy_Common", 2, (4, 6), 2.3, {"hue": 0.42, "sat": 1.2, "grad": ["#0f3a3c", "#e4dc8a"], "grad_amount": 0.45, "glow": 0.9, "glow_min": 0.8, "glow_color": "#8affc6"}),
+        wl("Horse_Unicorn", "Horse_Unicorn", 1, (3, 5), 2.0, {"hue": 0.62, "sat": 1.3, "grad": ["#3a1a50", "#ffb347"], "grad_amount": 0.7, "bands": 1.0, "band_freq": 2.2, "glow_color": "#5affe0"}),
+        wl("Bull_Fantasy", "Bull_Fantasy", 1, (1, 1), 5.8, {"hue": 0.25, "sat": 0.9, "grad": ["#5a7a40", "#f0e8a0"], "grad_amount": 0.7, "glow": 0.6, "glow_min": 0.8, "glow_color": "#c8ff7a"}, colony=1, walk=2.0, flee=0, ring=(52, 82), spread=10, emit=True, var=0.03, vis=500),
+    ],
+    "pelagos": [  # shore life: blue tide striders on the beaches, sea raptors on the rocks
+        wl("Horse_Thoroughbred", "Horse_Thoroughbred", 2, (3, 5), 1.9, {"hue": 0.52, "sat": 0.9, "grad": ["#4a8aa8", "#effcff"], "grad_amount": 0.7, "glow": 0.5, "glow_min": 0.85, "glow_color": "#7fe8ff", "bands": 0.9, "band_freq": 2.4}, habitat="shore", ring=(16, 86)),
+        wl("Gryphon", "Gryphon", 2, (1, 2), 2.4, {"hue": 0.45, "sat": 1.1, "grad": ["#2a4a5a", "#fff8ea"], "grad_amount": 0.55}, habitat="shore", flee=13, ring=(16, 86)),
+    ],
+    "ferrum": [  # hardy charcoal grazers with ember-banded hides, bone runners, a spiked giant far off
+        wl("Bull_Fantasy", "Bull_Fantasy", 2, (3, 5), 2.1, {"hue": 0.0, "sat": 1.1, "val": 0.85, "grad": ["#2a1a18", "#9a6a52"], "grad_amount": 0.75, "emit": 3.0, "emit_color": "#ffb04a", "bands": 1.6, "band_freq": 1.4, "glow_color": "#ff8a2a"}, emit=True),
+        wl("Horse_Skeleton", "Horse_Skeleton", 1, (2, 4), 1.9, {"hue": 0.05, "sat": 0.6, "grad": ["#3a2418", "#efd2b0"], "grad_amount": 0.5, "emit": 2.0, "emit_color": "#ffd25a"}, emit=True),
+        giant("AlienSpikes_01", 5.2),
+    ],
+    "sere": [  # beaked dune striders and bone-plated dune stags
+        wl("Hippogryph", "Hippogryph", 2, (3, 5), 2.2, {"hue": 0.0, "sat": 0.6, "val": 1.1, "grad": ["#2f6f73", "#f3e6c8"], "grad_amount": 0.75, "bands": 0.7, "band_freq": 1.8, "glow_color": "#ffb060"}),
+        wl("Stag_Fantasy_Undead", "Stag_Fantasy_Undead", 2, (1, 2), 2.3, {"hue": 0.08, "sat": 0.4, "val": 1.1, "grad": ["#6a5a48", "#fffaf0"], "grad_amount": 0.75, "glow": 0.5, "glow_min": 0.86, "glow_color": "#ffcf7a"}),
+    ],
+    "nivalis": [  # frost stags, snow bears, the horned rock giant far off
+        wl("Stag_Fantasy_Frost", "Stag_Fantasy_Frost", 2, (4, 6), 2.4, {"hue": 0.0, "sat": 0.9, "grad": ["#1c2f4a", "#e8f6ff"], "grad_amount": 0.35, "glow": 1.1, "glow_min": 0.82, "glow_color": "#9fe8ff"}),
+        wl("Bear_Fantasy_Snow", "Bear_Fantasy_Snow", 2, (1, 1), 2.2, {"hue": 0.55, "sat": 0.5, "grad": ["#2a3448", "#f2f6ff"], "grad_amount": 0.4, "emit": 1.5, "emit_color": "#9fe8ff"}, colony=1, run=4.0, flee=14, emit=True),
+        giant("AlienRock_01", 6.0),
+    ],
+    "umbra": [  # bioluminescent night creatures: banded glow stags, lantern bears, ghost runners
+        wl("Stag_Fantasy_Undead", "Stag_Fantasy_Undead", 2, (3, 5), 2.3, {"hue": 0.55, "sat": 1.1, "val": 0.6, "grad": ["#0a1020", "#3a4a6a"], "grad_amount": 0.6, "glow": 1.8, "glow_min": 0.6, "glow_color": "#4dffe0", "bands": 2.2, "band_freq": 1.6}),
+        wl("Bear_Fantasy_Forest", "Bear_Fantasy_Forest", 2, (1, 1), 2.2, {"hue": 0.7, "sat": 1.0, "val": 0.55, "grad": ["#120a22", "#4a3a6a"], "grad_amount": 0.6, "bands": 2.6, "band_freq": 1.3, "glow_color": "#c07bff", "emit": 2.0, "emit_color": "#c07bff"}, colony=1, run=3.6, flee=14, emit=True),
+        wl("Horse_Skeleton", "Horse_Skeleton", 1, (3, 4), 1.9, {"hue": 0.5, "sat": 0.8, "val": 0.6, "grad": ["#081420", "#4a7088"], "grad_amount": 0.5, "emit": 3.0, "emit_color": "#4dffe0", "glow": 0.8, "glow_min": 0.7, "glow_color": "#4dffe0"}, emit=True),
+    ],
+}
+for _pid, _w in WILDLIFE.items():
+    PLANETS[_pid]["wildlife"] = _w
+
 for _pid, _d in DESCENT.items():
     PLANETS[_pid]["descent"] = _d
 for _pid, _extra in ALIEN.items():

@@ -469,6 +469,15 @@ func _lay_ground_cover(clear: ColonyClearance) -> void:
 	var gs: GameState = GameSession.state
 	_cover = GroundCover.build(terrain, gs.colony.planet_id, hash(gs.colony.site_id) + 3, avoid, 220.0, gs.colony.biome_id)
 	add_child(_cover)
+	# D-053: a lighter set of the world's wildlife out past the districts' full
+	# grown extent (buildings, roads and tubes come later; animals keep clear).
+	var wild_avoid := avoid.duplicate()
+	wild_avoid.append_array(GroundWildlife.obstacles(_cover))
+	for dk: String in DictUtil.get_dict(site, "districts").keys():
+		var dc: Array = DictUtil.get_arr(site["districts"][dk], "center")
+		wild_avoid.append([Vector2(float(dc[0]), float(dc[1])), DictUtil.get_float(site["districts"][dk], "radius") * 2.0 + 10.0])
+	var wild_spec := GroundCover.spec_for(gs.colony.planet_id, gs.colony.biome_id)
+	add_child(GroundWildlife.build(terrain, DictUtil.get_arr(wild_spec, "wildlife"), hash(gs.colony.site_id) + 13, wild_avoid, 220.0, null, 0.5))
 
 
 ## Ground cover is laid once (stable, deterministic); each new layout hides the
@@ -848,6 +857,21 @@ func debug_action(action: String) -> void:
 		if event_dialog.visible:
 			event_dialog.hide()
 		get_viewport().warp_mouse(Vector2(get_viewport().get_visible_rect().size.x * 0.5, 160))  # no stray tooltip in the shot
+		return
+	if action.begins_with("wildlife"):  # evidence: "wildlife[:<n>[:<zoom>]]" the colony camera on the n-th animal (D-053)
+		var parts := action.split(":")
+		var wild := get_node_or_null("GroundWildlife") as GroundWildlife
+		if wild and wild.count() > 0:
+			var at := wild.animal_position(int(parts[1]) if parts.size() > 1 else 0)
+			cam_rig.position = at
+			cam_rig.target_yaw = atan2(at.x, at.z)  # look out from the colony
+			cam_rig.rotation.y = cam_rig.target_yaw
+		cam_rig.zoom = float(parts[2]) if parts.size() > 2 else 22.0
+		if decision.visible:
+			decision.hide()
+		if event_dialog.visible:
+			event_dialog.hide()
+		get_viewport().warp_mouse(Vector2(get_viewport().get_visible_rect().size.x * 0.5, 160))
 		return
 	if action.begins_with("market"):  # evidence: "market[:<n>[:<zoom>[:<yaw deg>]]]" close-up on the n-th market crowd spot
 		var parts := action.split(":")

@@ -372,6 +372,19 @@ func _run() -> void:
 	await frames(30)
 	check("surface_captain_on_terrain", cap2.global_position.y > -5.0 and cap2.global_position.y < 40.0, str(cap2.global_position))
 	check("surface_dressing_keeps_paths_clear", _dressing_blockers(surf).is_empty(), str(_dressing_blockers(surf)))
+	# D-053: ground wildlife never collides and keeps off the camp and the sites;
+	# a startled animal bolts away from the captain (no animals without the local packs).
+	var wild := surf.get_node_or_null("GroundWildlife") as GroundWildlife
+	check("surface_wildlife_clear_and_ghostly", wild != null and _wildlife_problems(surf, wild).is_empty(), str(_wildlife_problems(surf, wild)) if wild else "no GroundWildlife")
+	if wild and wild.count() > 0 and not FxEffect.reduced_motion():
+		var home := cap2.global_position
+		var at := wild.animal_position(0)
+		var near := at + (Vector3(-at.x, 0.0, -at.z).normalized() * 3.0)
+		cap2.teleport(Vector3(near.x, at.y + 0.3, near.z), 0.0)
+		await frames(120)
+		var fled := wild.animal_position(0).distance_to(near) - at.distance_to(near)
+		check("surface_wildlife_flees_captain", fled > 1.0, "moved %.1f m further away" % fled)
+		cap2.teleport(home, 0.0)
 	var e0 := GameSession.state.expedition.suit_energy
 	await frames(60)
 	check("ga06_suit_drains_in_scene", GameSession.state.expedition.suit_energy < e0)
@@ -531,6 +544,24 @@ func _visible_controls(n: Node) -> Array:
 
 ## D-038: colliding set dressing (PoiDressing) must leave every interactable and
 ## route polyline walkable. Returns the offenders (empty = clear).
+func _wildlife_problems(surf: Node, wild: GroundWildlife) -> Array:
+	var out: Array = []
+	for co: Node in wild.find_children("*", "CollisionObject3D", true, false):
+		if (co as CollisionObject3D).collision_layer != 0:
+			out.append("collides: " + str(co.name))
+	var markers: Dictionary = surf.get("_markers")
+	for i: int in wild.count():
+		var p := wild.animal_position(i)
+		var p2 := Vector2(p.x, p.z)
+		if p2.length() < 20.0:
+			out.append("animal %d in the camp at %s" % [i, p2])
+		for key: String in markers.keys():
+			var m: Node3D = markers[key]
+			if p2.distance_to(Vector2(m.global_position.x, m.global_position.z)) < 5.0:
+				out.append("animal %d on %s" % [i, key])
+	return out
+
+
 func _dressing_blockers(surf: Node) -> Array:
 	var out: Array = []
 	var root := surf.get_node_or_null("PoiDressing")
