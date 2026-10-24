@@ -17,6 +17,8 @@ var inventory: Dictionary = {"alloy": 0.0, "components": 0.0, "water": 0.0, "foo
 var battery_kwh: float = 0.0
 var ark_fuel: float = 0.0
 var salvage_left: float = 0.0
+## ~1-year moving share of days on which the Ark's emergency power was drawn (R9, D-034).
+var ark_draw_share: float = 0.0
 var speed: int = 0                    # 0 pause, 1, 3
 var last_report: Dictionary = {}      # Derived per tick, also saved for UI continuity
 var stats: Dictionary = {"days_stable": 0, "deficit_days": 0, "crises_resolved": 0}
@@ -52,7 +54,7 @@ func to_dict() -> Dictionary:
 		"planet_id": planet_id, "biome_id": biome_id, "site_id": site_id,
 		"buildings": buildings.duplicate(true), "next_building_id": next_building_id,
 		"inventory": inventory.duplicate(), "battery_kwh": battery_kwh, "ark_fuel": ark_fuel,
-		"salvage_left": salvage_left, "speed": speed, "last_report": last_report.duplicate(true),
+		"salvage_left": salvage_left, "ark_draw_share": ark_draw_share, "speed": speed, "last_report": last_report.duplicate(true),
 		"stats": stats.duplicate(),
 	}
 
@@ -72,6 +74,7 @@ static func from_dict(d: Dictionary) -> ColonyState:
 	s.battery_kwh = DictUtil.get_float(d, "battery_kwh")
 	s.ark_fuel = DictUtil.get_float(d, "ark_fuel")
 	s.salvage_left = DictUtil.get_float(d, "salvage_left")
+	s.ark_draw_share = DictUtil.get_float(d, "ark_draw_share")
 	s.speed = DictUtil.get_int(d, "speed")
 	s.last_report = DictUtil.get_dict(d, "last_report").duplicate(true)
 	var st: Dictionary = DictUtil.get_dict(d, "stats")

@@ -44,7 +44,9 @@ static func _rect_circle_overlap(r: Rect2, c: Vector2, radius: float) -> bool:
 ## Districts grow as the colony matures (balance.districts: growth_years, max_scale).
 func district_scale(gs: GameState) -> float:
 	var d: Dictionary = content.bal("districts", {})
-	return clampf(1.0 + gs.campaign.colony_year() / DictUtil.get_float(d, "growth_years", 25.0), 1.0, DictUtil.get_float(d, "max_scale", 2.2))
+	# Expansion (R9): districts grow faster and farther.
+	var g := ChoiceRules.mult(content, gs, "district_growth")
+	return clampf(1.0 + gs.campaign.colony_year() / DictUtil.get_float(d, "growth_years", 25.0) * g, 1.0, 1.0 + (DictUtil.get_float(d, "max_scale", 2.2) - 1.0) * g)
 
 
 func modifiers(gs: GameState) -> Dictionary:
@@ -256,7 +258,7 @@ func hazard_factors(gs: GameState, day: int) -> Dictionary:
 				if posmod(day, cycle) >= cycle - DictUtil.get_int(col, "night_days", 40):
 					f["solar"] = 0.0
 					f["night"] = true
-	f["wear"] *= DictUtil.get_float(DictUtil.get_dict(p, "colony_modifiers"), "wear_multiplier", 1.0)
+	f["wear"] *= DictUtil.get_float(DictUtil.get_dict(p, "colony_modifiers"), "wear_multiplier", 1.0) * ChoiceRules.mult(content, gs, "wear")
 	return f
 
 
@@ -392,12 +394,17 @@ func allocate_power(gs: GameState, hz: Dictionary) -> Dictionary:
 		else:
 			b["powered"] = false
 			shed.append(int(b["id"]))
-	var net := produced - used
+	# The Ark core is emergency power (R9, D-034): it covers what the colony's own
+	# generation cannot, before the battery, and never charges the battery.
+	var ark_kw := float(ctx["ark"])
+	var own := produced - ark_kw
+	var ark_drawn := clampf(used - own, 0.0, ark_kw)
+	var net := own + ark_drawn - used
 	gs.colony.battery_kwh = clampf(gs.colony.battery_kwh + net * 24.0, 0.0, cap)
 	gs.colony.invalidate()  # Powered flags changed
 	return {"produced_kw": snappedf(produced, 0.01), "demand_kw": snappedf(demand, 0.01), "used_kw": snappedf(used, 0.01),
 		"surplus_kw": snappedf(produced - demand, 0.01), "battery_kwh": snappedf(gs.colony.battery_kwh, 0.01),
-		"battery_capacity": cap, "shed": shed, "ark_kw": float(ctx["ark"]), "night": hz["night"], "storm": hz["storm"]}
+		"battery_capacity": cap, "shed": shed, "ark_kw": ark_kw, "ark_drawn_kw": snappedf(ark_drawn, 0.01), "night": hz["night"], "storm": hz["storm"]}
 
 
 func building_priorities_index(p: String) -> int:

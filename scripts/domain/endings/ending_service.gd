@@ -32,6 +32,10 @@ func metrics(gs: GameState) -> Dictionary:
 		else:
 			demand_kw -= kw
 	var rd := population.reserve_days(gs)
+	# What the Ark's emergency power carries: the part of demand the colony's own
+	# generation does not cover, up to what the Ark can still deliver (R9, D-034).
+	var ark_kw := colony_sim.ark_power_kw(gs)
+	var gap_kw := maxf(0.0, demand_kw - own_kw)
 	return {
 		"population": gs.population.alive_count(),
 		"adults": gs.population.adult_workforce(),
@@ -41,6 +45,10 @@ func metrics(gs: GameState) -> Dictionary:
 		"own_power_kw": snappedf(own_kw, 0.1),
 		"demand_kw": snappedf(demand_kw, 0.1),
 		"power_independent": own_kw >= demand_kw and demand_kw > 0.0,
+		"ark_kw": snappedf(ark_kw, 0.1),
+		"power_gap_share": snappedf(gap_kw / demand_kw, 0.001) if demand_kw > 0.0 else 0.0,
+		"ark_share": snappedf(minf(ark_kw, gap_kw) / demand_kw, 0.001) if demand_kw > 0.0 else 0.0,
+		"ark_days_share": snappedf(c.ark_draw_share, 0.001),
 		"reserve_days": rd,
 		"crises_resolved": int(c.stats.get("crises_resolved", 0)),
 		"years": snappedf(gs.campaign.colony_year(), 0.1),
@@ -55,9 +63,18 @@ func profile_for(m: Dictionary) -> String:
 	if m.is_empty():
 		return "fragile"
 	var robust := float(m["reserve_days"]) >= reserve_goal
-	if int(m["population"]) >= pop_goal and bool(m["council"]) and bool(m["power_independent"]) and robust:
+	var share := float(content.bal("ark_power.shielded_share", 0.15))
+	# The Ark still shields the colony (R9): its emergency power carries more than
+	# `share` of demand now, or was needed on more than `share` of the last year's days.
+	var ark_carries := float(m.get("ark_share", 0.0)) > share or float(m.get("ark_days_share", 0.0)) > share
+	if int(m["population"]) >= pop_goal and bool(m["council"]) and bool(m["power_independent"]) and robust and not ark_carries:
 		return "independent"
-	if int(m["population"]) >= pop_goal / 2 and bool(m["council"]) and (robust or bool(m["power_independent"])):
+	# Shielded (sharpened, R9): the colony lives, but either the Ark still carries
+	# it, or it is nearly self-sufficient with robust stores. A large own-power gap
+	# that nothing carries is fragile. Trust never enters here; only its systemic
+	# effects (work, reserves, crisis costs) do.
+	var near_self := float(m.get("power_gap_share", 0.0)) <= share and (robust or bool(m["power_independent"]))
+	if int(m["population"]) >= pop_goal / 2 and bool(m["council"]) and (ark_carries or near_self):
 		return "shielded"
 	return "fragile"
 
