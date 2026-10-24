@@ -11,12 +11,12 @@
         "SpotLight3D": 0
       },
       "draw_calls_max": 45,
-      "frame_p50": 8.41,
-      "frame_p95": 16.44,
-      "frame_p99": 17.5,
+      "frame_p50": 8.31,
+      "frame_p95": 9.25,
+      "frame_p99": 17.63,
       "frames": 360,
       "id": "ship",
-      "load_ms": 972,
+      "load_ms": 1047,
       "nodes_max": 3919,
       "objects_max": 323,
       "over_budget": [],
@@ -24,7 +24,7 @@
       "quality": "high",
       "scene": "ship",
       "setup": "power",
-      "static_mem_peak_mb": 116.2,
+      "static_mem_peak_mb": 116.3,
       "video_mem_mb": 911.1
     },
     {
@@ -38,12 +38,12 @@
         "SpotLight3D": 0
       },
       "draw_calls_max": 263,
-      "frame_p50": 8.62,
-      "frame_p95": 12.38,
-      "frame_p99": 18.03,
+      "frame_p50": 8.59,
+      "frame_p95": 9.68,
+      "frame_p99": 9.91,
       "frames": 360,
       "id": "flight_belt",
-      "load_ms": 533,
+      "load_ms": 556,
       "nodes_max": 1180,
       "objects_max": 746,
       "over_budget": [],
@@ -51,7 +51,7 @@
       "quality": "high",
       "scene": "flight",
       "setup": "approach:umbra",
-      "static_mem_peak_mb": 111.4,
+      "static_mem_peak_mb": 111.5,
       "video_mem_mb": 919.3
     },
     {
@@ -65,12 +65,12 @@
         "SpotLight3D": 0
       },
       "draw_calls_max": 376,
-      "frame_p50": 8.26,
+      "frame_p50": 8.32,
       "frame_p95": 9.43,
-      "frame_p99": 16.81,
+      "frame_p99": 15.2,
       "frames": 360,
       "id": "surface_viridia",
-      "load_ms": 1597,
+      "load_ms": 1598,
       "nodes_max": 674,
       "objects_max": 862,
       "over_budget": [],
@@ -78,7 +78,7 @@
       "quality": "high",
       "scene": "surface",
       "setup": "expedition:viridia",
-      "static_mem_peak_mb": 129.1,
+      "static_mem_peak_mb": 129.2,
       "video_mem_mb": 1327.9
     },
     {
@@ -91,23 +91,23 @@
         "OmniLight3D": 5,
         "SpotLight3D": 0
       },
-      "draw_calls_max": 291,
-      "frame_p50": 8.78,
-      "frame_p95": 16.66,
-      "frame_p99": 18.47,
+      "draw_calls_max": 268,
+      "frame_p50": 8.32,
+      "frame_p95": 9.62,
+      "frame_p99": 17.5,
       "frames": 360,
       "id": "surface_hazard",
-      "load_ms": 5,
+      "load_ms": 4,
       "nodes_max": 543,
       "objects_max": 833,
       "over_budget": [
-        "primitives 3063655 > 3000000"
+        "primitives 3044551 > 3000000"
       ],
-      "primitives_max": 3063655,
+      "primitives_max": 3044551,
       "quality": "high",
       "scene": "surface",
       "setup": "expedition:ferrum",
-      "static_mem_peak_mb": 129.7,
+      "static_mem_peak_mb": 129.9,
       "video_mem_mb": 1508.9
     },
     {
@@ -120,21 +120,21 @@
         "OmniLight3D": 13,
         "SpotLight3D": 0
       },
-      "draw_calls_max": 1163,
-      "frame_p50": 8.32,
-      "frame_p95": 9.65,
-      "frame_p99": 10.63,
+      "draw_calls_max": 1128,
+      "frame_p50": 7.98,
+      "frame_p95": 11.44,
+      "frame_p99": 18.5,
       "frames": 360,
       "id": "colony_grown",
-      "load_ms": 2387,
+      "load_ms": 2379,
       "nodes_max": 1744,
-      "objects_max": 2235,
+      "objects_max": 1854,
       "over_budget": [],
-      "primitives_max": 2379399,
+      "primitives_max": 2179673,
       "quality": "high",
       "scene": "colony",
       "setup": "grown:pelagos",
-      "static_mem_peak_mb": 151.3,
+      "static_mem_peak_mb": 151.4,
       "video_mem_mb": 1793.9
     },
     {
@@ -147,22 +147,22 @@
         "OmniLight3D": 15,
         "SpotLight3D": 0
       },
-      "draw_calls_max": 1051,
-      "frame_p50": 8.69,
-      "frame_p95": 16.39,
-      "frame_p99": 18.72,
+      "draw_calls_max": 1012,
+      "frame_p50": 8.3,
+      "frame_p95": 9.54,
+      "frame_p99": 17.4,
       "frames": 360,
       "id": "colony_overview",
-      "load_ms": 25,
+      "load_ms": 22,
       "nodes_max": 1640,
-      "objects_max": 2147,
+      "objects_max": 1817,
       "over_budget": [],
-      "primitives_max": 2117290,
+      "primitives_max": 1955094,
       "quality": "high",
       "scene": "colony",
       "setup": "grown:umbra",
-      "static_mem_peak_mb": 159.2,
-      "video_mem_mb": 1916.4
+      "static_mem_peak_mb": 159.4,
+      "video_mem_mb": 1924.4
     },
     {
       "census": {
@@ -174,25 +174,24 @@
         "OmniLight3D": 37,
         "SpotLight3D": 0
       },
-      "draw_calls_max": 2170,
-      "frame_p50": 8.71,
-      "frame_p95": 16.94,
-      "frame_p99": 20.01,
+      "draw_calls_max": 1960,
+      "frame_p50": 8.35,
+      "frame_p95": 9.66,
+      "frame_p99": 16.26,
       "frames": 360,
       "id": "colony_era20",
-      "load_ms": 2958,
+      "load_ms": 2894,
       "nodes_max": 9982,
-      "objects_max": 8514,
+      "objects_max": 6682,
       "over_budget": [
-        "primitives 8859273 > 3000000",
-        "p95 16.9 ms > 16.7"
+        "primitives 7657611 > 3000000"
       ],
-      "primitives_max": 8859273,
+      "primitives_max": 7657611,
       "quality": "high",
       "scene": "colony",
       "setup": "era:sere:20",
-      "static_mem_peak_mb": 221.5,
-      "video_mem_mb": 2025.8
+      "static_mem_peak_mb": 221.6,
+      "video_mem_mb": 2029.8
     }
   ],
   "cpu": "AMD Ryzen 9 9950X3D 16-Core Processor",
@@ -207,11 +206,11 @@
   },
   "os": "Windows",
   "over_budget": [
-    "surface_hazard: primitives 3063655 > 3000000",
-    "colony_era20: primitives 8859273 > 3000000, p95 16.9 ms > 16.7"
+    "surface_hazard: primitives 3044551 > 3000000",
+    "colony_era20: primitives 7657611 > 3000000"
   ],
   "profile": "desktop",
   "renderer": "forward_plus",
   "resolution": "(1920.0, 1080.0)",
-  "timestamp": "2026-10-24T12:15:50"
+  "timestamp": "2026-10-24T12:16:53"
 }

@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" path="res://assets/Synty/SciFiSpace/FBX/SM_Bld_Ceiling_01.fbx" id="1_r7p1w"]
 
-[node name="ship_ceiling" type="Node3D" unique_id=798912736]
+[node name="ship_ceiling" type="Node3D" unique_id=840974247]
 metadata/synty_source = "res://assets/Synty/SciFiSpace/FBX/SM_Bld_Ceiling_01.fbx"
 metadata/synty_fit = "module"
 

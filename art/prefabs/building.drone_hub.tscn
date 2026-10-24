@@ -6,159 +6,231 @@
 [ext_resource type="PackedScene" path="res://assets/Synty/PolygonSciFiWorlds/Prefabs/Buildings/SM_Bld_Platform_Base_Large_01.tscn" id="4_dcfrl"]
 [ext_resource type="ArrayMesh" path="res://assets/Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Platform_Base_Large_01.res" id="5_58m84"]
 
-[node name="building_drone_hub" type="Node3D" unique_id=775947018]
+[node name="building_drone_hub" type="Node3D" unique_id=1750012428]
 metadata/synty_source = "res://art/kits/Corporation_01_01_Corp_LandingPad_02.tscn"
 metadata/synty_fit = "footprint"
 
-[node name="Model" type="Node3D" parent="." unique_id=256737515]
+[node name="Model" type="Node3D" parent="." unique_id=326462452]
 transform = Transform3D(0.2360184, 0, 0, 0, 0.2360184, 0, 0, 0, 0.2360184, -4.7683716e-07, 0.46993297, -0.07678795)
 
-[node name="SM_Bld_Corp_LandingPad_02" type="MeshInstance3D" parent="Model" unique_id=1610865300 instance=ExtResource("1_40ci6")]
+[node name="SM_Bld_Corp_LandingPad_02" type="MeshInstance3D" parent="Model" unique_id=345003422 instance=ExtResource("1_40ci6")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.310646, -3.7358532)
 gi_mode = 2
 mesh = ExtResource("2_mlnuo")
 surface_material_override/0 = ExtResource("3_4agh7")
 
-[node name="SM_Bld_Platform_Base_Large_01" type="MeshInstance3D" parent="Model" unique_id=1693513397 instance=ExtResource("4_dcfrl")]
+[node name="SM_Bld_Platform_Base_Large_01" type="MeshInstance3D" parent="Model" unique_id=1631845690 instance=ExtResource("4_dcfrl")]
 transform = Transform3D(3.4431616e-06, 0, 1.0000005, 0, 1, 0, -1.0000005, 0, 3.4431616e-06, -3.2424927e-05, -0.689354, 7.5141582)
 gi_mode = 2
+visibility_range_end = 160.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
 mesh = ExtResource("5_58m84")
 surface_material_override/0 = ExtResource("3_4agh7")
 
-[node name="_MeshInstance3D_268" type="MeshInstance3D" parent="Model" unique_id=1422635157 instance=ExtResource("4_dcfrl")]
+[node name="_MeshInstance3D_268" type="MeshInstance3D" parent="Model" unique_id=1355978412 instance=ExtResource("4_dcfrl")]
 transform = Transform3D(3.4431616e-06, 0, 1.0000005, 0, 1, 0, -1.0000005, 0, 3.4431616e-06, -5.0000153, -0.689354, 2.514141)
 gi_mode = 2
+visibility_range_end = 160.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
 mesh = ExtResource("5_58m84")
 surface_material_override/0 = ExtResource("3_4agh7")
 
-[node name="_MeshInstance3D_269" type="MeshInstance3D" parent="Model" unique_id=1383803542 instance=ExtResource("4_dcfrl")]
+[node name="_MeshInstance3D_269" type="MeshInstance3D" parent="Model" unique_id=360177637 instance=ExtResource("4_dcfrl")]
 transform = Transform3D(3.4431616e-06, 0, 1.0000005, 0, 1, 0, -1.0000005, 0, 3.4431616e-06, -4.7683716e-05, -0.689354, 12.514157)
 gi_mode = 2
+visibility_range_end = 160.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
 mesh = ExtResource("5_58m84")
 surface_material_override/0 = ExtResource("3_4agh7")
 
-[node name="_MeshInstance3D_270" type="MeshInstance3D" parent="Model" unique_id=1387902251 instance=ExtResource("4_dcfrl")]
+[node name="_MeshInstance3D_270" type="MeshInstance3D" parent="Model" unique_id=1604507530 instance=ExtResource("4_dcfrl")]
 transform = Transform3D(3.4431616e-06, 0, 1.0000005, 0, 1, 0, -1.0000005, 0, 3.4431616e-06, -1.9073486e-06, -0.689354, -2.4858427)
 gi_mode = 2
+visibility_range_end = 160.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
 mesh = ExtResource("5_58m84")
 surface_material_override/0 = ExtResource("3_4agh7")
 
-[node name="_MeshInstance3D_271" type="MeshInstance3D" parent="Model" unique_id=401913442 instance=ExtResource("4_dcfrl")]
+[node name="_MeshInstance3D_271" type="MeshInstance3D" parent="Model" unique_id=1658001582 instance=ExtResource("4_dcfrl")]
 transform = Transform3D(3.4431616e-06, 0, 1.0000005, 0, 1, 0, -1.0000005, 0, 3.4431616e-06, -1.5258789e-05, -0.689354, 2.5141573)
 gi_mode = 2
+visibility_range_end = 160.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
 mesh = ExtResource("5_58m84")
 surface_material_override/0 = ExtResource("3_4agh7")
 
-[node name="_MeshInstance3D_272" type="MeshInstance3D" parent="Model" unique_id=1125516817 instance=ExtResource("4_dcfrl")]
+[node name="_MeshInstance3D_272" type="MeshInstance3D" parent="Model" unique_id=177660808 instance=ExtResource("4_dcfrl")]
 transform = Transform3D(3.4431616e-06, 0, 1.0000005, 0, 1, 0, -1.0000005, 0, 3.4431616e-06, -5.000002, -0.689354, -2.485858)
 gi_mode = 2
+visibility_range_end = 160.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
 mesh = ExtResource("5_58m84")
 surface_material_override/0 = ExtResource("3_4agh7")
 
-[node name="_MeshInstance3D_274" type="MeshInstance3D" parent="Model" unique_id=1347016611 instance=ExtResource("4_dcfrl")]
+[node name="_MeshInstance3D_274" type="MeshInstance3D" parent="Model" unique_id=1772410808 instance=ExtResource("4_dcfrl")]
 transform = Transform3D(3.4431616e-06, 0, 1.0000005, 0, 1, 0, -1.0000005, 0, 3.4431616e-06, -5.0000477, -0.689354, 12.514143)
 gi_mode = 2
+visibility_range_end = 160.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
 mesh = ExtResource("5_58m84")
 surface_material_override/0 = ExtResource("3_4agh7")
 
-[node name="_MeshInstance3D_275" type="MeshInstance3D" parent="Model" unique_id=1602407786 instance=ExtResource("4_dcfrl")]
+[node name="_MeshInstance3D_275" type="MeshInstance3D" parent="Model" unique_id=1734023468 instance=ExtResource("4_dcfrl")]
 transform = Transform3D(3.4431616e-06, 0, 1.0000005, 0, 1, 0, -1.0000005, 0, 3.4431616e-06, -5.000002, 0.560646, -2.485858)
 gi_mode = 2
+visibility_range_end = 160.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
 mesh = ExtResource("5_58m84")
 surface_material_override/0 = ExtResource("3_4agh7")
 
-[node name="_MeshInstance3D_277" type="MeshInstance3D" parent="Model" unique_id=1099195430 instance=ExtResource("4_dcfrl")]
+[node name="_MeshInstance3D_277" type="MeshInstance3D" parent="Model" unique_id=650331428 instance=ExtResource("4_dcfrl")]
 transform = Transform3D(3.4431616e-06, 0, 1.0000005, 0, 1, 0, -1.0000005, 0, 3.4431616e-06, -4.7683716e-05, 0.560646, 12.514157)
 gi_mode = 2
+visibility_range_end = 160.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
 mesh = ExtResource("5_58m84")
 surface_material_override/0 = ExtResource("3_4agh7")
 
-[node name="_MeshInstance3D_278" type="MeshInstance3D" parent="Model" unique_id=904548064 instance=ExtResource("4_dcfrl")]
+[node name="_MeshInstance3D_278" type="MeshInstance3D" parent="Model" unique_id=435593192 instance=ExtResource("4_dcfrl")]
 transform = Transform3D(3.4431616e-06, 0, 1.0000005, 0, 1, 0, -1.0000005, 0, 3.4431616e-06, -1.9073486e-06, 0.560646, -2.4858427)
 gi_mode = 2
+visibility_range_end = 160.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
 mesh = ExtResource("5_58m84")
 surface_material_override/0 = ExtResource("3_4agh7")
 
-[node name="_MeshInstance3D_279" type="MeshInstance3D" parent="Model" unique_id=690998335 instance=ExtResource("4_dcfrl")]
+[node name="_MeshInstance3D_279" type="MeshInstance3D" parent="Model" unique_id=791543110 instance=ExtResource("4_dcfrl")]
 transform = Transform3D(3.4431616e-06, 0, 1.0000005, 0, 1, 0, -1.0000005, 0, 3.4431616e-06, 4.999998, 0.560646, -2.4858265)
 gi_mode = 2
+visibility_range_end = 160.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
 mesh = ExtResource("5_58m84")
 surface_material_override/0 = ExtResource("3_4agh7")
 
-[node name="_MeshInstance3D_280" type="MeshInstance3D" parent="Model" unique_id=2110612481 instance=ExtResource("4_dcfrl")]
+[node name="_MeshInstance3D_280" type="MeshInstance3D" parent="Model" unique_id=859676894 instance=ExtResource("4_dcfrl")]
 transform = Transform3D(3.4431616e-06, 0, 1.0000005, 0, 1, 0, -1.0000005, 0, 3.4431616e-06, -5.0000324, -0.689354, 7.514142)
 gi_mode = 2
+visibility_range_end = 160.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
 mesh = ExtResource("5_58m84")
 surface_material_override/0 = ExtResource("3_4agh7")
 
-[node name="_MeshInstance3D_282" type="MeshInstance3D" parent="Model" unique_id=1269949101 instance=ExtResource("4_dcfrl")]
+[node name="_MeshInstance3D_282" type="MeshInstance3D" parent="Model" unique_id=459984868 instance=ExtResource("4_dcfrl")]
 transform = Transform3D(3.4431616e-06, 0, 1.0000005, 0, 1, 0, -1.0000005, 0, 3.4431616e-06, 4.999983, -0.689354, 2.5141735)
 gi_mode = 2
+visibility_range_end = 160.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
 mesh = ExtResource("5_58m84")
 surface_material_override/0 = ExtResource("3_4agh7")
 
-[node name="_MeshInstance3D_284" type="MeshInstance3D" parent="Model" unique_id=1767996261 instance=ExtResource("4_dcfrl")]
+[node name="_MeshInstance3D_284" type="MeshInstance3D" parent="Model" unique_id=1348990387 instance=ExtResource("4_dcfrl")]
 transform = Transform3D(3.4431616e-06, 0, 1.0000005, 0, 1, 0, -1.0000005, 0, 3.4431616e-06, 4.999998, -0.689354, -2.4858265)
 gi_mode = 2
+visibility_range_end = 160.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
 mesh = ExtResource("5_58m84")
 surface_material_override/0 = ExtResource("3_4agh7")
 
-[node name="_MeshInstance3D_285" type="MeshInstance3D" parent="Model" unique_id=994754276 instance=ExtResource("4_dcfrl")]
+[node name="_MeshInstance3D_285" type="MeshInstance3D" parent="Model" unique_id=809205230 instance=ExtResource("4_dcfrl")]
 transform = Transform3D(3.4431616e-06, 0, 1.0000005, 0, 1, 0, -1.0000005, 0, 3.4431616e-06, -5.0000477, 0.560646, 12.514143)
 gi_mode = 2
+visibility_range_end = 160.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
 mesh = ExtResource("5_58m84")
 surface_material_override/0 = ExtResource("3_4agh7")
 
-[node name="_MeshInstance3D_286" type="MeshInstance3D" parent="Model" unique_id=1432356624 instance=ExtResource("4_dcfrl")]
+[node name="_MeshInstance3D_286" type="MeshInstance3D" parent="Model" unique_id=1455821483 instance=ExtResource("4_dcfrl")]
 transform = Transform3D(3.4431616e-06, 0, 1.0000005, 0, 1, 0, -1.0000005, 0, 3.4431616e-06, 4.999983, 0.560646, 2.5141735)
 gi_mode = 2
+visibility_range_end = 160.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
 mesh = ExtResource("5_58m84")
 surface_material_override/0 = ExtResource("3_4agh7")
 
-[node name="_MeshInstance3D_287" type="MeshInstance3D" parent="Model" unique_id=1378971046 instance=ExtResource("4_dcfrl")]
+[node name="_MeshInstance3D_287" type="MeshInstance3D" parent="Model" unique_id=1004087336 instance=ExtResource("4_dcfrl")]
 transform = Transform3D(3.4431616e-06, 0, 1.0000005, 0, 1, 0, -1.0000005, 0, 3.4431616e-06, -10.000002, 0.560646, -2.4858742)
 gi_mode = 2
+visibility_range_end = 160.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
 mesh = ExtResource("5_58m84")
 surface_material_override/0 = ExtResource("3_4agh7")
 
-[node name="_MeshInstance3D_289" type="MeshInstance3D" parent="Model" unique_id=380605289 instance=ExtResource("4_dcfrl")]
+[node name="_MeshInstance3D_289" type="MeshInstance3D" parent="Model" unique_id=1102185228 instance=ExtResource("4_dcfrl")]
 transform = Transform3D(3.4431616e-06, 0, 1.0000005, 0, 1, 0, -1.0000005, 0, 3.4431616e-06, -10.000017, 0.560646, 2.5141249)
 gi_mode = 2
+visibility_range_end = 160.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
 mesh = ExtResource("5_58m84")
 surface_material_override/0 = ExtResource("3_4agh7")
 
-[node name="_MeshInstance3D_290" type="MeshInstance3D" parent="Model" unique_id=504386513 instance=ExtResource("4_dcfrl")]
+[node name="_MeshInstance3D_290" type="MeshInstance3D" parent="Model" unique_id=763804080 instance=ExtResource("4_dcfrl")]
 transform = Transform3D(3.4431616e-06, 0, 1.0000005, 0, 1, 0, -1.0000005, 0, 3.4431616e-06, -10.000002, -0.689354, -2.4858742)
 gi_mode = 2
+visibility_range_end = 160.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
 mesh = ExtResource("5_58m84")
 surface_material_override/0 = ExtResource("3_4agh7")
 
-[node name="_MeshInstance3D_291" type="MeshInstance3D" parent="Model" unique_id=1796855575 instance=ExtResource("4_dcfrl")]
+[node name="_MeshInstance3D_291" type="MeshInstance3D" parent="Model" unique_id=2077199923 instance=ExtResource("4_dcfrl")]
 transform = Transform3D(3.4431616e-06, 0, 1.0000005, 0, 1, 0, -1.0000005, 0, 3.4431616e-06, -5.0000324, 0.560646, 7.514142)
 gi_mode = 2
+visibility_range_end = 160.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
 mesh = ExtResource("5_58m84")
 surface_material_override/0 = ExtResource("3_4agh7")
 
-[node name="_MeshInstance3D_292" type="MeshInstance3D" parent="Model" unique_id=956434675 instance=ExtResource("4_dcfrl")]
+[node name="_MeshInstance3D_292" type="MeshInstance3D" parent="Model" unique_id=182009284 instance=ExtResource("4_dcfrl")]
 transform = Transform3D(3.4431616e-06, 0, 1.0000005, 0, 1, 0, -1.0000005, 0, 3.4431616e-06, -10.000017, -0.689354, 2.5141249)
 gi_mode = 2
+visibility_range_end = 160.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
 mesh = ExtResource("5_58m84")
 surface_material_override/0 = ExtResource("3_4agh7")
 
-[node name="_MeshInstance3D_294" type="MeshInstance3D" parent="Model" unique_id=968021280 instance=ExtResource("4_dcfrl")]
+[node name="_MeshInstance3D_294" type="MeshInstance3D" parent="Model" unique_id=734789828 instance=ExtResource("4_dcfrl")]
 transform = Transform3D(3.4431616e-06, 0, 1.0000005, 0, 1, 0, -1.0000005, 0, 3.4431616e-06, -3.2424927e-05, 0.560646, 7.5141582)
 gi_mode = 2
+visibility_range_end = 160.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
 mesh = ExtResource("5_58m84")
 surface_material_override/0 = ExtResource("3_4agh7")
 
-[node name="_MeshInstance3D_295" type="MeshInstance3D" parent="Model" unique_id=519540493 instance=ExtResource("4_dcfrl")]
+[node name="_MeshInstance3D_295" type="MeshInstance3D" parent="Model" unique_id=1567235006 instance=ExtResource("4_dcfrl")]
 transform = Transform3D(3.4431616e-06, 0, 1.0000005, 0, 1, 0, -1.0000005, 0, 3.4431616e-06, -1.5258789e-05, 0.560646, 2.5141573)
 gi_mode = 2
+visibility_range_end = 160.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
 mesh = ExtResource("5_58m84")
 surface_material_override/0 = ExtResource("3_4agh7")
 
-[node name="_MeshInstance3D_296" type="MeshInstance3D" parent="Model" unique_id=665269995 instance=ExtResource("4_dcfrl")]
+[node name="_MeshInstance3D_296" type="MeshInstance3D" parent="Model" unique_id=513429847 instance=ExtResource("4_dcfrl")]
 transform = Transform3D(3.4431616e-06, 0, 1.0000005, 0, 1, 0, -1.0000005, 0, 3.4431616e-06, -5.0000153, 0.560646, 2.514141)
 gi_mode = 2
+visibility_range_end = 160.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
 mesh = ExtResource("5_58m84")
 surface_material_override/0 = ExtResource("3_4agh7")

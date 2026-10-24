@@ -110,6 +110,18 @@ func build_one(slot: String, c: Dictionary, prefab_dir: String, suffix: String =
 				model.remove_child(ch)
 				ch.free()
 		raw = main_box
+		# Small kit parts fade out with distance and cast no shadow; the overview of a
+		# grown colony draws thousands of them otherwise.
+		for ch: Node in model.get_children().slice(1):
+			var pb := AssetSlots.aabb_of(ch, Transform3D.IDENTITY)
+			var small := pb.size.length() < 4.0
+			for gi: Node in ([ch] if ch is GeometryInstance3D else []) + ch.find_children("*", "GeometryInstance3D", true, false):
+				var g := gi as GeometryInstance3D
+				g.visibility_range_end = 70.0 if small else 160.0
+				g.visibility_range_end_margin = 8.0
+				g.visibility_range_fade_mode = GeometryInstance3D.VISIBILITY_RANGE_FADE_SELF
+				if small:
+					g.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 	var proxy_node := AssetSlots.build_proxy(slot)
 	var proxy := AssetSlots.aabb_of(proxy_node, Transform3D.IDENTITY)
 	proxy_node.free()
