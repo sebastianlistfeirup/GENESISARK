@@ -29,6 +29,11 @@ var lander_body: Node3D           # the lander's VisualSlot, flown top-level dur
 var surface_root: Node3D
 
 var autopilot := true
+var scale_k := 1.0
+var _body_rest := Transform3D.IDENTITY   # the body's own local transform, restored at touchdown
+var _rest_basis := Basis.IDENTITY
+var _nose_yaw := PI  # Synty ships face +Z; long-in-X models (the landed Ark) fly along X                # camera and landing distances scale with the ship (the Ark is huge)
+var _layers: Array[CanvasLayer] = []
 var _vel := Vector3.ZERO
 var _alt := START_ALT
 var _phase := "space"
@@ -82,6 +87,16 @@ func start(p_root: Node3D, p_terrain: TerrainBuilder, p_planet: Dictionary, p_ta
 	planet = p_planet
 	target = p_target
 	lander_body = p_body
+	_body_rest = p_body.transform
+	_rest_basis = p_body.global_basis
+	var box := AssetSlots.aabb_of(p_body, Transform3D.IDENTITY)
+	scale_k = clampf(box.size.length() / 14.0, 1.0, 8.0)
+	if box.size.x > box.size.z * 1.25:
+		_nose_yaw = -PI * 0.5
+	for c: Node in p_root.get_children():
+		if c is CanvasLayer and (c as CanvasLayer).visible:
+			(c as CanvasLayer).visible = false
+			_layers.append(c)
 	_world_env = _find_env(p_root)
 	_planet_env = _world_env.environment if _world_env else null
 	_remember_fog()
@@ -197,12 +212,12 @@ func _hide_surface() -> void:
 		if c == self or c is WorldEnvironment or c is DirectionalLight3D or not (c is Node3D):
 			continue
 		var n := c as Node3D
-		if n.visible and not lander_body.is_ancestor_of(n) and n != lander_body.get_parent():
+		if n.visible and n != lander_body and not lander_body.is_ancestor_of(n) and n != lander_body.get_parent():
 			n.visible = false
 			_hidden.append(n)
 	# The lander node itself stays (its body flies top-level); its interactable gizmos hide.
 	var lp := lander_body.get_parent()
-	if lp is Node3D:
+	if lp is Node3D and lp != surface_root:
 		for c: Node in lp.get_children():
 			if c != lander_body and c is Node3D and (c as Node3D).visible:
 				(c as Node3D).visible = false
@@ -580,7 +595,7 @@ func _process(delta: float) -> void:
 	var to := Vector3(target.x - pos.x, 0.0, target.z - pos.z)
 	var hdist := to.length()
 	if not _landing:
-		if hdist < ASSIST_RANGE and _alt < ASSIST_ALT:
+		if hdist < ASSIST_RANGE * sqrt(scale_k) and _alt < ASSIST_ALT * sqrt(scale_k):
 			_begin_landing()
 		else:
 			_fly(delta, pos, to, hdist)
@@ -635,7 +650,7 @@ func _fly(delta: float, pos: Vector3, to: Vector3, hdist: float) -> void:
 	var prev := _vel
 	_vel = _vel.lerp(want, clampf(delta * 1.2, 0.0, 1.0))
 	var np := pos + _vel * delta
-	var floor_y := _ground_y(np) + 18.0
+	var floor_y := _ground_y(np) + 18.0 * scale_k
 	if np.y < floor_y:  # never into the ground before the pad
 		np.y = lerpf(np.y, floor_y, 0.5)
 		_vel.y = maxf(_vel.y, 0.0)
@@ -646,16 +661,16 @@ func _fly(delta: float, pos: Vector3, to: Vector3, hdist: float) -> void:
 	var fwd := _vel.normalized() if _vel.length() > 1.0 else heading
 	fwd.y = clampf(fwd.y, -0.55, 0.3)
 	var b := Basis.looking_at(fwd.normalized(), Vector3.UP)
-	lander_body.global_basis = b * Basis(Vector3.FORWARD, _bank) * Basis(Vector3.UP, PI)  # Synty fronts face +Z
+	lander_body.global_basis = b * Basis(Vector3.FORWARD, _bank) * Basis(Vector3.UP, _nose_yaw)
 
 
 func _begin_landing() -> void:
 	_landing = true
 	autopilot = true
 	var pos := lander_body.global_position
-	var hover := target + Vector3.UP * HOVER_ALT
+	var hover := target + Vector3.UP * HOVER_ALT * scale_k
 	var dur1 := clampf(pos.distance_to(hover) / 45.0, 2.0, 6.0)
-	var rest: Basis = (lander_body.get_parent() as Node3D).global_basis if lander_body.get_parent() is Node3D else Basis.IDENTITY
+	var rest := _rest_basis
 	var t := create_tween().set_parallel(false)
 	t.tween_property(lander_body, "global_position", hover, dur1).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 	t.parallel().tween_method(func(k: float) -> void: lander_body.global_basis = lander_body.global_basis.slerp(rest, k * 0.25), 0.0, 1.0, dur1)
@@ -696,9 +711,11 @@ func _finish() -> void:
 		if is_instance_valid(b):
 			b.queue_free()
 	lander_body.top_level = false
-	lander_body.position = Vector3.ZERO
-	lander_body.basis = Basis.IDENTITY
+	lander_body.transform = _body_rest
 	_cam.current = false
+	for l: CanvasLayer in _layers:
+		if is_instance_valid(l):
+			l.visible = true
 	finished.emit()
 	queue_free()
 
@@ -715,15 +732,15 @@ func _update_fx(delta: float, pos: Vector3) -> void:
 		heat = 0.0
 	_plasma_mat.set_shader_parameter("heat", heat)
 	var fwd := _vel.normalized() if speed > 1.0 else -lander_body.global_basis.z
-	_plasma.global_position = pos + fwd * 2.5
-	_plasma.global_basis = Basis.looking_at(fwd, Vector3.UP if absf(fwd.y) < 0.98 else Vector3.FORWARD).scaled(Vector3(4.2, 3.4, 8.5))
+	_plasma.global_position = pos + fwd * 2.5 * scale_k
+	_plasma.global_basis = Basis.looking_at(fwd, Vector3.UP if absf(fwd.y) < 0.98 else Vector3.FORWARD).scaled(Vector3(4.2, 3.4, 8.5) * scale_k)
 	_plasma.visible = heat > 0.01
 	_streak_mat.set_shader_parameter("heat", heat)
 	(_vignette.material as ShaderMaterial).set_shader_parameter("heat", heat)
 	_streaks.visible = heat > 0.02
 	if _streaks.visible:
 		var sb := Basis.looking_at(fwd, Vector3.UP if absf(fwd.y) < 0.98 else Vector3.FORWARD)
-		_streaks.global_transform = Transform3D(sb, pos)
+		_streaks.global_transform = Transform3D(sb.scaled(Vector3.ONE * scale_k), pos)
 		var flow := speed * 0.35 * delta
 		for i: int in _streak_pts.size():
 			var sp: Array = _streak_pts[i]
@@ -756,10 +773,10 @@ func _update_camera(delta: float, pos: Vector3) -> void:
 	var back := (_vel.normalized() if speed > 2.0 else -lander_body.global_basis.z)
 	back.y = clampf(back.y, -0.5, 0.2)
 	back = back.normalized()
-	var dist := lerpf(10.0, 17.0, clampf(speed / 350.0, 0.0, 1.0))
-	var want := pos - back * dist + Vector3.UP * lerpf(3.2, 5.0, clampf(speed / 350.0, 0.0, 1.0))
+	var dist := lerpf(10.0, 17.0, clampf(speed / 350.0, 0.0, 1.0)) * scale_k
+	var want := pos - back * dist + Vector3.UP * lerpf(3.2, 5.0, clampf(speed / 350.0, 0.0, 1.0)) * scale_k
 	if _landing:
-		want = pos + (Vector3(_cam_pos.x - pos.x, 0, _cam_pos.z - pos.z).normalized() * 22.0) + Vector3.UP * 9.0
+		want = pos + (Vector3(_cam_pos.x - pos.x, 0, _cam_pos.z - pos.z).normalized() * 22.0 * scale_k) + Vector3.UP * 9.0 * scale_k
 	# Smooth the camera's offset from the ship, not its world position: at
 	# orbital speed a world-space lag would leave the ship a dot far ahead.
 	_cam_off = _cam_off.lerp(want - pos, clampf(delta * 3.0, 0.0, 1.0))

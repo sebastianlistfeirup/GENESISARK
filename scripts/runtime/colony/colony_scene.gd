@@ -121,8 +121,8 @@ func _ready() -> void:
 		GameSession.sim.colony.recompute_network(gs)
 		GameSession.sim.colony.allocate_power(gs, GameSession.sim.colony.hazard_factors(gs, gs.campaign.colony_day))
 	_sync()
-	if AppFlow.params.get("landing", false):
-		hud.toast(Loc.t("The Ark has landed. Build power, water and a habitat. Tap a building below."), "info", 10.0)
+	if AppFlow.params.get("landing", false) or str(AppFlow.params.get("action", "")).begins_with("descent"):
+		_maybe_ark_descent()
 	_check_pending_event()
 
 
@@ -941,3 +941,27 @@ func _exit_tree() -> void:
 
 func gs_planet_id() -> String:
 	return GameSession.state.colony.planet_id if GameSession.state and GameSession.state.colony else ""
+
+
+## The Ark comes down from orbit onto the landing zone in real time
+## (PlanetDescent, D-049); the colony clock and its UI wait until touchdown.
+func _maybe_ark_descent() -> void:
+	var ark: Node3D = null
+	for v: Variant in views.values():
+		var bv := v as BuildingView
+		if bv and bv.def_id == "ark_core":
+			ark = bv.get("_visual") as Node3D  # the model flies; its pad and label wait on the ground
+			break
+	var action := str(AppFlow.params.get("action", ""))
+	if ark == null or not PlanetDescent.wanted() or AppFlow.test_mode or (DebugCapture.requested() and not action.begins_with("descent")):
+		hud.toast(Loc.t("The Ark has landed. Build power, water and a habitat. Tap a building below."), "info", 10.0)
+		return
+	GameSession.colony_clock_active = false
+	var d := PlanetDescent.new()
+	d.name = "Descent"
+	add_child(d)
+	d.start(self, terrain, planet, ark.global_position, ark, float(action.get_slice(":", 1)) if action.contains(":") else PlanetDescent.START_ALT)
+	d.finished.connect(func() -> void:
+		GameSession.colony_clock_active = true
+		cam_rig.make_current()
+		hud.toast(Loc.t("The Ark has landed. Build power, water and a habitat. Tap a building below."), "info", 10.0))

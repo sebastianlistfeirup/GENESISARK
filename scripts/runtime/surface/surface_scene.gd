@@ -540,14 +540,12 @@ func _start_descent(lander: Node3D, body: Node3D, start_alt: float) -> void:
 	_descending = true
 	captain.visible = false
 	captain.input_enabled = false
-	hud.visible = false
 	var d := PlanetDescent.new()
 	d.name = "Descent"
 	add_child(d)
 	d.start(self, terrain, planet, lander.global_position, body, start_alt)
 	d.finished.connect(func() -> void:
 		_descending = false
-		hud.visible = true
 		if waypoints:
 			waypoints.visible = true
 		captain.visible = true
