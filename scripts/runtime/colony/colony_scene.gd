@@ -170,7 +170,10 @@ func _draw_districts() -> void:
 			var mi := MeshInstance3D.new()
 			mi.mesh = rock[0]
 			var sc := DictUtil.get_float(bz, "radius") * 2.2 / maxf(maxf(rb.size.x, rb.size.z), 0.1)
-			mi.transform = Transform3D(Basis(Vector3.UP, float(absi(hash(bc)) % 628) / 100.0).scaled(Vector3.ONE * sc), Vector3(float(bc[0]), terrain.height_at(float(bc[0]), float(bc[1])) - rb.position.y * sc - 0.4, float(bc[1]))) * (rock[1] as Transform3D)
+			# A tall formation scaled to the zone's width towered 40-50 m over the town
+			# and filled the default colony camera: keep it a hill (at most 1.3 x radius high).
+			var sy := minf(sc, DictUtil.get_float(bz, "radius") * 1.3 / maxf(rb.size.y, 0.1))
+			mi.transform = Transform3D(Basis(Vector3.UP, float(absi(hash(bc)) % 628) / 100.0).scaled(Vector3(sc, sy, sc)), Vector3(float(bc[0]), terrain.height_at(float(bc[0]), float(bc[1])) - rb.position.y * sy - 0.4, float(bc[1]))) * (rock[1] as Transform3D)
 			add_child(mi)
 			continue
 		var m := VisualSlot.make("surface.rock_large", "#5f5d58")
@@ -477,9 +480,14 @@ func _prune_cover(clear: ColonyClearance) -> void:
 	for c: Node in _cover.get_children():
 		if c is MultiMeshInstance3D:
 			var mm := (c as MultiMeshInstance3D).multimesh
+			# Big alien plants spread metres from their stem: test their canopy, not
+			# only the stem (they grew through roofs in the grown districts).
+			var mb := mm.mesh.get_aabb() if mm.mesh else AABB()
+			var half := maxf(mb.size.x, mb.size.z) * 0.35
 			for i: int in mm.instance_count:
 				var xf := mm.get_instance_transform(i)
-				if xf.basis.get_scale().x > 0.0001 and clear.blocked(Vector2(xf.origin.x, xf.origin.z), 0.5):
+				var sx := xf.basis.get_scale().x
+				if sx > 0.0001 and clear.blocked(Vector2(xf.origin.x, xf.origin.z), maxf(0.5, half * sx), -1, half * sx > 1.5):
 					mm.set_instance_transform(i, Transform3D(Basis.from_scale(Vector3.ONE * 0.00001), xf.origin))
 		elif c is MeshInstance3D and (c as MeshInstance3D).visible:
 			var mi := c as MeshInstance3D

@@ -59,6 +59,7 @@ var _globe_space: Node3D
 var _globe_ground: MeshInstance3D
 var _horizon: MeshInstance3D
 var _sea: MeshInstance3D
+var _site_water: MeshInstance3D  # the playable map's own sea plane, hidden under _sea while in the air
 var _horizon_bits: Array[Node3D] = []
 var _mothership: Node3D
 var _ark_pending := false
@@ -80,6 +81,7 @@ var _lbl_data: Label
 var _lbl_hint: Label
 var _gauge: DescentHud
 var _sky_tint := Color(0.85, 0.9, 1.0)
+var _sky_far: Array = []  # [node, rest position]: moons, sun, rings, aurora of the planet's sky
 var _haze := Color(0.8, 0.86, 0.9)
 
 
@@ -156,6 +158,13 @@ func _setup(p_root: Node3D, p_terrain: TerrainBuilder, p_planet: Dictionary, p_t
 		if c is CanvasLayer and (c as CanvasLayer).visible:
 			(c as CanvasLayer).visible = false
 			_layers.append(c)
+	# Sky bodies hang 1.5 km from the site: from the air they must stay at sky
+	# distance around the camera, not turn into nearby spheres and a fence of aurora.
+	var ps := p_root.get_node_or_null("PlanetSky")
+	if ps:
+		for c: Node in ps.get_children():
+			if c is Node3D and c.has_meta("sky_far"):
+				_sky_far.append([c, (c as Node3D).position])
 	_world_env = _find_env(p_root)
 	_planet_env = _world_env.environment if _world_env else null
 	_remember_fog()
@@ -302,9 +311,18 @@ func _build_globes() -> void:
 		_sea.mesh = pm
 		var wm := ShaderMaterial.new()
 		wm.shader = preload("res://art/shaders/water.gdshader")
+		wm.set_shader_parameter("foam_strength", 0.0)  # depth-buffer noise at kilometre range reads as white speckle
 		_sea.material_override = wm
 		add_child(_sea)
 		_sea.global_position = Vector3(target.x, terrain.water_level - 0.05, target.z)
+		# Two translucent seas 5 cm apart: the site's own plane showed as a dark
+		# square in the ocean from the air. One sea until touchdown.
+		for c: Node in terrain.get_children():
+			var mi := c as MeshInstance3D
+			if mi and mi.material_override is ShaderMaterial and (mi.material_override as ShaderMaterial).shader == wm.shader:
+				_site_water = mi
+				mi.visible = false
+				break
 	_globe_ground = MeshInstance3D.new()
 	_globe_ground.mesh = sm
 	_globe_ground.material_override = mat
@@ -452,7 +470,7 @@ func _horizon_height(p: Vector2) -> float:
 		h += terrain.noise.get_noise_2d(p.x * 0.004, p.y * 0.004) * terrain.height_scale * 6.0 * smoothstep(460.0, 1400.0, dist)
 	if bool(terrain.style.get("ocean", false)):
 		var isle := maxf(0.0, terrain.detail.get_noise_2d(p.x * 0.012 + 40.0, p.y * 0.012) - 0.18) * terrain.height_scale * 9.0
-		h = lerpf(h, terrain.water_level - 5.0 + isle, smoothstep(terrain.size_m * 0.5, terrain.size_m * 0.5 + 70.0, dist))
+		h = lerpf(h, terrain.water_level - 5.0 + isle, terrain.ocean_shore(p, dist))
 	return h - maxf(0.0, p.length_squared() - 211600.0) / (2.0 * R_PLANET)
 
 
@@ -536,7 +554,7 @@ func _build_ship_fx() -> void:
 	_marker = Label3D.new()
 	_marker.text = "◆"
 	_marker.billboard = BaseMaterial3D.BILLBOARD_ENABLED
-	_marker.no_depth_test = true
+	_marker.no_depth_test = false  # the chase-cam lander sits right in front of the pad: its hull hides the marker, not the other way round
 	_marker.fixed_size = true
 	_marker.pixel_size = 0.0016
 	_marker.font_size = 48
@@ -675,7 +693,15 @@ func _process(delta: float) -> void:
 		_mothership.scale = Vector3.ONE * 7.0
 		_mothership.global_position = _cam.global_position - cb.z * 1150.0 + cb.x * 360.0 + cb.y * 300.0
 		_mothership.look_at(_mothership.global_position + cb.x, Vector3.UP)
+	_follow_sky()
 	_update_hud(hdist)
+
+
+func _follow_sky() -> void:
+	var off := Vector3(_cam_pos.x, maxf(0.0, _cam_pos.y - target.y), _cam_pos.z)
+	for e: Array in _sky_far:
+		if is_instance_valid(e[0]):
+			(e[0] as Node3D).position = (e[1] as Vector3) + off
 
 
 func _ground_y(p: Vector3) -> float:
@@ -801,6 +827,11 @@ func _finish() -> void:
 	_restore_fog()
 	AudioService.set_layer("", -2.0)
 	_stretch_cover(false)
+	if is_instance_valid(_site_water):
+		_site_water.visible = true
+	for e: Array in _sky_far:
+		if is_instance_valid(e[0]):
+			(e[0] as Node3D).position = e[1]
 	if is_instance_valid(_horizon):
 		_horizon.queue_free()
 	for b: Node3D in _horizon_bits:
@@ -868,7 +899,7 @@ func _update_fx(delta: float, pos: Vector3) -> void:
 	# Cloud whiteout hides the sky change; peaks right at the switch altitude.
 	var w := 1.0 - smoothstep(0.0, 220.0, absf(_alt - SWITCH_ALT))
 	_white.color.a = w * 0.88 if not _landing else 0.0
-	_marker.visible = _alt > 60.0
+	_marker.visible = _alt > 60.0 and not _ascent
 	(_clouds.material_override as ShaderMaterial).set_shader_parameter("presence", 1.0 - smoothstep(1900.0, 2700.0, _alt))
 
 
@@ -905,13 +936,12 @@ func _update_camera(delta: float, pos: Vector3) -> void:
 
 func _update_hud(hdist: float) -> void:
 	_gauge.alt = _alt
-	_gauge.position = Vector2.ZERO
-	_gauge.size = get_viewport().get_visible_rect().size
 	var site := target + Vector3.UP * 6.0
 	var behind := _cam.is_position_behind(site)
 	var px := _cam.unproject_position(site)
 	var vr := get_viewport().get_visible_rect().size
-	_gauge.site_on_screen = not behind and px.x > 30.0 and px.y > 30.0 and px.x < vr.x - 30.0 and px.y < vr.y - 30.0
+	# Climbing out there is no site to point at.
+	_gauge.site_on_screen = _ascent or (not behind and px.x > 30.0 and px.y > 30.0 and px.x < vr.x - 30.0 and px.y < vr.y - 30.0)
 	_gauge.site_px = (vr - px) if behind else px  # behind the camera: point the other way
 	_gauge.site_text = Loc.t("SITE %s") % _fmt_m(hdist)
 	_gauge.visible = not _landing

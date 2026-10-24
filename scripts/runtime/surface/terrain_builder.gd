@@ -338,16 +338,18 @@ func _build_far_ring(mat: Material, ground: Color, patch: Color, cliff: Color, f
 					if ocean:
 						# Water world: open sea to the horizon, broken by scattered islands.
 						var isle := maxf(0.0, detail.get_noise_2d(v.x * 0.012 + 40.0, v.y * 0.012) - 0.18) * height_scale * 9.0
-						h = lerpf(h, water_level - 5.0 + isle, smoothstep(size_m * 0.5, size_m * 0.5 + 70.0, dist))
+						h = lerpf(h, water_level - 5.0 + isle, ocean_shore(v, dist))
 					if dist < inner:
 						h -= 3.0  # tucked under the playable mesh where they overlap
 					vs.append(Vector3(v.x, h, v.y))
 				var fn := (vs[2] - vs[0]).cross(vs[1] - vs[0]).normalized()
 				var slope := 1.0 - fn.y
 				var c := ground.lerp(patch, clampf(detail.get_noise_2d(vs[0].x * 0.08, vs[0].z * 0.08) * 0.5 + 0.5, 0, 1)).lerp(cliff, smoothstep(0.1, 0.35, slope))
-				# Same light speckle as the playable ground, so the two meet without a seam.
-				c = c.lerp(c.lightened(0.12), clampf(detail.get_noise_2d(vs[0].x, vs[0].z) * 0.5 + 0.5, 0, 1) * 0.35)
 				var far_k := smoothstep(size_m * 0.5, size_m * 0.5 + 160.0, maxf(absf(vs[0].x), absf(vs[0].z)))
+				# Same light speckle as the playable ground at the seam, so the two meet;
+				# it fades with distance (one random shade per 10-90 m cell read as a
+				# checkerboard from the air).
+				c = c.lerp(c.lightened(0.12), clampf(detail.get_noise_2d(vs[0].x, vs[0].z) * 0.5 + 0.5, 0, 1) * 0.35 * (1.0 - 0.8 * far_k))
 				if far_k > 0.0:  # far land: broad regions of darker and lighter ground, faded in past the map edge
 					var reg := noise.get_noise_2d(vs[0].x * 0.0022 + 90.0, vs[0].z * 0.0022)
 					var rc := c.lerp(c.darkened(0.38), smoothstep(-0.05, 0.4, reg)).lerp(patch.lightened(0.12), smoothstep(-0.2, -0.5, reg))
@@ -365,6 +367,14 @@ func _build_far_ring(mat: Material, ground: Color, patch: Color, cliff: Color, f
 	ring.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 	add_child(ring)
 	return ring
+
+
+## Water world: how far past the map edge the land has sunk into the sea (0..1).
+## The shore wanders 40-320 m out with the noise, so from the air the site is a
+## ragged island, not a square plateau (0 at the map edge: the seam stays closed).
+func ocean_shore(v: Vector2, dist: float) -> float:
+	var reach := lerpf(40.0, 320.0, clampf(detail.get_noise_2d(v.x * 0.05 + 17.0, v.y * 0.05 - 9.0) * 0.9 + 0.5, 0.0, 1.0))
+	return smoothstep(0.0, reach, dist - size_m * 0.5)
 
 
 ## Land from the far ring out to the horizon for the descent from orbit (coarse

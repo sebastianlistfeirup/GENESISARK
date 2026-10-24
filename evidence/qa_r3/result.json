@@ -1,0 +1,44 @@
+{
+  "task_id": "qa_r3",
+  "decision": "D-052",
+  "commit": "743e7c2",
+  "engine_version": "Godot 4.7.2-stable (Forward+, Vulkan, RTX 5090)",
+  "command": [
+    "godot --path . --resolution 1600x900|1280x720 -- --capture=<png> --setup=<fixture> --scene=<menu|ship|flight|surface|colony|ending> --wait=<120-200> [--action=<...>] [--ui_scale=1.5]",
+    "godot --path . -- --perf --out=builds/perf_qa.json (and builds/perf_qa_before.json with the pre-fix files checked out back-to-back)",
+    "CHECK_FAST=1 tools/check.sh"
+  ],
+  "exit_code": 0,
+  "expected": "Whole game flow captured (menu, ship fresh/power, star map, orbit/landing panels, flight + cockpit, descent on all six planets at 5200/1700/900/300/60 m, ascent, surface ground + vista + sample on all six, colony grown/era20 living/overview/zoomout on all six, ending, 1280x720 and UI scale 1.5); highest-impact visual defects fixed with small presentation-only changes; checks green; perf p95 about 10 ms.",
+  "observed": "122 captures before, 96 after (two verification rounds). Fixed 11 issues (see findings). Perf back-to-back (same machine, same session): before p95 8.9-9.9 ms in 9 of 10 cases, colony_era20 16.3 ms (noise spike, p50 7.9); after p95 8.9-9.8 ms in 9 of 10, colony_era20 11.0 then 10.6 and 9.6 ms in two single-case repeats; primitives/draws unchanged (surface_descent 45.8k -> 45.7k prims, 36 -> 34 draws). check.sh: compile 0 failed, loc_exit=0 tests_exit=0 smoke_exit=0 touch_exit=0 campaign_exit=0. No SCRIPT ERROR in any capture log; the only warning class (per-frame 'non-equal opposite anchors' from the descent gauge, up to 1170 lines per ascent capture) is gone.",
+  "fixture": "fresh, power, orbit:<p>, approach:<p>, expedition:<p>, colony:<p>, grown:<p>, era:<p>:20, era:viridia:40 for p in ferrum, nivalis, pelagos, sere, umbra, viridia",
+  "status": "PASS",
+  "findings": [
+    {"id": 1, "status": "FIXED", "area": "descent/ascent", "issue": "Story subtitle 'The lander's hatch slides open. Wind...' shown kilometres up during the whole descent and during the ascent (the StoryPlayer CanvasLayer inside the hidden HUD layer stayed drawn; the story was triggered at scene start).", "fix": "GameHud hides/shows its story layer with itself; surface scene triggers expedition_start and NAV's landing brief on Descent.finished."},
+    {"id": 2, "status": "FIXED", "area": "descent", "issue": "Moons, ringed gas giant, sun halo and aurora hang 1.5 km from the site: from 900 m they became huge nearby spheres (Umbra), a pale disc (Ferrum) and a fence of aurora around the map (Nivalis, Umbra).", "fix": "PlanetSky marks sky_far nodes; PlanetDescent keeps them around the camera and restores them at touchdown."},
+    {"id": 3, "status": "FIXED", "area": "descent Pelagos", "issue": "Dark square of sea around the site (site water plane 5 cm above the descent sea, two translucent layers), white speckle over the far ocean, and the site was a square plateau island.", "fix": "Site water hidden under the single far sea until touchdown; far-sea foam off (new water shader uniform foam_strength); TerrainBuilder.ocean_shore gives a noisy 40-320 m shoreline (zero at the map edge, so the seam stays closed)."},
+    {"id": 4, "status": "FIXED", "area": "descent", "issue": "Amber pad marker (no depth test) drawn on top of the lander's hull for most of the approach; it reappeared over the globe during the climb to orbit.", "fix": "Marker depth-tested (hull hides it, still visible from orbit), hidden on ascent."},
+    {"id": 5, "status": "FIXED", "area": "ascent", "issue": "'SITE 60 m' chevron pointer drawn at the bottom over the subtitle during lift-off.", "fix": "No site pointer on ascent."},
+    {"id": 6, "status": "FIXED", "area": "colony scav worlds (Ferrum, Sere)", "issue": "Care center prefab extracted from the Black Market demo carried a weapon rack plus two axes scaled x5-6.7 above the roof: giant glowing cyan axes floating over the living district.", "fix": "Six SM_Wep_BigAxe nodes removed from art/prefabs/building.care_center@scav.tscn."},
+    {"id": 7, "status": "FIXED", "area": "colony Sere", "issue": "Blocked-zone rock (tall formation scaled uniformly to the zone width) towered ~40 m and filled half of the default colony camera.", "fix": "Height capped at 1.3 x zone radius (width unchanged)."},
+    {"id": 8, "status": "FIXED", "area": "colony", "issue": "Big ground cover was pruned only by stem position, so canopies could grow through buildings.", "fix": "Prune radius uses the instance's scaled canopy footprint (rects only for big plants)."},
+    {"id": 9, "status": "FIXED", "area": "star map", "issue": "Fuel pills overlapped ('24 fuel' under '8 fuel'); ARK tag unreadable on route lines.", "fix": "Pills slide along their own route until free; ARK tag outlined."},
+    {"id": 10, "status": "FIXED", "area": "descent from the air", "issue": "Far-land speckle (one random shade per 10-90 m cell) read as a checkerboard at 300 m.", "fix": "Speckle full at the map seam, fading to 20 % with distance."},
+    {"id": 11, "status": "FIXED", "area": "log hygiene", "issue": "Descent gauge set size on a full-rect-anchored Control every frame (240-1170 warnings per ascent capture).", "fix": "Redundant size/position writes removed."},
+    {"id": 12, "status": "OPEN", "area": "descent", "issue": "The playable map still reads as a rougher, finer-faceted patch inside the smooth far land at 900 m (Ferrum, Sere).", "reason": "Needs terrain LOD/blend between the playable heightmap and the far ring; not a small safe change."},
+    {"id": 13, "status": "OPEN", "area": "colony scav care center", "issue": "The care center (where the first children are raised) is dressed as a black-market butcher stall: skulls, spines, ribs, tentacles, ham.", "reason": "Art-direction call for the owner; prefab otherwise sound."},
+    {"id": 14, "status": "OPEN", "area": "ship panels", "issue": "Opening star map/orbit panels leaves the bottom story subtitle peeking out under the panel frame.", "reason": "Panels are created by ship_scene (owned by another agent this round)."},
+    {"id": 15, "status": "OPEN", "area": "flight cockpit", "issue": "Cockpit interior is washed salmon-pink by the nebula/sun ambient; low contrast vs. Sci-Fi Space key art.", "reason": "Lighting tuning of the flight scene; left for a lighting pass."},
+    {"id": 16, "status": "OPEN", "area": "sky", "issue": "Aurora band on Nivalis/Umbra has a straight, sharp lower edge across the whole view near the ground.", "reason": "Shader/shape redesign (curtains instead of one cylinder); minor."},
+    {"id": 17, "status": "OPEN", "area": "captures", "issue": "A build-bar tooltip can stay over the pause menu / zoomed-out colony in captures at 1280x720 (OS cursor parked over the bar before the warp).", "reason": "Capture artifact, not seen in play."},
+    {"id": 18, "status": "NOTED", "area": "menu, settings, credits, load, ending, surface, flight", "issue": "No defects found beyond the above at 1600x900, 1280x720 or UI scale 1.5 (star map panel fits via fit_layer)."}
+  ],
+  "artifacts": [
+    "evidence/qa_r3/before/",
+    "evidence/qa_r3/after/",
+    "evidence/qa_r3/sheet_descent_before_after.jpg",
+    "evidence/qa_r3/sheet_descent2_before_after.jpg",
+    "evidence/qa_r3/sheet_colony_ui_before_after.jpg",
+    "evidence/qa_r3/perf/"
+  ]
+}

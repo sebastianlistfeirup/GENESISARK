@@ -132,6 +132,9 @@ func _ready() -> void:
 	AudioService.alarm_raised.connect(show_alarm)
 	story = StoryPlayer.new()
 	add_child(story)
+	# A CanvasLayer inside a hidden CanvasLayer is still drawn: subtitles follow the
+	# HUD (descent from orbit, establishing shots) instead of floating over them.
+	visibility_changed.connect(func() -> void: story.visible = visible)
 	journal = JournalPanel.new()
 	add_child(journal)
 	pause_menu = PauseMenu.new()

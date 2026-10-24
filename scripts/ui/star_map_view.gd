@@ -88,6 +88,7 @@ func _draw() -> void:
 		_dotted(_pos(a), _pos(b), Color(0.6, 0.9, 1.0, 0.12), 1.0, 5.0)
 	# Routes from the Ark: a soft glow under a bright core; fuel cost in a pill.
 	var pills: Array = []  # [Rect2, text, colour, selected]
+	var taken: Array[Rect2] = [Rect2(_pos(here) + Vector2(-14, -22), Vector2(54, 40))]  # the Ark chevron and its tag
 	for loc: String in content.locations.keys():
 		if loc == here:
 			continue
@@ -105,12 +106,23 @@ func _draw() -> void:
 			_flow(a, b, col)
 		else:
 			_dotted(a, b, Color(col, 0.6), 1.5, 7.0)
-		var mid := a.lerp(b, 0.42)  # a little towards the Ark: clear of the world's name
 		# Route risk is also a symbol, not only a colour: ▲ risky, ✕ not possible.
 		var mark := "" if q["ok"] and not q["risky"] else (" " + UiKit.status_icon("warning") if q["ok"] else " " + UiKit.status_icon("locked"))
 		var txt := Loc.t("%d fuel") % int(r.get("fuel", 0)) + mark
 		var tw := font.get_string_size(txt, HORIZONTAL_ALIGNMENT_LEFT, -1, 13).x
-		var pill := Rect2(mid + Vector2(-tw * 0.5 - 7.0, -10.0), Vector2(tw + 14.0, 20.0))
+		# A little towards the Ark (clear of the world's name); slid along its own
+		# route when it would sit on a neighbour's pill (routes fan out from the Ark).
+		var pill := Rect2()
+		for f: float in [0.42, 0.56, 0.3, 0.66, 0.22]:
+			pill = Rect2(a.lerp(b, f) + Vector2(-tw * 0.5 - 7.0, -10.0), Vector2(tw + 14.0, 20.0))
+			var free := true
+			for t: Rect2 in taken:
+				if t.grow(3.0).intersects(pill):
+					free = false
+					break
+			if free:
+				break
+		taken.append(pill)
 		if sel:
 			pills.append([pill, txt, col, sel])  # drawn last: on top of its neighbours
 		else:
@@ -158,6 +170,7 @@ func _draw() -> void:
 	draw_texture_rect(_glow_tex, Rect2(ark - Vector2.ONE * 26.0, Vector2.ONE * 52.0), false, Color(UiKit.AMBER, 0.7))
 	draw_arc(ark, 14.0 + pulse * 6.0, 0.0, TAU, 32, Color(UiKit.AMBER, 0.55 * (1.0 - pulse)), 1.5, true)
 	draw_colored_polygon(PackedVector2Array([ark + Vector2(0, -12), ark + Vector2(8, 8), ark + Vector2(0, 4), ark + Vector2(-8, 8)]), UiKit.AMBER)
+	draw_string_outline(font, ark + Vector2(13, -8), "ARK", HORIZONTAL_ALIGNMENT_LEFT, -1, 12, 5, Color(0.01, 0.01, 0.04, 0.85))
 	draw_string(font, ark + Vector2(13, -8), "ARK", HORIZONTAL_ALIGNMENT_LEFT, -1, 12, UiKit.AMBER)
 
 
