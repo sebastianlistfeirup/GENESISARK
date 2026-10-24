@@ -61,6 +61,20 @@ func tick_day(gs: GameState, _report: Dictionary) -> Dictionary:
 				gs.events.active.append({"id": id, "day_started": gs.campaign.colony_day + DictUtil.get_int(def, "warning_days", 3), "phase": "warning"})
 				gs.log_journal(Loc.t("Warning: %s") % def.get("warning", def.get("title")), "warning")
 				out["warned"].append(id)
+	# Delayed consequences of earlier choices (R9 layer 3): each applies once.
+	out["aftermath"] = []
+	for a: Dictionary in gs.events.aftermath.duplicate():
+		if gs.campaign.colony_day < int(a.get("due_day", 0)):
+			continue
+		gs.events.aftermath.erase(a)
+		var key := "aftermath:%s" % a.get("event_id")
+		if gs.is_applied(key):
+			continue
+		var after := aftermath_def(str(a.get("event_id")), str(a.get("option")))
+		_apply_effects(gs, DictUtil.get_dict(after, "effects"))
+		gs.mark_applied(key)
+		gs.log_journal(Loc.t("Aftermath: %s") % str(after.get("text", "")), "event")
+		out["aftermath"].append(a.get("event_id"))
 	# Promote warnings to active events when their day arrives.
 	for a: Dictionary in gs.events.active:
 		if a.get("phase") == "warning" and gs.campaign.colony_day >= int(a.get("day_started", 0)):
@@ -87,9 +101,39 @@ func blocking_event(gs: GameState) -> Dictionary:
 	return {}
 
 
+## What an option actually costs now: crises cost less when trust is high (R9).
+func option_cost(gs: GameState, def: Dictionary, option: Dictionary) -> Dictionary:
+	var m := ChoiceRules.crisis_cost_mult(content, gs) if str(def.get("kind")) == "crisis" else 1.0
+	var out := {}
+	var cost: Dictionary = DictUtil.get_dict(option, "cost")
+	for k: String in cost.keys():
+		out[k] = ceilf(float(cost[k]) * m) if float(cost[k]) > 0.0 else float(cost[k])
+	return out
+
+
+## The option's effects after the colony's course: under "safety" the harmful
+## side of a crisis is smaller (R9). Benefits are never scaled.
+func option_effects(gs: GameState, def: Dictionary, option: Dictionary) -> Dictionary:
+	var e: Dictionary = DictUtil.get_dict(option, "effects").duplicate()
+	if str(def.get("kind")) != "crisis":
+		return e
+	var m := ChoiceRules.crisis_effect_mult(content, gs)
+	if is_equal_approx(m, 1.0):
+		return e
+	for k: String in ["food", "water", "alloy", "components", "trust", "health", "power_kw_days"]:
+		if e.has(k) and float(e[k]) < 0.0:
+			e[k] = float(e[k]) * m
+	if e.has("wear") and float(e["wear"]) > 0.0:
+		e["wear"] = float(e["wear"]) * m
+	for k: String in ["deaths", "embryo_lost"]:
+		if e.has(k) and int(e[k]) > 0:
+			e[k] = roundi(float(e[k]) * m)
+	return e
+
+
 func option_blockers(gs: GameState, def: Dictionary, option: Dictionary) -> Array:
 	var out: Array = []
-	var cost: Dictionary = DictUtil.get_dict(option, "cost")
+	var cost: Dictionary = option_cost(gs, def, option)
 	for k: String in cost.keys():
 		if float(cost[k]) > 0.0 and float(gs.colony.inventory.get(k, 0.0)) < float(cost[k]):
 			out.append(Loc.t("Missing %s.") % ColonySimulation._res_label(k))
@@ -127,12 +171,15 @@ func resolve(gs: GameState, event_id: String, option_id: String) -> CommandResul
 	var blockers := option_blockers(gs, def, option)
 	if not blockers.is_empty():
 		return CommandResult.fail("option_blocked", " ".join(blockers), {"blockers": blockers})
-	var cost: Dictionary = DictUtil.get_dict(option, "cost")
+	var cost: Dictionary = option_cost(gs, def, option)
 	for k: String in cost.keys():
 		gs.colony.inventory[k] = maxf(0.0, float(gs.colony.inventory.get(k, 0.0)) - float(cost[k]))
-	_apply_effects(gs, DictUtil.get_dict(option, "effects"))
+	_apply_effects(gs, option_effects(gs, def, option))
 	gs.events.active.erase(active_entry)
 	gs.events.resolved[event_id] = {"option": option_id, "day": gs.campaign.colony_day}
+	var after: Dictionary = DictUtil.get_dict(option, "aftermath")
+	if not after.is_empty():
+		gs.events.aftermath.append({"event_id": event_id, "option": option_id, "due_day": gs.campaign.colony_day + DictUtil.get_int(after, "days", 365)})
 	if str(def.get("kind")) == "crisis":
 		gs.colony.stats["crises_resolved"] = int(gs.colony.stats.get("crises_resolved", 0)) + 1
 	gs.mark_applied("event:%s" % event_id)
@@ -171,6 +218,13 @@ func _apply_effects(gs: GameState, e: Dictionary) -> void:
 		population.apply_embryo_loss(gs, int(e["embryo_lost"]))
 
 
+func aftermath_def(event_id: String, option_id: String) -> Dictionary:
+	for o: Dictionary in DictUtil.get_arr(content.events.get(event_id, {}), "options"):
+		if o.get("id") == option_id:
+			return DictUtil.get_dict(o, "aftermath")
+	return {}
+
+
 ## Validation for event data (bible GA-23: no event demands a lost one-off resource).
 func validate_events() -> PackedStringArray:
 	var out: PackedStringArray = []
@@ -189,6 +243,10 @@ func validate_events() -> PackedStringArray:
 					out.append(Loc.t("event %s: fallback '%s' has requirements") % [id, fb])
 		if not found:
 			out.append(Loc.t("event %s: missing valid fallback") % id)
+		for o: Dictionary in DictUtil.get_arr(def, "options"):
+			var af: Dictionary = DictUtil.get_dict(o, "aftermath")
+			if not af.is_empty() and (DictUtil.get_int(af, "days") <= 0 or DictUtil.get_str(af, "text").is_empty()):
+				out.append(Loc.t("event %s: aftermath of '%s' needs days > 0 and a text") % [id, o.get("id")])
 		for bid: Variant in DictUtil.get_arr(DictUtil.get_dict(def, "trigger"), "requires_buildings"):
 			if not content.buildings.has(str(bid)):
 				out.append(Loc.t("event %s: unknown building %s") % [id, bid])

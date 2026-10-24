@@ -14,8 +14,9 @@ func _init(db: ContentDB) -> void:
 
 func council_blockers(gs: GameState) -> Array:
 	var out: Array = []
-	if gs.population.adult_workforce() < COUNCIL_MIN_ADULTS:
-		out.append(Loc.t("The council requires at least %d adults (now %d).") % [COUNCIL_MIN_ADULTS, gs.population.adult_workforce()])
+	var min_adults := ChoiceRules.council_min_adults(content, gs)
+	if gs.population.adult_workforce() < min_adults:
+		out.append(Loc.t("The council requires at least %d adults (now %d).") % [min_adults, gs.population.adult_workforce()])
 	if gs.colony == null or gs.colony.count_active("school_hall") == 0:
 		out.append(Loc.t("The council requires a completed school and town hall."))
 	return out

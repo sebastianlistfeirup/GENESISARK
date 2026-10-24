@@ -175,7 +175,8 @@ func _institutions(gs: GameState, plan: Dictionary, actions: Array) -> void:
 	if bool(plan.get("auto_incubate", true)) and posmod(gs.campaign.colony_day, 30) == 0:
 		var size := int(plan.get("cohort_size", 10))
 		# The approved plan sets a birth rate: total births follow it, never a runaway.
-		var planned := 20.0 + float(plan.get("births_per_year", 16)) * gs.campaign.colony_year()
+		# The chosen priorities shift the plan from the day they were chosen (R9).
+		var planned := 20.0 + float(plan.get("births_per_year", 16)) * gs.campaign.colony_year() + ChoiceRules.planned_birth_offset(content, gs)
 		var on_plan := float(gs.ark.embryo_born + gs.ark.embryo_incubating) < planned
 		if on_plan and population.incubation_blockers(gs, size).is_empty():
 			var r := population.start_incubation(gs, size, "era:inc:%d" % gs.campaign.colony_day)
@@ -197,7 +198,10 @@ func _needs(gs: GameState, plan: Dictionary, report: Dictionary) -> Array:
 	var free_wf := free_workforce(gs)
 	if free_wf < 1.0:
 		out.append("drone_hub")
-	if surplus < 8.0:
+	# How much power margin the institutions keep follows the colony's course (R9):
+	# expansion spends on growth and leans on the Ark's emergency power.
+	var targets := power_targets(gs)
+	if surplus < targets.x:
 		out.append(gen)
 	if float(prod.get("water", 0.0)) < float(need["water"]) * 1.15 + 4.0 + float(c.count_active("greenhouse")) * 4.0:
 		out.append("water_plant")
@@ -222,9 +226,16 @@ func _needs(gs: GameState, plan: Dictionary, report: Dictionary) -> Array:
 		out.append("school_hall")
 	if gs.population.alive_count() > 60 and c.count_active("clinic") == 0:
 		out.append("clinic")
-	if surplus < 20.0 and out.size() < 2:
+	if surplus < targets.y and out.size() < 2:
 		out.append(gen)
 	return out
+
+
+## Power surplus (kW) below which the institutions build a generator: x = urgent,
+## y = when nothing else is needed. Scaled by the course's power_margin (R9).
+func power_targets(gs: GameState) -> Vector2:
+	var m := ChoiceRules.mult(content, gs, "power_margin")
+	return Vector2(8.0 * m, 20.0 * m)
 
 
 ## Components made per day minus the average maintenance need per day
@@ -246,7 +257,7 @@ func component_balance(gs: GameState) -> float:
 ## Robot labor left once every staffed building (active or under construction)
 ## has its crew: what remains is construction capacity.
 func free_workforce(gs: GameState) -> float:
-	var free := colony_sim.drones(gs) + floorf(float(gs.population.adult_workforce()) / 4.0)
+	var free := colony_sim.drones(gs) + ChoiceRules.adult_labor(content, gs)
 	for b: Dictionary in gs.colony.buildings:
 		if b.get("state") == ColonyState.B_ACTIVE or b.get("state") == ColonyState.B_CONSTRUCTING:
 			free -= float(content.building(str(b.get("def_id"))).get("workforce", 0.0))

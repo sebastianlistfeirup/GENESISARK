@@ -97,7 +97,14 @@
             "power_kw_days": 0,
             "solar_penalty_days": 0
           },
-          "result": "The colony held its breath for ten days. The harvest rotted, but everyone made it through."
+          "result": "The colony held its breath for ten days. The harvest rotted, but everyone made it through.",
+          "aftermath": {
+            "days": 200,
+            "effects": {
+              "health": -0.02
+            },
+            "text": "Spores that settled in the vents during the shutdown are still making people cough."
+          }
         }
       ],
       "fallback": "c",
@@ -202,7 +209,15 @@
             "power_kw_days": 0,
             "solar_penalty_days": 14
           },
-          "result": "When the storm passed, the dust lay a hand's breadth thick. It took two weeks to get the panels clean."
+          "result": "When the storm passed, the dust lay a hand's breadth thick. It took two weeks to get the panels clean.",
+          "aftermath": {
+            "days": 300,
+            "effects": {
+              "wear": 15,
+              "trust": -1
+            },
+            "text": "Dust from the storm got into the bearings. Months later, the panels still grind when they turn."
+          }
         }
       ],
       "fallback": "c",
@@ -308,7 +323,15 @@
             "power_kw_days": 0,
             "solar_penalty_days": 0
           },
-          "result": "For three weeks everyone lived crowded together in the Ark's corridors. It was cramped. It was warm."
+          "result": "For three weeks everyone lived crowded together in the Ark's corridors. It was cramped. It was warm.",
+          "aftermath": {
+            "days": 365,
+            "effects": {
+              "trust": 2,
+              "autonomy": -2
+            },
+            "text": "The three weeks in the Ark's corridors became the colony's favourite story. The young are tired of hearing it."
+          }
         }
       ],
       "fallback": "c",

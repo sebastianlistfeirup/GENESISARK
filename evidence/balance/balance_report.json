@@ -1,33 +1,33 @@
 {
   "by_planet": {
     "ferrum": {
-      "best_pop": 600,
+      "best_pop": 640,
       "wins": 3
     },
     "nivalis": {
-      "best_pop": 650,
+      "best_pop": 730,
       "wins": 3
     },
     "pelagos": {
-      "best_pop": 650,
+      "best_pop": 730,
       "wins": 3
     },
     "sere": {
-      "best_pop": 650,
+      "best_pop": 730,
       "wins": 3
     },
     "umbra": {
-      "best_pop": 650,
+      "best_pop": 730,
       "wins": 3
     },
     "viridia": {
-      "best_pop": 650,
+      "best_pop": 730,
       "wins": 3
     }
   },
   "content_version": "0.1.0",
-  "elapsed_ms": 273279,
-  "engine_version": "4.5.1-stable (official)",
+  "elapsed_ms": 154501,
+  "engine_version": "4.7.1-stable (official)",
   "runs": [
     {
       "adults": 360,
@@ -45,7 +45,7 @@
         "lost": 0,
         "viable": 49340
       },
-      "ms": 13093,
+      "ms": 7324,
       "opening_days": 116,
       "own_kw": 312.0,
       "planet": "viridia",
@@ -65,29 +65,29 @@
     },
     {
       "adults": 360,
-      "births": 650,
+      "births": 590,
       "blockers_end": [],
-      "buildings": 108,
+      "buildings": 100,
       "council": true,
       "crises": 1,
       "deficit_days": 0,
-      "demand_kw": 290.0,
+      "demand_kw": 268.0,
       "invariants_ok": true,
       "ledger": {
-        "born": 650,
+        "born": 590,
         "incubating": 10,
         "lost": 0,
-        "viable": 49340
+        "viable": 49400
       },
-      "ms": 13029,
+      "ms": 7151,
       "opening_days": 126,
-      "own_kw": 316.0,
+      "own_kw": 292.0,
       "planet": "viridia",
       "pop_y20": 330,
-      "population": 650,
+      "population": 590,
       "profile": "independent",
-      "reserve_days": 365.0,
-      "residents": 721,
+      "reserve_days": 547.5,
+      "residents": 641,
       "slots": 80,
       "stops": [
         "critic",
@@ -98,30 +98,30 @@
       "year": 40.0
     },
     {
-      "adults": 360,
-      "births": 650,
+      "adults": 370,
+      "births": 730,
       "blockers_end": [],
-      "buildings": 104,
+      "buildings": 111,
       "council": true,
       "crises": 1,
       "deficit_days": 0,
-      "demand_kw": 284.0,
+      "demand_kw": 310.0,
       "invariants_ok": true,
       "ledger": {
-        "born": 650,
+        "born": 730,
         "incubating": 10,
         "lost": 0,
-        "viable": 49340
+        "viable": 49260
       },
-      "ms": 13103,
+      "ms": 7395,
       "opening_days": 55,
       "own_kw": 312.0,
       "planet": "viridia",
       "pop_y20": 330,
-      "population": 650,
+      "population": 730,
       "profile": "independent",
-      "reserve_days": 365.0,
-      "residents": 721,
+      "reserve_days": 273.75,
+      "residents": 801,
       "slots": 80,
       "stops": [
         "critic",
@@ -147,7 +147,7 @@
         "lost": 0,
         "viable": 49340
       },
-      "ms": 12974,
+      "ms": 6778,
       "opening_days": 144,
       "own_kw": 278.4,
       "planet": "pelagos",
@@ -166,29 +166,29 @@
     },
     {
       "adults": 360,
-      "births": 650,
+      "births": 590,
       "blockers_end": [],
-      "buildings": 105,
+      "buildings": 98,
       "council": true,
       "crises": 0,
       "deficit_days": 1446,
-      "demand_kw": 249.0,
+      "demand_kw": 229.0,
       "invariants_ok": true,
       "ledger": {
-        "born": 650,
+        "born": 590,
         "incubating": 10,
         "lost": 0,
-        "viable": 49340
+        "viable": 49400
       },
-      "ms": 12576,
+      "ms": 6713,
       "opening_days": 132,
-      "own_kw": 270.8,
+      "own_kw": 261.2,
       "planet": "pelagos",
       "pop_y20": 330,
-      "population": 650,
+      "population": 590,
       "profile": "independent",
-      "reserve_days": 365.0,
-      "residents": 721,
+      "reserve_days": 547.5,
+      "residents": 641,
       "slots": 80,
       "stops": [
         "critic",
@@ -198,30 +198,30 @@
       "year": 40.0
     },
     {
-      "adults": 360,
-      "births": 650,
+      "adults": 370,
+      "births": 730,
       "blockers_end": [],
-      "buildings": 104,
+      "buildings": 113,
       "council": true,
       "crises": 0,
-      "deficit_days": 1455,
-      "demand_kw": 249.0,
+      "deficit_days": 1457,
+      "demand_kw": 276.0,
       "invariants_ok": true,
       "ledger": {
-        "born": 650,
+        "born": 730,
         "incubating": 10,
         "lost": 0,
-        "viable": 49340
+        "viable": 49260
       },
-      "ms": 11758,
+      "ms": 7215,
       "opening_days": 57,
-      "own_kw": 278.4,
+      "own_kw": 288.0,
       "planet": "pelagos",
       "pop_y20": 330,
-      "population": 650,
+      "population": 730,
       "profile": "independent",
-      "reserve_days": 365.0,
-      "residents": 721,
+      "reserve_days": 273.75,
+      "residents": 801,
       "slots": 80,
       "stops": [
         "critic",
@@ -234,13 +234,13 @@
       "adults": 360,
       "births": 560,
       "blockers_end": [
-        "Not enough housing for the coming children."
+        "Ikke nok boligpladser til de kommende børn."
       ],
-      "buildings": 147,
+      "buildings": 145,
       "council": true,
       "crises": 1,
       "deficit_days": 18,
-      "demand_kw": 557.0,
+      "demand_kw": 547.0,
       "invariants_ok": true,
       "ledger": {
         "born": 560,
@@ -248,7 +248,7 @@
         "lost": 0,
         "viable": 49440
       },
-      "ms": 20053,
+      "ms": 12054,
       "opening_days": 77,
       "own_kw": 577.2,
       "planet": "ferrum",
@@ -270,7 +270,7 @@
       "adults": 360,
       "births": 560,
       "blockers_end": [
-        "Not enough housing for the coming children."
+        "Ikke nok boligpladser til de kommende børn."
       ],
       "buildings": 147,
       "council": true,
@@ -284,14 +284,14 @@
         "lost": 0,
         "viable": 49440
       },
-      "ms": 22210,
+      "ms": 11450,
       "opening_days": 114,
       "own_kw": 567.6,
       "planet": "ferrum",
       "pop_y20": 330,
       "population": 560,
       "profile": "independent",
-      "reserve_days": 365.0,
+      "reserve_days": 547.5,
       "residents": 561,
       "slots": 80,
       "stops": [
@@ -303,32 +303,32 @@
       "year": 40.0
     },
     {
-      "adults": 360,
-      "births": 600,
+      "adults": 370,
+      "births": 640,
       "blockers_end": [
-        "Not enough housing for the coming children."
+        "Ikke nok boligpladser til de kommende børn."
       ],
-      "buildings": 147,
+      "buildings": 167,
       "council": true,
       "crises": 1,
       "deficit_days": 0,
-      "demand_kw": 557.0,
+      "demand_kw": 638.0,
       "invariants_ok": true,
       "ledger": {
-        "born": 600,
+        "born": 640,
         "incubating": 0,
         "lost": 0,
-        "viable": 49400
+        "viable": 49360
       },
-      "ms": 19977,
+      "ms": 13160,
       "opening_days": 40,
-      "own_kw": 577.2,
+      "own_kw": 655.2,
       "planet": "ferrum",
       "pop_y20": 330,
-      "population": 600,
+      "population": 640,
       "profile": "independent",
-      "reserve_days": 365.0,
-      "residents": 601,
+      "reserve_days": 273.75,
+      "residents": 641,
       "slots": 80,
       "stops": [
         "critic",
@@ -354,7 +354,7 @@
         "lost": 0,
         "viable": 49340
       },
-      "ms": 15189,
+      "ms": 9110,
       "opening_days": 76,
       "own_kw": 360.0,
       "planet": "sere",
@@ -374,29 +374,29 @@
     },
     {
       "adults": 360,
-      "births": 650,
+      "births": 590,
       "blockers_end": [],
-      "buildings": 142,
+      "buildings": 131,
       "council": true,
       "crises": 1,
       "deficit_days": 17,
-      "demand_kw": 340.0,
+      "demand_kw": 313.0,
       "invariants_ok": true,
       "ledger": {
-        "born": 650,
+        "born": 590,
         "incubating": 10,
         "lost": 0,
-        "viable": 49340
+        "viable": 49400
       },
-      "ms": 16314,
+      "ms": 8709,
       "opening_days": 92,
-      "own_kw": 364.0,
+      "own_kw": 337.0,
       "planet": "sere",
       "pop_y20": 330,
-      "population": 650,
+      "population": 590,
       "profile": "independent",
-      "reserve_days": 365.0,
-      "residents": 721,
+      "reserve_days": 547.5,
+      "residents": 641,
       "slots": 80,
       "stops": [
         "critic",
@@ -407,30 +407,30 @@
       "year": 40.0
     },
     {
-      "adults": 360,
-      "births": 650,
+      "adults": 370,
+      "births": 730,
       "blockers_end": [],
-      "buildings": 140,
+      "buildings": 152,
       "council": true,
       "crises": 1,
       "deficit_days": 3,
-      "demand_kw": 340.0,
+      "demand_kw": 374.0,
       "invariants_ok": true,
       "ledger": {
-        "born": 650,
+        "born": 730,
         "incubating": 10,
         "lost": 0,
-        "viable": 49340
+        "viable": 49260
       },
-      "ms": 15496,
+      "ms": 9607,
       "opening_days": 36,
-      "own_kw": 360.0,
+      "own_kw": 378.0,
       "planet": "sere",
       "pop_y20": 330,
-      "population": 650,
+      "population": 730,
       "profile": "independent",
-      "reserve_days": 365.0,
-      "residents": 721,
+      "reserve_days": 273.75,
+      "residents": 801,
       "slots": 80,
       "stops": [
         "critic",
@@ -456,7 +456,7 @@
         "lost": 0,
         "viable": 49340
       },
-      "ms": 13619,
+      "ms": 7930,
       "opening_days": 171,
       "own_kw": 398.4,
       "planet": "nivalis",
@@ -476,29 +476,29 @@
     },
     {
       "adults": 360,
-      "births": 650,
+      "births": 590,
       "blockers_end": [],
-      "buildings": 112,
+      "buildings": 102,
       "council": true,
       "crises": 1,
       "deficit_days": 9,
-      "demand_kw": 377.0,
+      "demand_kw": 343.0,
       "invariants_ok": true,
       "ledger": {
-        "born": 650,
+        "born": 590,
         "incubating": 10,
         "lost": 0,
-        "viable": 49340
+        "viable": 49400
       },
-      "ms": 14502,
+      "ms": 7494,
       "opening_days": 157,
-      "own_kw": 415.2,
+      "own_kw": 367.2,
       "planet": "nivalis",
       "pop_y20": 330,
-      "population": 650,
+      "population": 590,
       "profile": "independent",
-      "reserve_days": 365.0,
-      "residents": 721,
+      "reserve_days": 547.5,
+      "residents": 641,
       "slots": 80,
       "stops": [
         "critic",
@@ -509,30 +509,30 @@
       "year": 40.0
     },
     {
-      "adults": 360,
-      "births": 650,
+      "adults": 370,
+      "births": 730,
       "blockers_end": [],
-      "buildings": 111,
+      "buildings": 122,
       "council": true,
       "crises": 1,
       "deficit_days": 32,
-      "demand_kw": 377.0,
+      "demand_kw": 418.0,
       "invariants_ok": true,
       "ledger": {
-        "born": 650,
+        "born": 730,
         "incubating": 10,
         "lost": 0,
-        "viable": 49340
+        "viable": 49260
       },
-      "ms": 14604,
+      "ms": 8314,
       "opening_days": 83,
-      "own_kw": 415.2,
+      "own_kw": 439.2,
       "planet": "nivalis",
       "pop_y20": 330,
-      "population": 650,
+      "population": 730,
       "profile": "independent",
-      "reserve_days": 365.0,
-      "residents": 721,
+      "reserve_days": 273.75,
+      "residents": 801,
       "slots": 80,
       "stops": [
         "critic",
@@ -549,7 +549,7 @@
       "buildings": 121,
       "council": true,
       "crises": 1,
-      "deficit_days": 79,
+      "deficit_days": 68,
       "demand_kw": 346.0,
       "invariants_ok": true,
       "ledger": {
@@ -558,8 +558,8 @@
         "lost": 0,
         "viable": 49340
       },
-      "ms": 16435,
-      "opening_days": 141,
+      "ms": 8286,
+      "opening_days": 140,
       "own_kw": 378.0,
       "planet": "umbra",
       "pop_y20": 330,
@@ -578,29 +578,29 @@
     },
     {
       "adults": 360,
-      "births": 650,
+      "births": 590,
       "blockers_end": [],
-      "buildings": 120,
+      "buildings": 111,
       "council": true,
       "crises": 1,
       "deficit_days": 0,
-      "demand_kw": 342.0,
+      "demand_kw": 317.0,
       "invariants_ok": true,
       "ledger": {
-        "born": 650,
+        "born": 590,
         "incubating": 10,
         "lost": 0,
-        "viable": 49340
+        "viable": 49400
       },
-      "ms": 14394,
+      "ms": 7526,
       "opening_days": 121,
-      "own_kw": 378.0,
+      "own_kw": 342.0,
       "planet": "umbra",
       "pop_y20": 330,
-      "population": 650,
+      "population": 590,
       "profile": "independent",
-      "reserve_days": 365.0,
-      "residents": 721,
+      "reserve_days": 547.5,
+      "residents": 641,
       "slots": 80,
       "stops": [
         "critic",
@@ -611,30 +611,30 @@
       "year": 40.0
     },
     {
-      "adults": 360,
-      "births": 650,
+      "adults": 370,
+      "births": 730,
       "blockers_end": [],
-      "buildings": 119,
+      "buildings": 131,
       "council": true,
       "crises": 1,
       "deficit_days": 18,
-      "demand_kw": 342.0,
+      "demand_kw": 381.0,
       "invariants_ok": true,
       "ledger": {
-        "born": 650,
+        "born": 730,
         "incubating": 10,
         "lost": 0,
-        "viable": 49340
+        "viable": 49260
       },
-      "ms": 13952,
+      "ms": 8285,
       "opening_days": 55,
-      "own_kw": 378.0,
+      "own_kw": 396.0,
       "planet": "umbra",
       "pop_y20": 330,
-      "population": 650,
+      "population": 730,
       "profile": "independent",
-      "reserve_days": 365.0,
-      "residents": 721,
+      "reserve_days": 273.75,
+      "residents": 801,
       "slots": 80,
       "stops": [
         "critic",
@@ -645,5 +645,5 @@
       "year": 40.0
     }
   ],
-  "timestamp": "2026-10-20T11:26:10"
+  "timestamp": "2026-10-24T09:11:50"
 }

@@ -16,7 +16,7 @@
 
 | Lag | Kommando | Resultat |
 |---|---|---|
-| 1 · Domæne | `godot --headless --path . --script res://tests/run_tests.gd` | **67 tests, 0 fejl** → `evidence/test_report.json` |
+| 1 · Domæne | `godot --headless --path . --script res://tests/run_tests.gd` | **81 tests, 0 fejl** → `evidence/test_report.json` |
 | 2 · Scener (rigtigt input) | `godot --headless --path . res://scenes/tests/scene_smoke.tscn` | **54 checks, 0 fejl** + touch-føling 6/6 → `evidence/scene_smoke.json` |
 | Parse-tjek | `godot --headless --path . res://scenes/tests/compile_all.tscn` | 110 scripts, 0 fejl |
 | Balance | `godot --headless --path . --script res://tools/balance/run_balance.gd` | 18 kørsler til år 40 → `evidence/balance/` |
@@ -92,6 +92,7 @@
 | Tekst | 63 linjer poleret (NAV-format, ARK's stemme, terminologi); "1 crisis"; børn arbejder ikke i historierne. | `evidence/text_pass/changes.md` |
 | Tilgængelighed | Alt kan ombindes, paneler og HUD passer i 1280×720 ved UI-skala 1,5, symboler ved siden af farver, visuel alarm, undertekststørrelse virker overalt; 5 nye scenetests. Åbent: lille tekst ved skala 1,0 i 1280×720 (standardskala er dit valg), ingen ombinding af controller (D-018), ingen advarsel ved dobbelt-bundne taster. | `evidence/a11y/audit.md` |
 | R9-forslag | Tre lag til valg med konsekvens, med målepunkter til kampagnebotten. | `docs/proposals/R9_valg_med_konsekvens.md` |
+| R9 implementeret | Lag 1 (varig kurs ved år 20/40), lag 2 (tillid < 35 / > 65 med HUD-symbol og forklaring i Fremtid-fanen), lag 3 (ét efterspil pr. hændelse), skærpet *skærmet*. Bot: befolkning år 40 spreder 21-24 % mellem spillestile, to slutprofiler blandt normale spillestile, 0 fejl; balance 18/18. 81 domænetests. | D-034, `evidence/R9/result.json` |
 
 ## Balance (fase 3-forløber, `evidence/balance/balance_table.txt`)
 

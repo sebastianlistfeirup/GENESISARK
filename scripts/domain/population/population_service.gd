@@ -50,8 +50,9 @@ func incubation_blockers(gs: GameState, count: int) -> Array:
 	if surplus < float(inc.get("required_surplus_kw", 5)):
 		out.append(Loc.t("Requires at least +%d kW power surplus (now %+.1f kW).") % [int(inc.get("required_surplus_kw", 5)), surplus])
 	var rd := reserve_days(gs, count + gs.ark.embryo_incubating)
-	if rd < float(inc.get("required_reserve_days", 30)):
-		out.append(Loc.t("Requires water and food reserves for %d days for the coming children (now %.0f).") % [int(inc.get("required_reserve_days", 30)), rd])
+	var need_days := ChoiceRules.incubation_reserve_days(content, gs)  # low trust demands more (R9)
+	if rd < float(need_days):
+		out.append(Loc.t("Requires water and food reserves for %d days for the coming children (now %.0f).") % [need_days, rd])
 	var req := colony_sim.requires_module(gs)
 	if not req.is_empty():
 		var any_ok := false

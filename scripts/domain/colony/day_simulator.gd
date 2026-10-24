@@ -33,7 +33,7 @@ func tick_day(gs: GameState) -> Dictionary:
 		colony_sim.recompute_network(gs)
 
 	# Workforce: drones (+ adults) staff production first, the rest builds.
-	var workforce := colony_sim.drones(gs) + floorf(float(gs.population.adult_workforce()) / 4.0)
+	var workforce := colony_sim.drones(gs) + ChoiceRules.adult_labor(content, gs)
 	for b: Dictionary in c.buildings:
 		b["staffed"] = true
 		if b["state"] != ColonyState.B_ACTIVE:
@@ -45,6 +45,7 @@ func tick_day(gs: GameState) -> Dictionary:
 			else:
 				b["staffed"] = false
 	var build_capacity := workforce
+	var build_speed := ChoiceRules.mult(content, gs, "build_speed")
 	for b: Dictionary in c.buildings:
 		if b.get("state") != ColonyState.B_CONSTRUCTING:
 			continue
@@ -57,7 +58,7 @@ func tick_day(gs: GameState) -> Dictionary:
 			b["blocked_reason"] = "no_workforce"
 			continue
 		build_capacity -= units
-		b["progress"] = minf(1.0, float(b.progress) + units / work)
+		b["progress"] = minf(1.0, float(b.progress) + units / work * build_speed)
 		b["blocked_reason"] = "constructing"
 		if float(b.progress) >= 1.0:
 			b["state"] = ColonyState.B_ACTIVE
@@ -115,8 +116,14 @@ func tick_day(gs: GameState) -> Dictionary:
 		c.salvage_left -= s
 		c.inventory["alloy"] = float(c.inventory["alloy"]) + s
 		produced["alloy"] = float(produced["alloy"]) + s
+	# How often the colony still needs the Ark: ~1-year moving share of days with draw (R9).
+	var drew := 1.0 if float(power.get("ark_drawn_kw", 0.0)) > 0.01 else 0.0
+	c.ark_draw_share += (drew - c.ark_draw_share) / float(content.bal("time.days_per_year", 365))
 	if c.ark_fuel > 0.0:
-		c.ark_fuel = maxf(0.0, c.ark_fuel - DictUtil.get_float(ark_def, "fuel_per_day", 0.1))
+		# Emergency power burns fuel for what is drawn; standby costs little (R9).
+		var ark_kw := float(power.get("ark_kw", 0.0))
+		var drawn := float(power.get("ark_drawn_kw", 0.0)) / ark_kw if ark_kw > 0.0 else 0.0
+		c.ark_fuel = maxf(0.0, c.ark_fuel - DictUtil.get_float(ark_def, "fuel_per_day", 0.1) * ChoiceRules.ark_burn_factor(content, gs, drawn))
 
 	# Consumption: every living person, every day. Captain is supplied by the ark module.
 	var need := population.daily_need(gs)
@@ -132,10 +139,11 @@ func tick_day(gs: GameState) -> Dictionary:
 	# Storage limits: lagers are physical. Water/food keep up to a year of need.
 	var st: Dictionary = content.bal("storage", {})
 	if not st.is_empty():
-		c.inventory["alloy"] = minf(float(c.inventory["alloy"]), DictUtil.get_float(st, "alloy", 1500.0))
-		c.inventory["components"] = minf(float(c.inventory["components"]), DictUtil.get_float(st, "components", 300.0))
+		var smult := ChoiceRules.mult(content, gs, "storage")  # expansion −, safety + (R9)
+		c.inventory["alloy"] = minf(float(c.inventory["alloy"]), DictUtil.get_float(st, "alloy", 1500.0) * smult)
+		c.inventory["components"] = minf(float(c.inventory["components"]), DictUtil.get_float(st, "components", 300.0) * smult)
 		for k: String in ["water", "food"]:
-			var cap := maxf(DictUtil.get_float(st, "supply_min", 1500.0), float(need[k]) * DictUtil.get_float(st, "supply_days", 365.0))
+			var cap := maxf(DictUtil.get_float(st, "supply_min", 1500.0), float(need[k]) * DictUtil.get_float(st, "supply_days", 365.0)) * smult
 			c.inventory[k] = minf(float(c.inventory[k]), cap)
 
 	# Maintenance: robots service worn buildings with components; otherwise output halves.

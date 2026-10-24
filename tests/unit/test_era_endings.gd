@@ -124,7 +124,7 @@ func test_institutions_keep_construction_labor() -> void:
 
 
 func _free_labor(sim: Simulation) -> float:
-	var free := sim.colony.drones(sim.state) + floorf(float(sim.state.population.adult_workforce()) / 4.0)
+	var free := sim.colony.drones(sim.state) + ChoiceRules.adult_labor(content, sim.state)
 	for b: Dictionary in sim.state.colony.buildings:
 		if b["state"] == ColonyState.B_ACTIVE or b["state"] == ColonyState.B_CONSTRUCTING:
 			free -= float(content.building(str(b["def_id"])).get("workforce", 0.0))

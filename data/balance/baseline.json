@@ -103,5 +103,49 @@
     "_note": "District radius multiplier = 1 + colony_year / growth_years, capped at max_scale (D-032).",
     "growth_years": 25.0,
     "max_scale": 2.2
+  },
+  "council": {
+    "min_adults": 10
+  },
+  "workforce": {
+    "_note": "Share of adults that work as construction/staff labor (children never work).",
+    "adult_work_share": 0.25
+  },
+  "priorities": {
+    "_note": "R9/D-034: the year-20/40 priority is a lasting modifier set; the latest decision is the colony's course. Missing keys mean 1.0 (multipliers) or 0 (deltas). Every priority has a gain and a price.",
+    "expansion": {
+      "district_growth": 1.2,
+      "births_per_year": 4,
+      "power_margin": 0.5,
+      "wear": 1.15,
+      "storage": 0.75
+    },
+    "safety": {
+      "storage": 1.5,
+      "crisis_effects": 0.7,
+      "build_speed": 0.85,
+      "power_margin": 1.5,
+      "births_per_year": -3
+    },
+    "self_determination": {
+      "council_min_adults": 6,
+      "adult_work_share": 0.3333,
+      "ark_fuel_burn": 2.0,
+      "ark_standby_burn": 1.0
+    }
+  },
+  "trust_effects": {
+    "_note": "R9/D-034: trust is a dial with systemic effects. Below 'low' adults work less and incubation demands more reserve days; above 'high' adults work more and crises cost less. Trust never decides an ending on its own.",
+    "low": 35.0,
+    "high": 65.0,
+    "low_effort": 0.75,
+    "high_effort": 1.1,
+    "low_reserve_days": 45,
+    "high_crisis_cost": 0.8
+  },
+  "ark_power": {
+    "_note": "R9/D-034: after landing the Ark's core is emergency power. It burns fuel in proportion to the share of its output the colony actually draws; 'standby_burn' is the fraction of the daily burn spent while idle. The Ark 'still shields' the colony when its emergency power carries more than 'shielded_share' of demand now, or was drawn on more than 'shielded_share' of the last year's days (an 8 kW core can never carry 15% of a 300 kW grid; the epilogue's 'every night the emergency power still flows' is the measurable form). Shielded colonies are never 'independent'.",
+    "standby_burn": 0.0,
+    "shielded_share": 0.15
   }
 }

@@ -1,44 +1,27 @@
 {
   "content_version": "0.1.0",
-  "elapsed_ms": 40922,
+  "elapsed_ms": 245613,
   "endings": {
-    "independent": 1
+    "fragile": 6,
+    "independent": 17,
+    "shielded": 1
   },
-  "engine_version": "4.5.1-stable (official)",
+  "engine_version": "4.7.1-stable (official)",
   "events_seen": [
     "civic_first_night",
-    "crisis_dust_storm",
+    "crisis_spore_bloom",
     "civic_fever",
     "civic_naming",
     "civic_school_or_work",
     "civic_mine_accident",
-    "civic_youth_vote"
+    "civic_youth_vote",
+    "crisis_dust_storm",
+    "crisis_deep_cold"
   ],
   "events_total": 9,
   "failures": [],
-  "options_chosen": 7,
-  "options_never_chosen": [
-    "civic_first_night/a",
-    "civic_first_night/c",
-    "civic_fever/a",
-    "civic_fever/c",
-    "civic_naming/a",
-    "civic_naming/c",
-    "civic_school_or_work/a",
-    "civic_school_or_work/c",
-    "civic_mine_accident/a",
-    "civic_mine_accident/c",
-    "civic_youth_vote/a",
-    "civic_youth_vote/c",
-    "crisis_spore_bloom/a",
-    "crisis_spore_bloom/b",
-    "crisis_spore_bloom/c",
-    "crisis_dust_storm/a",
-    "crisis_dust_storm/c",
-    "crisis_deep_cold/a",
-    "crisis_deep_cold/b",
-    "crisis_deep_cold/c"
-  ],
+  "options_chosen": 27,
+  "options_never_chosen": [],
   "options_total": 27,
   "runs": [
     {
@@ -48,15 +31,687 @@
         "care_center": 4,
         "clinic": 1,
         "drone_hub": 1,
-        "greenhouse": 31,
+        "greenhouse": 23,
+        "habitat": 20,
+        "mine": 2,
+        "school_hall": 1,
+        "solar_array": 27,
+        "water_plant": 32,
+        "workshop": 1
+      },
+      "checksum": "55ec8a43b37d8ad92cf7b31fadf08e7bea5a66a99e37cac597d92e7fabd9c59e",
+      "council": true,
+      "decisions": [
+        "year_20:expansion",
+        "year_40:expansion"
+      ],
+      "ending": "independent",
+      "events": {
+        "civic_fever": "a",
+        "civic_first_night": "a",
+        "civic_mine_accident": "a",
+        "civic_naming": "a",
+        "civic_school_or_work": "a",
+        "civic_youth_vote": "a",
+        "crisis_spore_bloom": "a"
+      },
+      "failures": 0,
+      "free_workforce_end": 104.0,
+      "greenhouse_room_end": {
+        "landing": 0,
+        "living": 0,
+        "resource": 0
+      },
+      "incubation_blockers_end": [],
+      "ledger": {
+        "born": 730,
+        "incubating": 10,
+        "lost": 0,
+        "viable": 49260
+      },
+      "metrics": {
+        "adults": 370,
+        "ark_days_share": 0.004,
+        "ark_fuel": 83.3,
+        "ark_kw": 8.0,
+        "ark_share": 0.0,
+        "autonomy": 34.0,
+        "council": true,
+        "crises_resolved": 1,
+        "demand_kw": 316.0,
+        "own_power_kw": 324.0,
+        "population": 730,
+        "power_gap_share": 0.0,
+        "power_independent": true,
+        "reserve_days": 273.75,
+        "trust": 100.0,
+        "years": 40.0
+      },
+      "ms": 10254,
+      "planet": "viridia",
+      "policy": "first",
+      "population": 730,
+      "probe": false,
+      "roundtrips": 8,
+      "seed": 5000,
+      "stops": {
+        "critical_event": 3
+      },
+      "trace": [],
+      "year": 40.0
+    },
+    {
+      "buildings_end": {
+        "ark_core": 1,
+        "battery": 1,
+        "care_center": 4,
+        "clinic": 1,
+        "drone_hub": 1,
+        "greenhouse": 19,
+        "habitat": 16,
+        "mine": 2,
+        "school_hall": 1,
+        "solar_array": 25,
+        "water_plant": 27,
+        "workshop": 1
+      },
+      "checksum": "0489d22ccb2841e08c2d96e0d6214c6a8e3c715c1703a9c0909e752e1ab74beb",
+      "council": true,
+      "decisions": [
+        "year_20:safety",
+        "year_40:safety"
+      ],
+      "ending": "independent",
+      "events": {
+        "civic_fever": "b",
+        "civic_first_night": "b",
+        "civic_mine_accident": "b",
+        "civic_naming": "b",
+        "civic_school_or_work": "b",
+        "civic_youth_vote": "b",
+        "crisis_spore_bloom": "b"
+      },
+      "failures": 0,
+      "free_workforce_end": 102.0,
+      "greenhouse_room_end": {
+        "landing": 0,
+        "living": 0,
+        "resource": 0
+      },
+      "incubation_blockers_end": [],
+      "ledger": {
+        "born": 590,
+        "incubating": 10,
+        "lost": 0,
+        "viable": 49400
+      },
+      "metrics": {
+        "adults": 360,
+        "ark_days_share": 0.0,
+        "ark_fuel": 86.0,
+        "ark_kw": 8.0,
+        "ark_share": 0.0,
+        "autonomy": 20.0,
+        "council": true,
+        "crises_resolved": 1,
+        "demand_kw": 268.0,
+        "own_power_kw": 300.0,
+        "population": 590,
+        "power_gap_share": 0.0,
+        "power_independent": true,
+        "reserve_days": 547.5,
+        "trust": 100.0,
+        "years": 40.0
+      },
+      "ms": 9531,
+      "planet": "viridia",
+      "policy": "middle",
+      "population": 590,
+      "probe": false,
+      "roundtrips": 8,
+      "seed": 5001,
+      "stops": {
+        "critical_event": 3
+      },
+      "trace": [],
+      "year": 40.0
+    },
+    {
+      "buildings_end": {
+        "ark_core": 1,
+        "battery": 1,
+        "care_center": 4,
+        "clinic": 1,
+        "drone_hub": 1,
+        "greenhouse": 21,
         "habitat": 18,
+        "mine": 2,
+        "school_hall": 1,
+        "solar_array": 26,
+        "water_plant": 29,
+        "workshop": 1
+      },
+      "checksum": "fcbb4ad39127095d783dd1eb8e91deb0e80574625835ff5fbee3ef7bc2a9ed01",
+      "council": true,
+      "decisions": [
+        "year_20:self_determination",
+        "year_40:self_determination"
+      ],
+      "ending": "independent",
+      "events": {
+        "civic_fever": "c",
+        "civic_first_night": "c",
+        "civic_mine_accident": "c",
+        "civic_naming": "c",
+        "civic_school_or_work": "c",
+        "civic_youth_vote": "c",
+        "crisis_spore_bloom": "c"
+      },
+      "failures": 0,
+      "free_workforce_end": 134.0,
+      "greenhouse_room_end": {
+        "landing": 0,
+        "living": 0,
+        "resource": 0
+      },
+      "incubation_blockers_end": [],
+      "ledger": {
+        "born": 650,
+        "incubating": 10,
+        "lost": 0,
+        "viable": 49340
+      },
+      "metrics": {
+        "adults": 360,
+        "ark_days_share": 0.0,
+        "ark_fuel": 0.0,
+        "ark_kw": 0.0,
+        "ark_share": 0.0,
+        "autonomy": 54.0,
+        "council": true,
+        "crises_resolved": 1,
+        "demand_kw": 290.0,
+        "own_power_kw": 312.0,
+        "population": 650,
+        "power_gap_share": 0.0,
+        "power_independent": true,
+        "reserve_days": 365.0,
+        "trust": 100.0,
+        "years": 40.0
+      },
+      "ms": 9810,
+      "planet": "viridia",
+      "policy": "last",
+      "population": 650,
+      "probe": false,
+      "roundtrips": 8,
+      "seed": 5002,
+      "stops": {
+        "critical_event": 3
+      },
+      "trace": [],
+      "year": 40.0
+    },
+    {
+      "buildings_end": {
+        "ark_core": 1,
+        "battery": 1,
+        "care_center": 4,
+        "clinic": 1,
+        "drone_hub": 1,
+        "greenhouse": 23,
+        "habitat": 20,
+        "mine": 2,
+        "school_hall": 1,
+        "solar_array": 27,
+        "water_plant": 32,
+        "workshop": 1
+      },
+      "checksum": "83755c632621ac7cdb45bdb22d256529ef72ccf95fa05022ec841ba591be9c7f",
+      "council": false,
+      "decisions": [
+        "year_20:expansion",
+        "year_40:expansion"
+      ],
+      "ending": "fragile",
+      "events": {
+        "civic_fever": "b",
+        "civic_first_night": "a",
+        "civic_mine_accident": "a",
+        "civic_naming": "a",
+        "civic_school_or_work": "a",
+        "civic_youth_vote": "a",
+        "crisis_spore_bloom": "a"
+      },
+      "failures": 0,
+      "free_workforce_end": 104.0,
+      "greenhouse_room_end": {
+        "landing": 0,
+        "living": 0,
+        "resource": 0
+      },
+      "incubation_blockers_end": [],
+      "ledger": {
+        "born": 730,
+        "incubating": 10,
+        "lost": 0,
+        "viable": 49260
+      },
+      "metrics": {
+        "adults": 370,
+        "ark_days_share": 0.004,
+        "ark_fuel": 83.8,
+        "ark_kw": 8.0,
+        "ark_share": 0.0,
+        "autonomy": 32.0,
+        "council": false,
+        "crises_resolved": 1,
+        "demand_kw": 316.0,
+        "own_power_kw": 324.0,
+        "population": 730,
+        "power_gap_share": 0.0,
+        "power_independent": true,
+        "reserve_days": 273.75,
+        "trust": 100.0,
+        "years": 40.0
+      },
+      "ms": 8872,
+      "planet": "viridia",
+      "policy": "neglect",
+      "population": 730,
+      "probe": false,
+      "roundtrips": 8,
+      "seed": 5003,
+      "stops": {
+        "critical_event": 3
+      },
+      "trace": [],
+      "year": 40.0
+    },
+    {
+      "buildings_end": {
+        "ark_core": 1,
+        "battery": 1,
+        "care_center": 4,
+        "clinic": 1,
+        "drone_hub": 1,
+        "greenhouse": 27,
+        "habitat": 20,
+        "mine": 2,
+        "school_hall": 1,
+        "solar_array": 30,
+        "water_plant": 24,
+        "workshop": 1
+      },
+      "checksum": "e434295bad6fc1276d132b3e1382642094b49f6dbc0a706db5c10342e1e1ca01",
+      "council": true,
+      "decisions": [
+        "year_20:expansion",
+        "year_40:expansion"
+      ],
+      "ending": "independent",
+      "events": {
+        "civic_fever": "a",
+        "civic_first_night": "a",
+        "civic_mine_accident": "a",
+        "civic_naming": "a",
+        "civic_school_or_work": "a",
+        "civic_youth_vote": "a"
+      },
+      "failures": 0,
+      "free_workforce_end": 103.7,
+      "greenhouse_room_end": {
+        "landing": 0,
+        "living": 0,
+        "resource": 0
+      },
+      "incubation_blockers_end": [],
+      "ledger": {
+        "born": 730,
+        "incubating": 10,
+        "lost": 0,
+        "viable": 49260
+      },
+      "metrics": {
+        "adults": 370,
+        "ark_days_share": 0.0,
+        "ark_fuel": 0.0,
+        "ark_kw": 0.0,
+        "ark_share": 0.0,
+        "autonomy": 34.0,
+        "council": true,
+        "crises_resolved": 0,
+        "demand_kw": 276.0,
+        "own_power_kw": 288.0,
+        "population": 730,
+        "power_gap_share": 0.0,
+        "power_independent": true,
+        "reserve_days": 273.75,
+        "trust": 77.0,
+        "years": 40.0
+      },
+      "ms": 10655,
+      "planet": "pelagos",
+      "policy": "first",
+      "population": 730,
+      "probe": false,
+      "roundtrips": 7,
+      "seed": 5010,
+      "stops": {
+        "critical_event": 2
+      },
+      "trace": [],
+      "year": 40.0
+    },
+    {
+      "buildings_end": {
+        "ark_core": 1,
+        "battery": 2,
+        "care_center": 4,
+        "clinic": 1,
+        "drone_hub": 1,
+        "greenhouse": 22,
+        "habitat": 16,
+        "mine": 2,
+        "school_hall": 1,
+        "solar_array": 27,
+        "water_plant": 19,
+        "workshop": 1
+      },
+      "checksum": "5775c88b1f4ed008bb2c63828fd5b1c491580fffdb5d0bdceca6879fef3d2054",
+      "council": true,
+      "decisions": [
+        "year_20:safety",
+        "year_40:safety"
+      ],
+      "ending": "independent",
+      "events": {
+        "civic_fever": "b",
+        "civic_first_night": "b",
+        "civic_mine_accident": "b",
+        "civic_naming": "b",
+        "civic_school_or_work": "b",
+        "civic_youth_vote": "b"
+      },
+      "failures": 0,
+      "free_workforce_end": 101.7,
+      "greenhouse_room_end": {
+        "landing": 0,
+        "living": 0,
+        "resource": 0
+      },
+      "incubation_blockers_end": [],
+      "ledger": {
+        "born": 590,
+        "incubating": 10,
+        "lost": 0,
+        "viable": 49400
+      },
+      "metrics": {
+        "adults": 360,
+        "ark_days_share": 0.0,
+        "ark_fuel": 0.0,
+        "ark_kw": 0.0,
+        "ark_share": 0.0,
+        "autonomy": 20.0,
+        "council": true,
+        "crises_resolved": 0,
+        "demand_kw": 229.0,
+        "own_power_kw": 259.2,
+        "population": 590,
+        "power_gap_share": 0.0,
+        "power_independent": true,
+        "reserve_days": 547.5,
+        "trust": 68.0,
+        "years": 40.0
+      },
+      "ms": 10097,
+      "planet": "pelagos",
+      "policy": "middle",
+      "population": 590,
+      "probe": false,
+      "roundtrips": 7,
+      "seed": 5011,
+      "stops": {
+        "critical_event": 2
+      },
+      "trace": [],
+      "year": 40.0
+    },
+    {
+      "buildings_end": {
+        "ark_core": 1,
+        "battery": 1,
+        "care_center": 4,
+        "clinic": 1,
+        "drone_hub": 1,
+        "greenhouse": 24,
+        "habitat": 18,
+        "mine": 2,
+        "school_hall": 1,
+        "solar_array": 29,
+        "water_plant": 21,
+        "workshop": 1
+      },
+      "checksum": "85a76f2c12ecb7d6a6e968e52c40eab2b5846f454d1a98908d3e0034ed72f1f9",
+      "council": true,
+      "decisions": [
+        "year_20:self_determination",
+        "year_40:self_determination"
+      ],
+      "ending": "independent",
+      "events": {
+        "civic_fever": "c",
+        "civic_first_night": "c",
+        "civic_mine_accident": "c",
+        "civic_naming": "c",
+        "civic_school_or_work": "c",
+        "civic_youth_vote": "c"
+      },
+      "failures": 0,
+      "free_workforce_end": 133.7,
+      "greenhouse_room_end": {
+        "landing": 0,
+        "living": 0,
+        "resource": 0
+      },
+      "incubation_blockers_end": [],
+      "ledger": {
+        "born": 650,
+        "incubating": 10,
+        "lost": 0,
+        "viable": 49340
+      },
+      "metrics": {
+        "adults": 360,
+        "ark_days_share": 0.0,
+        "ark_fuel": 0.0,
+        "ark_kw": 0.0,
+        "ark_share": 0.0,
+        "autonomy": 54.0,
+        "council": true,
+        "crises_resolved": 0,
+        "demand_kw": 249.0,
+        "own_power_kw": 278.4,
+        "population": 650,
+        "power_gap_share": 0.0,
+        "power_independent": true,
+        "reserve_days": 365.0,
+        "trust": 70.0,
+        "years": 40.0
+      },
+      "ms": 10162,
+      "planet": "pelagos",
+      "policy": "last",
+      "population": 650,
+      "probe": false,
+      "roundtrips": 7,
+      "seed": 5012,
+      "stops": {
+        "critical_event": 2
+      },
+      "trace": [],
+      "year": 40.0
+    },
+    {
+      "buildings_end": {
+        "ark_core": 1,
+        "battery": 1,
+        "care_center": 1,
+        "greenhouse": 2,
+        "habitat": 2,
+        "solar_array": 3,
+        "water_plant": 2
+      },
+      "checksum": "335f6ce2b1d79b82065497f3e54e946a84785df5b467daf9f3e7505ff6dd7d2f",
+      "council": false,
+      "decisions": [],
+      "ending": "fragile",
+      "events": {
+        "civic_fever": "b",
+        "civic_first_night": "a"
+      },
+      "failures": 0,
+      "free_workforce_end": 2.85,
+      "greenhouse_room_end": {
+        "landing": 0,
+        "living": 0,
+        "resource": 0
+      },
+      "incubation_blockers_end": [
+        "Kræver mindst +5 kW strømoverskud (nu -2.6 kW).",
+        "Kræver vand- og madreserve til 30 dage for de kommende børn (nu 0)."
+      ],
+      "ledger": {
+        "born": 40,
+        "incubating": 0,
+        "lost": 0,
+        "viable": 49960
+      },
+      "metrics": {
+        "adults": 0,
+        "ark_days_share": 0.677,
+        "ark_fuel": 41.3,
+        "ark_kw": 8.0,
+        "ark_share": 0.32,
+        "autonomy": 0.0,
+        "council": false,
+        "crises_resolved": 0,
+        "demand_kw": 25.0,
+        "own_power_kw": 14.4,
+        "population": 40,
+        "power_gap_share": 0.424,
+        "power_independent": false,
+        "reserve_days": 0.0,
+        "trust": 54.6,
+        "years": 2.5
+      },
+      "ms": 1248,
+      "planet": "pelagos",
+      "policy": "neglect",
+      "population": 40,
+      "probe": false,
+      "roundtrips": 7,
+      "seed": 5013,
+      "stops": {
+        "critical_event": 1,
+        "supply_shortage": 3
+      },
+      "trace": [],
+      "year": 2.5
+    },
+    {
+      "buildings_end": {
+        "ark_core": 1,
+        "battery": 1,
+        "care_center": 4,
+        "clinic": 1,
+        "greenhouse": 34,
+        "habitat": 17,
         "mine": 1,
         "school_hall": 1,
-        "solar_array": 40,
-        "water_plant": 38,
-        "workshop": 3
+        "solar_array": 42,
+        "water_plant": 67,
+        "workshop": 2
       },
-      "checksum": "1a2042cd2dea40363dc442a176a19bea10615bbfb12b620c72a2440cda1af344",
+      "checksum": "fcb4298ff69091ad3a276c26f4779555a5dc608d41c7aacbfc80d25b878afca6",
+      "council": true,
+      "decisions": [
+        "year_20:expansion",
+        "year_40:expansion"
+      ],
+      "ending": "shielded",
+      "events": {
+        "civic_fever": "a",
+        "civic_first_night": "a",
+        "civic_mine_accident": "a",
+        "civic_naming": "a",
+        "civic_school_or_work": "a",
+        "civic_youth_vote": "a",
+        "crisis_dust_storm": "a"
+      },
+      "failures": 0,
+      "free_workforce_end": 101.0,
+      "greenhouse_room_end": {
+        "landing": 0,
+        "living": 0,
+        "resource": 0
+      },
+      "incubation_blockers_end": [
+        "Ikke nok boligpladser til de kommende børn."
+      ],
+      "ledger": {
+        "born": 680,
+        "incubating": 0,
+        "lost": 0,
+        "viable": 49320
+      },
+      "metrics": {
+        "adults": 370,
+        "ark_days_share": 0.993,
+        "ark_fuel": 7.8,
+        "ark_kw": 8.0,
+        "ark_share": 0.004,
+        "autonomy": 34.0,
+        "council": true,
+        "crises_resolved": 1,
+        "demand_kw": 658.0,
+        "own_power_kw": 655.2,
+        "population": 680,
+        "power_gap_share": 0.004,
+        "power_independent": false,
+        "reserve_days": 273.75,
+        "trust": 100.0,
+        "years": 40.0
+      },
+      "ms": 14740,
+      "planet": "ferrum",
+      "policy": "first",
+      "population": 680,
+      "probe": false,
+      "roundtrips": 8,
+      "seed": 5020,
+      "stops": {
+        "critical_event": 3
+      },
+      "trace": [],
+      "year": 40.0
+    },
+    {
+      "buildings_end": {
+        "ark_core": 1,
+        "battery": 1,
+        "care_center": 4,
+        "clinic": 1,
+        "greenhouse": 29,
+        "habitat": 14,
+        "mine": 1,
+        "school_hall": 1,
+        "solar_array": 36,
+        "water_plant": 54,
+        "workshop": 1
+      },
+      "checksum": "f167e0fda98c2a4a718ab9bfb568c84f36fd78f15736b95a9e2a309f48b51b1c",
       "council": true,
       "decisions": [
         "year_20:safety",
@@ -73,7 +728,383 @@
         "crisis_dust_storm": "b"
       },
       "failures": 0,
-      "free_workforce_end": 92.9,
+      "free_workforce_end": 100.0,
+      "greenhouse_room_end": {
+        "landing": 0,
+        "living": 0,
+        "resource": 0
+      },
+      "incubation_blockers_end": [
+        "Ikke nok boligpladser til de kommende børn."
+      ],
+      "ledger": {
+        "born": 560,
+        "incubating": 0,
+        "lost": 0,
+        "viable": 49440
+      },
+      "metrics": {
+        "adults": 360,
+        "ark_days_share": 0.0,
+        "ark_fuel": 80.3,
+        "ark_kw": 8.0,
+        "ark_share": 0.0,
+        "autonomy": 20.0,
+        "council": true,
+        "crises_resolved": 1,
+        "demand_kw": 540.0,
+        "own_power_kw": 561.6,
+        "population": 560,
+        "power_gap_share": 0.0,
+        "power_independent": true,
+        "reserve_days": 547.5,
+        "trust": 100.0,
+        "years": 40.0
+      },
+      "ms": 12864,
+      "planet": "ferrum",
+      "policy": "middle",
+      "population": 560,
+      "probe": false,
+      "roundtrips": 8,
+      "seed": 5021,
+      "stops": {
+        "critical_event": 3
+      },
+      "trace": [],
+      "year": 40.0
+    },
+    {
+      "buildings_end": {
+        "ark_core": 1,
+        "battery": 1,
+        "care_center": 4,
+        "clinic": 1,
+        "greenhouse": 29,
+        "habitat": 14,
+        "mine": 1,
+        "school_hall": 1,
+        "solar_array": 37,
+        "water_plant": 55,
+        "workshop": 1
+      },
+      "checksum": "0acf70c8d387aa9894dff51800cbed22204267c2ff13431b8a7e31ac31c63467",
+      "council": true,
+      "decisions": [
+        "year_20:self_determination",
+        "year_40:self_determination"
+      ],
+      "ending": "independent",
+      "events": {
+        "civic_fever": "c",
+        "civic_first_night": "c",
+        "civic_mine_accident": "c",
+        "civic_naming": "c",
+        "civic_school_or_work": "c",
+        "civic_youth_vote": "c",
+        "crisis_dust_storm": "c"
+      },
+      "failures": 0,
+      "free_workforce_end": 132.0,
+      "greenhouse_room_end": {
+        "landing": 0,
+        "living": 0,
+        "resource": 0
+      },
+      "incubation_blockers_end": [
+        "Ikke nok boligpladser til de kommende børn."
+      ],
+      "ledger": {
+        "born": 560,
+        "incubating": 0,
+        "lost": 0,
+        "viable": 49440
+      },
+      "metrics": {
+        "adults": 360,
+        "ark_days_share": 0.0,
+        "ark_fuel": 0.0,
+        "ark_kw": 0.0,
+        "ark_share": 0.0,
+        "autonomy": 54.0,
+        "council": true,
+        "crises_resolved": 1,
+        "demand_kw": 547.0,
+        "own_power_kw": 577.2,
+        "population": 560,
+        "power_gap_share": 0.0,
+        "power_independent": true,
+        "reserve_days": 365.0,
+        "trust": 100.0,
+        "years": 40.0
+      },
+      "ms": 13662,
+      "planet": "ferrum",
+      "policy": "last",
+      "population": 560,
+      "probe": false,
+      "roundtrips": 8,
+      "seed": 5022,
+      "stops": {
+        "critical_event": 3
+      },
+      "trace": [],
+      "year": 40.0
+    },
+    {
+      "buildings_end": {
+        "ark_core": 1,
+        "battery": 1,
+        "care_center": 1,
+        "greenhouse": 2,
+        "habitat": 1,
+        "solar_array": 3,
+        "water_plant": 5
+      },
+      "checksum": "e4b2f8d1fe9671eb94bc8af727d4c8d3e9235e2d1035c3c28e03d03eb56e8677",
+      "council": false,
+      "decisions": [],
+      "ending": "fragile",
+      "events": {
+        "civic_fever": "b",
+        "civic_first_night": "a",
+        "crisis_dust_storm": "a"
+      },
+      "failures": 0,
+      "free_workforce_end": 3.0,
+      "greenhouse_room_end": {
+        "landing": 0,
+        "living": 0,
+        "resource": 0
+      },
+      "incubation_blockers_end": [
+        "Kræver mindst +5 kW strømoverskud (nu -17.6 kW).",
+        "Kræver vand- og madreserve til 30 dage for de kommende børn (nu 0).",
+        "Ikke nok boligpladser til de kommende børn."
+      ],
+      "ledger": {
+        "born": 40,
+        "incubating": 0,
+        "lost": 0,
+        "viable": 49960
+      },
+      "metrics": {
+        "adults": 0,
+        "ark_days_share": 0.736,
+        "ark_fuel": 60.6,
+        "ark_kw": 8.0,
+        "ark_share": 0.163,
+        "autonomy": 0.0,
+        "council": false,
+        "crises_resolved": 1,
+        "demand_kw": 49.0,
+        "own_power_kw": 23.4,
+        "population": 40,
+        "power_gap_share": 0.522,
+        "power_independent": false,
+        "reserve_days": 0.0,
+        "trust": 57.9,
+        "years": 2.3
+      },
+      "ms": 1051,
+      "planet": "ferrum",
+      "policy": "neglect",
+      "population": 40,
+      "probe": false,
+      "roundtrips": 8,
+      "seed": 5023,
+      "stops": {
+        "critical_event": 2,
+        "supply_shortage": 3
+      },
+      "trace": [],
+      "year": 2.3
+    },
+    {
+      "buildings_end": {
+        "ark_core": 1,
+        "battery": 1,
+        "care_center": 4,
+        "clinic": 1,
+        "drone_hub": 1,
+        "greenhouse": 35,
+        "habitat": 20,
+        "mine": 1,
+        "school_hall": 1,
+        "solar_array": 42,
+        "water_plant": 42,
+        "workshop": 3
+      },
+      "checksum": "3a421b4c6bd382ab9267bfd5725f50ecf7c0cf99271b6345fd688ba414e4f273",
+      "council": true,
+      "decisions": [
+        "year_20:expansion",
+        "year_40:expansion"
+      ],
+      "ending": "independent",
+      "events": {
+        "civic_fever": "a",
+        "civic_first_night": "a",
+        "civic_mine_accident": "a",
+        "civic_naming": "a",
+        "civic_school_or_work": "a",
+        "civic_youth_vote": "a",
+        "crisis_dust_storm": "a"
+      },
+      "failures": 0,
+      "free_workforce_end": 103.9,
+      "greenhouse_room_end": {
+        "landing": 0,
+        "living": 0,
+        "resource": 0
+      },
+      "incubation_blockers_end": [],
+      "ledger": {
+        "born": 730,
+        "incubating": 10,
+        "lost": 0,
+        "viable": 49260
+      },
+      "metrics": {
+        "adults": 370,
+        "ark_days_share": 0.009,
+        "ark_fuel": 76.5,
+        "ark_kw": 8.0,
+        "ark_share": 0.0,
+        "autonomy": 34.0,
+        "council": true,
+        "crises_resolved": 1,
+        "demand_kw": 374.0,
+        "own_power_kw": 378.0,
+        "population": 730,
+        "power_gap_share": 0.0,
+        "power_independent": true,
+        "reserve_days": 273.75,
+        "trust": 100.0,
+        "years": 40.0
+      },
+      "ms": 11367,
+      "planet": "sere",
+      "policy": "first",
+      "population": 730,
+      "probe": false,
+      "roundtrips": 8,
+      "seed": 5030,
+      "stops": {
+        "critical_event": 3
+      },
+      "trace": [],
+      "year": 40.0
+    },
+    {
+      "buildings_end": {
+        "ark_core": 1,
+        "battery": 1,
+        "care_center": 4,
+        "clinic": 1,
+        "drone_hub": 1,
+        "greenhouse": 28,
+        "habitat": 16,
+        "mine": 1,
+        "school_hall": 1,
+        "solar_array": 37,
+        "water_plant": 35,
+        "workshop": 2
+      },
+      "checksum": "d027835152a624c963f58113b398b2d53d7e034aa495ac720763858c2f3b9749",
+      "council": true,
+      "decisions": [
+        "year_20:safety",
+        "year_40:safety"
+      ],
+      "ending": "independent",
+      "events": {
+        "civic_fever": "b",
+        "civic_first_night": "b",
+        "civic_mine_accident": "b",
+        "civic_naming": "b",
+        "civic_school_or_work": "b",
+        "civic_youth_vote": "b",
+        "crisis_dust_storm": "b"
+      },
+      "failures": 0,
+      "free_workforce_end": 102.9,
+      "greenhouse_room_end": {
+        "landing": 0,
+        "living": 0,
+        "resource": 0
+      },
+      "incubation_blockers_end": [],
+      "ledger": {
+        "born": 590,
+        "incubating": 10,
+        "lost": 0,
+        "viable": 49400
+      },
+      "metrics": {
+        "adults": 360,
+        "ark_days_share": 0.0,
+        "ark_fuel": 80.0,
+        "ark_kw": 8.0,
+        "ark_share": 0.0,
+        "autonomy": 20.0,
+        "council": true,
+        "crises_resolved": 1,
+        "demand_kw": 310.0,
+        "own_power_kw": 333.0,
+        "population": 590,
+        "power_gap_share": 0.0,
+        "power_independent": true,
+        "reserve_days": 547.5,
+        "trust": 100.0,
+        "years": 40.0
+      },
+      "ms": 10024,
+      "planet": "sere",
+      "policy": "middle",
+      "population": 590,
+      "probe": false,
+      "roundtrips": 8,
+      "seed": 5031,
+      "stops": {
+        "critical_event": 3
+      },
+      "trace": [],
+      "year": 40.0
+    },
+    {
+      "buildings_end": {
+        "ark_core": 1,
+        "battery": 1,
+        "care_center": 4,
+        "clinic": 1,
+        "drone_hub": 1,
+        "greenhouse": 31,
+        "habitat": 18,
+        "mine": 1,
+        "school_hall": 1,
+        "solar_array": 40,
+        "water_plant": 38,
+        "workshop": 3
+      },
+      "checksum": "ec2f5fec3e9dd62e089c252448f4ec24618dc1502b1e507806400f3453eb216e",
+      "council": true,
+      "decisions": [
+        "year_20:self_determination",
+        "year_40:self_determination"
+      ],
+      "ending": "independent",
+      "events": {
+        "civic_fever": "c",
+        "civic_first_night": "c",
+        "civic_mine_accident": "c",
+        "civic_naming": "c",
+        "civic_school_or_work": "c",
+        "civic_youth_vote": "c",
+        "crisis_dust_storm": "c"
+      },
+      "failures": 0,
+      "free_workforce_end": 133.9,
       "greenhouse_room_end": {
         "landing": 0,
         "living": 0,
@@ -86,19 +1117,722 @@
         "lost": 0,
         "viable": 49340
       },
-      "ms": 21687,
+      "metrics": {
+        "adults": 360,
+        "ark_days_share": 0.0,
+        "ark_fuel": 0.0,
+        "ark_kw": 0.0,
+        "ark_share": 0.0,
+        "autonomy": 54.0,
+        "council": true,
+        "crises_resolved": 1,
+        "demand_kw": 340.0,
+        "own_power_kw": 360.0,
+        "population": 650,
+        "power_gap_share": 0.0,
+        "power_independent": true,
+        "reserve_days": 365.0,
+        "trust": 100.0,
+        "years": 40.0
+      },
+      "ms": 10663,
       "planet": "sere",
-      "policy": "middle",
+      "policy": "last",
       "population": 650,
       "probe": false,
       "roundtrips": 8,
-      "seed": 5014,
+      "seed": 5032,
       "stops": {
         "critical_event": 3
       },
       "trace": [],
       "year": 40.0
+    },
+    {
+      "buildings_end": {
+        "ark_core": 1,
+        "battery": 1,
+        "care_center": 4,
+        "clinic": 1,
+        "drone_hub": 1,
+        "greenhouse": 35,
+        "habitat": 20,
+        "mine": 2,
+        "school_hall": 1,
+        "solar_array": 43,
+        "water_plant": 42,
+        "workshop": 3
+      },
+      "checksum": "fda52c40e69d11098bc3a726ee998098099bbd81bdf858588e96e2272bcf7307",
+      "council": false,
+      "decisions": [
+        "year_20:expansion",
+        "year_40:expansion"
+      ],
+      "ending": "fragile",
+      "events": {
+        "civic_fever": "b",
+        "civic_first_night": "a",
+        "civic_mine_accident": "a",
+        "civic_naming": "a",
+        "civic_school_or_work": "a",
+        "civic_youth_vote": "a",
+        "crisis_dust_storm": "a"
+      },
+      "failures": 0,
+      "free_workforce_end": 102.9,
+      "greenhouse_room_end": {
+        "landing": 0,
+        "living": 0,
+        "resource": 0
+      },
+      "incubation_blockers_end": [],
+      "ledger": {
+        "born": 730,
+        "incubating": 10,
+        "lost": 0,
+        "viable": 49260
+      },
+      "metrics": {
+        "adults": 370,
+        "ark_days_share": 0.004,
+        "ark_fuel": 75.2,
+        "ark_kw": 8.0,
+        "ark_share": 0.0,
+        "autonomy": 32.0,
+        "council": false,
+        "crises_resolved": 1,
+        "demand_kw": 378.0,
+        "own_power_kw": 387.0,
+        "population": 730,
+        "power_gap_share": 0.0,
+        "power_independent": true,
+        "reserve_days": 273.75,
+        "trust": 100.0,
+        "years": 40.0
+      },
+      "ms": 10554,
+      "planet": "sere",
+      "policy": "neglect",
+      "population": 730,
+      "probe": false,
+      "roundtrips": 8,
+      "seed": 5033,
+      "stops": {
+        "critical_event": 3
+      },
+      "trace": [],
+      "year": 40.0
+    },
+    {
+      "buildings_end": {
+        "ark_core": 1,
+        "battery": 1,
+        "care_center": 4,
+        "clinic": 1,
+        "drone_hub": 1,
+        "geothermal_generator": 17,
+        "greenhouse": 45,
+        "habitat": 20,
+        "mine": 1,
+        "school_hall": 1,
+        "solar_array": 2,
+        "water_plant": 27,
+        "workshop": 1
+      },
+      "checksum": "d8278136fe4f2ec33bb99108dcf0365b3626abd7048daced8bbbdc48bec8a155",
+      "council": true,
+      "decisions": [
+        "year_20:expansion",
+        "year_40:expansion"
+      ],
+      "ending": "independent",
+      "events": {
+        "civic_fever": "a",
+        "civic_first_night": "a",
+        "civic_mine_accident": "a",
+        "civic_naming": "a",
+        "civic_school_or_work": "a",
+        "civic_youth_vote": "a",
+        "crisis_deep_cold": "a"
+      },
+      "failures": 0,
+      "free_workforce_end": 103.8,
+      "greenhouse_room_end": {
+        "landing": 0,
+        "living": 0,
+        "resource": 0
+      },
+      "incubation_blockers_end": [],
+      "ledger": {
+        "born": 730,
+        "incubating": 10,
+        "lost": 0,
+        "viable": 49260
+      },
+      "metrics": {
+        "adults": 370,
+        "ark_days_share": 0.001,
+        "ark_fuel": 66.8,
+        "ark_kw": 8.0,
+        "ark_share": 0.0,
+        "autonomy": 34.0,
+        "council": true,
+        "crises_resolved": 1,
+        "demand_kw": 418.0,
+        "own_power_kw": 422.4,
+        "population": 730,
+        "power_gap_share": 0.0,
+        "power_independent": true,
+        "reserve_days": 273.75,
+        "trust": 100.0,
+        "years": 40.0
+      },
+      "ms": 11289,
+      "planet": "nivalis",
+      "policy": "first",
+      "population": 730,
+      "probe": false,
+      "roundtrips": 8,
+      "seed": 5040,
+      "stops": {
+        "critical_event": 3
+      },
+      "trace": [],
+      "year": 40.0
+    },
+    {
+      "buildings_end": {
+        "ark_core": 1,
+        "battery": 1,
+        "care_center": 4,
+        "clinic": 1,
+        "drone_hub": 1,
+        "geothermal_generator": 15,
+        "greenhouse": 36,
+        "habitat": 16,
+        "mine": 1,
+        "school_hall": 1,
+        "solar_array": 2,
+        "water_plant": 22,
+        "workshop": 1
+      },
+      "checksum": "9fc4c8bfa127e89b61b0f37ca7ab2a9d36f9f251b470508990baad70d606cd63",
+      "council": true,
+      "decisions": [
+        "year_20:safety",
+        "year_40:safety"
+      ],
+      "ending": "independent",
+      "events": {
+        "civic_fever": "b",
+        "civic_first_night": "b",
+        "civic_mine_accident": "b",
+        "civic_naming": "b",
+        "civic_school_or_work": "b",
+        "civic_youth_vote": "b",
+        "crisis_deep_cold": "b"
+      },
+      "failures": 0,
+      "free_workforce_end": 101.8,
+      "greenhouse_room_end": {
+        "landing": 0,
+        "living": 0,
+        "resource": 0
+      },
+      "incubation_blockers_end": [],
+      "ledger": {
+        "born": 590,
+        "incubating": 10,
+        "lost": 0,
+        "viable": 49400
+      },
+      "metrics": {
+        "adults": 360,
+        "ark_days_share": 0.0,
+        "ark_fuel": 68.3,
+        "ark_kw": 8.0,
+        "ark_share": 0.0,
+        "autonomy": 20.0,
+        "council": true,
+        "crises_resolved": 1,
+        "demand_kw": 343.0,
+        "own_power_kw": 374.4,
+        "population": 590,
+        "power_gap_share": 0.0,
+        "power_independent": true,
+        "reserve_days": 547.5,
+        "trust": 100.0,
+        "years": 40.0
+      },
+      "ms": 10434,
+      "planet": "nivalis",
+      "policy": "middle",
+      "population": 590,
+      "probe": false,
+      "roundtrips": 8,
+      "seed": 5041,
+      "stops": {
+        "critical_event": 3
+      },
+      "trace": [],
+      "year": 40.0
+    },
+    {
+      "buildings_end": {
+        "ark_core": 1,
+        "battery": 1,
+        "care_center": 4,
+        "clinic": 1,
+        "drone_hub": 1,
+        "geothermal_generator": 16,
+        "greenhouse": 40,
+        "habitat": 18,
+        "mine": 1,
+        "school_hall": 1,
+        "solar_array": 2,
+        "water_plant": 24,
+        "workshop": 1
+      },
+      "checksum": "51d463a056f573b5d2a57cd0ae0021df964ed03e8595a14bbd4e91f88f410177",
+      "council": true,
+      "decisions": [
+        "year_20:self_determination",
+        "year_40:self_determination"
+      ],
+      "ending": "independent",
+      "events": {
+        "civic_fever": "c",
+        "civic_first_night": "c",
+        "civic_mine_accident": "c",
+        "civic_naming": "c",
+        "civic_school_or_work": "c",
+        "civic_youth_vote": "c",
+        "crisis_deep_cold": "c"
+      },
+      "failures": 0,
+      "free_workforce_end": 133.8,
+      "greenhouse_room_end": {
+        "landing": 0,
+        "living": 0,
+        "resource": 0
+      },
+      "incubation_blockers_end": [],
+      "ledger": {
+        "born": 650,
+        "incubating": 10,
+        "lost": 0,
+        "viable": 49340
+      },
+      "metrics": {
+        "adults": 360,
+        "ark_days_share": 0.0,
+        "ark_fuel": 0.0,
+        "ark_kw": 0.0,
+        "ark_share": 0.0,
+        "autonomy": 52.0,
+        "council": true,
+        "crises_resolved": 1,
+        "demand_kw": 377.0,
+        "own_power_kw": 398.4,
+        "population": 650,
+        "power_gap_share": 0.0,
+        "power_independent": true,
+        "reserve_days": 365.0,
+        "trust": 100.0,
+        "years": 40.0
+      },
+      "ms": 10838,
+      "planet": "nivalis",
+      "policy": "last",
+      "population": 650,
+      "probe": false,
+      "roundtrips": 8,
+      "seed": 5042,
+      "stops": {
+        "critical_event": 3
+      },
+      "trace": [],
+      "year": 40.0
+    },
+    {
+      "buildings_end": {
+        "ark_core": 1,
+        "battery": 1,
+        "care_center": 4,
+        "clinic": 1,
+        "drone_hub": 1,
+        "geothermal_generator": 18,
+        "greenhouse": 45,
+        "habitat": 20,
+        "mine": 2,
+        "school_hall": 1,
+        "solar_array": 2,
+        "water_plant": 27,
+        "workshop": 1
+      },
+      "checksum": "f3b745994bcd20950f4691a98f2f39340bc2486b97adad1495708cb367a8e5ab",
+      "council": false,
+      "decisions": [
+        "year_20:expansion",
+        "year_40:expansion"
+      ],
+      "ending": "fragile",
+      "events": {
+        "civic_fever": "b",
+        "civic_first_night": "a",
+        "civic_mine_accident": "a",
+        "civic_naming": "a",
+        "civic_school_or_work": "a",
+        "civic_youth_vote": "a",
+        "crisis_deep_cold": "a"
+      },
+      "failures": 0,
+      "free_workforce_end": 102.8,
+      "greenhouse_room_end": {
+        "landing": 0,
+        "living": 0,
+        "resource": 0
+      },
+      "incubation_blockers_end": [],
+      "ledger": {
+        "born": 730,
+        "incubating": 10,
+        "lost": 0,
+        "viable": 49260
+      },
+      "metrics": {
+        "adults": 370,
+        "ark_days_share": 0.005,
+        "ark_fuel": 66.0,
+        "ark_kw": 8.0,
+        "ark_share": 0.0,
+        "autonomy": 32.0,
+        "council": false,
+        "crises_resolved": 1,
+        "demand_kw": 422.0,
+        "own_power_kw": 446.4,
+        "population": 730,
+        "power_gap_share": 0.0,
+        "power_independent": true,
+        "reserve_days": 273.75,
+        "trust": 100.0,
+        "years": 40.0
+      },
+      "ms": 10026,
+      "planet": "nivalis",
+      "policy": "neglect",
+      "population": 730,
+      "probe": false,
+      "roundtrips": 8,
+      "seed": 5043,
+      "stops": {
+        "critical_event": 3
+      },
+      "trace": [],
+      "year": 40.0
+    },
+    {
+      "buildings_end": {
+        "ark_core": 1,
+        "battery": 1,
+        "care_center": 4,
+        "clinic": 1,
+        "drone_hub": 1,
+        "geothermal_generator": 22,
+        "greenhouse": 42,
+        "habitat": 20,
+        "mine": 2,
+        "school_hall": 1,
+        "solar_array": 2,
+        "water_plant": 35,
+        "workshop": 1
+      },
+      "checksum": "268ba159a43aa7d87569c257031f57dad9857bda950f594ed1c8077058976078",
+      "council": true,
+      "decisions": [
+        "year_20:expansion",
+        "year_40:expansion"
+      ],
+      "ending": "independent",
+      "events": {
+        "civic_fever": "a",
+        "civic_first_night": "a",
+        "civic_mine_accident": "a",
+        "civic_naming": "a",
+        "civic_school_or_work": "a",
+        "civic_youth_vote": "a",
+        "crisis_deep_cold": "a"
+      },
+      "failures": 0,
+      "free_workforce_end": 103.4,
+      "greenhouse_room_end": {
+        "landing": 0,
+        "living": 0,
+        "resource": 0
+      },
+      "incubation_blockers_end": [],
+      "ledger": {
+        "born": 730,
+        "incubating": 10,
+        "lost": 0,
+        "viable": 49260
+      },
+      "metrics": {
+        "adults": 370,
+        "ark_days_share": 0.0,
+        "ark_fuel": 57.8,
+        "ark_kw": 8.0,
+        "ark_share": 0.0,
+        "autonomy": 34.0,
+        "council": true,
+        "crises_resolved": 1,
+        "demand_kw": 385.0,
+        "own_power_kw": 396.0,
+        "population": 730,
+        "power_gap_share": 0.0,
+        "power_independent": true,
+        "reserve_days": 273.75,
+        "trust": 100.0,
+        "years": 40.0
+      },
+      "ms": 12138,
+      "planet": "umbra",
+      "policy": "first",
+      "population": 730,
+      "probe": false,
+      "roundtrips": 8,
+      "seed": 5050,
+      "stops": {
+        "critical_event": 3
+      },
+      "trace": [],
+      "year": 40.0
+    },
+    {
+      "buildings_end": {
+        "ark_core": 1,
+        "battery": 1,
+        "care_center": 4,
+        "clinic": 1,
+        "drone_hub": 1,
+        "geothermal_generator": 20,
+        "greenhouse": 34,
+        "habitat": 16,
+        "mine": 2,
+        "school_hall": 1,
+        "solar_array": 2,
+        "water_plant": 29,
+        "workshop": 1
+      },
+      "checksum": "9a66c0e788348c7b19796e5d888a471600809989a297d29713e0069bfb199fd6",
+      "council": true,
+      "decisions": [
+        "year_20:safety",
+        "year_40:safety"
+      ],
+      "ending": "independent",
+      "events": {
+        "civic_fever": "b",
+        "civic_first_night": "b",
+        "civic_mine_accident": "b",
+        "civic_naming": "b",
+        "civic_school_or_work": "b",
+        "civic_youth_vote": "b",
+        "crisis_deep_cold": "c"
+      },
+      "failures": 0,
+      "free_workforce_end": 101.4,
+      "greenhouse_room_end": {
+        "landing": 0,
+        "living": 0,
+        "resource": 0
+      },
+      "incubation_blockers_end": [],
+      "ledger": {
+        "born": 590,
+        "incubating": 10,
+        "lost": 0,
+        "viable": 49400
+      },
+      "metrics": {
+        "adults": 360,
+        "ark_days_share": 0.0,
+        "ark_fuel": 59.5,
+        "ark_kw": 8.0,
+        "ark_share": 0.0,
+        "autonomy": 20.0,
+        "council": true,
+        "crises_resolved": 1,
+        "demand_kw": 321.0,
+        "own_power_kw": 360.0,
+        "population": 590,
+        "power_gap_share": 0.0,
+        "power_independent": true,
+        "reserve_days": 547.5,
+        "trust": 100.0,
+        "years": 40.0
+      },
+      "ms": 11272,
+      "planet": "umbra",
+      "policy": "middle",
+      "population": 590,
+      "probe": false,
+      "roundtrips": 8,
+      "seed": 5051,
+      "stops": {
+        "critical_event": 3
+      },
+      "trace": [],
+      "year": 40.0
+    },
+    {
+      "buildings_end": {
+        "ark_core": 1,
+        "battery": 1,
+        "care_center": 4,
+        "clinic": 1,
+        "drone_hub": 1,
+        "geothermal_generator": 21,
+        "greenhouse": 37,
+        "habitat": 18,
+        "mine": 2,
+        "school_hall": 1,
+        "solar_array": 2,
+        "water_plant": 31,
+        "workshop": 1
+      },
+      "checksum": "c16210a7718d2a46c334886a0f74915ecfee68f3816436f84093f6b585cd2953",
+      "council": true,
+      "decisions": [
+        "year_20:self_determination",
+        "year_40:self_determination"
+      ],
+      "ending": "independent",
+      "events": {
+        "civic_fever": "c",
+        "civic_first_night": "c",
+        "civic_mine_accident": "c",
+        "civic_naming": "c",
+        "civic_school_or_work": "c",
+        "civic_youth_vote": "c",
+        "crisis_deep_cold": "c"
+      },
+      "failures": 0,
+      "free_workforce_end": 133.4,
+      "greenhouse_room_end": {
+        "landing": 0,
+        "living": 0,
+        "resource": 0
+      },
+      "incubation_blockers_end": [],
+      "ledger": {
+        "born": 650,
+        "incubating": 10,
+        "lost": 0,
+        "viable": 49340
+      },
+      "metrics": {
+        "adults": 360,
+        "ark_days_share": 0.0,
+        "ark_fuel": 0.0,
+        "ark_kw": 0.0,
+        "ark_share": 0.0,
+        "autonomy": 52.0,
+        "council": true,
+        "crises_resolved": 1,
+        "demand_kw": 346.0,
+        "own_power_kw": 378.0,
+        "population": 650,
+        "power_gap_share": 0.0,
+        "power_independent": true,
+        "reserve_days": 365.0,
+        "trust": 100.0,
+        "years": 40.0
+      },
+      "ms": 11658,
+      "planet": "umbra",
+      "policy": "last",
+      "population": 650,
+      "probe": false,
+      "roundtrips": 8,
+      "seed": 5052,
+      "stops": {
+        "critical_event": 3
+      },
+      "trace": [],
+      "year": 40.0
+    },
+    {
+      "buildings_end": {
+        "ark_core": 1,
+        "battery": 1,
+        "care_center": 1,
+        "geothermal_generator": 1,
+        "greenhouse": 3,
+        "habitat": 1,
+        "solar_array": 2,
+        "water_plant": 2
+      },
+      "checksum": "c92f96f84d41ae466d5506ad0bedc929e054108b53e8190efa3de4d947883c7a",
+      "council": false,
+      "decisions": [],
+      "ending": "fragile",
+      "events": {
+        "civic_fever": "b",
+        "civic_first_night": "a",
+        "crisis_deep_cold": "a"
+      },
+      "failures": 0,
+      "free_workforce_end": 2.7,
+      "greenhouse_room_end": {
+        "landing": 0,
+        "living": 0,
+        "resource": 0
+      },
+      "incubation_blockers_end": [
+        "Kræver mindst +5 kW strømoverskud (nu -4.8 kW).",
+        "Kræver vand- og madreserve til 30 dage for de kommende børn (nu 0).",
+        "Ikke nok boligpladser til de kommende børn."
+      ],
+      "ledger": {
+        "born": 40,
+        "incubating": 0,
+        "lost": 0,
+        "viable": 49960
+      },
+      "metrics": {
+        "adults": 0,
+        "ark_days_share": 0.746,
+        "ark_fuel": 25.4,
+        "ark_kw": 8.0,
+        "ark_share": 0.308,
+        "autonomy": 0.0,
+        "council": false,
+        "crises_resolved": 1,
+        "demand_kw": 26.0,
+        "own_power_kw": 13.2,
+        "population": 40,
+        "power_gap_share": 0.492,
+        "power_independent": false,
+        "reserve_days": 0.0,
+        "trust": 58.8,
+        "years": 2.3
+      },
+      "ms": 1970,
+      "planet": "umbra",
+      "policy": "neglect",
+      "population": 40,
+      "probe": false,
+      "roundtrips": 8,
+      "seed": 5053,
+      "stops": {
+        "critical_event": 2,
+        "supply_shortage": 3
+      },
+      "trace": [],
+      "year": 2.3
     }
   ],
-  "timestamp": "2026-10-20T12:41:42"
+  "timestamp": "2026-10-24T09:09:15"
 }
