@@ -12,11 +12,14 @@ var _drone := false
 
 
 func _init() -> void:
-	super(Vector2(1180, 760))
+	# Fixed width, height from the content: the landing preview is much shorter
+	# than the site list and used to leave ~40 % of the panel blank.
+	super(Vector2(1180, 0))
 
 
 func refresh() -> void:
 	UiKit.clear(body)
+	_shrink_to_content()
 	var content := GameSession.content
 	var gs: GameState = GameSession.state
 	var pid := GameSession.sim.travel.current_planet_id(gs)
@@ -138,6 +141,21 @@ func _landing_preview(pid: String, sid: String) -> void:
 func close() -> void:
 	_landing_site = ""
 	super()
+
+
+## A Control never shrinks on its own once it has grown: once the new page is
+## laid out (wrapped labels know their width, so their height is right), drop
+## to the content's height and re-centre.
+func _shrink_to_content() -> void:
+	if not is_inside_tree():
+		return
+	for i: int in 2:
+		await get_tree().process_frame
+	if not is_instance_valid(panel) or not visible:
+		return
+	panel.size = Vector2(panel.size.x, 0.0)  # clamped up to the combined minimum
+	panel.set_anchors_and_offsets_preset(Control.PRESET_CENTER, Control.PRESET_MODE_KEEP_SIZE)
+	fit()
 
 
 const FACT_LABELS := {"water_distance_m": "water", "flatness": "flatness", "shelter": "shelter", "vent": "heat source",
