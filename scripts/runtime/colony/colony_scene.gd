@@ -31,7 +31,6 @@ var _build_bar: HFlowContainer  # wraps to two rows when the screen is narrow (U
 var _top: VBoxContainer
 var _ghost_tip: Label
 var _life: ColonyLife
-var _cover_avoid: Array = []
 var _cover: Node3D
 var _roads: Node3D
 var _paths: ColonyPaths
@@ -70,7 +69,6 @@ func _ready() -> void:
 	add_child(terrain)
 	terrain.build()
 	terrain.scatter(hash(gs.colony.site_id) + 1, 60 if GroundCover.spec_for(gs.colony.planet_id, "").is_empty() else 0, avoid)
-	_cover_avoid = avoid  # ground cover is laid in _relayout, once the roads and buildings are known
 	_draw_districts()
 	SceneDressing.attach(self, str(site.get("id", "")), terrain)
 	_net = MeshInstance3D.new()
@@ -292,7 +290,9 @@ func _relayout() -> void:
 	for rd: PackedVector2Array in _paths.roads:
 		clear.add_polyline(rd, road_w * 0.5 + 0.3)
 	_draw_roads(road_cfg)
-	_lay_ground_cover(clear)
+	if _cover == null:
+		_lay_ground_cover(clear)
+	_prune_cover(clear)
 	if _dressing == null:
 		_dressing = ColonyDressing.new()
 		_dressing.name = "Dressing"
@@ -318,25 +318,66 @@ func _draw_roads(cfg: Dictionary) -> void:
 	if tstyle.has("ground"):
 		ground = Color(str(tstyle["ground"]))
 	var col := Color.from_hsv(ground.h, clampf(ground.s * 1.05, 0.0, 1.0), ground.v * DictUtil.get_float(cfg, "darken", 0.62))
+	var per: Dictionary = DictUtil.get_dict(cfg, "colors")  # a dirt tone per world reads better than a shade
+	if per.has(str(planet.get("id", ""))):
+		col = Color(str(per[str(planet.get("id", ""))]))
 	for rd: PackedVector2Array in _paths.roads:
 		_roads.add_child(ColonyPaths.road_mesh(rd, terrain, col, DictUtil.get_float(cfg, "width", 3.2), DictUtil.get_float(cfg, "shoulder", 1.4)))
 
 
-## Ground cover keeps off the districts, the roads and every building (it is
-## re-laid only when the layout changes).
+## Ground cover is laid with the first layout (district cores, buildings, roads
+## and tubes stay clear; plants grow right up to them) and then kept stable.
 func _lay_ground_cover(clear: ColonyClearance) -> void:
-	var avoid: Array = _cover_avoid.duplicate()
+	var avoid: Array = []
+	var dscale := GameSession.sim.colony.district_scale(GameSession.state)
+	for dk: String in DictUtil.get_dict(site, "districts").keys():
+		var dc: Array = DictUtil.get_arr(site["districts"][dk], "center")
+		avoid.append([Vector2(float(dc[0]), float(dc[1])), DictUtil.get_float(site["districts"][dk], "radius") * dscale * 0.6])
+	for bz: Dictionary in DictUtil.get_arr(site, "blocked"):
+		var bc: Array = DictUtil.get_arr(bz, "center")
+		avoid.append([Vector2(float(bc[0]), float(bc[1])), DictUtil.get_float(bz, "radius") + 1.0])
+	var segs: Array = _corridors.get_meta("segments") if _corridors and _corridors.has_meta("segments") else []
+	for sg: Array in segs:
+		var a: Vector2 = sg[0]
+		var b: Vector2 = sg[1]
+		for k: int in int(a.distance_to(b) / 2.0) + 1:
+			avoid.append([a.lerp(b, k * 2.0 / maxf(a.distance_to(b), 0.01)), 2.2])
+	var road_w := DictUtil.get_float(DictUtil.get_dict(BuildingDressing.doc(), "roads"), "width", 3.0)
 	for rd: PackedVector2Array in _paths.roads:
 		for i: int in range(0, rd.size(), 2):
-			avoid.append([rd[i], DictUtil.get_float(DictUtil.get_dict(BuildingDressing.doc(), "roads"), "width", 3.2) * 0.5 + 1.8])
+			avoid.append([rd[i], road_w * 0.5 + 1.8])
 	for rr: Array in clear.rects():
 		var r: Rect2 = rr[0]
 		avoid.append([r.get_center(), r.size.length() * 0.5 + 2.0])
-	if _cover:
-		_cover.queue_free()
 	var gs: GameState = GameSession.state
 	_cover = GroundCover.build(terrain, gs.colony.planet_id, hash(gs.colony.site_id) + 3, avoid, 220.0, gs.colony.biome_id)
 	add_child(_cover)
+
+
+## Ground cover is laid once (stable, deterministic); each new layout hides the
+## pieces a building, road or corridor now stands on (tree trunks stop colliding
+## there too) and any landmark silhouette the grown colony has reached.
+func _prune_cover(clear: ColonyClearance) -> void:
+	if _cover == null:
+		return
+	for c: Node in _cover.get_children():
+		if c is MultiMeshInstance3D:
+			var mm := (c as MultiMeshInstance3D).multimesh
+			for i: int in mm.instance_count:
+				var xf := mm.get_instance_transform(i)
+				if xf.basis.get_scale().x > 0.0001 and clear.blocked(Vector2(xf.origin.x, xf.origin.z), 0.5):
+					mm.set_instance_transform(i, Transform3D(Basis.from_scale(Vector3.ONE * 0.00001), xf.origin))
+		elif c is MeshInstance3D and (c as MeshInstance3D).visible:
+			var mi := c as MeshInstance3D
+			var box: AABB = mi.transform * mi.get_aabb()
+			if clear.blocked(Vector2(box.get_center().x, box.get_center().z), maxf(box.size.x, box.size.z) * 0.4, -1, true):
+				mi.visible = false
+		elif c is StaticBody3D:
+			for cs: Node in c.get_children():
+				if cs is CollisionShape3D and not (cs as CollisionShape3D).disabled:
+					var at := (cs as Node3D).position
+					if clear.blocked(Vector2(at.x, at.z), 0.5):
+						(cs as CollisionShape3D).disabled = true
 
 
 func _process_network_visibility() -> void:

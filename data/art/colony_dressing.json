@@ -882,8 +882,9 @@
  },
  "roads": {
   "width": 3.0,
-  "shoulder": 2.2,
+  "shoulder": 1.4,
   "darken": 0.62,
+  "colors": {"viridia": "#8f7a55", "pelagos": "#9c8c6a", "ferrum": "#8e5638", "sere": "#9a7c55", "nivalis": "#7d8a9c", "umbra": "#2e3646"},
   "cell": 1.5
  }
 }
