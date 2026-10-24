@@ -19,7 +19,13 @@
     }
    ],
    "motes": "fx.spores",
-   "motes_scale": 2.5
+   "motes_scale": 2.5,
+   "fauna": {
+    "mesh": "res://assets/Synty/Nature/Jungle/FBX/FX_Bird_Mesh_01.fbx",
+    "flocks": 3,
+    "count": 9,
+    "scale": 1.6
+   }
   },
   "terrain": {
    "ground_tex": "res://assets/Synty/Nature/Jungle/Textures/Terrain/Grass_Debris_Texture_01.png",
@@ -201,7 +207,13 @@
      "size": 22,
      "ring": "#cfe4ee"
     }
-   ]
+   ],
+   "fauna": {
+    "mesh": "res://assets/Synty/Nature/Jungle/FBX/FX_Bird_Mesh_01.fbx",
+    "flocks": 4,
+    "count": 11,
+    "scale": 1.9
+   }
   },
   "terrain": {
    "ground_tex": "res://assets/Synty/Nature/Swamp/Textures/Terrain/Moss_Swamp_Texture_01.png",

@@ -28,6 +28,10 @@ static func build(planet_id: String, fallback: String) -> Node3D:
 		if body.has("ring"):
 			root.add_child(_ring(slot.position, radius, Color(str(body["ring"])), az))
 		i += 1
+	if sky.has("fauna"):
+		var flock := FaunaFlock.build(DictUtil.get_dict(sky, "fauna"), hash(planet_id))
+		if flock:
+			root.add_child(flock)
 	if sky.has("aurora"):
 		root.add_child(_aurora(Color(str(sky["aurora"])), Color(str(sky.get("aurora_high", "#9a5cff")))))
 	return root

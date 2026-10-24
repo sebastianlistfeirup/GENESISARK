@@ -33,7 +33,7 @@ def lm(meshes, count, s=(1, 1.4), ring=(70, 86)):
 
 PLANETS = {
     "viridia": {  # jungle: dense canopy, ferns, flowers, alien flora
-        "sky": {"bodies": [{"biome": "ice", "tint": "#cfd8e6", "azimuth": 35, "elevation": 22, "size": 14}, {"biome": "desert", "tint": "#d9a06a", "azimuth": 70, "elevation": 34, "size": 5}], "motes": "fx.spores", "motes_scale": 2.5},
+        "sky": {"bodies": [{"biome": "ice", "tint": "#cfd8e6", "azimuth": 35, "elevation": 22, "size": 14}, {"biome": "desert", "tint": "#d9a06a", "azimuth": 70, "elevation": 34, "size": 5}], "motes": "fx.spores", "motes_scale": 2.5, "fauna": {"mesh": N + "Jungle/FBX/FX_Bird_Mesh_01.fbx", "flocks": 3, "count": 9, "scale": 1.6}},
         "terrain": {"ground_tex": N + "Jungle/Textures/Terrain/Grass_Debris_Texture_01.png", "cliff_tex": N + "Jungle/Textures/Terrain/RockWall_Texture_01.png", "amp": 1.25, "ground": "#4c8a2f", "patch": "#3a7426", "cliff": "#3f4a33"},
         "look": {"hue_shift": -0.02, "sat": 1.15, "wind": 0.07, "rock_tint": "#9aa58a", "rock_top_tint": "#6f9a3c"},
         "trees": [t([J("SM_Env_Tree_Palm_01"), J("SM_Env_Tree_Palm_02"), J("SM_Env_Tree_Palm_03"), J("SM_Env_Tree_Banana_01"), J("SM_Env_Tree_Banana_02"),
@@ -48,7 +48,7 @@ PLANETS = {
         "landmarks": [lm([J("SM_Env_Rock_Cliff_01"), J("SM_Env_Rock_Cliff_02"), J("SM_Env_Rock_Cliff_03"), J("SM_Env_Rock_Arch_01")], 22, (1.6, 2.6))],
     },
     "pelagos": {  # water world: open sea, islands, mangroves, reeds, lily pads, coral shallows
-        "sky": {"bodies": [{"biome": "green", "tint": "#7fb0c8", "azimuth": -40, "elevation": 18, "size": 22, "ring": "#cfe4ee"}]},
+        "sky": {"bodies": [{"biome": "green", "tint": "#7fb0c8", "azimuth": -40, "elevation": 18, "size": 22, "ring": "#cfe4ee"}], "fauna": {"mesh": N + "Jungle/FBX/FX_Bird_Mesh_01.fbx", "flocks": 4, "count": 11, "scale": 1.9}},
         "terrain": {"ground_tex": N + "Swamp/Textures/Terrain/Moss_Swamp_Texture_01.png", "cliff_tex": N + "Jungle/Textures/Terrain/RockWall_Texture_01.png", "amp": 1.55, "water": True, "ground": "#4f8f5c", "patch": "#c9b98a", "cliff": "#46564c"},
         "look": {"hue_shift": 0.07, "sat": 1.05, "wind": 0.12, "rock_tint": "#8c9a98", "rock_top_tint": "#6b8f5a"},
         "trees": [t([S("SM_Env_Tree_Mangrove_01"), S("SM_Env_Tree_Mangrove_02"), S("SM_Env_Tree_Mangrove_03"), S("SM_Env_Tree_Swamp_01"),
