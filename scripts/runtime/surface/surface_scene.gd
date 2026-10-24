@@ -65,6 +65,7 @@ func _ready() -> void:
 	_place_hazards()
 	captain = Captain.new()
 	captain.footstep_slot = "sfx_footstep_soil"
+	captain.wear_helmet = true
 	add_child(captain)
 	captain.teleport(Vector3(4, terrain.height_at(4, 4) + 0.3, 4), PI * 0.25)
 	if str(planet.get("id")) == "umbra":

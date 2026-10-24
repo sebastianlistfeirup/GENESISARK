@@ -144,8 +144,11 @@
    "status": "approved"
   },
   "surface.lander": {
-   "source": "res://assets/Synty/PolygonSciFiCity/Prefabs/Vehicles/SM_Veh_Armored_Truck_01_Hover.tscn",
-   "status": "approved"
+   "source": "res://assets/Synty/SciFiSpace/FBX/SM_Ship_Bomber_01.fbx",
+   "status": "approved",
+   "material": "res://art/materials/scifi_space_atlas.tres",
+   "fit": "size",
+   "extra_scale": 1.8
   },
   "surface.relay_beacon": {
    "source": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_Antenna_02.tscn",

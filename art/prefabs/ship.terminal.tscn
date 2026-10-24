@@ -4,14 +4,14 @@
 [ext_resource type="ArrayMesh" path="res://assets/Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Monitor_03.res" id="2_yq23i"]
 [ext_resource type="Material" path="res://assets/Synty/PolygonSciFiWorlds/Materials/Alts/PolygonScifiWorlds_01_A_mat.tres" id="3_tgldn"]
 
-[node name="ship_terminal" type="Node3D" unique_id=1905937356]
+[node name="ship_terminal" type="Node3D" unique_id=1271518917]
 metadata/synty_source = "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_Monitor_03.tscn"
 metadata/synty_fit = "natural"
 
-[node name="Model" type="Node3D" parent="." unique_id=2116952853]
+[node name="Model" type="Node3D" parent="." unique_id=240586052]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.8146972e-08, 2.9802322e-08)
 
-[node name="SM_Prop_Monitor_03" type="MeshInstance3D" parent="Model" unique_id=1808749176 instance=ExtResource("1_1x6xf")]
+[node name="SM_Prop_Monitor_03" type="MeshInstance3D" parent="Model" unique_id=1288638769 instance=ExtResource("1_1x6xf")]
 gi_mode = 2
 mesh = ExtResource("2_yq23i")
 surface_material_override/0 = ExtResource("3_tgldn")

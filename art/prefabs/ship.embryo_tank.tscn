@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" path="res://assets/Synty/SciFiSpace/FBX/SM_Prop_Medical_Isolator_01.fbx" id="1_buyuo"]
 
-[node name="ship_embryo_tank" type="Node3D" unique_id=1895281959]
+[node name="ship_embryo_tank" type="Node3D" unique_id=1009894854]
 metadata/synty_source = "res://assets/Synty/SciFiSpace/FBX/SM_Prop_Medical_Isolator_01.fbx"
 metadata/synty_fit = "natural"
 

@@ -28,6 +28,11 @@ var _probe: Area3D
 var _step_accum := 0.0
 var _anim: CharacterAnimator
 var _slot: VisualSlot
+## EVA helmet outdoors; the surface scene sets this before adding the captain.
+var wear_helmet := false
+
+const HELMET_PREFAB := "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Characters/SM_Chr_ScifiWorlds_SpaceSuit_Male_01.tscn"
+const HELMET_NODE := "SM_Chr_Attach_Helmet_Space_01"
 
 
 func _ready() -> void:
@@ -47,6 +52,8 @@ func _ready() -> void:
 	_slot = VisualSlot.make("char.captain")
 	visual_pivot.add_child(_slot)
 	_anim = CharacterAnimator.for_slot(_slot)
+	if wear_helmet:
+		_attach_helmet()
 	_probe = Area3D.new()
 	_probe.collision_layer = 0
 	_probe.collision_mask = 4
@@ -172,3 +179,32 @@ func teleport(pos: Vector3, yaw: float = 0.0) -> void:
 	camera_rig.yaw = yaw
 	camera_rig.snap()
 	visual_pivot.rotation.y = yaw
+
+
+## Puts Synty's space helmet on the retargeted captain. The helmet is authored in
+## the head-bone space of Synty's own rig, so its offset is carried over from that
+## rig's rest pose to ours (the retarget re-orients bone axes). Presentation only;
+## silently skipped on a clone without the purchased packs.
+func _attach_helmet() -> void:
+	var skels := _slot.find_children("GeneralSkeleton", "Skeleton3D", true, false)
+	if skels.is_empty() or not ResourceLoader.exists(HELMET_PREFAB):
+		return
+	var sk: Skeleton3D = skels[0]
+	var head := sk.find_bone("Head")
+	var ref: Node = (load(HELMET_PREFAB) as PackedScene).instantiate()
+	var ref_skels := ref.find_children("*", "Skeleton3D", true, false)
+	var helm_src := ref.find_child(HELMET_NODE, true, false) as Node3D
+	if head < 0 or ref_skels.is_empty() or helm_src == null:
+		ref.free()
+		return
+	var rs: Skeleton3D = ref_skels[0]
+	var ho := rs.get_bone_global_rest(rs.find_bone("Head"))
+	var local := helm_src.transform
+	var helm: Node3D = helm_src.duplicate()
+	ref.free()
+	var att := BoneAttachment3D.new()
+	att.name = "Helmet"
+	att.bone_name = "Head"
+	sk.add_child(att)
+	att.add_child(helm)
+	helm.transform = sk.get_bone_global_rest(head).affine_inverse() * ho * local
