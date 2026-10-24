@@ -79,8 +79,23 @@ func _run() -> void:
 		elif sc and sc.has_method("debug_action"):
 			sc.call("debug_action", act)
 		# The alarm banner hides after a few real seconds; software rendering is slow.
-		for i: int in (4 if act == "alarm" else 40):
+		# --hold=N waits N frames instead (Movie Maker sequences); --frametimes=<json>
+		# records every frame's time over that window (hero-moment perf, D-056).
+		var hold := int(extra.get("hold", 4 if act == "alarm" else 40))
+		var times: Array = []
+		var last := Time.get_ticks_usec()
+		for i: int in hold:
 			await get_tree().process_frame
+			var now := Time.get_ticks_usec()
+			times.append(snappedf((now - last) / 1000.0, 0.001))
+			last = now
+		if extra.has("frametimes"):
+			var fp := str(extra["frametimes"])
+			var fabs := fp if fp.is_absolute_path() else ProjectSettings.globalize_path("res://" + fp)
+			DirAccess.make_dir_recursive_absolute(fabs.get_base_dir())
+			var f := FileAccess.open(fabs, FileAccess.WRITE)
+			f.store_string(JSON.stringify({"action": act, "frame_ms": times, "device": RenderingServer.get_video_adapter_name()}))
+			f.close()
 	var img := get_viewport().get_texture().get_image()
 	var abs_path := out_path if out_path.is_absolute_path() else ProjectSettings.globalize_path("res://" + out_path)
 	DirAccess.make_dir_recursive_absolute(abs_path.get_base_dir())

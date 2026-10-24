@@ -1,0 +1,665 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Supply Drop Pod</title>
+<!--
+  GENESIS ARK, D-056: the energy-cell supply drop pod as a phone-friendly three.js viewer.
+  Built from the image-to-3d-rebuild skill's viewer_template.html. The model is the Godot
+  ProcBuilder rebuild (scripts/runtime/visual/drop_pod.gd) exported as GLB (base64 .txt);
+  when drop_pod_baked.* are present (local only: paint baked from the owner's Meshy scan)
+  the scan's paint is mixed in on UV2, otherwise the procedural look is used.
+  The hero sequence is a pure function of time, mirrored 1:1 from
+  scripts/runtime/visual/drop_pod_timeline.gd (same constants, same ms).
+  Patterns kept from the template: base64 GLB, onBeforeCompile + customProgramCacheKey,
+  bloom via EffectComposer with prewarm() against composer.readBuffer, NaN-safe camera
+  fit (0x0 first layout), adaptive pixel ratio, shake offset removed before controls,
+  all motion from performance.now() + rAF (fake-clock friendly).
+-->
+<style>
+  :root { --bg: #10161a; --ink: #eef3f4; --muted: #9fb3b8; --accent: #f08a2c; --cyan: #4fe0ff; --panel: #141c20; }
+  html, body { margin: 0; height: 100%; background: var(--bg); color: var(--ink); font: 15px/1.4 system-ui, sans-serif; overflow: hidden; }
+  canvas { display: block; touch-action: none; }
+  .hud { position: fixed; left: 16px; right: 16px; top: 12px; pointer-events: none; }
+  .hud h1 { margin: 0; font: 650 21px/1.2 system-ui, sans-serif; letter-spacing: .02em; }
+  .hud p { margin: 3px 0 0; color: var(--muted); font-size: 13px; max-width: 40em; }
+  .beat { position: fixed; left: 16px; top: 74px; font: 600 12px/1 ui-monospace, monospace; color: var(--cyan); pointer-events: none; opacity: .85; }
+  .tray { position: fixed; left: 0; right: 0; bottom: 0; padding: 10px 16px calc(12px + env(safe-area-inset-bottom));
+          background: color-mix(in srgb, var(--panel) 90%, transparent); display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; align-items: center; }
+  button { font: 600 14px system-ui; padding: 10px 14px; border-radius: 10px; border: 1px solid #ffffff22; background: #23302f; color: var(--ink); }
+  button.primary { background: var(--accent); color: #1a0f05; border: 0; }
+  button[aria-pressed="true"] { border-color: var(--cyan); color: var(--cyan); }
+  .bar { flex-basis: 100%; height: 3px; background: #ffffff14; border-radius: 2px; overflow: hidden; }
+  .bar i { display: block; height: 100%; width: 0; background: var(--cyan); }
+  [hidden] { display: none !important; }
+  @media (max-width: 520px) { .hud p { display: none; } .beat { top: 46px; } }
+  #loader { position: fixed; inset: 0; display: grid; place-items: center; color: var(--muted); }
+</style>
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+} }
+</script>
+</head>
+<body>
+<div class="hud"><h1>Supply drop pod</h1><p>Genesis Ark · drone reserve. Tap the pod or press the button: it descends on thrusters, lands, unlocks, and an energy cell flies to the captain.</p></div>
+<div class="beat" id="beat"></div>
+<div id="loader">Loading…</div>
+<div class="tray">
+  <div class="bar"><i id="prog"></i></div>
+  <button id="play" class="primary" type="button">Call drone reserve</button>
+  <button id="short" type="button" aria-pressed="false">Reduced motion</button>
+  <button id="paint" type="button" aria-pressed="true" hidden>Scan paint</button>
+  <button id="skip" type="button">Skip</button>
+</div>
+<script type="module">
+import * as THREE from "three";
+import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
+import { EffectComposer } from "three/addons/postprocessing/EffectComposer.js";
+import { RenderPass } from "three/addons/postprocessing/RenderPass.js";
+import { UnrealBloomPass } from "three/addons/postprocessing/UnrealBloomPass.js";
+import { ShaderPass } from "three/addons/postprocessing/ShaderPass.js";
+import { OutputPass } from "three/addons/postprocessing/OutputPass.js";
+
+const $ = (id) => document.getElementById(id);
+const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const isPhone = matchMedia("(max-width: 700px)").matches;
+
+// ================= timeline: mirror of scripts/runtime/visual/drop_pod_timeline.gd
+const T = { ALT0: 26, HOVER_H: 1.45, HOVER_RISE: 0.16, TOUCH: 0.07, DESC_END: 1750, DEPLOY_A: 1150, DEPLOY_B: 1750,
+  DROP_A: 2400, IMPACT: 2720, UNLOCK: 3500, STRAIN_A: 3760, SNAP: 4400, SNAP_END: 4590, CELL_A: 4470, CELL_TOP: 5250,
+  DIP_A: 5900, ZIP_A: 6150, ARRIVE: 6530, DIM_A: 6600, DIM_B: 7700, END: 7900,
+  S_ALT0: 3, S_LAND: 650, S_LID_A: 800, S_LID_B: 1150, S_CELL_A: 1000, S_ZIP_A: 1500, S_ARRIVE: 1950, S_END: 2500,
+  CELL_Y0: 0.66, CELL_Y1: 1.82, ROLL_LAND: 0.045, PITCH_LAND: -0.022 };
+const TAU = Math.PI * 2;
+const k = (t, a, b) => Math.min(1, Math.max(0, (t - a) / (b - a)));
+const bump = (t, a, b) => (t < a || t > b ? 0 : Math.sin(Math.PI * (t - a) / (b - a)));
+const easeOut3 = (x) => 1 - Math.pow(1 - x, 3);
+const easeIO = (x) => x * x * (3 - 2 * x);
+const backOut = (x, s = 1.1) => { const p = x - 1; return 1 + p * p * ((s + 1) * p + s); };
+const lerp = (a, b, x) => a + (b - a) * x;
+const duration = (short) => (short ? T.S_END : T.END);
+const events = (short) => short
+  ? { impact: T.S_LAND, unlock: T.S_LID_A, snap: T.S_LID_A, burst: T.S_LID_A + 150, arrive: T.S_ARRIVE, done: T.S_END }
+  : { impact: T.IMPACT, unlock: T.UNLOCK, snap: T.SNAP, burst: T.SNAP + 20, arrive: T.ARRIVE, done: T.END };
+const base = () => ({ alt: 0, dx: 0, dz: 0, yaw: 0, roll: 0, pitch: 0, squash: 1, thrust: 0, deploy: 1, lid: 0, hiss: 0, glow: 1,
+  scorch: 0, ring: 0, cell_y: T.CELL_Y0, cell_zip: -1, cell_vis: 1, cell_scale: 1, cell_spin: 0, tremble: 0, dust_t: -1, burst_t: -1, arrive_t: -1, contact: 0 });
+
+function poseFull(t) {
+  const p = base();
+  p.ring = easeIO(k(t, 0, 450)) * (1 - easeIO(k(t, T.IMPACT, T.IMPACT + 600)));
+  if (t < T.DESC_END) {
+    const kd = k(t, 0, T.DESC_END);
+    p.alt = T.HOVER_H + (T.ALT0 - T.HOVER_H) * Math.pow(1 - kd, 2.4);
+    const dr = Math.pow(1 - kd, 1.7);
+    p.dx = -3.2 * dr; p.dz = 1.4 * dr;
+    const dv = 1.7 * Math.pow(1 - kd, 0.7);
+    p.roll = 0.11 * dv * (1 - kd);
+    p.pitch = -0.05 * dv * (1 - kd);
+    p.yaw = 0.85 * Math.pow(1 - kd, 2);
+    p.thrust = 0.65 + 0.35 * kd;
+  } else if (t < T.DROP_A) {
+    const kh = k(t, T.DESC_END, T.DROP_A), u = t - T.DESC_END;
+    const settle = (1 - easeIO(kh)) * easeIO(k(t, T.DESC_END, T.DESC_END + 260));
+    p.alt = T.HOVER_H + T.HOVER_RISE * easeIO(k(t, T.DESC_END + 80, T.DROP_A - 60)) + 0.022 * Math.sin(TAU * u / 330) * settle;
+    p.roll = 0.022 * Math.sin(TAU * u / 520) * settle + T.ROLL_LAND * 0.4 * kh;
+    p.pitch = -0.014 * Math.sin(TAU * u / 410 + 0.9) * settle + T.PITCH_LAND * 0.4 * kh;
+    p.thrust = 1 + 0.3 * bump(t, T.DROP_A - 260, T.DROP_A + 40);
+  } else if (t < T.IMPACT) {
+    const kf = k(t, T.DROP_A, T.IMPACT), top = T.HOVER_H + T.HOVER_RISE;
+    p.alt = top + (T.TOUCH - top) * Math.pow(kf, 2.6);
+    p.roll = T.ROLL_LAND * (0.4 + 0.6 * kf);
+    p.pitch = T.PITCH_LAND * (0.4 + 0.6 * kf);
+    p.thrust = 1.3 * (1 - easeOut3(k(t, T.DROP_A, T.DROP_A + 70)));
+  } else {
+    const u = t - T.IMPACT;
+    p.alt = u < 70 ? T.TOUCH - 0.12 * easeOut3(u / 70) : -0.05 * Math.exp(-(u - 70) / 120) * Math.cos(TAU * (u - 70) / 280);
+    p.roll = T.ROLL_LAND * Math.exp(-u / 150) * Math.cos(TAU * u / 170);
+    p.pitch = T.PITCH_LAND * Math.exp(-u / 140) * (Math.cos(TAU * u / 150) + 0.5 * Math.sin(TAU * u / 150));
+    p.squash = 1 - 0.03 * Math.exp(-u / 45) * Math.cos(TAU * u / 130);
+    p.dust_t = u / 1000; p.contact = 1;
+  }
+  p.deploy = backOut(k(t, T.DEPLOY_A, T.DEPLOY_B), 1.2);
+  p.scorch = 0.85 * easeIO(k(t, T.DESC_END - 400, T.IMPACT));
+  let lid = 0;
+  if (t >= T.UNLOCK && t < T.STRAIN_A) {
+    const u = t - T.UNLOCK;
+    lid = 0.016 * Math.exp(-u / 90) * Math.abs(Math.cos(TAU * u / 120)) + 0.008 * k(t, T.UNLOCK, T.UNLOCK + 60);
+  } else if (t >= T.STRAIN_A && t < T.SNAP) {
+    const strain = 0.026 * bump(t, T.STRAIN_A, T.STRAIN_A + 260) + 0.045 * bump(t, T.STRAIN_A + 360, T.SNAP);
+    lid = 0.008 + strain * (0.75 + 0.25 * Math.sin(TAU * (t - T.STRAIN_A) / 55));
+    p.tremble = 0.6 * bump(t, T.STRAIN_A, T.STRAIN_A + 260) + bump(t, T.STRAIN_A + 360, T.SNAP);
+  } else if (t >= T.SNAP && t < T.SNAP_END) {
+    lid = 0.008 + (1.075 - 0.008) * easeOut3(k(t, T.SNAP, T.SNAP_END));
+  } else if (t >= T.SNAP_END) {
+    const u = t - T.SNAP_END;
+    lid = 1 + 0.075 * Math.exp(-u / 120) * Math.cos(TAU * 4.2 * u / 1000);
+  }
+  p.lid = lid;
+  p.hiss = t >= T.UNLOCK ? (1 - Math.exp(-Math.max(t - T.UNLOCK, 0) / 60)) * (1 - easeIO(k(t, T.UNLOCK + 200, T.SNAP + 300))) : 0;
+  if (t >= T.SNAP) {
+    const u = t - T.SNAP;
+    p.pitch += 0.012 * Math.exp(-u / 130) * Math.sin(TAU * u / 260);
+    p.burst_t = (t - T.SNAP - 20) / 1000;
+  }
+  if (t >= T.CELL_A) {
+    p.cell_y = t < T.CELL_TOP + 400 ? T.CELL_Y0 + (T.CELL_Y1 - T.CELL_Y0) * backOut(k(t, T.CELL_A, T.CELL_TOP), 1.0) : T.CELL_Y1;
+    p.cell_y += 0.02 * Math.sin(TAU * (t - T.CELL_TOP) / 900) * k(t, T.CELL_TOP - 200, T.CELL_TOP + 200) * (1 - k(t, T.DIP_A, T.DIP_A + 80));
+    p.cell_y -= 0.07 * bump(t, T.DIP_A, T.ZIP_A + 60);
+    p.cell_scale = 1 - 0.03 * bump(t, T.DIP_A + 80, T.ZIP_A + 40);
+    p.cell_spin = (t - T.CELL_A) / 1000 * 1.3 + 2 * easeOut3(k(t, T.CELL_A, T.CELL_TOP));
+  }
+  if (t >= T.ZIP_A) {
+    const kz = k(t, T.ZIP_A, T.ARRIVE);
+    p.cell_zip = Math.pow(kz, 2.2);
+    p.cell_scale = lerp(1, 0.35, Math.pow(kz, 3));
+  }
+  if (t >= T.ARRIVE) { p.cell_vis = 0; p.arrive_t = (t - T.ARRIVE) / 1000; }
+  p.glow = lerp(1, 0.12, easeIO(k(t, T.DIM_A, T.DIM_B))) * (1 + 0.25 * p.tremble * Math.sin(t * 0.09));
+  return p;
+}
+function poseShort(t) {
+  const p = base();
+  const kl = k(t, 0, T.S_LAND);
+  p.alt = t < T.S_LAND ? T.TOUCH + (T.S_ALT0 - T.TOUCH) * (1 - easeOut3(kl)) : 0;
+  p.contact = t >= T.S_LAND ? 1 : 0;
+  p.thrust = 0.6 * (1 - kl);
+  p.ring = (1 - k(t, T.S_LAND, T.S_LAND + 300)) * k(t, 0, 150);
+  p.scorch = 0.5 * kl;
+  p.dust_t = t >= T.S_LAND ? (t - T.S_LAND) / 1000 : -1;
+  p.lid = easeIO(k(t, T.S_LID_A, T.S_LID_B));
+  if (t >= T.S_CELL_A) { p.cell_y = T.CELL_Y0 + (1.6 - T.CELL_Y0) * easeIO(k(t, T.S_CELL_A, T.S_ZIP_A - 100)); p.cell_spin = (t - T.S_CELL_A) / 1000; }
+  if (t >= T.S_ZIP_A) { p.cell_zip = easeIO(k(t, T.S_ZIP_A, T.S_ARRIVE)); p.cell_scale = lerp(1, 0.4, k(t, T.S_ZIP_A, T.S_ARRIVE)); }
+  if (t >= T.S_ARRIVE) { p.cell_vis = 0; p.arrive_t = (t - T.S_ARRIVE) / 1000; }
+  p.glow = lerp(1, 0.12, easeIO(k(t, T.S_ARRIVE, T.S_END)));
+  return p;
+}
+const pose = (t, short) => (short ? poseShort(t) : poseFull(t));
+
+// ================= pod constants (scripts/runtime/visual/drop_pod.gd)
+const POD = { HIP_R: 0.535, HIP_Y: 0.52, FOOT_R: 0.665, FOOT_Y: 0.05, STROKE: 0.07, FOLD: 1.05, LID_MAX: 1.95, TOP_Y: 1.13, LID_APO: 0.3, BELLY_Y: 0.13 };
+const CAPTAIN = new THREE.Vector3(-1.7, 0, 2.3);   // stand-in captain the cell flies to (pod front faces +Z)
+const CHEST = new THREE.Vector3(0, 1.2, 0);
+
+// ================= renderer / scene
+const renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: "high-performance" });
+renderer.setPixelRatio(Math.min(devicePixelRatio, isPhone ? 1.6 : 2));
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.2;
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+document.body.prepend(renderer.domElement);
+
+const scene = new THREE.Scene();
+{ // dusk gradient sky
+  const c = document.createElement("canvas"); c.width = 4; c.height = 256;
+  const g = c.getContext("2d"), gr = g.createLinearGradient(0, 0, 0, 256);
+  gr.addColorStop(0, "#1d3a4a"); gr.addColorStop(0.55, "#6f8f8f"); gr.addColorStop(0.78, "#e2b07e"); gr.addColorStop(1, "#c98f62");
+  g.fillStyle = gr; g.fillRect(0, 0, 4, 256);
+  const tex = new THREE.CanvasTexture(c); tex.colorSpace = THREE.SRGBColorSpace;
+  scene.background = tex;
+}
+const FOG = new THREE.Color("#b99a7a");
+scene.fog = new THREE.Fog(FOG, 12, 60);
+const camera = new THREE.PerspectiveCamera(36, 1, 0.05, 200);
+let camShake = 0;
+const camShakeOff = new THREE.Vector3();
+const controls = new OrbitControls(camera, renderer.domElement);
+controls.target.set(-0.7, 1.0, 0.9);
+camera.position.set(3.4, 2.1, 3.9);         // direction only; resize() sets the distance
+controls.enableDamping = true;
+controls.minDistance = 2; controls.maxDistance = 30;
+controls.maxPolarAngle = Math.PI * 0.49;
+
+scene.add(new THREE.HemisphereLight("#cfe6ff", "#6b4a33", 0.9));
+const sun = new THREE.DirectionalLight("#ffe2c0", 2.4);
+sun.position.set(3, 7, 6);
+sun.castShadow = true; sun.shadow.mapSize.set(1024, 1024); sun.shadow.bias = -0.0005;
+Object.assign(sun.shadow.camera, { left: -4, right: 4, top: 4, bottom: -4, near: 0.5, far: 20 });
+scene.add(sun);
+const GROUND = new THREE.Color("#b88a62");
+const ground = new THREE.Mesh(new THREE.CircleGeometry(80, 64), new THREE.MeshStandardMaterial({ color: GROUND, roughness: 0.95 }));
+ground.rotation.x = -Math.PI / 2; ground.receiveShadow = true;
+scene.add(ground);
+{ // a few low-poly rocks for scale
+  const rm = new THREE.MeshStandardMaterial({ color: "#8a6247", roughness: 0.9, flatShading: true });
+  [[-3.2, -2.5, 0.7], [3.8, -3.6, 1.1], [-5.5, 2.4, 0.5], [5.2, 1.8, 0.4]].forEach(([x, z, s]) => {
+    const r = new THREE.Mesh(new THREE.DodecahedronGeometry(s, 0), rm); r.position.set(x, s * 0.45, z); r.rotation.set(x, z, 0.3);
+    r.castShadow = r.receiveShadow = true; scene.add(r);
+  });
+}
+
+// ================= materials by class name (ProcBuilder: COLOR_0 R tint, G chamfer, B stripes)
+const loadTex = (url, srgb) => new Promise((res) => new THREE.TextureLoader().load(url, (t) => {
+  t.flipY = false; t.colorSpace = srgb ? THREE.SRGBColorSpace : THREE.NoColorSpace; t.anisotropy = 8; res(t);
+}, undefined, () => res(null)));
+const U = { uBakeAlbedo: { value: null }, uBakeOrm: { value: null }, uPaint: { value: 0 }, uScorch: { value: 0 } };
+function podMat(key, col, rough, metal, stripe, opts = {}) {
+  const m = new THREE.MeshStandardMaterial({ color: col, roughness: rough, metalness: metal, ...opts });
+  m.name = key;
+  const stripeCol = new THREE.Color(stripe);
+  m.onBeforeCompile = (sh) => {
+    Object.assign(sh.uniforms, U, { uStripe: { value: stripeCol } });
+    sh.vertexShader = sh.vertexShader
+      .replace("#include <common>", "#include <common>\nattribute vec4 color;\n#ifndef USE_UV1\nattribute vec2 uv1;\n#endif\nvarying vec4 vMask; varying vec2 vBakeUv; varying vec2 vUv0; varying float vLy;")
+      .replace("#include <uv_vertex>", "#include <uv_vertex>\nvMask = color; vBakeUv = uv1; vUv0 = uv; vLy = position.y;");
+    sh.fragmentShader = sh.fragmentShader
+      .replace("#include <common>", "#include <common>\nuniform sampler2D uBakeAlbedo, uBakeOrm; uniform float uPaint, uScorch; uniform vec3 uStripe; varying vec4 vMask; varying vec2 vBakeUv; varying vec2 vUv0; varying float vLy;")
+      .replace("#include <map_fragment>", `#include <map_fragment>
+        diffuseColor.rgb *= 1.0 + (vMask.r - 0.5) * 0.12;
+        float st = step(0.5, fract((vUv0.x + vUv0.y) * 9.0));
+        diffuseColor.rgb = mix(diffuseColor.rgb, uStripe, vMask.b * st);
+        float wear = vMask.g * 0.35;
+        diffuseColor.rgb = mix(diffuseColor.rgb, diffuseColor.rgb * 1.18 + 0.04, wear);
+        vec4 bA = texture2D(uBakeAlbedo, vBakeUv); float bk = bA.a * uPaint;
+        diffuseColor.rgb = mix(diffuseColor.rgb, bA.rgb, bk);
+        float soot = uScorch * (1.0 - smoothstep(0.08, 0.55, vLy));
+        diffuseColor.rgb = mix(diffuseColor.rgb, diffuseColor.rgb * 0.32, clamp(soot, 0.0, 0.85));`)
+      .replace("#include <roughnessmap_fragment>", `#include <roughnessmap_fragment>
+        vec4 bO = texture2D(uBakeOrm, vBakeUv); roughnessFactor = mix(roughnessFactor, bO.g, bO.a * uPaint * 0.6);`);
+  };
+  m.customProgramCacheKey = () => "pod-" + key;
+  return m;
+}
+const GLOW = new THREE.Color("#33d9ff");
+const MATS = {
+  hull: podMat("hull", "#dcdcd6", 0.55, 0.0, "#1c1c1e"),
+  accent: podMat("accent", "#ec5f0d", 0.5, 0.0, "#1a1a1c"),
+  frame: podMat("frame", "#33363b", 0.45, 0.25, "#e69e1f"),
+  metal: podMat("metal", "#8c9199", 0.35, 0.6, "#1a1a1c"),
+  glow: podMat("glow", GLOW.clone().multiplyScalar(0.3), 0.3, 0.0, "#000", { emissive: GLOW, emissiveIntensity: 1.6 }),
+};
+
+// ================= post
+const composer = new EffectComposer(renderer);
+composer.addPass(new RenderPass(scene, camera));
+composer.addPass(new ShaderPass({
+  uniforms: { tDiffuse: { value: null } },
+  vertexShader: "varying vec2 vUv; void main(){ vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }",
+  fragmentShader: "uniform sampler2D tDiffuse; varying vec2 vUv; void main(){ vec4 c = texture2D(tDiffuse, vUv); gl_FragColor = vec4(min(c.rgb, vec3(3.0)), c.a); }",
+}));
+const bloom = new UnrealBloomPass(new THREE.Vector2(256, 256), 0.38, 0.5, 0.92);
+composer.addPass(bloom);
+composer.addPass(new OutputPass());
+
+// ================= load
+async function loadGlbTxt(url) {
+  const r = await fetch(url);
+  if (!r.ok) throw new Error(url);
+  const bin = Uint8Array.from(atob((await r.text()).trim()), (c) => c.charCodeAt(0));
+  return new GLTFLoader().parseAsync(bin.buffer, "");
+}
+let gltf, baked = false;
+try {
+  const [g, a, o] = await Promise.all([loadGlbTxt("drop_pod_baked.glb.txt"), loadTex("drop_pod_baked_albedo.webp", true), loadTex("drop_pod_baked_orm.webp", false)]);
+  if (!a || !o) throw new Error("textures");
+  gltf = g; U.uBakeAlbedo.value = a; U.uBakeOrm.value = o; U.uPaint.value = 1; baked = true;
+} catch (e) {
+  console.info("procedural look (no local bake):", e && e.message);
+  gltf = await loadGlbTxt("drop_pod.glb.txt");
+  const blank = new THREE.DataTexture(new Uint8Array([0, 0, 0, 0]), 1, 1); blank.needsUpdate = true;
+  U.uBakeAlbedo.value = blank; U.uBakeOrm.value = blank;
+}
+$("paint").hidden = !baked;
+const pod = new THREE.Group();
+const asset = gltf.scene;
+asset.traverse((o) => {
+  if (!o.isMesh) return;
+  const name = (o.material.name || "").replace(/\d+$/, "").replace(/_$/, "");
+  o.material = MATS[name] || MATS.frame;
+  if (!o.geometry.attributes.uv1) o.geometry.setAttribute("uv1", o.geometry.attributes.uv);
+  if (!o.geometry.attributes.color) o.geometry.setAttribute("color", new THREE.Float32BufferAttribute(new Float32Array(o.geometry.attributes.position.count * 4).fill(0.5), 4));
+  o.castShadow = o.receiveShadow = true;
+});
+pod.add(asset);
+scene.add(pod);
+const N = (n) => asset.getObjectByName(n);
+const body = N("Body"), lidPivot = N("LidPivot");
+const sleeves = [0, 1, 2, 3].map((i) => N("Leg" + i)), rods = [0, 1, 2, 3].map((i) => N("Rod" + i)), feet = [0, 1, 2, 3].map((i) => N("Foot" + i));
+$("loader").hidden = true;
+
+// ================= cell (no_export in Godot: rebuilt here with the same dimensions)
+const cell = new THREE.Group();
+{
+  const glowM = new THREE.MeshStandardMaterial({ color: "#2a6b78", emissive: "#6bf2ff", emissiveIntensity: 3.2, roughness: 0.2 });
+  const core = new THREE.Mesh(new THREE.CylinderGeometry(0.1 * 0.72 / Math.cos(Math.PI / 8), 0.1 * 0.72 / Math.cos(Math.PI / 8), 0.18 * 1.44, 8), glowM);
+  const capM = MATS.frame;
+  [-1, 1].forEach((s) => {
+    const cap = new THREE.Mesh(new THREE.CylinderGeometry(0.08 / Math.cos(Math.PI / 8), 0.1 / Math.cos(Math.PI / 8), 0.18 * 0.28, 8), capM);
+    cap.position.y = s * 0.18 * 0.86; if (s < 0) cap.rotation.x = Math.PI;
+    const pin = new THREE.Mesh(new THREE.CylinderGeometry(0.026, 0.026, 0.028, 8), MATS.metal); pin.position.y = s * (0.18 + 0.012);
+    cell.add(cap, pin);
+  });
+  for (let i = 0; i < 4; i++) {
+    const a = Math.PI * 0.5 * i + Math.PI * 0.25;
+    const bar = new THREE.Mesh(new THREE.BoxGeometry(0.022, 0.18 * 1.48, 0.016), MATS.accent);
+    bar.position.set(Math.sin(a) * 0.09, 0, Math.cos(a) * 0.09); bar.rotation.y = a; cell.add(bar);
+  }
+  cell.add(core);
+  const c = document.createElement("canvas"); c.width = c.height = 64;
+  const g = c.getContext("2d"), gr = g.createRadialGradient(32, 32, 0, 32, 32, 32);
+  gr.addColorStop(0, "rgba(140,242,255,0.38)"); gr.addColorStop(1, "rgba(50,180,255,0)");
+  g.fillStyle = gr; g.fillRect(0, 0, 64, 64);
+  const halo = new THREE.Sprite(new THREE.SpriteMaterial({ map: new THREE.CanvasTexture(c), blending: THREE.AdditiveBlending, depthWrite: false, transparent: true }));
+  halo.scale.setScalar(0.75); cell.add(halo);
+  // The cell light is not a child of the cell: a hidden light changes the light count and recompiles every program.
+  const cl = new THREE.PointLight("#33d9ff", 1.2, 2.6, 1.5); scene.add(cl); cell.userData.light = cl; cell.userData.glowM = glowM;
+}
+scene.add(cell);
+
+// captain stand-in (the cell's destination)
+const captain = new THREE.Group();
+{
+  const suit = new THREE.MeshStandardMaterial({ color: "#d9d6cf", roughness: 0.6, flatShading: true });
+  const orange = new THREE.MeshStandardMaterial({ color: "#e0661c", roughness: 0.6, flatShading: true });
+  const visor = new THREE.MeshStandardMaterial({ color: "#1b2a30", roughness: 0.2, metalness: 0.4 });
+  const torso = new THREE.Mesh(new THREE.CylinderGeometry(0.2, 0.17, 0.62, 8), suit); torso.position.y = 1.15;
+  const pack = new THREE.Mesh(new THREE.BoxGeometry(0.3, 0.38, 0.14), orange); pack.position.set(0, 1.2, -0.17);
+  const head = new THREE.Mesh(new THREE.IcosahedronGeometry(0.16, 1), suit); head.position.y = 1.62;
+  const vis = new THREE.Mesh(new THREE.SphereGeometry(0.12, 12, 8, -0.9, 1.8, 0.9, 1.0), visor); vis.position.set(0, 1.62, 0.05);
+  const legL = new THREE.Mesh(new THREE.CylinderGeometry(0.08, 0.07, 0.84, 6), suit); legL.position.set(-0.1, 0.42, 0);
+  const legR = legL.clone(); legR.position.x = 0.1;
+  const strip = new THREE.Mesh(new THREE.TorusGeometry(0.19, 0.012, 4, 16), MATS.glow); strip.rotation.x = Math.PI / 2; strip.position.y = 0.92;
+  captain.add(torso, pack, head, vis, legL, legR, strip);
+  captain.traverse((o) => { if (o.isMesh) o.castShadow = true; });
+  captain.position.copy(CAPTAIN); captain.rotation.y = Math.atan2(-CAPTAIN.x, -CAPTAIN.z);  // faces the pod
+}
+scene.add(captain);
+
+// ================= effects (closed form where Godot is closed form)
+const rng = (seed) => () => ((seed = (seed * 16807) % 2147483647) / 2147483647);
+function seeds(n, s) { const r = rng(s), a = new Float32Array(n * 4); for (let i = 0; i < a.length; i++) a[i] = r(); return a; }
+const DUST_VS = `uniform float t, loopRate, life, delay, r0, radialSpeed, drag, rise, height0, size0, size1, opacity, strength, pxScale;
+  attribute vec4 seed; varying float vA; varying float vS;
+  void main(){ float u, tt, on = 1.0;
+    if (loopRate > 0.0) { u = fract(t * loopRate + seed.w); tt = u * life; } else { tt = t - seed.w * delay; on = step(0.0, tt); tt = max(tt, 0.0); u = tt / life; }
+    float az = seed.x * 6.2831853, sp = 0.55 + 0.9 * seed.y;
+    float r = r0 + radialSpeed * sp * (1.0 - exp(-drag * tt)) / drag;
+    vec3 c = vec3(cos(az) * r, height0 + rise * tt * (0.6 + 0.8 * seed.z), sin(az) * r);
+    float sz = mix(size0, size1, sqrt(clamp(u, 0.0, 1.0))) * (0.6 + 0.8 * seed.z);
+    vA = on * opacity * strength * smoothstep(0.0, 0.08, u) * pow(max(1.0 - u, 0.0), 1.5); vS = seed.w * 17.0 + seed.x * 5.0;
+    vec4 mv = modelViewMatrix * vec4(c, 1.0); gl_Position = projectionMatrix * mv; gl_PointSize = sz * pxScale / -mv.z; }`;
+const DUST_FS = `uniform vec3 color; varying float vA; varying float vS;
+  float h(vec2 p){ return fract(sin(dot(p, vec2(12.9898, 78.233))) * 43758.5453); }
+  void main(){ vec2 p = gl_PointCoord - 0.5; float d = length(p) * 2.0; float n = h(floor(gl_PointCoord * 5.0) + vS);
+    float a = smoothstep(1.0, 0.25, d + (n - 0.5) * 0.4); gl_FragColor = vec4(color * (0.85 + 0.2 * n), vA * a); }`;
+function dustSystem(n, s, params, color) {
+  const g = new THREE.BufferGeometry();
+  g.setAttribute("position", new THREE.Float32BufferAttribute(new Float32Array(n * 3), 3));
+  g.setAttribute("seed", new THREE.Float32BufferAttribute(seeds(n, s), 4));
+  const uniforms = { t: { value: 0 }, strength: { value: 1 }, pxScale: { value: 600 }, color: { value: new THREE.Color(color) } };
+  for (const [kk, v] of Object.entries(params)) uniforms[kk] = { value: v };
+  const m = new THREE.ShaderMaterial({ uniforms, vertexShader: DUST_VS, fragmentShader: DUST_FS, transparent: true, depthWrite: false });
+  const p = new THREE.Points(g, m); p.frustumCulled = false; p.visible = false; return p;
+}
+const DUSTC = "#b9a48c";
+const wash = dustSystem(28, 11, { loopRate: 1.3, life: 0.75, delay: 0, r0: 0.35, radialSpeed: 3.6, drag: 2.0, rise: 0.35, height0: 0.08, size0: 0.2, size1: 0.75, opacity: 0.3 }, DUSTC);
+const dust = dustSystem(56, 23, { loopRate: 0, life: 1.9, delay: 0.04, r0: 0.55, radialSpeed: 3.4, drag: 2.6, rise: 0.22, height0: 0.06, size0: 0.22, size1: 1.0, opacity: 0.42 }, DUSTC);
+const steam = dustSystem(18, 37, { loopRate: 1.8, life: 0.55, delay: 0, r0: 0.3 / Math.cos(Math.PI / 8), radialSpeed: 0.35, drag: 1.0, rise: 0.55, height0: 0.0, size0: 0.05, size1: 0.28, opacity: 0.45 }, "#eef3f6");
+pod.add(wash, dust); body.add(steam); steam.position.y = POD.TOP_Y + 0.01;
+
+const SPARK_VS = `uniform float t, life, speedMin, speedMax, elMin, elMax, drag, gravity, delaySpread, size, pxScale; attribute vec4 seed; varying float vA; varying float vH;
+  void main(){ float az = seed.x * 6.2831853, el = mix(elMin, elMax, seed.y);
+    vec3 dir = vec3(cos(el) * cos(az), sin(el), cos(el) * sin(az)); float sp = mix(speedMin, speedMax, seed.z);
+    float tt = t - seed.w * delaySpread; float on = step(0.0, tt); tt = max(tt, 0.0);
+    vec3 c = dir * sp * (1.0 - exp(-drag * tt)) / drag + vec3(0.0, -0.5 * gravity * tt * tt, 0.0);
+    float u = tt / (life * (0.6 + 0.8 * seed.w)); vA = on * exp(-u * 2.2) * (1.0 - smoothstep(0.7, 1.0, u * 0.5)); vH = exp(-u * 4.0);
+    float sz = size * (0.5 + 0.8 * seed.z) * max(0.15, 1.0 - u * 0.6);
+    vec4 mv = modelViewMatrix * vec4(c, 1.0); gl_Position = projectionMatrix * mv; gl_PointSize = sz * pxScale / -mv.z; }`;
+const GLOWPT_FS = `uniform vec3 color; uniform float energy; varying float vA; varying float vH;
+  void main(){ float d = length(gl_PointCoord - 0.5) * 2.0; float kk = pow(max(1.0 - d, 0.0), 1.8);
+    gl_FragColor = vec4(mix(color, vec3(1.0), vH * 0.55 * kk) * energy * vA * kk, 1.0); }`;
+function sparkSystem(n, s, params) {
+  const g = new THREE.BufferGeometry();
+  g.setAttribute("position", new THREE.Float32BufferAttribute(new Float32Array(n * 3), 3));
+  g.setAttribute("seed", new THREE.Float32BufferAttribute(seeds(n, s), 4));
+  const uniforms = { t: { value: 0 }, pxScale: { value: 600 }, color: { value: new THREE.Color("#66f0ff") }, energy: { value: 2.0 } };
+  for (const [kk, v] of Object.entries(params)) uniforms[kk] = { value: v };
+  const m = new THREE.ShaderMaterial({ uniforms, vertexShader: SPARK_VS, fragmentShader: GLOWPT_FS, blending: THREE.AdditiveBlending, transparent: true, depthWrite: false });
+  const p = new THREE.Points(g, m); p.frustumCulled = false; p.visible = false; return p;
+}
+const sparks = sparkSystem(26, 41, { size: 0.045, life: 0.32, speedMin: 1.2, speedMax: 3.2, elMin: 0.5, elMax: 1.45, drag: 3.2, gravity: 3.5, delaySpread: 0.06 });
+sparks.position.y = POD.TOP_Y + 0.05; body.add(sparks);
+const absorbSparks = sparkSystem(14, 67, { size: 0.035, life: 0.25, speedMin: 0.5, speedMax: 1.4, elMin: -0.6, elMax: 1.2, drag: 4.0, gravity: 0.5, delaySpread: 0.06 });
+scene.add(absorbSparks);
+
+// trail (CPU, like Godot)
+const TRAIL = 36;
+const trailG = new THREE.BufferGeometry();
+trailG.setAttribute("position", new THREE.Float32BufferAttribute(new Float32Array(TRAIL * 3), 3));
+trailG.setAttribute("alpha", new THREE.Float32BufferAttribute(new Float32Array(TRAIL), 1));
+const trail = new THREE.Points(trailG, new THREE.ShaderMaterial({
+  uniforms: { pxScale: { value: 600 }, color: { value: new THREE.Color("#66f0ff") }, energy: { value: 1.8 } },
+  vertexShader: "uniform float pxScale; attribute float alpha; varying float vA; varying float vH; void main(){ vA = alpha; vH = alpha; vec4 mv = modelViewMatrix * vec4(position, 1.0); gl_Position = projectionMatrix * mv; gl_PointSize = 0.07 * (1.0 - 0.6 * (1.0 - alpha)) * pxScale / -mv.z; }",
+  fragmentShader: GLOWPT_FS, blending: THREE.AdditiveBlending, transparent: true, depthWrite: false }));
+trail.frustumCulled = false; scene.add(trail);
+const trailPts = [];
+
+// rings, flames, lights
+const RING_FS = `uniform vec3 color; uniform float energy, alpha, radius, width, dashes, spin, fill; varying vec2 vUv;
+  void main(){ vec2 p = vUv - 0.5; float d = length(p); float ring = smoothstep(width, 0.0, abs(d - radius));
+    if (dashes > 0.0) { float a = atan(p.y, p.x) / 6.2831853 + spin; ring *= smoothstep(0.15, 0.3, abs(fract(a * dashes) - 0.5) * 2.0); }
+    float f = fill * smoothstep(radius, 0.0, d) * 0.25; gl_FragColor = vec4(color * energy * clamp((ring + f) * alpha * smoothstep(0.5, 0.45, d), 0.0, 1.0), 1.0); }`;
+function ringPlane(size, params) {
+  const uniforms = { color: { value: new THREE.Color("#59e6ff") }, energy: { value: 1.5 }, alpha: { value: 1 }, radius: { value: 0.4 }, width: { value: 0.04 }, dashes: { value: 0 }, spin: { value: 0 }, fill: { value: 0 } };
+  for (const [kk, v] of Object.entries(params)) uniforms[kk].value = v;
+  const m = new THREE.Mesh(new THREE.PlaneGeometry(size, size), new THREE.ShaderMaterial({ uniforms,
+    vertexShader: "varying vec2 vUv; void main(){ vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }",
+    fragmentShader: RING_FS, blending: THREE.AdditiveBlending, transparent: true, depthWrite: false, side: THREE.DoubleSide }));
+  m.rotation.x = -Math.PI / 2; m.visible = false; return m;
+}
+const marker = ringPlane(2.6, { radius: 0.4, width: 0.012, dashes: 16, energy: 1.4, fill: 0.6 }); marker.position.y = 0.02; pod.add(marker);
+const burstRing = ringPlane(1.4, { width: 0.03, energy: 1.6 }); burstRing.position.y = POD.TOP_Y + 0.07; body.add(burstRing);
+const absorbRing = ringPlane(2.0, { width: 0.025, energy: 1.4 }); scene.add(absorbRing);
+const flameMat = new THREE.ShaderMaterial({ uniforms: { thrust: { value: 1 }, clock: { value: 0 } }, transparent: true, depthWrite: false, blending: THREE.AdditiveBlending, side: THREE.DoubleSide,
+  vertexShader: "varying float vY; varying float vX; void main(){ vY = (position.y + 0.35) / 0.7; vX = atan(position.x, position.z); gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }",
+  fragmentShader: `uniform float thrust, clock; varying float vY; varying float vX;
+    void main(){ float v = 1.0 - vY; float fl = 0.85 + 0.15 * sin(clock * 61.0 + vX * 4.0) * sin(clock * 37.0 + v * 9.0);
+      float a = pow(max(1.0 - v, 0.0), 1.6) * thrust * fl; vec3 c = mix(vec3(0.85, 0.97, 1.0), vec3(0.2, 0.7, 1.0), smoothstep(0.0, 0.5, v)) * 1.6;
+      gl_FragColor = vec4(c * clamp(a, 0.0, 1.0), 1.0); }` });
+const flames = [];
+for (let i = 0; i < 4; i++) {
+  const a = Math.PI * 0.25 + Math.PI * 0.5 * i;
+  const holder = new THREE.Group(); holder.position.set(Math.sin(a) * 0.19, POD.BELLY_Y - 0.068, Math.cos(a) * 0.19);
+  const f = new THREE.Mesh(new THREE.CylinderGeometry(0.05, 0.012, 0.7, 10, 1, true), flameMat); f.position.y = -0.35;
+  holder.add(f); body.add(holder); flames.push(holder);
+}
+const thrustLight = new THREE.PointLight("#8cd9ff", 0, 3.5, 1.6); thrustLight.position.y = -0.15; body.add(thrustLight);
+const flash = new THREE.PointLight("#99eeff", 0, 4, 1.6); flash.position.y = POD.TOP_Y + 0.35; body.add(flash);
+
+// ================= pose application (mirror of DropPod._apply)
+const _m = new THREE.Matrix4(), _inv = new THREE.Matrix4(), _q = new THREE.Quaternion(), _e = new THREE.Euler(0, 0, 0, "YXZ");
+const UP = new THREE.Vector3(0, 1, 0);
+const dirOf = (i) => new THREE.Vector3(Math.sin(Math.PI * 0.5 * i), 0, Math.cos(Math.PI * 0.5 * i));
+function footLocal(i, deploy) {
+  const d = dirOf(i);
+  const hip = d.clone().multiplyScalar(POD.HIP_R).add(new THREE.Vector3(0, POD.HIP_Y, 0));
+  const ext = d.clone().multiplyScalar(POD.FOOT_R).add(new THREE.Vector3(0, POD.FOOT_Y - POD.STROKE, 0));
+  const folded = hip.clone().add(ext.clone().sub(hip).applyAxisAngle(d.clone().cross(UP).normalize(), -POD.FOLD));
+  return folded.lerp(ext, deploy);
+}
+function bodyMatrix(p, t) {
+  const tremble = p.tremble * 0.0045 * Math.sin(t * 0.088);
+  _e.set(p.pitch, p.yaw, p.roll + tremble, "YXZ"); _q.setFromEuler(_e);
+  const sy = p.squash, sx = 1 / Math.sqrt(sy);
+  return new THREE.Matrix4().compose(new THREE.Vector3(p.dx, p.alt, p.dz), _q.clone(), new THREE.Vector3(sx, sy, sx));
+}
+let zipFrom = new THREE.Vector3();
+function apply(p, t, short) {
+  const bm = bodyMatrix(p, t);
+  bm.decompose(body.position, body.quaternion, body.scale);
+  _inv.copy(bm).invert();
+  for (let i = 0; i < 4; i++) {
+    const d = dirOf(i);
+    const hip = d.clone().multiplyScalar(POD.HIP_R).add(new THREE.Vector3(0, POD.HIP_Y, 0));
+    const fw = footLocal(i, p.deploy).applyMatrix4(bm);
+    const grounded = fw.y <= POD.FOOT_Y;
+    if (grounded) fw.y = POD.FOOT_Y;
+    const fb = fw.clone().applyMatrix4(_inv);
+    const axis = hip.clone().sub(fb).normalize();
+    const side = UP.clone().cross(d).normalize();
+    const fwd = side.clone().cross(axis).normalize();
+    const x = axis.clone().cross(fwd).normalize();
+    _m.makeBasis(x, axis, fwd);
+    sleeves[i].position.copy(hip); sleeves[i].quaternion.setFromRotationMatrix(_m);
+    rods[i].position.copy(fb); rods[i].quaternion.setFromRotationMatrix(_m);
+    feet[i].position.copy(fw);
+    if (grounded) feet[i].quaternion.setFromAxisAngle(UP, Math.PI * 0.5 * i + p.yaw);
+    else feet[i].quaternion.copy(body.quaternion).multiply(new THREE.Quaternion().setFromAxisAngle(UP, Math.PI * 0.5 * i));
+  }
+  lidPivot.rotation.set(0, 0, p.lid * POD.LID_MAX);
+  MATS.glow.emissiveIntensity = 1.6 * p.glow;
+  U.uScorch.value = p.scorch;
+  const thrust = p.thrust;
+  flames.forEach((h) => { h.visible = thrust > 0.02; h.scale.set(1, 0.25 + 0.75 * thrust, 1); });
+  flameMat.uniforms.thrust.value = Math.min(1.3, thrust); flameMat.uniforms.clock.value = t * 0.001;
+  thrustLight.intensity = 0.8 * thrust * 3;
+  const w = thrust * Math.min(1, Math.max(0, 1 - p.alt / 4));
+  wash.visible = w > 0.02; wash.material.uniforms.t.value = t * 0.001; wash.material.uniforms.strength.value = w;
+  marker.visible = p.ring > 0.01; marker.material.uniforms.alpha.value = p.ring * (0.75 + 0.25 * Math.sin(t * 0.008)); marker.material.uniforms.spin.value = t * 0.00004;
+  dust.visible = p.dust_t >= 0 && p.dust_t < 2.4; dust.material.uniforms.t.value = Math.max(0, p.dust_t); dust.material.uniforms.strength.value = short ? 0.5 : 1;
+  steam.visible = p.hiss > 0.01; steam.material.uniforms.t.value = t * 0.001; steam.material.uniforms.strength.value = p.hiss;
+  const bt = p.burst_t, burst = bt >= 0 && bt < 1.4;
+  sparks.visible = burst && !short; sparks.material.uniforms.t.value = Math.max(0, bt);
+  flash.intensity = burst ? (short ? 0.6 : 1.6) * 3 * Math.exp(-Math.max(0, bt) * 1000 / 70) : 0;
+  const br = easeOut3(Math.min(1, Math.max(0, bt / 0.4)));
+  burstRing.visible = burst && bt < 0.45; burstRing.material.uniforms.radius.value = 0.12 + 0.33 * br; burstRing.material.uniforms.alpha.value = (1 - br) * (short ? 0.5 : 0.85);
+  // cell
+  cell.visible = p.cell_vis > 0.5;
+  let cp;
+  if (p.cell_zip < 0) { cp = new THREE.Vector3(0, p.cell_y, 0).applyMatrix4(bm); }
+  else {
+    const a = short ? T.S_ZIP_A : T.ZIP_A, pz = pose(a, short);
+    const from = new THREE.Vector3(0, pz.cell_y, 0).applyMatrix4(bodyMatrix(pz, a));
+    const to = CAPTAIN.clone().add(CHEST);
+    const ctrl = from.clone().add(to).multiplyScalar(0.5).add(new THREE.Vector3(0, 0.55 + 0.08 * from.distanceTo(to), 0));
+    cp = from.clone().lerp(ctrl, p.cell_zip).lerp(ctrl.clone().lerp(to, p.cell_zip), p.cell_zip);
+  }
+  cell.position.copy(cp); cell.rotation.set(0, p.cell_spin, 0); cell.scale.setScalar(p.cell_scale);
+  cell.userData.glowM.emissiveIntensity = 3.2 * (1 + 0.35 * Math.sin(t * 0.006));
+  cell.userData.light.intensity = cell.visible ? 1.2 * Math.min(1, Math.max(0, p.lid * 1.5)) : 0; cell.userData.light.position.copy(cp);
+  updateTrail(cp, cell.visible && t >= (short ? T.S_CELL_A : T.CELL_A + 200), t);
+  const at = p.arrive_t, ab = at >= 0 && at < 0.8;
+  absorbRing.visible = ab; absorbSparks.visible = ab && !short;
+  if (ab) {
+    absorbRing.position.copy(CAPTAIN).add(CHEST); absorbSparks.position.copy(absorbRing.position);
+    const ka = easeOut3(Math.min(1, at / 0.5));
+    absorbRing.material.uniforms.radius.value = 0.12 + 0.3 * ka; absorbRing.material.uniforms.alpha.value = (1 - ka) * 0.8;
+    absorbSparks.material.uniforms.t.value = at;
+  }
+}
+function updateTrail(pos, emit, t) {
+  for (const e of trailPts) e[1] += 1 / 60;
+  if (emit && (!trailPts.length || trailPts[0][0].distanceTo(pos) > 0.025)) trailPts.unshift([pos.clone(), 0]);
+  while (trailPts.length > TRAIL || (trailPts.length && trailPts[trailPts.length - 1][1] > 0.45)) trailPts.pop();
+  const P = trailG.attributes.position, A = trailG.attributes.alpha;
+  for (let i = 0; i < TRAIL; i++) {
+    if (i < trailPts.length) { const [v, age] = trailPts[i]; P.setXYZ(i, v.x, v.y, v.z); A.setX(i, Math.max(0, 1 - age / 0.45) * 0.9); }
+    else A.setX(i, 0);
+  }
+  P.needsUpdate = A.needsUpdate = true;
+}
+
+// ================= control
+let seqStart = -1, short = reduceMotion, fired = {};
+$("short").setAttribute("aria-pressed", String(short));
+const BEATS = [[0, "call · landing marker"], [1150, "legs deploy"], [1750, "anticipation hover"], [2400, "thrusters cut · drop"], [2720, "impact · struts compress"],
+  [3500, "unlock · hiss"], [3760, "hatch strains"], [4400, "snap open · burst"], [4470, "cell rises"], [5900, "anticipation dip"], [6150, "zip to the suit"], [6530, "delivered"], [6600, "lights dim"], [7900, "prop stays"]];
+function play() {
+  seqStart = performance.now(); fired = {}; trailPts.length = 0;
+  apply(pose(0, short), 0, short);
+}
+function skip() { if (seqStart >= 0) seqStart = performance.now() - duration(short) - 1; }
+$("play").addEventListener("click", play);
+$("skip").addEventListener("click", skip);
+$("short").addEventListener("click", () => { short = !short; $("short").setAttribute("aria-pressed", String(short)); });
+$("paint").addEventListener("click", () => { U.uPaint.value = U.uPaint.value > 0.5 ? 0 : 1; $("paint").setAttribute("aria-pressed", String(U.uPaint.value > 0.5)); });
+const ray = new THREE.Raycaster(), ndc = new THREE.Vector2();
+let downAt = null;
+renderer.domElement.addEventListener("pointerdown", (e) => { downAt = [e.clientX, e.clientY]; });
+renderer.domElement.addEventListener("pointerup", (e) => {
+  if (!downAt || Math.hypot(e.clientX - downAt[0], e.clientY - downAt[1]) > 6) return;
+  ndc.set(e.clientX / innerWidth * 2 - 1, -(e.clientY / innerHeight) * 2 + 1);
+  ray.setFromCamera(ndc, camera);
+  if (ray.intersectObject(pod, true).length) play();
+});
+
+// ================= performance / sizing
+function prewarm() {
+  // every effect on for one compile against the composer target (no hitch on the first drop)
+  [wash, dust, steam, sparks, absorbSparks, marker, burstRing, absorbRing].forEach((o) => (o.visible = true));
+  flames.forEach((h) => (h.visible = true)); cell.visible = true;
+  renderer.setRenderTarget(composer.readBuffer); renderer.compile(scene, camera); renderer.setRenderTarget(null);
+  composer.render();
+  apply(restPose(), 0, false);
+}
+function restPose() { const p = pose(T.END, false); p.glow = 1; p.lid = 0; p.cell_vis = 0; p.arrive_t = -1; p.burst_t = -1; return p; }
+const perf = { last: 0, acc: 0, n: 0, minRatio: 1 };
+function adaptQuality(now) {
+  if (perf.last) { const dt = now - perf.last; if (dt < 250) { perf.acc += dt; perf.n++; } }
+  perf.last = now;
+  if (perf.n >= 45) {
+    const pr = renderer.getPixelRatio();
+    if (perf.acc / perf.n > 28 && pr > perf.minRatio) { renderer.setPixelRatio(Math.max(perf.minRatio, pr - 0.25)); resize(false); }
+    perf.acc = 0; perf.n = 0;
+  }
+}
+const FIT_PULLBACK = 2.0;
+const DEFAULT_DIR = camera.position.clone().sub(controls.target).normalize();
+let fitPending = true;
+function resize(refit = true) {
+  const hidden = !(innerWidth > 0 && innerHeight > 0);
+  const w = Math.max(1, innerWidth), h = Math.max(1, innerHeight);
+  renderer.setSize(w, h);
+  composer.setPixelRatio(renderer.getPixelRatio());
+  composer.setSize(w, h);
+  camera.aspect = w / h;
+  const tray = document.querySelector(".tray").getBoundingClientRect().height;
+  camera.setViewOffset(w, h, 0, tray * 0.42, w, h);
+  camera.updateProjectionMatrix();
+  const px = h * renderer.getPixelRatio() / (2 * Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)));
+  [wash, dust, steam, sparks, absorbSparks, trail].forEach((o) => (o.material.uniforms.pxScale.value = px));
+  if (hidden) { fitPending = true; return; }
+  if (!refit && !fitPending) return;
+  fitPending = false;
+  const half = THREE.MathUtils.degToRad(camera.fov / 2);
+  const R = 1.6;   // pod + captain + landing marker
+  const fit = FIT_PULLBACK * 0.62 * Math.min(14, Math.max(R / Math.tan(half), (R * 1.15) / (Math.tan(half) * camera.aspect)));
+  const dir = camera.position.clone().sub(controls.target);
+  if (!Number.isFinite(dir.lengthSq()) || dir.lengthSq() < 1e-8) dir.copy(DEFAULT_DIR);
+  camera.position.copy(controls.target).add(dir.normalize().multiplyScalar(fit));
+}
+addEventListener("resize", () => resize(true));
+resize();
+prewarm();
+
+window.__viewer = { THREE, scene, camera, controls, renderer, pose, play, skip, apply, U, baked, get t() { return seqStart >= 0 ? performance.now() - seqStart : -1; } };
+
+renderer.setAnimationLoop((now) => {
+  if (fitPending && innerWidth > 0 && innerHeight > 0) resize(true);   // first real layout after a hidden (0x0) load
+  adaptQuality(now);
+  if (seqStart >= 0) {
+    const t = now - seqStart, dur = duration(short);
+    const p = pose(Math.min(t, dur), short);
+    apply(p, Math.min(t, dur), short);
+    const ev = events(short);
+    if (!fired.impact && t >= ev.impact) { fired.impact = true; if (!short) camShake = 0.03; }
+    let b = ""; for (const [bt, name] of BEATS) if ((short ? t * T.END / T.S_END : t) >= bt) b = name;
+    $("beat").textContent = (short ? "reduced motion · " : "") + b;
+    $("prog").style.width = (100 * Math.min(1, t / dur)).toFixed(1) + "%";
+    if (t >= dur) { seqStart = -1; trailPts.length = 0; updateTrail(new THREE.Vector3(), false, 0); }
+  }
+  camera.position.sub(camShakeOff);
+  controls.update();
+  camShake *= 0.86;
+  camShakeOff.set(Math.sin(now * 0.091) * camShake, Math.sin(now * 0.137 + 1.3) * camShake * 1.3, 0);
+  camera.position.add(camShakeOff);
+  composer.render();
+});
+</script>
+</body>
+</html>

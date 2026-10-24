@@ -391,6 +391,18 @@ func _run() -> void:
 	var markers: Dictionary = surf.get("_markers")
 	var swl: WaypointLayer = surf.get("waypoints")
 	check("waypoint_surface_main_sample", swl.objective == markers["main_sample"], swl.objective_label)
+	# D-056: the drone reserve's supply pod lands clear of the sites, has no collision,
+	# plays, and pressing again skips it to the landed, open, dimmed end pose.
+	surf.call("_call_drop_pod", false)
+	await frames(10)
+	var pod := surf.get_node_or_null("DropPod") as DropPod
+	var pod_ok := pod != null and pod.is_busy() and pod.find_children("*", "CollisionObject3D", true, false).is_empty()
+	if pod:
+		for k: String in markers.keys():
+			pod_ok = pod_ok and pod.global_position.distance_to((markers[k] as Node3D).global_position) > 3.5
+		pod.skip()
+		pod_ok = pod_ok and not pod.is_busy() and pod.visible
+	check("surface_drop_pod_lands_clear_and_skips", pod_ok, str(pod.global_position) if pod else "no pod")
 	var sample: Interactable = markers["main_sample"]
 	sample.use()
 	await frames(2)
