@@ -51,6 +51,11 @@
           "role": "Exo 2 typeface (SIL Open Font License)",
           "name": "Natanael Gama",
           "status": "in_use"
+        },
+        {
+          "role": "Quantico typeface (SIL Open Font License)",
+          "name": "Matthew Desmond",
+          "status": "in_use"
         }
       ]
     },

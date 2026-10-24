@@ -1,0 +1,9 @@
+PERF ship             p50   8.3  p95   9.0  p99   9.3 ms | draws    50  prims    59140  objs   328  nodes  4155 | load  1874 ms  OK
+PERF ship_orbit_view  p50   8.3  p95   8.9  p99  10.0 ms | draws    51  prims    59140  objs   328  nodes  4156 | load     4 ms  OK
+PERF ship_starmap     p50   8.3  p95   8.9  p99   9.2 ms | draws    50  prims    59140  objs   328  nodes  4143 | load     4 ms  OK
+PERF flight_belt      p50   7.9  p95   9.6  p99  10.0 ms | draws   287  prims   576838  objs   782  nodes  1241 | load   569 ms  OK
+PERF surface_viridia  p50   8.2  p95   9.3  p99   9.8 ms | draws   456  prims  2084819  objs   876  nodes   818 | load  2645 ms  OK
+PERF surface_hazard   p50   7.9  p95   9.2  p99   9.5 ms | draws   318  prims  3382801  objs   818  nodes   661 | load     2 ms  OVER: primitives 3382801 > 3000000
+PERF colony_grown     p50   8.9  p95   9.5  p99  15.6 ms | draws  1242  prims  2753672  objs  1970  nodes  1844 | load  7475 ms  OVER: load 7475 ms > 4000
+PERF colony_overview  p50   8.9  p95   9.4  p99   9.6 ms | draws  1136  prims  3479432  objs  1868  nodes  1660 | load    23 ms  OVER: primitives 3479432 > 3000000
+PERF colony_era20     p50   8.3  p95   9.7  p99  19.3 ms | draws  2070  prims  7793614  objs  6149  nodes  9037 | load  3005 ms  OVER: primitives 7793614 > 3000000

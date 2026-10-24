@@ -1,0 +1,13 @@
+{
+  "task_id": "ui_r1",
+  "decision": "D-048",
+  "commit": "see git log (branch worktree-agent-a1c3556abe67af9a5, parent a6320f1)",
+  "engine_version": "Godot 4.7.1-stable (official)",
+  "command": "CHECK_FAST=1 tools/check.sh; godot --path . --resolution 1600x900|1280x720 -- --capture=<png> --setup=<fixture> --scene=<scene> --wait=150 [--action=...] [--touch]; godot --path . -- --perf",
+  "exit_code": 0,
+  "expected": "Every UI surface (HUD, menus, pause/settings/save-load/credits, colony panels, embryo bank/workshop, ending, touch) uses one Synty INTERFACE skin with icons, display typography and visible focus; fallback without the packs still works; check.sh green; perf p95 < ~10 ms.",
+  "observed": "check.sh (CHECK_FAST=1): compile 143/0, loc_exit=0, 81 tests 0 failures, smoke 56/0 (incl. a11y fit 1280x720 @1.5), touch 6/0, campaign skipped (fast). Perf p95: ship 9.0, ship_orbit_view 8.9, ship_starmap 8.9, flight_belt 9.6, surface_viridia 9.3, surface_hazard 9.2, colony_grown 9.5, colony_overview 9.4, colony_era20 9.7 ms (OVER flags are triangle/load budgets of the 3D scenes, not UI). GA_NO_SYNTY_UI=1 fallback renders the flat theme without errors.",
+  "fixture": "fresh, power, approach, expedition:sere, grown:umbra, era:pelagos:40",
+  "status": "PASS",
+  "artifacts": ["evidence/ui_r1/before/", "evidence/ui_r1/after/", "evidence/ui_r1/after_1280x720/", "evidence/ui_r1/perf.txt"]
+}

@@ -17,6 +17,7 @@ var _zone := ""
 var waypoints: WaypointLayer
 var _window_planet: Node3D
 var _voyage_label: Label
+var _voyage_title: Label
 
 
 func _ready() -> void:
@@ -83,8 +84,18 @@ func _ready() -> void:
 	captain.interact_target_changed.connect(func(t: Interactable) -> void: hud.set_prompt(t.prompt_text() + ("" if t.consequence.is_empty() or t.locked else "\n" + t.consequence) if t else ""))
 	captain.hold_progress.connect(hud.set_hold)
 	var vp := UiKit.panel(Vector2(300, 0))
+	var vv := UiKit.vbox(2)
+	var vh := UiKit.hbox(8)
+	var vic := UiKit.icon_rect("ui.icon_ship", 18, UiKit.AMBER)
+	if vic:
+		vh.add_child(vic)
+	_voyage_title = UiKit.title("")
+	_voyage_title.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	vh.add_child(_voyage_title)
+	vv.add_child(vh)
 	_voyage_label = UiKit.label("", 16)
-	vp.add_child(_voyage_label)
+	vv.add_child(_voyage_label)
+	vp.add_child(vv)
 	hud.top_right.add_child(vp)
 	starmap = StarMapPanel.new()
 	starmap.closed.connect(_panel_closed)
@@ -225,6 +236,10 @@ func _on_state(_kind: String) -> void:
 	_voyage_label.text = Loc.t("%s\nFuel %d · Hull %d%% · Oxygen %d%% · Comp. %d\nEmbryos %s · Stasis %.1f yrs") % [
 		str(loc.get("name", "")) + (Loc.t("  (orbit)") if loc.has("planet_id") else ""), int(gs.ark.fuel), int(gs.ark.integrity),
 		int(gs.ark.oxygen), gs.ark.components, UiKit.thousands(gs.ark.embryo_viable), gs.campaign.captain_stasis_years]
+	# First line (where the Ark is) becomes the panel's section title.
+	var vparts := _voyage_label.text.split("\n", true, 1)
+	_voyage_title.text = vparts[0].to_upper()
+	_voyage_label.text = vparts[1] if vparts.size() > 1 else ""
 	# NAV's standing alerts (fuel, oxygen, hull): said once per change, never spammed.
 	for alert: Dictionary in GameSession.sim.nav.status(gs):
 		hud.nav.say(alert)
@@ -381,6 +396,8 @@ func debug_action(action: String) -> void:
 			_open(orbit)
 		"embryo":
 			_open(embryo_panel)
+		"workshop":
+			_open(workshop_panel)
 		"bridge":
 			captain.teleport(interactables["starmap"].global_position + Vector3(2.5, 0.1, 5.0), 0.3)
 		"embryo_room":

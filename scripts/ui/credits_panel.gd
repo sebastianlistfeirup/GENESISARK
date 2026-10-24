@@ -49,8 +49,8 @@ func _unhandled_input(event: InputEvent) -> void:
 
 func _build() -> void:
 	UiKit.clear(_body)
-	var close_btn := UiKit.button(Loc.t("Close"), close)
-	_body.add_child(UiKit.heading(Loc.t("Credits")))
+	var close_btn := UiKit.with_icon(UiKit.button(Loc.t("Close"), close), "ui.icon_close", 16)
+	_body.add_child(UiKit.header_block(Loc.t("Credits"), "", "ui.icon_credits"))
 	for section: Dictionary in GameSession.content.credits:
 		_body.add_child(UiKit.title(str(section.get("title", ""))))
 		for e: Dictionary in DictUtil.get_arr(section, "entries"):

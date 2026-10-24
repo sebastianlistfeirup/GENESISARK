@@ -22,7 +22,7 @@ func refresh() -> void:
 	UiKit.clear(body)
 	var gs: GameState = GameSession.state
 	var p := GameSession.content.planet(gs.colony.planet_id)
-	header(Loc.t("The colony on %s") % p.get("name"), Loc.t("Year %.1f · day %d · %s") % [gs.campaign.colony_year(), gs.campaign.colony_day, GameSession.content.site(gs.colony.site_id).get("name", "")])
+	header(Loc.t("The colony on %s") % p.get("name"), Loc.t("Year %.1f · day %d · %s") % [gs.campaign.colony_year(), gs.campaign.colony_day, GameSession.content.site(gs.colony.site_id).get("name", "")], "ui.icon_planet")
 	var tabs := TabContainer.new()
 	tabs.custom_minimum_size = Vector2(1140, 640)
 	body.add_child(tabs)
@@ -50,7 +50,7 @@ func _supply_tab() -> Control:
 	var sim: Simulation = GameSession.sim
 	var rep: Dictionary = gs.colony.last_report
 	var pw: Dictionary = rep.get("power", {})
-	v.add_child(UiKit.title(Loc.t("Power")))
+	v.add_child(UiKit.section(Loc.t("Power"), "ui.icon_power"))
 	v.add_child(UiKit.label(Loc.t("Production %.1f kW (Ark %.1f) · Consumption %.1f kW · Balance %+.1f kW · Battery %d / %d kWh%s%s") % [
 		float(pw.get("produced_kw", 0)), float(pw.get("ark_kw", 0)), float(pw.get("demand_kw", 0)), float(pw.get("surplus_kw", 0)),
 		int(pw.get("battery_kwh", 0)), int(pw.get("battery_capacity", 0)), Loc.t(" · STORM") if pw.get(Loc.t("storm"), false) else "", Loc.t(" · NIGHT") if pw.get("night", false) else ""], 16, UiKit.TEXT, true))
@@ -71,12 +71,12 @@ func _supply_tab() -> Control:
 					cut += 1
 		v.add_child(UiKit.rich(Loc.t("%s [b]%s[/b]: %.1f kW — %s%s") % [UiKit.status_icon("critical" if cut > 0 else "ok"), Loc.t(str(ColonySimulation.PRIORITY_LABELS.get(prio, prio))), kw,
 			", ".join(names) if not names.is_empty() else Loc.t("none"), (Loc.t("  [color=#d25b4c]%d cut off[/color]") % cut) if cut > 0 else ""]))
-	v.add_child(UiKit.title(Loc.t("Water and food")))
+	v.add_child(UiKit.section(Loc.t("Water and food"), "ui.icon_water"))
 	var need: Dictionary = rep.get("need", {})
 	var prod: Dictionary = rep.get("produced", {})
 	v.add_child(UiKit.label(Loc.t("Water +%.0f / −%.0f per day · Food +%.0f / −%.0f per day · Reserve: %s days") % [float(prod.get("water", 0)), float(need.get("water", 0)), float(prod.get("food", 0)), float(need.get("food", 0)),
 		"∞" if float(rep.get("reserve_days", 9999)) >= 9999 else str(int(float(rep.get("reserve_days", 0))))], 16))
-	v.add_child(UiKit.title(Loc.t("Bottlenecks")))
+	v.add_child(UiKit.section(Loc.t("Bottlenecks"), "ui.icon_bottleneck"))
 	var bn: Array = rep.get("bottlenecks", [])
 	if bn.is_empty():
 		v.add_child(UiKit.label(Loc.t("● None. All completed buildings are running."), 16, UiKit.OK))
@@ -91,10 +91,10 @@ func _population_tab() -> Control:
 	var v: VBoxContainer = sv[1]
 	var gs: GameState = GameSession.state
 	var l := gs.ark.ledger()
-	v.add_child(UiKit.title(Loc.t("Embryo ledger (always 50,000)")))
+	v.add_child(UiKit.section(Loc.t("Embryo ledger (always 50,000)"), "ui.icon_embryo"))
 	v.add_child(UiKit.label(Loc.t("Viable %s · In incubation %s · Born %s · Lost %s") % [UiKit.thousands(l["viable"]), UiKit.thousands(l["incubating"]), UiKit.thousands(l["born"]), UiKit.thousands(l["lost"])], 17))
 	v.add_child(UiKit.label(Loc.t("Population (living): %d · Adults: %d · Children: %d") % [gs.population.alive_count(), gs.population.adult_workforce(), gs.population.count_stage("child")], 17))
-	v.add_child(UiKit.title(Loc.t("Cohorts")))
+	v.add_child(UiKit.section(Loc.t("Cohorts"), "ui.icon_population"))
 	if gs.population.cohorts.is_empty():
 		v.add_child(UiKit.label(Loc.t("None yet. The first cohort requires a care center, +5 kW surplus and 30 days of water and food reserves."), 15, UiKit.MUTED, true))
 	for c: Dictionary in gs.population.cohorts:
@@ -105,7 +105,7 @@ func _population_tab() -> Control:
 		else:
 			txt = Loc.t("Cohort %d · %d %s · %.1f yrs · health %d%% · education %d%%") % [c["id"], c["size"], Loc.t("children") if stage == "child" else Loc.t("adults"), float(c["age_days"]) / 365.0, int(float(c["health"]) * 100), int(float(c.get("education", 0)) * 100)]
 		v.add_child(UiKit.label(txt, 15))
-	v.add_child(UiKit.title(Loc.t("Incubation")))
+	v.add_child(UiKit.section(Loc.t("Incubation"), "ui.icon_time"))
 	var size := int(GameSession.content.bal("incubation.cohort_size", 10))
 	var blockers := GameSession.sim.population.incubation_blockers(gs, size)
 	var b := UiKit.button(Loc.t("Start incubation of %d embryos") % size, func() -> void:
@@ -124,7 +124,7 @@ func _future_tab() -> Control:
 	var gs: GameState = GameSession.state
 	var sim: Simulation = GameSession.sim
 	var y := gs.campaign.colony_year()
-	v.add_child(UiKit.title(Loc.t("Generation leap")))
+	v.add_child(UiKit.section(Loc.t("Generation leap"), "ui.icon_time"))
 	v.add_child(UiKit.label(Loc.t("Plan: approx. %d births a year, cohorts of %d, construction as needed.") % [int(ChoiceRules.births_per_year(GameSession.content, gs, float(EraService.default_plan(20)["births_per_year"]))), int(EraService.default_plan(20)["cohort_size"])], 15, UiKit.TEXT, true))
 	v.add_child(UiKit.label(Loc.t("A leap is a forecast, not a fast-forward button. The simulator calculates supply, aging, work and planned events day by day, and stops before an unresolved crisis or a deficit. ARK and the colony's institutions carry daily life according to the plan: incubation when conditions allow, construction as needed."), 15, UiKit.MUTED, true))
 	_target = 20 if y < 20.0 else 40
@@ -149,6 +149,7 @@ func _future_tab() -> Control:
 		for k: String in builds.keys():
 			bl.append("%d× %s" % [builds[k], GameSession.content.building(k).get("name")])
 		var fp := UiKit.panel()
+		fp.theme_type_variation = &"PanelAccent"
 		var fv := UiKit.vbox(4)
 		fv.add_child(UiKit.label(Loc.t("Forecast: year %.1f → year %.1f (%d days)") % [float(f["start_day"]) / 365.0, float(f["end_year"]), int(f["days"])], 18, UiKit.AMBER))
 		fv.add_child(UiKit.label(UiKit.status_icon("ok" if f["stop_reason"] == EraService.STOP_TARGET else "warning") + " " + str(f["stop_text"]) + ("  " + str(f.get("stop_detail", "")) if not str(f.get("stop_detail", "")).is_empty() else ""), 16, UiKit.OK if f["stop_reason"] == EraService.STOP_TARGET else UiKit.WARN, true))
@@ -163,7 +164,7 @@ func _future_tab() -> Control:
 				leap_committed.emit()))
 		fp.add_child(fv)
 		v.add_child(fp)
-	v.add_child(UiKit.title(Loc.t("Council and handover")))
+	v.add_child(UiKit.section(Loc.t("Council and handover"), "ui.icon_council"))
 	v.add_child(UiKit.label(Loc.t("Council: %s · Trust %d · Autonomy %d") % [Loc.t("convened") if gs.society.council_formed else Loc.t("not convened"), int(gs.society.trust), int(gs.society.autonomy)], 16))
 	_choice_lines(v, gs)
 	var m := sim.endings.metrics(gs)

@@ -278,7 +278,7 @@ func _place_hazards() -> void:
 func _build_suit_hud() -> void:
 	var p := UiKit.panel(Vector2(340, 0))
 	var v := UiKit.vbox(4)
-	v.add_child(UiKit.title(Loc.t("Suit")))
+	v.add_child(UiKit.section(Loc.t("Suit"), "ui.icon_suit"))
 	_suit_bar = UiKit.bar(100, 100, UiKit.PETROL, 18)
 	v.add_child(_suit_bar)
 	_suit_label = UiKit.label("", 16)

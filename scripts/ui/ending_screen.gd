@@ -40,22 +40,28 @@ func _ready() -> void:
 	var col := UiKit.vbox(16)
 	col.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	scroll.add_child(col)
-	col.add_child(UiKit.label(Loc.t("EPILOGUE"), 18, UiKit.PETROL.lightened(0.3)))
-	col.add_child(UiKit.label(str(def.get("title", gs.campaign.ending_id)), 54, UiKit.TEXT))
+	col.add_child(UiKit.section(Loc.t("EPILOGUE"), "ui.icon_trophy"))
+	var head := UiKit.heading(str(def.get("title", gs.campaign.ending_id)), 54)
+	head.add_theme_font_override("font", UiKit.display_variant(2))
+	head.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	col.add_child(head)
 	col.add_child(UiKit.label(GameSession.sim.endings.summary(gs), 20, UiKit.AMBER, true))
 	for para: String in GameSession.sim.endings.epilogue(gs):
 		col.add_child(UiKit.label(para, 19, UiKit.TEXT, true))
 	var m: Dictionary = gs.campaign.final_state
-	col.add_child(UiKit.label(Loc.t("%d people · %s · own power %.0f / %.0f kW · reserve %s days · %d crises resolved · the captain in stasis for %d years") % [
+	var stats := UiKit.panel()
+	col.add_child(stats)
+	stats.add_child(UiKit.label(Loc.t("%d people · %s · own power %.0f / %.0f kW · reserve %s days · %d crises resolved · the captain in stasis for %d years") % [
 		int(m.get("population", 0)), Loc.t("council") if m.get("council", false) else Loc.t("no council"), float(m.get("own_power_kw", 0)), float(m.get("demand_kw", 0)),
 		"∞" if float(m.get("reserve_days", 0)) >= 9999 else str(int(float(m.get("reserve_days", 0)))), int(m.get("crises_resolved", 0)), int(gs.campaign.captain_stasis_years)], 15, UiKit.MUTED, true))
 	var row := UiKit.hbox(12)
-	row.add_child(UiKit.button(Loc.t("Main menu"), func() -> void: AppFlow.goto("menu")))
+	row.add_child(UiKit.with_icon(UiKit.button(Loc.t("Main menu"), func() -> void: AppFlow.goto("menu")), "ui.icon_menu", 18))
 	var pre := UiKit.button(Loc.t("Continue from the last save before the handover"), func() -> void:
 		var r := GameSession.load_from("auto", true)
 		if r["ok"]:
 			AppFlow.continue_game())
 	pre.tooltip_text = Loc.t("Loading the backup from before the ending.")
+	UiKit.with_icon(pre, "ui.icon_load", 18)
 	row.add_child(pre)
 	outer.add_child(row)
 

@@ -3,11 +3,11 @@ extends RefCounted
 ## Builders for the colony HUD: resource bar, speed, build bar, info panel.
 ## Every number shown is read from the domain report; UI only sends commands.
 
-static func res_chip(icon_slot: String, text: String, tip: String, color: Color = UiKit.TEXT, glyph: String = "") -> PanelContainer:
-	var p := UiKit.panel()
-	p.tooltip_text = tip
-	p.mouse_filter = Control.MOUSE_FILTER_PASS
+## One readout of the resource dock: glyph + value, tooltip explains it.
+static func res_chip(icon_slot: String, text: String, tip: String, color: Color = UiKit.TEXT, glyph: String = "") -> Control:
 	var h := UiKit.hbox(6)
+	h.tooltip_text = tip
+	h.mouse_filter = Control.MOUSE_FILTER_PASS
 	var tint := Color(str(AssetSlots.slot(icon_slot).get("proxy", [{}])[0].get("color", "#ffffff")))
 	# Synty glyph tinted with the slot colour when the UI packs are installed;
 	# otherwise the original colour square. The text always carries the value.
@@ -17,7 +17,7 @@ static func res_chip(icon_slot: String, text: String, tip: String, color: Color 
 		ic.texture = tex
 		ic.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 		ic.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-		ic.custom_minimum_size = Vector2(16, 16)
+		ic.custom_minimum_size = Vector2(18, 18)
 		ic.modulate = tint.lightened(0.2)
 		ic.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 		ic.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -28,13 +28,15 @@ static func res_chip(icon_slot: String, text: String, tip: String, color: Color 
 		dot.color = tint
 		dot.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 		h.add_child(dot)
-	h.add_child(UiKit.label(text, 16, color))
-	p.add_child(h)
-	return p
+	var l := UiKit.label(text, 16, color)
+	l.add_theme_font_override("font", UiKit.bold_font())
+	l.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	h.add_child(l)
+	return h
 
 
 ## Trust as a dial (R9): symbol + number, never colour alone. ▼ low, ▲ high, ◆ neutral.
-static func trust_chip(gs: GameState) -> PanelContainer:
+static func trust_chip(gs: GameState) -> Control:
 	var band := ChoiceRules.trust_band(GameSession.content, gs)
 	var sym := {"low": "▼", "high": "▲"}.get(band, "◆") as String
 	var why := ChoiceRules.trust_explanation(GameSession.content, gs)
@@ -45,8 +47,16 @@ static func trust_chip(gs: GameState) -> PanelContainer:
 	return res_chip("ui.icon_population", Loc.t("%s Trust %d") % [sym, int(gs.society.trust)], tip, UiKit.WARN if band == "low" else (UiKit.OK if band == "high" else UiKit.TEXT))
 
 
+## The colony's resource readouts on one dock plate, separated by hairlines
+## (one HUD element instead of ten loose chips).
 static func resource_bar(gs: GameState) -> HBoxContainer:
-	var h := UiKit.hbox(6)
+	var outer := UiKit.hbox(0)
+	var dock := PanelContainer.new()
+	dock.theme_type_variation = &"PanelDock"
+	dock.mouse_filter = Control.MOUSE_FILTER_PASS
+	outer.add_child(dock)
+	var h := UiKit.hbox(4)
+	dock.add_child(h)
 	var c := gs.colony
 	var rep: Dictionary = c.last_report
 	var pw: Dictionary = rep.get("power", {})
@@ -63,7 +73,12 @@ static func resource_bar(gs: GameState) -> HBoxContainer:
 	h.add_child(trust_chip(gs))
 	h.add_child(res_chip("ui.icon_embryo", UiKit.thousands(gs.ark.embryo_viable), Loc.t("Viable embryos (%d in incubation, %d born)") % [gs.ark.embryo_incubating, gs.ark.embryo_born]))
 	h.add_child(res_chip("ui.icon_fuel", Loc.t("Ark %d") % int(c.ark_fuel), Loc.t("The Ark's fuel for emergency power (%d kW). If it runs out, the colony loses the Ark's power.") % int(pw.get("ark_kw", 0))))
-	return h
+	for i: int in range(h.get_child_count() - 1, 0, -1):
+		var sep := VSeparator.new()
+		sep.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		h.add_child(sep)
+		h.move_child(sep, i)
+	return outer
 
 
 static func building_tooltip(sim: Simulation, def_id: String) -> String:
@@ -95,7 +110,16 @@ static func info_panel(sim: Simulation, bid: int, actions: Dictionary) -> PanelC
 		return p
 	var def := sim.content.building(str(b["def_id"]))
 	var v := UiKit.vbox(6)
-	v.add_child(UiKit.label(str(def.get("name")), 22, UiKit.AMBER))
+	var head := UiKit.hbox(10)
+	var bic := UiKit.badge("build." + str(b["def_id"]) if str(b["def_id"]) != "ark_core" else "ui.icon_ship", 38)
+	if bic.custom_minimum_size.x > 0.0:
+		head.add_child(bic)
+	var nm := UiKit.heading(str(def.get("name")), 22)
+	nm.add_theme_color_override("font_color", UiKit.AMBER)
+	nm.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	nm.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	head.add_child(nm)
+	v.add_child(head)
 	v.add_child(UiKit.label(str(def.get("description", "")), 14, UiKit.MUTED, true))
 	var state := str(b["state"])
 	if state == ColonyState.B_CONSTRUCTING:
