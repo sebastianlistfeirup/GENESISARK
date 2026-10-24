@@ -19,6 +19,8 @@ var _fx: Node3D
 var _body: StaticBody3D
 var _constructing := false
 var _body_for := ""  # "frame" | "shape": what the walkable body currently follows
+## Building-local set dressing (BuildingDressing.plan); ColonyDressing draws it.
+var dressing: Array = []
 
 
 func setup(b: Dictionary, terrain_height: float) -> void:
@@ -38,13 +40,19 @@ func setup(b: Dictionary, terrain_height: float) -> void:
 	add_child(_frame)
 	_modules = Node3D.new()
 	add_child(_modules)
-	var pad := MeshInstance3D.new()
-	var bm := BoxMesh.new()
-	bm.size = Vector3(_size.x + 1.0, 0.3, _size.y + 1.0)
-	pad.mesh = bm
-	pad.position.y = -0.1
-	pad.material_override = AssetSlots.material("#3b4a54")
-	add_child(pad)
+	dressing = BuildingDressing.plan(def_id, _size, building_id)
+	var style := BuildingDressing.pad_style(def_id)
+	if style != "none":
+		# "pad": the plain slab (fresh clone). "skirt": a dark base under the Synty
+		# platform tiles that hides the gap where the ground falls away.
+		var pad := MeshInstance3D.new()
+		var bm := BoxMesh.new()
+		var grow := 1.0 if style == "pad" else BuildingDressing.platform_margin() * 2.0 - 0.1
+		bm.size = Vector3(_size.x + grow, 0.3 if style == "pad" else 1.6, _size.y + grow)
+		pad.mesh = bm
+		pad.position.y = -0.1 if style == "pad" else -0.88
+		pad.material_override = AssetSlots.material("#3b4a54" if style == "pad" else str(DictUtil.get_dict(BuildingDressing.doc(), "platform").get("skirt", "#2a3036")))
+		add_child(pad)
 	var sb := StaticBody3D.new()
 	sb.collision_layer = 8
 	sb.collision_mask = 0
@@ -98,6 +106,10 @@ func collision_boxes() -> Array[AABB]:
 			var bs := (cs as CollisionShape3D).shape as BoxShape3D
 			out.append(AABB((cs as Node3D).position - bs.size * 0.5, bs.size))
 	return out
+
+
+func constructing() -> bool:
+	return _constructing
 
 
 func refresh(b: Dictionary) -> void:

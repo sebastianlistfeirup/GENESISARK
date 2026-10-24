@@ -17,6 +17,7 @@ const NO_TUBE := ["solar_array", "battery", "geothermal_generator", "drone_hub"]
 static func build(gs: GameState, terrain: TerrainBuilder) -> Node3D:
 	var root := Node3D.new()
 	root.name = "Corridors"
+	root.set_meta("segments", [])  # [Vector2 a, Vector2 b] per tube, for ColonyClearance
 	var mods: Array = []
 	for p: String in MODULES:
 		var m := GroundCover._mesh_of(p)
@@ -69,6 +70,7 @@ static func _tube(root: Node3D, a: Dictionary, b: Dictionary, terrain: TerrainBu
 	var length := start.distance_to(end)
 	if length < 1.0 or (pb - pa).dot(end - start) <= 0.0:
 		return
+	(root.get_meta("segments") as Array).append([start, end])
 	var box: AABB = mod[2]
 	var s := WIDTH / maxf(box.size.x, 0.1)
 	var seg := box.size.z * s
