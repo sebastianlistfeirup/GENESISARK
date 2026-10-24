@@ -117,7 +117,23 @@ func _ready() -> void:
 	_on_state("init")
 	AudioService.set_ambience_any(["amb_ship_dark" if GameSession.state.ark.systems.get("power") == "offline" else "amb_ship_powered", "amb_ship_hum"])
 	AudioService.set_music_any(["music_ark_alone"])
-	GameSession.trigger_story("intro_wakeup")
+	var first_wake := not GameSession.state.is_applied("story:intro_wakeup")
+	var act := str(AppFlow.params.get("action", ""))
+	if first_wake and not AppFlow.test_mode and (not (DebugCapture.requested() or PerfProbe.requested()) or act.begins_with("wakeup")):
+		# A new campaign opens on the captain waking in the cryo pod (D-060); the
+		# first subtitle starts as the hatch opens.
+		var w := ShipWakeup.new()
+		w.name = "Wakeup"
+		add_child(w)
+		w.start(captain, hud, builder.spawn, builder.spawn_yaw)
+		w.opened.connect(func() -> void: GameSession.trigger_story("intro_wakeup"))
+		if waypoints:
+			waypoints.visible = false
+			w.finished.connect(func() -> void: waypoints.visible = true)
+		if act.begins_with("wakeup:"):
+			w.set("_t", float(act.get_slice(":", 1)))
+	else:
+		GameSession.trigger_story("intro_wakeup")
 	if GameSession.state.campaign.location_id != GameSession.content.start_location:
 		GameSession.trigger_story("arrival_" + GameSession.state.campaign.location_id)
 
