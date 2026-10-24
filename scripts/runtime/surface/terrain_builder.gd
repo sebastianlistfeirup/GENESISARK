@@ -179,6 +179,10 @@ func build() -> void:
 			var slope := 1.0 - Vector3(-hx, 2.0 * step, -hz).normalized().y
 			var c := ground.lerp(patch, smoothstep(0.1, 0.35, detail.get_noise_2d(ix * 0.7, iz * 0.7)))
 			c = c.lerp(cliff, smoothstep(0.08, 0.3, slope))
+			if style.has("terraces") and slope > 0.15:
+				# Mesa walls show geological strata: alternating bands by height.
+				var band := fposmod(h / (float(style["terraces"]) * 0.5), 1.0)
+				c = c.lerp(c.lightened(0.18) if band < 0.5 else c.darkened(0.18), 0.8)
 			c = c.lerp(c.lightened(0.12), clampf(detail.get_noise_2d(ix * 3.0, iz * 3.0) * 0.5 + 0.5, 0, 1) * 0.35)
 			if biome_id == "ice" and h > height_scale * 0.4:
 				c = c.lerp(Color.WHITE, 0.5)

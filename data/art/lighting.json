@@ -71,7 +71,8 @@
       "sun_color": "#ffe9c4",
       "sun_energy": 1.2,
       "fog_sun_scatter": 0.3,
-      "glow": 0.7
+      "glow": 0.7,
+      "adjust_saturation": 1.3
     },
     "pelagos": {
       "sky_top": "#6a7f90",
@@ -86,8 +87,8 @@
       "sky_top": "#8fb6d6",
       "sky_horizon": "#f0d9b0",
       "sun_color": "#fffaf0",
-      "sun_energy": 1.6,
-      "sun_pitch": -66,
+      "sun_energy": 1.5,
+      "sun_pitch": -42,
       "exposure": 0.92,
       "glow": 0.45
     },
@@ -103,9 +104,9 @@
     "nivalis": {
       "sky_top": "#6f9cc4",
       "sky_horizon": "#dde8ef",
-      "sun_color": "#fff0dc",
-      "sun_energy": 1.0,
-      "sun_pitch": -16,
+      "sun_color": "#ffc38a",
+      "sun_energy": 1.35,
+      "sun_pitch": -18,
       "sun_yaw": 70,
       "fog_sun_scatter": 0.4,
       "glow": 0.75,
