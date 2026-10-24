@@ -335,6 +335,23 @@ func debug_action(action: String) -> void:
 		captain.camera_rig.pitch = 0.05
 		captain.camera_rig.snap()
 		return
+	if action.begins_with("roomcam_"):  # evidence: a free wide-angle camera from a room's south-west corner (roomcam_E ...)
+		var zone := action.trim_prefix("roomcam_")
+		var a := Vector2(INF, INF)
+		var b := Vector2(-INF, -INF)
+		for r: int in builder.rows.size():
+			for c: int in str(builder.rows[r]).length():
+				if builder._zone(c, r) == zone:
+					a = a.min(Vector2(c, r))
+					b = b.max(Vector2(c, r))
+		if a.x < INF:
+			var cam := Camera3D.new()
+			add_child(cam)
+			cam.global_position = builder.cell_to_world(a.x + 0.6, b.y + 0.4) + Vector3(0, 3.1, 0)
+			cam.look_at(builder.cell_to_world((a.x + b.x + 1.0) * 0.55, (a.y + b.y + 1.0) * 0.45) + Vector3(0, 0.8, 0))
+			cam.fov = 78.0
+			cam.current = true
+		return
 	if action.begins_with("room_"):  # evidence: stand at the south middle of a room, facing north (room_B, room_E, room_W, room_C)
 		var want := action.trim_prefix("room_")
 		var lo := Vector2(INF, INF)

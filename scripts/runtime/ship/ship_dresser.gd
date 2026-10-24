@@ -165,6 +165,9 @@ static func _near(p: Vector3, pts: Array[Vector3], dist: float) -> bool:
 
 static func _place(root: Node3D, name: String, pos: Vector3, yaw: float, mat: Material) -> Node3D:
 	var path := "res://assets/Synty/SciFiSpace/FBX/%s.fbx" % name
+	if name.begins_with("res://"):  # a prefab from another pack keeps its own materials
+		path = name
+		mat = null
 	if not _scenes.has(path):
 		_scenes[path] = load(path) if ResourceLoader.exists(path) else null
 	var ps: PackedScene = _scenes[path]

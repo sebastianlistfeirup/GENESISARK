@@ -47,10 +47,12 @@
   "E": {
    "chance": 0.95,
    "floor": [
+    "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_Hydroponic_Planter_01.tscn",
+    "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_Hydroponic_Planter_02.tscn",
     "SM_Prop_Plant_Container_01",
-    "SM_Prop_Plant_Vase_02",
+    "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_Hydroponic_Planter_01.tscn",
     "SM_Prop_Medical_Machine_01",
-    "SM_Prop_Plant_Container_01",
+    "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_Hydroponic_Planter_02.tscn",
     "SM_Prop_Test_Tube_01",
     "SM_Prop_Plant_Vase_01"
    ],
