@@ -217,8 +217,18 @@ static func set_strip_glow(restored: bool) -> void:
 		m.set_shader_parameter("glow_energy", 2.4 if restored else 0.9)
 
 
+var _flicker: Array = []  # emergency lamps that stutter while the ship is on emergency power
+var _flicker_t := 0.0
+
+
 func set_power(restored: bool) -> void:
 	set_strip_glow(restored)
+	_flicker.clear()
+	if not restored and not FxEffect.reduced_motion():
+		for i: int in lights.size():
+			if i % 5 == 2:
+				_flicker.append(lights[i]["light"])
+	set_process(not _flicker.is_empty())
 	for l: Dictionary in lights:
 		var ol: OmniLight3D = l["light"]
 		if restored:
@@ -228,3 +238,13 @@ func set_power(restored: bool) -> void:
 			ol.light_color = Color("c0392b") if l["zone"] != "." else Color("e8a33d")
 			ol.light_energy = 0.7 if (lights.find(l) % 2 == 0 or l["zone"] == ".") else 0.0
 		(l["lamp"] as Node3D).visible = restored
+
+
+func _process(delta: float) -> void:
+	if _flicker.is_empty() or Engine.is_editor_hint():
+		return
+	_flicker_t += delta
+	for i: int in _flicker.size():
+		var ol: OmniLight3D = _flicker[i]
+		var n := sin(_flicker_t * 23.0 + i * 7.0) + sin(_flicker_t * 37.0 + i * 3.0)
+		ol.light_energy = 0.0 if n > 1.55 else 0.7

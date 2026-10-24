@@ -1,0 +1,14 @@
+[gd_resource type="ShaderMaterial" load_steps=3 format=3]
+
+[ext_resource type="Shader" path="res://art/shaders/synty_glow_atlas.gdshader" id="1"]
+[ext_resource type="Texture2D" path="res://assets/Synty/SciFiSpace/Textures/PolygonSciFiSpace_Signs_Texture_01_C.png" id="2"]
+
+[resource]
+resource_name = "scifi_space signs C"
+shader = ExtResource("1")
+shader_parameter/albedo_tex = ExtResource("2")
+shader_parameter/roughness = 0.5
+shader_parameter/metallic = 0.0
+shader_parameter/glow_energy = 1.6
+shader_parameter/sat_min = 0.45
+shader_parameter/val_min = 0.55

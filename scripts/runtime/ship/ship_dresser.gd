@@ -89,6 +89,55 @@ static func dress(b: ShipBuilder) -> Node3D:
 			inst.position -= Vector3(box.get_center().x, box.position.y, box.get_center().z)
 		if bool(d.get("collide", false)):
 			_collide(body, inst)
+	# A ship that drifted for centuries: cables hanging from the ceiling, rubble and
+	# loose hoses on the floor (off the walkway markers and doors), sparks at broken panels.
+	var der: Dictionary = DictUtil.get_dict(doc, "derelict")
+	var dz: Array = DictUtil.get_arr(der, "zones")
+	for r: int in b.rows.size():
+		for c: int in str(b.rows[r]).length():
+			var z := b._zone(c, r)
+			if not z in dz:
+				continue
+			var h := absi(hash(Vector3i(c, r, 99)))
+			var center := b._cell_center(c, r)
+			var jit := Vector3(float(h % 100) / 100.0 - 0.5, 0, float((h / 100) % 100) / 100.0 - 0.5) * b.cell * 0.6
+			var ceil_list: Array = DictUtil.get_arr(der, "ceiling")
+			if not ceil_list.is_empty() and float(h % 997) / 997.0 < DictUtil.get_float(der, "ceiling_chance", 0.25):
+				var wi := _place(root, str(ceil_list[h % ceil_list.size()]), center + jit + Vector3(0, b.wall_h - 0.1, 0), float(h % 360), mat)
+				if wi:
+					var wb := AssetSlots.aabb_of(wi, Transform3D.IDENTITY)
+					wi.position.y = b.wall_h - wb.end.y * wi.scale.y  # hang from the ceiling
+			var floor_list: Array = DictUtil.get_arr(der, "floor")
+			var fp := center + jit
+			if not floor_list.is_empty() and float((h / 7) % 991) / 991.0 < DictUtil.get_float(der, "floor_chance", 0.2) and not _near(fp, clear, keep * 0.8):
+				_place(root, str(floor_list[(h / 3) % floor_list.size()]), fp, float(h % 628) / 100.0, mat)
+	for n: Node in root.get_children():
+		if n is Node3D and String(n.scene_file_path).contains("Panel_Broken") and absi(hash(n.name)) % 2 == 0:
+			var sp := VisualSlot.make("fx.construction_sparks")
+			sp.position = (n as Node3D).position
+			sp.scale = Vector3.ONE * 0.35
+			sp.name = "BrokenSparks"
+			root.add_child(sp)
+	# Room signs over every door, on the corridor side, in the room's colour (Sci-Fi Space sign kit).
+	var signs: Dictionary = DictUtil.get_dict(doc, "door_signs")
+	for r: int in b.rows.size():
+		for c: int in str(b.rows[r]).length():
+			if b._zone(c, r) != "D":
+				continue
+			for i: int in DIRS.size():
+				var d: Array = DIRS[i]
+				var room := b._zone(c + int(d[0]), r + int(d[1]))
+				var other := b._zone(c - int(d[0]), r - int(d[1]))
+				if not signs.has(room) or other == "#" or other == "D":
+					continue
+				var spec: Array = signs[room]
+				var sm_path := "res://art/materials/scifi_space_signs_%s.tres" % str(spec[1])
+				var sm: Material = load(sm_path) if ResourceLoader.exists(sm_path) else mat
+				var toward := -Vector3(float(d[0]), 0, float(d[1]))  # toward the corridor side
+				var pos := b._cell_center(c, r) + toward * (b.cell * 0.5 - 0.2) + Vector3(0, b.wall_h - 0.55, 0)
+				var sg := _place(root, str(spec[0]), pos, atan2(toward.x, toward.z), sm)
+				if sg:
+					sg.scale = Vector3.ONE * 0.8
 	# Holograms over the consoles of the bridge and the embryo bank.
 	var holo: Dictionary = DictUtil.get_dict(doc, "holograms")
 	for m: Dictionary in b.interact_markers:
