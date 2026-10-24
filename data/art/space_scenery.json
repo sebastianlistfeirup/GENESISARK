@@ -312,8 +312,9 @@
    ],
    "color": "#59e6ff"
   },
-  "albedo_mul": "#a8869c",
-  "glow_energy": 2.8,
-  "warm_energy": 1.3
+  "albedo_mul": "#7a5f74",
+  "glow_energy": 3.2,
+  "warm_energy": 1.0,
+  "cool_energy": 1.4
  }
 }
