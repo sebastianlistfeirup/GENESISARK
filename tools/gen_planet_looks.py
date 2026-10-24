@@ -266,6 +266,17 @@ HERO = {
 PLANETS["pelagos"]["sky"]["leviathan"] = {"model": MS("creature_leviathan"), "size": 150, "radius": [240, 340], "glow": [2.4, 0.4, 0.7]}
 for _pid, _l in HERO.items():
     PLANETS[_pid]["landmarks"] = _l + PLANETS[_pid]["landmarks"]
+# Surface cloud decks (PlanetSky._clouds): the sky you flew down through.
+CLOUDS = {
+    "viridia": {"count": 110, "height": [220, 320], "color": "#fbfaf2", "shade": "#9fb8a8", "opacity": 0.8},
+    "pelagos": {"count": 130, "height": [200, 300], "color": "#ffffff", "shade": "#9cb0c8", "opacity": 0.85},
+    "ferrum": {"count": 40, "height": [300, 380], "color": "#f2d2b0", "shade": "#b08a70", "opacity": 0.5},
+    "sere": {"count": 30, "height": [320, 400], "color": "#fbe6c4", "shade": "#c8a07a", "opacity": 0.45},
+    "nivalis": {"count": 120, "height": [180, 280], "color": "#f2f6fb", "shade": "#a8b6cc", "opacity": 0.8},
+    "umbra": {"count": 60, "height": [240, 340], "color": "#6a6f9a", "shade": "#2a2f4a", "opacity": 0.55},
+}
+for _pid, _c in CLOUDS.items():
+    PLANETS[_pid]["sky"]["clouds"] = _c
 for _pid, _d in DESCENT.items():
     PLANETS[_pid]["descent"] = _d
 for _pid, _extra in ALIEN.items():

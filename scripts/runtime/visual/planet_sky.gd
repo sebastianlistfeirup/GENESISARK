@@ -44,6 +44,10 @@ static func build(planet_id: String, fallback: String, terrain: Node3D = null) -
 		var lv := SeaLeviathan.build(DictUtil.get_dict(sky, "leviathan"), float(terrain.get("water_level")), hash(planet_id + "leviathan"))
 		if lv:
 			root.add_child(lv)
+	if sky.has("clouds"):
+		var cl := _clouds(DictUtil.get_dict(sky, "clouds"), hash(planet_id + "clouds"), terrain)
+		cl.set_meta("sky_far", true)
+		root.add_child(cl)
 	if sky.has("sun_size"):
 		var sun := _sun(planet_id, fallback, DictUtil.get_float(sky, "sun_size"), Color(str(sky.get("sun_color", "#fff2c8"))))
 		sun.set_meta("sky_far", true)
@@ -189,3 +193,39 @@ static func _debris(spec: Dictionary, seed_value: int) -> Node3D:
 		mmi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 		root.add_child(mmi)
 	return root
+
+
+## A loose deck of stylized cloud puffs high over the map (same puffs as the
+## descent's cloud deck, so the sky you flew through is the one you stand under).
+static func _clouds(spec: Dictionary, seed_value: int, terrain: Node3D) -> MultiMeshInstance3D:
+	var rng := RandomNumberGenerator.new()
+	rng.seed = seed_value
+	var mm := MultiMesh.new()
+	mm.transform_format = MultiMesh.TRANSFORM_3D
+	var q := QuadMesh.new()
+	q.size = Vector2.ONE
+	mm.mesh = q
+	mm.instance_count = int(spec.get("count", 90))
+	var base := float(terrain.call("height_at", 0.0, 0.0)) if terrain else 0.0
+	var h: Array = DictUtil.get_arr(spec, "height")
+	for i: int in mm.instance_count:
+		var a := rng.randf() * TAU
+		var r := sqrt(rng.randf()) * DictUtil.get_float(spec, "radius", 700.0)
+		var y := base + (rng.randf_range(float(h[0]), float(h[1])) if h.size() == 2 else 260.0)
+		var sc := rng.randf_range(60.0, 150.0) * DictUtil.get_float(spec, "scale", 1.0)
+		mm.set_instance_transform(i, Transform3D(Basis().scaled(Vector3.ONE * sc), Vector3(cos(a) * r, y, sin(a) * r)))
+	var mat := ShaderMaterial.new()
+	mat.shader = preload("res://art/shaders/cloud_sky.gdshader")
+	var col := Color(str(spec.get("color", "#f4f2ec")))
+	mat.set_shader_parameter("lit", col)
+	mat.set_shader_parameter("shade", col.darkened(0.3).lerp(Color(str(spec.get("shade", "#9aa6bc"))), 0.5))
+	mat.set_shader_parameter("opacity", DictUtil.get_float(spec, "opacity", 0.75))
+	mat.set_shader_parameter("near_fade", 60.0)
+	mat.set_shader_parameter("far_fade", 2600.0)
+	var mmi := MultiMeshInstance3D.new()
+	mmi.name = "Clouds"
+	mmi.multimesh = mm
+	mmi.material_override = mat
+	mmi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	mmi.custom_aabb = AABB(Vector3(-1200, -100, -1200), Vector3(2400, 900, 2400))
+	return mmi

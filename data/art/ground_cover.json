@@ -64,6 +64,16 @@
      1.5,
      3.5
     ]
+   },
+   "clouds": {
+    "count": 110,
+    "height": [
+     220,
+     320
+    ],
+    "color": "#fbfaf2",
+    "shade": "#9fb8a8",
+    "opacity": 0.8
    }
   },
   "terrain": {
@@ -602,6 +612,16 @@
      0.4,
      0.7
     ]
+   },
+   "clouds": {
+    "count": 130,
+    "height": [
+     200,
+     300
+    ],
+    "color": "#ffffff",
+    "shade": "#9cb0c8",
+    "opacity": 0.85
    }
   },
   "terrain": {
@@ -977,7 +997,17 @@
     }
    ],
    "motes": "fx.dust",
-   "motes_scale": 2.0
+   "motes_scale": 2.0,
+   "clouds": {
+    "count": 40,
+    "height": [
+     300,
+     380
+    ],
+    "color": "#f2d2b0",
+    "shade": "#b08a70",
+    "opacity": 0.5
+   }
   },
   "terrain": {
    "ground_tex": "res://assets/Synty/Nature/Arid/Textures/Dirt_Texture_Red_01.png",
@@ -1447,7 +1477,17 @@
     }
    ],
    "motes": "fx.dust",
-   "motes_scale": 2.5
+   "motes_scale": 2.5,
+   "clouds": {
+    "count": 30,
+    "height": [
+     320,
+     400
+    ],
+    "color": "#fbe6c4",
+    "shade": "#c8a07a",
+    "opacity": 0.45
+   }
   },
   "terrain": {
    "ground_tex": "res://assets/Synty/Nature/Jungle/Textures/Terrain/Sand_Wavy_Texture_01.png",
@@ -1831,7 +1871,17 @@
    "aurora": "#3dffa8",
    "aurora_high": "#8a5cff",
    "motes": "fx.snow",
-   "motes_scale": 2.5
+   "motes_scale": 2.5,
+   "clouds": {
+    "count": 120,
+    "height": [
+     180,
+     280
+    ],
+    "color": "#f2f6fb",
+    "shade": "#a8b6cc",
+    "opacity": 0.8
+   }
   },
   "terrain": {
    "ground_tex": "res://assets/Synty/Nature/Alpine/Textures/Snow_01.png",
@@ -2317,7 +2367,17 @@
     }
    ],
    "aurora": "#41ffd9",
-   "aurora_high": "#c05cff"
+   "aurora_high": "#c05cff",
+   "clouds": {
+    "count": 60,
+    "height": [
+     240,
+     340
+    ],
+    "color": "#6a6f9a",
+    "shade": "#2a2f4a",
+    "opacity": 0.55
+   }
   },
   "terrain": {
    "ground_tex": "res://assets/Synty/Nature/Alpine/Textures/Snow_01.png",
