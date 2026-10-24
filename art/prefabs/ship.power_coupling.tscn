@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" path="res://assets/Synty/SciFiSpace/FBX/SM_Prop_EnergyPort_01.fbx" id="1_gxeex"]
 
-[node name="ship_power_coupling" type="Node3D" unique_id=951071475]
+[node name="ship_power_coupling" type="Node3D" unique_id=892193522]
 metadata/synty_source = "res://assets/Synty/SciFiSpace/FBX/SM_Prop_EnergyPort_01.fbx"
 metadata/synty_fit = "natural"
 

@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" path="res://assets/Synty/CharactersSrc/City/SK_Character_Hacker_Female_01.fbx" id="1_4ljqw"]
 
-[node name="char_citizen_adult" type="Node3D" unique_id=1674275014]
+[node name="char_citizen_adult" type="Node3D" unique_id=903796812]
 metadata/synty_source = "res://assets/Synty/CharactersSrc/City/SK_Character_Hacker_Female_01.fbx"
 metadata/synty_fit = "natural"
 

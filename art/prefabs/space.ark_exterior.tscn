@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" path="res://assets/Synty/SciFiSpace/FBX/SM_Ship_Galactic_Carrier_01.fbx" id="1_jajw4"]
 
-[node name="space_ark_exterior" type="Node3D" unique_id=682424136]
+[node name="space_ark_exterior" type="Node3D" unique_id=84444317]
 metadata/synty_source = "res://assets/Synty/SciFiSpace/FBX/SM_Ship_Galactic_Carrier_01.fbx"
 metadata/synty_fit = "size"
 

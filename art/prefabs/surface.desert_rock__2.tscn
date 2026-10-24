@@ -4,14 +4,14 @@
 [ext_resource type="ArrayMesh" path="res://assets/Synty/PolygonSciFiWorlds/Models/extracted/SM_Env_Rock_Spike_02.res" id="2_1yh48"]
 [ext_resource type="Material" path="res://assets/Synty/PolygonSciFiWorlds/Materials/Environment/PolygonSciFiWorlds_Env_Triplanar_Corp_01_mat.tres" id="3_dve4r"]
 
-[node name="surface_desert_rock" type="Node3D" unique_id=239588272]
+[node name="surface_desert_rock" type="Node3D" unique_id=341272492]
 metadata/synty_source = "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Rock_Spike_02.tscn"
 metadata/synty_fit = "natural"
 
-[node name="Model" type="Node3D" parent="." unique_id=1642157376]
+[node name="Model" type="Node3D" parent="." unique_id=430739617]
 transform = Transform3D(0.55, 0, 0, 0, 0.55, 0, 0, 0, 0.55, 0.26559734, 0.07755411, 0.07681477)
 
-[node name="SM_Env_Rock_Spike_02" type="MeshInstance3D" parent="Model" unique_id=1543107456 instance=ExtResource("1_yt0cv")]
+[node name="SM_Env_Rock_Spike_02" type="MeshInstance3D" parent="Model" unique_id=1891833834 instance=ExtResource("1_yt0cv")]
 gi_mode = 2
 mesh = ExtResource("2_1yh48")
 surface_material_override/0 = ExtResource("3_dve4r")

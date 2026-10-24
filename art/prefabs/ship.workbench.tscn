@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" path="res://assets/Synty/SciFiSpace/FBX/SM_Prop_Desk_Small_01.fbx" id="1_fyj21"]
 
-[node name="ship_workbench" type="Node3D" unique_id=2138666561]
+[node name="ship_workbench" type="Node3D" unique_id=1915635149]
 metadata/synty_source = "res://assets/Synty/SciFiSpace/FBX/SM_Prop_Desk_Small_01.fbx"
 metadata/synty_fit = "natural"
 

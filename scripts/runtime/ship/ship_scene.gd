@@ -344,3 +344,7 @@ func debug_action(action: String) -> void:
 			orbit._landing_site = str(GameSession.content.planet(GameSession.sim.travel.current_planet_id(GameSession.state))["site_templates"][0])
 			orbit._landing_txn = "dbg"
 			orbit.refresh()
+
+
+func _exit_tree() -> void:
+	ShipBuilder.set_strip_glow(true)  # the shared atlas is also used outside the ship

@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" path="res://assets/Synty/CharactersSrc/City/SK_Character_Rich_Female_01.fbx" id="1_rd0b6"]
 
-[node name="char_citizen_adult" type="Node3D" unique_id=1255091437]
+[node name="char_citizen_adult" type="Node3D" unique_id=2058459894]
 metadata/synty_source = "res://assets/Synty/CharactersSrc/City/SK_Character_Rich_Female_01.fbx"
 metadata/synty_fit = "natural"
 

@@ -4,14 +4,14 @@
 [ext_resource type="ArrayMesh" path="res://assets/Synty/PolygonSciFiWorlds/Models/extracted/SM_Env_Plant_Balloon_Group_01.res" id="2_5pl5l"]
 [ext_resource type="Material" path="res://assets/Synty/PolygonSciFiWorlds/Materials/Alts/PolygonScifiWorlds_01_A_mat.tres" id="3_yu85b"]
 
-[node name="surface_tree_green" type="Node3D" unique_id=453974410]
+[node name="surface_tree_green" type="Node3D" unique_id=1524530319]
 metadata/synty_source = "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Plant_Balloon_Group_01.tscn"
 metadata/synty_fit = "natural"
 
-[node name="Model" type="Node3D" parent="." unique_id=762325107]
+[node name="Model" type="Node3D" parent="." unique_id=1525695147]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.16299236, 0.21266626, -0.1844284)
 
-[node name="SM_Env_Plant_Balloon_Group_01" type="MeshInstance3D" parent="Model" unique_id=1794479446 instance=ExtResource("1_d8ud3")]
+[node name="SM_Env_Plant_Balloon_Group_01" type="MeshInstance3D" parent="Model" unique_id=1984631501 instance=ExtResource("1_d8ud3")]
 gi_mode = 2
 mesh = ExtResource("2_5pl5l")
 surface_material_override/0 = ExtResource("3_yu85b")

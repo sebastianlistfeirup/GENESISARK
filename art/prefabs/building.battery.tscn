@@ -4,14 +4,14 @@
 [ext_resource type="ArrayMesh" path="res://assets/Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_PowerGenerator_02.res" id="2_71y7u"]
 [ext_resource type="Material" path="res://assets/Synty/PolygonSciFiWorlds/Materials/Alts/PolygonScifiWorlds_01_A_mat.tres" id="3_a7nq2"]
 
-[node name="building_battery" type="Node3D" unique_id=1802934309]
+[node name="building_battery" type="Node3D" unique_id=2072022230]
 metadata/synty_source = "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_PowerGenerator_02.tscn"
 metadata/synty_fit = "footprint"
 
-[node name="Model" type="Node3D" parent="." unique_id=911874749]
+[node name="Model" type="Node3D" parent="." unique_id=1614537752]
 transform = Transform3D(0.49184725, 0, 0, 0, 0.49184725, 0, 0, 0, 0.49184725, 0, -0.0002609486, 0)
 
-[node name="SM_Prop_PowerGenerator_02" type="MeshInstance3D" parent="Model" unique_id=1495756697 instance=ExtResource("1_ib0wx")]
+[node name="SM_Prop_PowerGenerator_02" type="MeshInstance3D" parent="Model" unique_id=1092552420 instance=ExtResource("1_ib0wx")]
 gi_mode = 2
 mesh = ExtResource("2_71y7u")
 surface_material_override/0 = ExtResource("3_a7nq2")

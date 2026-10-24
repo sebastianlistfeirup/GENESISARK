@@ -4,14 +4,14 @@
 [ext_resource type="ArrayMesh" path="res://assets/Synty/PolygonSciFiWorlds/Models/extracted/SM_Env_Floating_Crystal_02.res" id="2_kooto"]
 [ext_resource type="Material" path="res://assets/Synty/PolygonSciFiWorlds/Materials/Alts/PolygonScifiWorlds_04_A_mat.tres" id="3_wleto"]
 
-[node name="surface_crystal_ice" type="Node3D" unique_id=657972583]
+[node name="surface_crystal_ice" type="Node3D" unique_id=2104313920]
 metadata/synty_source = "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Floating_Crystal_02.tscn"
 metadata/synty_fit = "natural"
 
-[node name="Model" type="Node3D" parent="." unique_id=1197201898]
+[node name="Model" type="Node3D" parent="." unique_id=614910832]
 transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, -0.11750299, -0.7127947, 0.0794)
 
-[node name="SM_Env_Floating_Crystal_02" type="MeshInstance3D" parent="Model" unique_id=912008600 instance=ExtResource("1_ujh6x")]
+[node name="SM_Env_Floating_Crystal_02" type="MeshInstance3D" parent="Model" unique_id=1070763391 instance=ExtResource("1_ujh6x")]
 gi_mode = 2
 mesh = ExtResource("2_kooto")
 surface_material_override/0 = ExtResource("3_wleto")
