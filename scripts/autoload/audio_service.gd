@@ -74,10 +74,10 @@ func stream(slot: String) -> AudioStream:
 	if _cache.has(slot):
 		return _cache[slot]
 	# Lookup order: explicit override -> finished sound in assets/audio/final/
-	# (ogg/wav) -> synthesized placeholder. Dropping a file in "final" is enough.
+	# (ogg/mp3/wav) -> synthesized placeholder. Dropping a file in "final" is enough.
 	var path := str(_overrides.get(slot, ""))
 	if path.is_empty():
-		for cand: String in [FINAL_DIR + slot + ".ogg", FINAL_DIR + slot + ".wav", DEFAULT_DIR + slot + ".wav"]:
+		for cand: String in [FINAL_DIR + slot + ".ogg", FINAL_DIR + slot + ".mp3", FINAL_DIR + slot + ".wav", DEFAULT_DIR + slot + ".wav"]:
 			if ResourceLoader.exists(cand):
 				path = cand
 				break
@@ -86,6 +86,10 @@ func stream(slot: String) -> AudioStream:
 		var o := (s as AudioStreamOggVorbis).duplicate() as AudioStreamOggVorbis
 		o.loop = true
 		s = o
+	if s is AudioStreamMP3 and loops(slot):
+		var m := (s as AudioStreamMP3).duplicate() as AudioStreamMP3
+		m.loop = true
+		s = m
 	if s is AudioStreamWAV and loops(slot):
 		var w := (s as AudioStreamWAV).duplicate() as AudioStreamWAV
 		w.loop_mode = AudioStreamWAV.LOOP_FORWARD
