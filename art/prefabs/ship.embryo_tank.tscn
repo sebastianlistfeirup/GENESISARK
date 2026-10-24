@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" path="res://assets/Synty/SciFiSpace/FBX/SM_Prop_Test_Tube_02.fbx" id="1_buyuo"]
 
-[node name="ship_embryo_tank" type="Node3D" unique_id=323778681]
+[node name="ship_embryo_tank" type="Node3D" unique_id=1643074531]
 metadata/synty_source = "res://assets/Synty/SciFiSpace/FBX/SM_Prop_Test_Tube_02.fbx"
 metadata/synty_fit = "natural"
 

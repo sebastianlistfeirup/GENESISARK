@@ -1,0 +1,10 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://assets/Synty/CharactersSrc/City/SK_Character_Hacker_Female_01.fbx" id="1_4ljqw"]
+
+[node name="char_citizen_adult" type="Node3D" unique_id=1139108475]
+metadata/synty_source = "res://assets/Synty/CharactersSrc/City/SK_Character_Hacker_Female_01.fbx"
+metadata/synty_fit = "natural"
+
+[node name="Model" type="Node3D" parent="." unique_id=390899653 instance=ExtResource("1_4ljqw")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 3.5762787e-07, 0.0036701965, -0.0021761656)

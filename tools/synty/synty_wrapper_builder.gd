@@ -48,8 +48,12 @@ func build_slot(slot: String, c: Dictionary, prefab_dir: String) -> Dictionary:
 		var vc := c.duplicate()
 		vc["source"] = str(sources[i])
 		var bodies: Array = Array(c.get("only_mesh_variants", []))
+		vc.erase("only_mesh")
 		if i < bodies.size():
 			vc["only_mesh"] = str(bodies[i])  # one multi-character FBX, a different body per variant
+		var mats: Array = Array(c.get("materials_per_variant", []))
+		if i < mats.size():
+			vc["material"] = str(mats[i])
 		var r := build_one(slot, vc, prefab_dir, "" if i == 0 else "__%d" % (i + 1))
 		if not r["ok"]:
 			return r

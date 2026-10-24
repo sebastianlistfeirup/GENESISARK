@@ -1,0 +1,10 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://assets/Synty/CharactersSrc/City/SK_Character_Junky_Female_01.fbx" id="1_dfulx"]
+
+[node name="char_citizen_adult" type="Node3D" unique_id=1851582879]
+metadata/synty_source = "res://assets/Synty/CharactersSrc/City/SK_Character_Junky_Female_01.fbx"
+metadata/synty_fit = "natural"
+
+[node name="Model" type="Node3D" parent="." unique_id=1436790344 instance=ExtResource("1_dfulx")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -0.0010973215, 0.002977171, -0.07344034)

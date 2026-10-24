@@ -1,0 +1,15 @@
+{
+ "task_id": "GA-12",
+ "commit": "be81606",
+ "engine_version": "4.7.1.stable.official.a13da4feb",
+ "command": "godot --headless --path . --export-release \"Windows Desktop\" builds/windows/GenesisArk.exe; builds/windows/GenesisArk.exe -- --capture=... --setup=expedition:viridia --scene=surface",
+ "exit_code": 0,
+ "expected": "Exported Windows build starts without the editor on the target OS and renders a gameplay scene identical to the editor",
+ "observed": "Exported in 1m51s (exe 109 MB, pck 1.9 GB incl. local Synty packs). Ran on Windows 11 / RTX 5090 / Vulkan Forward+, captured the Viridia expedition; first run showed white Nature foliage (MaterialList txt not exported, source textures not listed in export) -> fixed (include_filter + .import/.remap names) -> identical to editor. Exit 0.",
+ "fixture": "expedition:viridia",
+ "status": "PASS",
+ "artifacts": [
+  "evidence/GA-12/shots/windows_export_viridia.png"
+ ],
+ "notes": "pck size: the export still packs every extracted Synty pack; trimming unused packs is a follow-up. Human 20-minute playthrough (GA-11) is still the owner's."
+}

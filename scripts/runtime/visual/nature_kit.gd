@@ -174,8 +174,10 @@ static func _index(pack: String) -> Dictionary:
 
 static func _scan(dir: String, idx: Dictionary) -> void:
 	for f: String in DirAccess.get_files_at(dir):
-		if not f.ends_with(".import") and not idx.has(f):
-			idx[f] = dir.path_join(f)
+		# An exported game lists "x.png.import"/"x.png.remap" instead of the source file.
+		var name := f.trim_suffix(".import").trim_suffix(".remap")
+		if not idx.has(name):
+			idx[name] = dir.path_join(name)
 	for d: String in DirAccess.get_directories_at(dir):
 		_scan(dir.path_join(d), idx)
 

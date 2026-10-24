@@ -4,14 +4,14 @@
 [ext_resource type="ArrayMesh" path="res://assets/Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Corp_Generator_01.res" id="2_4g4fc"]
 [ext_resource type="Material" path="res://assets/Synty/PolygonSciFiWorlds/Materials/Alts/PolygonScifiWorlds_01_A_mat.tres" id="3_wfyoq"]
 
-[node name="building_geothermal_generator" type="Node3D" unique_id=2097520422]
+[node name="building_geothermal_generator" type="Node3D" unique_id=784692037]
 metadata/synty_source = "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Buildings/SM_Bld_Corp_Generator_01.tscn"
 metadata/synty_fit = "footprint"
 
-[node name="Model" type="Node3D" parent="." unique_id=595818020]
+[node name="Model" type="Node3D" parent="." unique_id=1107877198]
 transform = Transform3D(0.45758244, 0, 0, 0, 0.45758244, 0, 0, 0, 0.45758244, 0, 0, 0)
 
-[node name="SM_Bld_Corp_Generator_01" type="MeshInstance3D" parent="Model" unique_id=1327138040 instance=ExtResource("1_roxij")]
+[node name="SM_Bld_Corp_Generator_01" type="MeshInstance3D" parent="Model" unique_id=882042846 instance=ExtResource("1_roxij")]
 gi_mode = 2
 mesh = ExtResource("2_4g4fc")
 surface_material_override/0 = ExtResource("3_wfyoq")

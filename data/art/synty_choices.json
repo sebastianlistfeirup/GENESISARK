@@ -179,17 +179,34 @@
     "res://assets/Synty/CharactersSrc/Characters.fbx",
     "res://assets/Synty/CharactersSrc/Characters.fbx",
     "res://assets/Synty/CharactersSrc/Characters.fbx",
-    "res://assets/Synty/CharactersSrc/Characters.fbx"
+    "res://assets/Synty/CharactersSrc/Characters.fbx",
+    "res://assets/Synty/CharactersSrc/City/SK_Character_Medical_Male_01.fbx",
+    "res://assets/Synty/CharactersSrc/City/SK_Character_Junky_Female_01.fbx",
+    "res://assets/Synty/CharactersSrc/City/SK_Character_Junky_Male_01.fbx",
+    "res://assets/Synty/CharactersSrc/City/SK_Character_Garbage_Male_01.fbx",
+    "res://assets/Synty/CharactersSrc/City/SK_Character_Hacker_Female_01.fbx",
+    "res://assets/Synty/CharactersSrc/City/SK_Character_Rich_Female_01.fbx"
    ],
    "status": "approved",
-   "only_mesh": "SM_Chr_ScifiWorlds_Male_01",
-   "material": "res://assets/Synty/PolygonSciFiWorlds/Materials/Alts/PolygonScifiWorlds_01_A_mat.tres",
    "rotation_y": 180,
+   "material": "res://assets/Synty/PolygonSciFiWorlds/Materials/Alts/PolygonScifiWorlds_01_A_mat.tres",
    "only_mesh_variants": [
     "SM_Chr_ScifiWorlds_Male_01",
     "SM_Chr_ScifiWorlds_Female_01",
     "SM_Chr_ScifiWorlds_Scavenger_01",
     "SM_Chr_ScifiWorlds_Scavenger_02"
+   ],
+   "materials_per_variant": [
+    "res://assets/Synty/PolygonSciFiWorlds/Materials/Alts/PolygonScifiWorlds_01_A_mat.tres",
+    "res://assets/Synty/PolygonSciFiWorlds/Materials/Alts/PolygonScifiWorlds_01_A_mat.tres",
+    "res://assets/Synty/PolygonSciFiWorlds/Materials/Alts/PolygonScifiWorlds_01_A_mat.tres",
+    "res://assets/Synty/PolygonSciFiWorlds/Materials/Alts/PolygonScifiWorlds_01_A_mat.tres",
+    "res://assets/Synty/PolygonSciFiCity/Materials/Alts/PolygonScifi_01_A_mat.tres",
+    "res://assets/Synty/PolygonSciFiCity/Materials/Alts/PolygonScifi_01_A_mat.tres",
+    "res://assets/Synty/PolygonSciFiCity/Materials/Alts/PolygonScifi_01_A_mat.tres",
+    "res://assets/Synty/PolygonSciFiCity/Materials/Alts/PolygonScifi_01_A_mat.tres",
+    "res://assets/Synty/PolygonSciFiCity/Materials/Alts/PolygonScifi_01_A_mat.tres",
+    "res://assets/Synty/PolygonSciFiCity/Materials/Alts/PolygonScifi_01_A_mat.tres"
    ]
   },
   "char.robot_drone": {
