@@ -1,0 +1,10 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://assets/Synty/SciFiSpace/FBX/SM_Prop_Medical_Isolator_01.fbx" id="1_buyuo"]
+
+[node name="ship_embryo_tank" type="Node3D" unique_id=1895281959]
+metadata/synty_source = "res://assets/Synty/SciFiSpace/FBX/SM_Prop_Medical_Isolator_01.fbx"
+metadata/synty_fit = "natural"
+
+[node name="Model" type="Node3D" parent="." unique_id=991037456 instance=ExtResource("1_buyuo")]
+transform = Transform3D(1.7, 0, 0, 0, 1.7, 0, 0, 0, 1.7, -0.029836714, 0, 0)

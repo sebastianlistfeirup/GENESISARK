@@ -1,0 +1,10 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://assets/Synty/SciFiSpace/FBX/SM_Prop_CenterTube_01.fbx" id="1_wg7g6"]
+
+[node name="ship_embryo_bank_core" type="Node3D" unique_id=490103065]
+metadata/synty_source = "res://assets/Synty/SciFiSpace/FBX/SM_Prop_CenterTube_01.fbx"
+metadata/synty_fit = "natural"
+
+[node name="Model" type="Node3D" parent="." unique_id=917001220 instance=ExtResource("1_wg7g6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.0994415e-06, 0, -1.5497208e-06)

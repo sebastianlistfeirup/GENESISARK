@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" path="res://assets/Synty/CharactersSrc/Characters.fbx" id="1_dp4al"]
 
-[node name="char_citizen_adult" type="Node3D" unique_id=1370844018]
+[node name="char_citizen_adult" type="Node3D" unique_id=582523640]
 metadata/only_mesh = "SM_Chr_ScifiWorlds_Male_01"
 metadata/synty_source = "res://assets/Synty/CharactersSrc/Characters.fbx"
 metadata/synty_fit = "natural"

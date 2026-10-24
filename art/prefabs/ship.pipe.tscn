@@ -1,0 +1,10 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://assets/Synty/SciFiSpace/FBX/SM_Prop_Detail_Pipe_Pillar_01.fbx" id="1_ikx61"]
+
+[node name="ship_pipe" type="Node3D" unique_id=1254901687]
+metadata/synty_source = "res://assets/Synty/SciFiSpace/FBX/SM_Prop_Detail_Pipe_Pillar_01.fbx"
+metadata/synty_fit = "natural"
+
+[node name="Model" type="Node3D" parent="." unique_id=1028140147 instance=ExtResource("1_ikx61")]
+transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, 0, -1.4210855e-15, 0.005246103)

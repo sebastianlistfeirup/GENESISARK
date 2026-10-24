@@ -203,8 +203,105 @@
    "status": "approved"
   },
   "ship.starmap_table": {
-   "source": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_Projection_Table_01.tscn",
-   "status": "approved"
+   "source": "res://assets/Synty/SciFiSpace/FBX/SM_Prop_MapTable_01.fbx",
+   "status": "approved",
+   "material": "res://art/materials/scifi_space_atlas.tres"
+  },
+  "ship.floor": {
+   "source": "res://assets/Synty/SciFiSpace/FBX/SM_Bld_Floor_01.fbx",
+   "status": "approved",
+   "material": "res://art/materials/scifi_space_atlas.tres",
+   "variants": [
+    "res://assets/Synty/SciFiSpace/FBX/SM_Bld_Floor_01.fbx",
+    "res://assets/Synty/SciFiSpace/FBX/SM_Bld_Floor_02.fbx",
+    "res://assets/Synty/SciFiSpace/FBX/SM_Bld_Floor_03.fbx"
+   ]
+  },
+  "ship.wall": {
+   "source": "res://assets/Synty/SciFiSpace/FBX/SM_Bld_Wall_03.fbx",
+   "status": "approved",
+   "material": "res://art/materials/scifi_space_atlas.tres",
+   "variants": [
+    "res://assets/Synty/SciFiSpace/FBX/SM_Bld_Wall_03.fbx",
+    "res://assets/Synty/SciFiSpace/FBX/SM_Bld_Wall_05.fbx",
+    "res://assets/Synty/SciFiSpace/FBX/SM_Bld_Wall_06.fbx"
+   ]
+  },
+  "ship.wall_window": {
+   "source": "res://assets/Synty/SciFiSpace/FBX/SM_Bld_Wall_01_Alt.fbx",
+   "status": "approved",
+   "material": "res://art/materials/scifi_space_atlas.tres"
+  },
+  "ship.door": {
+   "source": "res://assets/Synty/SciFiSpace/FBX/SM_Bld_Wall_Doorframe_01.fbx",
+   "status": "approved",
+   "material": "res://art/materials/scifi_space_atlas.tres"
+  },
+  "ship.pillar": {
+   "source": "res://assets/Synty/SciFiSpace/FBX/SM_Bld_Wall_Corner_Pillar_01.fbx",
+   "status": "approved",
+   "material": "res://art/materials/scifi_space_atlas.tres",
+   "fit": "natural",
+   "extra_scale": 0.8
+  },
+  "ship.ceiling_light": {
+   "source": "res://assets/Synty/SciFiSpace/FBX/SM_Prop_Light_Panel_01.fbx",
+   "status": "approved",
+   "material": "res://art/materials/scifi_space_atlas.tres"
+  },
+  "ship.terminal_bridge": {
+   "source": "res://assets/Synty/SciFiSpace/FBX/SM_Prop_ControlPanel_04.fbx",
+   "status": "approved",
+   "material": "res://art/materials/scifi_space_atlas.tres",
+   "extra_scale": 0.6
+  },
+  "ship.captain_chair": {
+   "source": "res://assets/Synty/SciFiSpace/FBX/SM_Bld_Bridge_Chair_Captain_01.fbx",
+   "status": "approved",
+   "material": "res://art/materials/scifi_space_atlas.tres"
+  },
+  "ship.embryo_tank": {
+   "source": "res://assets/Synty/SciFiSpace/FBX/SM_Prop_Medical_Isolator_01.fbx",
+   "status": "approved",
+   "material": "res://art/materials/scifi_space_atlas.tres",
+   "extra_scale": 1.7
+  },
+  "ship.embryo_bank_core": {
+   "source": "res://assets/Synty/SciFiSpace/FBX/SM_Prop_CenterTube_01.fbx",
+   "status": "approved",
+   "material": "res://art/materials/scifi_space_atlas.tres"
+  },
+  "ship.cryo_pod": {
+   "source": "res://assets/Synty/SciFiSpace/FBX/SM_Prop_CryoBed_01.fbx",
+   "status": "approved",
+   "material": "res://art/materials/scifi_space_atlas.tres"
+  },
+  "ship.workbench": {
+   "source": "res://assets/Synty/SciFiSpace/FBX/SM_Prop_Desk_Small_01.fbx",
+   "status": "approved",
+   "material": "res://art/materials/scifi_space_atlas.tres"
+  },
+  "ship.power_coupling": {
+   "source": "res://assets/Synty/SciFiSpace/FBX/SM_Prop_EnergyPort_01.fbx",
+   "status": "approved",
+   "material": "res://art/materials/scifi_space_atlas.tres"
+  },
+  "ship.robot_station": {
+   "source": "res://assets/Synty/SciFiSpace/FBX/SM_Prop_Battery_03.fbx",
+   "status": "approved",
+   "material": "res://art/materials/scifi_space_atlas.tres"
+  },
+  "ship.pipe": {
+   "source": "res://assets/Synty/SciFiSpace/FBX/SM_Prop_Detail_Pipe_Pillar_01.fbx",
+   "status": "approved",
+   "material": "res://art/materials/scifi_space_atlas.tres",
+   "fit": "natural",
+   "extra_scale": 0.8
+  },
+  "space.ark_exterior": {
+   "source": "res://assets/Synty/SciFiSpace/FBX/SM_Ship_Galactic_Carrier_01.fbx",
+   "status": "approved",
+   "material": "res://art/materials/scifi_space_atlas.tres"
   }
  },
  "animations": {

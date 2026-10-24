@@ -1,0 +1,10 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://assets/Synty/SciFiSpace/FBX/SM_Prop_Light_Panel_01.fbx" id="1_wjdmh"]
+
+[node name="ship_ceiling_light" type="Node3D" unique_id=827968166]
+metadata/synty_source = "res://assets/Synty/SciFiSpace/FBX/SM_Prop_Light_Panel_01.fbx"
+metadata/synty_fit = "module"
+
+[node name="Model" type="Node3D" parent="." unique_id=1040651588 instance=ExtResource("1_wjdmh")]
+transform = Transform3D(1.3263444, 0, 0, 0, 1.3263444, 0, 0, 0, 1.3263444, 2.0861626e-07, 3.5, 0)

@@ -1,17 +1,10 @@
 [gd_scene format=3]
 
-[ext_resource type="PackedScene" path="res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_Projection_Table_01.tscn" id="1_4wud7"]
-[ext_resource type="ArrayMesh" path="res://assets/Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Projection_Table_01.res" id="2_75rap"]
-[ext_resource type="Material" path="res://assets/Synty/PolygonSciFiWorlds/Materials/Alts/PolygonScifiWorlds_01_A_mat.tres" id="3_ug323"]
+[ext_resource type="PackedScene" path="res://assets/Synty/SciFiSpace/FBX/SM_Prop_MapTable_01.fbx" id="1_410sx"]
 
-[node name="ship_starmap_table" type="Node3D" unique_id=1519833998]
-metadata/synty_source = "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_Projection_Table_01.tscn"
+[node name="ship_starmap_table" type="Node3D" unique_id=2135307463]
+metadata/synty_source = "res://assets/Synty/SciFiSpace/FBX/SM_Prop_MapTable_01.fbx"
 metadata/synty_fit = "natural"
 
-[node name="Model" type="Node3D" parent="." unique_id=1359494021]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3.5527136e-17, 0)
-
-[node name="SM_Prop_Projection_Table_01" type="MeshInstance3D" parent="Model" unique_id=2022958623 instance=ExtResource("1_4wud7")]
-gi_mode = 2
-mesh = ExtResource("2_75rap")
-surface_material_override/0 = ExtResource("3_ug323")
+[node name="Model" type="Node3D" parent="." unique_id=827368090 instance=ExtResource("1_410sx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.1920929e-07, 0, -4.4107437e-06)

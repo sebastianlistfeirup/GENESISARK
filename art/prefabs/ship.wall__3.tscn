@@ -1,0 +1,10 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://assets/Synty/SciFiSpace/FBX/SM_Bld_Wall_06.fbx" id="1_bk5r1"]
+
+[node name="ship_wall" type="Node3D" unique_id=691475085]
+metadata/synty_source = "res://assets/Synty/SciFiSpace/FBX/SM_Bld_Wall_06.fbx"
+metadata/synty_fit = "module"
+
+[node name="Model" type="Node3D" parent="." unique_id=1882583528 instance=ExtResource("1_bk5r1")]
+transform = Transform3D(0.7999993, 0, 0, 0, 0.7999993, 0, 0, 0, 0.7999993, -1.9999976, 0.79635185, -0.33066133)

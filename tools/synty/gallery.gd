@@ -13,6 +13,7 @@ var rows := 4
 var filter := ""
 var true_scale := false
 var page := 0
+var override_mat: Material = null
 
 
 func _init() -> void:
@@ -28,6 +29,7 @@ func _init() -> void:
 			"rows": rows = int(kv[1])
 			"filter": filter = kv[1]
 			"true_scale": true_scale = true
+			"material": override_mat = load(kv[1])
 	if not list.is_empty():
 		for line: String in FileAccess.get_file_as_string(list).split("\n"):
 			if not line.strip_edges().is_empty():
@@ -97,6 +99,9 @@ func _page(batch: Array[String], p: int) -> void:
 			nodes.append(null)
 			continue
 		_strip_bodies(inst)
+		if override_mat:
+			for mi: Node in inst.find_children("*", "MeshInstance3D", true, false):
+				(mi as MeshInstance3D).material_override = override_mat
 		var holder := Node3D.new()
 		holder.add_child(inst)
 		world.add_child(holder)

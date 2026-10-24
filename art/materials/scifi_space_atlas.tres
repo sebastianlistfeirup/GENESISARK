@@ -1,0 +1,15 @@
+[gd_resource type="StandardMaterial3D" load_steps=3 format=3]
+
+[ext_resource type="Texture2D" path="res://assets/Synty/SciFiSpace/Textures/PolygonSciFiSpace_Texture_01_A.png" id="1"]
+[ext_resource type="Texture2D" path="res://assets/Synty/SciFiSpace/Textures/PolygonSciFiSpace_Emissive_01.png" id="2"]
+
+[resource]
+resource_name = "scifi_space atlas"
+albedo_texture = ExtResource("1")
+metallic = 0.25
+roughness = 0.62
+emission_enabled = false
+emission = Color(1, 1, 1, 1)
+emission_energy_multiplier = 2.2
+emission_operator = 0
+emission_texture = ExtResource("2")

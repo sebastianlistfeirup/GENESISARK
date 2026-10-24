@@ -24,14 +24,38 @@
    "res://art/prefabs/char.citizen_adult__4.tscn"
   ],
   "char.robot_drone": "res://art/prefabs/char.robot_drone.tscn",
+  "ship.captain_chair": "res://art/prefabs/ship.captain_chair.tscn",
+  "ship.ceiling_light": "res://art/prefabs/ship.ceiling_light.tscn",
   "ship.crate": [
    "res://art/prefabs/ship.crate.tscn",
    "res://art/prefabs/ship.crate__2.tscn",
    "res://art/prefabs/ship.crate__3.tscn",
    "res://art/prefabs/ship.crate__4.tscn"
   ],
+  "ship.cryo_pod": "res://art/prefabs/ship.cryo_pod.tscn",
+  "ship.door": "res://art/prefabs/ship.door.tscn",
+  "ship.embryo_bank_core": "res://art/prefabs/ship.embryo_bank_core.tscn",
+  "ship.embryo_tank": "res://art/prefabs/ship.embryo_tank.tscn",
+  "ship.floor": [
+   "res://art/prefabs/ship.floor.tscn",
+   "res://art/prefabs/ship.floor__2.tscn",
+   "res://art/prefabs/ship.floor__3.tscn"
+  ],
+  "ship.pillar": "res://art/prefabs/ship.pillar.tscn",
+  "ship.pipe": "res://art/prefabs/ship.pipe.tscn",
+  "ship.power_coupling": "res://art/prefabs/ship.power_coupling.tscn",
+  "ship.robot_station": "res://art/prefabs/ship.robot_station.tscn",
   "ship.starmap_table": "res://art/prefabs/ship.starmap_table.tscn",
   "ship.terminal": "res://art/prefabs/ship.terminal.tscn",
+  "ship.terminal_bridge": "res://art/prefabs/ship.terminal_bridge.tscn",
+  "ship.wall": [
+   "res://art/prefabs/ship.wall.tscn",
+   "res://art/prefabs/ship.wall__2.tscn",
+   "res://art/prefabs/ship.wall__3.tscn"
+  ],
+  "ship.wall_window": "res://art/prefabs/ship.wall_window.tscn",
+  "ship.workbench": "res://art/prefabs/ship.workbench.tscn",
+  "space.ark_exterior": "res://art/prefabs/space.ark_exterior.tscn",
   "space.asteroid": [
    "res://art/prefabs/space.asteroid.tscn",
    "res://art/prefabs/space.asteroid__2.tscn"

@@ -1,0 +1,10 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://assets/Synty/SciFiSpace/FBX/SM_Prop_Battery_03.fbx" id="1_dlyuv"]
+
+[node name="ship_robot_station" type="Node3D" unique_id=1020758297]
+metadata/synty_source = "res://assets/Synty/SciFiSpace/FBX/SM_Prop_Battery_03.fbx"
+metadata/synty_fit = "natural"
+
+[node name="Model" type="Node3D" parent="." unique_id=190370407 instance=ExtResource("1_dlyuv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.9604645e-08, 0.197626, 1.1920929e-07)

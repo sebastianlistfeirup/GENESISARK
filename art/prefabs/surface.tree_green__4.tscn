@@ -4,14 +4,14 @@
 [ext_resource type="ArrayMesh" path="res://assets/Synty/PolygonSciFiWorlds/Models/extracted/SM_Env_Plant_Palm_01.res" id="2_pr6qg"]
 [ext_resource type="Material" path="res://assets/Synty/PolygonSciFiWorlds/Materials/Alts/PolygonScifiWorlds_01_A_mat.tres" id="3_c4mog"]
 
-[node name="surface_tree_green" type="Node3D" unique_id=1071762732]
+[node name="surface_tree_green" type="Node3D" unique_id=1663516124]
 metadata/synty_source = "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Plant_Palm_01.tscn"
 metadata/synty_fit = "natural"
 
-[node name="Model" type="Node3D" parent="." unique_id=1868769226]
+[node name="Model" type="Node3D" parent="." unique_id=1608841358]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.15526092, 0.2711609, -0.36343312)
 
-[node name="SM_Env_Plant_Palm_01" type="MeshInstance3D" parent="Model" unique_id=1026356928 instance=ExtResource("1_8s44t")]
+[node name="SM_Env_Plant_Palm_01" type="MeshInstance3D" parent="Model" unique_id=952029884 instance=ExtResource("1_8s44t")]
 gi_mode = 2
 mesh = ExtResource("2_pr6qg")
 surface_material_override/0 = ExtResource("3_c4mog")
