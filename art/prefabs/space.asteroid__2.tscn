@@ -4,14 +4,14 @@
 [ext_resource type="ArrayMesh" path="res://assets/Synty/PolygonSciFiWorlds/Models/extracted/SM_Env_Asteroid_02.res" id="2_bce6d"]
 [ext_resource type="Material" path="res://assets/Synty/PolygonSciFiWorlds/Materials/Alts/PolygonScifiWorlds_01_A_mat.tres" id="3_0ss7y"]
 
-[node name="space_asteroid" type="Node3D" unique_id=1743774251]
+[node name="space_asteroid" type="Node3D" unique_id=1212016500]
 metadata/synty_source = "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Asteroid_02.tscn"
 metadata/synty_fit = "size"
 
-[node name="Model" type="Node3D" parent="." unique_id=1744261378]
+[node name="Model" type="Node3D" parent="." unique_id=1040361079]
 transform = Transform3D(0.6515982, 0, 0, 0, 0.6515982, 0, 0, 0, 0.6515982, -0.081481695, -0.021872044, -0.012502074)
 
-[node name="SM_Env_Asteroid_02" type="MeshInstance3D" parent="Model" unique_id=934974946 instance=ExtResource("1_e3et7")]
+[node name="SM_Env_Asteroid_02" type="MeshInstance3D" parent="Model" unique_id=1539119026 instance=ExtResource("1_e3et7")]
 gi_mode = 2
 mesh = ExtResource("2_bce6d")
 surface_material_override/0 = ExtResource("3_0ss7y")

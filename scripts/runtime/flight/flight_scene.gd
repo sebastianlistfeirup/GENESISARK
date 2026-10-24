@@ -35,6 +35,7 @@ var _warn_t := 0.0
 var _cleared := false
 var _start_integrity := 100.0
 var _start_oxygen := 100.0
+var scenery: SpaceScenery  # non-colliding backdrop + hazard rock models (presentation only)
 
 
 func _ready() -> void:
@@ -45,9 +46,13 @@ func _ready() -> void:
 	if gs:
 		_start_integrity = gs.ark.integrity
 		_start_oxygen = gs.ark.oxygen
-	add_child(SpaceBackdrop.new())
+	var backdrop := SpaceBackdrop.new()
+	add_child(backdrop)
+	backdrop.set_depth_haze(Color("2a1f4a"), 0.00045)
 	var pid := str(GameSession.content.locations.get(_dest, {}).get("planet_id", "viridia"))
 	var p := GameSession.content.planet(pid)
+	scenery = SpaceScenery.new().setup(str(p.get("biome_id", "green")), hash(pid))
+	add_child(scenery)
 	var planet := VisualSlot.make("space.planet_" + str(p.get("biome_id", "green")), str(p.get("palette", {}).get("nature", "")))
 	planet.scale = Vector3.ONE * 3.0
 	planet.position = Vector3(0, -120, -LENGTH - 300.0)
@@ -104,6 +109,8 @@ func _belt_start() -> float:
 func _spawn_hazard(seed_value: int) -> void:
 	var rng := RandomNumberGenerator.new()
 	rng.seed = seed_value
+	var vis_rng := RandomNumberGenerator.new()  # art choices only, never gameplay
+	vis_rng.seed = seed_value + 101
 	var t := str(_hazard.get("type", "none"))
 	var dens := float(_hazard.get("density", 0.0))
 	var groups: Array = []  # [count, z_from, z_to, r_min, r_max, drift]
@@ -126,9 +133,13 @@ func _spawn_hazard(seed_value: int) -> void:
 			var pos := Vector3(rng.randf_range(-LANE.x, LANE.x), rng.randf_range(-LANE.y, LANE.y), -rng.randf_range(float(g[1]), float(g[2])))
 			if outside:
 				pos.x = signf(rng.randf() - 0.5) * rng.randf_range(LANE.x + 40.0, LANE.x + 260.0)
-			var a := VisualSlot.make("space.asteroid")
+			# Look only (D-038): Synty asteroid models normalised to radius 1, or the
+			# slot (proxy radius 2 m) without the packs. The rng draws stay identical
+			# so positions, radii and drift never change with the art.
+			var synty := scenery != null and scenery.has_rocks()
+			var a: Node3D = scenery.hazard_visual(vis_rng, "rock" if outside else t, r) if synty else VisualSlot.make("space.asteroid")
 			a.position = pos
-			a.scale = Vector3(r, r * rng.randf_range(0.7, 1.0), r * rng.randf_range(0.8, 1.2)) / 2.0  # proxy radius is 2 m
+			a.scale = Vector3(r, r * rng.randf_range(0.7, 1.0), r * rng.randf_range(0.8, 1.2)) / (1.0 if synty else 2.0)
 			a.rotation = Vector3(rng.randf() * TAU, rng.randf() * TAU, 0)
 			add_child(a)
 			var vel := Vector3(rng.randf_range(-1, 1), rng.randf_range(-0.5, 0.5), 0) * float(g[5])
@@ -195,6 +206,7 @@ func _update_rocks(delta: float) -> void:
 		var n: Node3D = rk["node"]
 		n.position += (rk["vel"] as Vector3) * delta
 		n.rotation.y += float(rk["spin"]) * delta
+		n.rotation.x += float(rk["spin"]) * 0.4 * delta  # slow tumble (look only)
 		# Rocks already passed would sit between camera and ark: hide them.
 		n.visible = rk["scenery"] or n.position.z < sp.z + float(rk["r"]) + 4.0
 		if rk["hit"] or rk["scenery"]:

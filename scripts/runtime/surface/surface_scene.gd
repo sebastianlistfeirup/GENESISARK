@@ -74,15 +74,20 @@ func _ready() -> void:
 	terrain.build()
 	terrain.scatter(hash(ex.site_id), 70 if GroundCover.spec_for(str(planet.get("id")), "").is_empty() else 0, avoid)
 	add_child(GroundCover.build(terrain, str(planet.get("id")), hash(ex.site_id) + 7, avoid, 180.0, str(planet.get("biome_id"))))
+	add_child(PlanetSky.build(str(planet.get("id")), str(planet.get("biome_id"))))
 	_place_lander()
 	SceneDressing.attach(self, str(site.get("id", "")), terrain)
 	_place_points(pts)
 	_place_routes()
 	_place_hazards()
+	add_child(PoiDressing.build(terrain, survey, planet, hash(ex.site_id)))  # D-038: camp, POI, hazard and route set dressing (look only)
 	captain = Captain.new()
 	captain.footstep_slot = "sfx_footstep_soil"
 	captain.wear_helmet = true
 	add_child(captain)
+	var motes := PlanetSky.motes(str(planet.get("id")), str(planet.get("biome_id")))
+	if motes:
+		captain.add_child(motes)
 	captain.teleport(Vector3(4, terrain.height_at(4, 4) + 0.3, 4), PI * 0.25)
 	if str(planet.get("id")) == "umbra":
 		var lamp := SpotLight3D.new()
@@ -378,6 +383,12 @@ func _finish(recalled: bool) -> void:
 
 
 func debug_action(action: String) -> void:
+	if action.begins_with("sky"):  # evidence: look up at the sky bodies (sky / sky:<azimuth deg>)
+		var az := deg_to_rad(float(action.get_slice(":", 1))) if action.contains(":") else 0.0
+		captain.camera_rig.yaw = -az
+		captain.camera_rig.pitch = 0.25
+		captain.camera_rig.snap()
+		return
 	match action:
 		"at_sample":
 			var m: Node3D = _markers.get("main_sample")

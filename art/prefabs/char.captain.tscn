@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" path="res://assets/Synty/CharactersSrc/Characters.fbx" id="1_of447"]
 
-[node name="char_captain" type="Node3D" unique_id=1423878113]
+[node name="char_captain" type="Node3D" unique_id=180328551]
 metadata/only_mesh = "SM_Chr_ScifiWorlds_SpaceSuit_Male_01"
 metadata/synty_source = "res://assets/Synty/CharactersSrc/Characters.fbx"
 metadata/synty_fit = "natural"

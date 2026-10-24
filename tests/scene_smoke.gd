@@ -337,6 +337,7 @@ func _run() -> void:
 	var cap2: Captain = surf.get("captain")
 	await frames(30)
 	check("surface_captain_on_terrain", cap2.global_position.y > -5.0 and cap2.global_position.y < 40.0, str(cap2.global_position))
+	check("surface_dressing_keeps_paths_clear", _dressing_blockers(surf).is_empty(), str(_dressing_blockers(surf)))
 	var e0 := GameSession.state.expedition.suit_energy
 	await frames(60)
 	check("ga06_suit_drains_in_scene", GameSession.state.expedition.suit_energy < e0)
@@ -491,4 +492,37 @@ func _visible_controls(n: Node) -> Array:
 		if c is Control and (c as Control).is_visible_in_tree():
 			out.append(c)
 			out.append_array(_visible_controls(c))
+	return out
+
+
+## D-038: colliding set dressing (PoiDressing) must leave every interactable and
+## route polyline walkable. Returns the offenders (empty = clear).
+func _dressing_blockers(surf: Node) -> Array:
+	var out: Array = []
+	var root := surf.get_node_or_null("PoiDressing")
+	if root == null:
+		return out
+	var survey: Dictionary = surf.get("survey")
+	var lines: Array = []
+	for r: Dictionary in DictUtil.get_arr(survey, "routes"):
+		var line: Array = [Vector2.ZERO]
+		for w: Variant in DictUtil.get_arr(r, "waypoints"):
+			line.append(Vector2(float(w[0]), float(w[1])))
+		lines.append(line)
+	var markers: Dictionary = surf.get("_markers")
+	for cs: Node in root.find_children("*", "CollisionShape3D", true, false):
+		var c := cs as CollisionShape3D
+		var p := Vector2(c.global_position.x, c.global_position.z)
+		var rad := (c.shape as CylinderShape3D).radius if c.shape is CylinderShape3D else 0.5
+		for key: String in markers.keys():
+			var m: Node3D = markers[key]
+			if p.distance_to(Vector2(m.global_position.x, m.global_position.z)) - rad < 3.0:
+				out.append("%s near %s" % [p, key])
+		for line: Array in lines:
+			for i: int in line.size() - 1:
+				var a: Vector2 = line[i]
+				var ab: Vector2 = line[i + 1] - a
+				var t := clampf((p - a).dot(ab) / maxf(ab.length_squared(), 0.0001), 0.0, 1.0)
+				if p.distance_to(a + ab * t) - rad < 2.0:
+					out.append("%s on a route" % p)
 	return out

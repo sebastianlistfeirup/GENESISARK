@@ -254,7 +254,7 @@
    ]
   },
   "ship.wall_window": {
-   "source": "res://assets/Synty/SciFiSpace/FBX/SM_Bld_Wall_01_Alt.fbx",
+   "source": "res://assets/Synty/SciFiSpace/FBX/SM_Bld_Wall_Exterior_Window_01.fbx",
    "status": "approved",
    "material": "res://art/materials/scifi_space_atlas.tres"
   },

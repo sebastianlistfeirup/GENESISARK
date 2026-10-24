@@ -49,7 +49,7 @@ static func mesh(path: String, look: Dictionary = {}) -> Array:
 			first = false
 		inst.free()
 		if merged.get_surface_count() > 0:
-			out = [merged, Transform3D.IDENTITY, box]
+			out = [_with_lods(merged), Transform3D.IDENTITY, box]
 	_meshes[key] = out
 	return out
 
@@ -58,6 +58,17 @@ static func mesh(path: String, look: Dictionary = {}) -> Array:
 static func pack_root(path: String) -> String:
 	var i := path.find("/FBX/")
 	return path.substr(0, i) if i > 0 else path.get_base_dir().get_base_dir()
+
+
+## Automatic LODs (what the importer does for imported meshes; a merged
+## runtime mesh would otherwise draw its full detail at every distance).
+static func _with_lods(m: ArrayMesh) -> ArrayMesh:
+	var im := ImporterMesh.new()
+	for s: int in m.get_surface_count():
+		im.add_surface(Mesh.PRIMITIVE_TRIANGLES, m.surface_get_arrays(s), [], {}, m.surface_get_material(s))
+	im.generate_lods(25.0, 60.0, [])
+	var out := im.get_mesh()
+	return out if out != null and out.get_surface_count() > 0 else m
 
 
 static func _local(n: Node, root: Node) -> Transform3D:

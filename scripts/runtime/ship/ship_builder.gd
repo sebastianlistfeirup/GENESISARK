@@ -86,7 +86,9 @@ func build() -> void:
 					wall.rotation.y += PI  # Face inward
 				geo.add_child(wall)
 				_box_collider(body, edge + Vector3(0, wall_h * 0.5, 0), Vector3(cell if int(dir[0]) == 0 else 0.3, wall_h, 0.3 if int(dir[0]) == 0 else cell))
-				if slot == "ship.wall_window":
+				if slot == "ship.wall_window" and not AssetSlots.scene_path("ship.wall_window").is_empty():
+					pass  # a real window frame: the nebula sky shows through it
+				elif slot == "ship.wall_window":
 					var sky := VisualSlot.make("ship.window_space")
 					sky.position = edge + Vector3(float(dir[0]), 0, float(dir[1])) * 0.4
 					sky.rotation.y = wall.rotation.y

@@ -2,9 +2,9 @@
 
 [ext_resource type="PackedScene" path="res://assets/Synty/CharactersSrc/City/SK_Character_Rich_Female_01.fbx" id="1_rd0b6"]
 
-[node name="char_citizen_adult" type="Node3D" unique_id=1378538243]
+[node name="char_citizen_adult" type="Node3D" unique_id=1255091437]
 metadata/synty_source = "res://assets/Synty/CharactersSrc/City/SK_Character_Rich_Female_01.fbx"
 metadata/synty_fit = "natural"
 
-[node name="Model" type="Node3D" parent="." unique_id=56697878 instance=ExtResource("1_rd0b6")]
+[node name="Model" type="Node3D" parent="." unique_id=401688292 instance=ExtResource("1_rd0b6")]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0.0029797077, -0.031325877)

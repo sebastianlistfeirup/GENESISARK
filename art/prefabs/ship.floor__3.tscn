@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" path="res://assets/Synty/SciFiSpace/FBX/SM_Bld_Floor_03.fbx" id="1_oms11"]
 
-[node name="ship_floor" type="Node3D" unique_id=535301342]
+[node name="ship_floor" type="Node3D" unique_id=1939149705]
 metadata/synty_source = "res://assets/Synty/SciFiSpace/FBX/SM_Bld_Floor_03.fbx"
 metadata/synty_fit = "module"
 

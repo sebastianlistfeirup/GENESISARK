@@ -6,6 +6,7 @@ extends Node3D
 @export var star_count: int = 1600
 @export var radius: float = 900.0
 @export var seed_value: int = 7
+var environment: Environment
 
 
 func _ready() -> void:
@@ -27,6 +28,7 @@ func _ready() -> void:
 	e.glow_intensity = 0.8
 	e.glow_bloom = 0.1
 	env.environment = e
+	environment = e
 	add_child(env)
 	var mm := MultiMesh.new()
 	mm.transform_format = MultiMesh.TRANSFORM_3D
@@ -67,3 +69,16 @@ func _ready() -> void:
 	fill.light_energy = 0.7
 	fill.sky_mode = DirectionalLight3D.SKY_MODE_LIGHT_ONLY
 	add_child(fill)
+
+
+## Violet depth haze for scenes with far geometry (approach flight): distant
+## asteroids fade into the nebula like the key art. The sky stays untouched.
+func set_depth_haze(color: Color, density: float) -> void:
+	if environment == null:
+		return
+	environment.fog_enabled = true
+	environment.fog_mode = Environment.FOG_MODE_EXPONENTIAL
+	environment.fog_light_color = color
+	environment.fog_density = density
+	environment.fog_sky_affect = 0.0
+	environment.fog_aerial_perspective = 0.35

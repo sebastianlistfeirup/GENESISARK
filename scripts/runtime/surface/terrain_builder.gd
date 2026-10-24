@@ -51,8 +51,21 @@ const LIFT_CELL := 2.0
 const LIFT_RADIUS := 7.0
 
 
-func set_water_below(points: Array) -> void:
+func set_water_below(points: Array, lift: bool = true) -> void:
 	if not bool(style.get("water", false)) or points.is_empty():
+		return
+	if not lift:
+		# Colony: wide flat districts must stay clearly dry; the sea only fills the low ground.
+		var lo := INF
+		for p: Variant in points:
+			var v: Vector2 = p
+			lo = minf(lo, height_at(v.x, v.y))
+		var hs2: Array = []
+		for iz: int in 30:
+			for ix: int in 30:
+				hs2.append(height_at(-size_m * 0.45 + ix * size_m * 0.9 / 29.0, -size_m * 0.45 + iz * size_m * 0.9 / 29.0))
+		hs2.sort()
+		water_level = minf(float(hs2[int(hs2.size() * float(style.get("sea", 0.4)))]), lo - 0.8)
 		return
 	var hs: Array = []
 	var half := size_m * 0.45

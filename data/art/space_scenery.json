@@ -1,0 +1,230 @@
+{
+ "_note": "Approach-flight scenery (SpaceScenery, D-038). Paths point at the local POLYGON Sci-Fi Space FBX files (purchased, gitignored); missing files are skipped and the flight falls back to the space.asteroid slot. Hazard asteroids only swap the look: positions, radii and collisions stay in flight_scene.gd. Everything else here is non-colliding backdrop.",
+ "material": "res://art/materials/scifi_space_atlas.tres",
+ "hazard_asteroids": [
+  "res://assets/Synty/SciFiSpace/FBX/SM_Env_Asteroid_01.fbx",
+  "res://assets/Synty/SciFiSpace/FBX/SM_Env_Asteroid_02.fbx",
+  "res://assets/Synty/SciFiSpace/FBX/SM_Env_Asteroid_03.fbx",
+  "res://assets/Synty/SciFiSpace/FBX/SM_Env_Asteroid_04.fbx",
+  "res://assets/Synty/SciFiSpace/FBX/SM_Env_Asteroid_05.fbx",
+  "res://assets/Synty/SciFiSpace/FBX/SM_Env_Asteroid_06.fbx",
+  "res://assets/Synty/SciFiSpace/FBX/SM_Env_Asteroid_07.fbx",
+  "res://assets/Synty/SciFiSpace/FBX/SM_Env_Astroid_01.fbx",
+  "res://assets/Synty/SciFiSpace/FBX/SM_Env_Astroid_02.fbx",
+  "res://assets/Synty/SciFiSpace/FBX/SM_Env_Astroid_03.fbx",
+  "res://assets/Synty/SciFiSpace/FBX/SM_Env_Astroid_04.fbx",
+  "res://assets/Synty/SciFiSpace/FBX/SM_Env_Astroid_05.fbx",
+  "res://assets/Synty/SciFiSpace/FBX/SM_Env_Astroid_Holes_01.fbx",
+  "res://assets/Synty/SciFiSpace/FBX/SM_Env_Astroid_Holes_02.fbx",
+  "res://assets/Synty/SciFiSpace/FBX/SM_Env_Astroid_Holes_03.fbx"
+ ],
+ "debris_hazard": [
+  "res://assets/Synty/SciFiSpace/FBX/SM_Env_Debris_Shell_01.fbx",
+  "res://assets/Synty/SciFiSpace/FBX/SM_Env_Debris_Shell_02.fbx",
+  "res://assets/Synty/SciFiSpace/FBX/SM_Env_Debris_Shell_03.fbx",
+  "res://assets/Synty/SciFiSpace/FBX/SM_Env_Debris_Shell_04.fbx",
+  "res://assets/Synty/SciFiSpace/FBX/SM_Env_Debris_Shell_05.fbx",
+  "res://assets/Synty/SciFiSpace/FBX/SM_Env_Debris_Shell_06.fbx",
+  "res://assets/Synty/SciFiSpace/FBX/SM_Env_Debris_Pipe_01.fbx"
+ ],
+ "large_asteroids": [
+  "res://assets/Synty/SciFiSpace/FBX/SM_Env_Astroid_Large_01.fbx",
+  "res://assets/Synty/SciFiSpace/FBX/SM_Env_Astroid_Large_02.fbx",
+  "res://assets/Synty/SciFiSpace/FBX/SM_Env_Astroid_Large_Holes_01.fbx",
+  "res://assets/Synty/SciFiSpace/FBX/SM_Env_Astroid_Large_Holes_02.fbx"
+ ],
+ "drift_debris": [
+  "res://assets/Synty/SciFiSpace/FBX/SM_Env_Debris_Shell_01.fbx",
+  "res://assets/Synty/SciFiSpace/FBX/SM_Env_Debris_Shell_03.fbx",
+  "res://assets/Synty/SciFiSpace/FBX/SM_Env_Debris_Shell_05.fbx",
+  "res://assets/Synty/SciFiSpace/FBX/SM_Env_Debris_Shell_07.fbx",
+  "res://assets/Synty/SciFiSpace/FBX/SM_Env_Debris_Shell_08.fbx",
+  "res://assets/Synty/SciFiSpace/FBX/SM_Env_Debris_Structure_01.fbx",
+  "res://assets/Synty/SciFiSpace/FBX/SM_Env_Debris_Structure_02.fbx",
+  "res://assets/Synty/SciFiSpace/FBX/SM_Env_Debris_Structure_03.fbx",
+  "res://assets/Synty/SciFiSpace/FBX/SM_Env_Debris_Pipe_01.fbx"
+ ],
+ "field_layers": [
+  {
+   "count": 90,
+   "x": [
+    260,
+    620
+   ],
+   "y": [
+    -150,
+    150
+   ],
+   "z": [
+    60,
+    -1450
+   ],
+   "size": [
+    4,
+    14
+   ],
+   "large_share": 0.08
+  },
+  {
+   "count": 120,
+   "x": [
+    700,
+    1500
+   ],
+   "y": [
+    -450,
+    300
+   ],
+   "z": [
+    -300,
+    -2100
+   ],
+   "size": [
+    12,
+    40
+   ],
+   "large_share": 0.2
+  },
+  {
+   "count": 60,
+   "x": [
+    -1000,
+    1000
+   ],
+   "y": [
+    -800,
+    -420
+   ],
+   "z": [
+    -400,
+    -2000
+   ],
+   "size": [
+    12,
+    36
+   ],
+   "large_share": 0.12,
+   "mirror": false
+  }
+ ],
+ "drift_debris_count": 36,
+ "ships": [
+  {
+   "mesh": "res://assets/Synty/SciFiSpace/FBX/SM_Ship_Station_03.fbx",
+   "pos": [
+    760,
+    230,
+    -1650
+   ],
+   "size": 340,
+   "tilt": [
+    62,
+    0,
+    -12
+   ],
+   "spin": 0.03
+  },
+  {
+   "mesh": "res://assets/Synty/SciFiSpace/FBX/SM_Ship_Cruiser_01.fbx",
+   "pos": [
+    -380,
+    60,
+    -700
+   ],
+   "size": 110,
+   "yaw": 90,
+   "vel": [
+    0,
+    0,
+    -9
+   ]
+  },
+  {
+   "mesh": "res://assets/Synty/SciFiSpace/FBX/SM_Ship_Transport_01.fbx",
+   "pos": [
+    420,
+    -40,
+    -420
+   ],
+   "size": 60,
+   "yaw": -90,
+   "vel": [
+    0,
+    0,
+    -14
+   ]
+  },
+  {
+   "mesh": "res://assets/Synty/SciFiSpace/FBX/SM_Ship_Fighter_01.fbx",
+   "pos": [
+    -160,
+    70,
+    -260
+   ],
+   "size": 14,
+   "yaw": -90,
+   "vel": [
+    55,
+    0,
+    -10
+   ],
+   "loop": 900
+  },
+  {
+   "mesh": "res://assets/Synty/SciFiSpace/FBX/SM_Ship_Fighter_02.fbx",
+   "pos": [
+    -180,
+    78,
+    -275
+   ],
+   "size": 14,
+   "yaw": -90,
+   "vel": [
+    55,
+    0,
+    -10
+   ],
+   "loop": 900
+  }
+ ],
+ "gas_giant": {
+  "pos": [
+   -1900,
+   700,
+   -3300
+  ],
+  "radius": 560,
+  "tilt": [
+   28,
+   0,
+   16
+  ],
+  "ring_scale": 4.6,
+  "palettes": {
+   "desert": {
+    "base": "#5f8fa8",
+    "ocean": "#2c4a66",
+    "high": "#cfe6ee",
+    "atmo": "#8fd0ff",
+    "ring": "#cfe0e6",
+    "ring_band": "#5d7484"
+   },
+   "ice": {
+    "base": "#c98a5a",
+    "ocean": "#6a3b2a",
+    "high": "#f2dcc0",
+    "atmo": "#ffb27a",
+    "ring": "#ecd4b0",
+    "ring_band": "#8a6a52"
+   },
+   "green": {
+    "base": "#a07ab8",
+    "ocean": "#4a3366",
+    "high": "#ead8f2",
+    "atmo": "#d0a0ff",
+    "ring": "#e6d6ee",
+    "ring_band": "#76608a"
+   }
+  }
+ }
+}
