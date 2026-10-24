@@ -56,7 +56,8 @@ func _build() -> void:
 		var lb := UiKit.button(str(Loc.LANGUAGES[code]), func() -> void:
 			close()
 			SettingsService.set_language(code))
-		lb.disabled = code == Loc.lang()
+		if code == Loc.lang():
+			UiKit.mark_selected(lb)
 		lang_row.add_child(lb)
 	_body.add_child(lang_row)
 	_body.add_child(UiKit.title(Loc.t("Audio")))
@@ -71,7 +72,8 @@ func _build() -> void:
 		var qb := UiKit.button({"auto": Loc.t("Auto"), "high": Loc.t("High"), "low": Loc.t("Low")}[q], func() -> void:
 			SettingsService.set_value("graphics_quality", q)
 			_build())
-		qb.disabled = str(SettingsService.get_value("graphics_quality", "auto")) == q
+		if str(SettingsService.get_value("graphics_quality", "auto")) == q:
+			UiKit.mark_selected(qb)
 		q_row.add_child(qb)
 	q_row.add_child(UiKit.label(Loc.t("(now: %s, from the next area)") % (Loc.t("Low") if Quality.low() else Loc.t("High")), 14, UiKit.MUTED))
 	_body.add_child(q_row)
@@ -129,6 +131,7 @@ func _toggle(key: String, label_text: String) -> void:
 	var c := CheckButton.new()
 	c.text = label_text
 	c.button_pressed = bool(SettingsService.get_value(key, false))
+	c.add_theme_font_size_override("font_size", 16)  # same size as the slider and choice labels
 	c.toggled.connect(func(on: bool) -> void: SettingsService.set_value(key, on))
 	_body.add_child(c)
 

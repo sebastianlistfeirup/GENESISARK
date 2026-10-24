@@ -12,3 +12,5 @@ shader_parameter/metallic = 0.25
 shader_parameter/glow_energy = 2.4
 shader_parameter/sat_min = 0.55
 shader_parameter/val_min = 0.75
+shader_parameter/no_glow_a = Vector4(0.432, 0.606, 0.501, 0.922)
+shader_parameter/no_glow_b = Vector4(0.772, 0.308, 0.813, 0.377)

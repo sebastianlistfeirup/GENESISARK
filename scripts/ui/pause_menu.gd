@@ -54,9 +54,7 @@ func _main() -> void:
 	_body.add_child(UiKit.button(Loc.t("Continue"), close))
 	_body.add_child(UiKit.button(Loc.t("Save game"), _save_menu))
 	_body.add_child(UiKit.button(Loc.t("Load game"), _load_menu))
-	_body.add_child(UiKit.button(Loc.t("Settings"), func() -> void:
-		_panel.visible = false
-		settings.open()))
+	_body.add_child(UiKit.button(Loc.t("Settings"), open_settings))
 	_body.add_child(UiKit.button(Loc.t("Main menu"), func() -> void:
 		GameSession.autosave()
 		close()
@@ -65,6 +63,12 @@ func _main() -> void:
 		GameSession.autosave()
 		get_tree().quit()))
 	(_body.get_child(1) as Button).grab_focus.call_deferred()
+
+
+## Settings replace the pause panel (never drawn through it).
+func open_settings() -> void:
+	_panel.visible = false
+	settings.open()
 
 
 func _save_menu() -> void:

@@ -23,6 +23,10 @@ var _alarm_label: Label
 var _alarm_tween: Tween
 var _top_inset := 0.0
 var _bottom_inset := 0.0
+var _prompt_drop := 0.0
+## A scene can replace the campaign objective while it is on screen (the
+## approach flight, an expedition): {title, hint}. Presentation only.
+var objective_override: Dictionary = {}
 
 
 func _ready() -> void:
@@ -117,7 +121,7 @@ func _ready() -> void:
 func refresh_objective() -> void:
 	if not GameSession.has_game():
 		return
-	var o := GameSession.sim.objectives.current(GameSession.state)
+	var o := objective_override if not objective_override.is_empty() else GameSession.sim.objectives.current(GameSession.state)
 	objective_title.text = str(o.get("title", Loc.t("The colony is self-sufficient.")))
 	objective_hint.text = str(o.get("hint", ""))
 
@@ -131,6 +135,20 @@ func _on_objectives(ids: Array) -> void:
 func set_prompt(text: String) -> void:
 	prompt.text = text
 	_prompt_panel.visible = not text.is_empty()
+
+
+## Scenes without subtitles (the approach flight) dock the prompt near the
+## bottom edge, so it never covers the player at large UI scales.
+func dock_prompt_low() -> void:
+	var d := 150.0 - _prompt_drop
+	_prompt_drop = 150.0
+	_prompt_panel.position.y += d
+
+
+## Shows `o` ({title, hint}) instead of the campaign objective; {} restores it.
+func override_objective(o: Dictionary) -> void:
+	objective_override = o
+	refresh_objective()
 
 
 func set_hold(fraction: float) -> void:
@@ -209,6 +227,19 @@ func set_insets(top: float, bottom: float) -> void:
 
 func objective_rect() -> Rect2:
 	return _objective.get_global_rect()
+
+
+## NAV sits top centre; when the screen is narrow (UI scale 1.5 at 1280x720)
+## it drops below the objective / top-right columns instead of overlapping them.
+func _process(_delta: float) -> void:
+	if not nav.visible:
+		return
+	var y := 18.0
+	var nr := Rect2(nav.position.x, y, nav.size.x, nav.size.y)
+	for c: Control in [_objective, top_right]:
+		if c.visible and c.get_rect().intersects(nr):
+			y = maxf(y, c.get_rect().end.y + 8.0)
+	nav.position.y = y
 
 
 func any_modal_open() -> bool:

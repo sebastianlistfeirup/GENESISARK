@@ -30,28 +30,30 @@ Water plant,Vandanlæg
 Workshop,Værksted
 "And to the 50,000 who are waiting.","Og til de 50.000, der venter."
 Art,Grafik
+Character animation: ANIMATION locomotion and idle packs,Figuranimation: ANIMATION-pakker til bevægelse og tomgang
 Composer or licensed music,Komponist eller licenseret musik
 "Concept, game design and production","Idé, spildesign og produktion"
 Cutscenes and trailer,Mellemsekvenser og trailer
 ElevenLabs,ElevenLabs
+Exo 2 typeface (SIL Open Font License),Skrifttypen Exo 2 (SIL Open Font License)
 Film,Film
 GENESIS ARK,GENESIS ARK
 Game engine,Spilmotor
 "Gemini, Grok and HeyGen","Gemini, Grok og HeyGen"
 Generated procedurally for the prototype,Genereret procedurelt til prototypen
 Godot Engine and its contributors,Godot Engine og dets bidragydere
-Greybox proxies and procedural terrain,Greybox-proxies og procedurelt terræn
 INTERFACE Sci-Fi Menus and Sci-Fi Soldier HUD,INTERFACE Sci-Fi Menus og Sci-Fi Soldier HUD
-POLYGON Particle FX,POLYGON Particle FX
-"POLYGON Sci-Fi Space, Sci-Fi Worlds, Sci-Fi City, Sci-Fi Cyber City, Sci-Fi Outpost","POLYGON Sci-Fi Space, Sci-Fi Worlds, Sci-Fi City, Sci-Fi Cyber City, Sci-Fi Outpost"
+Natanael Gama,Natanael Gama
 Placeholder sounds,Pladsholderlyde
+"Planet flora and rock: POLYGON Nature Biomes (Tropical Jungle, Swamp Marshland, Alpine Mountain, Arid Desert)","Planeternes flora og klipper: POLYGON Nature Biomes (Tropical Jungle, Swamp Marshland, Alpine Mountain, Arid Desert)"
 Programming and tools,Programmering og værktøjer
 Sebastian Listfeirup,Sebastian Listfeirup
 Sebastian Listfeirup with Claude Code,Sebastian Listfeirup med Claude Code
-Sidekick Modular Characters,Sidekick Modular Characters
+"Ship, colony, space and characters: POLYGON Sci-Fi Space, Sci-Fi Worlds and Sci-Fi City","Skib, koloni, rum og figurer: POLYGON Sci-Fi Space, Sci-Fi Worlds og Sci-Fi City"
 Sound and voices,Lyd og stemmer
 "Sound effects, ambience and voices","Lydeffekter, stemning og stemmer"
 Synty Studios,Synty Studios
+"Terrain, planets, sky, particle effects and shaders","Terræn, planeter, himmel, partikeleffekter og shadere"
 Thanks,Tak
 The team,Holdet
 Used under license from Synty Studios. The packs are not included in the source code.,Bruges under Synty Studios' licens. Pakkerne ligger ikke i kildekoden.
@@ -912,11 +914,13 @@ AUTOPILOT (NAV),AUTOPILOT (NAV)
 "Approach: %s
 Orbit in %d m · speed %d
 Hull %d %% · Oxygen %d %% · impacts %d
-%s","Indflyvning: %s
+Pilot: %s","Indflyvning: %s
 Kredsløb om %d m · fart %d
 Skrog %d %% · Ilt %d %% · nedslag %d
-%s"
+Pilot: %s"
 Orbit established.,Kredsløb etableret.
+Reach orbit around %s,Gå i kredsløb om %s
+"Steer around the rocks, or let NAV fly. Impacts cost hull and oxygen.","Styr uden om stenene, eller lad NAV flyve. Nedslag koster skrog og ilt."
 manual,manuel
   (orbit),  (kredsløb)
 "%s
