@@ -9,7 +9,7 @@
 | current_phase | 1 · Fundament (port ikke bestået endnu) |
 | last_passed_gate | — (fase 1-porten kræver GA-11 og GA-12 DONE) |
 | active_task | GA-11 (menneskelig gennemspilning) · GA-12 Windows-kørsel bestået · GA-13/14 Synty + figurer integreret (afventer din visuelle godkendelse) |
-| last_commit | se `git log -1` (session 7, 24.10.2026: Synty overalt, unikke planeter, animation, R9) |
+| last_commit | se `git log -1` (session 8, 24.10.2026: landing i realtid, nøglebillede-planeter, ny UI, Godot 4.7.2) |
 | next_command | `tools/check.sh` og derefter `godot --path .` |
 
 ## Tests kørt (faktiske resultater på dette commit)
@@ -93,6 +93,18 @@
 | Tilgængelighed | Alt kan ombindes, paneler og HUD passer i 1280×720 ved UI-skala 1,5, symboler ved siden af farver, visuel alarm, undertekststørrelse virker overalt; 5 nye scenetests. Åbent: lille tekst ved skala 1,0 i 1280×720 (standardskala er dit valg), ingen ombinding af controller (D-018), ingen advarsel ved dobbelt-bundne taster. | `evidence/a11y/audit.md` |
 | R9-forslag | Tre lag til valg med konsekvens, med målepunkter til kampagnebotten. | `docs/proposals/R9_valg_med_konsekvens.md` |
 | R9 implementeret | Lag 1 (varig kurs ved år 20/40), lag 2 (tillid < 35 / > 65 med HUD-symbol og forklaring i Fremtid-fanen), lag 3 (ét efterspil pr. hændelse), skærpet *skærmet*. Bot: befolkning år 40 spreder 21-24 % mellem spillestile, to slutprofiler blandt normale spillestile, 0 fejl; balance 18/18. 81 domænetests. | D-034, `evidence/R9/result.json` |
+
+## Nyt i session 8 (24.10.2026): landing i realtid, planeterne som nøglebillederne, ny brugerflade, Godot 4.7.2
+
+| Område | Hvad | Hvor |
+|---|---|---|
+| Landing som No Man's Sky | Fra lavt kredsløb (planetstor klode, tågehimmel, Arken bag dig) gennem brændende indtræden og skydækket til platformen på stedet – ét sammenhængende skud, autopilot eller manuel styring, landingsassistent, kan springes over. Arken lander på kolonistedet på samme måde; ekspeditionen slutter med letning og stigning til kredsløb. | D-049 · `planet_descent.gd`, `descent_hud.gd` |
+| Planeterne | Fremmed flora fra Sci-Fi Worlds på alle seks (selvlysende skov på Umbra, kæmpeblomster på Viridia, koraller/tang på Pelagos …), kæmpevrag i Seres klitter (gylden time), skrotplanet Ferrum (væltede paraboler), havhorisont på Pelagos, skelet og spir på Nivalis, fugle med rigtige vinger | D-047 |
+| Rummet | Facetterede Synty-planeter med glorie, måner og ringe; levende kredsløbsvisning; nyt stjernekort; cockpit; Arken med lysende motorer | D-044, D-046 |
+| Kolonien | Gadeliv pr. stil: markeder, skilte, parkerede køretøjer, røg og giftpøler | D-045 |
+| Brugerflade | Ét Synty-sci-fi-tema overalt; hovedmenu som udstillingsvindue | D-048 |
+| Motor og plugins | Godot 4.7.2; ejerens plugins installeret korrekt (lokalt, ikke i brug) | D-050 |
+| Repo | Historikken renset for Synty-nøglebilleder (force-push godkendt af ejeren); GitHub kan stadig vise den gamle commit via SHA, indtil GitHub Support renser cache | — |
 
 ## Nyt i session 7 (24.10.2026): Synty overalt og unikke planeter
 
