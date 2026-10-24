@@ -309,6 +309,9 @@ func _any_panel() -> bool:
 
 ## DEBUG/evidence hook used by DebugCapture (--action=...).
 func debug_action(action: String) -> void:
+	if action == "corridor":  # evidence: down the west leg of the ring corridor
+		captain.teleport(builder._cell_center(1, 10), 0.0)
+		return
 	if action == "coupling":  # evidence: the first goal in the dark workshop
 		var it: Node3D = interactables.get("power_coupling")
 		captain.teleport(it.global_position + Vector3(4.5, 0.1, 0.0), PI * 0.5)
