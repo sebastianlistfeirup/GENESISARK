@@ -167,8 +167,8 @@ func _add_weathering(views: Dictionary, terrain: TerrainBuilder, clear: ColonyCl
 	var sm := SphereMesh.new()
 	sm.radius = 0.5
 	sm.height = 1.0
-	sm.radial_segments = 10
-	sm.rings = 4
+	sm.radial_segments = 7
+	sm.rings = 2
 	sm.is_hemisphere = true
 	var mm := MultiMesh.new()
 	mm.transform_format = MultiMesh.TRANSFORM_3D
@@ -324,7 +324,7 @@ func _emit(batches: Dictionary, ranges: Dictionary, lights: Array, it: Dictionar
 			batches[m] = []
 			ranges[m] = 0.0
 		(batches[m] as Array).append(xf * (part[1] as Transform3D))
-		ranges[m] = maxf(float(ranges[m]), 420.0 if big else (150.0 if kind == "infill" else 190.0))
+		ranges[m] = maxf(float(ranges[m]), 420.0 if big else (110.0 if kind in ["infill", "roof"] else 190.0))
 	var col := str(it["light"])
 	if not col.is_empty():
 		lights.append([xf * (it["light_at"] as Vector3), Color(col)])
