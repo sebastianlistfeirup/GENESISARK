@@ -1,0 +1,38 @@
+{
+ "task_id": "D-040 animation pass",
+ "engine_version": "4.7.1.stable.official",
+ "command": "godot --headless --path . --script res://tools/anim_probe.gd  (full data: measurements.json)",
+ "method": "Clips played on the slot's retargeted model, sampled at 120 Hz. Ground speed of a clip = median horizontal speed of the ball-of-foot bone (LeftToes/RightToes) while within 3.5 cm of the clip's lowest foot height. Cross-check on Synty root-motion twins (source rig): walk 1.45 vs 1.45 m/s, run 2.49 vs 2.59 m/s, sprint 7.18 vs 7.24 m/s; planted feet in the root-motion twins read 0.04 / 0.15 / 0.42 m/s (residual noise of the method). Foot slide at game speed = |v_game - speed_ref * playback|, playback = clamp(v_game / map speed_ref, CharacterAnimator min..max).",
+ "measured_speed_ref_mps": {
+  "char.captain": {"walk_slow (A_Walk_F)": 1.49, "walk_mid (A_Run_F)": 2.45, "walk (A_Run_F x A_Sprint_F phase blend, w=0.53)": 4.30, "run (A_Sprint_F)": 7.03},
+  "char.citizen_adult": {"walk (A_Walk_F)": 1.49, "run (A_Run_F)": 2.45},
+  "char.citizen_child": {"walk (A_Walk_F_Femn, rig x0.66)": 0.97, "run (A_Run_F_Femn)": 1.62}
+ },
+ "before": {
+  "_how": "main @59a6e3a: captain walk=A_Walk_F, run=A_Run_F; animation_map speed_ref 1.5 / 4.5 / 1.4 / 1.2; playback clamp 0.5..1.8",
+  "captain_walk_4.2": {"clip_ref": 1.49, "playback": 1.8, "foot_slide_mps": 1.52, "foot_slide_pct": 36.1, "cadence_note": "walk cycle at 1.8x: legs blur, body glides"},
+  "captain_run_7.0": {"clip_ref": 2.45, "playback": 1.556, "foot_slide_mps": 3.19, "foot_slide_pct": 45.6},
+  "adult_walk_1.35": {"clip_ref": 1.49, "playback": 0.964, "foot_slide_mps": 0.09, "foot_slide_pct": 6.4},
+  "child_walk_1.05": {"clip_ref": 0.97, "playback": 0.875, "foot_slide_mps": 0.20, "foot_slide_pct": 19.2}
+ },
+ "after": {
+  "_how": "this branch: gait clips chosen by measured speed_ref, playback = v / ref within 0.6..1.5",
+  "captain_walk_4.2": {"clip_ref": 4.30, "playback": 0.977, "foot_slide_mps": 0.0},
+  "captain_run_7.0": {"clip_ref": 7.03, "playback": 0.996, "foot_slide_mps": 0.0},
+  "captain_slow_1.0_to_3.0": {"clips": "walk_slow / walk_mid by nearest ref", "playback_range": "0.67..1.22", "foot_slide_mps": 0.0},
+  "adult_walk_1.22_to_1.49": {"clip_ref": 1.49, "playback": "0.82..1.0", "foot_slide_mps": 0.0},
+  "child_walk_0.95_to_1.16": {"clip_ref": 0.97, "playback": "0.97..1.19", "foot_slide_mps": 0.0}
+ },
+ "stops": {
+  "Run_ToIdle root-motion travel": "2.40 m over 0.97 s (every 0.1 s: 0, 0.5, 0.95, 1.33, 1.63, 1.88, 2.07, 2.22, 2.33, 2.39)",
+  "Walk_ToIdle root-motion travel": "0.82 m over 1.03 s",
+  "captain braking": "16 m/s2 (was 19): 0.55 m from 4.2 m/s, 1.53 m from 7.0 m/s; the stop clip is distance-matched to the remaining braking distance v^2/2a, so the planted foot holds while braking"
+ },
+ "actions": {
+  "interact (PointHand_Index_F_Small)": "right hand reaches 0.56 m forward of the hips at 1.04 m height (console top 1.05 m)",
+  "sample (Pray_Kneeling legs + UsePhone_TwoHands_Typing upper body)": "hips 0.40 m (kneeling), both hands 0.70 m: works a handheld over the sample for the 8 s hold",
+  "build (UsePhone_TwoHands_Typing)": "hands 1.21-1.23 m, tablet work"
+ },
+ "status": "PASS",
+ "artifacts": ["evidence/animation_pass/measurements.json", "evidence/animation_pass/locomotion.png", "evidence/animation_pass/stops.png", "evidence/animation_pass/actions.png", "evidence/animation_pass/colonists.png"]
+}

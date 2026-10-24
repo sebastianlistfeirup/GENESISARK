@@ -1,17 +1,29 @@
 class_name AnimationLibraryBuilder
 extends RefCounted
 ## Collects retargeted clips into one AnimationLibrary per character slot, named
-## after the game's animation states (idle, walk, run, interact, sample, build),
-## so CharacterAnimator can play them on any humanoid wrapper.
+## after the game's animation states (idle, walk, run, interact, sample, build,
+## plus polish clips: walk_slow, stop_<gait>_l/r, turn_l/r, idle_alt_*), so
+## CharacterAnimator can play them on any humanoid wrapper.
 ## Locomotion is made in-place (bible p.24-25): the Hips' forward/sideways travel
 ## is removed; the controller moves the character, the clip only animates it.
+##
+## A state spec is a path, or {source, clip?, loop?, upper?, lower_bones?, blend_with?, weight?, phase_offset?}:
+##   blend_with  - second locomotion cycle blended in at weight (0..1), phase-matched
+##                 (AnimationLibraryBuilder.blend): a gait between two Synty gaits.
+##   upper       - second clip whose upper body (every bone not in lower_bones)
+##                 replaces the source's; the result takes the upper clip's length.
+##                 Used for "kneel + work with the hands" from two Synty clips.
+##   lower_bones - bones kept from `source` (default LOWER_BODY).
 
 const LIB_DIR := "res://art/animations/"
 const LIBRARIES := CharacterAnimator.LIBRARIES
-const LOOPING := ["idle", "walk", "run", "sample", "build"]
+const OVERRIDES := "res://data/art/animation_overrides.json"
+const LOOPING := ["idle", "walk", "walk_slow", "walk_mid", "run", "sample", "build"]
+const LOWER_BODY := ["Hips", "LeftUpperLeg", "LeftLowerLeg", "LeftFoot", "LeftToes",
+	"RightUpperLeg", "RightLowerLeg", "RightFoot", "RightToes"]
 
 
-## states: {state: "res://.../A_Walk_01.gltf" or {source, clip}}. Returns a report.
+## states: {state: "res://.../A_Walk_01.fbx" or {source, clip, ...}}. Returns a report.
 static func build(slot: String, states: Dictionary, out_dir: String = LIB_DIR) -> Dictionary:
 	var lib := AnimationLibrary.new()
 	var report := {"slot": slot, "ok": true, "clips": {}, "errors": []}
@@ -23,11 +35,32 @@ static func build(slot: String, states: Dictionary, out_dir: String = LIB_DIR) -
 		if anim == null:
 			report["errors"].append("%s: no clip in %s" % [state, src])
 			continue
-		anim.loop_mode = Animation.LOOP_LINEAR if state in LOOPING else Animation.LOOP_NONE
+		var other := str(spec.get("blend_with", "")) if spec is Dictionary else ""
+		if not other.is_empty():
+			var ob := _take_clip(other, "")
+			if ob == null:
+				report["errors"].append("%s: no blend clip in %s" % [state, other])
+				continue
+			anim = blend(anim, ob, float(spec.get("weight", 0.5)), float(spec.get("phase_offset", 0.0)))
+		var upper := str(spec.get("upper", "")) if spec is Dictionary else ""
+		if not upper.is_empty():
+			var up := _take_clip(upper, "")
+			if up == null:
+				report["errors"].append("%s: no upper clip in %s" % [state, upper])
+				continue
+			var lower: Array = spec.get("lower_bones", LOWER_BODY) if spec is Dictionary else LOWER_BODY
+			anim = layer(anim, up, lower)
+		var loop := state in LOOPING
+		if spec is Dictionary and spec.has("loop"):
+			loop = bool(spec["loop"])
+		anim.loop_mode = Animation.LOOP_LINEAR if loop else Animation.LOOP_NONE
 		var travel := make_in_place(anim)
 		lib.add_animation(state, anim)
-		report["clips"][state] = {"source": src, "length_s": snappedf(anim.length, 0.01), "removed_travel_m": snappedf(travel, 0.01),
-			"retargeted": _is_retargeted(anim)}
+		var entry := {"source": src, "length_s": snappedf(anim.length, 0.01), "removed_travel_m": snappedf(travel, 0.01),
+			"loop": loop, "retargeted": _is_retargeted(anim)}
+		if not upper.is_empty():
+			entry["upper"] = upper
+		report["clips"][state] = entry
 	if lib.get_animation_list().is_empty():
 		report["ok"] = false
 		return report
@@ -36,6 +69,102 @@ static func build(slot: String, states: Dictionary, out_dir: String = LIB_DIR) -
 	ResourceSaver.save(lib, path)
 	report["library"] = path
 	return report
+
+
+## Every source file a spec needs (for retargeting before the build).
+static func spec_sources(spec: Variant) -> Array:
+	if spec is Dictionary:
+		var out := [str(spec.get("source", ""))]
+		for k: String in ["upper", "blend_with"]:
+			if not str(spec.get(k, "")).is_empty():
+				out.append(str(spec[k]))
+		return out
+	return [str(spec)]
+
+
+## The "animations" section of synty_choices.json with data/art/animation_overrides.json
+## merged over it: per slot, override states replace or add states; "status" too.
+## A state set to null in the overrides removes it.
+static func merged_animations(choices_anims: Dictionary, overrides_path: String = OVERRIDES) -> Dictionary:
+	var out := choices_anims.duplicate(true)
+	var ov: Variant = DictUtil.load_json(overrides_path) if FileAccess.file_exists(overrides_path) else null
+	if not ov is Dictionary:
+		return out
+	var slots: Dictionary = DictUtil.get_dict(ov, "animations")
+	for slot: String in slots.keys():
+		var o: Dictionary = slots[slot]
+		var base: Dictionary = out.get(slot, {"status": "approved", "states": {}})
+		var states: Dictionary = DictUtil.get_dict(base, "states").duplicate(true)
+		var ostates: Dictionary = DictUtil.get_dict(o, "states")
+		for st: String in ostates.keys():
+			if ostates[st] == null:
+				states.erase(st)
+			else:
+				states[st] = ostates[st]
+		base["states"] = states
+		if o.has("status"):
+			base["status"] = o["status"]
+		out[slot] = base
+	return out
+
+
+## Phase-matched pose blend of two locomotion cycles (a gait between them): both
+## clips are sampled at the same normalised phase u (b shifted by phase_offset),
+## the result lasts lerp(a.length, b.length, w). With matching foot contacts the
+## blended ground speed lands between the two (measured by tools/anim_probe.gd).
+static func blend(a: Animation, b: Animation, w: float, phase_offset: float = 0.0, fps: float = 30.0) -> Animation:
+	var out := Animation.new()
+	out.length = lerpf(a.length, b.length, w)
+	var frames := maxi(int(round(out.length * fps)), 2)
+	for t: int in a.get_track_count():
+		var ty := a.track_get_type(t)
+		if not ty in [Animation.TYPE_POSITION_3D, Animation.TYPE_ROTATION_3D, Animation.TYPE_SCALE_3D]:
+			continue
+		var p := a.track_get_path(t)
+		var tb := b.find_track(p, ty)
+		var nt := out.add_track(ty)
+		out.track_set_path(nt, p)
+		for i: int in frames + 1:
+			var u := float(i) / float(frames)
+			var ta := u * a.length
+			var tbt := fposmod(u + phase_offset, 1.0) * b.length
+			var v: Variant
+			match ty:
+				Animation.TYPE_POSITION_3D:
+					var va := a.position_track_interpolate(t, ta)
+					v = va.lerp(b.position_track_interpolate(tb, tbt), w) if tb >= 0 else va
+				Animation.TYPE_ROTATION_3D:
+					var qa := a.rotation_track_interpolate(t, ta)
+					v = qa.slerp(b.rotation_track_interpolate(tb, tbt), w) if tb >= 0 else qa
+				_:
+					var sa := a.scale_track_interpolate(t, ta)
+					v = sa.lerp(b.scale_track_interpolate(tb, tbt), w) if tb >= 0 else sa
+			out.track_insert_key(nt, u * out.length, v)
+	return out
+
+
+## Upper body from `up`, lower body (bone names in `lower`) from `base`, time-scaled
+## to the upper clip's length (the lower clip is a held pose such as a kneel).
+static func layer(base: Animation, up: Animation, lower: Array) -> Animation:
+	var out := up.duplicate(true) as Animation
+	var k := up.length / maxf(base.length, 0.001)
+	for t: int in range(out.get_track_count() - 1, -1, -1):
+		if _bone(out.track_get_path(t)) in lower:
+			out.remove_track(t)
+	for t: int in base.get_track_count():
+		var p := base.track_get_path(t)
+		if not _bone(p) in lower:
+			continue
+		var nt := out.add_track(base.track_get_type(t))
+		out.track_set_path(nt, p)
+		out.track_set_interpolation_type(nt, base.track_get_interpolation_type(t))
+		for i: int in base.track_get_key_count(t):
+			out.track_insert_key(nt, base.track_get_key_time(t, i) * k, base.track_get_key_value(t, i))
+	return out
+
+
+static func _bone(p: NodePath) -> String:
+	return String(p.get_concatenated_subnames())
 
 
 static func _take_clip(src: String, clip: String) -> Animation:
