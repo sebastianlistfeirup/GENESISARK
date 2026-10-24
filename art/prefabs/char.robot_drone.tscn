@@ -4,14 +4,14 @@
 [ext_resource type="ArrayMesh" path="res://assets/Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Drone_01.res" id="2_ikumt"]
 [ext_resource type="Material" path="res://assets/Synty/PolygonSciFiWorlds/Materials/Alts/PolygonScifiWorlds_01_A_mat.tres" id="3_nlile"]
 
-[node name="char_robot_drone" type="Node3D" unique_id=1055453473]
+[node name="char_robot_drone" type="Node3D" unique_id=579642675]
 metadata/synty_source = "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_Drone_01.tscn"
 metadata/synty_fit = "natural"
 
-[node name="Model" type="Node3D" parent="." unique_id=1968449709]
+[node name="Model" type="Node3D" parent="." unique_id=1800026817]
 transform = Transform3D(0.6, 0, 0, 0, 0.6, 0, 0, 0, 0.6, 0, 0.15601283, 0.0758442)
 
-[node name="SM_Prop_Drone_01" type="MeshInstance3D" parent="Model" unique_id=50575448 instance=ExtResource("1_asqyy")]
+[node name="SM_Prop_Drone_01" type="MeshInstance3D" parent="Model" unique_id=561353750 instance=ExtResource("1_asqyy")]
 gi_mode = 2
 mesh = ExtResource("2_ikumt")
 surface_material_override/0 = ExtResource("3_nlile")

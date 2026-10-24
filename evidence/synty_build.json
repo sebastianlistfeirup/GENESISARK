@@ -1107,11 +1107,11 @@
       "size_m": [
         4.0,
         4.0,
-        0.71
+        0.54
       ],
       "slot": "ship.wall_window",
-      "source": "res://assets/Synty/SciFiSpace/FBX/SM_Bld_Wall_01_Alt.fbx",
-      "summary": "module x0.800 -> 4.0x4.0x0.7 m (proxy 4.0x3.6x0.3)",
+      "source": "res://assets/Synty/SciFiSpace/FBX/SM_Bld_Wall_Exterior_Window_01.fbx",
+      "summary": "module x0.800 -> 4.0x4.0x0.5 m (proxy 4.0x3.6x0.3)",
       "uses_atlas": true,
       "warnings": []
     },

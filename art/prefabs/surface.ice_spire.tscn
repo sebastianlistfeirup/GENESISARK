@@ -4,14 +4,14 @@
 [ext_resource type="ArrayMesh" path="res://assets/Synty/PolygonSciFiWorlds/Models/extracted/SM_Env_Detail_Spire_01.res" id="2_wpyoe"]
 [ext_resource type="Material" path="res://assets/Synty/PolygonSciFiWorlds/Materials/Environment/PolygonSciFiWorlds_Env_Triplanar_Corp_01_mat.tres" id="3_abygv"]
 
-[node name="surface_ice_spire" type="Node3D" unique_id=1906116742]
+[node name="surface_ice_spire" type="Node3D" unique_id=1728753859]
 metadata/synty_source = "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Detail_Spire_01.tscn"
 metadata/synty_fit = "natural"
 
-[node name="Model" type="Node3D" parent="." unique_id=2128063994]
+[node name="Model" type="Node3D" parent="." unique_id=1718256551]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.03236842, 0.45560178, 0.05840099)
 
-[node name="SM_Env_Detail_Spire_01" type="MeshInstance3D" parent="Model" unique_id=1542349406 instance=ExtResource("1_s1eex")]
+[node name="SM_Env_Detail_Spire_01" type="MeshInstance3D" parent="Model" unique_id=1763974701 instance=ExtResource("1_s1eex")]
 gi_mode = 2
 mesh = ExtResource("2_wpyoe")
 surface_material_override/0 = ExtResource("3_abygv")

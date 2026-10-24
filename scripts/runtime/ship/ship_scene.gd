@@ -24,8 +24,15 @@ func _ready() -> void:
 		GameSession.new_campaign()
 	var env := WorldEnvironment.new()
 	var e := Environment.new()
-	e.background_mode = Environment.BG_COLOR
-	e.background_color = Color("020407")
+	# Space outside the windows: the same painted nebula as the flight (ambient stays local).
+	var sky_mat := ShaderMaterial.new()
+	sky_mat.shader = preload("res://art/shaders/nebula_sky.gdshader")
+	sky_mat.set_shader_parameter("seed", 7.0)
+	sky_mat.set_shader_parameter("veil_strength", 1.6)
+	var sky := Sky.new()
+	sky.sky_material = sky_mat
+	e.background_mode = Environment.BG_SKY
+	e.sky = sky
 	e.ambient_light_source = Environment.AMBIENT_SOURCE_COLOR
 	e.ambient_light_color = Color("3a3450")  # violet shade, warm lamps: the two-tone of the Sci-Fi Space key art
 	e.ambient_light_energy = 0.5
@@ -184,7 +191,8 @@ func _window_view() -> void:
 	# A candidate world outside the bridge windows once in orbit.
 	_window_planet = Node3D.new()
 	add_child(_window_planet)
-	_window_planet.position = Vector3(0, -40, builder.origin.z - 220)
+	_window_planet.position = Vector3(-40, -112, builder.origin.z - 240)  # the orbited world: its curved horizon fills the bridge windows
+	_window_planet.scale = Vector3.ONE * 3.0
 
 
 func _on_state(_kind: String) -> void:
@@ -298,6 +306,11 @@ func _any_panel() -> bool:
 
 ## DEBUG/evidence hook used by DebugCapture (--action=...).
 func debug_action(action: String) -> void:
+	if action == "window":  # evidence: the bridge windows from inside
+		captain.teleport(builder.cell_to_world(7.5, 2.6), 0.0)
+		captain.camera_rig.pitch = 0.05
+		captain.camera_rig.snap()
+		return
 	if action.begins_with("room_"):  # evidence: stand at the south middle of a room, facing north (room_B, room_E, room_W, room_C)
 		var want := action.trim_prefix("room_")
 		var lo := Vector2(INF, INF)
@@ -331,3 +344,7 @@ func debug_action(action: String) -> void:
 			orbit._landing_site = str(GameSession.content.planet(GameSession.sim.travel.current_planet_id(GameSession.state))["site_templates"][0])
 			orbit._landing_txn = "dbg"
 			orbit.refresh()
+
+
+func _exit_tree() -> void:
+	ShipBuilder.set_strip_glow(true)  # the shared atlas is also used outside the ship

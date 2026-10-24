@@ -8,6 +8,8 @@ uniform float metallic = 0.25;
 uniform float glow_energy = 2.4;
 uniform float sat_min = 0.55;
 uniform float val_min = 0.75;
+uniform vec3 glow_tint : source_color = vec3(1.0);  // ship on emergency power: strips shift to this colour
+uniform float tint_amount = 0.0;
 
 void fragment() {
 	vec3 c = texture(albedo_tex, UV).rgb;
@@ -18,5 +20,7 @@ void fragment() {
 	float mn = min(c.r, min(c.g, c.b));
 	float sat = mx > 0.0 ? (mx - mn) / mx : 0.0;
 	float mask = smoothstep(sat_min, sat_min + 0.15, sat) * smoothstep(val_min, val_min + 0.15, mx);
-	EMISSION = c * mask * glow_energy;
+	vec3 strip = mix(c, glow_tint * mx, tint_amount);
+	EMISSION = strip * mask * glow_energy;
+	ALBEDO = mix(c, strip, mask);
 }

@@ -4,14 +4,14 @@
 [ext_resource type="ArrayMesh" path="res://assets/Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Fuel_Cell_01.res" id="2_mlxm7"]
 [ext_resource type="Material" path="res://assets/Synty/PolygonSciFiWorlds/Materials/Alts/PolygonScifiWorlds_01_A_mat.tres" id="3_x7jsn"]
 
-[node name="building_module_heater" type="Node3D" unique_id=1627712554]
+[node name="building_module_heater" type="Node3D" unique_id=1398269004]
 metadata/synty_source = "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_Fuel_Cell_01.tscn"
 metadata/synty_fit = "natural"
 
-[node name="Model" type="Node3D" parent="." unique_id=478902452]
+[node name="Model" type="Node3D" parent="." unique_id=86930653]
 transform = Transform3D(1.4, 0, 0, 0, 1.4, 0, 0, 0, 1.4, 0, 0, -0.00029435754)
 
-[node name="SM_Prop_Fuel_Cell_01" type="MeshInstance3D" parent="Model" unique_id=1452607531 instance=ExtResource("1_06ntu")]
+[node name="SM_Prop_Fuel_Cell_01" type="MeshInstance3D" parent="Model" unique_id=1306517328 instance=ExtResource("1_06ntu")]
 gi_mode = 2
 mesh = ExtResource("2_mlxm7")
 surface_material_override/0 = ExtResource("3_x7jsn")

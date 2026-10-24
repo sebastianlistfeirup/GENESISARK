@@ -1,4 +1,5 @@
 shader_type spatial;
+render_mode fog_disabled;
 // Procedural planet: fbm continents/dunes/ice in object space, a slowly drifting
 // cloud layer, terminator softening and an atmosphere rim. Own art (no vendor data).
 uniform vec3 base_color : source_color = vec3(0.31, 0.54, 0.35);
@@ -10,6 +11,9 @@ uniform float cloud_amount = 0.45;
 uniform float banding = 0.0;
 uniform float seed = 0.0;
 uniform float cloud_speed = 0.004;
+uniform float city_lights = 0.0;  // a settled world: warm lights on the night side
+uniform vec3 sun_dir = vec3(0.6, 0.3, 0.75);
+uniform vec3 settlement = vec3(0.3, 0.35, 0.88);
 
 varying vec3 obj_n;
 
@@ -41,4 +45,11 @@ void fragment() {
 	SPECULAR = mix(0.6, 0.2, land);
 	float rim = pow(1.0 - clamp(dot(NORMAL, VIEW), 0.0, 1.0), 3.0);
 	EMISSION = atmo_color * rim * 1.4;
+	if (city_lights > 0.0) {
+		float night = smoothstep(0.05, -0.25, dot(n, normalize(sun_dir)));
+		float near = smoothstep(0.86, 0.985, dot(n, normalize(settlement)));
+		float dots = step(0.82, hash(floor(n * 160.0))) * land;
+		float spread = step(0.93, hash(floor(n * 70.0) + 3.0)) * land * smoothstep(0.6, 0.9, dot(n, normalize(settlement)));
+		EMISSION += vec3(1.0, 0.72, 0.35) * (dots * near + spread * 0.6) * night * city_lights * 3.0;
+	}
 }

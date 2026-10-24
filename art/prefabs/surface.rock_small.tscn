@@ -4,14 +4,14 @@
 [ext_resource type="ArrayMesh" path="res://assets/Synty/PolygonSciFiWorlds/Models/extracted/SM_Env_Rock_01.res" id="2_xvm1d"]
 [ext_resource type="Material" path="res://assets/Synty/PolygonSciFiWorlds/Materials/Environment/PolygonSciFiWorlds_Env_Triplanar_Corp_01_mat.tres" id="3_vwcll"]
 
-[node name="surface_rock_small" type="Node3D" unique_id=1170756217]
+[node name="surface_rock_small" type="Node3D" unique_id=1229985300]
 metadata/synty_source = "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Rock_01.tscn"
 metadata/synty_fit = "natural"
 
-[node name="Model" type="Node3D" parent="." unique_id=1447390163]
+[node name="Model" type="Node3D" parent="." unique_id=1005352569]
 transform = Transform3D(0.12, 0, 0, 0, 0.12, 0, 0, 0, 0.12, 7.748604e-07, 0.39210895, -7.4505806e-07)
 
-[node name="SM_Env_Rock_01" type="MeshInstance3D" parent="Model" unique_id=1590409053 instance=ExtResource("1_d3mt7")]
+[node name="SM_Env_Rock_01" type="MeshInstance3D" parent="Model" unique_id=1454998774 instance=ExtResource("1_d3mt7")]
 gi_mode = 2
 mesh = ExtResource("2_xvm1d")
 surface_material_override/0 = ExtResource("3_vwcll")

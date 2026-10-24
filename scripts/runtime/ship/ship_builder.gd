@@ -86,7 +86,9 @@ func build() -> void:
 					wall.rotation.y += PI  # Face inward
 				geo.add_child(wall)
 				_box_collider(body, edge + Vector3(0, wall_h * 0.5, 0), Vector3(cell if int(dir[0]) == 0 else 0.3, wall_h, 0.3 if int(dir[0]) == 0 else cell))
-				if slot == "ship.wall_window":
+				if slot == "ship.wall_window" and not AssetSlots.scene_path("ship.wall_window").is_empty():
+					pass  # a real window frame: the nebula sky shows through it
+				elif slot == "ship.wall_window":
 					var sky := VisualSlot.make("ship.window_space")
 					sky.position = edge + Vector3(float(dir[0]), 0, float(dir[1])) * 0.4
 					sky.rotation.y = wall.rotation.y
@@ -201,7 +203,22 @@ func _prop_collider(parent: Node3D, pos: Vector3, size: Vector3, yaw: float) -> 
 
 
 ## Emergency (dim red, flicker-free) vs restored (zone colours).
+const ATLAS := "res://art/materials/scifi_space_atlas.tres"
+
+
+## The atlas' painted light strips follow the power: dim amber on emergency power.
+static func set_strip_glow(restored: bool) -> void:
+	if not ResourceLoader.exists(ATLAS):
+		return
+	var m := load(ATLAS) as ShaderMaterial
+	if m:
+		m.set_shader_parameter("glow_tint", Color(1, 1, 1) if restored else Color(1.0, 0.5, 0.1))  # amber: "follow the yellow service lights"
+		m.set_shader_parameter("tint_amount", 0.0 if restored else 1.0)
+		m.set_shader_parameter("glow_energy", 2.4 if restored else 0.9)
+
+
 func set_power(restored: bool) -> void:
+	set_strip_glow(restored)
 	for l: Dictionary in lights:
 		var ol: OmniLight3D = l["light"]
 		if restored:

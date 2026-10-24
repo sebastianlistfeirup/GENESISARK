@@ -2,9 +2,9 @@
 
 [ext_resource type="PackedScene" path="res://assets/Synty/CharactersSrc/City/SK_Character_Junky_Male_01.fbx" id="1_5mbkc"]
 
-[node name="char_citizen_adult" type="Node3D" unique_id=1992063295]
+[node name="char_citizen_adult" type="Node3D" unique_id=1817519894]
 metadata/synty_source = "res://assets/Synty/CharactersSrc/City/SK_Character_Junky_Male_01.fbx"
 metadata/synty_fit = "natural"
 
-[node name="Model" type="Node3D" parent="." unique_id=516740321 instance=ExtResource("1_5mbkc")]
+[node name="Model" type="Node3D" parent="." unique_id=701754575 instance=ExtResource("1_5mbkc")]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0.0029792576, 0.0048777014)

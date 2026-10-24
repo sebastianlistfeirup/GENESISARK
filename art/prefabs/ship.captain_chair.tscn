@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" path="res://assets/Synty/SciFiSpace/FBX/SM_Bld_Bridge_Chair_Captain_01.fbx" id="1_2p4tp"]
 
-[node name="ship_captain_chair" type="Node3D" unique_id=505337740]
+[node name="ship_captain_chair" type="Node3D" unique_id=1862277464]
 metadata/synty_source = "res://assets/Synty/SciFiSpace/FBX/SM_Bld_Bridge_Chair_Captain_01.fbx"
 metadata/synty_fit = "natural"
 

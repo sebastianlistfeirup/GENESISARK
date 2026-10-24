@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" path="res://assets/Synty/SciFiSpace/FBX/SM_Prop_Detail_Pipe_Pillar_01.fbx" id="1_ikx61"]
 
-[node name="ship_pipe" type="Node3D" unique_id=955014919]
+[node name="ship_pipe" type="Node3D" unique_id=1414975679]
 metadata/synty_source = "res://assets/Synty/SciFiSpace/FBX/SM_Prop_Detail_Pipe_Pillar_01.fbx"
 metadata/synty_fit = "natural"
 

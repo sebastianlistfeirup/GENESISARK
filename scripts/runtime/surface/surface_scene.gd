@@ -74,6 +74,7 @@ func _ready() -> void:
 	terrain.build()
 	terrain.scatter(hash(ex.site_id), 70 if GroundCover.spec_for(str(planet.get("id")), "").is_empty() else 0, avoid)
 	add_child(GroundCover.build(terrain, str(planet.get("id")), hash(ex.site_id) + 7, avoid, 180.0, str(planet.get("biome_id"))))
+	add_child(PlanetSky.build(str(planet.get("id")), str(planet.get("biome_id"))))
 	_place_lander()
 	SceneDressing.attach(self, str(site.get("id", "")), terrain)
 	_place_points(pts)
@@ -84,6 +85,9 @@ func _ready() -> void:
 	captain.footstep_slot = "sfx_footstep_soil"
 	captain.wear_helmet = true
 	add_child(captain)
+	var motes := PlanetSky.motes(str(planet.get("id")), str(planet.get("biome_id")))
+	if motes:
+		captain.add_child(motes)
 	captain.teleport(Vector3(4, terrain.height_at(4, 4) + 0.3, 4), PI * 0.25)
 	if str(planet.get("id")) == "umbra":
 		var lamp := SpotLight3D.new()
@@ -184,13 +188,15 @@ func _place_routes() -> void:
 			var steps := int(seg.length() / 4.0)
 			for i: int in steps:
 				var q := prev + seg * (float(i) / maxf(1.0, float(steps)))
+				# A flat glowing chevron on the ground pointing along the route (shape + colour, a11y).
 				var dot := MeshInstance3D.new()
-				var sm := SphereMesh.new()
-				sm.radius = 0.18
-				sm.height = 0.36
-				dot.mesh = sm
-				dot.material_override = AssetSlots.material(col, 1.5)
-				dot.position = _ground(q) + Vector3(0, 0.25, 0)
+				var pm := PrismMesh.new()
+				pm.size = Vector3(0.55, 0.5, 0.05)
+				dot.mesh = pm
+				dot.material_override = AssetSlots.material(col, 2.2)
+				dot.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+				dot.position = _ground(q) + Vector3(0, 0.06, 0)
+				dot.rotation = Vector3(-PI * 0.5, atan2(-seg.x, -seg.y), 0)
 				add_child(dot)
 			prev = p
 		var lbl := Label3D.new()
@@ -379,6 +385,12 @@ func _finish(recalled: bool) -> void:
 
 
 func debug_action(action: String) -> void:
+	if action.begins_with("sky"):  # evidence: look up at the sky bodies (sky / sky:<azimuth deg>)
+		var az := deg_to_rad(float(action.get_slice(":", 1))) if action.contains(":") else 0.0
+		captain.camera_rig.yaw = -az
+		captain.camera_rig.pitch = 0.25
+		captain.camera_rig.snap()
+		return
 	match action:
 		"at_sample":
 			var m: Node3D = _markers.get("main_sample")

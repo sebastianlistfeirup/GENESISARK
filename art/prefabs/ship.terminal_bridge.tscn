@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" path="res://assets/Synty/SciFiSpace/FBX/SM_Prop_ControlPanel_04.fbx" id="1_8c3mi"]
 
-[node name="ship_terminal_bridge" type="Node3D" unique_id=1200749777]
+[node name="ship_terminal_bridge" type="Node3D" unique_id=1733586293]
 metadata/synty_source = "res://assets/Synty/SciFiSpace/FBX/SM_Prop_ControlPanel_04.fbx"
 metadata/synty_fit = "natural"
 
