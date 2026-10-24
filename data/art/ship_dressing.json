@@ -1,5 +1,5 @@
 {
- "_note": "Ship dressing (ShipDresser): props against the walls of each zone, never in doorways, never within keep_clear metres of a marker, and only in a strip along the wall so routes stay open. floor = standing pieces with collision; wall = mounted pieces at height y (no collision). Paths are local Synty FBX; missing files are skipped. chance is per wall edge.",
+ "_note": "Ship dressing (ShipDresser): props against the walls of each zone, never in doorways, never within keep_clear metres of a marker, and only in a strip along the wall so routes stay open. floor = standing pieces with collision (an entry may be a list placed together); wall = mounted pieces at height y (no collision). set_pieces: mesh at cell/yaw, scale (number or [x,y,z]), y, count+step (a row), glass (material for the model's *Glass* meshes), power on/off (shown only with power restored / on emergency power), keep_clear (wall props keep off it), collide. holo_screens: floating procedural screens (cyan with power, red warning on emergency power). ambient: [colour, energy] per power state. ceiling_grade: albedo multiplier for the ceilings. Paths are local Synty FBX or full res:// prefabs; missing files are skipped. chance is per wall edge.",
  "material": "res://art/materials/scifi_space_atlas.tres",
  "prop_material": {
   "_why": "pieces whose painted orange/amber trim the glow atlas would light like a lamp (the wide crate lid read as a glaring floor hatch beside the room W spawn camera): same atlas, strips do not emit and their paint is darkened to 65 %",
@@ -47,14 +47,12 @@
   "E": {
    "chance": 0.95,
    "floor": [
-    "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_Hydroponic_Planter_01.tscn",
-    "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_Hydroponic_Planter_02.tscn",
     "SM_Prop_Plant_Container_01",
-    "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_Hydroponic_Planter_01.tscn",
     "SM_Prop_Medical_Machine_01",
-    "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_Hydroponic_Planter_02.tscn",
     "SM_Prop_Test_Tube_01",
-    "SM_Prop_Plant_Vase_01"
+    "SM_Prop_Plant_Vase_01",
+    "SM_Prop_Plant_Container_01",
+    "SM_Prop_Plant_Vase_02"
    ],
    "wall": [
     [
@@ -232,7 +230,8 @@
     15.75
    ],
    "yaw": 180,
-   "collide": true
+   "collide": true,
+   "glass": "res://art/materials/cryo_glass.tres"
   },
   {
    "mesh": "SM_Bld_Wall_Pods_01",
@@ -241,47 +240,8 @@
     14.6
    ],
    "yaw": 90,
-   "collide": true
-  },
-  {
-   "mesh": "SM_Prop_Chr_Male_Cryo_01",
-   "cell": [
-    12.6,
-    14.2
-   ],
-   "yaw": 270,
-   "y": 0.25
-  },
-  {
-   "mesh": "SM_Prop_Test_Tube_02",
-   "cell": [
-    12.6,
-    14.2
-   ],
-   "yaw": 0,
-   "scale": 3.4,
-   "material": "res://art/materials/embryo_glass.tres",
-   "collide": true
-  },
-  {
-   "mesh": "SM_Prop_Chr_Female_Cryo_01",
-   "cell": [
-    12.6,
-    14.9
-   ],
-   "yaw": 270,
-   "y": 0.25
-  },
-  {
-   "mesh": "SM_Prop_Test_Tube_02",
-   "cell": [
-    12.6,
-    14.9
-   ],
-   "yaw": 0,
-   "scale": 3.4,
-   "material": "res://art/materials/embryo_glass.tres",
-   "collide": true
+   "collide": true,
+   "glass": "res://art/materials/cryo_glass.tres"
   },
   {
    "mesh": "SM_Bld_Bridge_Console_02",
@@ -393,6 +353,461 @@
    "yaw": 0,
    "y": 1.5,
    "scale": 3.0
+  },
+  {
+   "mesh": "SM_Prop_Chr_Male_Cryo_01",
+   "cell": [
+    10.29,
+    15.71
+   ],
+   "yaw": 180,
+   "y": 1.25
+  },
+  {
+   "mesh": "SM_Prop_Chr_Female_Cryo_02",
+   "cell": [
+    10.6,
+    15.71
+   ],
+   "yaw": 180,
+   "y": 1.25
+  },
+  {
+   "mesh": "SM_Prop_Chr_Male_Cryo_02",
+   "cell": [
+    10.91,
+    15.71
+   ],
+   "yaw": 180,
+   "y": 1.25
+  },
+  {
+   "mesh": "SM_Prop_Chr_Female_Cryo_01",
+   "cell": [
+    9.29,
+    14.91
+   ],
+   "yaw": 90,
+   "y": 1.25
+  },
+  {
+   "mesh": "SM_Prop_Chr_Male_Cryo_01",
+   "cell": [
+    9.29,
+    14.29
+   ],
+   "yaw": 90,
+   "y": 1.25
+  },
+  {
+   "mesh": "SM_Prop_Medical_Tube_01",
+   "cell": [
+    12.72,
+    13.7
+   ],
+   "count": 3,
+   "step": [
+    0,
+    0.7
+   ],
+   "yaw": 270,
+   "glass": "res://art/materials/cryo_glass.tres",
+   "collide": true,
+   "keep_clear": true
+  },
+  {
+   "mesh": "SM_Prop_Chr_Female_Cryo_02",
+   "cell": [
+    12.72,
+    13.7
+   ],
+   "yaw": 270,
+   "y": 0.7
+  },
+  {
+   "mesh": "SM_Prop_Chr_Male_Cryo_02",
+   "cell": [
+    12.72,
+    14.4
+   ],
+   "yaw": 270,
+   "y": 0.7
+  },
+  {
+   "mesh": "SM_Env_Rubble_Pebbles_01",
+   "cell": [
+    12.35,
+    15.1
+   ],
+   "yaw": 40,
+   "center": false
+  },
+  {
+   "mesh": "SM_Prop_Bed_Medical_01",
+   "cell": [
+    11.85,
+    15.3
+   ],
+   "yaw": 90,
+   "collide": true,
+   "keep_clear": true
+  },
+  {
+   "mesh": "SM_Prop_Medical_Scanner_01",
+   "cell": [
+    11.85,
+    15.3
+   ],
+   "yaw": 90,
+   "collide": false
+  },
+  {
+   "mesh": "SM_Prop_MedicalArms_01",
+   "cell": [
+    11.6,
+    15.3
+   ],
+   "yaw": 90,
+   "y": 3.55,
+   "center": false
+  },
+  {
+   "mesh": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_Hydroponic_Planter_02.tscn",
+   "cell": [
+    3.165,
+    7.9
+   ],
+   "count": 3,
+   "step": [
+    0,
+    0.6
+   ],
+   "yaw": 0,
+   "y": 0.0,
+   "scale": 0.9,
+   "center": false,
+   "keep_clear": true
+  },
+  {
+   "mesh": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_Hydroponic_Planter_02_Insert_01.tscn",
+   "cell": [
+    3.165,
+    7.9
+   ],
+   "count": 3,
+   "step": [
+    0,
+    0.6
+   ],
+   "yaw": 0,
+   "y": 0.0,
+   "scale": 0.9,
+   "center": false,
+   "keep_clear": false
+  },
+  {
+   "mesh": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_Hydroponic_Planter_02.tscn",
+   "cell": [
+    3.165,
+    7.9
+   ],
+   "count": 3,
+   "step": [
+    0,
+    0.6
+   ],
+   "yaw": 0,
+   "y": 1.755,
+   "scale": 0.9,
+   "center": false,
+   "keep_clear": false
+  },
+  {
+   "mesh": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_Hydroponic_Planter_02_Insert_01.tscn",
+   "cell": [
+    3.165,
+    7.9
+   ],
+   "count": 3,
+   "step": [
+    0,
+    0.6
+   ],
+   "yaw": 0,
+   "y": 1.755,
+   "scale": 0.9,
+   "center": false,
+   "keep_clear": false
+  },
+  {
+   "mesh": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_Hydroponic_Planter_02.tscn",
+   "cell": [
+    11.835,
+    7.9
+   ],
+   "count": 3,
+   "step": [
+    0,
+    0.6
+   ],
+   "yaw": 0,
+   "y": 0.0,
+   "scale": 0.9,
+   "center": false,
+   "keep_clear": true
+  },
+  {
+   "mesh": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_Hydroponic_Planter_02_Insert_01.tscn",
+   "cell": [
+    11.835,
+    7.9
+   ],
+   "count": 3,
+   "step": [
+    0,
+    0.6
+   ],
+   "yaw": 0,
+   "y": 0.0,
+   "scale": 0.9,
+   "center": false,
+   "keep_clear": false
+  },
+  {
+   "mesh": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_Hydroponic_Planter_02.tscn",
+   "cell": [
+    11.835,
+    7.9
+   ],
+   "count": 3,
+   "step": [
+    0,
+    0.6
+   ],
+   "yaw": 0,
+   "y": 1.755,
+   "scale": 0.9,
+   "center": false,
+   "keep_clear": false
+  },
+  {
+   "mesh": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_Hydroponic_Planter_02_Insert_01.tscn",
+   "cell": [
+    11.835,
+    7.9
+   ],
+   "count": 3,
+   "step": [
+    0,
+    0.6
+   ],
+   "yaw": 0,
+   "y": 1.755,
+   "scale": 0.9,
+   "center": false,
+   "keep_clear": false
+  },
+  {
+   "mesh": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_Hydroponic_Planter_01.tscn",
+   "cell": [
+    4.9,
+    8.5
+   ],
+   "yaw": 90,
+   "center": false,
+   "collide": true,
+   "keep_clear": true
+  },
+  {
+   "mesh": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_Hydroponic_Plant_01.tscn",
+   "cell": [
+    4.58,
+    8.5
+   ],
+   "count": 2,
+   "step": [
+    0.64,
+    0
+   ],
+   "yaw": 0,
+   "y": 0.5,
+   "center": false
+  },
+  {
+   "mesh": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_Hydroponic_Plant_02.tscn",
+   "cell": [
+    4.9,
+    8.5
+   ],
+   "yaw": 90,
+   "y": 0.5,
+   "center": false
+  },
+  {
+   "mesh": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_Hydroponic_Planter_01.tscn",
+   "cell": [
+    10.1,
+    8.5
+   ],
+   "yaw": 90,
+   "center": false,
+   "collide": true,
+   "keep_clear": true
+  },
+  {
+   "mesh": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_Hydroponic_Plant_01.tscn",
+   "cell": [
+    9.78,
+    8.5
+   ],
+   "count": 2,
+   "step": [
+    0.64,
+    0
+   ],
+   "yaw": 0,
+   "y": 0.5,
+   "center": false
+  },
+  {
+   "mesh": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_Hydroponic_Plant_02.tscn",
+   "cell": [
+    10.1,
+    8.5
+   ],
+   "yaw": 90,
+   "y": 0.5,
+   "center": false
+  },
+  {
+   "mesh": "SM_Veh_EscapePod_Large_01",
+   "cell": [
+    7.15,
+    14.45
+   ],
+   "yaw": 270,
+   "collide": true,
+   "keep_clear": true
+  },
+  {
+   "mesh": "SM_Bld_Wall_EscPod_Hatch_01",
+   "cell": [
+    7.88,
+    14.45
+   ],
+   "yaw": 270,
+   "scale": 0.72,
+   "keep_clear": true
+  },
+  {
+   "mesh": "SM_Veh_Drone_Repair_01",
+   "cell": [
+    4.9,
+    14.2
+   ],
+   "yaw": 25,
+   "y": 2.7,
+   "scale": 0.78,
+   "center": false
+  },
+  {
+   "mesh": "SM_Prop_Crate_02",
+   "cell": [
+    3.95,
+    15.6
+   ],
+   "yaw": 90,
+   "collide": true,
+   "keep_clear": true
+  },
+  {
+   "mesh": "SM_Prop_Crate_01",
+   "cell": [
+    3.95,
+    15.6
+   ],
+   "yaw": 10,
+   "y": 0.39
+  },
+  {
+   "mesh": "SM_Bld_Wall_EscPod_Hatch_01",
+   "cell": [
+    1.12,
+    7.5
+   ],
+   "count": 2,
+   "step": [
+    0,
+    2.0
+   ],
+   "yaw": 90,
+   "scale": 0.72,
+   "collide": true,
+   "keep_clear": true
+  },
+  {
+   "mesh": "SM_Bld_Wall_EscPod_Hatch_01",
+   "cell": [
+    13.88,
+    7.5
+   ],
+   "count": 2,
+   "step": [
+    0,
+    2.0
+   ],
+   "yaw": 270,
+   "scale": 0.72,
+   "collide": true,
+   "keep_clear": true
+  },
+  {
+   "mesh": "SM_Prop_ControlPanel_04",
+   "cell": [
+    5.35,
+    2.75
+   ],
+   "yaw": 0,
+   "collide": true,
+   "keep_clear": true
+  },
+  {
+   "mesh": "SM_Bld_Bridge_Chair_01",
+   "cell": [
+    5.13,
+    3.22
+   ],
+   "count": 2,
+   "step": [
+    0.44,
+    0
+   ],
+   "yaw": 180,
+   "collide": true
+  },
+  {
+   "mesh": "SM_Prop_ControlPanel_04",
+   "cell": [
+    10.6,
+    2.75
+   ],
+   "yaw": 0,
+   "collide": true,
+   "keep_clear": true
+  },
+  {
+   "mesh": "SM_Bld_Bridge_Chair_01",
+   "cell": [
+    10.379999999999999,
+    3.22
+   ],
+   "count": 2,
+   "step": [
+    0.44,
+    0
+   ],
+   "yaw": 180,
+   "collide": true
   }
  ],
  "door_signs": {
@@ -434,7 +849,189 @@
    ".",
    "W",
    "C",
-   "E"
+   "E",
+   "B"
   ]
- }
+ },
+ "ambient": {
+  "_why": "emergency power must read as a dead ship: darker shade so the red lamps, amber strips and red warning screens carry the light",
+  "power": [
+   "#5a3f6e",
+   0.75
+  ],
+  "emergency": [
+   "#3a2648",
+   0.6
+  ]
+ },
+ "ceiling_grade": "#6f5f7c",
+ "holo_screens": [
+  {
+   "cell": [
+    7.5,
+    1.12
+   ],
+   "y": 2.35,
+   "size": [
+    2.6,
+    1.1
+   ],
+   "color": "#3ff2ff"
+  },
+  {
+   "cell": [
+    3.0,
+    1.3
+   ],
+   "y": 2.2,
+   "size": [
+    1.2,
+    0.7
+   ],
+   "tilt": -8,
+   "color": "#3ff2ff"
+  },
+  {
+   "cell": [
+    5.05,
+    1.3
+   ],
+   "y": 2.2,
+   "size": [
+    1.2,
+    0.7
+   ],
+   "tilt": -8,
+   "color": "#3ff2ff"
+  },
+  {
+   "cell": [
+    9.95,
+    1.3
+   ],
+   "y": 2.2,
+   "size": [
+    1.2,
+    0.7
+   ],
+   "tilt": -8,
+   "color": "#3ff2ff"
+  },
+  {
+   "cell": [
+    12.0,
+    1.3
+   ],
+   "y": 2.2,
+   "size": [
+    1.2,
+    0.7
+   ],
+   "tilt": -8,
+   "color": "#3ff2ff"
+  },
+  {
+   "cell": [
+    5.1,
+    2.66
+   ],
+   "y": 1.75,
+   "size": [
+    0.95,
+    0.55
+   ],
+   "tilt": -12,
+   "color": "#5ffcff"
+  },
+  {
+   "cell": [
+    5.6,
+    2.66
+   ],
+   "y": 1.75,
+   "size": [
+    0.95,
+    0.55
+   ],
+   "tilt": -12,
+   "color": "#5ffcff"
+  },
+  {
+   "cell": [
+    10.35,
+    2.66
+   ],
+   "y": 1.75,
+   "size": [
+    0.95,
+    0.55
+   ],
+   "tilt": -12,
+   "color": "#5ffcff"
+  },
+  {
+   "cell": [
+    10.85,
+    2.66
+   ],
+   "y": 1.75,
+   "size": [
+    0.95,
+    0.55
+   ],
+   "tilt": -12,
+   "color": "#5ffcff"
+  },
+  {
+   "cell": [
+    4.9,
+    8.25
+   ],
+   "y": 1.95,
+   "size": [
+    1.1,
+    0.6
+   ],
+   "tilt": -8,
+   "color": "#5affc8"
+  },
+  {
+   "cell": [
+    10.1,
+    8.25
+   ],
+   "y": 1.95,
+   "size": [
+    1.1,
+    0.6
+   ],
+   "tilt": -8,
+   "color": "#5affc8"
+  },
+  {
+   "cell": [
+    11.85,
+    15.05
+   ],
+   "y": 2.05,
+   "size": [
+    0.95,
+    0.55
+   ],
+   "color": "#8fd8ff"
+  },
+  {
+   "cell": [
+    5.0,
+    15.2
+   ],
+   "y": 1.85,
+   "size": [
+    1.2,
+    0.65
+   ],
+   "tilt": -10,
+   "color": "#ffc27a"
+  }
+ ]
 }

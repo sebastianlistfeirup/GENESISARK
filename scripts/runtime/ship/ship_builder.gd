@@ -24,6 +24,8 @@ var origin := Vector3.ZERO
 var markers: Array = []
 var lights: Array = []          # [{light: OmniLight3D, zone: String}]
 var interact_markers: Array = []  # [{id, slot, pos, yaw}]
+var power_nodes: Array = []     # [{node, on: bool} | {node, screen: true}]: dressing that follows the ship's power
+var ambient: Dictionary = {}    # ship_dressing.json "ambient": {power: [hex, energy], emergency: [hex, energy]}
 var spawn := Vector3.ZERO
 var spawn_yaw := 0.0
 var embryo_display_pos := Vector3.ZERO
@@ -36,6 +38,8 @@ func build() -> void:
 		c.queue_free()
 	lights.clear()
 	interact_markers.clear()
+	power_nodes.clear()
+	_graded.clear()
 	var d: Variant = DictUtil.load_json(LAYOUT)
 	if not d is Dictionary:
 		push_error("ShipBuilder: kan ikke læse %s" % LAYOUT)
@@ -45,6 +49,9 @@ func build() -> void:
 	rows = DictUtil.get_arr(d, "rows")
 	zones = DictUtil.get_dict(d, "zones")
 	markers = DictUtil.get_arr(d, "markers")
+	var dressing: Variant = DictUtil.load_json(ShipDresser.PATH)
+	ambient = DictUtil.get_dict(dressing, "ambient") if dressing is Dictionary else {}
+	var ceil_mat := _graded_atlas(str(dressing.get("ceiling_grade", "")) if dressing is Dictionary else "")
 	var w := str(rows[0]).length()
 	origin = Vector3(-w * cell * 0.5, 0, -rows.size() * cell * 0.5)
 	var windows := {}
@@ -72,6 +79,9 @@ func build() -> void:
 			var ceil_slot := VisualSlot.make("ship.ceiling")
 			ceil_slot.position = center + Vector3(0, wall_h, 0)
 			geo.add_child(ceil_slot)
+			if ceil_mat:
+				for mi: Node in ceil_slot.find_children("*", "MeshInstance3D", true, false):
+					(mi as MeshInstance3D).material_override = ceil_mat
 			for dir: Array in [[0, -1, "north"], [0, 1, "south"], [-1, 0, "west"], [1, 0, "east"]]:
 				var nz := _zone(c + int(dir[0]), r + int(dir[1]))
 				var needs := nz == "#" or (nz != z and z != "D" and nz != "D")
@@ -203,15 +213,36 @@ func _prop_collider(parent: Node3D, pos: Vector3, size: Vector3, yaw: float) -> 
 
 
 ## Emergency (dim red, flicker-free) vs restored (zone colours).
+const EMERGENCY_ENERGY := 1.15  # red pools strong enough to carry the darker emergency shade
 const ATLAS := "res://art/materials/scifi_space_atlas.tres"
+
+
+static var _graded: Array[ShaderMaterial] = []  # graded copies of the atlas (ceiling) that follow the power too
+
+
+## The ceilings sat right above the lamps and filled every wide shot flat pale grey:
+## a darker graded copy of the atlas (albedo_mul), still glowing with the power.
+func _graded_atlas(hex: String) -> ShaderMaterial:
+	if hex.is_empty() or not ResourceLoader.exists(ATLAS):
+		return null
+	var base := load(ATLAS) as ShaderMaterial
+	if base == null:
+		return null
+	var m := base.duplicate() as ShaderMaterial
+	m.set_shader_parameter("albedo_mul", Color(hex))
+	_graded.append(m)
+	return m
 
 
 ## The atlas' painted light strips follow the power: dim amber on emergency power.
 static func set_strip_glow(restored: bool) -> void:
 	if not ResourceLoader.exists(ATLAS):
 		return
-	var m := load(ATLAS) as ShaderMaterial
-	if m:
+	var all: Array[ShaderMaterial] = [load(ATLAS) as ShaderMaterial]
+	all.append_array(_graded)
+	for m: ShaderMaterial in all:
+		if m == null:
+			continue
 		m.set_shader_parameter("glow_tint", Color(1, 1, 1) if restored else Color(1.0, 0.5, 0.1))  # amber: "follow the yellow service lights"
 		m.set_shader_parameter("tint_amount", 0.0 if restored else 1.0)
 		m.set_shader_parameter("glow_energy", 2.4 if restored else 0.9)
@@ -236,8 +267,22 @@ func set_power(restored: bool) -> void:
 			ol.light_energy = 2.1
 		else:
 			ol.light_color = Color("c0392b") if l["zone"] != "." else Color("e8a33d")
-			ol.light_energy = 0.7 if (lights.find(l) % 2 == 0 or l["zone"] == ".") else 0.0
+			ol.light_energy = EMERGENCY_ENERGY if (lights.find(l) % 2 == 0 or l["zone"] == ".") else 0.0
 		(l["lamp"] as Node3D).visible = restored
+	for p: Dictionary in power_nodes:
+		var n: Node3D = p["node"]
+		if not is_instance_valid(n):
+			continue
+		if p.has("screen"):
+			(n as HoloScreen).set_powered(restored)
+		else:
+			n.visible = restored == bool(p["on"])
+
+
+## Ambient light for the power state (ship_dressing.json "ambient"): darker on emergency power.
+func ambient_for(restored: bool) -> Array:
+	var a: Array = DictUtil.get_arr(ambient, "power" if restored else "emergency")
+	return [Color(str(a[0])), float(a[1])] if a.size() == 2 else []
 
 
 func _process(delta: float) -> void:
@@ -247,4 +292,4 @@ func _process(delta: float) -> void:
 	for i: int in _flicker.size():
 		var ol: OmniLight3D = _flicker[i]
 		var n := sin(_flicker_t * 23.0 + i * 7.0) + sin(_flicker_t * 37.0 + i * 3.0)
-		ol.light_energy = 0.0 if n > 1.55 else 0.7
+		ol.light_energy = 0.0 if n > 1.55 else EMERGENCY_ENERGY
