@@ -15,6 +15,7 @@ S = lambda n: N + "Swamp/FBX/" + n + ".fbx"
 A = lambda n: N + "Alpine/FBX/Environment/" + n + ".fbx"
 R = lambda n: N + "Arid/FBX/" + n + ".fbx"
 Wp = lambda n: W + n + ".tscn"
+SS = lambda n: "res://assets/Synty/SciFiSpace/FBX/" + n + ".fbx"
 
 
 def c(mesh, count, s=(0.8, 1.3), cluster=5, **kw):
@@ -27,8 +28,12 @@ def t(meshes, count, s=(0.8, 1.3), radius=0.5, cluster=1):
     return {"meshes": meshes, "count": count, "scale": list(s), "radius": radius, "cluster": cluster}
 
 
-def lm(meshes, count, s=(1, 1.4), ring=(70, 86)):
-    return {"meshes": meshes, "count": count, "scale": list(s), "ring": list(ring)}
+def lm(meshes, count, s=(1, 1.4), ring=(70, 86), tilt=0, sink=0.06):
+    d = {"meshes": meshes, "count": count, "scale": list(s), "ring": list(ring)}
+    if tilt:
+        d["tilt"] = tilt  # crashed wrecks: random roll/pitch up to this many degrees
+        d["sink"] = sink  # fraction of the height buried
+    return d
 
 
 PLANETS = {
@@ -80,7 +85,7 @@ PLANETS = {
                   c(R("Props/SM_Prop_Bones_03"), 25, (0.8, 1.2), 2), c(R("Props/SM_Prop_Bones_06"), 20, (0.8, 1.2), 2),
                   c(R("Environment/SM_Env_Sulphur_Blob_01"), 30, (0.6, 1.0), 3), c(Wp("SM_Env_Floating_Crystal_01"), 30, (0.05, 0.1), 3, emissive="#ffb35a"),
                   c(R("Environment/SM_Env_GroundCover_02"), 200, (0.9, 1.4), 6)],
-        "landmarks": [
+        "landmarks": [lm([SS("SM_Ship_Bomber_02")], 1, (0.55, 0.65), (58, 72), 14, 0.3), lm([SS("SM_Ship_Fighter_Heavy_01")], 2, (0.75, 0.9), (52, 70), 22, 0.28), 
                       lm([Wp("SM_Env_Skeleton_Preset_01"), Wp("SM_Env_Skeleton_Preset_03")], 2, (0.1, 0.13), (72, 86)), lm([Wp("SM_Env_Artifact_Head_01"), Wp("SM_Env_Artifact_AlienRuin_06")], 4, (0.9, 1.2), (76, 88)), lm([R("Environment/SM_Env_Rock_Cliff_05"), R("Environment/SM_Env_Rock_Cliff_06"), R("Environment/SM_Env_Rock_Cliff_10"),
                           R("Environment/SM_Env_Rock_Cliff_14"), R("Environment/SM_Env_Rock_Arch_01")], 26, (1.6, 2.6))],
     },
@@ -96,7 +101,7 @@ PLANETS = {
                   c(R("Environment/SM_Env_Succulent_05"), 100, (0.8, 1.3), 4), c(R("Environment/SM_Env_GroundCover_01"), 220, (0.9, 1.4), 6),
                   c(R("Environment/SM_Env_Rock_Pebbles_04"), 200, (0.8, 1.3), 6), c(R("Environment/SM_Env_Bush_Bramble_02"), 60, (0.7, 1.1), 3),
                   c(R("Props/SM_Prop_Bones_01"), 12, (0.9, 1.2), 1)],
-        "landmarks": [
+        "landmarks": [lm([SS("SM_Ship_Cruiser_01")], 1, (0.55, 0.65), (58, 70), 12, 0.32), lm([SS("SM_Ship_Transport_01")], 1, (0.2, 0.24), (76, 86), 9, 0.35), 
                       lm([Wp("SM_Env_Skeleton_Preset_02"), Wp("SM_Env_Skeleton_Preset_04")], 2, (0.18, 0.24), (70, 84)), lm([Wp("SM_Env_Artifact_AlienRuin_05"), Wp("SM_Env_Artifact_Arm_01")], 3, (0.9, 1.3), (74, 88)), lm([R("Environment/SM_Env_Backrgound_Hill_01"), R("Environment/SM_Env_Backrgound_Hill_02"), R("Environment/SM_Env_Backrgound_Hill_03")], 10, (0.8, 1.2), (84, 96)),
                       lm([R("Environment/SM_Env_Rock_Arch_Half_01"), R("Environment/SM_Env_Rock_Arch_01"), R("Environment/SM_Env_Rock_Cliff_08")], 10, (0.7, 1.1), (62, 84))],
     },

@@ -722,6 +722,38 @@
   "landmarks": [
    {
     "meshes": [
+     "res://assets/Synty/SciFiSpace/FBX/SM_Ship_Bomber_02.fbx"
+    ],
+    "count": 1,
+    "scale": [
+     0.55,
+     0.65
+    ],
+    "ring": [
+     58,
+     72
+    ],
+    "tilt": 14,
+    "sink": 0.3
+   },
+   {
+    "meshes": [
+     "res://assets/Synty/SciFiSpace/FBX/SM_Ship_Fighter_Heavy_01.fbx"
+    ],
+    "count": 2,
+    "scale": [
+     0.75,
+     0.9
+    ],
+    "ring": [
+     52,
+     70
+    ],
+    "tilt": 22,
+    "sink": 0.28
+   },
+   {
+    "meshes": [
      "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Skeleton_Preset_01.tscn",
      "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Skeleton_Preset_03.tscn"
     ],
@@ -894,6 +926,38 @@
    }
   ],
   "landmarks": [
+   {
+    "meshes": [
+     "res://assets/Synty/SciFiSpace/FBX/SM_Ship_Cruiser_01.fbx"
+    ],
+    "count": 1,
+    "scale": [
+     0.55,
+     0.65
+    ],
+    "ring": [
+     58,
+     70
+    ],
+    "tilt": 12,
+    "sink": 0.32
+   },
+   {
+    "meshes": [
+     "res://assets/Synty/SciFiSpace/FBX/SM_Ship_Transport_01.fbx"
+    ],
+    "count": 1,
+    "scale": [
+     0.2,
+     0.24
+    ],
+    "ring": [
+     76,
+     86
+    ],
+    "tilt": 9,
+    "sink": 0.35
+   },
    {
     "meshes": [
      "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Skeleton_Preset_02.tscn",

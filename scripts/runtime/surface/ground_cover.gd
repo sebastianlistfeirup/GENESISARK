@@ -130,6 +130,7 @@ static func build(terrain: Node3D, key: String, seed_value: int, avoid: Array, s
 			mmi.material_override = em
 		root.add_child(mmi)
 	# Landmarks: big silhouettes in an outer ring (no collision: beyond the playable edge).
+	var taken: Array = []  # [centre, radius] of placed landmarks: earlier entries win, nothing interpenetrates
 	for item: Variant in DictUtil.get_arr(spec, "landmarks"):
 		var it: Dictionary = item
 		var srcs: Array = []
@@ -150,8 +151,9 @@ static func build(terrain: Node3D, key: String, seed_value: int, avoid: Array, s
 			var src: Array = srcs[rng.randi() % srcs.size()]
 			var s := rng.randf_range(float(sc[0]), float(sc[1])) if sc.size() == 2 else 1.0
 			var reach := maxf((src[2] as AABB).size.x, (src[2] as AABB).size.z) * s * 0.5
-			if _blocked(p, avoid, reach + 6.0):
-				continue  # never over a site, route or colony district
+			if _blocked(p, avoid, reach + 6.0) or _blocked(p, taken, reach * 0.7):
+				continue  # never over a site, route or colony district, nor inside another landmark
+			taken.append([p, reach * 0.7])
 			var mi := MeshInstance3D.new()
 			mi.mesh = src[0]
 			# Anchor by the mesh's own base, on the LOWEST ground under its footprint, sunk a
@@ -162,8 +164,19 @@ static func build(terrain: Node3D, key: String, seed_value: int, avoid: Array, s
 			for k: int in 9:
 				var qq := p + (Vector2.from_angle(TAU * k / 8.0) * half_w if k < 8 else Vector2.ZERO)
 				lo = minf(lo, float(terrain.call("height_at", clampf(qq.x, -size_m * 0.49, size_m * 0.49), clampf(qq.y, -size_m * 0.49, size_m * 0.49))))
-			var y := lo - box.position.y * s - box.size.y * s * 0.06
-			mi.transform = Transform3D(Basis(Vector3.UP, rng.randf() * TAU).scaled(Vector3.ONE * s), Vector3(p.x, y, p.y)) * (src[1] as Transform3D)
+			var y := lo - box.position.y * s - box.size.y * s * DictUtil.get_float(it, "sink", 0.06)
+			var basis := Basis(Vector3.UP, rng.randf() * TAU)
+			var tilt := deg_to_rad(DictUtil.get_float(it, "tilt", 0.0))
+			if tilt > 0.0:  # a crashed wreck: nose ploughed in, rolled onto one side
+				basis = basis * Basis.from_euler(Vector3(rng.randf_range(0.4, 1.0) * tilt, 0.0, rng.randf_range(-1.0, 1.0) * tilt))
+				var live := (src[0] as Mesh).surface_get_material(0)
+				if live is ShaderMaterial:  # dead hull: power strips long gone, sand-scoured paint
+					var dead := (live as ShaderMaterial).duplicate() as ShaderMaterial
+					dead.set_shader_parameter("glow_energy", 0.12)
+					dead.set_shader_parameter("roughness", 0.9)
+					dead.set_shader_parameter("metallic", 0.05)
+					mi.material_override = dead
+			mi.transform = Transform3D(basis.scaled(Vector3.ONE * s), Vector3(p.x, y, p.y)) * (src[1] as Transform3D)
 			mi.visibility_range_end = 600.0
 			root.add_child(mi)
 	_cliffs(root, terrain, DictUtil.get_arr(spec, "cliffs"), rng, size_m)
@@ -237,9 +250,10 @@ static func _mesh_of(path: String) -> Array:
 			if mi == null or mi.mesh == null or not mi.visible:
 				continue
 			var mesh := mi.mesh.duplicate() as Mesh
+			var atlas: Material = load("res://art/materials/scifi_space_atlas.tres") if path.contains("/SciFiSpace/") and ResourceLoader.exists("res://art/materials/scifi_space_atlas.tres") else null
 			if mesh is ArrayMesh:
 				for s: int in mesh.get_surface_count():
-					var mat := mi.get_surface_override_material(s)
+					var mat := atlas if atlas else mi.get_surface_override_material(s)
 					if mat:
 						(mesh as ArrayMesh).surface_set_material(s, mat)
 			var local := Transform3D.IDENTITY
