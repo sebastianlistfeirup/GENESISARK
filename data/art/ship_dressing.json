@@ -1,6 +1,10 @@
 {
  "_note": "Ship dressing (ShipDresser): props against the walls of each zone, never in doorways, never within keep_clear metres of a marker, and only in a strip along the wall so routes stay open. floor = standing pieces with collision; wall = mounted pieces at height y (no collision). Paths are local Synty FBX; missing files are skipped. chance is per wall edge.",
  "material": "res://art/materials/scifi_space_atlas.tres",
+ "prop_material": {
+  "_why": "pieces whose painted orange/amber trim the glow atlas would light like a lamp (the wide crate lid read as a glaring floor hatch beside the room W spawn camera): same atlas, strips do not emit and their paint is darkened to 65 %",
+  "SM_Prop_Crate_Wide_01": "res://art/materials/scifi_space_atlas_dim.tres"
+ },
  "keep_clear": 2.6,
  "inset": 1.05,
  "zones": {

@@ -21,6 +21,11 @@ static func dress(b: ShipBuilder) -> Node3D:
 		return root
 	var mat_path := str(doc.get("material", ""))
 	var mat: Material = load(mat_path) if ResourceLoader.exists(mat_path) else null
+	var prop_mats: Dictionary = {}  # per-prop material (e.g. the dim-strip atlas for painted trim)
+	var pmd: Dictionary = DictUtil.get_dict(doc, "prop_material")
+	for k: String in pmd.keys():
+		if not k.begins_with("_") and ResourceLoader.exists(str(pmd[k])):
+			prop_mats[k] = load(str(pmd[k]))
 	var keep := DictUtil.get_float(doc, "keep_clear", 2.6)
 	var inset := DictUtil.get_float(doc, "inset", 0.75)
 	var zones: Dictionary = DictUtil.get_dict(doc, "zones")
@@ -60,13 +65,14 @@ static func dress(b: ShipBuilder) -> Node3D:
 					continue
 				var floors: Array = DictUtil.get_arr(spec, "floor")
 				if not floors.is_empty():
-					var inst := _place(root, str(floors[h % floors.size()]), floor_pt, yaw, mat)
+					var fname := str(floors[h % floors.size()])
+					var inst := _place(root, fname, floor_pt, yaw, prop_mats.get(fname, mat))
 					if inst:
 						_collide(body, inst)
 				var walls: Array = DictUtil.get_arr(spec, "wall")
 				if not walls.is_empty() and (h / 7) % 2 == 0:
 					var w: Array = walls[(h / 13) % walls.size()]
-					_place(root, str(w[0]), wall_pt - outward * 0.45 - along * slide * 0.6 + Vector3(0, float(w[1]), 0), yaw, mat)
+					_place(root, str(w[0]), wall_pt - outward * 0.45 - along * slide * 0.6 + Vector3(0, float(w[1]), 0), yaw, prop_mats.get(str(w[0]), mat))
 	# Set pieces at fixed cells (bridge crew stations, cryo wall pods, sleepers in tubes).
 	for sp: Variant in DictUtil.get_arr(doc, "set_pieces"):
 		var d: Dictionary = sp
@@ -74,7 +80,7 @@ static func dress(b: ShipBuilder) -> Node3D:
 		if cell.size() != 2:
 			continue
 		var pos := b.cell_to_world(float(cell[0]), float(cell[1])) + Vector3(0, DictUtil.get_float(d, "y"), 0)
-		var pm: Material = mat
+		var pm: Material = prop_mats.get(str(d.get("mesh", "")), mat)
 		if d.has("material"):
 			pm = load(str(d["material"])) if ResourceLoader.exists(str(d["material"])) else mat
 		var inst := _place(root, str(d.get("mesh", "")), pos, deg_to_rad(DictUtil.get_float(d, "yaw")), pm)
