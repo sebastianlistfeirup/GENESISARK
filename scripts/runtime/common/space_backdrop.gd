@@ -11,11 +11,17 @@ extends Node3D
 func _ready() -> void:
 	var env := WorldEnvironment.new()
 	var e := Environment.new()
-	e.background_mode = Environment.BG_COLOR
-	e.background_color = Color("03060b")
+	# Painted nebula sky (art/shaders/nebula_sky.gdshader), varied per seed.
+	var sky_mat := ShaderMaterial.new()
+	sky_mat.shader = preload("res://art/shaders/nebula_sky.gdshader")
+	sky_mat.set_shader_parameter("seed", float(seed_value % 97))
+	var sky := Sky.new()
+	sky.sky_material = sky_mat
+	e.background_mode = Environment.BG_SKY
+	e.sky = sky
 	e.ambient_light_source = Environment.AMBIENT_SOURCE_COLOR
-	e.ambient_light_color = Color("2a3a4a")
-	e.ambient_light_energy = 0.6
+	e.ambient_light_color = Color("5a4a7a")
+	e.ambient_light_energy = 0.7
 	e.tonemap_mode = Environment.TONE_MAPPER_FILMIC
 	e.glow_enabled = true
 	e.glow_intensity = 0.8
@@ -52,5 +58,12 @@ func _ready() -> void:
 	var sun := DirectionalLight3D.new()
 	sun.rotation_degrees = Vector3(-25, -40, 0)
 	sun.light_color = Color("ffe2b8")
-	sun.light_energy = 1.4
+	sun.light_energy = 1.6
 	add_child(sun)
+	# Cool violet fill from the other side: the two-tone rim of the key art.
+	var fill := DirectionalLight3D.new()
+	fill.rotation_degrees = Vector3(15, 140, 0)
+	fill.light_color = Color("8a6cff")
+	fill.light_energy = 0.7
+	fill.sky_mode = DirectionalLight3D.SKY_MODE_LIGHT_ONLY
+	add_child(fill)
