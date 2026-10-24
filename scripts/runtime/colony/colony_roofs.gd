@@ -142,8 +142,8 @@ static func _triangles(view: BuildingView) -> PackedVector3Array:
 	var inv := view.global_transform.affine_inverse() if view.is_inside_tree() else Transform3D.IDENTITY
 	for n: Node in vis.find_children("*", "MeshInstance3D", true, false):
 		var mi := n as MeshInstance3D
-		if mi.mesh == null or not mi.is_inside_tree():
-			continue
+		if mi.mesh == null or not mi.is_inside_tree() or mi.cast_shadow == GeometryInstance3D.SHADOW_CASTING_SETTING_SHADOWS_ONLY:
+			continue  # shadow twins (D-054) repeat their piece
 		var xf := inv * mi.global_transform
 		for v: Vector3 in mi.mesh.get_faces():
 			out.append(xf * v)

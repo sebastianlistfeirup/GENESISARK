@@ -51,7 +51,7 @@ static func parts(short: String) -> Dictionary:
 			var mi := n as MeshInstance3D
 			if mi == null or mi.mesh == null or not mi.visible:
 				continue
-			var mesh := mi.mesh
+			var mesh := MeshLod.lodded(mi.mesh)  # D-054: the pack meshes have no LODs
 			var baked := false
 			for s: int in mesh.get_surface_count():
 				if mi.get_surface_override_material(s) != null or mi.material_override != null:
@@ -89,6 +89,8 @@ static func instance(short: String) -> Node3D:
 	for b: Node in inst.find_children("*", "CollisionObject3D", true, false):
 		b.get_parent().remove_child(b)
 		b.free()
+	MeshLod.apply_tree(inst)  # D-054: LODs, and heavy hulls cast through a shadow twin
+	MeshLod.add_shadow_twins(inst)
 	return inst
 
 

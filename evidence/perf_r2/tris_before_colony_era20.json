@@ -1,0 +1,1316 @@
+{
+  "cases": [
+    {
+      "census": {
+        "CollisionShape3D": 2445,
+        "GPUParticles3D": 18,
+        "Label3D": 84,
+        "MeshInstance3D": 3335,
+        "MultiMeshInstance3D": 165,
+        "OmniLight3D": 63,
+        "SpotLight3D": 0
+      },
+      "draw_calls_max": 1742,
+      "frame_p50": 8.25,
+      "frame_p95": 8.99,
+      "frame_p99": 21.71,
+      "frames": 90,
+      "id": "colony_era20",
+      "load_ms": 8261,
+      "nodes_max": 9032,
+      "objects_max": 5169,
+      "over_budget": [
+        "primitives 6480046 > 3000000",
+        "load 8261 ms > 4000"
+      ],
+      "primitives_max": 6480046,
+      "quality": "high",
+      "scene": "colony",
+      "setup": "era:sere:20",
+      "static_mem_peak_mb": 235.1,
+      "tris": {
+        "ablation": [
+          {
+            "base": 6479994
+          },
+          {
+            "branch": "@DirectionalLight3D@18",
+            "class": "DirectionalLight3D",
+            "prims": 3393597,
+            "script": ""
+          },
+          {
+            "branch": "Dressing",
+            "class": "Node3D",
+            "prims": 1318524,
+            "script": "colony_dressing.gd"
+          },
+          {
+            "branch": "GroundCover",
+            "class": "Node3D",
+            "prims": 626416,
+            "script": ""
+          },
+          {
+            "branch": "Life",
+            "class": "Node3D",
+            "prims": 378678,
+            "script": "colony_life.gd"
+          },
+          {
+            "branch": "@Node3D@19",
+            "class": "Node3D",
+            "prims": 306528,
+            "script": "terrain_builder.gd"
+          },
+          {
+            "branch": "Corridors",
+            "class": "Node3D",
+            "prims": 260324,
+            "script": ""
+          },
+          {
+            "branch": "@Node3D@963",
+            "class": "Node3D",
+            "prims": 163052,
+            "script": "building_view.gd"
+          },
+          {
+            "branch": "@Node3D@682",
+            "class": "Node3D",
+            "prims": 163052,
+            "script": "building_view.gd"
+          },
+          {
+            "branch": "@Node3D@327",
+            "class": "Node3D",
+            "prims": 163052,
+            "script": "building_view.gd"
+          },
+          {
+            "branch": "@Node3D@499",
+            "class": "Node3D",
+            "prims": 163048,
+            "script": "building_view.gd"
+          },
+          {
+            "branch": "@Node3D@546",
+            "class": "Node3D",
+            "prims": 163048,
+            "script": "building_view.gd"
+          },
+          {
+            "branch": "@Node3D@638",
+            "class": "Node3D",
+            "prims": 163048,
+            "script": "building_view.gd"
+          },
+          {
+            "branch": "@Node3D@763",
+            "class": "Node3D",
+            "prims": 163048,
+            "script": "building_view.gd"
+          },
+          {
+            "branch": "@Node3D@818",
+            "class": "Node3D",
+            "prims": 163048,
+            "script": "building_view.gd"
+          },
+          {
+            "branch": "@Node3D@1074",
+            "class": "Node3D",
+            "prims": 163048,
+            "script": "building_view.gd"
+          },
+          {
+            "branch": "@Node3D@853",
+            "class": "Node3D",
+            "prims": 163044,
+            "script": "building_view.gd"
+          },
+          {
+            "branch": "@Node3D@327/building_greenhouse",
+            "class": "Node3D",
+            "prims": 163028,
+            "script": "visual_slot.gd"
+          },
+          {
+            "branch": "@Node3D@963/building_greenhouse",
+            "class": "Node3D",
+            "prims": 163028,
+            "script": "visual_slot.gd"
+          },
+          {
+            "branch": "@Node3D@853/building_greenhouse",
+            "class": "Node3D",
+            "prims": 163024,
+            "script": "visual_slot.gd"
+          },
+          {
+            "branch": "@Node3D@546/building_greenhouse",
+            "class": "Node3D",
+            "prims": 163024,
+            "script": "visual_slot.gd"
+          },
+          {
+            "branch": "@Node3D@727/building_greenhouse",
+            "class": "Node3D",
+            "prims": 163020,
+            "script": "visual_slot.gd"
+          },
+          {
+            "branch": "@Node3D@927/building_greenhouse",
+            "class": "Node3D",
+            "prims": 163020,
+            "script": "visual_slot.gd"
+          },
+          {
+            "branch": "@Node3D@592/building_greenhouse",
+            "class": "Node3D",
+            "prims": 163020,
+            "script": "visual_slot.gd"
+          },
+          {
+            "branch": "@Node3D@1074/building_greenhouse",
+            "class": "Node3D",
+            "prims": 163020,
+            "script": "visual_slot.gd"
+          },
+          {
+            "branch": "@Node3D@401/building_greenhouse",
+            "class": "Node3D",
+            "prims": 163020,
+            "script": "visual_slot.gd"
+          },
+          {
+            "branch": "@Node3D@226",
+            "class": "Node3D",
+            "prims": 163004,
+            "script": "building_view.gd"
+          },
+          {
+            "branch": "@Node3D@1029",
+            "class": "Node3D",
+            "prims": 163000,
+            "script": "building_view.gd"
+          },
+          {
+            "branch": "@Node3D@445",
+            "class": "Node3D",
+            "prims": 163000,
+            "script": "building_view.gd"
+          },
+          {
+            "branch": "@Node3D@401",
+            "class": "Node3D",
+            "prims": 162996,
+            "script": "building_view.gd"
+          },
+          {
+            "branch": "@Node3D@592",
+            "class": "Node3D",
+            "prims": 162996,
+            "script": "building_view.gd"
+          }
+        ],
+        "branches": [
+          {
+            "branch": "GroundCover/",
+            "tris": 2104538
+          },
+          {
+            "branch": "/building_greenhouse [SM_Bld_Pod_Research_05.tscn]",
+            "tris": 805528
+          },
+          {
+            "branch": "Dressing/",
+            "tris": 687948
+          },
+          {
+            "branch": "Corridors/",
+            "tris": 130186
+          },
+          {
+            "branch": "/building_solar_array [SM_Prop_SolarPanel_02.tscn]",
+            "tris": 114862
+          },
+          {
+            "branch": "/building_greenhouse [SM_Bld_Door_Double_01.tscn]",
+            "tris": 112472
+          },
+          {
+            "branch": "/building_greenhouse [SM_Prop_Satellite_06.tscn]",
+            "tris": 102544
+          },
+          {
+            "branch": "/TerrainMesh",
+            "tris": 96800
+          },
+          {
+            "branch": "/building_greenhouse [SM_Prop_Vending_Machine_02.tscn]",
+            "tris": 84422
+          },
+          {
+            "branch": "Life/ [Characters.fbx]",
+            "tris": 69286
+          },
+          {
+            "branch": "/building_greenhouse [SM_Bld_Door_Double_04.tscn]",
+            "tris": 46716
+          },
+          {
+            "branch": "/building_greenhouse [SM_Prop_Vending_Machine_01.tscn]",
+            "tris": 43044
+          },
+          {
+            "branch": "/building_greenhouse [SM_Bld_Pod_Ramp_02.tscn]",
+            "tris": 38896
+          },
+          {
+            "branch": "/building_greenhouse [SM_Bld_Pod_Support_01.tscn]",
+            "tris": 36312
+          },
+          {
+            "branch": "/building_care_center [SM_Bld_Pod_Hab_Small_04.tscn]",
+            "tris": 31077
+          },
+          {
+            "branch": "/building_greenhouse [SM_Prop_Satellite_08.tscn]",
+            "tris": 27370
+          },
+          {
+            "branch": "/building_mine [SM_Bld_Scav_Refinery_02.tscn]",
+            "tris": 25895
+          },
+          {
+            "branch": "Life/ [SM_Prop_Drone_02.tscn]",
+            "tris": 20440
+          },
+          {
+            "branch": "/building_workshop [SM_Bld_Scav_Garage_01.tscn]",
+            "tris": 20076
+          },
+          {
+            "branch": "/building_greenhouse [SM_Bld_Pod_Base_04.tscn]",
+            "tris": 17952
+          },
+          {
+            "branch": "PlanetSky/",
+            "tris": 16640
+          },
+          {
+            "branch": "PlanetSky/space_planet_ice",
+            "tris": 16640
+          },
+          {
+            "branch": "/FarTerrain",
+            "tris": 16128
+          },
+          {
+            "branch": "/building_greenhouse [SM_Prop_Antenna_07.tscn]",
+            "tris": 15708
+          },
+          {
+            "branch": "/building_workshop [SM_Bld_Door_Garage_01.tscn]",
+            "tris": 14584
+          },
+          {
+            "branch": "Life/ [SK_Character_Junky_Female_01.fbx]",
+            "tris": 14568
+          },
+          {
+            "branch": "Life/ [SM_Veh_Classic_01_Hover.tscn]",
+            "tris": 14028
+          },
+          {
+            "branch": "/building_greenhouse [SM_Prop_Antenna_01.tscn]",
+            "tris": 13668
+          },
+          {
+            "branch": "/building_water_plant [SM_Bld_Watertank_01.tscn]",
+            "tris": 13200
+          },
+          {
+            "branch": "/building_greenhouse [SM_Prop_Vending_Machine_05.tscn]",
+            "tris": 13124
+          }
+        ],
+        "lodless": {
+          "ArrayMesh(1 surf, 106 tris)": 106,
+          "ArrayMesh(1 surf, 1122 tris)": 10098,
+          "ArrayMesh(1 surf, 1452 tris)": 1452,
+          "ArrayMesh(1 surf, 1470 tris)": 33810,
+          "ArrayMesh(1 surf, 15070 tris)": 15070,
+          "ArrayMesh(1 surf, 156 tris)": 31200,
+          "ArrayMesh(1 surf, 16128 tris)": 16128,
+          "ArrayMesh(1 surf, 1620 tris)": 4860,
+          "ArrayMesh(1 surf, 1690 tris)": 20280,
+          "ArrayMesh(1 surf, 1826 tris)": 32868,
+          "ArrayMesh(1 surf, 280 tris)": 1120,
+          "ArrayMesh(1 surf, 3466 tris)": 62388,
+          "ArrayMesh(1 surf, 3594 tris)": 3594,
+          "ArrayMesh(1 surf, 410 tris)": 12300,
+          "ArrayMesh(1 surf, 412 tris)": 5768,
+          "ArrayMesh(1 surf, 5574 tris)": 5574,
+          "ArrayMesh(1 surf, 616 tris)": 616,
+          "ArrayMesh(1 surf, 96800 tris)": 96800,
+          "ArrayMesh(2 surf, 905 tris)": 18100,
+          "SphereMesh(1 surf, 16640 tris)": 33280,
+          "SphereMesh(1 surf, 80 tris)": 10560,
+          "Synty/CharactersSrc/Characters.fbx::ArrayMesh_46c28": 38262,
+          "Synty/CharactersSrc/Characters.fbx::ArrayMesh_ot3ae": 14840,
+          "Synty/CharactersSrc/Characters.fbx::ArrayMesh_sxga0": 12324,
+          "Synty/CharactersSrc/Characters.fbx::ArrayMesh_vr27h": 7576,
+          "Synty/CharactersSrc/City/SK_Character_Garbage_Male_01.fbx::ArrayMesh_vu13j": 10020,
+          "Synty/CharactersSrc/City/SK_Character_Hacker_Female_01.fbx::ArrayMesh_td80h": 11672,
+          "Synty/CharactersSrc/City/SK_Character_Junky_Male_01.fbx::ArrayMesh_bd5ed": 8232,
+          "Synty/CharactersSrc/City/SK_Character_Medical_Male_01.fbx::ArrayMesh_5btku": 8766,
+          "Synty/CharactersSrc/City/SK_Character_Rich_Female_01.fbx::ArrayMesh_guyq2": 3760,
+          "Synty/PolygonSciFiCity/Models/extracted/SM_Veh_Armored_Truck_02_Hover.res": 3301,
+          "Synty/PolygonSciFiCity/Models/extracted/SM_Veh_Armored_Truck_02_Wheel_fl_Hover.res": 512,
+          "Synty/PolygonSciFiCity/Models/extracted/SM_Veh_Armored_Truck_02_Wheel_fr_Hover.res": 512,
+          "Synty/PolygonSciFiCity/Models/extracted/SM_Veh_Armored_Truck_02_Wheel_rl_01_Hover.res": 512,
+          "Synty/PolygonSciFiCity/Models/extracted/SM_Veh_Armored_Truck_02_Wheel_rl_02_Hover.res": 512,
+          "Synty/PolygonSciFiCity/Models/extracted/SM_Veh_Armored_Truck_02_Wheel_rr_01_Hover.res": 512,
+          "Synty/PolygonSciFiCity/Models/extracted/SM_Veh_Armored_Truck_02_Wheel_rr_02_Hover.res": 512,
+          "Synty/PolygonSciFiCity/Models/extracted/SM_Veh_Armored_Truck_SteeringW_02_Hover.res": 374,
+          "Synty/PolygonSciFiCity/Models/extracted/SM_Veh_Classic_01_Hover.res": 8592,
+          "Synty/PolygonSciFiCity/Models/extracted/SM_Veh_Classic_01_L_Door_Hover.res": 256,
+          "Synty/PolygonSciFiCity/Models/extracted/SM_Veh_Classic_01_R_Door_Hover.res": 252,
+          "Synty/PolygonSciFiCity/Models/extracted/SM_Veh_Classic_01_SteeringW.res": 748,
+          "Synty/PolygonSciFiCity/Models/extracted/SM_Veh_Classic_01_Wheel_fl_Hover.res": 1024,
+          "Synty/PolygonSciFiCity/Models/extracted/SM_Veh_Classic_01_Wheel_fr_Hover.res": 1024,
+          "Synty/PolygonSciFiCity/Models/extracted/SM_Veh_Classic_01_Wheel_rl_Hover.res": 1024,
+          "Synty/PolygonSciFiCity/Models/extracted/SM_Veh_Classic_01_Wheel_rr_Hover.res": 1024,
+          "Synty/PolygonSciFiCity/Models/extracted/SM_Veh_Garbage_01_Hover.res": 4330,
+          "Synty/PolygonSciFiCity/Models/extracted/SM_Veh_Garbage_01_SteeringW_Hover.res": 374,
+          "Synty/PolygonSciFiCity/Models/extracted/SM_Veh_Garbage_01_Wheel_fl_Hover.res": 160,
+          "Synty/PolygonSciFiCity/Models/extracted/SM_Veh_Garbage_01_Wheel_fr_Hover.res": 160,
+          "Synty/PolygonSciFiCity/Models/extracted/SM_Veh_Garbage_01_Wheel_rl_01_Hover.res": 160,
+          "Synty/PolygonSciFiCity/Models/extracted/SM_Veh_Garbage_01_Wheel_rl_02_Hover.res": 160,
+          "Synty/PolygonSciFiCity/Models/extracted/SM_Veh_Garbage_01_Wheel_rr_01_Hover.res": 160,
+          "Synty/PolygonSciFiCity/Models/extracted/SM_Veh_Garbage_01_Wheel_rr_02_Hover.res": 160,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Corp_LandingPad_02.res": 7118,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Crate_Building_01.res": 8015,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Crate_Building_01_Shutter_01.res": 1520,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Crate_Building_02.res": 7888,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Crate_Building_03.res": 2426,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Crate_Building_Balcony_01.res": 576,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Crate_Building_Frame_01.res": 101,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Door_Double_01.res": 61064,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Door_Double_01_Door_01.res": 21488,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Door_Double_01_Door_02.res": 22576,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Door_Double_01_Door_03.res": 7344,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Door_Double_03.res": 1216,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Door_Double_03_Door_01.res": 1544,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Door_Double_03_Door_02.res": 1544,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Door_Double_03_Lock_01.res": 568,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Door_Double_04.res": 9652,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Door_Double_04_Door_01.res": 21280,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Door_Double_04_Door_02.res": 21280,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Door_Garage_01.res": 3752,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Door_Garage_01_Door_01.res": 10832,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Door_Single_01_Door_01.res": 5916,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Door_Single_02_Door_01.res": 328,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Door_Single_02_Door_02.res": 352,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Door_Single_04.res": 2154,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Door_Single_04_Door_01.res": 768,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Door_Single_04_Door_02.res": 768,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Door_Single_04_Door_03.res": 1434,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Door_Single_05_Door_01.res": 6208,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Greeble_22_Fan_01.res": 636,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Greeble_27_Crusher_01.res": 1144,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Greeble_28_Tank_01.res": 1032,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Platform_Barrier_Long_01.res": 3636,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Pod_Base_04.res": 17952,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Pod_Hab_Small_04.res": 30021,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Pod_Ramp_02.res": 38896,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Pod_Research_05.res": 360196,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Pod_Research_05_Dome_01.res": 175100,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Pod_Research_05_Dome_01_Glass_01.res": 5440,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Pod_Research_05_Dome_01_Glass_02.res": 4216,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Pod_Research_05_Leg_01.res": 30090,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Pod_Research_05_Leg_02.res": 30090,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Pod_Research_05_Leg_03.res": 30090,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Pod_Research_05_Leg_04.res": 30090,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Pod_Research_05_Leg_05.res": 30090,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Pod_Research_05_Leg_06.res": 30090,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Pod_Research_05_Leg_07.res": 30090,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Pod_Research_05_Leg_08.res": 30090,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Pod_Research_05_Light_01.res": 4964,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Pod_Research_05_Light_02.res": 4964,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Pod_Research_05_Light_03.res": 4964,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Pod_Research_05_Light_04.res": 4964,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Pod_Support_01.res": 25568,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Pod_Support_01_Leg_01.res": 10744,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Scav_Garage_01.res": 20076,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Scav_Garage_02.res": 6678,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Scav_Refinery_02.res": 25847,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Scav_Refinery_Pipe_01_Bend_02.res": 1344,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Scav_Refinery_Pipe_02_Bend_01.res": 460,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Scav_Refinery_Pipe_02_Half_01.res": 1312,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Scav_Refinery_Silo_02.res": 3622,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Scav_Refinery_Silo_05.res": 1159,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Scav_Refinery_Silo_06.res": 6768,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Tower_Monitors_01.res": 2418,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Watertank_01.res": 13200,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Antenna_01.res": 13668,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Antenna_06.res": 418,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Antenna_07.res": 15708,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Antenna_08.res": 480,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Billboard_01.res": 4000,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Billboard_03.res": 510,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Billboard_04.res": 510,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Chair_01_Armrest_01.res": 300,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Chair_01_Back_01.res": 666,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Chair_01_Headrest_01.res": 258,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Chair_01_Pivot_01.res": 960,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Chair_02_Backrest_01.res": 236,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Chair_02_Pivot_01.res": 292,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Crate_01_Lid_01.res": 936,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Crate_02_Lid_01.res": 528,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Crate_04_Lid_01.res": 880,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Crate_05_Lid_01.res": 4520,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Crate_07_Lid_01.res": 564,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Crate_07_Lid_02.res": 564,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Crate_09_Lid_01.res": 704,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Crate_11_Lid_01.res": 148,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Crate_11_Lid_02.res": 172,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Crate_12_Lid_01.res": 1276,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Crate_14_Lid_01.res": 2556,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Crate_14_Lid_02.res": 2556,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Crate_15_Lid_01.res": 572,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Crate_Lid_01.res": 864,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Drone_02.res": 15200,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Drone_02_Arm_01.res": 1452,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Drone_02_Arm_02.res": 2816,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Drone_02_Claw_01.res": 748,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Drone_02_Claw_02.res": 748,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Junk_Cardboard_07.res": 552,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Locker_01_Door_01.res": 1712,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Monitor_02_Screen_01.res": 168,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Monitor_02_Screen_02.res": 168,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Monitor_02_Screen_03.res": 410,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Monitor_02_Screen_04.res": 102,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Monitor_02_Screen_05.res": 102,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Monitor_04.res": 776,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Monitor_04_Arm_01.res": 1332,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Monitor_04_Arm_02.res": 1332,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Monitor_04_Arm_03.res": 1332,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Monitor_04_Screen_01.res": 1192,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Monitor_08_Screen_01.res": 576,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Monitor_08_Screen_02.res": 576,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_PowerGenerator_02.res": 1268,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_PowerGenerator_02_Chamber_01.res": 2172,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_PowerGenerator_03_Gear_01.res": 15280,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Projection_Table_01.res": 2228,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Satellite_06.res": 35020,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Satellite_06_Dish_01.res": 22508,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Satellite_06_Dish_02.res": 22508,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Satellite_06_Dish_03.res": 22508,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Satellite_08_CrateArm_01.res": 1904,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Satellite_08_CrateArm_02.res": 4488,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Satellite_08_CrateArm_03.res": 1292,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Satellite_08_CrateDish_01.res": 6528,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Satellite_08_CrateSwivel_01.res": 1734,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Satellite_08_Lid_01.res": 5712,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Satellite_08_Lid_02.res": 5712,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Scav_Scrap_34.res": 236,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_SolarPanel_02.res": 20056,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_SolarPanel_02_Panel_01.res": 93518,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Tether_Pole_Tall_01.res": 6732,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Tether_Wire_05.res": 1160,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_TrashBin_01_Lid_01.res": 388,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Vending_Machine_01.res": 42942,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Vending_Machine_02.res": 84422,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Vending_Machine_03.res": 1395,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Vending_Machine_03_Drum_01.res": 140,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Vending_Machine_03_Sign_01.res": 426,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Vending_Machine_03_Stick_01.res": 96,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Vending_Machine_04_Arm_01.res": 2240,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Vending_Machine_04_Arm_02.res": 2240,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Vending_Machine_04_Topper_01.res": 4520,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Vending_Machine_05_Sign_01.res": 13124,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Vendor_Product_14_Plant_01.res": 5025,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Veh_Buggy_01.res": 4810,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Veh_Buggy_01_SteeringWheel_01.res": 342,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Veh_Buggy_01_SuspensionArm_lf.res": 144,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Veh_Buggy_01_SuspensionArm_lr.res": 144,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Veh_Buggy_01_SuspensionArm_rf.res": 144,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Veh_Buggy_01_SuspensionArm_rr.res": 144,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Veh_Buggy_01_Wheel_lf.res": 1597,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Veh_Buggy_01_Wheel_lr.res": 1597,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Veh_Buggy_01_Wheel_rf.res": 1597,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Veh_Buggy_01_Wheel_rr.res": 1597,
+          "meta:C:Props/SM_Prop_AirConditioningUnit_01": 696,
+          "meta:C:Props/SM_Prop_AirConditioningUnit_02": 960,
+          "meta:C:Props/SM_Prop_Barrier_Pole_01": 1992,
+          "meta:C:Props/SM_Prop_Box_Supplies_01": 5136,
+          "meta:C:Props/SM_Prop_ChargingStation_01": 856,
+          "meta:C:Props/SM_Prop_Crate_Military_01": 8764,
+          "meta:C:Props/SM_Prop_Cylinder_01": 17928,
+          "meta:C:Props/SM_Prop_Cylinder_02": 2784,
+          "meta:C:Props/SM_Prop_MarketTable_01": 247,
+          "meta:C:Props/SM_Prop_MarketTable_05": 1678,
+          "meta:C:Props/SM_Prop_Plant_Vase_02": 1980,
+          "meta:C:Props/SM_Prop_Rubbish_Bin_01": 768,
+          "meta:C:Props/SM_Prop_SatDish_01": 156,
+          "meta:C:Props/SM_Prop_SatDish_03": 8106,
+          "meta:C:Props/SM_Prop_Vent_02": 516,
+          "meta:C:Props/SM_Prop_Vent_03": 1692,
+          "meta:C:Props/SM_Prop_Vent_04": 480,
+          "meta:C:Vehicles/SM_Veh_Armored_Truck_01_Hover": 6737,
+          "meta:W:Buildings/SM_Bld_Greeble_10": 16080,
+          "meta:W:Buildings/SM_Bld_Greeble_12": 3564,
+          "meta:W:Buildings/SM_Bld_Greeble_17": 12292,
+          "meta:W:Buildings/SM_Bld_Greeble_18": 8136,
+          "meta:W:Buildings/SM_Bld_Greeble_24": 29290,
+          "meta:W:Buildings/SM_Bld_Greeble_25": 17996,
+          "meta:W:Buildings/SM_Bld_Light_07": 31242,
+          "meta:W:Buildings/SM_Bld_Scav_Refinery_Silo_03": 958,
+          "meta:W:Buildings/SM_Bld_Scav_Refinery_Silo_05": 1159,
+          "meta:W:Buildings/SM_Bld_Scav_Refinery_Silo_06": 2256,
+          "meta:W:Buildings/SM_Bld_Vendor_01": 3810,
+          "meta:W:Buildings/SM_Bld_Vendor_04": 13485,
+          "meta:W:Buildings/SM_Bld_Watertank_01": 7920,
+          "meta:W:Props/Junkies/SM_Prop_Junky_Female_01": 6284,
+          "meta:W:Props/Junkies/SM_Prop_Junky_Female_02": 12568,
+          "meta:W:Props/Junkies/SM_Prop_Junky_Female_03": 5628,
+          "meta:W:Props/Junkies/SM_Prop_Junky_Female_05": 8466,
+          "meta:W:Props/Junkies/SM_Prop_Junky_Male_01": 5772,
+          "meta:W:Props/Junkies/SM_Prop_Junky_Male_02": 2890,
+          "meta:W:Props/Junkies/SM_Prop_Junky_Male_03": 8970,
+          "meta:W:Props/Junkies/SM_Prop_Junky_Male_05": 5152,
+          "meta:W:Props/SM_Prop_Antenna_01": 4824,
+          "meta:W:Props/SM_Prop_Antenna_03": 736,
+          "meta:W:Props/SM_Prop_Antenna_09": 1460,
+          "meta:W:Props/SM_Prop_Antenna_10": 2844,
+          "meta:W:Props/SM_Prop_BatteryPack_01": 14504,
+          "meta:W:Props/SM_Prop_BatteryPack_03": 45448,
+          "meta:W:Props/SM_Prop_Bench_Seat_01": 2480,
+          "meta:W:Props/SM_Prop_Bench_Seat_02": 1748,
+          "meta:W:Props/SM_Prop_Canopy_Preset_01": 624,
+          "meta:W:Props/SM_Prop_Canopy_Preset_03": 780,
+          "meta:W:Props/SM_Prop_Crate_01": 6496,
+          "meta:W:Props/SM_Prop_Crate_02": 10176,
+          "meta:W:Props/SM_Prop_Crate_03": 10624,
+          "meta:W:Props/SM_Prop_Crate_04": 8400,
+          "meta:W:Props/SM_Prop_Crate_08": 17500,
+          "meta:W:Props/SM_Prop_Crate_10": 12600,
+          "meta:W:Props/SM_Prop_Crate_13": 25228,
+          "meta:W:Props/SM_Prop_Crate_14": 20490,
+          "meta:W:Props/SM_Prop_Drone_01": 1734,
+          "meta:W:Props/SM_Prop_Drone_03": 1906,
+          "meta:W:Props/SM_Prop_Fuel_Cell_01": 7174,
+          "meta:W:Props/SM_Prop_Hydroponic_Plant_01": 26004,
+          "meta:W:Props/SM_Prop_Hydroponic_Plant_02": 42066,
+          "meta:W:Props/SM_Prop_Hydroponic_Plant_03": 12720,
+          "meta:W:Props/SM_Prop_Hydroponic_Planter_01": 11424,
+          "meta:W:Props/SM_Prop_Junk_Cardboard_01": 1232,
+          "meta:W:Props/SM_Prop_Monitor_01": 1186,
+          "meta:W:Props/SM_Prop_PowerCellCharger_01": 774,
+          "meta:W:Props/SM_Prop_PowerGenerator_03": 32284,
+          "meta:W:Props/SM_Prop_Satellite_05": 1890,
+          "meta:W:Props/SM_Prop_Satellite_06": 3016,
+          "meta:W:Props/SM_Prop_Scav_Barrel_01": 13896,
+          "meta:W:Props/SM_Prop_Syncola_Can_Stack_01": 288,
+          "meta:W:Props/SM_Prop_Syncola_Can_Stack_02": 408,
+          "meta:W:Props/SM_Prop_Tether_Pole_Tall_01": 1980,
+          "meta:W:Props/SM_Prop_Vending_Machine_01": 2526,
+          "meta:W:Props/SM_Prop_Vendor_TV_01": 606,
+          "meta:W:Props/Scrap/SM_Prop_Scav_Scrap_02": 738,
+          "meta:W:Props/Scrap/SM_Prop_Scav_Scrap_04": 1018,
+          "meta:W:Props/Scrap/SM_Prop_Scav_Scrap_10": 1098,
+          "meta:W:Props/Signs/SM_Prop_Billboard_09": 4568,
+          "meta:W:Props/Signs/SM_Prop_Sign_02": 19074,
+          "meta:W:Props/Vehicles/SM_Veh_Hover_Bike_02": 10264,
+          "name:SM_Env_Debris_Pipe_01": 3080,
+          "name:SM_Env_Debris_Shell_07": 864
+        },
+        "meshes": [
+          {
+            "far_m": 64.4,
+            "instances": 120,
+            "lod0": 7284,
+            "lods": 3,
+            "mesh": "ArrayMesh(1 surf, 7284 tris)",
+            "near_m": 64.4,
+            "nodes": 1,
+            "shadow_inst": 120,
+            "tris": 874080
+          },
+          {
+            "far_m": 66.3,
+            "instances": 100,
+            "lod0": 4444,
+            "lods": 2,
+            "mesh": "ArrayMesh(3 surf, 4444 tris)",
+            "near_m": 66.3,
+            "nodes": 1,
+            "shadow_inst": 100,
+            "tris": 444400
+          },
+          {
+            "far_m": 160.8,
+            "instances": 17,
+            "lod0": 21188,
+            "lods": 0,
+            "mesh": "Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Pod_Research_05.res",
+            "near_m": 103.5,
+            "nodes": 17,
+            "shadow_inst": 17,
+            "tris": 360196
+          },
+          {
+            "far_m": 65.6,
+            "instances": 140,
+            "lod0": 2122,
+            "lods": 1,
+            "mesh": "ArrayMesh(2 surf, 2122 tris)",
+            "near_m": 65.6,
+            "nodes": 1,
+            "shadow_inst": 140,
+            "tris": 297080
+          },
+          {
+            "far_m": 69.5,
+            "instances": 60,
+            "lod0": 2934,
+            "lods": 3,
+            "mesh": "ArrayMesh(1 surf, 2934 tris)",
+            "near_m": 69.5,
+            "nodes": 1,
+            "shadow_inst": 60,
+            "tris": 176040
+          },
+          {
+            "far_m": 160.3,
+            "instances": 17,
+            "lod0": 10300,
+            "lods": 0,
+            "mesh": "Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Pod_Research_05_Dome_01.res",
+            "near_m": 102.3,
+            "nodes": 17,
+            "shadow_inst": 17,
+            "tris": 175100
+          },
+          {
+            "far_m": 61.4,
+            "instances": 1,
+            "lod0": 96800,
+            "lods": 0,
+            "mesh": "ArrayMesh(1 surf, 96800 tris)",
+            "near_m": 61.4,
+            "nodes": 1,
+            "shadow_inst": 1,
+            "tris": 96800
+          },
+          {
+            "far_m": 154.0,
+            "instances": 23,
+            "lod0": 4066,
+            "lods": 0,
+            "mesh": "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_SolarPanel_02_Panel_01.res",
+            "near_m": 101.0,
+            "nodes": 23,
+            "shadow_inst": 23,
+            "tris": 93518
+          },
+          {
+            "far_m": 161.9,
+            "instances": 17,
+            "lod0": 4966,
+            "lods": 0,
+            "mesh": "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Vending_Machine_02.res",
+            "near_m": 104.5,
+            "nodes": 17,
+            "shadow_inst": 17,
+            "tris": 84422
+          },
+          {
+            "far_m": 160.6,
+            "instances": 18,
+            "lod0": 3466,
+            "lods": 0,
+            "mesh": "ArrayMesh(1 surf, 3466 tris)",
+            "near_m": 109.6,
+            "nodes": 18,
+            "shadow_inst": 18,
+            "tris": 62388
+          },
+          {
+            "far_m": 165.2,
+            "instances": 68,
+            "lod0": 898,
+            "lods": 0,
+            "mesh": "Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Door_Double_01.res",
+            "near_m": 104.6,
+            "nodes": 68,
+            "shadow_inst": 68,
+            "tris": 61064
+          },
+          {
+            "far_m": 111.8,
+            "instances": 13,
+            "lod0": 3496,
+            "lods": 0,
+            "mesh": "meta:W:Props/SM_Prop_BatteryPack_03",
+            "near_m": 111.8,
+            "nodes": 1,
+            "shadow_inst": 13,
+            "tris": 45448
+          },
+          {
+            "far_m": 163.1,
+            "instances": 17,
+            "lod0": 2526,
+            "lods": 0,
+            "mesh": "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Vending_Machine_01.res",
+            "near_m": 105.8,
+            "nodes": 17,
+            "shadow_inst": 17,
+            "tris": 42942
+          },
+          {
+            "far_m": 100.7,
+            "instances": 41,
+            "lod0": 1026,
+            "lods": 0,
+            "mesh": "meta:W:Props/SM_Prop_Hydroponic_Plant_02",
+            "near_m": 100.7,
+            "nodes": 1,
+            "shadow_inst": 41,
+            "tris": 42066
+          },
+          {
+            "far_m": 163.6,
+            "instances": 68,
+            "lod0": 572,
+            "lods": 0,
+            "mesh": "Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Pod_Ramp_02.res",
+            "near_m": 104.5,
+            "nodes": 68,
+            "shadow_inst": 68,
+            "tris": 38896
+          },
+          {
+            "far_m": 71.7,
+            "instances": 11,
+            "lod0": 3490,
+            "lods": 2,
+            "mesh": "ArrayMesh(1 surf, 3490 tris)",
+            "near_m": 71.7,
+            "nodes": 1,
+            "shadow_inst": 11,
+            "tris": 38390
+          },
+          {
+            "far_m": 168.2,
+            "instances": 21,
+            "lod0": 1822,
+            "lods": 0,
+            "mesh": "Synty/CharactersSrc/Characters.fbx::ArrayMesh_46c28",
+            "near_m": 112.0,
+            "nodes": 21,
+            "shadow_inst": 21,
+            "tris": 38262
+          },
+          {
+            "far_m": 74.0,
+            "instances": 15,
+            "lod0": 2412,
+            "lods": 2,
+            "mesh": "ArrayMesh(1 surf, 2412 tris)",
+            "near_m": 74.0,
+            "nodes": 1,
+            "shadow_inst": 15,
+            "tris": 36180
+          },
+          {
+            "far_m": 166.7,
+            "instances": 34,
+            "lod0": 1030,
+            "lods": 0,
+            "mesh": "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Satellite_06.res",
+            "near_m": 104.4,
+            "nodes": 34,
+            "shadow_inst": 34,
+            "tris": 35020
+          },
+          {
+            "far_m": 73.0,
+            "instances": 24,
+            "lod0": 1416,
+            "lods": 2,
+            "mesh": "ArrayMesh(1 surf, 1416 tris)",
+            "near_m": 68.5,
+            "nodes": 2,
+            "shadow_inst": 24,
+            "tris": 33984
+          },
+          {
+            "far_m": 160.3,
+            "instances": 23,
+            "lod0": 1470,
+            "lods": 0,
+            "mesh": "ArrayMesh(1 surf, 1470 tris)",
+            "near_m": 105.7,
+            "nodes": 23,
+            "shadow_inst": 23,
+            "tris": 33810
+          },
+          {
+            "far_m": 1363.6,
+            "instances": 2,
+            "lod0": 16640,
+            "lods": 0,
+            "mesh": "SphereMesh(1 surf, 16640 tris)",
+            "near_m": 1253.5,
+            "nodes": 2,
+            "shadow_inst": 2,
+            "tris": 33280
+          },
+          {
+            "far_m": 158.4,
+            "instances": 18,
+            "lod0": 1826,
+            "lods": 0,
+            "mesh": "ArrayMesh(1 surf, 1826 tris)",
+            "near_m": 113.0,
+            "nodes": 18,
+            "shadow_inst": 18,
+            "tris": 32868
+          },
+          {
+            "far_m": 101.8,
+            "instances": 28,
+            "lod0": 1542,
+            "lods": 0,
+            "mesh": "meta:W:Props/SM_Prop_PowerGenerator_03",
+            "near_m": 101.7,
+            "nodes": 2,
+            "shadow_inst": 28,
+            "tris": 32284
+          },
+          {
+            "far_m": 101.0,
+            "instances": 127,
+            "lod0": 246,
+            "lods": 0,
+            "mesh": "meta:W:Buildings/SM_Bld_Light_07",
+            "near_m": 101.0,
+            "nodes": 1,
+            "shadow_inst": 127,
+            "tris": 31242
+          },
+          {
+            "far_m": 68.1,
+            "instances": 200,
+            "lod0": 156,
+            "lods": 0,
+            "mesh": "ArrayMesh(1 surf, 156 tris)",
+            "near_m": 68.1,
+            "nodes": 1,
+            "shadow_inst": 200,
+            "tris": 31200
+          },
+          {
+            "far_m": 161.1,
+            "instances": 17,
+            "lod0": 1770,
+            "lods": 0,
+            "mesh": "Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Pod_Research_05_Leg_08.res",
+            "near_m": 104.4,
+            "nodes": 17,
+            "shadow_inst": 17,
+            "tris": 30090
+          },
+          {
+            "far_m": 161.7,
+            "instances": 17,
+            "lod0": 1770,
+            "lods": 0,
+            "mesh": "Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Pod_Research_05_Leg_07.res",
+            "near_m": 105.1,
+            "nodes": 17,
+            "shadow_inst": 17,
+            "tris": 30090
+          },
+          {
+            "far_m": 161.9,
+            "instances": 17,
+            "lod0": 1770,
+            "lods": 0,
+            "mesh": "Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Pod_Research_05_Leg_06.res",
+            "near_m": 104.0,
+            "nodes": 17,
+            "shadow_inst": 17,
+            "tris": 30090
+          },
+          {
+            "far_m": 163.1,
+            "instances": 17,
+            "lod0": 1770,
+            "lods": 0,
+            "mesh": "Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Pod_Research_05_Leg_05.res",
+            "near_m": 104.4,
+            "nodes": 17,
+            "shadow_inst": 17,
+            "tris": 30090
+          },
+          {
+            "far_m": 165.3,
+            "instances": 17,
+            "lod0": 1770,
+            "lods": 0,
+            "mesh": "Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Pod_Research_05_Leg_04.res",
+            "near_m": 105.7,
+            "nodes": 17,
+            "shadow_inst": 17,
+            "tris": 30090
+          },
+          {
+            "far_m": 165.8,
+            "instances": 17,
+            "lod0": 1770,
+            "lods": 0,
+            "mesh": "Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Pod_Research_05_Leg_03.res",
+            "near_m": 106.4,
+            "nodes": 17,
+            "shadow_inst": 17,
+            "tris": 30090
+          },
+          {
+            "far_m": 165.0,
+            "instances": 17,
+            "lod0": 1770,
+            "lods": 0,
+            "mesh": "Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Pod_Research_05_Leg_02.res",
+            "near_m": 106.8,
+            "nodes": 17,
+            "shadow_inst": 17,
+            "tris": 30090
+          },
+          {
+            "far_m": 163.9,
+            "instances": 17,
+            "lod0": 1770,
+            "lods": 0,
+            "mesh": "Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Pod_Research_05_Leg_01.res",
+            "near_m": 106.4,
+            "nodes": 17,
+            "shadow_inst": 17,
+            "tris": 30090
+          },
+          {
+            "far_m": 148.6,
+            "instances": 3,
+            "lod0": 10007,
+            "lods": 0,
+            "mesh": "Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Pod_Hab_Small_04.res",
+            "near_m": 126.4,
+            "nodes": 3,
+            "shadow_inst": 3,
+            "tris": 30021
+          },
+          {
+            "far_m": 110.2,
+            "instances": 29,
+            "lod0": 1010,
+            "lods": 0,
+            "mesh": "meta:W:Buildings/SM_Bld_Greeble_24",
+            "near_m": 110.2,
+            "nodes": 1,
+            "shadow_inst": 29,
+            "tris": 29290
+          },
+          {
+            "far_m": 100.9,
+            "instances": 44,
+            "lod0": 591,
+            "lods": 0,
+            "mesh": "meta:W:Props/SM_Prop_Hydroponic_Plant_01",
+            "near_m": 100.9,
+            "nodes": 1,
+            "shadow_inst": 44,
+            "tris": 26004
+          },
+          {
+            "far_m": 128.7,
+            "instances": 1,
+            "lod0": 25847,
+            "lods": 0,
+            "mesh": "Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Scav_Refinery_02.res",
+            "near_m": 128.7,
+            "nodes": 1,
+            "shadow_inst": 1,
+            "tris": 25847
+          },
+          {
+            "far_m": 166.2,
+            "instances": 68,
+            "lod0": 376,
+            "lods": 0,
+            "mesh": "Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Pod_Support_01.res",
+            "near_m": 105.1,
+            "nodes": 68,
+            "shadow_inst": 68,
+            "tris": 25568
+          },
+          {
+            "far_m": 108.9,
+            "instances": 42,
+            "lod0": 1370,
+            "lods": 0,
+            "mesh": "meta:W:Props/SM_Prop_Crate_13",
+            "near_m": 108.2,
+            "nodes": 3,
+            "shadow_inst": 42,
+            "tris": 25228
+          },
+          {
+            "far_m": 165.3,
+            "instances": 68,
+            "lod0": 332,
+            "lods": 0,
+            "mesh": "Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Door_Double_01_Door_02.res",
+            "near_m": 104.8,
+            "nodes": 68,
+            "shadow_inst": 68,
+            "tris": 22576
+          },
+          {
+            "far_m": 166.9,
+            "instances": 34,
+            "lod0": 662,
+            "lods": 0,
+            "mesh": "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Satellite_06_Dish_01.res",
+            "near_m": 104.5,
+            "nodes": 34,
+            "shadow_inst": 34,
+            "tris": 22508
+          },
+          {
+            "far_m": 166.9,
+            "instances": 34,
+            "lod0": 662,
+            "lods": 0,
+            "mesh": "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Satellite_06_Dish_02.res",
+            "near_m": 104.6,
+            "nodes": 34,
+            "shadow_inst": 34,
+            "tris": 22508
+          },
+          {
+            "far_m": 166.9,
+            "instances": 34,
+            "lod0": 662,
+            "lods": 0,
+            "mesh": "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Satellite_06_Dish_03.res",
+            "near_m": 104.7,
+            "nodes": 34,
+            "shadow_inst": 34,
+            "tris": 22508
+          },
+          {
+            "far_m": 165.4,
+            "instances": 68,
+            "lod0": 316,
+            "lods": 0,
+            "mesh": "Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Door_Double_01_Door_01.res",
+            "near_m": 104.8,
+            "nodes": 68,
+            "shadow_inst": 68,
+            "tris": 21488
+          },
+          {
+            "far_m": 162.2,
+            "instances": 19,
+            "lod0": 1120,
+            "lods": 0,
+            "mesh": "Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Door_Double_04_Door_01.res",
+            "near_m": 104.7,
+            "nodes": 19,
+            "shadow_inst": 19,
+            "tris": 21280
+          },
+          {
+            "far_m": 162.1,
+            "instances": 19,
+            "lod0": 1120,
+            "lods": 0,
+            "mesh": "Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Door_Double_04_Door_02.res",
+            "near_m": 104.7,
+            "nodes": 19,
+            "shadow_inst": 19,
+            "tris": 21280
+          },
+          {
+            "far_m": 106.0,
+            "instances": 45,
+            "lod0": 514,
+            "lods": 0,
+            "mesh": "meta:W:Props/SM_Prop_Crate_14",
+            "near_m": 105.1,
+            "nodes": 3,
+            "shadow_inst": 45,
+            "tris": 20490
+          },
+          {
+            "far_m": 72.5,
+            "instances": 12,
+            "lod0": 1690,
+            "lods": 0,
+            "mesh": "ArrayMesh(1 surf, 1690 tris)",
+            "near_m": 72.5,
+            "nodes": 1,
+            "shadow_inst": 12,
+            "tris": 20280
+          },
+          {
+            "far_m": 109.9,
+            "instances": 2,
+            "lod0": 10038,
+            "lods": 0,
+            "mesh": "Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Scav_Garage_01.res",
+            "near_m": 109.5,
+            "nodes": 2,
+            "shadow_inst": 2,
+            "tris": 20076
+          },
+          {
+            "far_m": 157.0,
+            "instances": 23,
+            "lod0": 872,
+            "lods": 0,
+            "mesh": "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_SolarPanel_02.res",
+            "near_m": 103.6,
+            "nodes": 23,
+            "shadow_inst": 23,
+            "tris": 20056
+          },
+          {
+            "far_m": 68.1,
+            "instances": 220,
+            "lod0": 88,
+            "lods": 3,
+            "mesh": "ArrayMesh(1 surf, 88 tris)",
+            "near_m": 68.1,
+            "nodes": 1,
+            "shadow_inst": 220,
+            "tris": 19360
+          },
+          {
+            "far_m": 104.0,
+            "instances": 11,
+            "lod0": 1734,
+            "lods": 0,
+            "mesh": "meta:W:Props/Signs/SM_Prop_Sign_02",
+            "near_m": 104.0,
+            "nodes": 1,
+            "shadow_inst": 11,
+            "tris": 19074
+          },
+          {
+            "far_m": 68.2,
+            "instances": 20,
+            "lod0": 905,
+            "lods": 0,
+            "mesh": "ArrayMesh(2 surf, 905 tris)",
+            "near_m": 68.2,
+            "nodes": 1,
+            "shadow_inst": 20,
+            "tris": 18100
+          },
+          {
+            "far_m": 106.8,
+            "instances": 22,
+            "lod0": 818,
+            "lods": 0,
+            "mesh": "meta:W:Buildings/SM_Bld_Greeble_25",
+            "near_m": 106.8,
+            "nodes": 1,
+            "shadow_inst": 22,
+            "tris": 17996
+          },
+          {
+            "far_m": 162.0,
+            "instances": 17,
+            "lod0": 1056,
+            "lods": 0,
+            "mesh": "Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Pod_Base_04.res",
+            "near_m": 104.9,
+            "nodes": 17,
+            "shadow_inst": 17,
+            "tris": 17952
+          },
+          {
+            "far_m": 106.7,
+            "instances": 72,
+            "lod0": 340,
+            "lods": 0,
+            "mesh": "meta:C:Props/SM_Prop_Cylinder_01",
+            "near_m": 106.7,
+            "nodes": 2,
+            "shadow_inst": 72,
+            "tris": 17928
+          },
+          {
+            "far_m": 106.9,
+            "instances": 50,
+            "lod0": 428,
+            "lods": 0,
+            "mesh": "meta:W:Props/SM_Prop_Crate_08",
+            "near_m": 106.7,
+            "nodes": 2,
+            "shadow_inst": 50,
+            "tris": 17500
+          },
+          {
+            "far_m": 37.7,
+            "instances": 1,
+            "lod0": 16128,
+            "lods": 0,
+            "mesh": "ArrayMesh(1 surf, 16128 tris)",
+            "near_m": 37.7,
+            "nodes": 1,
+            "shadow_inst": 0,
+            "tris": 16128
+          },
+          {
+            "far_m": 111.4,
+            "instances": 15,
+            "lod0": 1072,
+            "lods": 0,
+            "mesh": "meta:W:Buildings/SM_Bld_Greeble_10",
+            "near_m": 111.4,
+            "nodes": 1,
+            "shadow_inst": 15,
+            "tris": 16080
+          }
+        ],
+        "static_total": 5021058
+      },
+      "video_mem_mb": 1425.5
+    }
+  ],
+  "cpu": "AMD Ryzen 9 9950X3D 16-Core Processor",
+  "device": "NVIDIA GeForce RTX 5090",
+  "engine_version": "4.7.2-stable (official)",
+  "frame_times_judged": true,
+  "limits": {
+    "draw_calls": 2500.0,
+    "load_ms": 4000.0,
+    "nodes": 12000.0,
+    "primitives": 3000000.0
+  },
+  "os": "Windows",
+  "over_budget": [
+    "colony_era20: primitives 6480046 > 3000000, load 8261 ms > 4000"
+  ],
+  "profile": "desktop",
+  "renderer": "forward_plus",
+  "resolution": "(1920.0, 1080.0)",
+  "timestamp": "2026-10-24T17:31:42"
+}

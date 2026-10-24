@@ -1,0 +1,992 @@
+{
+  "cases": [
+    {
+      "census": {
+        "CollisionShape3D": 105,
+        "GPUParticles3D": 6,
+        "Label3D": 6,
+        "MeshInstance3D": 248,
+        "MultiMeshInstance3D": 293,
+        "OmniLight3D": 9,
+        "SpotLight3D": 0
+      },
+      "draw_calls_max": 670,
+      "fixture_ms": 0,
+      "frame_p50": 7.95,
+      "frame_p95": 10.05,
+      "frame_p99": 21.14,
+      "frames": 90,
+      "id": "surface_hazard",
+      "load_ms": 2767,
+      "mesh_lod": {
+        "chunks": 159,
+        "from_disk": 68,
+        "generated": 5,
+        "ms": 125.365,
+        "skipped": 43,
+        "split": 8,
+        "twins": 115
+      },
+      "nodes_max": 920,
+      "objects_max": 1219,
+      "over_budget": [],
+      "primitives_max": 1123961,
+      "quality": "high",
+      "scene": "surface",
+      "setup": "expedition:ferrum",
+      "static_mem_peak_mb": 138.6,
+      "tris": {
+        "ablation": [
+          {
+            "base": 1123961
+          },
+          {
+            "branch": "@DirectionalLight3D@18",
+            "class": "DirectionalLight3D",
+            "prims": 848256,
+            "script": ""
+          },
+          {
+            "branch": "GroundCover",
+            "class": "Node3D",
+            "prims": 446919,
+            "script": ""
+          },
+          {
+            "branch": "Terrain",
+            "class": "Node3D",
+            "prims": 340416,
+            "script": "terrain_builder.gd"
+          },
+          {
+            "branch": "PoiDressing",
+            "class": "Node3D",
+            "prims": 253570,
+            "script": ""
+          },
+          {
+            "branch": "PoiDressing/@Node3D@344",
+            "class": "Node3D",
+            "prims": 52758,
+            "script": ""
+          },
+          {
+            "branch": "@CharacterBody3D@379",
+            "class": "CharacterBody3D",
+            "prims": 30086,
+            "script": "captain.gd"
+          },
+          {
+            "branch": "@CharacterBody3D@379/VisualPivot",
+            "class": "Node3D",
+            "prims": 29722,
+            "script": ""
+          },
+          {
+            "branch": "PoiDressing/@Node3D@341",
+            "class": "Node3D",
+            "prims": 22478,
+            "script": ""
+          }
+        ],
+        "branches": [
+          {
+            "branch": "GroundCover/",
+            "tris": 254679
+          },
+          {
+            "branch": "Terrain/TerrainMesh",
+            "tris": 64800
+          },
+          {
+            "branch": "GroundCover/_MultiMeshInstance3D_87_-2_",
+            "tris": 37010
+          },
+          {
+            "branch": "GroundCover/_MultiMeshInstance3D_87_-3_-",
+            "tris": 29608
+          },
+          {
+            "branch": "GroundCover/_MultiMeshInstance3D_86_1_",
+            "tris": 28928
+          },
+          {
+            "branch": "GroundCover/_MultiMeshInstance3D_83_0_",
+            "tris": 25032
+          },
+          {
+            "branch": "GroundCover/_MultiMeshInstance3D_83_2_-",
+            "tris": 23840
+          },
+          {
+            "branch": "GroundCover/_MultiMeshInstance3D_87_-1_-",
+            "tris": 22206
+          },
+          {
+            "branch": "GroundCover/_MultiMeshInstance3D_86_-2_-",
+            "tris": 21696
+          },
+          {
+            "branch": "GroundCover/_MultiMeshInstance3D_86_0_-",
+            "tris": 21696
+          },
+          {
+            "branch": "GroundCover/_MultiMeshInstance3D_88_-1_",
+            "tris": 18600
+          },
+          {
+            "branch": "GroundCover/_MultiMeshInstance3D_86_1_-",
+            "tris": 18080
+          },
+          {
+            "branch": "GroundCover/_MultiMeshInstance3D_86_2_-",
+            "tris": 18080
+          },
+          {
+            "branch": "PlanetSky/space_planet_ice",
+            "tris": 16640
+          },
+          {
+            "branch": "PlanetSky/space_planet_desert",
+            "tris": 16640
+          },
+          {
+            "branch": "Terrain/FarTerrain",
+            "tris": 16416
+          },
+          {
+            "branch": "GroundCover/_MultiMeshInstance3D_83_1_",
+            "tris": 15496
+          },
+          {
+            "branch": "PlanetSky/SkyDebris",
+            "tris": 15326
+          },
+          {
+            "branch": "GroundCover/_MultiMeshInstance3D_87_-3_",
+            "tris": 14804
+          },
+          {
+            "branch": "GroundCover/_MultiMeshInstance3D_87_-2_-",
+            "tris": 14804
+          },
+          {
+            "branch": "GroundCover/_MultiMeshInstance3D_87_0_-",
+            "tris": 14804
+          },
+          {
+            "branch": "GroundCover/_MultiMeshInstance3D_87_1_",
+            "tris": 14804
+          },
+          {
+            "branch": "GroundCover/_MultiMeshInstance3D_87_2_",
+            "tris": 14804
+          },
+          {
+            "branch": "GroundCover/_MultiMeshInstance3D_86_2_",
+            "tris": 14464
+          },
+          {
+            "branch": "GroundCover/_MultiMeshInstance3D_86_-1_-",
+            "tris": 14464
+          },
+          {
+            "branch": "GroundCover/_MultiMeshInstance3D_86_-3_-",
+            "tris": 14464
+          },
+          {
+            "branch": "GroundCover/_MultiMeshInstance3D_84_2_-",
+            "tris": 14400
+          },
+          {
+            "branch": "GroundCover/_MultiMeshInstance3D_84_-2_-",
+            "tris": 13500
+          },
+          {
+            "branch": "GroundCover/_MultiMeshInstance3D_84_0_",
+            "tris": 13500
+          },
+          {
+            "branch": "PoiDressing/ [SM_Env_Skeleton_Preset_01.tscn]",
+            "tris": 13144
+          }
+        ],
+        "lod_estimate_total": 1134838,
+        "lodless": {
+          "ArrayMesh(1 surf, 138 tris)": 138,
+          "ArrayMesh(1 surf, 140 tris)": 7000,
+          "ArrayMesh(1 surf, 156 tris)": 1248,
+          "ArrayMesh(1 surf, 16416 tris)": 16416,
+          "ArrayMesh(1 surf, 198 tris)": 5940,
+          "ArrayMesh(1 surf, 220 tris)": 220,
+          "ArrayMesh(1 surf, 230 tris)": 230,
+          "ArrayMesh(1 surf, 64800 tris)": 64800,
+          "ArrayMesh(1 surf, 7038 tris)": 7038,
+          "ArrayMesh(1 surf, 75 tris)": 75,
+          "CylinderMesh(1 surf, 120 tris)": 960,
+          "CylinderMesh(1 surf, 768 tris)": 768,
+          "CylinderMesh(1 surf, 96 tris)": 1536,
+          "SphereMesh(1 surf, 140 tris)": 1120,
+          "SphereMesh(1 surf, 16640 tris)": 33280,
+          "SphereMesh(1 surf, 80 tris)": 1120,
+          "Synty/CharactersSrc/Characters.fbx::ArrayMesh_tb2k0": 5368,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Chr_Attach_Helmet_Space_01.res": 484,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Env_Ground_Greeble_01.res": 80,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Env_Ground_Greeble_01_Metal_01.res": 232,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Env_Ground_Greeble_03.res": 224,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Env_Rock_Spike_01.res": 444,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Antenna_03.res": 368,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Container_01_Door_01.res": 564,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Crate_01_Lid_01.res": 156,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Crate_02_Lid_01.res": 176,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Crate_10_Lid_01.res": 486,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Drill_04_Drill_Head_01.res": 286,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Fuel_Cell_01_Lid.res": 80,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Satellite_04.res": 164,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Scanner_01.res": 96,
+          "TorusMesh(1 surf, 576 tris)": 576
+        },
+        "meshes": [
+          {
+            "drawn": 162720,
+            "far_m": 117.2,
+            "instances": 90,
+            "lod0": 1808,
+            "lods": 3,
+            "mesh": "ArrayMesh(1 surf, 1808 tris)",
+            "near_m": 23.6,
+            "nodes": 20,
+            "shadow_inst": 0,
+            "tris": 162720
+          },
+          {
+            "drawn": 143040,
+            "far_m": 105.5,
+            "instances": 120,
+            "lod0": 1192,
+            "lods": 2,
+            "mesh": "ArrayMesh(1 surf, 1192 tris)",
+            "near_m": 0.0,
+            "nodes": 26,
+            "shadow_inst": 0,
+            "tris": 143040
+          },
+          {
+            "drawn": 108000,
+            "far_m": 99.9,
+            "instances": 120,
+            "lod0": 900,
+            "lods": 1,
+            "mesh": "ArrayMesh(1 surf, 900 tris)",
+            "near_m": 0.0,
+            "nodes": 24,
+            "shadow_inst": 0,
+            "tris": 108000
+          },
+          {
+            "drawn": 99908,
+            "far_m": 98.4,
+            "instances": 23,
+            "lod0": 7402,
+            "lods": 2,
+            "mesh": "ArrayMesh(1 surf, 7402 tris)",
+            "near_m": 28.9,
+            "nodes": 12,
+            "shadow_inst": 0,
+            "tris": 170246
+          },
+          {
+            "drawn": 64800,
+            "far_m": 0.0,
+            "instances": 1,
+            "lod0": 64800,
+            "lods": 0,
+            "mesh": "ArrayMesh(1 surf, 64800 tris)",
+            "near_m": 0.0,
+            "nodes": 1,
+            "shadow_inst": 1,
+            "tris": 64800
+          },
+          {
+            "drawn": 41186,
+            "far_m": 85.1,
+            "instances": 2,
+            "lod0": 20593,
+            "lods": 5,
+            "mesh": "name:SM_Bld_Scav_Dish_01",
+            "near_m": 38.8,
+            "nodes": 2,
+            "shadow_inst": 2,
+            "tris": 41186
+          },
+          {
+            "drawn": 38208,
+            "far_m": 105.1,
+            "instances": 260,
+            "lod0": 150,
+            "lods": 1,
+            "mesh": "ArrayMesh(1 surf, 150 tris)",
+            "near_m": 11.3,
+            "nodes": 29,
+            "shadow_inst": 233,
+            "tris": 39000
+          },
+          {
+            "drawn": 37200,
+            "far_m": 84.4,
+            "instances": 20,
+            "lod0": 1860,
+            "lods": 2,
+            "mesh": "ArrayMesh(1 surf, 1860 tris)",
+            "near_m": 21.5,
+            "nodes": 8,
+            "shadow_inst": 0,
+            "tris": 37200
+          },
+          {
+            "drawn": 33600,
+            "far_m": 110.5,
+            "instances": 200,
+            "lod0": 168,
+            "lods": 3,
+            "mesh": "ArrayMesh(1 surf, 168 tris)",
+            "near_m": 10.4,
+            "nodes": 25,
+            "shadow_inst": 200,
+            "tris": 33600
+          },
+          {
+            "drawn": 33280,
+            "far_m": 1317.2,
+            "instances": 2,
+            "lod0": 16640,
+            "lods": 0,
+            "mesh": "SphereMesh(1 surf, 16640 tris)",
+            "near_m": 826.2,
+            "nodes": 2,
+            "shadow_inst": 2,
+            "tris": 33280
+          },
+          {
+            "drawn": 24600,
+            "far_m": 114.4,
+            "instances": 60,
+            "lod0": 410,
+            "lods": 2,
+            "mesh": "name:SM_Env_Plant_Cactus_01",
+            "near_m": 13.6,
+            "nodes": 16,
+            "shadow_inst": 0,
+            "tris": 24600
+          },
+          {
+            "drawn": 17820,
+            "far_m": 0.0,
+            "instances": 30,
+            "lod0": 594,
+            "lods": 1,
+            "mesh": "ArrayMesh(1 surf, 594 tris)",
+            "near_m": 0.0,
+            "nodes": 1,
+            "shadow_inst": 0,
+            "tris": 17820
+          },
+          {
+            "drawn": 16992,
+            "far_m": 7.7,
+            "instances": 12,
+            "lod0": 1416,
+            "lods": 2,
+            "mesh": "name:SM_Env_Plant_Succulent_Large_01",
+            "near_m": 7.7,
+            "nodes": 1,
+            "shadow_inst": 0,
+            "tris": 16992
+          },
+          {
+            "drawn": 16416,
+            "far_m": 6.3,
+            "instances": 1,
+            "lod0": 16416,
+            "lods": 0,
+            "mesh": "ArrayMesh(1 surf, 16416 tris)",
+            "near_m": 6.3,
+            "nodes": 1,
+            "shadow_inst": 0,
+            "tris": 16416
+          },
+          {
+            "drawn": 15148,
+            "far_m": 0.0,
+            "instances": 7,
+            "lod0": 2164,
+            "lods": 2,
+            "mesh": "ArrayMesh(1 surf, 2164 tris)",
+            "near_m": 0.0,
+            "nodes": 1,
+            "shadow_inst": 0,
+            "tris": 15148
+          },
+          {
+            "drawn": 14854,
+            "far_m": 0.0,
+            "instances": 7,
+            "lod0": 2122,
+            "lods": 3,
+            "mesh": "name:SM_Env_Plant_Hallowed_01",
+            "near_m": 0.0,
+            "nodes": 1,
+            "shadow_inst": 0,
+            "tris": 14854
+          },
+          {
+            "drawn": 13341,
+            "far_m": 60.0,
+            "instances": 1,
+            "lod0": 13341,
+            "lods": 2,
+            "mesh": "name:SM_Bld_Scav_Refinery_Tower_01",
+            "near_m": 60.0,
+            "nodes": 1,
+            "shadow_inst": 1,
+            "tris": 13341
+          },
+          {
+            "drawn": 13144,
+            "far_m": 54.5,
+            "instances": 1,
+            "lod0": 13144,
+            "lods": 3,
+            "mesh": "name:SM_Env_Skeleton_Preset_01",
+            "near_m": 54.5,
+            "nodes": 1,
+            "shadow_inst": 1,
+            "tris": 13144
+          },
+          {
+            "drawn": 13144,
+            "far_m": 25.9,
+            "instances": 1,
+            "lod0": 13144,
+            "lods": 3,
+            "mesh": "user://mesh_lods/b9d6f61c6f7ffdb430201841f86de472.res",
+            "near_m": 25.9,
+            "nodes": 1,
+            "shadow_inst": 1,
+            "tris": 13144
+          },
+          {
+            "drawn": 11848,
+            "far_m": 31.9,
+            "instances": 1,
+            "lod0": 11848,
+            "lods": 3,
+            "mesh": "name:SM_Env_Skeleton_Preset_03",
+            "near_m": 31.9,
+            "nodes": 1,
+            "shadow_inst": 1,
+            "tris": 11848
+          },
+          {
+            "drawn": 11648,
+            "far_m": 0.0,
+            "instances": 13,
+            "lod0": 896,
+            "lods": 1,
+            "mesh": "ArrayMesh(1 surf, 896 tris)",
+            "near_m": 0.0,
+            "nodes": 1,
+            "shadow_inst": 0,
+            "tris": 11648
+          },
+          {
+            "drawn": 11500,
+            "far_m": 0.0,
+            "instances": 50,
+            "lod0": 230,
+            "lods": 2,
+            "mesh": "name:SM_Env_Plant_Cactus_02",
+            "near_m": 0.0,
+            "nodes": 1,
+            "shadow_inst": 50,
+            "tris": 11500
+          },
+          {
+            "drawn": 11316,
+            "far_m": 97.5,
+            "instances": 1,
+            "lod0": 11316,
+            "lods": 3,
+            "mesh": "name:SM_Bld_Scav_Refinery_Smoke_Stack_01",
+            "near_m": 97.5,
+            "nodes": 1,
+            "shadow_inst": 1,
+            "tris": 11316
+          },
+          {
+            "drawn": 8688,
+            "far_m": 57.5,
+            "instances": 2,
+            "lod0": 4344,
+            "lods": 2,
+            "mesh": "name:SM_Ship_Fighter_Heavy_01",
+            "near_m": 42.2,
+            "nodes": 2,
+            "shadow_inst": 2,
+            "tris": 8688
+          },
+          {
+            "drawn": 8132,
+            "far_m": 37.9,
+            "instances": 2,
+            "lod0": 4066,
+            "lods": 3,
+            "mesh": "user://mesh_lods/93396b901ac1988fde8f19e0f688cb6f.res",
+            "near_m": 29.0,
+            "nodes": 2,
+            "shadow_inst": 2,
+            "tris": 8132
+          },
+          {
+            "drawn": 8058,
+            "far_m": 37.8,
+            "instances": 17,
+            "lod0": 474,
+            "lods": 1,
+            "mesh": "name:SM_Env_Floating_Rocks_01",
+            "near_m": 37.8,
+            "nodes": 1,
+            "shadow_inst": 0,
+            "tris": 8058
+          },
+          {
+            "drawn": 7848,
+            "far_m": 0.0,
+            "instances": 18,
+            "lod0": 436,
+            "lods": 2,
+            "mesh": "name:SM_Env_Plant_Pinecone_02",
+            "near_m": 0.0,
+            "nodes": 1,
+            "shadow_inst": 0,
+            "tris": 7848
+          },
+          {
+            "drawn": 7038,
+            "far_m": 9.8,
+            "instances": 1,
+            "lod0": 7038,
+            "lods": 0,
+            "mesh": "ArrayMesh(1 surf, 7038 tris)",
+            "near_m": 9.8,
+            "nodes": 1,
+            "shadow_inst": 0,
+            "tris": 7038
+          },
+          {
+            "drawn": 7000,
+            "far_m": 0.0,
+            "instances": 50,
+            "lod0": 140,
+            "lods": 0,
+            "mesh": "ArrayMesh(1 surf, 140 tris)",
+            "near_m": 0.0,
+            "nodes": 1,
+            "shadow_inst": 50,
+            "tris": 7000
+          },
+          {
+            "drawn": 5940,
+            "far_m": 0.0,
+            "instances": 30,
+            "lod0": 198,
+            "lods": 0,
+            "mesh": "ArrayMesh(1 surf, 198 tris)",
+            "near_m": 0.0,
+            "nodes": 1,
+            "shadow_inst": 0,
+            "tris": 5940
+          },
+          {
+            "drawn": 5624,
+            "far_m": 28.0,
+            "instances": 19,
+            "lod0": 296,
+            "lods": 1,
+            "mesh": "name:SM_Env_Floating_Rocks_02",
+            "near_m": 28.0,
+            "nodes": 1,
+            "shadow_inst": 0,
+            "tris": 5624
+          },
+          {
+            "drawn": 5584,
+            "far_m": 56.2,
+            "instances": 1,
+            "lod0": 5584,
+            "lods": 2,
+            "mesh": "ArrayMesh(1 surf, 5584 tris)",
+            "near_m": 56.2,
+            "nodes": 1,
+            "shadow_inst": 1,
+            "tris": 5584
+          },
+          {
+            "drawn": 5574,
+            "far_m": 25.1,
+            "instances": 1,
+            "lod0": 5574,
+            "lods": 3,
+            "mesh": "user://mesh_lods/e4e2ee92df334e98848ef726fb19ad93.res",
+            "near_m": 25.1,
+            "nodes": 1,
+            "shadow_inst": 1,
+            "tris": 5574
+          },
+          {
+            "drawn": 5424,
+            "far_m": 6.2,
+            "instances": 4,
+            "lod0": 1356,
+            "lods": 3,
+            "mesh": "name:SM_Env_Plant_Hallowed_02",
+            "near_m": 6.2,
+            "nodes": 1,
+            "shadow_inst": 0,
+            "tris": 5424
+          },
+          {
+            "drawn": 5368,
+            "far_m": 5.7,
+            "instances": 1,
+            "lod0": 5368,
+            "lods": 0,
+            "mesh": "Synty/CharactersSrc/Characters.fbx::ArrayMesh_tb2k0",
+            "near_m": 5.7,
+            "nodes": 1,
+            "shadow_inst": 1,
+            "tris": 5368
+          },
+          {
+            "drawn": 5304,
+            "far_m": 29.1,
+            "instances": 1,
+            "lod0": 5304,
+            "lods": 2,
+            "mesh": "user://mesh_lods/81efc719f194c68c3305c7df12fd6747.res",
+            "near_m": 29.1,
+            "nodes": 1,
+            "shadow_inst": 1,
+            "tris": 5304
+          },
+          {
+            "drawn": 4874,
+            "far_m": 65.0,
+            "instances": 1,
+            "lod0": 4874,
+            "lods": 1,
+            "mesh": "name:SM_Ship_Bomber_02",
+            "near_m": 65.0,
+            "nodes": 1,
+            "shadow_inst": 1,
+            "tris": 4874
+          },
+          {
+            "drawn": 4032,
+            "far_m": 76.7,
+            "instances": 2,
+            "lod0": 2016,
+            "lods": 1,
+            "mesh": "ArrayMesh(1 surf, 2016 tris)",
+            "near_m": 52.8,
+            "nodes": 2,
+            "shadow_inst": 2,
+            "tris": 4032
+          },
+          {
+            "drawn": 3898,
+            "far_m": 12.1,
+            "instances": 1,
+            "lod0": 3898,
+            "lods": 1,
+            "mesh": "Synty/SciFiSpace/FBX/SM_Ship_Bomber_01.fbx::ArrayMesh_e32jk",
+            "near_m": 12.1,
+            "nodes": 1,
+            "shadow_inst": 1,
+            "tris": 3898
+          },
+          {
+            "drawn": 3860,
+            "far_m": 31.3,
+            "instances": 5,
+            "lod0": 772,
+            "lods": 1,
+            "mesh": "user://mesh_lods/c8707dc7382000691e2be6b6579a1aaf.res",
+            "near_m": 9.4,
+            "nodes": 5,
+            "shadow_inst": 5,
+            "tris": 3860
+          },
+          {
+            "drawn": 3496,
+            "far_m": 37.9,
+            "instances": 1,
+            "lod0": 3496,
+            "lods": 2,
+            "mesh": "user://mesh_lods/09d8ec85bf5574344b16e34a1729243f.res",
+            "near_m": 37.9,
+            "nodes": 1,
+            "shadow_inst": 1,
+            "tris": 3496
+          },
+          {
+            "drawn": 3168,
+            "far_m": 48.9,
+            "instances": 8,
+            "lod0": 396,
+            "lods": 1,
+            "mesh": "user://mesh_lods/37801cb67fdf2d410cc4cb854b6a6630.res",
+            "near_m": 18.2,
+            "nodes": 8,
+            "shadow_inst": 8,
+            "tris": 3168
+          },
+          {
+            "drawn": 3030,
+            "far_m": 5.4,
+            "instances": 1,
+            "lod0": 3030,
+            "lods": 2,
+            "mesh": "user://mesh_lods/8bc18f426f886882e7ffe745561e4152.res",
+            "near_m": 5.4,
+            "nodes": 1,
+            "shadow_inst": 1,
+            "tris": 3030
+          },
+          {
+            "drawn": 2664,
+            "far_m": 22.5,
+            "instances": 3,
+            "lod0": 888,
+            "lods": 2,
+            "mesh": "user://mesh_lods/ccef561ddac5e105fd3dbab5b43baeae.res",
+            "near_m": 8.0,
+            "nodes": 3,
+            "shadow_inst": 3,
+            "tris": 2664
+          },
+          {
+            "drawn": 2630,
+            "far_m": 51.6,
+            "instances": 2,
+            "lod0": 1315,
+            "lods": 2,
+            "mesh": "user://mesh_lods/ad7b8f01718efd98bd261dd6ddcaaaa2.res",
+            "near_m": 37.9,
+            "nodes": 2,
+            "shadow_inst": 2,
+            "tris": 2630
+          },
+          {
+            "drawn": 2226,
+            "far_m": 10.3,
+            "instances": 1,
+            "lod0": 2226,
+            "lods": 2,
+            "mesh": "user://mesh_lods/73b79faa33094d65a9c9e1a9a70409fa.res",
+            "near_m": 10.3,
+            "nodes": 1,
+            "shadow_inst": 1,
+            "tris": 2226
+          },
+          {
+            "drawn": 2172,
+            "far_m": 15.3,
+            "instances": 1,
+            "lod0": 2172,
+            "lods": 1,
+            "mesh": "user://mesh_lods/bb17035c581f02d0df80bf9b3564d2bf.res",
+            "near_m": 15.3,
+            "nodes": 1,
+            "shadow_inst": 1,
+            "tris": 2172
+          },
+          {
+            "drawn": 2140,
+            "far_m": 23.9,
+            "instances": 1,
+            "lod0": 2140,
+            "lods": 1,
+            "mesh": "user://mesh_lods/43ca4412c7a03971304e2789b28801af.res",
+            "near_m": 23.9,
+            "nodes": 1,
+            "shadow_inst": 1,
+            "tris": 2140
+          },
+          {
+            "drawn": 2012,
+            "far_m": 48.7,
+            "instances": 1,
+            "lod0": 2012,
+            "lods": 2,
+            "mesh": "user://mesh_lods/4af03ec117abd566d34b2188c07fd4f8.res",
+            "near_m": 48.7,
+            "nodes": 1,
+            "shadow_inst": 1,
+            "tris": 2012
+          },
+          {
+            "drawn": 1986,
+            "far_m": 0.0,
+            "instances": 3,
+            "lod0": 662,
+            "lods": 2,
+            "mesh": "name:SM_Env_Plant_Hallowed_03",
+            "near_m": 0.0,
+            "nodes": 1,
+            "shadow_inst": 0,
+            "tris": 1986
+          },
+          {
+            "drawn": 1980,
+            "far_m": 33.7,
+            "instances": 5,
+            "lod0": 396,
+            "lods": 1,
+            "mesh": "user://mesh_lods/9936b6f54c62151629ad973f8216604f.res",
+            "near_m": 9.3,
+            "nodes": 5,
+            "shadow_inst": 5,
+            "tris": 1980
+          },
+          {
+            "drawn": 1910,
+            "far_m": 31.8,
+            "instances": 1,
+            "lod0": 1910,
+            "lods": 2,
+            "mesh": "user://mesh_lods/3e94aafa3c352fbf0dc97df30083c22e.res",
+            "near_m": 31.8,
+            "nodes": 1,
+            "shadow_inst": 1,
+            "tris": 1910
+          },
+          {
+            "drawn": 1744,
+            "far_m": 39.2,
+            "instances": 2,
+            "lod0": 872,
+            "lods": 3,
+            "mesh": "user://mesh_lods/21da6f1bd43fe0f6553cec87cf8cb9c6.res",
+            "near_m": 30.7,
+            "nodes": 2,
+            "shadow_inst": 2,
+            "tris": 1744
+          },
+          {
+            "drawn": 1714,
+            "far_m": 17.3,
+            "instances": 1,
+            "lod0": 1714,
+            "lods": 2,
+            "mesh": "user://mesh_lods/98de748669ab554b83e596ae3074bcd6.res",
+            "near_m": 17.3,
+            "nodes": 1,
+            "shadow_inst": 1,
+            "tris": 1714
+          },
+          {
+            "drawn": 1620,
+            "far_m": 33.2,
+            "instances": 1,
+            "lod0": 1620,
+            "lods": 3,
+            "mesh": "user://mesh_lods/08945f2d3e06847db179ae2db7125b0c.res",
+            "near_m": 33.2,
+            "nodes": 1,
+            "shadow_inst": 1,
+            "tris": 1620
+          },
+          {
+            "drawn": 1536,
+            "far_m": 33.2,
+            "instances": 16,
+            "lod0": 96,
+            "lods": 0,
+            "mesh": "CylinderMesh(1 surf, 96 tris)",
+            "near_m": 10.7,
+            "nodes": 16,
+            "shadow_inst": 16,
+            "tris": 1536
+          },
+          {
+            "drawn": 1512,
+            "far_m": 29.3,
+            "instances": 1,
+            "lod0": 1512,
+            "lods": 2,
+            "mesh": "user://mesh_lods/08329a80d56aae762d13d31d2b8f4aec.res",
+            "near_m": 29.3,
+            "nodes": 1,
+            "shadow_inst": 1,
+            "tris": 1512
+          },
+          {
+            "drawn": 1512,
+            "far_m": 62.1,
+            "instances": 1,
+            "lod0": 1512,
+            "lods": 2,
+            "mesh": "name:SM_Env_Artifact_Head_01",
+            "near_m": 62.1,
+            "nodes": 1,
+            "shadow_inst": 1,
+            "tris": 1512
+          },
+          {
+            "drawn": 1502,
+            "far_m": 10.1,
+            "instances": 1,
+            "lod0": 1502,
+            "lods": 2,
+            "mesh": "user://mesh_lods/ba77a864ef5f10b1f4cf07058a2608a3.res",
+            "near_m": 10.1,
+            "nodes": 1,
+            "shadow_inst": 1,
+            "tris": 1502
+          },
+          {
+            "drawn": 1370,
+            "far_m": 22.7,
+            "instances": 1,
+            "lod0": 1370,
+            "lods": 2,
+            "mesh": "user://mesh_lods/01f2c9460ec20160b37516415dfff1da.res",
+            "near_m": 22.7,
+            "nodes": 1,
+            "shadow_inst": 1,
+            "tris": 1370
+          }
+        ],
+        "static_total": 1206944
+      },
+      "video_mem_mb": 1261.3
+    }
+  ],
+  "cpu": "AMD Ryzen 9 9950X3D 16-Core Processor",
+  "device": "NVIDIA GeForce RTX 5090",
+  "engine_version": "4.7.2-stable (official)",
+  "frame_times_judged": true,
+  "limits": {
+    "draw_calls": 2500.0,
+    "load_ms": 4000.0,
+    "nodes": 12000.0,
+    "primitives": 3000000.0
+  },
+  "os": "Windows",
+  "over_budget": [],
+  "profile": "desktop",
+  "renderer": "forward_plus",
+  "resolution": "(1920.0, 1080.0)",
+  "timestamp": "2026-10-24T19:24:56"
+}

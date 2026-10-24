@@ -1,0 +1,33 @@
+{
+  "task_id": "perf_r2",
+  "decision": "D-054",
+  "commit": "see git log (branch worktree-agent-abf46d9f4651ae1e5)",
+  "engine_version": "Godot 4.7.2-stable (Forward+, Vulkan, RTX 5090)",
+  "command": [
+    "godot --path . -- --perf --out=builds/perf_before.json   (c2a7210 scripts + the fixed perf probe, back-to-back)",
+    "godot --path . -- --perf --out=builds/perf_after.json",
+    "godot --path . -- --perf --tris --frames=30 --case=<id> --out=<json>   (triangle breakdown, tools/perf/tri_probe.gd)",
+    "godot --path . --resolution 1600x900 -- --capture=<png> --setup=<fixture> --scene=<colony|surface> --wait=150 [--action=zoomout|living|hazard|vista:135]",
+    "CHECK_FAST=1 tools/check.sh"
+  ],
+  "exit_code": 0,
+  "expected": "All desktop budget cases within 2500 draws / 3,000,000 primitives / 12000 nodes / 4000 ms load without visible loss; frame p95 not worse; no gameplay/domain change.",
+  "observed": "0 of 10 cases over budget after (before: 2 over primitives with the fixed probe, surface_hazard 3.61 M and colony_era20 6.48 M). colony_era20 6,477,902 -> 2,892,605 primitives, colony_overview 2,574,401 -> 1,144,003, surface_hazard 3,614,729 -> 1,123,961, colony_grown 2,891,266 -> 2,390,133 and load 3262 -> 2882 ms, colony_era20 load 1989 -> 1635 ms. surface_viridia 2,192,777 -> 2,307,838 (chunk shadows, within budget). Frame p50 7.8-8.5 ms both runs (vsync 120 Hz); p95 after 8.8-9.8 ms in 9 of 10 cases (ship_starmap 15.8, before 20.6: machine noise). Captures: 10 views before/after identical apart from animated crowds, particles, dust storm and surface cloud shadows (two runs of the same build differ by mean abs diff 6.8-18). check.sh: COMPILE 151 scripts 0 failed, loc_exit=0 tests_exit=0 smoke_exit=0 touch_exit=0 campaign_exit=0 (CHECK_FAST).",
+  "fixture": "power, orbit:sere, approach:umbra, expedition:viridia, expedition:ferrum, grown:pelagos, grown:umbra, era:sere:20, era:ferrum:20",
+  "status": "PASS",
+  "artifacts": [
+    "evidence/perf_r2/perf_before.json",
+    "evidence/perf_r2/perf_after.json",
+    "evidence/perf_r2/perf_table.md",
+    "evidence/perf_r2/tris_before_colony_era20.json",
+    "evidence/perf_r2/tris_after_colony_era20.json",
+    "evidence/perf_r2/tris_before_surface_hazard.json",
+    "evidence/perf_r2/tris_after_surface_hazard.json",
+    "evidence/perf_r2/capture_diff.json",
+    "evidence/perf_r2/before_after_*.jpg (10 views, before left, after right, 800x450 each)"
+  ],
+  "notes": [
+    "Before-tris JSONs were taken with the first probe version (no LOD estimate column, old perf probe); after-tris with the final one.",
+    "user://mesh_lods holds generated LOD meshes (derived from the local packs, never committed); first run on a machine generates them (~20 ms per heavy mesh)."
+  ]
+}

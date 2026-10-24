@@ -160,6 +160,8 @@ func rebuild(views: Dictionary, terrain: TerrainBuilder, clear: ColonyClearance,
 	_add_weathering(views, terrain, clear)
 	_add_fx(views)
 	_add_pools(pools, terrain)
+	# D-054: per-chunk LOD and culling for the colony-wide batches (ranges kept for the overhead camera).
+	MeshLod.split_multimeshes(self, 40.0, 300.0)
 
 
 ## Biome weathering at the foundations (data "weathering" per world): soft,

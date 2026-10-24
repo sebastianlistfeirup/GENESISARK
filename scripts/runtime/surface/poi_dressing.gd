@@ -59,6 +59,7 @@ static func build(terrain: TerrainBuilder, survey: Dictionary, planet: Dictionar
 	for r: Dictionary in DictUtil.get_arr(survey, "routes"):
 		_route_kit(ctx, kits, "route_" + str(r.get("id")), ctx["routes"][ri], rng, seed_value + 97 * (ri + 1))
 		ri += 1
+	MeshLod.apply_tree(root)  # D-054: LODs for pack meshes that ship without them
 	return root
 
 

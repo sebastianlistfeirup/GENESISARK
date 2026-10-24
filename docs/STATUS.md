@@ -21,7 +21,7 @@
 | Parse-tjek | `godot --headless --path . res://scenes/tests/compile_all.tscn` | 131 scripts, 0 fejl |
 | Balance | `godot --headless --path . --script res://tools/balance/run_balance.gd` | 18 kørsler til år 40 → `evidence/balance/` |
 | Hel kampagne (bot) | `godot --headless --path . --script res://tools/campaign/campaign_bot.gd` | 6 planeter × 4 spillestile → `evidence/campaign_bot.json` (se session 6) |
-| Ydelse | `godot --path . -- --perf [--profile=web]` | RTX 5090, 1080p Forward+: p95 8,8–9,9 ms i alle 7 scener; 2 over trekantbudget (surface_hazard 3,3 mio., colony_era20 4,1 mio. > 3 mio.) → `evidence/perf/` |
+| Ydelse | `godot --path . -- --perf [--tris] [--profile=web]` | RTX 5090, Forward+ (D-054): **10/10 cases inden for desktopbudgettet**; colony_era20 6,48 → 2,89 mio. primitiver, surface_hazard 3,61 → 1,12 mio., colony_grown indlæsning 2,9 s; p50 7,8–8,5 ms → `evidence/perf_r2/` |
 | 3 · Optaget gameplay | — | NOT_RUN (kræver menneske) |
 | 4 · Eksport | Windows eksporteret og **kørt på målmaskinen** (menu, Viridia, Umbra) | PASS → `evidence/GA-12/windows_run.json` |
 | Oversættelse | `python3 tools/loc_extract.py --check` | 1191 nøgler, 0 mangler (en → da) |

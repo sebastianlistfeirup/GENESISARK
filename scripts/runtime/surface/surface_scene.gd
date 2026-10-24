@@ -39,6 +39,7 @@ func _ready() -> void:
 		AppFlow.goto("ship")
 		return
 	var ex := gs.expedition
+	MeshLod.small_shadow_rules = true  # D-054: small pieces cast shadows only near the camera
 	planet = GameSession.content.planet(ex.planet_id)
 	survey = GameSession.content.surveys.get(ex.planet_id, {})
 	var site := GameSession.content.site(ex.site_id)
@@ -75,7 +76,9 @@ func _ready() -> void:
 	add_child(terrain)
 	terrain.build()
 	terrain.scatter(hash(ex.site_id), 70 if GroundCover.spec_for(str(planet.get("id")), "").is_empty() else 0, avoid)
-	add_child(GroundCover.build(terrain, str(planet.get("id")), hash(ex.site_id) + 7, avoid, 180.0, str(planet.get("biome_id"))))
+	var cover := GroundCover.build(terrain, str(planet.get("id")), hash(ex.site_id) + 7, avoid, 180.0, str(planet.get("biome_id")))
+	MeshLod.split_multimeshes(cover, 30.0)  # D-054: per-chunk LOD, culling and the authored fade ranges
+	add_child(cover)
 	add_child(PlanetSky.build(str(planet.get("id")), str(planet.get("biome_id")), terrain))
 	_place_lander()
 	SceneDressing.attach(self, str(site.get("id", "")), terrain)
@@ -618,3 +621,7 @@ func _start_descent(lander: Node3D, body: Node3D, start_alt: float) -> void:
 		captain.camera_rig.camera.current = true
 		captain.camera_rig.pitch = CaptainCamera.REST_PITCH
 		captain.camera_rig.snap())
+
+
+func _exit_tree() -> void:
+	MeshLod.small_shadow_rules = false

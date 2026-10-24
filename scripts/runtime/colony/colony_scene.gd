@@ -54,6 +54,8 @@ func _ready() -> void:
 	AssetSlots.style = str(GroundCover.spec_for(gs.colony.planet_id, "").get("colony_style", ""))
 	if AssetSlots.style == "explorer":
 		AssetSlots.style = ""
+	ResourcePrefetch.request(_prefetch_paths(gs))  # D-054: pack scenes load on worker threads meanwhile
+	MeshLod.small_shadow_rules = true
 	for n: Node in TerrainBuilder.environment_for(planet, gs.colony.biome_id):
 		add_child(n)
 	terrain = TerrainBuilder.new()
@@ -124,6 +126,23 @@ func _ready() -> void:
 	if AppFlow.params.get("landing", false) or str(AppFlow.params.get("action", "")).begins_with("descent"):
 		_maybe_ark_descent()
 	_check_pending_event()
+	ResourcePrefetch.release()
+
+
+## Pack scenes this colony builds from: its buildings' wrappers, the street
+## dressing, corridor modules, the planet's ground cover and the colonists.
+func _prefetch_paths(gs: GameState) -> Array:
+	AssetSlots.slots()
+	var out: Array = []
+	for b: Dictionary in gs.colony.buildings:
+		var def := GameSession.content.building(str(b["def_id"]))
+		out.append_array(AssetSlots.scene_paths(str(def.get("visual_slot", "building." + str(b["def_id"])))))
+	for slot: String in ["char.citizen_adult", "char.citizen_child", "char.robot_worker"]:
+		out.append_array(AssetSlots.scene_paths(slot))
+	ResourcePrefetch.paths_in(BuildingDressing.doc(), BuildingDressing.resolve, out)
+	out.append_array(ColonyCorridors.MODULES)
+	ResourcePrefetch.paths_in(GroundCover.spec_for(gs.colony.planet_id, gs.colony.biome_id), Callable(), out)
+	return out
 
 
 func _draw_districts() -> void:
@@ -287,6 +306,7 @@ func _draw_corridors() -> void:
 	if _corridors:
 		_corridors.queue_free()
 	_corridors = ColonyCorridors.build(gs, terrain)
+	MeshLod.add_shadow_twins(_corridors)  # D-054
 	add_child(_corridors)
 	if AssetSlots.style == "corp":
 		if _perimeter:
@@ -468,6 +488,8 @@ func _lay_ground_cover(clear: ColonyClearance) -> void:
 		avoid.append([r.get_center(), r.size.length() * 0.5 + 2.0])
 	var gs: GameState = GameSession.state
 	_cover = GroundCover.build(terrain, gs.colony.planet_id, hash(gs.colony.site_id) + 3, avoid, 220.0, gs.colony.biome_id)
+	# D-054: chunks get their own LOD and culling; the overhead camera sees ~250 m, so nothing is range-culled sooner than before.
+	MeshLod.split_multimeshes(_cover, 40.0, 300.0)
 	add_child(_cover)
 	# D-053: a lighter set of the world's wildlife out past the districts' full
 	# grown extent (buildings, roads and tubes come later; animals keep clear).
@@ -969,6 +991,7 @@ func debug_action(action: String) -> void:
 
 func _exit_tree() -> void:
 	AssetSlots.style = ""
+	MeshLod.small_shadow_rules = false
 
 
 func gs_planet_id() -> String:

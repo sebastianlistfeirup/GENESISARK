@@ -44,6 +44,8 @@ func rebuild() -> void:
 	if ps:
 		var inst: Node3D = ps.instantiate()
 		inst.name = "Asset"
+		if not Engine.is_editor_hint():
+			MeshLod.apply_tree(inst)  # D-054: LODs for pack meshes that ship without them
 		var s: Dictionary = AssetSlots.slot(slot_id)
 		var sc := DictUtil.get_float(s, "scale", 1.0)
 		inst.scale = Vector3.ONE * sc
