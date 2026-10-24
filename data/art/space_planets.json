@@ -114,7 +114,7 @@
   },
   "sere": {
    "band_a": "#f6d29a",
-   "band_b": "#d68848",
+   "band_b": "#c46f34",
    "atmo": "#ffc890",
    "land_amount": 0.0,
    "bands": 1.0,
@@ -123,14 +123,16 @@
    "clouds": 0.15,
    "rim": 1.1,
    "ring": {
-    "color": "#f2d6b0",
-    "band": "#9a6a4a",
+    "color": "#cfa77a",
+    "band": "#5e3a26",
     "scale": 4.4,
     "tilt": [
      24,
      0,
      12
-    ]
+    ],
+    "opacity": 0.62,
+    "inner": 0.56
    },
    "mesh": "res://assets/Synty/SciFiSpace/FBX/SM_Env_Planet_03.fbx",
    "tilt": [
@@ -138,7 +140,7 @@
     0,
     0
    ],
-   "halo": 0.9,
+   "halo": 0.7,
    "moons": [
     {
      "look": "grey",

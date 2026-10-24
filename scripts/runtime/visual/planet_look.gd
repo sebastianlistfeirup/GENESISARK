@@ -222,6 +222,7 @@ static func ring_node(r: float, ring: Dictionary) -> MeshInstance3D:
 	rm.set_shader_parameter("ring_color", Color(str(ring.get("color", "#e8d2b4"))))
 	rm.set_shader_parameter("band_color", Color(str(ring.get("band", "#8a7262"))))
 	rm.set_shader_parameter("inner", float(ring.get("inner", 0.5)))
+	rm.set_shader_parameter("opacity", float(ring.get("opacity", 0.75)))
 	var rt := _texture("ring")
 	if rt != null:
 		rm.set_shader_parameter("ring_tex", rt)

@@ -208,6 +208,17 @@ func _traffic(view: Dictionary) -> void:
 	if ark.using_asset:
 		var spec := DictUtil.get_dict(scd, "ark_fx")
 		SpaceFx.dress_ark(ark, spec)
+	# The Ark crosses the day side backlit: a soft key from the camera's side lights
+	# only the ship (render layer 2), so it reads as a hull, not a black sliver.
+	for gi: Node in ark.find_children("*", "GeometryInstance3D", true, false):
+		(gi as GeometryInstance3D).layers |= 2
+	var key := DirectionalLight3D.new()
+	key.light_cull_mask = 2
+	key.light_color = Color("ffd8b4")
+	key.light_energy = float(view.get("ark_key", 0.9))
+	key.shadow_enabled = false
+	_world.add_child(key)
+	key.look_at_from_position(_cam.position if _cam else Vector3(0, 30, 215), Vector3.ZERO)
 	for s: Variant in DictUtil.get_arr(view, "satellites"):
 		var d: Dictionary = s
 		var src := SpaceScenery._source(str(d.get("mesh", "")))
