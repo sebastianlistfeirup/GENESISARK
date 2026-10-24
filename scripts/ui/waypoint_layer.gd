@@ -9,6 +9,7 @@ extends CanvasLayer
 ## Presentation only: scenes tell it which nodes matter; it never touches state.
 
 const BOTTOM_EDGE := 230.0     # keep edge markers above subtitles and prompts
+const TOP_EDGE := 200.0        # ... and below the objective / top-right HUD columns
 const EDGE := 84.0           # px kept free at the screen edge
 const PLACE_RANGE := 28.0    # m: places further away stay hidden
 const PROMPT_RANGE := 2.6    # m: inside this the interaction prompt speaks instead
@@ -76,7 +77,7 @@ func _draw_markers() -> void:
 	if cam == null:
 		return
 	var rect := _canvas.get_rect()
-	var font := ThemeDB.fallback_font
+	var font := UiKit.body_font()  # the HUD's Exo 2, not the engine font
 	var player_pos := cam.global_position
 	var me: Node3D = get_tree().get_first_node_in_group("player") as Node3D
 	if me:
@@ -106,7 +107,7 @@ func _draw_markers() -> void:
 		return
 	var behind := cam.is_position_behind(owp)
 	var pos := cam.unproject_position(owp)
-	var inner := rect.grow_individual(-EDGE, -EDGE, -EDGE, -BOTTOM_EDGE)
+	var inner := rect.grow_individual(-EDGE, -TOP_EDGE, -EDGE, -BOTTOM_EDGE)
 	var on_screen := not behind and inner.has_point(pos)
 	var pulse := 1.0 if bool(SettingsService.get_value("reduced_motion", false)) else 0.85 + sin(_t * 3.0) * 0.15
 	var col := Color(UiKit.AMBER, pulse)

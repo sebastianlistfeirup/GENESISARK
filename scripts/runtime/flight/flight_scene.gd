@@ -76,6 +76,11 @@ func _ready() -> void:
 	var panel := UiKit.panel()
 	panel.add_child(_info)
 	hud.top_right.add_child(panel)
+	# The campaign objective still names the ship task until the Ark is in orbit;
+	# in the cockpit the goal is the approach itself.
+	hud.override_objective({"title": Loc.t("Reach orbit around %s") % str(GameSession.content.locations.get(_dest, {}).get("name", _dest)),
+		"hint": Loc.t("Steer around the rocks, or let NAV fly. Impacts cost hull and oxygen.")})
+	hud.dock_prompt_low()  # no subtitles here: the controls line sits under the Ark, never on it
 	var k := SettingsService.primary_key
 	hud.set_prompt(Loc.t("%s/%s speed · %s/%s sideways · %s/%s up/down · [%s] evasive burn · [%s] autopilot") % [k.call("move_forward"), k.call("move_back"),
 		k.call("move_left"), k.call("move_right"), k.call("ascend"), k.call("descend"), k.call("sprint"), k.call("autopilot")])
@@ -193,7 +198,7 @@ func _physics_process(delta: float) -> void:
 		_cleared = true
 		if GameSession.has_game():
 			hud.nav.say({"id": "hazard_cleared", "severity": "info", "speaker": "NAV", "text": GameSession.sim.nav.line("hazard_cleared", {"hits": hits})})
-	_info.text = Loc.t("Approach: %s\nOrbit in %d m · speed %d\nHull %d %% · Oxygen %d %% · impacts %d\n%s") % [
+	_info.text = Loc.t("Approach: %s\nOrbit in %d m · speed %d\nHull %d %% · Oxygen %d %% · impacts %d\nPilot: %s") % [
 		GameSession.content.locations.get(_dest, {}).get("name", _dest), int(maxf(0.0, LENGTH - progress)), int(speed),
 		int(_projected_integrity()), int(_projected_oxygen()), hits, Loc.t("AUTOPILOT (NAV)") if autopilot else Loc.t("manual")]
 	if progress >= LENGTH:

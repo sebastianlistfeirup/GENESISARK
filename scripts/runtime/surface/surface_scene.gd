@@ -27,6 +27,7 @@ var waypoints: WaypointLayer
 var _nav_said: Dictionary = {}  # what NAV has reported this expedition (UI memory, not saved)
 var _objective_key := ""
 var _nav_t := 0.0
+var _poi_labels: Dictionary = {}  # key -> Label3D: far-off signage, handed to the waypoint layer up close
 
 
 func _ready() -> void:
@@ -108,7 +109,10 @@ func _ready() -> void:
 	_build_suit_hud()
 	AudioService.set_ambience_any(["amb_surface_" + str(planet.get("biome_id")), "amb_colony_wind"])
 	GameSession.trigger_story("expedition_start")
-	hud.toast(str(survey.get("goal", "")), "info", 9.0)
+	# On the ground the voyage objective's hint ("choose a landing site ...") is
+	# stale: the panel shows this site's goal instead (it used to be a toast).
+	var o := GameSession.sim.objectives.current(GameSession.state)
+	hud.override_objective({"title": str(o.get("title", "")), "hint": str(survey.get("goal", o.get("hint", "")))})
 	_update_waypoint(ex)
 	hud.nav.say(GameSession.sim.nav.surface_brief(ex, _nav_context(ex, [1.0, "", "", ""])))
 
@@ -172,8 +176,11 @@ func _place_points(pts: Dictionary) -> void:
 		lbl.pixel_size = 0.01
 		lbl.position.y = 3.2
 		lbl.modulate = UiKit.AMBER if key != "relay" else UiKit.PETROL.lightened(0.3)
+		lbl.outline_size = 12
+		lbl.outline_modulate = Color(0.02, 0.05, 0.06, 0.85)
 		lbl.no_depth_test = true
 		it.add_child(lbl)
+		_poi_labels[key] = lbl
 		it.used.connect(_on_use)
 		_markers[key] = it
 
@@ -213,6 +220,11 @@ func _place_routes() -> void:
 		var bends: Array = DictUtil.get_arr(r, "waypoints").filter(func(w: Variant) -> bool: return Vector2(float(w[0]), float(w[1])).length() > 3.0)
 		var first: Array = bends[0] if not bends.is_empty() else [0, 0]
 		lbl.position = _ground(Vector2(float(first[0]), float(first[1]))) + Vector3(0, 2.0, 0)
+		# A choice made near the lander: the sign fades out with distance instead
+		# of piling onto the place and objective labels across the map.
+		lbl.visibility_range_end = 45.0
+		lbl.visibility_range_end_margin = 8.0
+		lbl.visibility_range_fade_mode = GeometryInstance3D.VISIBILITY_RANGE_FADE_SELF
 		add_child(lbl)
 
 
@@ -251,6 +263,8 @@ func _place_hazards() -> void:
 		lbl.pixel_size = 0.01
 		lbl.position.y = 6.5
 		lbl.modulate = Color(str(hdef.get("color", "#d6c447")))
+		lbl.outline_size = 10
+		lbl.outline_modulate = Color(0.02, 0.05, 0.06, 0.85)
 		area.add_child(lbl)
 		hazard_areas.append({"area": area, "mult": DictUtil.get_float(DictUtil.get_dict(hdef, "expedition"), "suit_drain_multiplier", 2.0),
 			"label": str(hz.get("label", hdef.get("name", hid))), "sound": str(HAZARD_SOUND.get(hid, "")), "id": hid + "@" + str(hazard_areas.size())})
@@ -285,6 +299,17 @@ func _update_waypoint(ex: ExpeditionState) -> void:
 		label = Loc.t("Place the relay")
 	_objective_key = key
 	waypoints.set_objective(_markers.get(key), label, 3.6 if key != "lander" else 4.2)
+
+
+## Big place signs read from afar; up close (and for the current objective) the
+## waypoint layer names the spot, so the two never stack on top of each other.
+func _process(_delta: float) -> void:
+	if captain == null:
+		return
+	for key: String in _poi_labels:
+		var lbl: Label3D = _poi_labels[key]
+		var far := captain.global_position.distance_to(lbl.global_position) > WaypointLayer.PLACE_RANGE
+		lbl.visible = far and key != _objective_key
 
 
 func _hazard_mult() -> Array:

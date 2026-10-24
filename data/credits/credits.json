@@ -22,30 +22,35 @@
       "title": "Art",
       "entries": [
         {
-          "role": "Greybox proxies and procedural terrain",
-          "name": "GENESIS ARK",
-          "status": "in_use"
-        },
-        {
-          "role": "POLYGON Sci-Fi Space, Sci-Fi Worlds, Sci-Fi City, Sci-Fi Cyber City, Sci-Fi Outpost",
+          "role": "Ship, colony, space and characters: POLYGON Sci-Fi Space, Sci-Fi Worlds and Sci-Fi City",
           "name": "Synty Studios",
-          "status": "planned",
+          "status": "in_use",
           "text": "Used under license from Synty Studios. The packs are not included in the source code."
         },
         {
-          "role": "POLYGON Particle FX",
+          "role": "Planet flora and rock: POLYGON Nature Biomes (Tropical Jungle, Swamp Marshland, Alpine Mountain, Arid Desert)",
           "name": "Synty Studios",
-          "status": "planned"
+          "status": "in_use"
         },
         {
-          "role": "Sidekick Modular Characters",
+          "role": "Character animation: ANIMATION locomotion and idle packs",
           "name": "Synty Studios",
-          "status": "planned"
+          "status": "in_use"
         },
         {
           "role": "INTERFACE Sci-Fi Menus and Sci-Fi Soldier HUD",
           "name": "Synty Studios",
-          "status": "planned"
+          "status": "in_use"
+        },
+        {
+          "role": "Terrain, planets, sky, particle effects and shaders",
+          "name": "GENESIS ARK",
+          "status": "in_use"
+        },
+        {
+          "role": "Exo 2 typeface (SIL Open Font License)",
+          "name": "Natanael Gama",
+          "status": "in_use"
         }
       ]
     },
