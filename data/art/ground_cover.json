@@ -467,6 +467,7 @@
    "cliff_tex": "res://assets/Synty/Nature/Jungle/Textures/Terrain/RockWall_Texture_01.png",
    "amp": 1.55,
    "water": true,
+   "ocean": true,
    "ground": "#4f8f5c",
    "patch": "#c9b98a",
    "cliff": "#46564c"
@@ -692,9 +693,8 @@
   "landmarks": [
    {
     "meshes": [
-     "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Floating_Rocks_Spiral_01.tscn",
-     "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Floating_Rocks_Spiral_02.tscn",
-     "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Artifact_AlienRuin_04.tscn"
+     "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Artifact_AlienRuin_04.tscn",
+     "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Detail_Spire_Group_01.tscn"
     ],
     "count": 4,
     "scale": [
@@ -1988,7 +1988,6 @@
     "meshes": [
      "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Artifact_AlienRuin_01.tscn",
      "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Artifact_AlienRuin_08.tscn",
-     "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Floating_Rocks_Spiral_01.tscn",
      "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Artifact_AlienRuin_11.tscn"
     ],
     "count": 5,

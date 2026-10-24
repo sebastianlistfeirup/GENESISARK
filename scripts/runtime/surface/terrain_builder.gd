@@ -246,9 +246,10 @@ func build() -> void:
 		var wm := ShaderMaterial.new()
 		wm.shader = preload("res://art/shaders/water.gdshader")
 		w.material_override = wm
-		pm.size = Vector2(size_m * 3.0, size_m * 3.0)
-		pm.subdivide_width = 96
-		pm.subdivide_depth = 96
+		var span := 960.0 if bool(style.get("ocean", false)) else size_m * 3.0  # a water world's sea reaches the horizon
+		pm.size = Vector2(span, span)
+		pm.subdivide_width = 128 if span > size_m * 3.0 else 96
+		pm.subdivide_depth = pm.subdivide_width
 		add_child(w)
 
 
@@ -311,6 +312,7 @@ func _build_far_ring(mat: Material, ground: Color, patch: Color, cliff: Color) -
 	var fs := 10.0
 	var inner := size_m * 0.5 - step * 2.0
 	var n := int(far * 2.0 / fs)
+	var ocean := water_level > -50.0 and bool(style.get("ocean", false))
 	var st := SurfaceTool.new()
 	st.begin(Mesh.PRIMITIVE_TRIANGLES)
 	for iz: int in n:
@@ -327,6 +329,10 @@ func _build_far_ring(mat: Material, ground: Color, patch: Color, cliff: Color) -
 					var h := height_at(v.x, v.y)
 					var dist := maxf(absf(v.x), absf(v.y))
 					h += smoothstep(size_m * 0.5, far, dist) * height_scale * 2.5 * (0.6 + 0.4 * detail.get_noise_2d(v.x * 0.05, v.y * 0.05))
+					if ocean:
+						# Water world: open sea to the horizon, broken by scattered islands.
+						var isle := maxf(0.0, detail.get_noise_2d(v.x * 0.012 + 40.0, v.y * 0.012) - 0.18) * height_scale * 9.0
+						h = lerpf(h, water_level - 5.0 + isle, smoothstep(size_m * 0.5, size_m * 0.5 + 70.0, dist))
 					if dist < inner:
 						h -= 3.0  # tucked under the playable mesh where they overlap
 					vs.append(Vector3(v.x, h, v.y))

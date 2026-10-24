@@ -42,6 +42,19 @@ static func build(spec: Dictionary, seed_value: int, terrain: Node3D = null) -> 
 	var mmi := MultiMeshInstance3D.new()
 	mmi.multimesh = f._mm
 	mmi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	# The pack's bird mesh has no material of its own: a matte silhouette, two-sided
+	# (wings are single planes), so flocks read as birds against the sky, not crates.
+	var mat := StandardMaterial3D.new()
+	mat.albedo_color = Color(str(spec.get("color", "#2b2f38")))
+	mat.roughness = 1.0
+	mat.cull_mode = BaseMaterial3D.CULL_DISABLED
+	var tex := str(spec.get("texture", "res://assets/Synty/Nature/Alpine/Textures/FX/HawkWing_Tex_01.png"))
+	if ResourceLoader.exists(tex):  # the pack's feathered wing cut-out
+		mat.albedo_texture = load(tex)
+		mat.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA_SCISSOR
+		mat.alpha_scissor_threshold = 0.5
+		mat.albedo_color = Color(str(spec.get("color", "#ffffff")))
+	mmi.material_override = mat
 	f.add_child(mmi)
 	f._place(0.0)
 	return f

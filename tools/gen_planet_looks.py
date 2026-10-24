@@ -62,7 +62,7 @@ PLANETS = {
         "blocked_rock": J("SM_Env_Rock_Pile_06"),
         "colony_style": "explorer",  # water world: open sea, islands, mangroves, reeds, lily pads, coral shallows
         "sky": {"sun_size": 4, "sun_color": "#f2f8ff", "creatures": [{"model": "res://assets/imported/meshy/creature_manta.glb", "motion": "wing", "size": 9, "count": 5, "height": [12, 24], "radius": [25, 55], "speed": 0.06, "beat": 1.1, "amount": 0.3, "glow": 0.4}], "bodies": [{"biome": "green", "tint": "#7fb0c8", "azimuth": -40, "elevation": 18, "size": 22, "ring": "#cfe4ee"}], "fauna": {"mesh": N + "Jungle/FBX/FX_Bird_Mesh_01.fbx", "flocks": 4, "count": 11, "scale": 1.9}},
-        "terrain": {"ground_tex": N + "Swamp/Textures/Terrain/Moss_Swamp_Texture_01.png", "cliff_tex": N + "Jungle/Textures/Terrain/RockWall_Texture_01.png", "amp": 1.55, "water": True, "ground": "#4f8f5c", "patch": "#c9b98a", "cliff": "#46564c"},
+        "terrain": {"ground_tex": N + "Swamp/Textures/Terrain/Moss_Swamp_Texture_01.png", "cliff_tex": N + "Jungle/Textures/Terrain/RockWall_Texture_01.png", "amp": 1.55, "water": True, "ocean": True, "ground": "#4f8f5c", "patch": "#c9b98a", "cliff": "#46564c"},
         "look": {"rock_top_tex": N + "Jungle/Textures/Terrain/Grass_Debris_Texture_01.png", "hue_shift": 0.07, "sat": 1.05, "wind": 0.12, "rock_tint": "#8c9a98", "rock_top_tint": "#6b8f5a"},
         "trees": [t([S("SM_Env_Tree_Mangrove_01"), S("SM_Env_Tree_Mangrove_02"), S("SM_Env_Tree_Mangrove_03"), S("SM_Env_Tree_Swamp_01"),
                      S("SM_Env_Tree_Swamp_03"), J("SM_Env_Tree_Palm_04")], 90, (0.9, 1.4), 0.6, 3)],
@@ -73,7 +73,7 @@ PLANETS = {
                   c(S("SM_Env_LillyPads_01"), 180, (0.9, 1.4), 6, on_water=True), c(S("SM_Env_LillyPads_03"), 140, (0.9, 1.4), 6, on_water=True),
                   c(J("SM_Prop_Coral_02"), 60, (0.8, 1.3), 4, on_water=True)],
         "landmarks": [
-                      lm([Wp("SM_Env_Floating_Rocks_Spiral_01"), Wp("SM_Env_Floating_Rocks_Spiral_02"), Wp("SM_Env_Artifact_AlienRuin_04")], 4, (1.6, 2.4), (60, 82)), lm([J("SM_Env_Rock_Cliff_01"), J("SM_Env_Rock_Spike_01"), J("SM_Env_Rock_Spikes_02")], 18, (1.8, 2.8), (62, 86))],
+                      lm([Wp("SM_Env_Artifact_AlienRuin_04"), Wp("SM_Env_Detail_Spire_Group_01")], 4, (1.6, 2.4), (60, 82)), lm([J("SM_Env_Rock_Cliff_01"), J("SM_Env_Rock_Spike_01"), J("SM_Env_Rock_Spikes_02")], 18, (1.8, 2.8), (62, 86))],
     },
     "ferrum": {
         "blocked_rock": R("Environment/SM_Env_Rock_05"),
@@ -138,7 +138,7 @@ PLANETS = {
                   c(Wp("SM_Env_Floating_Crystal_01"), 70, (0.06, 0.13), 4, emissive="#54ffe0"), c(Wp("SM_Env_Floating_Crystal_02"), 50, (0.06, 0.12), 4, emissive="#b37bff"),
                   c(A("SM_Env_Rock_Pebbles_04"), 200, (0.8, 1.3), 6), c(A("SM_Env_Snow_Mound_02"), 60, (0.7, 1.2), 3)],
         "landmarks": [
-                      lm([Wp("SM_Env_Artifact_AlienRuin_01"), Wp("SM_Env_Artifact_AlienRuin_08"), Wp("SM_Env_Floating_Rocks_Spiral_01"), Wp("SM_Env_Artifact_AlienRuin_11")], 5, (1.8, 2.6), (60, 82)), lm([A("SM_Env_MountainRange_02"), A("SM_Env_MountainRange_04")], 7, (0.5, 0.7), (92, 104)),
+                      lm([Wp("SM_Env_Artifact_AlienRuin_01"), Wp("SM_Env_Artifact_AlienRuin_08"), Wp("SM_Env_Artifact_AlienRuin_11")], 5, (1.8, 2.6), (60, 82)), lm([A("SM_Env_MountainRange_02"), A("SM_Env_MountainRange_04")], 7, (0.5, 0.7), (92, 104)),
                       lm([A("SM_Env_Rock_08"), A("SM_Env_Rock_010"), Wp("SM_Env_Rock_Spike_02"), Wp("SM_Env_Rock_Spike_04"), A("SM_Env_Stalactite_03")], 18, (2.2, 3.4), (58, 84))],
     },
 }
