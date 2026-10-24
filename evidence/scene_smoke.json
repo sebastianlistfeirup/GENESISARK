@@ -6,7 +6,7 @@
       "ok": true
     },
     {
-      "detail": "@Button@57:<Button#135325026180>",
+      "detail": "@Button@63:<Button#139586439097>",
       "name": "pad_focuses_menu",
       "ok": true
     },
@@ -36,7 +36,7 @@
       "ok": true
     },
     {
-      "detail": "moved=0.62",
+      "detail": "moved=0.56",
       "name": "riglab_runs",
       "ok": true
     },
@@ -101,7 +101,7 @@
       "ok": true
     },
     {
-      "detail": "I_power_coupling:<Area3D#310680492913>",
+      "detail": "I_power_coupling:<Area3D#314891574138>",
       "name": "prompt_targets_coupling",
       "ok": true
     },
@@ -284,5 +284,5 @@
   "engine_version": "4.7.1-stable (official)",
   "failures": [],
   "status": "PASS",
-  "timestamp": "2026-10-24T13:24:00"
+  "timestamp": "2026-10-24T13:44:33"
 }

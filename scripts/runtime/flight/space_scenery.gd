@@ -11,9 +11,9 @@ extends Node3D
 const PATH := "res://data/art/space_scenery.json"
 ## Rock tints per destination biome: the same models read as rusty, icy or dusty fields.
 const TINTS := {
-	"desert": ["#4a3a33", "#57463c", "#3a2e2a"],
-	"ice": ["#454a52", "#52575e", "#3a3f48"],
-	"green": ["#46403a", "#524a42", "#38332f"],
+	"desert": ["#6a5448", "#7a6252", "#56443c"],
+	"ice": ["#5e6470", "#6c727c", "#525866"],
+	"green": ["#665a54", "#74685e", "#544a46"],
 }
 
 static var _cache: Dictionary = {}  # path -> {parts: [[Mesh, Transform3D]], aabb: AABB}
@@ -173,37 +173,24 @@ func _ships() -> void:
 		if vel != Vector3.ZERO and float(d.get("spin", 0.0)) == 0.0:
 			n.basis = Basis.looking_at(vel, Vector3.UP)
 			n.rotate_object_local(Vector3.UP, deg_to_rad(float(d.get("yaw_offset", 180.0))))
-			_engine_glow(n, float(d.get("size", 50.0)))
+			_engine_glow(n, float(d.get("size", 50.0)), Color(str(d.get("trail", "#5fe8ff"))))
 		_movers.append({"node": n, "vel": vel, "spin": Vector3(0, float(d.get("spin", 0.0)), 0), "loop": float(d.get("loop", 0.0)), "origin": n.position})
 
 
-## A soft blue exhaust behind a moving ship (billboard quad, additive).
-func _engine_glow(ship: Node3D, size: float) -> void:
-	var q := QuadMesh.new()
-	q.size = Vector2.ONE * size * 0.35
-	var m := StandardMaterial3D.new()
-	m.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
-	m.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
-	m.blend_mode = BaseMaterial3D.BLEND_MODE_ADD
-	m.billboard_mode = BaseMaterial3D.BILLBOARD_ENABLED
-	m.albedo_color = Color(0.45, 0.75, 1.0, 0.9)
-	var g := Gradient.new()
-	g.set_color(0, Color(1, 1, 1, 1))
-	g.set_color(1, Color(1, 1, 1, 0))
-	var gt := GradientTexture2D.new()
-	gt.gradient = g
-	gt.fill = GradientTexture2D.FILL_RADIAL
-	gt.fill_from = Vector2(0.5, 0.5)
-	gt.fill_to = Vector2(0.5, 0.0)
-	m.albedo_texture = gt
-	q.material = m
-	var mi := MeshInstance3D.new()
-	mi.mesh = q
-	mi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
-	# Ship models face -Z after look_at + 180 deg turn: the engines sit on local -Z... measured per model by the AABB.
+## Engine glow + a long laser-like trail behind a moving ship (D-044, the
+## coloured streaks of the key art). Colour per ship (data "trail"), cyan default.
+func _engine_glow(ship: Node3D, size: float, color: Color = Color("5fe8ff")) -> void:
+	# Ship models face -Z after look_at + 180 deg turn: the engines sit at the
+	# AABB's -Z end, measured per model.
 	var box := AssetSlots.aabb_of(ship, Transform3D.IDENTITY)
-	mi.position = Vector3(0, 0, box.position.z + box.size.z * 0.02)
-	ship.add_child(mi)
+	var holder := Node3D.new()
+	holder.position = Vector3(0, box.position.y + box.size.y * 0.45, box.position.z + box.size.z * 0.02)
+	ship.add_child(holder)
+	holder.add_child(SpaceFx.glow(size * 0.2, color, 1.1))
+	holder.add_child(SpaceFx.glow(size * 0.06, Color(1, 1, 1), 1.4))
+	var t := SpaceFx.trail(size * 2.5, size * 0.03, color, 2.0)
+	t.rotation_degrees.y = 180.0
+	holder.add_child(t)
 
 
 ## A ringed gas giant far off to the side: banded planet shader + ring quad
@@ -226,34 +213,32 @@ func _gas_giant(biome: String) -> void:
 	sphere.height = radius * 2.0
 	sphere.radial_segments = 96
 	sphere.rings = 48
-	var m := ShaderMaterial.new()
-	m.shader = PlanetLook.SHADER
-	m.set_shader_parameter("base_color", Color(str(pal.get("base", "#c98a5a"))))
-	m.set_shader_parameter("ocean_color", Color(str(pal.get("ocean", "#6a3b2a"))))
-	m.set_shader_parameter("high_color", Color(str(pal.get("high", "#f2dcc0"))))
-	m.set_shader_parameter("atmo_color", Color(str(pal.get("atmo", "#ffb27a"))))
-	m.set_shader_parameter("sea_level", 0.46)
-	m.set_shader_parameter("cloud_amount", 0.0)
-	m.set_shader_parameter("banding", 1.0)
-	m.set_shader_parameter("seed", 31.0)
-	m.set_shader_parameter("cloud_speed", 0.0)
+	# The pack-sheet look (banded lines texture, D-044) when the planet masks are
+	# present; the procedural banded planet otherwise.
+	var sheet: Dictionary = DictUtil.get_dict(DictUtil.get_dict(DictUtil.load_json(PlanetLook.DATA), "gas_giants"), biome)
+	var m: ShaderMaterial = PlanetLook.sheet_material(sheet, 31) if not sheet.is_empty() else null
+	if m != null:
+		m.set_shader_parameter("bands", 1.0)
+		m.set_shader_parameter("band_scale", 1.3)
+	else:
+		m = ShaderMaterial.new()
+		m.shader = PlanetLook.SHADER
+		m.set_shader_parameter("base_color", Color(str(pal.get("base", "#c98a5a"))))
+		m.set_shader_parameter("ocean_color", Color(str(pal.get("ocean", "#6a3b2a"))))
+		m.set_shader_parameter("high_color", Color(str(pal.get("high", "#f2dcc0"))))
+		m.set_shader_parameter("atmo_color", Color(str(pal.get("atmo", "#ffb27a"))))
+		m.set_shader_parameter("sea_level", 0.46)
+		m.set_shader_parameter("cloud_amount", 0.0)
+		m.set_shader_parameter("banding", 1.0)
+		m.set_shader_parameter("seed", 31.0)
+		m.set_shader_parameter("cloud_speed", 0.0)
 	var mi := MeshInstance3D.new()
 	mi.mesh = sphere
 	mi.material_override = m
 	mi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 	root.add_child(mi)
-	var rq := PlaneMesh.new()
-	rq.size = Vector2.ONE * radius * float(g.get("ring_scale", 4.6))
-	var rm := ShaderMaterial.new()
-	rm.shader = preload("res://art/shaders/planet_ring.gdshader")
-	rm.set_shader_parameter("ring_color", Color(str(pal.get("ring", "#e8d2b4"))))
-	rm.set_shader_parameter("band_color", Color(str(pal.get("ring_band", "#8a7262"))))
-	rm.set_shader_parameter("inner", 0.5)
-	var ring := MeshInstance3D.new()
-	ring.mesh = rq
-	ring.material_override = rm
-	ring.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
-	root.add_child(ring)
+	root.add_child(PlanetLook.ring_node(radius, {"scale": float(g.get("ring_scale", 4.6)),
+		"color": str(sheet.get("ring", pal.get("ring", "#e8d2b4"))), "band": str(sheet.get("ring_band", pal.get("ring_band", "#8a7262")))}))
 	add_child(root)
 
 

@@ -1,0 +1,18 @@
+{
+  "task_id": "space_r1",
+  "commit": "see git log (D-044 commits on this branch)",
+  "engine_version": "4.7.1.stable.official.a13da4feb (Forward+, RTX 5090)",
+  "command": "godot --path . --resolution 1600x900 -- --capture=<file> --setup=approach:<planet> --scene=flight --wait=60 [--action=cockpit|cockpit_belt|ark_side]; --scene=menu --wait=90; --setup=orbit:ferrum --scene=ship --action=window --wait=90; godot --path . --resolution 1600x900 --script res://tools/space_planet_sheet.gd -- --out=<file>",
+  "exit_code": 0,
+  "expected": "Approach flight, menu and bridge window read like the POLYGON Sci-Fi Space key art (image1 nebula/sun/ark engines, image3 cockpit, image12 lit capital ship, image23 planets); gameplay and bookkeeping unchanged; CHECK_FAST=1 tools/check.sh all *_exit=0",
+  "observed": "Captures in before/ and after/, side-by-side JPEGs with the references in this folder. Gate: loc_exit=0 tests_exit=0 smoke_exit=0 touch_exit=0 campaign_exit=0. Found and fixed: the regraded sky shader produced NaN without a directional light, which blacked out the whole ship scene through the glow pass.",
+  "fixture": "approach:viridia, approach:ferrum, approach:sere, orbit:ferrum, menu",
+  "status": "PASS",
+  "artifacts": [
+    "evidence/space_r1/flight_before_after.jpg",
+    "evidence/space_r1/flight_ferrum_before_after.jpg",
+    "evidence/space_r1/menu_before_after.jpg",
+    "evidence/space_r1/bridge_window_before_after.jpg"
+  ],
+  "note_local_only": "Side-by-side composites with Synty promotional key art are kept local (public repo); game captures remain in before/ and after/."
+}

@@ -137,7 +137,8 @@
     0,
     0,
     -9
-   ]
+   ],
+   "trail": "#ff5fd2"
   },
   {
    "mesh": "res://assets/Synty/SciFiSpace/FBX/SM_Ship_Transport_01.fbx",
@@ -152,7 +153,8 @@
     0,
     0,
     -14
-   ]
+   ],
+   "trail": "#ffb04a"
   },
   {
    "mesh": "res://assets/Synty/SciFiSpace/FBX/SM_Ship_Fighter_01.fbx",
@@ -168,7 +170,8 @@
     0,
     -10
    ],
-   "loop": 900
+   "loop": 900,
+   "trail": "#5fe8ff"
   },
   {
    "mesh": "res://assets/Synty/SciFiSpace/FBX/SM_Ship_Fighter_02.fbx",
@@ -184,7 +187,8 @@
     0,
     -10
    ],
-   "loop": 900
+   "loop": 900,
+   "trail": "#ff7a3a"
   }
  ],
  "gas_giant": {
@@ -226,5 +230,90 @@
     "ring_band": "#76608a"
    }
   }
+ },
+ "ark_fx": {
+  "_note": "Lit window strips + engine nozzles on the Galactic Carrier (D-044). engines = [x, y, z, radius] in slot-local metres, measured from the carrier's cyan nozzle texels (stern at -Z). windows: atlas shader window_* params, cell/size in mesh units.",
+  "flip": true,
+  "engine_color": "#5fe8ff",
+  "trail_length": 7.0,
+  "engines": [
+   [
+    -2.19,
+    -0.5,
+    -17.7,
+    1.15
+   ],
+   [
+    2.19,
+    -0.5,
+    -17.7,
+    1.15
+   ],
+   [
+    0.0,
+    -1.85,
+    -18.1,
+    0.7
+   ]
+  ],
+  "windows": {
+   "amount": 1.0,
+   "energy": 3.6,
+   "cell": [
+    3.0,
+    2.6
+   ],
+   "size": [
+    0.62,
+    0.4
+   ],
+   "strip_energy": 3.4,
+   "side": 0.55
+  }
+ },
+ "cockpit": {
+  "_note": "Cockpit view (FlightCockpit, D-044): the pack's POV cockpit + window frame, positions in the cockpit model's own metres (it looks along +Z). mount = where the cockpit sits on the Ark (ship-local metres).",
+  "body": "res://assets/Synty/SciFiSpace/FBX/SM_Veh_POV_Cockpit_01.fbx",
+  "frame": "res://assets/Synty/SciFiSpace/FBX/SM_Veh_POV_Cockpit_Frame_01.fbx",
+  "scale": 1.0,
+  "mount": [
+   0.0,
+   1.2,
+   -15.0
+  ],
+  "eye": [
+   0.0,
+   0.78,
+   -0.72
+  ],
+  "eye_pitch": 6.0,
+  "hologram": {
+   "pos": [
+    -0.4,
+    0.68,
+    0.34
+   ],
+   "size": 0.16,
+   "color": "#59e6ff",
+   "globe": "#ffb070",
+   "meshes": [
+    "res://assets/Synty/SciFiSpace/FBX/SM_Hud_Rings_01.fbx",
+    "res://assets/Synty/SciFiSpace/FBX/SM_Hud_Rings_02.fbx"
+   ],
+   "energy": 0.7
+  },
+  "target_ring": {
+   "mesh": "res://assets/Synty/SciFiSpace/FBX/SM_Hud_Reticle_03.fbx",
+   "size": 7.0,
+   "pos": [
+    0.0,
+    0.4,
+    -70.0
+   ],
+   "color": "#59e6ff"
+  },
+  "albedo_mul": "#a8869c",
+  "glow_energy": 2.8,
+  "warm_energy": 1.3
  }
 }

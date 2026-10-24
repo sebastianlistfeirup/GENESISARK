@@ -18,7 +18,7 @@ const ACTIONS := {
 	"confirm": ["mouse:1"], "cancel": ["mouse:2"], "autopilot": ["F"], "speed_pause": ["Space"],
 	"speed_1": ["1"], "speed_3": ["3"], "drone_refill": ["G"], "ascend": ["Space"], "descend": ["Ctrl"],
 	"zoom_in": ["Equal"], "zoom_out": ["Minus"], "build_confirm": ["Enter"],
-	"build_repeat": ["Shift"], "skip_line": ["Enter"],
+	"build_repeat": ["Shift"], "skip_line": ["Enter"], "camera_view": ["V"],
 }
 const ACTION_LABELS := {
 	"move_forward": "Forward", "move_back": "Back", "move_left": "Left", "move_right": "Right",
@@ -28,7 +28,7 @@ const ACTION_LABELS := {
 	"speed_pause": "Pause time", "speed_1": "Speed 1x", "speed_3": "Speed 3x", "drone_refill": "Drone reserve",
 	"ascend": "Ascend (flight)", "descend": "Descend (flight)",
 	"zoom_in": "Zoom in", "zoom_out": "Zoom out", "build_confirm": "Build here",
-	"build_repeat": "Hold: keep building", "skip_line": "Skip subtitle line",
+	"build_repeat": "Hold: keep building", "skip_line": "Skip subtitle line", "camera_view": "Cockpit / chase view (flight)",
 }
 
 ## Controller layout (Xbox naming; Godot JoyButton/JoyAxis indices). Tokens:
@@ -42,7 +42,7 @@ const PAD := {
 	"colony_mode": ["btn:3"], "rotate_cam_left": ["btn:9"], "rotate_cam_right": ["btn:10"], "rotate_building": ["btn:2"],
 	"confirm": ["btn:0"], "build_confirm": ["btn:0"], "cancel": ["btn:1"], "autopilot": ["btn:3"],
 	"speed_pause": ["btn:8"], "drone_refill": ["btn:2"], "ascend": ["axis:5:+"], "descend": ["axis:4:+"],
-	"zoom_in": ["axis:5:+"], "zoom_out": ["axis:4:+"],
+	"zoom_in": ["axis:5:+"], "zoom_out": ["axis:4:+"], "camera_view": ["btn:2"],
 }
 const PAD_NAMES := {"btn:0": "A", "btn:1": "B", "btn:2": "X", "btn:3": "Y", "btn:4": "Back", "btn:6": "Start",
 	"btn:7": "L3", "btn:8": "R3", "btn:9": "LB", "btn:10": "RB", "btn:11": "D-pad", "btn:12": "D-pad",

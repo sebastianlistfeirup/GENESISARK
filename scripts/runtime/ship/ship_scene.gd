@@ -239,7 +239,7 @@ func _on_state(_kind: String) -> void:
 		var p := GameSession.content.planet(pid2)
 		var v := VisualSlot.make("space.planet_" + str(p.get("biome_id")), str(p.get("palette", {}).get("nature", "")))
 		_window_planet.add_child(v)
-		PlanetLook.apply(v, str(p.get("biome_id")), str(p.get("palette", {}).get("nature", "")), hash(pid2))
+		PlanetLook.apply(v, str(p.get("biome_id")), str(p.get("palette", {}).get("nature", "")), hash(pid2), pid2)
 
 
 func _on_use(it: Interactable) -> void:

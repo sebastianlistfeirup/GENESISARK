@@ -114,7 +114,7 @@ func _build_world() -> void:
 	_planet.position = Vector3(112, -96, -215)
 	var planet_slot := VisualSlot.make("space.planet_green", "#4f8a3a")
 	_planet.add_child(planet_slot)
-	PlanetLook.apply(planet_slot, "green", "#4f8a3a", 11)
+	PlanetLook.apply(planet_slot, "green", "#4f8a3a", 11, "viridia")
 	var atmo := MeshInstance3D.new()
 	var am := SphereMesh.new()
 	am.radius = 66.0
@@ -130,8 +130,13 @@ func _build_world() -> void:
 	_planet.add_child(atmo)
 	add_child(_planet)
 	_ark = Node3D.new()
-	_ark.add_child(VisualSlot.make("space.ark_exterior"))
+	var ark_slot := VisualSlot.make("space.ark_exterior")
+	_ark.add_child(ark_slot)
 	add_child(_ark)
+	# Lit window strips and glowing nozzles, as in the approach flight (D-044).
+	if ark_slot.using_asset:
+		var sc: Variant = DictUtil.load_json(SpaceScenery.PATH)
+		SpaceFx.dress_ark(ark_slot, DictUtil.get_dict(sc, "ark_fx") if sc is Dictionary else {})
 	_cam = Camera3D.new()
 	_cam.fov = 46
 	add_child(_cam)

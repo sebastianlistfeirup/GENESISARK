@@ -59,7 +59,7 @@ func _ready() -> void:
 		["autopilot", Loc.t("Auto"), Vector2(-120, -150), 64.0], ["drone_refill", Loc.t("Drone"), Vector2(-260, -250), 44.0],
 		["ascend", "▲", Vector2(-380, -150), 42.0], ["descend", "▼", Vector2(-380, -60), 42.0],
 		["journal", Loc.t("Log"), Vector2(170, 180), 40.0], ["pause", "II", Vector2(70, 180), 40.0],
-		["speed_pause", Loc.t("Time"), Vector2(-220, -460), 40.0],
+		["speed_pause", Loc.t("Time"), Vector2(-220, -460), 40.0], ["camera_view", Loc.t("View"), Vector2(-260, -250), 40.0],
 	]
 	for d: Array in defs:
 		_add_button(str(d[0]), str(d[1]), d[2], float(d[3]))
@@ -137,7 +137,7 @@ func _update_visibility() -> void:
 	var sets := {
 		"ship": ["interact", "journal", "pause"],  # run = push the stick all the way
 		"surface": ["interact", "journal", "pause", "drone_refill"],
-		"flight": ["autopilot", "ascend", "descend", "sprint", "pause"],
+		"flight": ["autopilot", "ascend", "descend", "sprint", "pause", "camera_view"],
 		"colony": ["build_confirm", "cancel", "rotate_building", "zoom_in", "zoom_out", "rotate_cam_left", "rotate_cam_right", "colony_mode", "journal", "pause", "speed_pause"],
 	}
 	var show: Array = sets.get(key, [])
