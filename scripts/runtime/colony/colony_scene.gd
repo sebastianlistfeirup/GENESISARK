@@ -30,8 +30,11 @@ var _info_holder: VBoxContainer
 var _build_bar: HFlowContainer  # wraps to two rows when the screen is narrow (UI scale)
 var _top: VBoxContainer
 var _ghost_tip: Label
-var _people: Node3D
-var _people_nodes: Array[Node3D] = []
+var _life: ColonyLife
+var _cover_avoid: Array = []
+var _cover: Node3D
+var _roads: Node3D
+var _paths: ColonyPaths
 var _t := 0.0
 var planet: Dictionary = {}
 var site: Dictionary = {}
@@ -60,13 +63,16 @@ func _ready() -> void:
 	add_child(terrain)
 	terrain.build()
 	terrain.scatter(hash(gs.colony.site_id) + 1, 60, avoid)
-	add_child(GroundCover.build(terrain, gs.colony.biome_id, hash(gs.colony.site_id) + 3, avoid, 220.0))
+	_cover_avoid = avoid  # ground cover is laid in _relayout, once the roads are known
 	_draw_districts()
 	SceneDressing.attach(self, str(site.get("id", "")), terrain)
 	_net = MeshInstance3D.new()
 	add_child(_net)
-	_people = Node3D.new()
-	add_child(_people)
+	_life = ColonyLife.new()
+	_life.terrain = terrain
+	var lv: Array = DictUtil.get_arr(districts.get("living", {}), "center")
+	_life.living_center = Vector2(float(lv[0]), float(lv[1])) if lv.size() == 2 else Vector2.ZERO
+	add_child(_life)
 	cam_rig = ColonyCamera.new()
 	add_child(cam_rig)
 	var lc: Array = DictUtil.get_arr(districts.get("landing", {}), "center")
@@ -224,6 +230,7 @@ func _sync() -> void:
 		b.text = Loc.t("%s\n%d mat.%s") % [str(GameSession.content.building(def_id).get("name")).replace(Loc.t(" and incubation center"), "").replace(Loc.t("Geothermal generator"), Loc.t("Geothermal")), int(cost.get("alloy", 0)), (Loc.t(" · %d comp.") % int(cost["components"])) if cost.has("components") else ""]
 	_draw_network()
 	_draw_corridors()
+	_relayout()
 	_refresh_info()
 	_sync_people()
 
@@ -248,6 +255,73 @@ func _draw_corridors() -> void:
 	_corridors = ColonyCorridors.build(gs, terrain)
 	add_child(_corridors)
 	_process_network_visibility()
+
+
+var _dressing: ColonyDressing
+var _layout_key := ""
+
+
+## Set dressing, roads and the walking grid follow the building set; rebuilt only
+## when a building is added, removed, or finishes construction (visual only).
+func _relayout() -> void:
+	var gs: GameState = GameSession.state
+	var key := _corridor_key + "|"
+	for b: Dictionary in gs.colony.buildings:
+		key += "%d:%s," % [int(b["id"]), str(b["state"]) == ColonyState.B_CONSTRUCTING]
+	if key == _layout_key:
+		return
+	_layout_key = key
+	var clear := ColonyClearance.new()
+	for b: Dictionary in gs.colony.buildings:
+		var def := GameSession.content.building(str(b["def_id"]))
+		clear.add_rect(ColonySimulation.rect_for(def, float(b["x"]), float(b["z"]), int(b.get("rot", 0))), int(b["id"]))
+	var segs: Array = _corridors.get_meta("segments") if _corridors and _corridors.has_meta("segments") else []
+	for sg: Array in segs:
+		clear.add_segment(sg[0], sg[1], ColonyCorridors.WIDTH * 0.5 + 0.2)
+	var road_cfg: Dictionary = DictUtil.get_dict(BuildingDressing.doc(), "roads")
+	var road_w := DictUtil.get_float(road_cfg, "width", 3.2)
+	_paths = ColonyPaths.new()
+	_paths.build(gs, site, segs, 220.0)
+	for rd: PackedVector2Array in _paths.roads:
+		clear.add_polyline(rd, road_w * 0.5 + 0.3)
+	_draw_roads(road_cfg)
+	_lay_ground_cover(clear)
+	_life.relayout(gs, _paths)
+	if _dressing == null:
+		_dressing = ColonyDressing.new()
+		_dressing.name = "Dressing"
+		add_child(_dressing)
+	var lights: Dictionary = DictUtil.get_dict(BuildingDressing.doc(), "lights")
+	_dressing.rebuild(views, terrain, clear, float(lights.get(str(planet.get("id", "")), lights.get("_default", 0.45))))
+
+
+## Dirt roads between the districts, a darker tone of the planet's ground.
+func _draw_roads(cfg: Dictionary) -> void:
+	if _roads:
+		_roads.queue_free()
+	_roads = Node3D.new()
+	_roads.name = "Roads"
+	add_child(_roads)
+	var base := Color(str(DictUtil.get_dict(planet, "palette").get("nature", "#8a7a60")))
+	var col := Color.from_hsv(base.h, clampf(base.s * 1.1, 0.0, 1.0), base.v * DictUtil.get_float(cfg, "darken", 0.72))
+	for rd: PackedVector2Array in _paths.roads:
+		_roads.add_child(ColonyPaths.road_mesh(rd, terrain, col, DictUtil.get_float(cfg, "width", 3.2), DictUtil.get_float(cfg, "shoulder", 1.4)))
+
+
+## Ground cover keeps off the districts, the roads and every building (it is
+## re-laid only when the layout changes).
+func _lay_ground_cover(clear: ColonyClearance) -> void:
+	var avoid: Array = _cover_avoid.duplicate()
+	for rd: PackedVector2Array in _paths.roads:
+		for i: int in range(0, rd.size(), 2):
+			avoid.append([rd[i], DictUtil.get_float(DictUtil.get_dict(BuildingDressing.doc(), "roads"), "width", 3.2) * 0.5 + 1.8])
+	for rr: Array in clear.rects():
+		var r: Rect2 = rr[0]
+		avoid.append([r.get_center(), r.size.length() * 0.5 + 2.0])
+	if _cover:
+		_cover.queue_free()
+	_cover = GroundCover.build(terrain, GameSession.state.colony.biome_id, hash(GameSession.state.colony.site_id) + 3, avoid, 220.0)
+	add_child(_cover)
 
 
 func _process_network_visibility() -> void:
@@ -314,26 +388,10 @@ func _refresh_info() -> void:
 
 
 ## Up to ~40 visible citizens illustrate the cohorts (bible p.11); they never
-## change population data. Robots show up at construction sites.
+## change population data. Robots show up at construction sites. ColonyLife
+## walks them along the colony's paths.
 func _sync_people() -> void:
-	var gs: GameState = GameSession.state
-	var want_people := mini(40, gs.population.alive_count())
-	var robots := 0
-	for b: Dictionary in gs.colony.buildings:
-		if b["state"] == ColonyState.B_CONSTRUCTING:
-			robots += 1
-	var want := want_people + mini(robots * 2, 12)
-	while _people_nodes.size() < want:
-		var is_robot := _people_nodes.size() >= want_people
-		var slot := "char.robot_worker" if is_robot else ("char.citizen_child" if gs.population.count_stage("adult") == 0 or _people_nodes.size() % 3 == 0 else "char.citizen_adult")
-		var n := VisualSlot.make(slot)
-		n.set_meta("robot", is_robot)
-		n.set_meta("seed", _people_nodes.size())
-		_people.add_child(n)
-		_people_nodes.append(n)
-	while _people_nodes.size() > want:
-		var n: Node3D = _people_nodes.pop_back()
-		n.queue_free()
+	_life.sync_people(GameSession.state)
 
 
 func _process(delta: float) -> void:
@@ -343,23 +401,6 @@ func _process(delta: float) -> void:
 	var gs: GameState = GameSession.state
 	if gs == null or gs.colony == null:
 		return
-	var living: Dictionary = DictUtil.get_dict(DictUtil.get_dict(site, "districts"), "living")
-	var lc: Array = DictUtil.get_arr(living, "center")
-	var targets: Array = []
-	for b: Dictionary in gs.colony.buildings:
-		if b["state"] == ColonyState.B_CONSTRUCTING:
-			targets.append(Vector2(float(b["x"]), float(b["z"])))
-	for n: Node3D in _people_nodes:
-		var s := float(int(n.get_meta("seed")))
-		var center := Vector2(float(lc[0]), float(lc[1])) if lc.size() == 2 else Vector2.ZERO
-		var rad := 14.0
-		if n.get_meta("robot") and not targets.is_empty():
-			center = targets[int(s) % targets.size()]
-			rad = 5.0
-		var ang := _t * (0.05 + fmod(s * 0.37, 0.1)) + s * 1.7
-		var p := center + Vector2(cos(ang), sin(ang * 0.8)) * rad * (0.4 + fmod(s * 0.13, 0.6))
-		n.position = Vector3(p.x, terrain.height_at(p.x, p.y), p.y)
-		n.rotation.y = -ang
 	if not build_def.is_empty():
 		_update_ghost()
 
@@ -549,6 +590,21 @@ func _check_pending_event() -> void:
 
 
 func debug_action(action: String) -> void:
+	if action.begins_with("district:"):  # evidence: "district:<landing|resource|living>:<zoom>[:<yaw deg>]"
+		var parts := action.split(":")
+		var dc: Array = DictUtil.get_arr(DictUtil.get_dict(DictUtil.get_dict(site, "districts"), parts[1]), "center")
+		if dc.size() == 2:
+			cam_rig.position = Vector3(float(dc[0]), terrain.height_at(float(dc[0]), float(dc[1])), float(dc[1]))
+		cam_rig.zoom = float(parts[2]) if parts.size() > 2 else 40.0
+		if parts.size() > 3:
+			cam_rig.target_yaw = deg_to_rad(float(parts[3]))
+			cam_rig.rotation.y = cam_rig.target_yaw
+		if decision.visible:
+			decision.hide()
+		if event_dialog.visible:
+			event_dialog.hide()
+		get_viewport().warp_mouse(Vector2(get_viewport().get_visible_rect().size.x * 0.5, 160))  # no stray tooltip in the shot
+		return
 	match action:
 		"ghost":
 			_start_build("habitat")

@@ -1,0 +1,889 @@
+{
+ "_note": "Per-building set dressing for the colony (BuildingDressing, D-037). Pure presentation: props stand around the footprint edge, never inside it; ColonyDressing hides any that would touch a neighbour, a corridor or a road. Paths are short names: 'W:' = PolygonSciFiWorlds/Prefabs/, 'C:' = PolygonSciFiCity/Prefabs/. Missing files are skipped (fresh clone = the plain pads). prop_scale matches the scaled-down colony buildings (people stay life size).",
+ "roots": {
+  "W": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/",
+  "C": "res://assets/Synty/PolygonSciFiCity/Prefabs/"
+ },
+ "prop_scale": 0.72,
+ "platform": {
+  "tiles": [
+   "W:Buildings/SM_Bld_Platform_Large_01",
+   "W:Buildings/SM_Bld_Platform_Large_03"
+  ],
+  "landing": [
+   "W:Buildings/SM_Bld_Platform_Large_02"
+  ],
+  "tile_m": 3.6,
+  "margin": 0.7,
+  "skirt": "#2a3036"
+ },
+ "lights": {
+  "_default": 0.45,
+  "umbra": 1.6,
+  "nivalis": 0.7,
+  "pelagos": 0.7
+ },
+ "sets": {
+  "crates": [
+   {
+    "mesh": "W:Props/SM_Prop_Crate_03"
+   },
+   {
+    "mesh": "W:Props/SM_Prop_Crate_01"
+   },
+   {
+    "mesh": "W:Props/SM_Prop_Crate_04"
+   },
+   {
+    "mesh": "W:Props/SM_Prop_Crate_13"
+   },
+   {
+    "mesh": "W:Props/SM_Prop_Crate_14"
+   },
+   {
+    "mesh": "W:Props/SM_Prop_Crate_02"
+   },
+   {
+    "mesh": "C:Props/SM_Prop_Crate_Military_01"
+   },
+   {
+    "mesh": "C:Props/SM_Prop_Box_Supplies_01"
+   }
+  ],
+  "cells": [
+   {
+    "mesh": "W:Props/SM_Prop_BatteryPack_01",
+    "scale": 1.3
+   },
+   {
+    "mesh": "W:Props/SM_Prop_BatteryPack_03",
+    "scale": 1.3
+   },
+   {
+    "mesh": "W:Props/SM_Prop_Fuel_Cell_01",
+    "scale": 1.3
+   },
+   {
+    "mesh": "W:Props/SM_Prop_PowerGenerator_03"
+   }
+  ],
+  "tech": [
+   {
+    "mesh": "W:Props/SM_Prop_Antenna_01"
+   },
+   {
+    "mesh": "W:Props/SM_Prop_Antenna_03"
+   },
+   {
+    "mesh": "W:Props/SM_Prop_Antenna_11"
+   },
+   {
+    "mesh": "W:Props/SM_Prop_Satellite_06"
+   },
+   {
+    "mesh": "W:Props/SM_Prop_Satellite_07"
+   },
+   {
+    "mesh": "C:Props/SM_Prop_SatDish_01"
+   },
+   {
+    "mesh": "C:Props/SM_Prop_SatDish_03"
+   }
+  ],
+  "dish": [
+   {
+    "mesh": "W:Props/SM_Prop_Satellite_02"
+   },
+   {
+    "mesh": "W:Props/SM_Prop_Satellite_05"
+   },
+   {
+    "mesh": "W:Props/SM_Prop_Satellite_03",
+    "scale": 0.8
+   }
+  ],
+  "lamps": [
+   {
+    "mesh": "W:Buildings/SM_Bld_Light_07",
+    "scale": 1.25,
+    "light": "#ffc46e"
+   }
+  ],
+  "beacons": [
+   {
+    "mesh": "W:Buildings/SM_Bld_Light_07",
+    "scale": 1.1,
+    "light": "#5ff0d8"
+   }
+  ],
+  "planters": [
+   {
+    "mesh": "W:Props/SM_Prop_Hydroponic_Planter_01"
+   },
+   {
+    "mesh": "W:Props/SM_Prop_Hydroponic_Planter_02_Insert_01"
+   }
+  ],
+  "pots": [
+   {
+    "mesh": "W:Props/SM_Prop_Hydroponic_Plant_03",
+    "scale": 1.6
+   },
+   {
+    "mesh": "W:Props/SM_Prop_Hydroponic_Plant_01",
+    "scale": 1.4
+   },
+   {
+    "mesh": "W:Props/SM_Prop_Hydroponic_Plant_02",
+    "scale": 1.4
+   }
+  ],
+  "benches": [
+   {
+    "mesh": "W:Props/SM_Prop_Bench_Seat_01"
+   },
+   {
+    "mesh": "W:Props/SM_Prop_Bench_Seat_02"
+   }
+  ],
+  "drills": [
+   {
+    "mesh": "W:Props/SM_Prop_Drill_02"
+   },
+   {
+    "mesh": "W:Props/SM_Prop_Drill_03"
+   }
+  ],
+  "tanks": [
+   {
+    "mesh": "W:Buildings/SM_Bld_Watertank_01"
+   }
+  ],
+  "parked": [
+   {
+    "mesh": "W:Props/Vehicles/SM_Veh_Buggy_01"
+   },
+   {
+    "mesh": "W:Props/Vehicles/SM_Veh_Apc_02",
+    "scale": 0.8
+   },
+   {
+    "mesh": "C:Vehicles/SM_Veh_Armored_Truck_01_Hover"
+   }
+  ],
+  "lifter": [
+   {
+    "mesh": "W:Props/Vehicles/SM_Veh_Apc_01",
+    "scale": 0.8
+   },
+   {
+    "mesh": "W:Props/Vehicles/SM_Veh_Buggy_01"
+   }
+  ],
+  "drones": [
+   {
+    "mesh": "W:Props/SM_Prop_Drone_01"
+   },
+   {
+    "mesh": "W:Props/SM_Prop_Drone_03"
+   }
+  ],
+  "scrap": [
+   {
+    "mesh": "W:Props/Scrap/SM_Prop_Scav_Scrap_13"
+   },
+   {
+    "mesh": "W:Props/Scrap/SM_Prop_Scav_Scrap_06",
+    "scale": 0.35
+   },
+   {
+    "mesh": "W:Props/Scrap/SM_Prop_Scav_Scrap_10",
+    "scale": 0.35
+   }
+  ],
+  "poles": [
+   {
+    "mesh": "W:Props/SM_Prop_Tether_Pole_Tall_01",
+    "light": "#ffd08a"
+   }
+  ],
+  "machines": [
+   {
+    "mesh": "W:Buildings/SM_Bld_Greeble_12"
+   },
+   {
+    "mesh": "W:Buildings/SM_Bld_Greeble_17"
+   },
+   {
+    "mesh": "W:Buildings/SM_Bld_Greeble_18"
+   },
+   {
+    "mesh": "C:Props/SM_Prop_Vent_03"
+   },
+   {
+    "mesh": "C:Props/SM_Prop_Vent_04"
+   },
+   {
+    "mesh": "C:Props/SM_Prop_Cylinder_01"
+   },
+   {
+    "mesh": "C:Props/SM_Prop_Cylinder_02"
+   },
+   {
+    "mesh": "W:Buildings/SM_Bld_Greeble_10"
+   }
+  ],
+  "canisters": [
+   {
+    "mesh": "W:Buildings/SM_Bld_Greeble_24"
+   },
+   {
+    "mesh": "W:Buildings/SM_Bld_Greeble_25"
+   },
+   {
+    "mesh": "W:Props/SM_Prop_Crate_08"
+   },
+   {
+    "mesh": "W:Props/SM_Prop_Crate_10"
+   },
+   {
+    "mesh": "C:Props/SM_Prop_Cylinder_01"
+   }
+  ],
+  "street": [
+   {
+    "mesh": "C:Props/SM_Prop_Streetlight_01",
+    "light": "#ffd9a0",
+    "light_at": [
+     0,
+     5.1,
+     2.1
+    ]
+   }
+  ]
+ },
+ "buildings": {
+  "_default": {
+   "platform": "tiles",
+   "groups": [
+    {
+     "kind": "cluster",
+     "set": "crates",
+     "n": 2,
+     "count": [
+      3,
+      5
+     ],
+     "build": true
+    },
+    {
+     "kind": "cluster",
+     "set": "machines",
+     "n": 1,
+     "count": [
+      1,
+      2
+     ]
+    },
+    {
+     "kind": "corner",
+     "set": "lamps",
+     "n": 2
+    }
+   ]
+  },
+  "ark_core": {
+   "platform": "none",
+   "groups": [
+    {
+     "kind": "cluster",
+     "set": "crates",
+     "n": 4,
+     "count": [
+      4,
+      7
+     ],
+     "build": true
+    },
+    {
+     "kind": "cluster",
+     "set": "canisters",
+     "n": 3,
+     "count": [
+      3,
+      5
+     ]
+    },
+    {
+     "kind": "cluster",
+     "set": "machines",
+     "n": 3,
+     "count": [
+      2,
+      3
+     ]
+    },
+    {
+     "kind": "corner",
+     "set": "poles",
+     "n": 4
+    },
+    {
+     "kind": "edge",
+     "set": "lamps",
+     "n": 3
+    },
+    {
+     "kind": "edge",
+     "set": "dish",
+     "n": 1
+    },
+    {
+     "kind": "edge",
+     "set": "tech",
+     "n": 2
+    },
+    {
+     "kind": "park",
+     "set": "parked",
+     "n": 2
+    }
+   ]
+  },
+  "solar_array": {
+   "platform": "tiles",
+   "groups": [
+    {
+     "kind": "cluster",
+     "set": "cells",
+     "n": 1,
+     "count": [
+      2,
+      3
+     ]
+    },
+    {
+     "kind": "cluster",
+     "set": "machines",
+     "n": 1,
+     "count": [
+      1,
+      1
+     ]
+    },
+    {
+     "kind": "corner",
+     "set": "beacons",
+     "n": 2
+    }
+   ]
+  },
+  "geothermal_generator": {
+   "platform": "tiles",
+   "groups": [
+    {
+     "kind": "cluster",
+     "set": "canisters",
+     "n": 2,
+     "count": [
+      3,
+      5
+     ],
+     "build": true
+    },
+    {
+     "kind": "cluster",
+     "set": "machines",
+     "n": 2,
+     "count": [
+      2,
+      3
+     ]
+    },
+    {
+     "kind": "cluster",
+     "set": "cells",
+     "n": 1,
+     "count": [
+      1,
+      2
+     ]
+    },
+    {
+     "kind": "corner",
+     "set": "lamps",
+     "n": 2
+    }
+   ]
+  },
+  "battery": {
+   "platform": "tiles",
+   "groups": [
+    {
+     "kind": "cluster",
+     "set": "cells",
+     "n": 2,
+     "count": [
+      2,
+      3
+     ]
+    },
+    {
+     "kind": "cluster",
+     "set": "machines",
+     "n": 1,
+     "count": [
+      1,
+      2
+     ]
+    },
+    {
+     "kind": "corner",
+     "set": "beacons",
+     "n": 2
+    }
+   ]
+  },
+  "water_plant": {
+   "platform": "tiles",
+   "groups": [
+    {
+     "kind": "edge",
+     "set": "tanks",
+     "n": 2
+    },
+    {
+     "kind": "cluster",
+     "set": "canisters",
+     "n": 2,
+     "count": [
+      3,
+      4
+     ],
+     "build": true
+    },
+    {
+     "kind": "cluster",
+     "set": "machines",
+     "n": 1,
+     "count": [
+      1,
+      2
+     ]
+    },
+    {
+     "kind": "corner",
+     "set": "lamps",
+     "n": 2
+    }
+   ]
+  },
+  "greenhouse": {
+   "platform": "tiles",
+   "groups": [
+    {
+     "kind": "row",
+     "set": "planters",
+     "count": 3
+    },
+    {
+     "kind": "cluster",
+     "set": "pots",
+     "n": 2,
+     "count": [
+      3,
+      5
+     ]
+    },
+    {
+     "kind": "cluster",
+     "set": "crates",
+     "n": 1,
+     "count": [
+      2,
+      3
+     ],
+     "build": true
+    },
+    {
+     "kind": "cluster",
+     "set": "canisters",
+     "n": 1,
+     "count": [
+      1,
+      2
+     ]
+    },
+    {
+     "kind": "corner",
+     "set": "lamps",
+     "n": 2
+    }
+   ]
+  },
+  "mine": {
+   "platform": "none",
+   "groups": [
+    {
+     "kind": "corner",
+     "set": "drills",
+     "n": 2
+    },
+    {
+     "kind": "cluster",
+     "set": "crates",
+     "n": 3,
+     "count": [
+      3,
+      6
+     ],
+     "build": true
+    },
+    {
+     "kind": "cluster",
+     "set": "scrap",
+     "n": 2,
+     "count": [
+      1,
+      2
+     ]
+    },
+    {
+     "kind": "cluster",
+     "set": "canisters",
+     "n": 2,
+     "count": [
+      2,
+      4
+     ]
+    },
+    {
+     "kind": "cluster",
+     "set": "machines",
+     "n": 1,
+     "count": [
+      2,
+      3
+     ]
+    },
+    {
+     "kind": "park",
+     "set": "lifter",
+     "n": 1
+    },
+    {
+     "kind": "corner",
+     "set": "poles",
+     "n": 2
+    }
+   ]
+  },
+  "workshop": {
+   "platform": "tiles",
+   "groups": [
+    {
+     "kind": "park",
+     "set": "parked",
+     "n": 1
+    },
+    {
+     "kind": "cluster",
+     "set": "crates",
+     "n": 3,
+     "count": [
+      3,
+      6
+     ],
+     "build": true
+    },
+    {
+     "kind": "cluster",
+     "set": "canisters",
+     "n": 1,
+     "count": [
+      2,
+      4
+     ]
+    },
+    {
+     "kind": "cluster",
+     "set": "machines",
+     "n": 2,
+     "count": [
+      1,
+      3
+     ]
+    },
+    {
+     "kind": "cluster",
+     "set": "scrap",
+     "n": 1,
+     "count": [
+      1,
+      1
+     ]
+    },
+    {
+     "kind": "corner",
+     "set": "lamps",
+     "n": 2
+    }
+   ]
+  },
+  "drone_hub": {
+   "platform": "landing",
+   "groups": [
+    {
+     "kind": "corner",
+     "set": "beacons",
+     "n": 4
+    },
+    {
+     "kind": "cluster",
+     "set": "drones",
+     "n": 1,
+     "count": [
+      1,
+      2
+     ]
+    },
+    {
+     "kind": "cluster",
+     "set": "cells",
+     "n": 1,
+     "count": [
+      1,
+      2
+     ],
+     "build": true
+    },
+    {
+     "kind": "cluster",
+     "set": "crates",
+     "n": 1,
+     "count": [
+      2,
+      3
+     ]
+    }
+   ]
+  },
+  "habitat": {
+   "platform": "tiles",
+   "groups": [
+    {
+     "kind": "cluster",
+     "set": "crates",
+     "n": 1,
+     "count": [
+      2,
+      4
+     ],
+     "build": true
+    },
+    {
+     "kind": "cluster",
+     "set": "pots",
+     "n": 2,
+     "count": [
+      2,
+      4
+     ]
+    },
+    {
+     "kind": "edge",
+     "set": "benches",
+     "n": 1
+    },
+    {
+     "kind": "edge",
+     "set": "tech",
+     "n": 1
+    },
+    {
+     "kind": "cluster",
+     "set": "machines",
+     "n": 1,
+     "count": [
+      1,
+      2
+     ]
+    },
+    {
+     "kind": "corner",
+     "set": "lamps",
+     "n": 2
+    }
+   ]
+  },
+  "care_center": {
+   "platform": "tiles",
+   "groups": [
+    {
+     "kind": "cluster",
+     "set": "pots",
+     "n": 3,
+     "count": [
+      2,
+      4
+     ]
+    },
+    {
+     "kind": "edge",
+     "set": "benches",
+     "n": 2
+    },
+    {
+     "kind": "cluster",
+     "set": "crates",
+     "n": 1,
+     "count": [
+      2,
+      3
+     ],
+     "build": true
+    },
+    {
+     "kind": "cluster",
+     "set": "machines",
+     "n": 1,
+     "count": [
+      1,
+      2
+     ]
+    },
+    {
+     "kind": "corner",
+     "set": "lamps",
+     "n": 3
+    }
+   ]
+  },
+  "clinic": {
+   "platform": "tiles",
+   "groups": [
+    {
+     "kind": "cluster",
+     "set": "crates",
+     "n": 1,
+     "count": [
+      2,
+      4
+     ],
+     "build": true
+    },
+    {
+     "kind": "edge",
+     "set": "dish",
+     "n": 1
+    },
+    {
+     "kind": "cluster",
+     "set": "pots",
+     "n": 1,
+     "count": [
+      2,
+      3
+     ]
+    },
+    {
+     "kind": "cluster",
+     "set": "canisters",
+     "n": 1,
+     "count": [
+      2,
+      3
+     ]
+    },
+    {
+     "kind": "corner",
+     "set": "lamps",
+     "n": 2
+    }
+   ]
+  },
+  "school_hall": {
+   "platform": "tiles",
+   "groups": [
+    {
+     "kind": "edge",
+     "set": "benches",
+     "n": 2
+    },
+    {
+     "kind": "cluster",
+     "set": "pots",
+     "n": 2,
+     "count": [
+      2,
+      4
+     ]
+    },
+    {
+     "kind": "edge",
+     "set": "tech",
+     "n": 1
+    },
+    {
+     "kind": "cluster",
+     "set": "crates",
+     "n": 1,
+     "count": [
+      2,
+      3
+     ],
+     "build": true
+    },
+    {
+     "kind": "cluster",
+     "set": "machines",
+     "n": 1,
+     "count": [
+      1,
+      2
+     ]
+    },
+    {
+     "kind": "corner",
+     "set": "lamps",
+     "n": 3
+    }
+   ]
+  }
+ },
+ "life": {
+  "drones": {
+   "mesh": "W:Props/SM_Prop_Drone_02",
+   "per_buildings": 4,
+   "max": 10,
+   "height": [
+    5.0,
+    9.0
+   ],
+   "speed": 5.0
+  },
+  "vehicles": {
+   "meshes": [
+    "C:Vehicles/SM_Veh_Classic_01_Hover",
+    "C:Vehicles/SM_Veh_Garbage_01_Hover",
+    "C:Vehicles/SM_Veh_Armored_Truck_02_Hover",
+    "W:Props/Vehicles/SM_Veh_Buggy_01"
+   ],
+   "per_buildings": 6,
+   "max": 5,
+   "speed": 4.0,
+   "hover": [
+    0.45,
+    0.45,
+    0.45,
+    0.0
+   ]
+  }
+ },
+ "roads": {
+  "width": 3.0,
+  "shoulder": 2.2,
+  "darken": 0.62,
+  "cell": 1.5
+ }
+}
