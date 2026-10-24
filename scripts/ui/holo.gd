@@ -153,6 +153,74 @@ static func section(text: String, icon_slot: String = "") -> Control:
 	return UiKit.section(text, icon_slot)
 
 
+## Secondary "ghost" button (D-059): no fill, a faint outline, lit petrol on
+## hover/focus, so it never competes with the primary GlowButton beside it.
+static func ghost(b: Button) -> Button:
+	var base := StyleBoxFlat.new()
+	base.bg_color = Color(0, 0, 0, 0.0)
+	base.border_color = Color(UiKit.MUTED, 0.45)
+	base.set_border_width_all(1)
+	base.set_corner_radius_all(8)
+	base.content_margin_left = 14
+	base.content_margin_right = 14
+	base.content_margin_top = 7
+	base.content_margin_bottom = 7
+	var hov := base.duplicate() as StyleBoxFlat
+	hov.bg_color = Color(UiKit.PETROL, 0.18)
+	hov.border_color = Color(UiKit.PETROL.lightened(0.35), 0.8)
+	var dis := base.duplicate() as StyleBoxFlat
+	dis.border_color = Color(UiKit.MUTED, 0.18)
+	b.add_theme_stylebox_override("normal", base)
+	b.add_theme_stylebox_override("hover", hov)
+	b.add_theme_stylebox_override("pressed", hov)
+	b.add_theme_stylebox_override("hover_pressed", hov)
+	b.add_theme_stylebox_override("disabled", dis)
+	b.add_theme_color_override("font_color", UiKit.TEXT.darkened(0.1))
+	return b
+
+
+## Dashboard card (D-059): dark glass, no full outline, a coloured accent bar
+## on the left and the cut corners of the kit. Calm by design: bright colour
+## stays for live values and the selected/primary things inside.
+static func card(accent: Color = UiKit.PETROL, pad: int = 12) -> PanelContainer:
+	var p := PanelContainer.new()
+	var sb := StyleBoxFlat.new()
+	sb.bg_color = Color(0.02, 0.05, 0.07, 0.72)
+	sb.border_color = Color(accent.lightened(0.1), 0.85)
+	sb.border_width_left = 3
+	sb.corner_radius_top_right = 12
+	sb.corner_radius_bottom_left = 12
+	sb.set_content_margin_all(pad)
+	sb.content_margin_left = pad + 3
+	p.add_theme_stylebox_override("panel", sb)
+	p.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	return p
+
+
+## A big readout tile: caption, a large value (CountUpLabel when `count` is a
+## number), an optional muted sub line; glyph badge on the left.
+static func big_readout(icon_slot: String, caption: String, value_text: String, col: Color, sub: String = "", count: float = NAN, suffix: String = "") -> HBoxContainer:
+	var h := UiKit.hbox(10)
+	h.add_child(IconBadge.make(icon_slot, 40, col, false, "◆"))
+	var v := UiKit.vbox(-2)
+	v.alignment = BoxContainer.ALIGNMENT_CENTER
+	var c := UiKit.label(caption.to_upper(), 11, UiKit.MUTED)
+	c.add_theme_font_override("font", UiKit.display_variant(1))
+	v.add_child(c)
+	var val: Label
+	if is_nan(count):
+		val = UiKit.label(value_text, 26, col.lightened(0.3))
+	else:
+		var cu := CountUpLabel.make(count, 26, col.lightened(0.3), suffix)
+		val = cu
+	val.add_theme_font_override("font", UiKit.display_font())
+	v.add_child(val)
+	if not sub.is_empty():
+		v.add_child(UiKit.label(sub, 13, UiKit.MUTED))
+	h.add_child(v)
+	return h
+
+
 ## Segmented meter (e.g. flatness 0.8 -> 4 of 5 lit), code-drawn, `w` px wide.
 ## Always shown next to a text value (colour/length are never the only cue).
 static func meter(frac: float, segments: int = 5, col: Color = UiKit.PETROL, w: float = 40.0) -> Control:

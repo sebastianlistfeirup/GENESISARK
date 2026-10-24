@@ -98,16 +98,16 @@ func _build(property: String, row: Dictionary, obs: Dictionary, compact: bool) -
 	mouse_filter = Control.MOUSE_FILTER_PASS
 	var sb := StyleBoxFlat.new()
 	sb.bg_color = Color(0.02, 0.05, 0.07, 0.82) if status != "unknown" else Color(0.03, 0.04, 0.05, 0.7)
-	sb.border_color = Color(col, 0.35 if status != "unknown" else 0.2)
-	sb.set_border_width_all(1)
+	# D-059 art direction: a left accent bar instead of a full outline, and
+	# more air inside, so a grid of tiles reads calm.
 	sb.border_width_left = 3
-	sb.border_color = Color(col, 0.55)
+	sb.border_color = Color(col, 0.75 if status != "unknown" else 0.35)
 	sb.corner_radius_top_right = 10
 	sb.corner_radius_bottom_left = 10
-	sb.content_margin_left = 10 if not compact else 8
-	sb.content_margin_right = 10 if not compact else 8
-	sb.content_margin_top = 7 if not compact else 5
-	sb.content_margin_bottom = 8 if not compact else 6
+	sb.content_margin_left = 14 if not compact else 10
+	sb.content_margin_right = 12 if not compact else 8
+	sb.content_margin_top = 10 if not compact else 6
+	sb.content_margin_bottom = 10 if not compact else 7
 	add_theme_stylebox_override("panel", sb)
 	var v := UiKit.vbox(4 if not compact else 3)
 	var top := UiKit.hbox(9)

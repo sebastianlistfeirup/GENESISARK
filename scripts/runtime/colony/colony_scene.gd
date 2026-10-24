@@ -229,12 +229,11 @@ func _build_ui() -> void:
 	_build_bar.add_theme_constant_override("v_separation", 6)
 	hud.bottom.add_child(_build_bar)
 	for def_id: String in ["solar_array", "geothermal_generator", "battery", "water_plant", "greenhouse", "habitat", "mine", "workshop", "drone_hub", "care_center", "clinic", "school_hall"]:
-		var def := GameSession.content.building(def_id)
-		var b := UiKit.button(str(def.get("name")).replace(Loc.t(" and incubation center"), ""), func() -> void: _start_build(def_id))
-		b.tooltip_text = ColonyUi.building_tooltip(GameSession.sim, def_id)
-		b.custom_minimum_size = Vector2(0, 46)
-		b.add_theme_font_size_override("font_size", 14)
-		b.set_meta("def_id", def_id)
+		# D-059: icon-first build buttons with cost chips (ColonyUi.build_button).
+		var b := ColonyUi.build_button(def_id, func() -> void: _start_build(def_id))
+		# The long hint waits for a deliberate mouse move (_input): a cursor that
+		# merely rests over the bar when the scene opens must not pop it up.
+		b.set_meta("tip", ColonyUi.building_tooltip(GameSession.sim, def_id))
 		_build_bar.add_child(b)
 	_ghost_tip = UiKit.label("", 15, UiKit.TEXT, true)
 	_ghost_tip.custom_minimum_size = Vector2(720, 0)
@@ -273,14 +272,7 @@ func _sync() -> void:
 			(views[bid] as Node).queue_free()
 			views.erase(bid)
 	for b: Button in _build_bar.get_children():
-		var def_id := str(b.get_meta("def_id"))
-		var cost := GameSession.sim.colony.build_cost(gs, def_id)
-		var afford := true
-		for k: String in cost.keys():
-			if float(gs.colony.inventory.get(k, 0.0)) < float(cost[k]):
-				afford = false
-		b.modulate = Color.WHITE if afford else Color(1, 1, 1, 0.55)
-		b.text = Loc.t("%s\n%d mat.%s") % [str(GameSession.content.building(def_id).get("name")).replace(Loc.t(" and incubation center"), "").replace(Loc.t("Geothermal generator"), Loc.t("Geothermal")), int(cost.get("alloy", 0)), (Loc.t(" · %d comp.") % int(cost["components"])) if cost.has("components") else ""]
+		ColonyUi.update_build_button(b, GameSession.sim, gs)
 	_draw_network()
 	_draw_corridors()
 	_relayout()
@@ -961,6 +953,9 @@ func debug_action(action: String) -> void:
 			_refresh_info()
 		"overview":
 			overview.open()
+		"overview_pop", "overview_future":  # evidence: the other overview tabs (D-059)
+			overview.open()
+			overview.show_tab(1 if action == "overview_pop" else 2)
 		"future":
 			overview.open()
 			overview._start_forecast()
@@ -987,6 +982,22 @@ func debug_action(action: String) -> void:
 					break
 		"decision":
 			decision.ask("year_20")
+
+
+var _tips_armed := false
+
+
+## Build-bar hints arm on the first real mouse move (or any key / pad input),
+## so the scene's opening frame never shows a tooltip under a resting cursor.
+func _input(event: InputEvent) -> void:
+	if _tips_armed or _build_bar == null:
+		return
+	var mm := event as InputEventMouseMotion
+	if (mm and mm.relative.length() > 3.0) or event is InputEventKey or event is InputEventJoypadButton:
+		_tips_armed = true
+		for b: Node in _build_bar.get_children():
+			if b.has_meta("tip"):
+				(b as Control).tooltip_text = str(b.get_meta("tip"))
 
 
 func _exit_tree() -> void:

@@ -196,12 +196,18 @@ func _draw() -> void:
 		var b := _pos(loc)
 		var sel := loc == selected
 		var hov := loc == _hover
-		draw_line(ark, b, Color(col, 0.18 if sel else (0.11 if hov else 0.06)), 10.0 if sel else 6.0, true)
+		# D-059 art direction: only the selected route glows; the others recede
+		# to ~15 % (hover brings one back) so the chosen line reads at a glance.
 		if sel:
-			draw_line(ark, b, Color(col, 0.85), 2.4, true)
+			draw_line(ark, b, Color(col, 0.08), 18.0, true)
+			draw_line(ark, b, Color(col, 0.2), 9.0, true)
+			draw_line(ark, b, Color(col.lightened(0.2), 0.95), 2.6, true)
 			_flow(ark, b, col)
 		else:
-			_flow_dash(ark, b, Color(col, 0.75 if hov else 0.55), 1.6, 8.0, 6.0)
+			draw_line(ark, b, Color(col, 0.1 if hov else 0.025), 6.0, true)
+			_flow_dash(ark, b, Color(col, 0.6 if hov else 0.15), 1.4, 8.0, 6.0)
+		if not sel and not hov:
+			continue  # the fuel pill only for the selected / hovered route
 		# Route risk is also a symbol, not only a colour: ▲ risky, ✕ not possible.
 		var mark := "" if kind == "ok" else (" " + UiKit.status_icon(kind))
 		var txt := Loc.t("%d fuel") % int(r.get("fuel", 0)) + mark
@@ -257,8 +263,8 @@ func _draw() -> void:
 		var sel := loc == selected
 		_draw_rings(p, ring, hov, sel)
 		var name_col := UiKit.AMBER if sel else (Color.WHITE if hov else UiKit.TEXT)
-		_label(font, p + Vector2(0, ring + 22.0), str(content.locations[loc].get("name", loc)).to_upper(), 16, name_col)
-		_badges(loc, pid, p + Vector2(0, ring + 34.0), gs)
+		_name_pill(font, p + Vector2(0, ring + 22.0), str(content.locations[loc].get("name", loc)).to_upper(), 16, name_col, sel)
+		_badges(loc, pid, p + Vector2(0, ring + 42.0), gs)
 	# The Ark: the ship glyph (amber) with a soft pulse ring.
 	var pulse := 0.5 + 0.5 * sin(_t * 2.4)
 	draw_texture_rect(_glow_tex, Rect2(ark - Vector2.ONE * 28.0, Vector2.ONE * 56.0), false, Color(UiKit.AMBER, 0.75))
@@ -382,6 +388,21 @@ func _label(font: Font, at: Vector2, text: String, fs: int, col: Color) -> void:
 	var o := at - Vector2(w * 0.5, 0)
 	draw_string_outline(font, o, text, HORIZONTAL_ALIGNMENT_LEFT, -1, fs, 6, Color(0.01, 0.01, 0.04, 0.9))
 	draw_string(font, o, text, HORIZONTAL_ALIGNMENT_LEFT, -1, fs, col)
+
+
+## A world's name on a dark rounded pill (legible over the bright nebula);
+## the selected world's pill takes an amber rim.
+func _name_pill(font: Font, at: Vector2, text: String, fs: int, col: Color, sel: bool) -> void:
+	var w := font.get_string_size(text, HORIZONTAL_ALIGNMENT_LEFT, -1, fs).x
+	var r := Rect2(at + Vector2(-w * 0.5 - 9.0, -fs - 1.0), Vector2(w + 18.0, fs + 9.0))
+	var sb := StyleBoxFlat.new()
+	sb.bg_color = Color(0.01, 0.015, 0.04, 0.78)
+	sb.border_color = Color(UiKit.AMBER, 0.85) if sel else Color(0.6, 0.8, 0.85, 0.18)
+	sb.set_border_width_all(1)
+	sb.set_corner_radius_all(int(r.size.y * 0.5))
+	draw_style_box(sb, r)
+	draw_string_outline(font, at - Vector2(w * 0.5, 0), text, HORIZONTAL_ALIGNMENT_LEFT, -1, fs, 4, Color(0.01, 0.01, 0.04, 0.9))
+	draw_string(font, at - Vector2(w * 0.5, 0), text, HORIZONTAL_ALIGNMENT_LEFT, -1, fs, col)
 
 
 ## Dashes flowing from a to b (still with reduced motion).

@@ -80,8 +80,15 @@ func summary(slot: String) -> Dictionary:
 		return {}
 	var p: Dictionary = DictUtil.get_dict(v, "payload")
 	var camp: Dictionary = DictUtil.get_dict(p, "campaign")
+	# Read-only extras for the save cards (D-059): living colonists and viable embryos.
+	var pop := 0
+	for c: Variant in DictUtil.get_arr(DictUtil.get_dict(p, "population"), "cohorts"):
+		if c is Dictionary and (c as Dictionary).get("stage") != "incubating":
+			pop += int((c as Dictionary).get("size", 0))
+	var led: Dictionary = DictUtil.get_dict(DictUtil.get_dict(p, "ark"), "embryo_ledger")
 	return {"saved_at": v.get("saved_at", ""), "phase": camp.get("phase", ""), "location": camp.get("location_id", ""),
-		"colony_day": camp.get("colony_day", 0), "planet": camp.get("selected_planet_id", "")}
+		"colony_day": camp.get("colony_day", 0), "planet": camp.get("selected_planet_id", ""),
+		"population": pop, "embryos": int(led.get("viable", -1)), "elapsed_days": int(camp.get("elapsed_days", 0))}
 
 
 func delete_slot(slot: String) -> void:

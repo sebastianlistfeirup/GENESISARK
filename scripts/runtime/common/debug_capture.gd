@@ -54,7 +54,7 @@ func _run() -> void:
 	for i: int in wait_frames:
 		await get_tree().process_frame
 	# Park the cursor where no button sits, so no stray hover/tooltip lands in the shot.
-	get_viewport().warp_mouse(Vector2(get_viewport().get_visible_rect().size.x * 0.5, 170))
+	get_viewport().warp_mouse(Vector2(2, 2) if extra.has("park") else Vector2(get_viewport().get_visible_rect().size.x * 0.5, 170))
 	if extra.has("action"):
 		var sc := get_tree().current_scene
 		var act := str(extra["action"])

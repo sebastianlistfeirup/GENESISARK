@@ -30,6 +30,11 @@ var _confirming := false
 
 func _init() -> void:
 	super(Vector2(1340, 860))
+	# D-059 art direction: a calmer, desaturated frame; bright cyan is kept for
+	# the selected route, the active tab and the primary button.
+	frame.tint = Color("6fe6dc").lerp(UiKit.MUTED, 0.6)
+	frame.modulate = Color(1, 1, 1, 0.7)
+	panel.self_modulate = Color(0.66, 0.74, 0.76)
 
 
 func refresh() -> void:
@@ -42,6 +47,14 @@ func refresh() -> void:
 		["ui.icon_components", Loc.t("Components %d") % gs.ark.components, UiKit.PETROL.lightened(0.4)]])
 	tabs = TabContainer.new()
 	tabs.custom_minimum_size = Vector2(1300, 740)
+	var calm := StyleBoxFlat.new()  # the divider around the tab page, calm and desaturated
+	calm.bg_color = Color(0.015, 0.03, 0.045, 0.6)
+	calm.border_color = Color(UiKit.PETROL.lerp(UiKit.MUTED, 0.55), 0.22)
+	calm.set_border_width_all(1)
+	calm.corner_radius_top_right = 10
+	calm.corner_radius_bottom_left = 10
+	calm.set_content_margin_all(10)
+	tabs.add_theme_stylebox_override("panel", calm)
 	body.add_child(tabs)
 	var map_tab := UiKit.hbox(14)
 	map_tab.name = Loc.t("Voyage")
@@ -126,14 +139,18 @@ func _build_hero() -> Control:
 		m.add_theme_constant_override("margin_" + side, 16 if side == "left" else 14)
 	var v := UiKit.vbox(2)
 	v.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	_hero_tag = UiKit.label("", 12, Color(UiKit.AMBER, 0.95))
-	_hero_tag.add_theme_font_override("font", UiKit.display_variant(3))
+	_hero_tag = UiKit.label("", 11, Color(UiKit.AMBER, 0.95))
+	_hero_tag.add_theme_font_override("font", UiKit.display_variant(5))
 	_hero_tag.add_theme_color_override("font_shadow_color", Color(0, 0, 0, 0.9))
 	_hero_tag.add_theme_constant_override("shadow_outline_size", 5)
 	_hero_tag.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	_hero_tag.custom_minimum_size = Vector2(300, 0)
 	_hero_tag.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
 	v.add_child(_hero_tag)
+	var gap := Control.new()  # air between the tagline and the name
+	gap.custom_minimum_size = Vector2(0, 8)
+	gap.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	v.add_child(gap)
 	_hero_name = UiKit.label("", 34, Color.WHITE)
 	_hero_name.add_theme_font_override("font", Holo.name_font())
 	_hero_name.add_theme_color_override("font_shadow_color", Color(0, 0, 0, 0.85))
@@ -155,6 +172,13 @@ func _build_hero() -> Control:
 	m.add_child(v)
 	over.add_child(m)
 	_preview_frame.add_child(over)
+	var calm := StyleBoxFlat.new()  # the view's border, calm (bright cyan is for active things)
+	calm.bg_color = Color(0.01, 0.02, 0.05, 1.0)
+	calm.border_color = Color(UiKit.PETROL.lerp(UiKit.MUTED, 0.5), 0.35)
+	calm.set_border_width_all(1)
+	calm.set_corner_radius_all(3)
+	calm.set_content_margin_all(1)
+	_preview_frame.add_theme_stylebox_override("panel", calm)
 	return _preview_frame
 
 
@@ -202,6 +226,7 @@ func _show_detail(loc: String) -> void:
 			_build_compare(),
 		Loc.t("Narrows the archive's estimate of %s without traveling.") % p.get("name"))
 	UiKit.with_icon(probe, "ui.icon_probe", 22)
+	Holo.ghost(probe)  # secondary: a ghost button beside the filled primary
 	probe.custom_minimum_size = Vector2(0, 54)
 	probe.disabled = k.level_reached.has("orbital") or gs.ark.components < 3 or gs.campaign.phase != CampaignState.PHASE_VOYAGE
 	row.add_child(probe)
@@ -212,6 +237,8 @@ func _show_detail(loc: String) -> void:
 	travel.disabled = not q["ok"]
 	if q.has("fuel"):
 		travel.set_cost("−%d" % int(q["fuel"]), "ui.icon_fuel")
+	if not travel.disabled:
+		travel.set_filled()  # the unmistakable primary
 	row.add_child(travel)
 	_actions.add_child(row)
 	if _confirming:

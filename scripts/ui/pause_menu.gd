@@ -2,12 +2,16 @@ class_name PauseMenu
 extends CanvasLayer
 ## Esc menu, reachable from all gameplay (bible p.26): resume, save/load slots
 ## (with backup recovery), settings, main menu, quit. Pauses the tree.
+## Holo console (D-059): the panel wears the HoloFrame and boots in, a status
+## strip shows where the game stands, saves and loads are SaveSlots cards
+## (world render, place, day, people, embryos, date; overwrite asks first).
 
 var _panel: PanelContainer
 var _body: VBoxContainer
 var _prev_mouse := Input.MOUSE_MODE_VISIBLE
 var settings: SettingsPanel
 var dim: ColorRect
+var _frame: HoloFrame
 
 
 func _ready() -> void:
@@ -16,14 +20,21 @@ func _ready() -> void:
 	dim = ColorRect.new()
 	dim.color = Color(0, 0, 0, 0.55)
 	dim.set_anchors_preset(Control.PRESET_FULL_RECT)
+	# Oversized so the dim still covers the screen when _fit() scales the layer down.
+	dim.offset_left = -4096
+	dim.offset_top = -4096
+	dim.offset_right = 4096
+	dim.offset_bottom = 4096
 	add_child(dim)
-	_panel = UiKit.panel(Vector2(560, 0))
+	_panel = UiKit.panel(Vector2(600, 0))
 	_panel.set_anchors_and_offsets_preset(Control.PRESET_CENTER)
 	_panel.grow_horizontal = Control.GROW_DIRECTION_BOTH
 	_panel.grow_vertical = Control.GROW_DIRECTION_BOTH
 	_body = UiKit.vbox(10)
 	_panel.add_child(_body)
+	_frame = HoloFrame.attach(_panel)
 	add_child(_panel)
+	_panel.minimum_size_changed.connect(_fit)
 	settings = SettingsPanel.new()
 	settings.closed.connect(_main)
 	add_child(settings)
@@ -36,8 +47,10 @@ func open() -> void:
 	get_tree().paused = true
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	_main()
+	_fit()
 	UiKit.fade_in(dim, 0.22)
-	UiKit.fade_in(_panel)
+	HoloAnim.boot_in(_panel)
+	_frame.boot()
 
 
 func close() -> void:
@@ -45,6 +58,13 @@ func close() -> void:
 	settings.visible = false
 	get_tree().paused = false
 	Input.mouse_mode = _prev_mouse
+
+
+## Keep the whole panel on screen at any window size and UI scale (bible p.26).
+func _fit() -> void:
+	if visible:
+		UiKit.fit_layer(self, _panel)
+		UiKit.fit_layer.call_deferred(self, _panel)
 
 
 ## Menu entry in the main-menu style (lit plate, amber tab, glyph).
@@ -63,10 +83,30 @@ func _head(text: String) -> void:
 	_body.add_child(UiKit.header_block(text, sub, "ui.icon_pause"))
 
 
+## Where the game stands, as chips: the place, the day, people and embryos.
+func _status_strip() -> void:
+	if not GameSession.has_game():
+		return
+	var gs: GameState = GameSession.state
+	var row := HFlowContainer.new()
+	row.add_theme_constant_override("h_separation", 6)
+	row.add_theme_constant_override("v_separation", 4)
+	var settled := gs.colony != null
+	var sm := {"phase": gs.campaign.phase, "location": gs.campaign.location_id, "planet": gs.campaign.selected_planet_id}
+	row.add_child(Holo.chip(str(SaveSlots.place(sm)[0]), UiKit.PETROL.lightened(0.35), "ui.icon_home" if settled else "ui.icon_ship", 12))
+	if settled:
+		row.add_child(Holo.chip(Loc.t("Colony day %d") % gs.campaign.colony_day, UiKit.AMBER, "ui.icon_time", 12))
+		row.add_child(Holo.chip(Loc.t("%d people") % gs.population.alive_count(), UiKit.FOOD, "ui.icon_population", 12))
+	row.add_child(Holo.chip(Loc.t("%s embryos") % UiKit.thousands(gs.ark.embryo_viable), UiKit.PETROL.lightened(0.35), "ui.icon_embryo", 12))
+	_body.add_child(row)
+
+
 func _main() -> void:
 	_panel.visible = true
+	_panel.custom_minimum_size.x = 600
 	UiKit.clear(_body)
 	_head(Loc.t("Pause"))
+	_status_strip()
 	var first := _entry(Loc.t("Continue"), "ui.icon_play", close)
 	_body.add_child(first)
 	_body.add_child(_entry(Loc.t("Save game"), "ui.icon_save", _save_menu))
@@ -90,32 +130,28 @@ func open_settings() -> void:
 
 func _save_menu() -> void:
 	UiKit.clear(_body)
-	_body.add_child(UiKit.header_block(Loc.t("Save game"), "", "ui.icon_save"))
-	var first: Button
-	for slot: String in ["manual_1", "manual_2", "manual_3"]:
-		var sm := SaveService.summary(slot)
-		var txt := "%s — %s" % [Loc.t(str(SaveService.SLOT_LABELS[slot])), _describe(sm)]
-		var b := _entry(txt, "ui.icon_save", func() -> void:
-			var r := GameSession.save_to(slot)
-			_status(Loc.t("Saved to %s.") % Loc.t(str(SaveService.SLOT_LABELS[slot])) if r["ok"] else Loc.t("Save failed: ") + str(r["error"]), bool(r["ok"])))
-		_body.add_child(b)
-		if first == null:
-			first = b
+	_panel.custom_minimum_size.x = 780
+	_body.add_child(UiKit.header_block(Loc.t("Save game"), Loc.t("Three manual slots. Saving over a used slot asks first."), "ui.icon_save"))
+	var cards := SaveSlots.list("save", SaveSlots.MANUAL, func(slot: String) -> void:
+		var r := GameSession.save_to(slot)
+		_status(Loc.t("Saved to %s.") % Loc.t(str(SaveService.SLOT_LABELS[slot])) if r["ok"] else Loc.t("Save failed: ") + str(r["error"]), bool(r["ok"])))
+	_body.add_child(cards)
+	HoloAnim.stagger(cards, 0.05, 0.1)
 	_body.add_child(_entry(Loc.t("Back"), "ui.icon_back", _main))
-	first.grab_focus.call_deferred()
+	(cards.get_child(0) as Control).grab_focus.call_deferred()
 
 
 func _load_menu() -> void:
 	UiKit.clear(_body)
-	_body.add_child(UiKit.header_block(Loc.t("Load game"), "", "ui.icon_load"))
-	for slot: String in SaveService.SLOTS:
-		if not SaveService.store.exists(slot):
-			continue
-		var sm := SaveService.summary(slot)
-		_body.add_child(_entry("%s — %s" % [Loc.t(str(SaveService.SLOT_LABELS[slot])), _describe(sm)], "ui.icon_load", func() -> void: _load(slot, false)))
+	_panel.custom_minimum_size.x = 780
+	_body.add_child(UiKit.header_block(Loc.t("Load game"), Loc.t("Autosave, manual slots and the save from before the landing."), "ui.icon_load"))
+	var cards := SaveSlots.list("load", SaveService.SLOTS, func(slot: String) -> void: _load(slot, false))
+	_body.add_child(cards)
+	HoloAnim.stagger(cards, 0.05, 0.1)
 	var back := _entry(Loc.t("Back"), "ui.icon_back", _main)
 	_body.add_child(back)
-	(_body.get_child(1) as Control).grab_focus.call_deferred()
+	var first: Control = cards.get_child(0) as Control if cards.get_child_count() > 0 else back
+	first.grab_focus.call_deferred()
 
 
 func _load(slot: String, backup: bool) -> void:
@@ -125,6 +161,7 @@ func _load(slot: String, backup: bool) -> void:
 		AppFlow.continue_game()
 		return
 	UiKit.clear(_body)
+	_panel.custom_minimum_size.x = 600
 	_body.add_child(UiKit.header_block(Loc.t("Could not load"), "", "ui.icon_warning"))
 	_body.add_child(UiKit.label(str(r["error"]), 17, UiKit.WARN, true))
 	if r["backup_available"] and not backup:

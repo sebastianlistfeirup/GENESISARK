@@ -110,6 +110,21 @@
     "prop.robot_arm": "SoldierHUD/Source_Sprites/Sprites/Icons_Resources/ICON_SM_Prop_Robotic_Part_04_SciFiCity.png",
     "prop.drone": "SoldierHUD/Source_Sprites/Sprites/Icons_Resources/ICON_SM_Prop_Drone_02_SciFiWorlds.png",
 
+    "ui.icon_access": "SciFiMenus/SourceFiles/Sprites/Icons_Settings/ICON_SciFiMenus_Settings_Contrast_01_Clean.png",
+    "ui.icon_camera": "SciFiMenus/SourceFiles/Sprites/Icons_Settings/ICON_SciFiMenus_Settings_Camera_01_Clean.png",
+    "ui.icon_music": "SciFiMenus/SourceFiles/Sprites/Icons_Menu/ICON_SciFiMenus_Menu_Music_On_01_Clean.png",
+    "ui.icon_arrow_up": "SciFiMenus/SourceFiles/Sprites/Icons_Menu/ICON_SciFiMenus_Menu_ArrowUp_01_Clean.png",
+    "ui.icon_arrow_down": "SciFiMenus/SourceFiles/Sprites/Icons_Menu/ICON_SciFiMenus_Menu_ArrowDown_01_Clean.png",
+    "ui.icon_dna": "SciFiMenus/SourceFiles/Sprites/Icons_Menu/ICON_SciFiMenus_Menu_DNA_01_Clean.png",
+    "ui.icon_home": "SoldierHUD/Source_Sprites/Sprites/Icons_Map/ICON_SciFi_Map_Home.png",
+    "ui.icon_health": "SoldierHUD/Source_Sprites/Sprites/Icons_Status/ICON_SciFi_Status_Health01.png",
+    "ui.icon_delete": "SciFiMenus/SourceFiles/Sprites/Icons_Menu/ICON_SciFiMenus_Menu_Delete_01_Clean.png",
+    "crest.expansion": "SciFiMenus/SourceFiles/Sprites/Crests/SPR_SciFiMenus_Crest_Symbol_10.png",
+    "crest.safety": "SciFiMenus/SourceFiles/Sprites/Crests/SPR_SciFiMenus_Crest_Shield_01_Greyscale.png",
+    "crest.self_determination": "SciFiMenus/SourceFiles/Sprites/Crests/SPR_SciFiMenus_Crest_Wreath_01.png",
+    "crest.wreath": "SciFiMenus/SourceFiles/Sprites/Crests/SPR_SciFiMenus_Crest_Wreath_02.png",
+    "crest.star": "SciFiMenus/SourceFiles/Sprites/Crests/SPR_SciFiMenus_Crest_Star_01_Greyscale.png",
+
     "key.cap":"SciFiMenus/SourceFiles/Core/Icons_Input/MouseKeyboard/ICON_Input_PC_Button_Clean.png"
   }
 }
