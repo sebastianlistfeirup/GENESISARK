@@ -1,0 +1,219 @@
+{
+  "cases": [
+    {
+      "census": {
+        "CollisionShape3D": 562,
+        "GPUParticles3D": 8,
+        "Label3D": 2,
+        "MeshInstance3D": 856,
+        "MultiMeshInstance3D": 0,
+        "OmniLight3D": 63,
+        "SpotLight3D": 0
+      },
+      "draw_calls_max": 48,
+      "frame_p50": 8.39,
+      "frame_p95": 10.48,
+      "frame_p99": 13.88,
+      "frames": 360,
+      "id": "ship",
+      "load_ms": 1243,
+      "nodes_max": 4137,
+      "objects_max": 327,
+      "over_budget": [],
+      "primitives_max": 60555,
+      "quality": "high",
+      "scene": "ship",
+      "setup": "power",
+      "static_mem_peak_mb": 130.5,
+      "video_mem_mb": 889.4
+    },
+    {
+      "census": {
+        "CollisionShape3D": 0,
+        "GPUParticles3D": 2,
+        "Label3D": 0,
+        "MeshInstance3D": 368,
+        "MultiMeshInstance3D": 58,
+        "OmniLight3D": 1,
+        "SpotLight3D": 0
+      },
+      "draw_calls_max": 266,
+      "frame_p50": 7.66,
+      "frame_p95": 10.49,
+      "frame_p99": 11.55,
+      "frames": 360,
+      "id": "flight_belt",
+      "load_ms": 782,
+      "nodes_max": 1180,
+      "objects_max": 753,
+      "over_budget": [],
+      "primitives_max": 592086,
+      "quality": "high",
+      "scene": "flight",
+      "setup": "approach:umbra",
+      "static_mem_peak_mb": 125.5,
+      "video_mem_mb": 885.5
+    },
+    {
+      "census": {
+        "CollisionShape3D": 204,
+        "GPUParticles3D": 8,
+        "Label3D": 6,
+        "MeshInstance3D": 251,
+        "MultiMeshInstance3D": 28,
+        "OmniLight3D": 9,
+        "SpotLight3D": 0
+      },
+      "draw_calls_max": 406,
+      "frame_p50": 8.6,
+      "frame_p95": 17.63,
+      "frame_p99": 20.61,
+      "frames": 360,
+      "id": "surface_viridia",
+      "load_ms": 3208,
+      "nodes_max": 763,
+      "objects_max": 825,
+      "over_budget": [
+        "p95 17.6 ms > 16.7"
+      ],
+      "primitives_max": 1309746,
+      "quality": "high",
+      "scene": "surface",
+      "setup": "expedition:viridia",
+      "static_mem_peak_mb": 143.8,
+      "video_mem_mb": 1327.2
+    },
+    {
+      "census": {
+        "CollisionShape3D": 91,
+        "GPUParticles3D": 8,
+        "Label3D": 6,
+        "MeshInstance3D": 241,
+        "MultiMeshInstance3D": 19,
+        "OmniLight3D": 9,
+        "SpotLight3D": 0
+      },
+      "draw_calls_max": 277,
+      "frame_p50": 8.42,
+      "frame_p95": 9.81,
+      "frame_p99": 10.36,
+      "frames": 360,
+      "id": "surface_hazard",
+      "load_ms": 5,
+      "nodes_max": 618,
+      "objects_max": 778,
+      "over_budget": [],
+      "primitives_max": 2924757,
+      "quality": "high",
+      "scene": "surface",
+      "setup": "expedition:ferrum",
+      "static_mem_peak_mb": 144.6,
+      "video_mem_mb": 1466.0
+    },
+    {
+      "census": {
+        "CollisionShape3D": 485,
+        "GPUParticles3D": 4,
+        "Label3D": 15,
+        "MeshInstance3D": 575,
+        "MultiMeshInstance3D": 150,
+        "OmniLight3D": 42,
+        "SpotLight3D": 0
+      },
+      "draw_calls_max": 1263,
+      "frame_p50": 8.24,
+      "frame_p95": 10.11,
+      "frame_p99": 10.91,
+      "frames": 360,
+      "id": "colony_grown",
+      "load_ms": 5831,
+      "nodes_max": 1843,
+      "objects_max": 1991,
+      "over_budget": [
+        "load 5831 ms > 4000"
+      ],
+      "primitives_max": 2416069,
+      "quality": "high",
+      "scene": "colony",
+      "setup": "grown:pelagos",
+      "static_mem_peak_mb": 185.5,
+      "video_mem_mb": 1788.2
+    },
+    {
+      "census": {
+        "CollisionShape3D": 378,
+        "GPUParticles3D": 9,
+        "Label3D": 18,
+        "MeshInstance3D": 481,
+        "MultiMeshInstance3D": 170,
+        "OmniLight3D": 49,
+        "SpotLight3D": 0
+      },
+      "draw_calls_max": 1165,
+      "frame_p50": 8.58,
+      "frame_p95": 9.58,
+      "frame_p99": 9.85,
+      "frames": 360,
+      "id": "colony_overview",
+      "load_ms": 60,
+      "nodes_max": 1677,
+      "objects_max": 1813,
+      "over_budget": [],
+      "primitives_max": 2804532,
+      "quality": "high",
+      "scene": "colony",
+      "setup": "grown:umbra",
+      "static_mem_peak_mb": 210.2,
+      "video_mem_mb": 1932.9
+    },
+    {
+      "census": {
+        "CollisionShape3D": 2571,
+        "GPUParticles3D": 18,
+        "Label3D": 84,
+        "MeshInstance3D": 3413,
+        "MultiMeshInstance3D": 160,
+        "OmniLight3D": 63,
+        "SpotLight3D": 0
+      },
+      "draw_calls_max": 2013,
+      "frame_p50": 8.31,
+      "frame_p95": 16.61,
+      "frame_p99": 17.53,
+      "frames": 360,
+      "id": "colony_era20",
+      "load_ms": 3081,
+      "nodes_max": 9293,
+      "objects_max": 6025,
+      "over_budget": [
+        "primitives 7587060 > 3000000"
+      ],
+      "primitives_max": 7587060,
+      "quality": "high",
+      "scene": "colony",
+      "setup": "era:sere:20",
+      "static_mem_peak_mb": 285.4,
+      "video_mem_mb": 2059.7
+    }
+  ],
+  "cpu": "AMD Ryzen 9 9950X3D 16-Core Processor",
+  "device": "NVIDIA GeForce RTX 5090",
+  "engine_version": "4.7.1-stable (official)",
+  "frame_times_judged": true,
+  "limits": {
+    "draw_calls": 2500.0,
+    "load_ms": 4000.0,
+    "nodes": 12000.0,
+    "primitives": 3000000.0
+  },
+  "os": "Windows",
+  "over_budget": [
+    "surface_viridia: p95 17.6 ms > 16.7",
+    "colony_grown: load 5831 ms > 4000",
+    "colony_era20: primitives 7587060 > 3000000"
+  ],
+  "profile": "desktop",
+  "renderer": "forward_plus",
+  "resolution": "(1920.0, 1080.0)",
+  "timestamp": "2026-10-24T14:56:46"
+}

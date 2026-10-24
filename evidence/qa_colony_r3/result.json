@@ -1,0 +1,22 @@
+{
+  "task_id": "qa_colony_r3",
+  "decision": "D-045",
+  "engine_version": "Godot 4.7.1-stable (Forward+, RTX 5090)",
+  "command": [
+    "godot --path . --resolution 1600x900 -- --capture=<png> --setup=era:<planet>:20 --scene=colony --wait=150 --action=<zoomout|living|district:<d>:<zoom>|market:<n>:<zoom>[:<yaw>]>",
+    "godot --path . -- --perf [--case=colony_grown|colony_era20] --out=builds/<file>.json",
+    "CHECK_FAST=1 tools/check.sh"
+  ],
+  "exit_code": 0,
+  "expected": "Colony scenes closer to the Synty POLYGON Sci-Fi Worlds key art (market corners with stalls, signs and people; parked vehicles and billboards along the roads; smoke and toxic pools on scavenger worlds; per-style corp/scav/explorer street look) with frame time p95 within ~10 ms and all checks green.",
+  "observed": "Before/after for all six worlds (era 20) in before/ and after/, side-by-side sheets, market close-ups in sheet_markets_closeups.jpg. Umbra and Nivalis now grow to year 20 in the era/grown fixtures (geothermal power), so the corp worlds can be judged at all. Paired single-case perf: colony_grown p95 11.6 -> 9.5 ms, prims 2.28M -> 2.42M, draws 1206 -> 1263; colony_era20 p95 10.7/17.0 -> 10.5/9.6 ms, prims 5.50M -> 5.76-5.81M, draws 1492 -> 1599-1617 (other agents' Godot processes were running; frame times are noisy in untouched scenes too). check.sh: loc_exit=0 tests_exit=0 smoke_exit=0 touch_exit=0 campaign_exit=0.",
+  "fixture": "era:sere:20, era:ferrum:20, era:viridia:20, era:pelagos:20, era:nivalis:20, era:umbra:20",
+  "status": "PASS",
+  "artifacts": [
+    "evidence/qa_colony_r3/before/",
+    "evidence/qa_colony_r3/after/",
+    "evidence/qa_colony_r3/sheet_*_before_after.jpg",
+    "evidence/qa_colony_r3/sheet_markets_closeups.jpg",
+    "evidence/qa_colony_r3/perf/"
+  ]
+}
