@@ -24,6 +24,14 @@ const ICONS := {
 	"ui.icon_fuel": HUD + "Icons_Status/ICON_SciFi_Status_Oxygen02.png",
 }
 
+const PAD_DIR := "res://assets/Synty/UI/SciFiMenus/SourceFiles/Core/Icons_Input/Xbox/ICON_Input_Xbox_"
+## SettingsService pad tokens -> Xbox glyph files (colour face buttons).
+const PAD_GLYPHS := {
+	"btn:0": "ButtonColor_A_Clean", "btn:1": "ButtonColor_B_Clean", "btn:2": "ButtonColor_X_Clean",
+	"btn:3": "ButtonColor_Y_Clean", "btn:4": "Button_Share_Clean", "btn:6": "Button_Menu_Clean",
+	"btn:9": "Button_LB_Clean", "btn:10": "Button_RB_Clean",
+}
+
 static var _icons: Dictionary = {}
 static var _disabled := false  # tests can force the fallback look
 
@@ -110,4 +118,21 @@ static func icon(slot: String) -> Texture2D:
 		img.resize(48, 48, Image.INTERPOLATE_LANCZOS)
 		tex = ImageTexture.create_from_image(img)
 	_icons[slot] = tex
+	return tex
+
+
+## Controller glyph for a SettingsService pad token ("btn:1" = B); null if
+## the packs are missing or the token has no glyph.
+static func pad_glyph(token: String) -> Texture2D:
+	if not available() or not PAD_GLYPHS.has(token):
+		return null
+	var key := "pad:" + token
+	if _icons.has(key):
+		return _icons[key]
+	var img := _image(PAD_DIR + str(PAD_GLYPHS[token]) + ".png")
+	var tex: Texture2D = null
+	if img != null:
+		img.resize(40, 40, Image.INTERPOLATE_LANCZOS)
+		tex = ImageTexture.create_from_image(img)
+	_icons[key] = tex
 	return tex
