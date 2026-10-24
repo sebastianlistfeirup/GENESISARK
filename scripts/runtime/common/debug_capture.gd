@@ -47,6 +47,13 @@ func _run() -> void:
 	if extra.has("reduced_motion"):  # --reduced_motion=1: in memory only, never saved
 		SettingsService.values["reduced_motion"] = str(extra["reduced_motion"]) == "1"
 		UiKit.reset_theme()
+	# Mix checks (D-064): --mute=Voice,Music silences buses; --solo=Voice silences every
+	# other top-level bus. In memory only; Movie Maker then records what is left.
+	for b: String in str(extra.get("mute", "")).split(",", false):
+		AudioServer.set_bus_mute(AudioServer.get_bus_index(b), true)
+	if extra.has("solo"):
+		for b: String in AudioService.BUSES:
+			AudioServer.set_bus_mute(AudioServer.get_bus_index(b), b != str(extra["solo"]))
 	DebugFixtures.prepare(setup)
 	if scene_key != "menu" and not extra.has("no_scene"):
 		AppFlow.params = extra
@@ -107,5 +114,7 @@ func _run() -> void:
 	var abs_path := out_path if out_path.is_absolute_path() else ProjectSettings.globalize_path("res://" + out_path)
 	DirAccess.make_dir_recursive_absolute(abs_path.get_base_dir())
 	img.save_png(abs_path)
+	print("AUDIO music=%s ambience=%s layer=%s" % [AudioService.music_slot(), AudioService.ambience_slot(), AudioService.layer_slot()])
+	print("AUDIO played=", JSON.stringify(AudioService.played))
 	print("CAPTURED ", abs_path)
 	get_tree().quit(0)

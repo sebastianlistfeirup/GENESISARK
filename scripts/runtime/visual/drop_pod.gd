@@ -19,6 +19,9 @@ signal impact(strength: float)
 signal hatch_snapped
 signal cell_delivered
 signal finished
+## Every timeline beat as it plays (incoming, impact, unlock, strain, snap, burst,
+## zip, arrive, done): the owner hangs sounds on them (D-064). Not fired by skip().
+signal beat(beat_name: String)
 
 # --- Measurements (metres) from measure_scan.py, scan scaled to 1.20 m tall ---
 const WALL_APO := 0.505     # octagon apothem of the wall core (panels sit proud to ~0.515)
@@ -208,6 +211,7 @@ func _process(delta: float) -> void:
 	for k: String in ev.keys():
 		if not _fired.has(k) and t_ms >= float(ev[k]):
 			_fired[k] = true
+			beat.emit(k)
 			match k:
 				"impact": impact.emit(0.4 if short else 1.0)
 				"snap": hatch_snapped.emit()

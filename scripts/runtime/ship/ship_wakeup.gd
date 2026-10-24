@@ -123,7 +123,9 @@ func _open_now() -> void:
 	if _opened:
 		return
 	_opened = true
-	AudioService.play("sfx_door", "SFX", -2.0, 0.8)
+	# The seal lets go with a hiss, then the cold vapour rolls out (D-064).
+	AudioService.play_any(["sfx_cryo_hatch", "sfx_door"], "SFX", -2.0, 1.0 if AudioService.has_sound("sfx_cryo_hatch") else 0.8)
+	AudioService.play("sfx_cryo_vapour", "SFX", -9.0)
 	var vapour := _vapour()
 	add_child(vapour)
 	var fwd := -_rest.basis.z

@@ -1305,6 +1305,7 @@ Save over %s,Gem over %s
 Save to %s,Gem i %s
 year %.1f,år %.1f
 "(now: %s, from the next area)","(nu: %s, fra næste område)"
+"ARK, the captain and the colonists. The score and the beds dip under every line.","ARK, kaptajnen og kolonisterne. Musik og baggrundslyd dykker under hver replik."
 Accessibility,Tilgængelighed
 Ambience,Stemning
 Audio,Lyd
@@ -1351,6 +1352,7 @@ Text and subtitles.,Tekst og undertekster.
 The score.,Musikken.
 UI scale,UI-skalering
 Use the whole screen.,Brug hele skærmen.
+Voices,Stemmer
 Volume,Lydstyrke
 "Watch the Ark come down, or cut to the ground.","Se Arken komme ned, eller klip til jorden."
 "Wind, rooms, the colony.","Vind, rum, kolonien."

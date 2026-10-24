@@ -70,8 +70,9 @@ var _glow_light: OmniLight3D
 var _streaks: MultiMeshInstance3D
 var _streak_mat: ShaderMaterial
 var _streak_pts: Array = []
-var _roar := false
-var _engine: AudioStreamPlayer  # thruster loop owned by the descent (stops with it)  # [local offset (ship frame), length]
+var _engine: AudioStreamPlayer  # thruster loop owned by the descent (stops with it)
+var _roar_player: AudioStreamPlayer  # entry roar loop (D-064): its level follows the heat and the cloud deck
+var _roar_level := 0.0
 var _vignette: ColorRect
 var _thruster: Node3D
 var _marker: Label3D
@@ -135,6 +136,7 @@ func start_ascent(p_root: Node3D, p_terrain: TerrainBuilder, p_planet: Dictionar
 		lander.add_child(dust)
 		get_tree().create_timer(4.0).timeout.connect(dust.queue_free)
 	_start_engine()
+	AudioService.play("sfx_liftoff", "SFX", -2.0)
 
 
 ## Evidence captures: run the flight forward by `seconds` of simulated time.
@@ -723,6 +725,8 @@ func _process(delta: float) -> void:
 	_phase = _phase_for(_alt)
 	if (_alt > SWITCH_ALT) != _in_space:
 		_set_sky(_alt > SWITCH_ALT)
+		if _t > 0.5:  # punching through the deck (down or up), not the first frame's sky setup
+			AudioService.play("sfx_cloud_punch", "SFX", -3.0, 1.1 if _ascent else 1.0)
 	if not _in_space:
 		_fog_for_alt(_alt)
 	_update_fx(delta, pos)
@@ -828,6 +832,7 @@ func _ascend(delta: float, pos: Vector3) -> void:
 func _begin_landing() -> void:
 	_landing = true
 	autopilot = true
+	AudioService.play("sfx_retro_burst", "SFX", -5.0)
 	var pos := lander_body.global_position
 	var hover := target + Vector3.UP * HOVER_ALT * scale_k
 	var dur1 := clampf(pos.distance_to(hover) / 45.0, 2.0, 6.0)
@@ -846,7 +851,7 @@ func _touchdown() -> void:
 	if lander:
 		lander.add_child(dust)
 	get_tree().create_timer(4.0).timeout.connect(dust.queue_free)
-	AudioService.play("sfx_landing", "SFX", -6.0)
+	AudioService.play_any(["sfx_touchdown", "sfx_landing"], "SFX", -3.0)
 	_shake = 0.3 if _shake_ok() else 0.0
 	get_tree().create_timer(0.7).timeout.connect(_finish)
 
@@ -869,7 +874,8 @@ func _finish() -> void:
 	if _world_env:
 		_world_env.environment = _planet_env
 	_restore_fog()
-	AudioService.set_layer("", -2.0)
+	if _roar_player:
+		_roar_player.stop()
 	if _engine:
 		# Outlive the descent node so the engine spools down instead of cutting off.
 		var e := _engine
@@ -930,6 +936,37 @@ func _update_engine(delta: float) -> void:
 func _exit_tree() -> void:
 	if _engine:
 		_engine.stop()
+	if _roar_player:
+		_roar_player.stop()
+
+
+## Entry roar (D-064): one loop whose level rises and falls with the plasma heat,
+## swells again through the cloud deck and dies away below it (it used to borrow
+## the storm bed as an on/off layer).
+func _update_roar(delta: float, heat: float) -> void:
+	var deck := 1.0 - smoothstep(0.0, 320.0, absf(_alt - SWITCH_ALT))
+	var want := clampf(maxf(heat * 1.1, deck * 0.75), 0.0, 1.0)
+	if _landing:
+		want = 0.0
+	_roar_level = move_toward(_roar_level, want, delta * (1.6 if want > _roar_level else 0.7))
+	if _roar_player == null:
+		if _roar_level < 0.01:
+			return
+		var st := AudioService.stream("sfx_entry_roar_loop")
+		if st == null:
+			return
+		_roar_player = AudioStreamPlayer.new()
+		_roar_player.stream = st
+		_roar_player.bus = "SFX"
+		add_child(_roar_player)
+	if _roar_level < 0.005:
+		if _roar_player.playing:
+			_roar_player.stop()
+		return
+	if not _roar_player.playing:
+		_roar_player.play()
+	_roar_player.volume_db = linear_to_db(_roar_level) - 2.0
+	_roar_player.pitch_scale = 0.85 + 0.3 * _roar_level
 
 
 func _shake_ok() -> bool:
@@ -973,11 +1010,7 @@ func _update_fx(delta: float, pos: Vector3) -> void:
 	_thruster.global_position = pos + Vector3.DOWN * 1.2
 	_thruster.global_basis = Basis(Vector3.RIGHT, PI * 0.5)  # plume down at the ground
 	_thruster.visible = _alt < 600.0 or _landing or _ascent
-	# Entry roar: the storm bed swells with the heat and dies away below the deck.
-	var roaring := heat > 0.15 or (_alt < SWITCH_ALT + 150.0 and _alt > SWITCH_ALT - 250.0)
-	if roaring != _roar:
-		_roar = roaring
-		AudioService.set_layer("amb_hazard_storm" if roaring else "", -2.0)
+	_update_roar(delta, heat)
 	if heat > 0.25 and _shake_ok():
 		_shake = maxf(_shake, heat * 0.22)
 	_shake = maxf(0.0, _shake - delta * 0.8)

@@ -7,6 +7,14 @@ const BUSES := ["Music", "SFX", "Ambience", "UI", "Voice"]
 const DEFAULT_DIR := "res://assets/audio/placeholder/"
 const FINAL_DIR := "res://assets/audio/final/"
 const ALARM_COOLDOWN_MS := 6000
+## Mix trims (D-064) on top of the player's sliders, set from the in-game loudness
+## check: the score and the beds sit under the voice, effects in between.
+const MIX_TRIM_DB := {"Music": 6.0, "SFX": 0.0, "Ambience": 3.0, "UI": 0.0, "Voice": 0.0}
+## Ducking (D-064): while a voice line plays, music and ambience dip so every line
+## is intelligible; fast attack, slow release.
+const DUCK_DB := {"Music": -8.0, "Ambience": -6.0, "SFX": -2.0}
+const DUCK_ATTACK := 0.25
+const DUCK_RELEASE := 0.9
 
 ## Every alarm sound has a visual twin (bible p.26); GameHud shows it.
 signal alarm_raised(critical: bool)
@@ -22,6 +30,12 @@ var _layer: AudioStreamPlayer   # second ambience bed (embryo bank, hazard zone,
 var _layer_slot := ""
 var _stinger: AudioStreamPlayer
 var _rng := RandomNumberGenerator.new()
+var _duck := 0.0          # 0 = open, 1 = fully ducked under a voice line
+var _music_slot := ""
+var _ambience_slot := ""
+var _last_ui: Dictionary = {}  # slot -> ticks of its last play (ui_soft cooldown)
+var _log_plays := false   # evidence captures only: which cues fired (DebugCapture prints it)
+var played: Dictionary = {}  # slot -> count, while _log_plays
 
 
 func _ready() -> void:
@@ -74,6 +88,7 @@ func _ready() -> void:
 	_stinger = AudioStreamPlayer.new()
 	_stinger.bus = "Music"
 	add_child(_stinger)
+	_log_plays = DebugCapture.requested()
 	SettingsService.changed.connect(apply_volumes)
 	apply_volumes()
 
@@ -84,12 +99,43 @@ func apply_volumes() -> void:
 	_set_bus("SFX", float(SettingsService.get_value("sfx_volume", 1.0)))
 	_set_bus("Ambience", float(SettingsService.get_value("ambience_volume", 1.0)))
 	_set_bus("UI", float(SettingsService.get_value("ui_volume", 1.0)))
+	_set_bus("Voice", float(SettingsService.get_value("voice_volume", 1.0)))
 
 
 func _set_bus(bus: String, linear: float) -> void:
 	var idx := AudioServer.get_bus_index(bus)
 	if idx >= 0:
-		AudioServer.set_bus_volume_db(idx, linear_to_db(maxf(linear, 0.0001)))
+		AudioServer.set_bus_volume_db(idx, linear_to_db(maxf(linear, 0.0001)) + float(MIX_TRIM_DB.get(bus, 0.0)) + duck_offset_db(bus, _duck))
+
+
+## How far `bus` sits under a voice line at duck amount k (0..1).
+static func duck_offset_db(bus: String, k: float) -> float:
+	return float(DUCK_DB.get(bus, 0.0)) * clampf(k, 0.0, 1.0)
+
+
+func voice_playing() -> bool:
+	return _voice != null and _voice.playing
+
+
+func _process(delta: float) -> void:
+	var want := 1.0 if voice_playing() else 0.0
+	if is_equal_approx(want, _duck):
+		return
+	_duck = move_toward(_duck, want, delta / (DUCK_ATTACK if want > _duck else DUCK_RELEASE))
+	for b: String in DUCK_DB.keys():
+		_set_bus(b, float(SettingsService.get_value(b.to_lower() + "_volume", 1.0)))
+
+
+func duck_amount() -> float:
+	return _duck
+
+
+func music_slot() -> String:
+	return _music_slot if _music.playing else ""
+
+
+func ambience_slot() -> String:
+	return _ambience_slot if _ambience.playing else ""
 
 
 func stream(slot: String) -> AudioStream:
@@ -132,6 +178,8 @@ func play(slot: String, bus: String = "SFX", volume_db: float = 0.0, pitch: floa
 	var s := stream(slot)
 	if s == null:
 		return
+	if _log_plays:
+		played[slot] = int(played.get(slot, 0)) + 1
 	for p: AudioStreamPlayer in _players:
 		if not p.playing:
 			p.stream = s
@@ -214,8 +262,54 @@ func play_at(slot: String, parent: Node3D, volume_db: float = 0.0, max_distance:
 	return p
 
 
+## Fire-and-forget positional one-shot (D-064): a 3D player under `where` that
+## frees itself when done. `slot` may name a variant family (slot_01..06) without
+## a base file; a random take is picked. Missing sound -> nothing (fresh clone).
+func play_3d(slot: String, where: Node3D, volume_db: float = 0.0, max_distance: float = 60.0, pitch: float = 1.0,
+		bus: String = "SFX", unit_size: float = 8.0) -> AudioStreamPlayer3D:
+	var pick := slot
+	if stream(slot) == null:
+		var takes: Array = variants(slot)
+		if takes.is_empty():
+			return null
+		pick = str(takes[_rng.randi() % takes.size()])
+	if where == null or not where.is_inside_tree():
+		return null
+	if _log_plays:
+		played[pick] = int(played.get(pick, 0)) + 1
+	var p := AudioStreamPlayer3D.new()
+	p.stream = stream(pick)
+	p.bus = bus
+	p.volume_db = volume_db
+	p.pitch_scale = pitch
+	p.max_distance = max_distance
+	p.unit_size = unit_size
+	p.finished.connect(p.queue_free)
+	where.add_child(p)
+	p.play()
+	return p
+
+
+## First slot of `slots` that exists plays (new finals with an old fallback).
+func play_any(slots: Array, bus: String = "SFX", volume_db: float = 0.0, pitch: float = 1.0) -> void:
+	for sl: Variant in slots:
+		if has_sound(str(sl)):
+			play(str(sl), bus, volume_db, pitch)
+			return
+
+
 func ui(slot: String) -> void:
 	play(slot, "UI", -4.0)
+
+
+## Quiet UI accent with its own cooldown, so panels booting together make one
+## sound, not a burst (holo boot-in, location card).
+func ui_soft(slot: String, volume_db: float = -10.0, cooldown_ms: int = 350) -> void:
+	var now := Time.get_ticks_msec()
+	if now - int(_last_ui.get(slot, -cooldown_ms)) < cooldown_ms:
+		return
+	_last_ui[slot] = now
+	play(slot, "UI", volume_db)
 
 
 ## Alarms have a cooldown per type so they never spam (bible p.13).
@@ -288,6 +382,7 @@ func set_ambience(slot: String) -> void:
 	var s := stream(slot) if not slot.is_empty() else null
 	if _ambience.stream == s and _ambience.playing:
 		return
+	_ambience_slot = slot
 	_ambience.stream = s
 	if s:
 		_ambience.play()
@@ -299,8 +394,10 @@ func set_music(slot: String) -> void:
 	var s := stream(slot) if not slot.is_empty() else null
 	if _music.stream == s and _music.playing:
 		return
+	_music_slot = slot
 	_music.stream = s
-	_music.volume_db = -8.0
+	# The epilogue's theme plays alone (no voice, no bed): it may come up (D-064).
+	_music.volume_db = -3.0 if slot.begins_with("music_ending_") else -8.0
 	if s:
 		_music.play()
 	else:

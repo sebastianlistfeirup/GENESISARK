@@ -1,0 +1,166 @@
+{
+ "menu": {
+  "full": {
+   "I": -30.9,
+   "LRA": 1.3,
+   "peak": "-18.2"
+  },
+  "voice": {
+   "I": -70.0,
+   "LRA": 0.0,
+   "peak": "-inf"
+  },
+  "beds": {
+   "I": -30.9,
+   "LRA": 1.3,
+   "peak": "-18.2"
+  },
+  "voice_active_s": 0.0,
+  "beds_med_M_no_voice": -30.9
+ },
+ "ship_fresh": {
+  "full": {
+   "I": -18.9,
+   "LRA": 13.7,
+   "peak": "-0.9"
+  },
+  "voice": {
+   "I": -17.3,
+   "LRA": 5.8,
+   "peak": "-2.4"
+  },
+  "beds": {
+   "I": -30.7,
+   "LRA": 4.2,
+   "peak": "-11.6"
+  },
+  "voice_active_s": 14.9,
+  "voice_med_M": -17.7,
+  "beds_med_M_under_voice": -30.9,
+  "margin_LU": 13.2,
+  "beds_med_M_no_voice": -31.6
+ },
+ "ship_powered": {
+  "full": {
+   "I": -18.1,
+   "LRA": 14.2,
+   "peak": "-0.9"
+  },
+  "voice": {
+   "I": -17.3,
+   "LRA": 5.8,
+   "peak": "-2.4"
+  },
+  "beds": {
+   "I": -28.6,
+   "LRA": 9.3,
+   "peak": "-9.8"
+  },
+  "voice_active_s": 14.9,
+  "voice_med_M": -17.7,
+  "beds_med_M_under_voice": -30.6,
+  "margin_LU": 12.9,
+  "beds_med_M_no_voice": -31.6
+ },
+ "flight": {
+  "full": {
+   "I": -22.6,
+   "LRA": 13.5,
+   "peak": "-2.6"
+  },
+  "voice": {
+   "I": -17.2,
+   "LRA": 8.1,
+   "peak": "-3.3"
+  },
+  "beds": {
+   "I": -30.2,
+   "LRA": 3.3,
+   "peak": "-8.5"
+  },
+  "voice_active_s": 5.3,
+  "voice_med_M": -17.5,
+  "beds_med_M_under_voice": -31.1,
+  "margin_LU": 13.6,
+  "beds_med_M_no_voice": -38.4
+ },
+ "descent": {
+  "full": {
+   "I": -32.0,
+   "LRA": 4.9,
+   "peak": "-15.0"
+  },
+  "voice": {
+   "I": -70.0,
+   "LRA": 0.0,
+   "peak": "-inf"
+  },
+  "beds": {
+   "I": -32.0,
+   "LRA": 4.9,
+   "peak": "-15.0"
+  },
+  "voice_active_s": 0.0,
+  "beds_med_M_no_voice": -32.9
+ },
+ "surface": {
+  "full": {
+   "I": -17.6,
+   "LRA": 15.6,
+   "peak": "-2.7"
+  },
+  "voice": {
+   "I": -17.0,
+   "LRA": 4.5,
+   "peak": "-2.5"
+  },
+  "beds": {
+   "I": -32.8,
+   "LRA": 4.2,
+   "peak": "-9.2"
+  },
+  "voice_active_s": 9.7,
+  "voice_med_M": -17.3,
+  "beds_med_M_under_voice": -35.1,
+  "margin_LU": 17.8,
+  "beds_med_M_no_voice": -33.7
+ },
+ "colony": {
+  "full": {
+   "I": -32.5,
+   "LRA": 0.8,
+   "peak": "-9.3"
+  },
+  "voice": {
+   "I": -70.0,
+   "LRA": 0.0,
+   "peak": "-inf"
+  },
+  "beds": {
+   "I": -32.5,
+   "LRA": 0.8,
+   "peak": "-9.3"
+  },
+  "voice_active_s": 0.0,
+  "beds_med_M_no_voice": -32.7
+ },
+ "ending": {
+  "full": {
+   "I": -37.4,
+   "LRA": 7.1,
+   "peak": "-19.3"
+  },
+  "voice": {
+   "I": -70.0,
+   "LRA": 0.0,
+   "peak": "-inf"
+  },
+  "beds": {
+   "I": -37.4,
+   "LRA": 7.1,
+   "peak": "-19.3"
+  },
+  "voice_active_s": 0.0,
+  "beds_med_M_no_voice": -39.9
+ }
+}

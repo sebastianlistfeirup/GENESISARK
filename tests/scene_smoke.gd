@@ -116,6 +116,13 @@ func _run() -> void:
 	AudioService.set_layer("amb_embryo_bank")
 	check("audio_layer_set", AudioService.layer_slot() == "amb_embryo_bank")
 	AudioService.set_layer("")
+	# D-064: music and beds dip under a voice line (the voice itself never); wildlife call families.
+	check("audio_duck_and_calls", is_zero_approx(AudioService.duck_offset_db("Music", 0.0)) and AudioService.duck_offset_db("Music", 1.0) <= -6.0
+		and AudioService.duck_offset_db("Ambience", 1.0) < 0.0 and is_zero_approx(AudioService.duck_offset_db("Voice", 1.0))
+		and GroundWildlife.call_group({"model": "a/SKM_Bull_Fantasy.fbx", "size": 2.1}) == "beast"
+		and GroundWildlife.call_group({"model": "a/SKM_Bull_Fantasy.fbx", "size": 5.8}) == "giant"
+		and GroundWildlife.call_group({"model": "a/SKM_Gryphon.fbx", "size": 2.4}) == "flyer"
+		and GroundWildlife.call_group({"model": "a/SKM_Stag_Fantasy_Frost.fbx", "size": 2.4}) == "grazer")
 
 	# RigLab (GA-14 prep): every character slot audits clean and the lab scene runs all states.
 	var rig_bad: Array = []

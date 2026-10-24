@@ -23,6 +23,7 @@ var _mat: ShaderMaterial
 var _r := -1.0
 var _origin := Vector3.ZERO
 var _pending: Array = []   # targets not reached yet this pulse
+var _last_blip := 0.0      # _r at the last returning blip (spacing)
 
 
 func _ready() -> void:
@@ -56,7 +57,8 @@ func pulse() -> bool:
 	_r = 0.5
 	_pending = targets.duplicate()
 	_wave.visible = true
-	AudioService.play("sfx_scan", "SFX", -4.0)
+	_last_blip = -100.0
+	AudioService.play_any(["sfx_scan_ping", "sfx_scan"], "SFX", -4.0)
 	return true
 
 
@@ -112,3 +114,8 @@ func _tag(t: Dictionary, dist: float) -> void:
 	tw.tween_property(lbl, "modulate:a", 0.0, 0.6)
 	tw.tween_callback(lbl.queue_free)
 	tagged.emit(n, HOLD + 0.85)
+	# Returning blip (D-064): fainter and lower the farther the tag; never two on one frame-step.
+	if _r - _last_blip > 3.0:
+		_last_blip = _r
+		var k := clampf(dist / RANGE, 0.0, 1.0)
+		AudioService.play("sfx_scan_blip", "SFX", -8.0 - 8.0 * k, 1.18 - 0.3 * k)

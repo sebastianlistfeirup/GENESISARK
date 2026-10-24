@@ -19,6 +19,8 @@ const MID := 100.0   # clips every 4th frame; beyond: every 8th until culled
 const TURN := 2.0    # rad/s walking (running turns twice as fast)
 const MAX_SLOPE := 0.55  # rise per metre an animal will walk up
 const CELL := 1.5        # placement grid (m)
+const CALL_RANGE := 110.0  # herds farther than this from the camera stay quiet
+const CALL_GAP := 7.0      # seconds between any two calls on the whole map (sparse, never a chorus)
 
 static var _models: Dictionary = {}  # model path -> measured template (see _model)
 
@@ -36,6 +38,7 @@ var _wet := false
 var _rng := RandomNumberGenerator.new()
 var _frame := 0
 var _still := false
+var _call_cool := 0.0
 
 
 class Herd:
@@ -48,6 +51,9 @@ class Herd:
 	var habitat := "land"
 	var flee := 10.0
 	var members: Array = []
+	var call_slot := ""       # sound family (sfx_wild_<group>): grazer / beast / giant / flyer
+	var pitch := 1.0       # per world and species, so the same family sounds different on each planet
+	var call_t := 0.0
 
 
 class Beast:
@@ -109,6 +115,9 @@ static func build(p_terrain: Node3D, specs: Array, seed_value: int, avoid: Array
 			herd.radius = DictUtil.get_float(spec, "spread", 7.0)
 			herd.flee = DictUtil.get_float(spec, "flee", 10.0)
 			herd.timer = root._rng.randf_range(10.0, 30.0)
+			herd.call_slot = "sfx_wild_" + call_group(spec)
+			herd.pitch = 0.82 + float(absi(hash(str(seed_value) + str(spec.get("model", "")))) % 37) / 100.0
+			herd.call_t = root._rng.randf_range(6.0, 30.0) * (2.0 if herd.call_slot.ends_with("giant") else 1.0)
 			var found := false
 			for attempt: int in 60:
 				var c := Vector2.from_angle(root._rng.randf() * TAU) * root._rng.randf_range(herd.ring.x, minf(herd.ring.y, root._half))
@@ -196,8 +205,10 @@ func _process(delta: float) -> void:
 	var threat := Vector2.INF
 	if is_instance_valid(watcher) and watcher.is_visible_in_tree():
 		threat = Vector2(watcher.global_position.x, watcher.global_position.z)
+	_call_cool -= delta
 	for hv: Variant in _herds:
 		var herd: Herd = hv
+		_calls(herd, delta, eye)
 		herd.alarm -= delta
 		herd.timer -= delta
 		if herd.timer <= 0.0:  # the herd drifts on to fresh grazing
@@ -214,9 +225,48 @@ func _process(delta: float) -> void:
 		_animate(b, delta, eye)
 
 
+## Which call family a species uses (D-064): data may name it ("call"), else the
+## model and size decide. Alien-flavoured takes in assets/audio/final/sfx_wild_*.
+static func call_group(spec: Dictionary) -> String:
+	if spec.has("call"):
+		return str(spec["call"])
+	var m := str(spec.get("model", "")).to_lower()
+	if DictUtil.get_float(spec, "size", 1.8) >= 5.0:
+		return "giant"
+	if m.contains("gryph"):
+		return "flyer"
+	if m.contains("bull") or m.contains("bear"):
+		return "beast"
+	return "grazer"
+
+
+## Now and then one animal of a herd near the camera calls (positional, quiet,
+## sparse: per-herd timers plus a map-wide gap). Startled herds call once.
+func _calls(herd: Herd, delta: float, eye: Vector3) -> void:
+	herd.call_t -= delta
+	if herd.call_t > 0.0 or herd.members.is_empty():
+		return
+	herd.call_t = _rng.randf_range(25.0, 60.0) * (2.0 if herd.call_slot.ends_with("giant") else 1.0)
+	_voice(herd, eye, 1.0)
+
+
+func _voice(herd: Herd, eye: Vector3, pitch_k: float) -> void:
+	if _call_cool > 0.0 or herd.members.is_empty():
+		return
+	var b: Beast = herd.members[_rng.randi() % herd.members.size()]
+	if not is_instance_valid(b.holder) or b.holder.global_position.distance_to(eye) > CALL_RANGE:
+		return
+	_call_cool = CALL_GAP
+	var giant := herd.call_slot.ends_with("giant")
+	AudioService.play_3d(herd.call_slot, b.holder, 2.0 if giant else -2.0, 260.0 if giant else 130.0,
+		herd.pitch * pitch_k * _rng.randf_range(0.95, 1.05), "Ambience", 22.0 if giant else 10.0)
+
+
 func _think(b: Beast, delta: float, threat: Vector2) -> void:
 	var herd := b.herd
 	if threat != Vector2.INF and b.pos.distance_to(threat) < herd.flee:
+		if herd.alarm <= 0.0 and is_instance_valid(watcher):
+			_voice(herd, watcher.global_position, 1.15)  # the startled one cries out as the herd bolts
 		herd.alarm = 3.5  # one startled animal sets off the whole herd
 		herd.threat = threat
 	if herd.alarm > 0.0 and b.state != "run" and b.pos.distance_to(herd.threat) < herd.flee * 1.8:

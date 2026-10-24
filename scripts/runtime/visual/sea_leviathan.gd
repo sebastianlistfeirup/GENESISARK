@@ -18,6 +18,7 @@ var _pos := Vector2.ZERO
 var _dir := Vector2.RIGHT
 var _height := 30.0
 var _length := 60.0
+var _sang_at := -999.0  # _t of the last song (D-064)
 
 const RISE := 7.0
 const GLIDE := 9.0
@@ -111,10 +112,17 @@ func _process(delta: float) -> void:
 	if FxEffect.reduced_motion():
 		return
 	_t += delta
+	var was := _cycle
 	_cycle += delta
 	if _cycle > RISE + GLIDE + DIVE + REST:
 		_cycle = 0.0
 		_new_spot(get_meta("spec", {}))
+	# As it breaks the surface, now and then a distant whale-song rolls in over the
+	# sea (positional, far away; at most every 45 s, not every rise).
+	var cue := RISE * 0.2
+	if was < cue and _cycle >= cue and _t - _sang_at > 45.0 and _rng.randf() < 0.7:
+		_sang_at = _t
+		AudioService.play_3d("sfx_leviathan_song", self, 4.0, 1600.0, _rng.randf_range(0.9, 1.05), "Ambience", 160.0)
 	_place()
 
 

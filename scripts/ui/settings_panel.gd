@@ -192,6 +192,7 @@ func _audio_tab() -> Control:
 		["music_volume", Loc.t("Music"), Loc.t("The score."), "ui.icon_music"],
 		["sfx_volume", Loc.t("Effects"), Loc.t("Machines, steps, the Ark."), "ui.icon_power"],
 		["ambience_volume", Loc.t("Ambience"), Loc.t("Wind, rooms, the colony."), "ui.icon_wind"],
+		["voice_volume", Loc.t("Voices"), Loc.t("ARK, the captain and the colonists. The score and the beds dip under every line."), "ui.icon_population"],
 		["ui_volume", Loc.t("Interface"), Loc.t("Clicks and notices."), "ui.icon_display"]]
 	for r: Array in rows:
 		v.add_child(_tag(_slider(str(r[0]), str(r[1]), str(r[2]), str(r[3]), 0.0, 1.0, 0.05, _pct), str(r[0])))
@@ -306,7 +307,7 @@ func _mixer_preview() -> Control:
 	v.add_child(UiKit.section(Loc.t("Mixer"), "ui.icon_music"))
 	var m := _Mixer.new()
 	m.custom_minimum_size = Vector2(240, 250)
-	m.names = [Loc.t("Master"), Loc.t("Music"), Loc.t("Effects"), Loc.t("Ambience"), Loc.t("Interface")]
+	m.names = [Loc.t("Master"), Loc.t("Music"), Loc.t("Effects"), Loc.t("Ambience"), Loc.t("Voices"), Loc.t("Interface")]
 	v.add_child(m)
 	v.add_child(UiKit.label(Loc.t("Levels follow the sliders: each channel is mixed under the master."), 13, UiKit.MUTED, true))
 	p.add_child(v)
@@ -314,7 +315,7 @@ func _mixer_preview() -> Control:
 
 
 class _Mixer extends Control:
-	const KEYS := ["master_volume", "music_volume", "sfx_volume", "ambience_volume", "ui_volume"]
+	const KEYS := ["master_volume", "music_volume", "sfx_volume", "ambience_volume", "voice_volume", "ui_volume"]
 	var names: Array = []
 	var _t := 0.0
 

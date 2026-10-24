@@ -49,10 +49,13 @@ static func duration(short: bool) -> float:
 
 
 ## Beat times for one-shot events (sound, camera bump, burst, delivery).
+## "incoming", "strain" and "zip" are sound beats only (D-064).
 static func events(short: bool) -> Dictionary:
 	if short:
-		return {"impact": S_LAND, "unlock": S_LID_A, "snap": S_LID_A, "burst": S_LID_A + 150.0, "arrive": S_ARRIVE, "done": S_END}
-	return {"impact": IMPACT, "unlock": UNLOCK, "snap": SNAP, "burst": SNAP + 20.0, "arrive": ARRIVE, "done": END}
+		return {"incoming": 0.0, "impact": S_LAND, "unlock": S_LID_A, "snap": S_LID_A, "burst": S_LID_A + 150.0,
+			"zip": S_ZIP_A, "arrive": S_ARRIVE, "done": S_END}
+	return {"incoming": 0.0, "impact": IMPACT, "unlock": UNLOCK, "strain": STRAIN_A, "snap": SNAP, "burst": SNAP + 20.0,
+		"zip": ZIP_A, "arrive": ARRIVE, "done": END}
 
 
 static func k(t: float, a: float, b: float) -> float:

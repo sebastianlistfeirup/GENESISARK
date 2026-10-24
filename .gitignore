@@ -46,3 +46,5 @@ __pycache__/
 /evidence/droppod/viewer/drop_pod_baked*
 /assets/audio/final/*.mp3.import
 /assets/audio/vo/*.mp3.import
+/assets/audio/final/*.ogg
+/assets/audio/final/*.ogg.import

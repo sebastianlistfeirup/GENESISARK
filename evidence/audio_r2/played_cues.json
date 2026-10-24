@@ -1,0 +1,70 @@
+{
+ "menu": [
+  "music=music_hope ambience=amb_space layer=",
+  "played={}"
+ ],
+ "ship_fresh": [
+  "music=music_ark_alone ambience=amb_ship_dark layer=",
+  "played={\"ui_card_whoosh\":1}"
+ ],
+ "ship_powered": [
+  "music=music_ark_alone ambience=amb_ship_dark layer=",
+  "played={\"sfx_lamp_clunk_01\":1,\"sfx_lamp_clunk_02\":4,\"sfx_power_on\":1,\"sfx_power_surge\":1,\"ui_card_whoosh\":1,\"ui_confirm\":1}"
+ ],
+ "flight": [
+  "music= ambience=amb_space layer=",
+  "played={\"alarm_warning\":1,\"ui_hover\":2}"
+ ],
+ "descent": [
+  "music= ambience=amb_surface_green layer=",
+  "played={\"sfx_cloud_punch\":1,\"ui_card_whoosh\":1}"
+ ],
+ "surface": [
+  "music= ambience=amb_surface_green layer=",
+  "played={\"ui_card_whoosh\":1,\"ui_hover\":1}"
+ ],
+ "colony": [
+  "music= ambience=amb_colony_green layer=",
+  "played={\"ui_card_whoosh\":1,\"ui_hover\":1}"
+ ],
+ "ending": [
+  "music=music_ending_independent ambience= layer=",
+  "played={\"ui_card_whoosh\":1}"
+ ],
+ "droppod": [
+  "music= ambience=amb_surface_green layer=",
+  "played={\"sfx_energy_whoosh\":1,\"sfx_interact\":1,\"sfx_pod_impact\":1,\"sfx_pod_incoming\":1,\"sfx_pod_snap\":1,\"sfx_pod_strain\":1,\"sfx_pod_unlock\":1,\"ui_card_whoosh\":1,\"ui_hover\":1}"
+ ],
+ "scan": [
+  "music= ambience=amb_surface_green layer=",
+  "played={\"sfx_scan_blip\":4,\"sfx_scan_ping\":1,\"ui_card_whoosh\":1,\"ui_hover\":1}"
+ ],
+ "ascent": [
+  "music= ambience=amb_surface_green layer=",
+  "played={\"sfx_cloud_punch\":1,\"sfx_liftoff\":1,\"ui_card_whoosh\":1,\"ui_hover\":1}"
+ ],
+ "leviathan": [
+  "music= ambience=amb_surface_green layer=",
+  "played={\"sfx_leviathan_song\":1,\"sfx_wild_grazer_01\":1,\"sfx_wild_grazer_03\":1,\"ui_card_whoosh\":1,\"ui_hover\":1}"
+ ],
+ "wildlife": [
+  "music= ambience=amb_surface_ice layer=",
+  "played={\"sfx_wild_giant_02\":1,\"sfx_wild_grazer_02\":1,\"sfx_wild_grazer_03\":2,\"ui_card_whoosh\":1,\"ui_hover\":1}"
+ ],
+ "wakeup": [
+  "music=music_ark_alone ambience=amb_ship_dark layer=",
+  "played={\"sfx_cryo_hatch\":1,\"sfx_cryo_vapour\":1,\"ui_card_whoosh\":1}"
+ ],
+ "colony_act2": [
+  "music=music_colony_act2 ambience=amb_colony_green layer=amb_colony_people",
+  "played={\"ui_card_whoosh\":1,\"ui_hover\":1}"
+ ],
+ "colony_act3": [
+  "music=music_colony_act3 ambience=amb_colony_green layer=amb_colony_people",
+  "played={\"ui_card_whoosh\":1,\"ui_holo_boot\":1,\"ui_hover\":1}"
+ ],
+ "landing": [
+  "music= ambience=amb_surface_green layer=",
+  "played={\"sfx_retro_burst\":1,\"sfx_touchdown\":1,\"sfx_wild_grazer_02\":1,\"sfx_wild_grazer_03\":1,\"ui_card_whoosh\":1,\"ui_hover\":1}"
+ ]
+}

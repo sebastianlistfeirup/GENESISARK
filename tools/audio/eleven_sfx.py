@@ -57,7 +57,7 @@ def main() -> None:
         if "ElevenLabs" not in tool or "Music" in tool or not prompt or prompt.startswith("("):
             continue
         dst = OUT / (cue + ".mp3")
-        if dst.exists() and not force:
+        if (dst.exists() or dst.with_suffix(".ogg").exists()) and not force:  # normalize.py turns loops into .ogg
             continue
         secs = float(r["length_s"] or 2)
         if dry:

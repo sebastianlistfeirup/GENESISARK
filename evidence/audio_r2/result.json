@@ -1,0 +1,148 @@
+{
+ "task_id": "audio_r2",
+ "commit": "base c62fd71; evidence lands with the D-064 change",
+ "engine_version": "Godot 4.7.2-stable",
+ "command": "python tools/audio/mixcheck.py <before|after> all (Movie Maker --write-movie --fixed-fps 30 --resolution 960x540; modes full, --solo=Voice, --mute=Voice; ffmpeg ebur128). Hook clips: droppod, scan, ascent, leviathan, wildlife, landing (descent:700), wakeup, colony_act2 (era:viridia:8), colony_act3 (era:viridia:25). CHECK_FAST=1 tools/check.sh",
+ "exit_code": 0,
+ "expected": "Dialogue on top (>= 12 LU over the beds under it), music and beds audible but under the voice, no seam at loop points, every new cue fires in its moment, music follows the act, check.sh green.",
+ "observed": {
+  "full_mix_I_LUFS_before_after": {
+   "menu": [
+    -30.9,
+    -26.4
+   ],
+   "ship_fresh": [
+    -18.9,
+    -20.1
+   ],
+   "ship_powered": [
+    -18.1,
+    -19.5
+   ],
+   "flight": [
+    -22.6,
+    -22.2
+   ],
+   "descent": [
+    -32.0,
+    -27.3
+   ],
+   "surface": [
+    -17.6,
+    -18.5
+   ],
+   "colony": [
+    -32.5,
+    -29.3
+   ],
+   "ending": [
+    -37.4,
+    -26.5
+   ]
+  },
+  "dialogue_margin_LU_before_after": {
+   "ship_fresh": [
+    13.2,
+    15.0
+   ],
+   "ship_powered": [
+    12.9,
+    14.2
+   ],
+   "flight": [
+    13.6,
+    15.7
+   ],
+   "surface": [
+    17.8,
+    20.2
+   ]
+  },
+  "beds_without_voice_M_before_after": {
+   "menu": [
+    -30.9,
+    -26.5
+   ],
+   "ship_fresh": [
+    -31.6,
+    -27.3
+   ],
+   "ship_powered": [
+    -31.6,
+    -27.1
+   ],
+   "flight": [
+    -38.4,
+    -36.3
+   ],
+   "descent": [
+    -32.9,
+    -29.1
+   ],
+   "surface": [
+    -33.7,
+    -30.6
+   ],
+   "colony": [
+    -32.7,
+    -29.3
+   ],
+   "ending": [
+    -39.9,
+    -28.9
+   ]
+  },
+  "music_and_ambience_by_scene": {
+   "menu": "music=music_hope ambience=amb_space layer=",
+   "ship_fresh": "music=music_ark_alone ambience=amb_ship_dark layer=",
+   "ship_powered": "music=music_ark_alone ambience=amb_ship_dark layer=",
+   "flight": "music= ambience=amb_space layer=",
+   "descent": "music= ambience=amb_surface_green layer=",
+   "surface": "music= ambience=amb_surface_green layer=",
+   "colony": "music= ambience=amb_colony_green layer=",
+   "ending": "music=music_ending_independent ambience= layer=",
+   "droppod": "music= ambience=amb_surface_green layer=",
+   "scan": "music= ambience=amb_surface_green layer=",
+   "ascent": "music= ambience=amb_surface_green layer=",
+   "leviathan": "music= ambience=amb_surface_green layer=",
+   "wildlife": "music= ambience=amb_surface_ice layer=",
+   "wakeup": "music=music_ark_alone ambience=amb_ship_dark layer=",
+   "colony_act2": "music=music_colony_act2 ambience=amb_colony_green layer=amb_colony_people",
+   "colony_act3": "music=music_colony_act3 ambience=amb_colony_green layer=amb_colony_people",
+   "landing": "music= ambience=amb_surface_green layer="
+  },
+  "cues_fired_by_scene": {
+   "menu": "played={}",
+   "ship_fresh": "played={\"ui_card_whoosh\":1}",
+   "ship_powered": "played={\"sfx_lamp_clunk_01\":1,\"sfx_lamp_clunk_02\":4,\"sfx_power_on\":1,\"sfx_power_surge\":1,\"ui_card_whoosh\":1,\"ui_confirm\":1}",
+   "flight": "played={\"alarm_warning\":1,\"ui_hover\":2}",
+   "descent": "played={\"sfx_cloud_punch\":1,\"ui_card_whoosh\":1}",
+   "surface": "played={\"ui_card_whoosh\":1,\"ui_hover\":1}",
+   "colony": "played={\"ui_card_whoosh\":1,\"ui_hover\":1}",
+   "ending": "played={\"ui_card_whoosh\":1}",
+   "droppod": "played={\"sfx_energy_whoosh\":1,\"sfx_interact\":1,\"sfx_pod_impact\":1,\"sfx_pod_incoming\":1,\"sfx_pod_snap\":1,\"sfx_pod_strain\":1,\"sfx_pod_unlock\":1,\"ui_card_whoosh\":1,\"ui_hover\":1}",
+   "scan": "played={\"sfx_scan_blip\":4,\"sfx_scan_ping\":1,\"ui_card_whoosh\":1,\"ui_hover\":1}",
+   "ascent": "played={\"sfx_cloud_punch\":1,\"sfx_liftoff\":1,\"ui_card_whoosh\":1,\"ui_hover\":1}",
+   "leviathan": "played={\"sfx_leviathan_song\":1,\"sfx_wild_grazer_01\":1,\"sfx_wild_grazer_03\":1,\"ui_card_whoosh\":1,\"ui_hover\":1}",
+   "wildlife": "played={\"sfx_wild_giant_02\":1,\"sfx_wild_grazer_02\":1,\"sfx_wild_grazer_03\":2,\"ui_card_whoosh\":1,\"ui_hover\":1}",
+   "wakeup": "played={\"sfx_cryo_hatch\":1,\"sfx_cryo_vapour\":1,\"ui_card_whoosh\":1}",
+   "colony_act2": "played={\"ui_card_whoosh\":1,\"ui_hover\":1}",
+   "colony_act3": "played={\"ui_card_whoosh\":1,\"ui_holo_boot\":1,\"ui_hover\":1}",
+   "landing": "played={\"sfx_retro_burst\":1,\"sfx_touchdown\":1,\"sfx_wild_grazer_02\":1,\"sfx_wild_grazer_03\":1,\"ui_card_whoosh\":1,\"ui_hover\":1}"
+  },
+  "loop_seams": "23 loops re-encoded as seamless .ogg; seam step below each file's own 99th-percentile sample step (loop_seams.txt)",
+  "check": "loc_exit=0 tests_exit=0 smoke_exit=0 touch_exit=0 campaign_exit=0; COMPILE 181 scripts, 0 failed",
+  "elevenlabs_credits_used": 885
+ },
+ "fixture": "fresh, approach, expedition:viridia, expedition:pelagos, expedition:nivalis, grown:viridia, era:viridia:8/25/40",
+ "status": "PASS",
+ "artifacts": [
+  "evidence/audio_r2/loudness_table.md",
+  "evidence/audio_r2/mix_before.json",
+  "evidence/audio_r2/mix_after.json",
+  "evidence/audio_r2/played_cues.json",
+  "evidence/audio_r2/loop_seams.txt",
+  "evidence/audio_r2/new_cues.md"
+ ],
+ "notes": "Clips (AVI with audio) stay local. settings.cfg held the default slider values (master 0.9, music 0.6, sfx 0.9, ambience 0.7, ui 0.8) in both runs."
+}

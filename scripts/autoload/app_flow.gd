@@ -85,6 +85,7 @@ func goto(key: String, p: Dictionary = {}) -> void:
 	var t := create_tween()
 	t.tween_property(_fade, "modulate:a", 1.0, 0.05 if fast else 0.35)
 	if not card[0].is_empty() and not fast:
+		t.tween_callback(AudioService.ui_soft.bind("ui_card_whoosh", -9.0, 1000))  # the location card sweeps in (D-064)
 		t.tween_property(_card, "modulate:a", 1.0, 0.25)
 		t.tween_interval(0.35)
 	await t.finished

@@ -33,7 +33,7 @@ def main() -> None:
         if not cue.startswith(("music_", "stinger_")) or (only and cue not in only):
             continue
         dst = OUT / (cue + ".mp3")
-        if dst.exists() and not force:
+        if (dst.exists() or dst.with_suffix(".ogg").exists()) and not force:  # looping music lives on as .ogg (normalize.py)
             continue
         secs = max(10.0, min(180.0, float(r["length_s"] or 60)))
         prompt = THEME + " This cue: " + r["prompt"].strip() + ("" if cue.startswith("stinger_") else " Loopable: the ending flows back into the beginning.")

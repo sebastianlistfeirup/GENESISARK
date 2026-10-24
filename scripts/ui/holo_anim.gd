@@ -26,6 +26,7 @@ static func boot_in(c: Control, seconds: float = 0.3) -> void:
 		return
 	c.scale = Vector2(0.96, 0.03)
 	c.modulate.a = 0.0
+	AudioService.ui_soft("ui_holo_boot", -12.0)  # the projector catching (D-064); panels booting together make one
 	var tw := c.create_tween()
 	tw.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
 	tw.tween_method(func(k: float) -> void:

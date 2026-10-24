@@ -754,7 +754,8 @@ func _prepare_drop_pod() -> void:
 
 func _warm_pod() -> void:
 	_pod_obstacles()  # the spot search's obstacle list, built now rather than on the key press
-	for slot: String in ["sfx_landing", "sfx_interact", "sfx_drone_refill"]:
+	for slot: String in ["sfx_landing", "sfx_interact", "sfx_drone_refill", "sfx_pod_incoming", "sfx_pod_impact", "sfx_pod_unlock",
+			"sfx_pod_strain", "sfx_pod_snap", "sfx_energy_whoosh"]:
 		AudioService.stream(slot)  # decoded and cached before the landing
 	var cam := get_viewport().get_camera_3d()
 	if cam == null or _pod == null or _pod.is_busy():
@@ -785,6 +786,7 @@ func _call_drop_pod(reduced: bool = FxEffect.reduced_motion(), scrub_ms: float =
 		_pod.impact.connect(_on_pod_impact)
 		_pod.hatch_snapped.connect(_on_pod_snap)
 		_pod.cell_delivered.connect(_on_pod_delivered)
+		_pod.beat.connect(_on_pod_beat)
 	if scrub_ms >= 0.0:
 		_pod.set_time(scrub_ms, reduced)
 	else:
@@ -901,8 +903,26 @@ func _in_hazard(p: Vector2, margin: float) -> bool:
 	return false
 
 
+## The pod's sound beats (D-064), positional at the pod; the cell's whoosh plays
+## in the head (it flies into the captain's suit).
+func _on_pod_beat(beat_name: String) -> void:
+	match beat_name:
+		"incoming":
+			AudioService.play_3d("sfx_pod_incoming", _pod, -1.0, 70.0, 1.0, "SFX", 10.0)
+		"unlock":
+			if not _pod.short:  # short version: the lid just opens (snap below)
+				AudioService.play_3d("sfx_pod_unlock", _pod, -4.0, 40.0)
+		"strain":
+			AudioService.play_3d("sfx_pod_strain", _pod, -5.0, 40.0)
+		"zip":
+			AudioService.play("sfx_energy_whoosh", "SFX", -5.0)
+
+
 func _on_pod_impact(strength: float) -> void:
-	AudioService.play("sfx_landing", "SFX", -14.0 + 4.0 * strength, 1.7)
+	if AudioService.has_sound("sfx_pod_impact"):
+		AudioService.play_3d("sfx_pod_impact", _pod, -6.0 + 5.0 * strength, 60.0, 1.0, "SFX", 10.0)
+	else:
+		AudioService.play("sfx_landing", "SFX", -14.0 + 4.0 * strength, 1.7)
 	if not SettingsService.get_value("camera_shake", true) or FxEffect.reduced_motion() or strength < 0.5:
 		return
 	# A small camera bump, distance-scaled, ~200 ms (bible: respects camera_shake / reduced_motion).
@@ -920,11 +940,14 @@ func _on_pod_impact(strength: float) -> void:
 
 
 func _on_pod_snap() -> void:
-	AudioService.play("sfx_interact", "SFX", -6.0, 0.75)
+	if AudioService.has_sound("sfx_pod_snap"):
+		AudioService.play_3d("sfx_pod_snap", _pod, -3.0, 40.0)
+	else:
+		AudioService.play("sfx_interact", "SFX", -6.0, 0.75)
 
 
 func _on_pod_delivered() -> void:
-	AudioService.play("sfx_interact", "SFX", -2.0, 1.3)
+	AudioService.play("sfx_interact", "SFX", -8.0 if AudioService.has_sound("sfx_energy_whoosh") else -2.0, 1.3)
 	if _suit_hold <= 0.0:
 		return
 	var t := create_tween()

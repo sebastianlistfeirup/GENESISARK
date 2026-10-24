@@ -6,7 +6,7 @@
       "ok": true
     },
     {
-      "detail": "@Button@86:<Button#194129168466>",
+      "detail": "@Button@86:<Button#196897409118>",
       "name": "pad_focuses_menu",
       "ok": true
     },
@@ -31,12 +31,17 @@
       "ok": true
     },
     {
+      "detail": "",
+      "name": "audio_duck_and_calls",
+      "ok": true
+    },
+    {
       "detail": "[]",
       "name": "riglab_audit_all_slots",
       "ok": true
     },
     {
-      "detail": "moved=0.57",
+      "detail": "moved=0.56",
       "name": "riglab_runs",
       "ok": true
     },
@@ -101,7 +106,7 @@
       "ok": true
     },
     {
-      "detail": "I_power_coupling:<Area3D#395757755792>",
+      "detail": "I_power_coupling:<Area3D#396294626726>",
       "name": "prompt_targets_coupling",
       "ok": true
     },
@@ -181,7 +186,7 @@
       "ok": true
     },
     {
-      "detail": "moved 6.2 m further away",
+      "detail": "moved 6.5 m further away",
       "name": "surface_wildlife_flees_captain",
       "ok": true
     },
@@ -193,6 +198,11 @@
     {
       "detail": "Take the main sample",
       "name": "waypoint_surface_main_sample",
+      "ok": true
+    },
+    {
+      "detail": "(9.735765, -0.292198, -4.191521)",
+      "name": "surface_drop_pod_lands_clear_and_skips",
       "ok": true
     },
     {
@@ -294,5 +304,5 @@
   "engine_version": "4.7.2-stable (official)",
   "failures": [],
   "status": "PASS",
-  "timestamp": "2026-10-24T22:12:45"
+  "timestamp": "2026-10-24T23:31:08"
 }

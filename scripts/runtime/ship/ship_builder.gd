@@ -297,6 +297,7 @@ func power_wave(origin: Vector3, done: Callable = Callable()) -> void:
 	var tw := create_tween().set_parallel(true)
 	_wave_tween = tw
 	var last := 0.0
+	var first_lamp: Dictionary = {}  # zone -> [delay, lamp]: one clunk per section, where the wave first lights it (D-064)
 	for i: int in lights.size():
 		var l: Dictionary = lights[i]
 		var ol: OmniLight3D = l["light"]
@@ -311,6 +312,8 @@ func power_wave(origin: Vector3, done: Callable = Callable()) -> void:
 		tw.tween_property(ol, "light_energy", 0.0, 0.08).set_delay(0.42)
 		var delay := 0.85 + ol.global_position.distance_to(origin) / 42.0
 		last = maxf(last, delay)
+		if not first_lamp.has(l["zone"]) or delay < float(first_lamp[l["zone"]][0]):
+			first_lamp[l["zone"]] = [delay, lamp]
 		var col := Color.from_string(str(zones.get(l["zone"], {}).get("light", "#d8e2e6")), Color.WHITE)
 		tw.tween_callback(func() -> void:
 			ol.light_color = col
@@ -327,6 +330,16 @@ func power_wave(origin: Vector3, done: Callable = Callable()) -> void:
 		else:
 			tw.tween_callback(func() -> void: n.visible = bool(p["on"])).set_delay(d)
 	tw.tween_callback(set_strip_glow.bind(true)).set_delay(0.85 + (last - 0.85) * 0.4)
+	if not Engine.is_editor_hint():
+		# Sound (D-064): a rising electrical hum rolls with the wave, and each section's
+		# lamps clunk on where the wave reaches them (positional).
+		tw.tween_callback(AudioService.play.bind("sfx_power_surge", "SFX", -5.0)).set_delay(0.7)
+		for z: Variant in first_lamp.keys():
+			var fl: Array = first_lamp[z]
+			var lamp_node: Node3D = fl[1]
+			tw.tween_callback(func() -> void:
+				if is_instance_valid(lamp_node):
+					AudioService.play_3d("sfx_lamp_clunk", lamp_node, -3.0, 45.0, randf_range(0.92, 1.06))).set_delay(float(fl[0]))
 	if done.is_valid():
 		tw.tween_callback(done).set_delay(last + 0.6)
 
