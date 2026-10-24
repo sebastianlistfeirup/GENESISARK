@@ -57,6 +57,22 @@ static func _pos(b: Dictionary) -> Vector2:
 	return Vector2(float(b["x"]), float(b["z"]))
 
 
+## How far from the building's centre its walls are in direction dir: the
+## drawn model's extent (data "tube_extent", e.g. the landed Ark is narrower
+## than its footprint) or the footprint, so a tube always meets the hull.
+static func _reach(b: Dictionary, dir: Vector2) -> float:
+	var def := GameSession.content.building(str(b["def_id"]))
+	var ext: Array = DictUtil.get_arr(DictUtil.get_dict(BuildingDressing.doc(), "tube_extent"), str(b["def_id"]))
+	var size := ColonySimulation.footprint_size(def, int(b.get("rot", 0)))
+	if ext.size() == 2:
+		size = Vector2(float(ext[0]), float(ext[1]))
+		if posmod(int(b.get("rot", 0)), 2) == 1:
+			size = Vector2(size.y, size.x)
+	var tx := size.x * 0.5 / maxf(absf(dir.x), 0.001)
+	var tz := size.y * 0.5 / maxf(absf(dir.y), 0.001)
+	return minf(tx, tz)
+
+
 static func _half(b: Dictionary) -> float:
 	var fp: Array = DictUtil.get_arr(GameSession.content.building(str(b["def_id"])), "footprint")
 	return (minf(float(fp[0]), float(fp[1])) * 0.5) if fp.size() == 2 else 3.0
@@ -66,8 +82,8 @@ static func _tube(root: Node3D, a: Dictionary, b: Dictionary, terrain: TerrainBu
 	var pa := _pos(a)
 	var pb := _pos(b)
 	var dir := (pb - pa).normalized()
-	var start := pa + dir * (_half(a) - 0.4)
-	var end := pb - dir * (_half(b) - 0.4)
+	var start := pa + dir * (_reach(a, dir) - 0.4)
+	var end := pb - dir * (_reach(b, -dir) - 0.4)
 	var length := start.distance_to(end)
 	if length < 1.0 or (pb - pa).dot(end - start) <= 0.0:
 		return

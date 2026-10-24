@@ -426,7 +426,7 @@
    ]
   },
   "ark_core": {
-   "platform": "none",
+   "platform": "landing",
    "groups": [
     {
      "kind": "cluster",
@@ -1609,5 +1609,12 @@
    ],
    "y": 0.4
   }
+ },
+ "tube_extent": {
+  "_note": "Drawn width x depth (m, unrotated) where a corridor tube should meet the model, when it differs from the footprint.",
+  "ark_core": [
+   13.6,
+   5.0
+  ]
  }
 }
