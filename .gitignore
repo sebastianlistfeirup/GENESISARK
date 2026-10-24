@@ -41,3 +41,4 @@ __pycache__/
 /assets/audio/final/*.mp3
 /assets/audio/vo/*.mp3
 /tools/audio/eleven_log.jsonl
+/assets/audio/raw/
