@@ -204,3 +204,41 @@ func test_power_margin_follows_the_course() -> void:
 	check(tb.x < ta.x and tb.y < ta.y, "expansion keeps smaller margins: %s" % tb)
 	_decide(a, "year_20", "safety")
 	check(a.era.power_targets(a.state).x > ta.x, "safety keeps larger margins")
+
+
+# ------------------------------------------------------------ layer 3
+
+func test_event_choice_has_delayed_aftermath_once() -> void:
+	var sim := _colony()
+	var gs := sim.state
+	var ev := "civic_youth_vote"
+	var after := sim.events.aftermath_def(ev, "b")
+	if not check(not after.is_empty(), "youth vote 'keep it at eighteen' has an aftermath"):
+		return
+	gs.events.active.append({"id": ev, "day_started": gs.campaign.colony_day, "phase": "active"})
+	ok(sim.events.resolve(gs, ev, "b"), "resolve")
+	var t0 := gs.society.trust
+	eq(gs.events.aftermath.size(), 1, "queued")
+	var back := GameState.from_dict(JSON.parse_string(JSON.stringify(gs.to_dict())))
+	eq(back.events.aftermath.size(), 1, "the queue is saved")
+	for i: int in int(after["days"]) - 1:
+		gs.campaign.colony_day += 1
+		sim.events.tick_day(gs, {})
+	check(is_equal_approx(gs.society.trust, t0), "nothing before the day")
+	gs.campaign.colony_day += 1
+	sim.events.tick_day(gs, {})
+	check(gs.society.trust < t0, "trust falls when the aftermath lands")
+	check(gs.is_applied("aftermath:%s" % ev), "applied once")
+	eq(gs.events.aftermath.size(), 0, "queue empty")
+	var t1 := gs.society.trust
+	sim.events.tick_day(gs, {})
+	eq(gs.society.trust, t1, "never twice")
+
+
+func test_every_event_has_one_aftermath() -> void:
+	for id: String in content.events.keys():
+		var n := 0
+		for o: Dictionary in DictUtil.get_arr(content.events[id], "options"):
+			if not DictUtil.get_dict(o, "aftermath").is_empty():
+				n += 1
+		eq(n, 1, "%s: one choice with an aftermath" % id)

@@ -61,6 +61,20 @@ func tick_day(gs: GameState, _report: Dictionary) -> Dictionary:
 				gs.events.active.append({"id": id, "day_started": gs.campaign.colony_day + DictUtil.get_int(def, "warning_days", 3), "phase": "warning"})
 				gs.log_journal(Loc.t("Warning: %s") % def.get("warning", def.get("title")), "warning")
 				out["warned"].append(id)
+	# Delayed consequences of earlier choices (R9 layer 3): each applies once.
+	out["aftermath"] = []
+	for a: Dictionary in gs.events.aftermath.duplicate():
+		if gs.campaign.colony_day < int(a.get("due_day", 0)):
+			continue
+		gs.events.aftermath.erase(a)
+		var key := "aftermath:%s" % a.get("event_id")
+		if gs.is_applied(key):
+			continue
+		var after := aftermath_def(str(a.get("event_id")), str(a.get("option")))
+		_apply_effects(gs, DictUtil.get_dict(after, "effects"))
+		gs.mark_applied(key)
+		gs.log_journal(Loc.t("Aftermath: %s") % str(after.get("text", "")), "event")
+		out["aftermath"].append(a.get("event_id"))
 	# Promote warnings to active events when their day arrives.
 	for a: Dictionary in gs.events.active:
 		if a.get("phase") == "warning" and gs.campaign.colony_day >= int(a.get("day_started", 0)):
@@ -163,6 +177,9 @@ func resolve(gs: GameState, event_id: String, option_id: String) -> CommandResul
 	_apply_effects(gs, option_effects(gs, def, option))
 	gs.events.active.erase(active_entry)
 	gs.events.resolved[event_id] = {"option": option_id, "day": gs.campaign.colony_day}
+	var after: Dictionary = DictUtil.get_dict(option, "aftermath")
+	if not after.is_empty():
+		gs.events.aftermath.append({"event_id": event_id, "option": option_id, "due_day": gs.campaign.colony_day + DictUtil.get_int(after, "days", 365)})
 	if str(def.get("kind")) == "crisis":
 		gs.colony.stats["crises_resolved"] = int(gs.colony.stats.get("crises_resolved", 0)) + 1
 	gs.mark_applied("event:%s" % event_id)
@@ -201,6 +218,13 @@ func _apply_effects(gs: GameState, e: Dictionary) -> void:
 		population.apply_embryo_loss(gs, int(e["embryo_lost"]))
 
 
+func aftermath_def(event_id: String, option_id: String) -> Dictionary:
+	for o: Dictionary in DictUtil.get_arr(content.events.get(event_id, {}), "options"):
+		if o.get("id") == option_id:
+			return DictUtil.get_dict(o, "aftermath")
+	return {}
+
+
 ## Validation for event data (bible GA-23: no event demands a lost one-off resource).
 func validate_events() -> PackedStringArray:
 	var out: PackedStringArray = []
@@ -219,6 +243,10 @@ func validate_events() -> PackedStringArray:
 					out.append(Loc.t("event %s: fallback '%s' has requirements") % [id, fb])
 		if not found:
 			out.append(Loc.t("event %s: missing valid fallback") % id)
+		for o: Dictionary in DictUtil.get_arr(def, "options"):
+			var af: Dictionary = DictUtil.get_dict(o, "aftermath")
+			if not af.is_empty() and (DictUtil.get_int(af, "days") <= 0 or DictUtil.get_str(af, "text").is_empty()):
+				out.append(Loc.t("event %s: aftermath of '%s' needs days > 0 and a text") % [id, o.get("id")])
 		for bid: Variant in DictUtil.get_arr(DictUtil.get_dict(def, "trigger"), "requires_buildings"):
 			if not content.buildings.has(str(bid)):
 				out.append(Loc.t("event %s: unknown building %s") % [id, bid])

@@ -97,7 +97,14 @@
             "power_kw_days": 0,
             "solar_penalty_days": 0
           },
-          "result": "After a week the robots could tell hunger from distress. After two, the children slept."
+          "result": "After a week the robots could tell hunger from distress. After two, the children slept.",
+          "aftermath": {
+            "days": 400,
+            "effects": {
+              "trust": -2
+            },
+            "text": "The children raised by the learning program are slow to trust adults. The teachers notice it in every class."
+          }
         }
       ],
       "fallback": "c"
@@ -199,7 +206,14 @@
             "power_kw_days": 0,
             "solar_penalty_days": 0
           },
-          "result": "The fever broke after two weeks. They were two long weeks."
+          "result": "The fever broke after two weeks. They were two long weeks.",
+          "aftermath": {
+            "days": 300,
+            "effects": {
+              "trust": -3
+            },
+            "text": "The families who waited out the fever in isolation still bring it up. At every meeting, someone remembers those two weeks."
+          }
         }
       ],
       "fallback": "b"
@@ -248,7 +262,15 @@
             "solar_penalty_days": 0,
             "settlement_name": "First Vote"
           },
-          "result": "The name won by two votes. It wasn't the one you would have chosen. It was theirs."
+          "result": "The name won by two votes. It wasn't the one you would have chosen. It was theirs.",
+          "aftermath": {
+            "days": 730,
+            "effects": {
+              "trust": 2,
+              "autonomy": 3
+            },
+            "text": "The children who voted on the name now run the colony's first election. They remember how a vote feels."
+          }
         },
         {
           "id": "b",
@@ -379,7 +401,15 @@
             "power_kw_days": 0,
             "solar_penalty_days": 0
           },
-          "result": "The workshop rang with young voices. By sixteen, they knew every drone by its rattle."
+          "result": "The workshop rang with young voices. By sixteen, they knew every drone by its rattle.",
+          "aftermath": {
+            "days": 1095,
+            "effects": {
+              "components": 20,
+              "trust": -1
+            },
+            "text": "The apprentices have become the colony's best mechanics. A few of them wish they had finished school."
+          }
         },
         {
           "id": "c",
@@ -481,7 +511,14 @@
             "power_kw_days": 0,
             "solar_penalty_days": 0
           },
-          "result": "The mine became the drones' domain. The young stood at the entrance and watched them vanish into the dark."
+          "result": "The mine became the drones' domain. The young stood at the entrance and watched them vanish into the dark.",
+          "aftermath": {
+            "days": 365,
+            "effects": {
+              "wear": 10
+            },
+            "text": "The mine drones wear out faster than planned. None of the young know how to fix them by hand."
+          }
         },
         {
           "id": "c",
@@ -583,7 +620,14 @@
             "power_kw_days": 0,
             "solar_penalty_days": 0
           },
-          "result": "The young left. A week later they came back — with a written proposal."
+          "result": "The young left. A week later they came back — with a written proposal.",
+          "aftermath": {
+            "days": 365,
+            "effects": {
+              "trust": -3
+            },
+            "text": "The young who were turned away at the council door still keep their distance."
+          }
         },
         {
           "id": "c",

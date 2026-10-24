@@ -6,6 +6,7 @@ extends RefCounted
 var active: Array = []        # [{id, day_started, warned}]
 var resolved: Dictionary = {} # event_id -> {option, day}
 var warnings: Array = []      # event ids that have shown their warning
+var aftermath: Array = []     # [{event_id, option, due_day}] delayed consequences (R9 layer 3)
 
 
 func is_active(event_id: String) -> bool:
@@ -24,7 +25,7 @@ func has_unresolved_critical(events_db: Dictionary) -> bool:
 
 
 func to_dict() -> Dictionary:
-	return {"active": active.duplicate(true), "resolved": resolved.duplicate(true), "warnings": warnings.duplicate()}
+	return {"active": active.duplicate(true), "resolved": resolved.duplicate(true), "warnings": warnings.duplicate(), "aftermath": aftermath.duplicate(true)}
 
 
 static func from_dict(d: Dictionary) -> EventState:
@@ -32,4 +33,7 @@ static func from_dict(d: Dictionary) -> EventState:
 	s.active = DictUtil.get_arr(d, "active").duplicate(true)
 	s.resolved = DictUtil.get_dict(d, "resolved").duplicate(true)
 	s.warnings = DictUtil.get_arr(d, "warnings").duplicate()
+	s.aftermath = DictUtil.get_arr(d, "aftermath").duplicate(true)
+	for a: Dictionary in s.aftermath:
+		a["due_day"] = int(a.get("due_day", 0))
 	return s
