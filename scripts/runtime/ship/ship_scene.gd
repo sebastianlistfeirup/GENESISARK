@@ -301,6 +301,10 @@ func _process(delta: float) -> void:
 	_update_zone_audio()
 	if _ai:
 		_ai.position.y = builder.ai_pos.y + sin(_ai_t * 1.3) * 0.08
+	# A terminal panel covers the lower screen: the story subtitle waits under it
+	# instead of peeking out below the panel's edge.
+	if hud.story:
+		hud.story.visible = hud.visible and not _any_panel()
 	if hud.any_modal_open() and captain.input_enabled:
 		captain.set_active(false)
 	elif not hud.any_modal_open() and not captain.input_enabled and not _any_panel():
