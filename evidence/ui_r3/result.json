@@ -1,0 +1,26 @@
+{
+  "task_id": "D-059 ui_r3",
+  "commit": "see git log (branch worktree-agent-a40ca45eba7379243)",
+  "engine_version": "4.7.2-stable",
+  "command": "godot --path . --resolution 1600x900 -- --capture=<abs>.png --setup=<fresh|power|grown:viridia|colony:sere|era:viridia:40> --scene=<menu|ship|colony|ending> --wait=150 --action=<settings|settings_display|settings_access|settings_controls|credits|load | pause|pause_save|pause_load|pause_settings|journal|starmap | overview|overview_pop|overview_future|select_ark|event|decision> --post=60..240 --park=1 (also --resolution 1280x720 --ui_scale=1.5, --reduced_motion=1, GA_NO_SYNTY_UI=1); godot --path . -- --perf --case=colony_grown|colony_overview|ship_starmap --out=builds/<f>.json; CHECK_FAST=1 tools/check.sh",
+  "exit_code": 0,
+  "expected": "Every remaining menu (settings, save/load, pause, journal, colony overview, building card, event and decision dialogs, HUD resource and build bars, credits, epilogue; main menu aligned) in the D-055 holo look built from the kit, functions/signals/commands unchanged; star map art-direction polish; fits 1280x720 @1.5; static with reduced motion; works without the Synty packs; perf within budget; checks green.",
+  "observed": "Before/after captured per screen (before = the lead's captures of the old menus). 1280x720 @1.5: all 11 screens fit (smoke a11y fit checks green). Reduced motion: charts/strips drawn final, no boot. GA_NO_SYNTY_UI=1: code-drawn hexes, initials in the speaker badges, text cost labels. Perf (RTX 5090, forward_plus): colony_grown p95 9.6 ms (load 3996-4521 ms; the load budget was already exceeded intermittently before, e.g. 4042-4911 ms in earlier evidence), colony_overview p95 9.5 ms, ship_starmap p95 9.0 ms (10.3 in one noisy run, D-055 baseline 8.97). check.sh (CHECK_FAST=1): compile 172 scripts 0 failed, loc 0 untranslated, 81 tests 0 failures, smoke 58 checks 0 failures, touch 6/0; loc_exit=0 tests_exit=0 smoke_exit=0 touch_exit=0 campaign_exit=0.",
+  "fixture": "fresh, power, grown:viridia, colony:sere, era:viridia:40",
+  "status": "PASS",
+  "artifacts": [
+    "before_menu.jpg", "after_menu.jpg", "before_menu_settings.jpg", "after_menu_settings.jpg", "after_settings_display.jpg", "after_settings_access.jpg", "after_settings_controls.jpg",
+    "before_menu_credits.jpg", "after_menu_credits.jpg", "before_menu_load.jpg", "after_menu_load.jpg",
+    "before_pause.jpg", "after_pause.jpg", "before_pause_save.jpg", "after_pause_save.jpg", "after_pause_load.jpg", "before_pause_settings.jpg", "after_pause_settings.jpg",
+    "before_journal.jpg", "after_journal.jpg",
+    "before_col_overview.jpg", "after_col_overview.jpg", "after_col_overview_population.jpg", "after_col_overview_future.jpg",
+    "before_col_select.jpg", "after_col_select.jpg", "before_col_event.jpg", "after_col_event.jpg", "before_col_decision.jpg", "after_col_decision.jpg",
+    "before_hud.jpg", "after_hud.jpg", "after_build_bar_no_startup_tooltip.jpg", "before_ending.jpg", "after_ending.jpg",
+    "before_starmap.jpg", "after_starmap.jpg",
+    "after_settings_1280x720_ui1.5.jpg", "after_settings_controls_1280x720_ui1.5.jpg", "after_col_overview_1280x720_ui1.5.jpg", "after_col_event_1280x720_ui1.5.jpg",
+    "after_col_decision_1280x720_ui1.5.jpg", "after_pause_save_1280x720_ui1.5.jpg", "after_journal_1280x720_ui1.5.jpg", "after_ending_1280x720_ui1.5.jpg",
+    "after_starmap_1280x720_ui1.5.jpg", "after_col_select_1280x720_ui1.5.jpg", "after_menu_load_1280x720_ui1.5.jpg",
+    "after_col_overview_future_reduced_motion.jpg", "after_col_event_reduced_motion.jpg",
+    "after_settings_no_synty_fallback.jpg", "after_col_event_no_synty_fallback.jpg", "after_col_decision_no_synty_fallback.jpg", "after_pause_save_no_synty_fallback.jpg"
+  ]
+}

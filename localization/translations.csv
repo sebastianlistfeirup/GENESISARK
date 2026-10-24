@@ -892,11 +892,6 @@ no labor,mangler arbejdskraft
 no power,ingen strøm
 waiting for drones,venter på droner
  + %d comp., + %d komp.
- and incubation center, og inkubationscenter
- · %d comp., · %d komp.
-"%s
-%d mat.%s","%s
-%d mat.%s"
 "%s — %s
 %s
 [Left click] build · [%s] rotate · [Right click/Esc] cancel","%s — %s
@@ -906,7 +901,6 @@ Bottlenecks,Flaskehalse
 Captain [%s],Kaptajn [%s]
 Colony overview,Koloni-overblik
 Cost: %d mat.%s · %+d kW,Pris: %d mat.%s · %+d kW
-Geothermal generator,Geotermisk generator
 Landing zone,Landingszone
 Living zone,Boligzone
 Pause,Pause
@@ -1033,75 +1027,122 @@ The embryo bank,Embryobanken
 The number is not a score. It is everyone who may yet become someone.,"Tallet er ikke en score. Det er alle, der endnu kan blive til nogen."
 The workshop,Værkstedet
 Viable in cryo,Levedygtige i kryo
-  [color=#d25b4c]%d cut off[/color],  [color=#d25b4c]%d afbrudt[/color]
- · NIGHT, · NAT
- · STORM, · STORM
  · ▲ stalled, · ▲ står stille
-%s [b]%s[/b]: %.1f kW — %s%s,%s [b]%s[/b]: %.1f kW — %s%s
+%d cut off,%d afbrudt
+%d people,%d mennesker
 "A leap is a forecast, not a fast-forward button. The simulator calculates supply, aging, work and planned events day by day, and stops before an unresolved crisis or a deficit. ARK and the colony's institutions carry daily life according to the plan: incubation when conditions allow, construction as needed.","Et spring er en prognose, ikke en spoleknap. Simulatoren regner forsyning, aldring, arbejde og planlagte hændelser dag for dag og stopper før en uafklaret krise eller et underskud. ARK og koloniens institutioner bærer hverdagen efter planen: inkubation når forholdene tillader det, og byggeri efter behov."
+Adults,Voksne
+Age pyramid,Alderspyramide
 Approve the plan and leap,Godkend planen og spring
+Ark %.1f,Arken %.1f
+Ark fuel,Arkens brændstof
+Autonomy,Selvstyre
+Balance %+.1f kW,Balance %+.1f kW
+Battery %d / %d kWh,Batteri %d / %d kWh
+Battery kWh,Batteri kWh
+Births,Fødsler
+Building material,Byggemateriale
 Calculate forecast to year %d,Beregn prognose til år %d
 Calculating forecast…,Beregner prognose…
+Children,Børn
+Children do not work.,Børn arbejder ikke.
 Cohort %d · %d %s · %.1f yrs · health %d%% · education %d%%,Kohorte %d · %d %s · %.1f år · helbred %d%% · uddannelse %d%%
 Cohort %d · %d embryos · incubation %d/%d days%s,Kohorte %d · %d embryoner · inkubation %d/%d dage%s
 Cohorts,Kohorter
+Consumption,Forbrug
 Council and handover,Råd og overdragelse
+Council: %s,Råd: %s
 Council: %s · Trust %d · Autonomy %d,Rådet: %s · Tillid %d · Selvbestemmelse %d
 Course: %s. Gain: %s. Price: %s.,Kurs: %s. Gevinst: %s. Pris: %s.
-Drones: %.1f · Stable days in a row: %d,Droner: %.1f · Stabile dage i træk: %d
+Drones %.1f,Droner %.1f
+Education,Uddannelse
 "Embryo ledger (always 50,000)",Embryoregnskab (altid 50.000)
+Food,Mad
+Forecast,Prognose
 Forecast: year %.1f → year %.1f (%d days),Prognose: år %.1f → år %.1f (%d dage)
 Future,Fremtid
 Generation leap,Generationsspring
+Goal for year 40,Mål for år 40
 "Goal for year 40: at least %d people, a working council, its own power without the Ark and at least %d days of reserves.","Mål for år 40: mindst %d mennesker, et fungerende råd, egen strøm uden arken og mindst %d dages reserve."
+Goal: %d people,Mål: %d mennesker
 Hand over the colony (ends the campaign),Overdrag kolonien (afslutter kampagnen)
+Handover possible,Overdragelse mulig
+Health,Helbred
+If you hand over now,Hvis du overdrager nu
 If you hand over now: %s — %s,Hvis du overdrager nu: %s — %s
 Incubation,Inkubation
+Living,Levende
+Night,Nat
 "None yet. The first cohort requires a care center, +5 kW surplus and 30 days of water and food reserves.","Ingen endnu. Den første kohorte kræver et omsorgscenter, +5 kW overskud og 30 dages vand- og madreserve."
+Now: %d,Nu: %d
+Path to the goal,Vejen til målet
 "Plan: approx. %d births a year, cohorts of %d, construction as needed.","Plan: ca. %d fødsler om året, kohorter på %d, byggeri efter behov."
 Population,Befolkning
 Population %d → %d · births %d · adults %d · reserve %s days · Ark fuel %s,Befolkning %d → %d · fødsler %d · voksne %d · reserve %s dage · arkens brændstof %s
 Population (living): %d · Adults: %d · Children: %d,Befolkning (levende): %d · Voksne: %d · Børn: %d
+Population outlook,Befolkningsudsigt
 Possible from year 20. The ending reflects the colony's actual resilience.,Mulig fra år 20. Afslutningen følger koloniens faktiske robusthed.
 Power,Strøm
-Production %.1f kW (Ark %.1f) · Consumption %.1f kW · Balance %+.1f kW · Battery %d / %d kWh%s%s,Produktion %.1f kW (heraf ark %.1f) · Forbrug %.1f kW · Balance %+.1f kW · Batteri %d / %d kWh%s%s
+Reaches the target,Når målet
+Reserve,Reserve
+Reserve days,Reservedage
+Stable days in a row: %d,Stabile dage i træk: %d
 Start incubation of %d embryos,Start inkubation af %d embryoner
+Stock %d person-days,Lager %d persondage
+Stops early,Stopper tidligt
+Stores,Lagre
+Storm,Storm
 Supply,Forsyning
 The colony on %s,Kolonien på %s
 The plan: %d incubations · construction: %s,Planen: %d inkubationer · byggeri: %s
+Trust,Tillid
 Viable %s · In incubation %s · Born %s · Lost %s,Levedygtige %s · I inkubation %s · Født %s · Tabt %s
+Water,Vand
 Water +%.0f / −%.0f per day · Food +%.0f / −%.0f per day · Reserve: %s days,Vand +%.0f / −%.0f pr. dag · Mad +%.0f / −%.0f pr. dag · Reserve: %s dage
 Water and food,Vand og mad
+"Work, build and decide.","Arbejder, bygger og beslutter."
+Y%d,Å%d
 Year %.1f · day %d · %s,År %.1f · dag %d · %s
 adults,voksne
+at least %d people,mindst %d mennesker
 children,børn
 convened,samlet
+day,dag
+days,dage
 expansion,ekspansion
 not convened,ikke samlet
 safety,sikkerhed
 self-determination,selvbestemmelse
-storm,storm
+unborn,ufødte
 ● None. All completed buildings are running.,● Ingen. Alle færdige bygninger kører.
 "
 This planet requires the module before the habitat is safe.","
 Denne planet kræver modulet, før habitatet er sikkert."
  (depends on the planet), (afhænger af planeten)
+ and incubation center, og inkubationscenter
 %+.1f kW · %d kWh,%+.1f kW · %d kWh
+%d in incubation,%d i inkubation
 %s Trust %d,%s Tillid %d
 "Add %s (%d mat., %d comp., %+d kW)","Tilføj %s (%d mat., %d komp., %+d kW)"
 Ark %d,Ark %d
-Building material,Byggemateriale
+Blocked,Blokeret
 Cancel (+%d mat.),Annullér (+%d mat.)
 "Components (spare parts, maintenance, modules)","Komponenter (reservedele, vedligehold, moduler)"
 Construction work: %d drone-days,Byggearbejde: %d dronedage
 Convene the colony's first council,Saml koloniens første råd
 Cost: ,Pris: 
+Crew: %d robot(s),Mandskab: %d robot(ter)
 Days that water and food will last for the current population.,"Dage, vand og mad rækker til den nuværende befolkning."
 Demolish (+%d mat. back),Nedriv (+%d mat. tilbage)
+Efficiency,Effektivitet
+Emergency power,Nødstrøm
 Emergency power %d kW · Fuel %d · Salvage material left %d,Nødstrøm %d kW · Brændstof %d · Genbrugsmateriale tilbage %d
 Food in person-days (+%.0f/day),Mad i persondøgn (+%.0f/dag)
+Geothermal generator,Geotermisk generator
+Income: +%.0f per day,Indtægt: +%.0f pr. dag
 Living population (cohorts),Levende befolkning (kohorter)
 NOT connected,IKKE forbundet
+Net: %+.0f per day,Netto: %+.0f pr. dag
 "Next step: build a drone hub — or wait for adult cohorts. Mines and workshops each keep one robot busy: if nothing gets built at all, demolish one to free a robot for construction.","Næste skridt: byg en dronehub – eller vent på voksne kohorter. Miner og værksteder binder hver én robot: bliver intet bygget, så nedriv én for at frigøre en robot til byggeri."
 Next step: build more power (solar/geothermal) or a battery. Life support and care get power first.,Næste skridt: byg mere strøm (sol/geotermi) eller et batteri. Livsstøtte og omsorg får strøm først.
 Next step: install the module the planet requires.,"Næste skridt: installér modulet, planeten kræver."
@@ -1115,23 +1156,35 @@ Power: %+d kW%s,Strøm: %+d kW%s
 Priority: ,Prioritet: 
 Produces: %s %s/day,Producerer: %s %s/dag
 Reserve %s d,Reserve %s d
+Running,I drift
+Salvage,Bjærgning
 Start incubation (%d embryos),Start inkubation (%d embryoner)
 "The Ark's fuel for emergency power (%d kW). If it runs out, the colony loses the Ark's power.","Arkens brændstof til nødstrøm (%d kW). Slipper det op, mister kolonien arkens strøm."
 Trust in the plan (0-100). Below %d people work more slowly and incubation needs larger reserves; above %d they work harder and crises cost less.,"Tillid til planen (0-100). Under %d arbejder folk langsommere, og inkubation kræver større reserver; over %d arbejder de hårdere, og kriser koster mindre."
+Under construction,Under opførelse
 Under construction: %d%%,Under opførelse: %d%%
 "Viable embryos (%d in incubation, %d born)","Levedygtige embryoner (%d i inkubation, %d født)"
 Water in person-days (+%.0f/day),Vand i persondøgn (+%.0f/dag)
-Wear: %d%% · Efficiency: %d%%,Slid: %d%% · Effektivitet: %d%%
+Wear,Slid
+comp.,komp.
 connected,forbundet
+mat.,mat.
 power,strøm
+staffed,bemandet
+waiting for a robot,venter på en robot
 ● %s installed,● %s installeret
   (planned),  (planlagt)
 Close,Luk
 Credits,Krediteringer
 Licenses,Licenser
+Planned,Planlagt
 "The game uses Godot Engine, released under the MIT license:","Spillet bruger Godot Engine, udgivet under MIT-licensen:"
+"The people, packs and tools behind the Ark.","Menneskene, pakkerne og værktøjerne bag Arken."
 Third-party components in Godot Engine:,Tredjepartskomponenter i Godot Engine:
+Gain,Gevinst
 Gain: %s,Gevinst: %s
+Generation decision,Generationsbeslutning
+Price,Pris
 Price: %s,Pris: %s
 Support %s (%s),Støt %s (%s)
 Those born here have their own answers to what the colony should be. Your choice sets the colony's lasting course until the next decision: each has a gain and a price. No answer is the right one.,"De, der er født her, har deres egne svar på, hvad kolonien skal være. Dit valg sætter koloniens varige kurs indtil næste beslutning: hvert valg har en gevinst og en pris. Intet svar er det rigtige."
@@ -1141,23 +1194,52 @@ We want to decide for ourselves. Give the council the keys.,Vi vil selv bestemme
 Year %d: the first generation speaks,År %d: den første generation taler
 %d people · %s · own power %.0f / %.0f kW · reserve %s days · %d crises resolved · the captain in stasis for %d years,%d mennesker · %s · egen strøm %.0f / %.0f kW · reserve %s dage · %d kriser løst · kaptajnen i stasis i %d år
 Continue from the last save before the handover,Fortsæt fra seneste save før overdragelsen
+Crises resolved,Kriser løst
 Loading the backup from before the ending.,Indlæser backuppen fra før slutningen.
 Main menu,Hovedmenu
+People,Mennesker
+Year %d,År %d
+Years,År
+captain in stasis %d yrs,kaptajnen i stase %d år
 council,råd
 no council,intet råd
-  (free),  (gratis)
+own power %.0f / %.0f kW,egen strøm %.0f / %.0f kW
+Colony life,Kolonilivet
+Course: %s,Kurs: %s
+Crisis,Krise
+Critical,Kritisk
+Day %d,Dag %d
+Deaths,Dødsfald
+Embryos lost,Tabte embryoner
+Free,Gratis
+Material,Materiale
+Stored power,Lagret strøm
 Time stands still until you have chosen. Time leaps stop at unresolved crises.,"Tiden står stille, til du har valgt. Tidsspring stopper ved uafklarede kriser."
+Weaker sun,Svagere sol
 ALARM: warning,ALARM: advarsel
 Objectives,Mål
 The colony is self-sufficient.,Kolonien klarer sig selv.
 Travel here,Rejs hertil
+Handover,Overdragelse
+Press a key...,Tryk en tast...
+OFF,FRA
+ON,TIL
+%d of %d done,%d af %d klaret
+Current,Nu
+DAY,DAG
+"Day %d · objectives, the logbook and the embryo ledger.","Dag %d · mål, logbogen og embryoregnskabet."
+Done,Klaret
 Logbook,Logbog
-[color=#8fa3ad]Day %d[/color]  %s,[color=#8fa3ad]Dag %d[/color]  %s
-[color=#8fa3ad]Embryo ledger:[/color] %s viable · %s in incubation · %s born · %s lost   [color=#8fa3ad](total %s)[/color],[color=#8fa3ad]Embryoregnskab:[/color] %s levedygtige · %s i inkubation · %s født · %s tabt   [color=#8fa3ad](i alt %s)[/color]
+Next,Næste
+Nothing logged yet.,Intet logget endnu.
+Embryo ledger,Embryoregnskab
+Viable,Levedygtige
 "50,000 embryos. Six possible worlds. One choice you must live with.","50.000 embryoner. Seks mulige verdener. Ét valg, du skal leve med."
+"Autosave, manual slots and the save from before the landing.","Autogem, manuelle pladser og gemmet fra før landingen."
 Continue,Fortsæt
 Could not load: ,Kunne ikke indlæse: 
 Load,Indlæs
+Load game,Indlæs spil
 Load latest valid backup,Indlæs seneste gyldige backup
 New campaign,Ny kampagne
 Quit,Afslut
@@ -1193,7 +1275,6 @@ The Ark is not in orbit around a planet. Use the star map to travel.,Arken er ik
 The planet,Planeten
 Unknown,Ukendt
 Water (person-days),Vand (persondøgn)
-day,dag
 high,høj
 low,lav
 medium,middel
@@ -1205,40 +1286,74 @@ heat source,varmekilde
 landing quality,landingskvalitet
 shelter,læ
 Close  [%s],Luk  [%s]
+%s embryos,%s embryoner
 Colony day %d,Koloni dag %d
 Could not load,Kunne ikke indlæse
-Load game,Indlæs spil
 Quit game,Afslut spillet
 Save failed: ,Gemning fejlede: 
 Save game,Gem spil
 Saved to %s.,Gemt i %s.
+Three manual slots. Saving over a used slot asks first.,Tre manuelle pladser. At gemme over en brugt plads spørger først.
 Voyage,Rejse
 empty,tomt
+Colony,Koloni
+Empty slot. Save the current game here.,Tom plads. Gem det aktuelle spil her.
+Load %s,Indlæs %s
+New save,Nyt gem
+Press again to overwrite this save.,Tryk igen for at overskrive dette gem.
+Save over %s,Gem over %s
+Save to %s,Gem i %s
+year %.1f,år %.1f
 "(now: %s, from the next area)","(nu: %s, fra næste område)"
+Accessibility,Tilgængelighed
 Ambience,Stemning
 Audio,Lyd
+"Audio, display, accessibility and controls. Changes apply at once.","Lyd, skærm, tilgængelighed og styring. Ændringer gælder med det samme."
 Camera drag (touch),Kamera ved træk (touch)
 Camera shake,Kamerarystelser
+Clicks and notices.,Klik og beskeder.
+Comfort,Komfort
 Controls,Taster
-Display and accessibility,Visning og tilgængelighed
+Display,Skærm
 Effects,Effekter
+Everything at once.,Alt på én gang.
 Fullscreen,Fuld skærm
 Graphics quality,Grafikkvalitet
 High,Høj
+How fast the view turns.,Hvor hurtigt udsynet drejer.
+Impacts and landings shake the view.,Stød og landinger ryster udsynet.
 Interface,Brugerflade
 Invert vertical axis,Invertér lodret akse
+Keys,Taster
 Language,Sprog
+Levels follow the sliders: each channel is mixed under the master.,Niveauerne følger skyderne: hver kanal mixes under hovedlyden.
 Low,Lav
+"Machines, steps, the Ark.","Maskiner, skridt, Arken."
 Master,Samlet
+Mixer,Mixer
+Mouse up looks down.,Mus op kigger ned.
 Music,Musik
-Press a key...,Tryk en tast...
+Next tab,Næste fane
+PREVIEW,FORHÅNDSVISNING
+"Panels, cameras and effects stay still.","Paneler, kameraer og effekter står stille."
+Picture,Billede
+Previous tab,Forrige fane
 Real-time descent from orbit,Nedstigning fra kredsløb i realtid
 Reduced motion (no fades/shaking),Reduceret bevægelse (ingen fades/rystelser)
 Reset keys,Nulstil taster
+See the preview below.,Se forhåndsvisningen nedenfor.
 Sensitivity,Følsomhed
+Spoken lines as text at the bottom.,Talte replikker som tekst nederst.
 Subtitle size,Undertekststørrelse
 Subtitles,Undertekster
+Tested from 1280x720 to 1920x1080.,Testet fra 1280x720 til 1920x1080.
+Text and subtitles.,Tekst og undertekster.
+The score.,Musikken.
 UI scale,UI-skalering
+Use the whole screen.,Brug hele skærmen.
+Volume,Lydstyrke
+"Watch the Ark come down, or cut to the ground.","Se Arken komme ned, eller klip til jorden."
+"Wind, rooms, the colony.","Vind, rum, kolonien."
 Choose a world on the map.,Vælg en verden på kortet.
 Comparison,Sammenligning
 Confirm risky voyage,Bekræft risikabel rejse
@@ -1259,7 +1374,6 @@ Send remote probe (3 components),Send fjernsonde (3 komponenter)
 Show %s on the map,Vis %s på kortet
 Star map,Stjernekort
 Visited,Besøgt
-days,dage
 estimate,skøn
 known,kendt
 → %d left,→ %d tilbage

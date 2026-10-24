@@ -324,7 +324,7 @@ func _update_dock() -> void:
 	if n != _decorated:
 		_decorated = n
 		for b: Node in bottom.find_children("*", "Button", true, false):
-			if b.has_meta("def_id") and (b as Button).icon == null:
+			if b.has_meta("def_id") and not b.has_meta("holo_build") and (b as Button).icon == null:
 				UiKit.with_icon(b as Button, "build." + str(b.get_meta("def_id")), 20)
 
 

@@ -94,6 +94,23 @@ func _styles() -> void:
 	add_theme_constant_override("h_separation", 12)
 
 
+## The unmistakable primary (D-059): a filled plate in the style colour with
+## dark text, brighter when hovered; the glow and sweep stay.
+func set_filled() -> void:
+	var c := _col()
+	for st: String in ["normal", "hover", "pressed", "hover_pressed"]:
+		var sb := (get_theme_stylebox(st) as StyleBoxFlat).duplicate() as StyleBoxFlat
+		sb.bg_color = c.darkened(0.12) if st == "normal" else c.lightened(0.12)
+		sb.border_color = c.lightened(0.45)
+		add_theme_stylebox_override(st, sb)
+	var dark := Color(0.02, 0.06, 0.08)
+	for k: String in ["font_color", "font_hover_color", "font_focus_color", "font_pressed_color", "icon_normal_color", "icon_hover_color", "icon_focus_color"]:
+		add_theme_color_override(k, dark)
+	if _cost_box:
+		for l: Node in _cost_box.find_children("*", "Label", true, false):
+			(l as Label).add_theme_color_override("font_color", dark)
+
+
 ## A cost chip on the right: glyph + amount (e.g. "−16" fuel, "3" components).
 func set_cost(amount: String, icon_slot: String = "", caption: String = "") -> void:
 	if _cost_box:

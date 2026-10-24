@@ -18,7 +18,7 @@ var _ui: Control
 var _t := 0.0
 var _focus_sound_armed := false
 var _rings: Array[TextureRect] = []  # slow-turning HUD rings behind the title (still with reduced motion)
-var _save_card: PanelContainer
+var _save_card: Control
 var _footer: HBoxContainer
 
 
@@ -189,7 +189,8 @@ func _add_rings() -> void:
 		_rings.append(r)
 
 
-## The newest save as a glass card bottom right: where Continue will take you.
+## The newest save as a holo card bottom right (D-059: the SaveSlots card):
+## where Continue will take you; clicking it continues.
 func _refresh_save_card() -> void:
 	if is_instance_valid(_save_card):
 		_save_card.queue_free()
@@ -197,20 +198,19 @@ func _refresh_save_card() -> void:
 	if not SaveService.has_any():
 		return
 	var slot := SaveService.latest_slot()
-	_save_card = UiKit.panel()
-	_save_card.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_RIGHT)
-	_save_card.grow_horizontal = Control.GROW_DIRECTION_BEGIN
-	_save_card.grow_vertical = Control.GROW_DIRECTION_BEGIN
-	_save_card.offset_right = -28
-	_save_card.offset_bottom = -52
-	_save_card.custom_minimum_size = Vector2(340, 0)
-	_save_card.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	var v := UiKit.vbox(4)
-	v.add_child(UiKit.section(Loc.t("Continue"), "ui.icon_load"))
-	v.add_child(UiKit.label(Loc.t(str(SaveService.SLOT_LABELS.get(slot, slot))), 18, UiKit.TEXT))
-	v.add_child(UiKit.label(PauseMenu._describe(SaveService.summary(slot)), 15, UiKit.MUTED.lightened(0.1)))
-	_save_card.add_child(v)
-	_ui.add_child(_save_card)
+	var card := SaveSlots.card(slot, SaveService.summary(slot), "load", func(_s: String) -> void: _continue())
+	card.custom_minimum_size = Vector2(520, 0)
+	card.focus_mode = Control.FOCUS_NONE  # the Continue entry owns keyboard / pad focus
+	var box := UiKit.vbox(6)
+	box.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_RIGHT)
+	box.grow_horizontal = Control.GROW_DIRECTION_BEGIN
+	box.grow_vertical = Control.GROW_DIRECTION_BEGIN
+	box.offset_right = -28
+	box.offset_bottom = -52
+	box.add_child(UiKit.section(Loc.t("Continue"), "ui.icon_load"))
+	box.add_child(card)
+	_save_card = box
+	_ui.add_child(box)
 
 
 func _wash(from: Vector2, to: Vector2, alpha: float, preset: Control.LayoutPreset, size: Vector2) -> TextureRect:
@@ -312,12 +312,16 @@ func _open_panel(p: CanvasLayer) -> void:
 
 
 func _on_panel_closed() -> void:
+	_show_column()
+	_build()
+
+
+func _show_column() -> void:
 	_col.visible = true
 	for r: TextureRect in _rings:
 		r.visible = true
 	if not UiKit.calm():
 		UiKit.fade_in(_col, 0.25)
-	_build()
 
 
 func _new() -> void:
@@ -330,14 +334,27 @@ func _continue() -> void:
 	_try_load(slot, false)
 
 
+## The saves as holo cards in an overlay (D-059): world render, place, day,
+## people, embryos and date per slot; Esc / Back returns to the menu.
 func _load_list() -> void:
-	UiKit.clear(_body)
-	for slot: String in SaveService.SLOTS:
-		if SaveService.store.exists(slot):
-			_body.add_child(_menu_button("%s — %s" % [Loc.t(str(SaveService.SLOT_LABELS[slot])), PauseMenu._describe(SaveService.summary(slot))], func() -> void: _try_load(slot, false), "ui.icon_load"))
-	_body.add_child(_menu_button(Loc.t("Back"), _build, "ui.icon_back"))
-	_stagger()
-	(_body.get_child(0) as Control).grab_focus.call_deferred()
+	if _saves == null:
+		_saves = OverlayPanel.new(Vector2(820, 0))
+		_saves.closed.connect(_on_panel_closed)
+		add_child(_saves)
+	UiKit.clear(_saves.body)
+	_saves.header(Loc.t("Load game"), Loc.t("Autosave, manual slots and the save from before the landing."), "ui.icon_load")
+	var cards := SaveSlots.list("load", SaveService.SLOTS, func(slot: String) -> void:
+		_saves.visible = false
+		_show_column()
+		_try_load(slot, false))
+	_saves.body.add_child(cards)
+	_open_panel(_saves)
+	var first: Control = cards.get_child(0) as Control if cards.get_child_count() > 0 else _saves.focus_target()
+	if first:
+		first.grab_focus.call_deferred()
+
+
+var _saves: OverlayPanel
 
 
 func _try_load(slot: String, backup: bool) -> void:
@@ -379,6 +396,9 @@ func debug_action(action: String) -> void:
 	match action:
 		"credits": _open_panel(_credits)
 		"settings": _open_panel(_settings)
+		"settings_display", "settings_access", "settings_controls":
+			_open_panel(_settings)
+			_settings.show_tab({"settings_display": 1, "settings_access": 2, "settings_controls": 3}[action])
 		"load": _load_list()
 		"focus2":
 			if _body.get_child_count() > 1:
