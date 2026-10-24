@@ -45,7 +45,8 @@ static func decode(envelope: Variant, content: ContentDB) -> Dictionary:
 	if not env.get("payload") is Dictionary:
 		out["error"] = Loc.t("The save is missing its payload.")
 		return out
-	if str(env.get("checksum", "")) != checksum(env["payload"]):
+	var stored := str(env.get("checksum", ""))
+	if stored != checksum(env["payload"]) and stored != DictUtil.sha256(DictUtil.legacy_canonical_json(env["payload"])):
 		out["error"] = Loc.t("Checksum mismatch: the file is damaged or altered.")
 		return out
 	var version := int(env.get("schema_version", 0))

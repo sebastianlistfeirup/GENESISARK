@@ -4,29 +4,40 @@ extends RefCounted
 
 
 ## Canonical JSON: sorted keys, so equal states give equal strings and checksums.
+## Non-integral floats are written as fixed-precision text ("~f:0.109589") so the
+## string does not depend on the engine's float printer (Godot 4.5 and 4.7 print
+## 0.1 differently at full precision; D-033).
 static func canonical_json(value: Variant) -> String:
 	return JSON.stringify(_sorted(value), "", false, true)
 
 
-static func _sorted(value: Variant) -> Variant:
+## The pre-4.7 canonical form (engine float printer). Only used to accept saves
+## written before D-033; never used to write.
+static func legacy_canonical_json(value: Variant) -> String:
+	return JSON.stringify(_sorted(value, true), "", false, true)
+
+
+static func _sorted(value: Variant, legacy: bool = false) -> Variant:
 	if value is Dictionary:
 		var out := {}
 		var keys: Array = (value as Dictionary).keys()
 		keys.sort_custom(func(a: Variant, b: Variant) -> bool: return str(a) < str(b))
 		for k: Variant in keys:
-			out[str(k)] = _sorted(value[k])
+			out[str(k)] = _sorted(value[k], legacy)
 		return out
 	if value is Array:
 		var arr: Array = []
 		for v: Variant in value:
-			arr.append(_sorted(v))
+			arr.append(_sorted(v, legacy))
 		return arr
 	if value is float:
 		# Normalise integral floats so 3 and 3.0 serialise identically after a JSON roundtrip.
 		var f: float = value
 		if is_equal_approx(f, roundf(f)) and absf(f) < 9.0e15:
 			return int(roundf(f))
-		return snappedf(f, 0.000001)
+		if legacy:
+			return snappedf(f, 0.000001)
+		return "~f:" + String.num(f, 6)
 	return value
 
 
