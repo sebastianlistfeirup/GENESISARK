@@ -27,52 +27,174 @@ static func theme() -> Theme:
 		return _theme
 	var t := Theme.new()
 	t.default_font_size = 18
-	var panel := _box(PANEL, PETROL_D, 1, 6)
-	panel.bg_color.a = 0.94
+	# Panels: deep navy glass, a hairline petrol border, soft drop shadow. The
+	# content margins are part of the 1280x720 @1.5 fit budget (GA-29): keep them.
+	var panel := _box(PANEL, Color(PETROL, 0.42), 1, 8)
+	panel.bg_color.a = 0.93
+	panel.border_width_top = 2  # a brighter lip on top reads as "glass edge"
+	panel.shadow_color = Color(0, 0.01, 0.03, 0.45)
+	panel.shadow_size = 10
+	panel.shadow_offset = Vector2(0, 3)
 	t.set_stylebox("panel", "PanelContainer", panel)
 	t.set_stylebox("panel", "Panel", panel)
-	var btn := _box(PETROL_D, PETROL, 1, 4)
+	# Buttons: one shape, five states. Focus is drawn ON TOP of the current
+	# state (Godot 4), so it is an outline only: amber, 2 px, outside the
+	# button, never hidden by hover or pressed (bible p.26).
+	var btn := _box(PETROL_D.darkened(0.15), PETROL.darkened(0.2), 1, 6)
 	btn.content_margin_left = 14
 	btn.content_margin_right = 14
 	btn.content_margin_top = 7
 	btn.content_margin_bottom = 7
+	btn.border_width_bottom = 2
 	var hov := btn.duplicate() as StyleBoxFlat
-	hov.bg_color = PETROL
+	hov.bg_color = PETROL.darkened(0.12)
+	hov.border_color = PETROL.lightened(0.35)
 	var pr := btn.duplicate() as StyleBoxFlat
-	pr.bg_color = AMBER.darkened(0.3)
+	pr.bg_color = AMBER.darkened(0.45)
 	pr.border_color = AMBER
+	pr.border_width_bottom = 1
+	pr.border_width_top = 2
 	var dis := btn.duplicate() as StyleBoxFlat
-	dis.bg_color = Color("1a2328")
-	dis.border_color = Color("2a3840")
-	var foc := btn.duplicate() as StyleBoxFlat
+	dis.bg_color = Color("141d22")
+	dis.border_color = Color("26343b")
+	var foc := StyleBoxFlat.new()
+	foc.draw_center = false
 	foc.border_color = AMBER
 	foc.set_border_width_all(2)
-	for n: String in ["normal", "hover", "pressed", "disabled", "focus"]:
-		t.set_stylebox(n, "Button", {"normal": btn, "hover": hov, "pressed": pr, "disabled": dis, "focus": foc}[n])
-	t.set_color("font_color", "Button", TEXT)
-	t.set_color("font_hover_color", "Button", Color.WHITE)
-	t.set_color("font_disabled_color", "Button", MUTED.darkened(0.3))
+	foc.set_corner_radius_all(8)
+	foc.set_expand_margin_all(3)
+	for cls: String in ["Button", "OptionButton", "MenuButton"]:
+		t.set_stylebox("normal", cls, btn)
+		t.set_stylebox("hover", cls, hov)
+		t.set_stylebox("pressed", cls, pr)
+		t.set_stylebox("hover_pressed", cls, pr)
+		t.set_stylebox("disabled", cls, dis)
+		t.set_stylebox("focus", cls, foc)
+		t.set_color("font_color", cls, TEXT)
+		t.set_color("font_hover_color", cls, Color.WHITE)
+		t.set_color("font_focus_color", cls, Color.WHITE)
+		t.set_color("font_pressed_color", cls, Color("fff4e0"))
+		t.set_color("font_hover_pressed_color", cls, Color("fff4e0"))
+		t.set_color("font_disabled_color", cls, MUTED.darkened(0.25))
+	# Toggles (settings): flat row, amber outline when focused.
+	var flat := StyleBoxEmpty.new()
+	flat.content_margin_left = 6
+	flat.content_margin_right = 6
+	flat.content_margin_top = 4
+	flat.content_margin_bottom = 4
+	var flat_hov := _box(Color(PETROL, 0.14), Color(0, 0, 0, 0), 0, 6)
+	flat_hov.content_margin_left = 6
+	flat_hov.content_margin_right = 6
+	flat_hov.content_margin_top = 4
+	flat_hov.content_margin_bottom = 4
+	for cls: String in ["CheckButton", "CheckBox"]:
+		t.set_stylebox("normal", cls, flat)
+		t.set_stylebox("pressed", cls, flat)
+		t.set_stylebox("hover", cls, flat_hov)
+		t.set_stylebox("hover_pressed", cls, flat_hov)
+		t.set_stylebox("disabled", cls, flat)
+		t.set_stylebox("focus", cls, foc)
+		t.set_color("font_color", cls, TEXT)
+		t.set_color("font_hover_color", cls, Color.WHITE)
+		t.set_color("font_pressed_color", cls, TEXT)
+		t.set_color("font_hover_pressed_color", cls, Color.WHITE)
+		t.set_color("font_focus_color", cls, Color.WHITE)
+	for state: String in ["checked", "unchecked", "checked_disabled", "unchecked_disabled"]:
+		t.set_icon(state, "CheckButton", _toggle_icon(state.begins_with("checked"), state.ends_with("disabled")))
 	t.set_color("font_color", "Label", TEXT)
 	t.set_color("default_color", "RichTextLabel", TEXT)
-	var pb_bg := _box(Color("0a1418"), PETROL_D, 1, 3)
-	var pb_fg := _box(PETROL, PETROL, 0, 3)
+	# Bars, sliders, scrollbars share the petrol track.
+	var pb_bg := _box(Color("0a1418"), PETROL_D, 1, 4)
+	var pb_fg := _box(PETROL, PETROL, 0, 4)
 	t.set_stylebox("background", "ProgressBar", pb_bg)
 	t.set_stylebox("fill", "ProgressBar", pb_fg)
 	t.set_color("font_color", "ProgressBar", TEXT)
-	var tab_sel := _box(PETROL, PETROL, 1, 4)
-	var tab_un := _box(PETROL_D, PETROL_D, 1, 4)
+	var track := _box(Color("0a1418"), PETROL_D, 1, 4)
+	track.content_margin_top = 3
+	track.content_margin_bottom = 3
+	var track_fill := _box(PETROL, PETROL, 0, 4)
+	track_fill.content_margin_top = 3
+	track_fill.content_margin_bottom = 3
+	var track_hi := track_fill.duplicate() as StyleBoxFlat
+	track_hi.bg_color = PETROL.lightened(0.25)
+	t.set_stylebox("slider", "HSlider", track)
+	t.set_stylebox("grabber_area", "HSlider", track_fill)
+	t.set_stylebox("grabber_area_highlight", "HSlider", track_hi)
+	t.set_stylebox("focus", "HSlider", foc)
+	var sb_bg := _box(Color(0.02, 0.05, 0.07, 0.6), Color(0, 0, 0, 0), 0, 4)
+	sb_bg.set_content_margin_all(3)
+	var sb_grab := _box(PETROL_D.lightened(0.15), Color(0, 0, 0, 0), 0, 4)
+	var sb_grab_h := _box(PETROL, Color(0, 0, 0, 0), 0, 4)
+	for cls: String in ["VScrollBar", "HScrollBar"]:
+		t.set_stylebox("scroll", cls, sb_bg)
+		t.set_stylebox("grabber", cls, sb_grab)
+		t.set_stylebox("grabber_highlight", cls, sb_grab_h)
+		t.set_stylebox("grabber_pressed", cls, sb_grab_h)
+	var tab_sel := _box(PETROL.darkened(0.1), PETROL.lightened(0.3), 1, 6)
+	var tab_un := _box(PETROL_D.darkened(0.15), PETROL_D, 1, 6)
+	var tab_hov := _box(PETROL_D, PETROL, 1, 6)
 	t.set_stylebox("tab_selected", "TabContainer", tab_sel)
 	t.set_stylebox("tab_unselected", "TabContainer", tab_un)
-	t.set_stylebox("tab_hovered", "TabContainer", tab_sel)
+	t.set_stylebox("tab_hovered", "TabContainer", tab_hov)
+	t.set_stylebox("tab_focus", "TabContainer", foc)
 	t.set_stylebox("panel", "TabContainer", panel)
-	var tip := _box(Color("0b1219"), AMBER, 1, 4)
+	t.set_color("font_selected_color", "TabContainer", Color.WHITE)
+	t.set_color("font_unselected_color", "TabContainer", MUTED)
+	t.set_color("font_hovered_color", "TabContainer", TEXT)
+	var tip := _box(Color("0b1219"), AMBER, 1, 6)
+	tip.shadow_color = Color(0, 0, 0, 0.4)
+	tip.shadow_size = 6
 	t.set_stylebox("panel", "TooltipPanel", tip)
 	t.set_color("font_color", "TooltipLabel", TEXT)
-	var line := _box(Color("0a1418"), PETROL_D, 1, 3)
+	var line := _box(Color("0a1418"), PETROL_D, 1, 4)
+	var line_f := line.duplicate() as StyleBoxFlat
+	line_f.border_color = AMBER
 	t.set_stylebox("normal", "LineEdit", line)
+	t.set_stylebox("focus", "LineEdit", line_f)
 	t.set_stylebox("panel", "PopupMenu", panel)
+	var sep := StyleBoxLine.new()
+	sep.color = Color(PETROL, 0.35)
+	sep.thickness = 1
+	t.set_stylebox("separator", "HSeparator", sep)
 	_theme = t
 	return t
+
+
+## Switch icon drawn in code (no texture files): petrol track + white knob when
+## on, outlined dark track + grey knob when off. Shape AND position differ, so
+## the state never depends on colour alone (bible p.26).
+static func _toggle_icon(on: bool, disabled: bool) -> ImageTexture:
+	var w := 46
+	var h := 24
+	var img := Image.create(w, h, false, Image.FORMAT_RGBA8)
+	var track := PETROL if on else Color("0a1418")
+	var edge := PETROL.lightened(0.3) if on else MUTED.darkened(0.2)
+	var knob := Color.WHITE if on else MUTED
+	if disabled:
+		track = track.darkened(0.4)
+		edge = edge.darkened(0.5)
+		knob = knob.darkened(0.5)
+	var r := h * 0.5 - 1.0
+	var kx := (w - h * 0.5) if on else h * 0.5
+	for y: int in h:
+		for x: int in w:
+			var px := Vector2(x + 0.5, y + 0.5)
+			# Signed distance to the pill (capsule between the two end centres).
+			var cx := clampf(px.x, h * 0.5, w - h * 0.5)
+			var d_pill := px.distance_to(Vector2(cx, h * 0.5)) - r
+			var d_knob := px.distance_to(Vector2(kx, h * 0.5)) - (r - 3.5)
+			var c := Color(0, 0, 0, 0)
+			var a_pill := clampf(0.5 - d_pill, 0.0, 1.0)
+			if a_pill > 0.0:
+				var a_edge := clampf(0.5 - absf(d_pill + 0.75), 0.0, 1.0)
+				c = track.lerp(edge, a_edge)
+				c.a = a_pill
+			var a_knob := clampf(0.5 - d_knob, 0.0, 1.0)
+			if a_knob > 0.0:
+				c = c.lerp(knob, a_knob)
+				c.a = maxf(c.a, a_knob)
+			img.set_pixel(x, y, c)
+	return ImageTexture.create_from_image(img)
 
 
 static func _box(bg: Color, border: Color, bw: int, radius: int) -> StyleBoxFlat:
@@ -100,11 +222,30 @@ static func label(text: String, size: int = 18, color: Color = TEXT, wrap: bool 
 
 static func title(text: String) -> Label:
 	var l := label(text.to_upper(), 15, PETROL.lightened(0.35))
+	l.add_theme_font_override("font", font_variant(0.25, 1))
 	return l
 
 
 static func heading(text: String) -> Label:
-	return label(text, 26, TEXT)
+	var l := label(text, 26, TEXT)
+	l.add_theme_font_override("font", font_variant(0.45, 0))
+	return l
+
+
+static var _fonts: Dictionary = {}
+
+
+## The default font with a little weight/tracking: headings and section titles
+## get hierarchy without shipping a font file (D-035).
+static func font_variant(embolden: float, spacing: int) -> FontVariation:
+	var key := "%s/%d" % [embolden, spacing]
+	if not _fonts.has(key):
+		var fv := FontVariation.new()
+		fv.base_font = ThemeDB.fallback_font
+		fv.variation_embolden = embolden
+		fv.spacing_glyph = spacing
+		_fonts[key] = fv
+	return _fonts[key]
 
 
 static func button(text: String, cb: Callable = Callable(), tooltip: String = "") -> Button:
@@ -117,6 +258,74 @@ static func button(text: String, cb: Callable = Callable(), tooltip: String = ""
 	b.pressed.connect(func() -> void: AudioService.ui("ui_click"))
 	b.mouse_entered.connect(func() -> void: AudioService.ui("ui_hover"))
 	return b
+
+
+## True when the player asked for reduced motion: no fades, slides or drift.
+static func calm() -> bool:
+	return bool(SettingsService.get_value("reduced_motion", false))
+
+
+## Fades a control (or any CanvasItem) in from transparent. Instant with
+## reduced motion. Only modulate changes, so layout and fit checks are unaffected.
+static func fade_in(item: CanvasItem, seconds: float = 0.18) -> void:
+	if not is_instance_valid(item) or not item.is_inside_tree():
+		return
+	if calm():
+		item.modulate.a = 1.0
+		return
+	item.modulate.a = 0.0
+	var tw := item.create_tween()
+	tw.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
+	tw.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
+	tw.tween_property(item, "modulate:a", 1.0, seconds)
+
+
+## Large left-aligned menu entry (main menu): translucent plate with an accent
+## bar on the left that lights amber and slides the label in on hover/focus.
+## The shared amber focus outline still draws on top (bible p.26).
+static func style_menu_button(b: Button, animate: bool = true) -> void:
+	b.alignment = HORIZONTAL_ALIGNMENT_LEFT
+	b.custom_minimum_size = Vector2(0, 50)
+	b.add_theme_font_size_override("font_size", 21)
+	var base := StyleBoxFlat.new()
+	base.bg_color = Color(PANEL, 0.55)
+	base.border_color = Color(PETROL, 0.75)
+	base.border_width_left = 3
+	base.set_corner_radius_all(4)
+	base.content_margin_left = 22
+	base.content_margin_right = 22
+	base.content_margin_top = 8
+	base.content_margin_bottom = 8
+	var lit := base.duplicate() as StyleBoxFlat
+	lit.bg_color = Color(PETROL.darkened(0.25), 0.85)
+	lit.border_color = AMBER
+	lit.border_width_left = 5
+	var pr := lit.duplicate() as StyleBoxFlat
+	pr.bg_color = Color(AMBER.darkened(0.5), 0.9)
+	var dis := base.duplicate() as StyleBoxFlat
+	dis.bg_color = Color(PANEL, 0.35)
+	dis.border_color = Color(MUTED, 0.3)
+	b.add_theme_stylebox_override("normal", base)
+	b.add_theme_stylebox_override("hover", lit)
+	b.add_theme_stylebox_override("pressed", pr)
+	b.add_theme_stylebox_override("hover_pressed", pr)
+	b.add_theme_stylebox_override("disabled", dis)
+	# Lit when hovered OR focused (pad/keyboard), so both inputs get the same cue.
+	var light := func(on: bool) -> void:
+		var target := 34.0 if on else 22.0
+		b.add_theme_stylebox_override("normal", lit if on else base)
+		if animate and not calm() and b.is_inside_tree():
+			var tw := b.create_tween().set_parallel(true)
+			tw.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
+			for sb: StyleBoxFlat in [lit, pr]:
+				tw.tween_property(sb, "content_margin_left", target, 0.14)
+		else:
+			lit.content_margin_left = target
+			pr.content_margin_left = target
+	b.focus_entered.connect(func() -> void: light.call(true))
+	b.focus_exited.connect(func() -> void: light.call(b.is_hovered()))
+	b.mouse_entered.connect(func() -> void: light.call(true))
+	b.mouse_exited.connect(func() -> void: light.call(b.has_focus()))
 
 
 static func panel(min_size: Vector2 = Vector2.ZERO) -> PanelContainer:

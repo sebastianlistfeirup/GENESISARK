@@ -7,12 +7,13 @@ var _panel: PanelContainer
 var _body: VBoxContainer
 var _prev_mouse := Input.MOUSE_MODE_VISIBLE
 var settings: SettingsPanel
+var dim: ColorRect
 
 
 func _ready() -> void:
 	layer = 40
 	process_mode = Node.PROCESS_MODE_ALWAYS
-	var dim := ColorRect.new()
+	dim = ColorRect.new()
 	dim.color = Color(0, 0, 0, 0.55)
 	dim.set_anchors_preset(Control.PRESET_FULL_RECT)
 	add_child(dim)
@@ -35,6 +36,8 @@ func open() -> void:
 	get_tree().paused = true
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	_main()
+	UiKit.fade_in(dim, 0.22)
+	UiKit.fade_in(_panel)
 
 
 func close() -> void:

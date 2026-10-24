@@ -48,6 +48,8 @@ func open() -> void:
 	refresh()
 	fit()
 	fit.call_deferred()
+	UiKit.fade_in(_dim, 0.22)
+	UiKit.fade_in(panel)
 
 
 func close() -> void:

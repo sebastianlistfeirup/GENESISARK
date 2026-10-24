@@ -29,6 +29,7 @@ func toggle() -> void:
 	if visible:
 		refresh()
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+		UiKit.fade_in(_panel)
 	AudioService.ui("ui_click")
 
 
