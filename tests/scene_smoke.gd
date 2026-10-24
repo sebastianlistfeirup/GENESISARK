@@ -449,6 +449,27 @@ func _run() -> void:
 	var views: Dictionary = col.get("views")
 	check("ga08_building_views_synced", views.size() == GameSession.state.colony.buildings.size(), "%d vs %d" % [views.size(), GameSession.state.colony.buildings.size()])
 	check("ga08_habitat_active", GameSession.state.colony.count_active("habitat") == 1)
+	# D-065: the utility rovers drive the dirt roads, never collide, keep to the road.
+	var life: ColonyLife = col.get("_life")
+	var rovers := life.rovers if life else null
+	var rover_ok := rovers != null and rovers.count() >= 1 and rovers.find_children("*", "CollisionObject3D", true, false).is_empty()
+	var rover_detail := "count=%d" % (rovers.count() if rovers else -1)
+	if rover_ok:
+		var r0 := rovers.rover(0)
+		rovers.force(0, "mid")
+		var from := r0.global_position
+		for i: int in 120:  # two seconds at a fixed step (headless frames are too short to see it move)
+			rovers._process(1.0 / 60.0)
+		var moved := r0.global_position.distance_to(from)
+		var paths: ColonyPaths = col.get("_paths")
+		var off := INF
+		var p2 := Vector2(r0.global_position.x, r0.global_position.z)
+		for rd: PackedVector2Array in paths.roads:
+			for j: int in range(1, rd.size()):
+				off = minf(off, Geometry2D.get_closest_point_to_segment(p2, rd[j - 1], rd[j]).distance_to(p2))
+		rover_ok = moved > 0.5 and off < 2.8
+		rover_detail += " moved=%.2f off_road_centre=%.2f" % [moved, off]
+	check("colony_rovers_drive_the_roads", rover_ok, rover_detail)
 	# Walkable collision follows the model (ShapeCollider), not the whole footprint.
 	var shape_ok := true
 	var shape_detail := ""

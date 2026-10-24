@@ -1,0 +1,40 @@
+{
+ "task_id": "D-065-colony-rover",
+ "commit": "see git log (branch worktree-agent-ae518b3b56a0fd10e)",
+ "engine_version": "Godot 4.7.2.stable (Vulkan Forward+, NVIDIA GeForce RTX 5090)",
+ "command": [
+  "python meshy_image.py submit/get rover_ref_a|b|c (3 Meshy text-to-image, nano-banana) -> rover_ref_c chosen (the only one with six wheels)",
+  "python meshy_i23d.py submit rover_scan rover_ref_c.png (1 Meshy image-to-3D, latest, textured) -> assets/imported/meshy/rover_scan/rover_scan.glb",
+  "python tools/rebuild/measure_scan.py rover_scan.glb --size z=4.5 --yaw 90 --rebuild builds/rover/export/rover.glb",
+  "godot --path . --script res://tools/rebuild/capture.gd -- --target=res://scenes/colony/colony_rover.tscn --views=34:40,front:0,side:90,back34:-130 [--no-bake]",
+  "godot --headless --path . --script res://tools/rebuild/export_glb.gd -- --scene=res://scenes/colony/colony_rover.tscn --out=res://builds/rover/export/rover.glb --no-bake",
+  "python tools/rebuild/bake_scan.py --scan rover_scan.glb --rebuild rover.glb --out assets/imported/meshy/rover_baked --map rover=all --yaw 90 --scale 2.36791 --offset 0,0,-0.05",
+  "godot --headless --path . res://tools/rebuild/rover_probe.tscn -- --step=250",
+  "godot --path . --write-movie builds/rover/movie/<clip>.avi --fixed-fps 30 -- --capture=... --scene=colony --setup=<grown:viridia|grown:umbra|colony:sere|era:ferrum:20> --action=rover:<n>:<zoom>:<yaw>:<arrive|mid|captain> --wait=150 --hold=<frames>",
+  "godot --path . -- --capture=... --scene=colony --setup=grown:viridia --action=rover:0:12:135:unload --wait=200 --hold=720 --frametimes=evidence/rover/frametimes_unload_turn.json",
+  "godot --path . -- --perf --case=colony_grown --out=builds/p_rover.json (x3) and --case=colony_era20 (x2); A/B baselines with life.rovers max 0 and the old road clearance (x2 each)",
+  "CHECK_FAST=1 tools/check.sh"
+ ],
+ "exit_code": 0,
+ "expected": "1 rover at year 0, up to 4 in a grown colony (data life.rovers); they drive the colony roads in their lane with wheels spinning at ground speed, rocker-bogie suspension on the ruts, body pitching/rolling with weight, anticipation before pulling away, braking into a stop with follow-through, unload beat (bed tips, tailgate, crates shuffle), point turn on the spot; dust on Sere/Ferrum, head lamps on Umbra; no collision, give way to the captain and colonists; reduced motion drives without the bounce; perf unchanged.",
+ "observed": {
+  "probe": "ROVER_PROBE PASS: timelines end seated/closed/straight (yaw 180 deg, rate integrates to PI), reduced never overshoots; test road: wheel spin error 0.00 %, worst wheel contact 1.7 cm (tread blocks), body pitch -1.36..1.27 deg full / -0.54..0.48 reduced, stops at 60.05 m for a 60 m mark and settles; colony grown:viridia: 2 rovers on 2 roads, states drive/settle/unload/turn, rover 0 turned round 5 times in 150 s, max 1.43 m from the road's centre line; arrival brakes straight into unload (0 s dawdle); captain in its lane: stops with the bumper 2.14 m from him, flashes its lamps, drives on when he steps aside",
+  "counts": "colony:sere year 0 = 1 rover, grown:viridia = 2, grown:umbra = 3, era:ferrum:20 = 4",
+  "hero_frames": "unload+turn in the colony (120 Hz vsync, 8.33 ms avg): turn window worst/avg 1.15; unload windows show single 14-16 ms frames at 1.4-1.8 s and 4.7 s after the debug action; the same capture with no rover beat (district camera) shows 11-18 ms frames at 0.8-1.2 s and 5.8 s (scene streaming after the camera jump), and the spikes stay without the bake, so they are scene noise rather than the rover",
+  "perf_colony_grown": "with rovers p95 9.3-9.4 ms, draws 1308-1311, load 4583-4754 ms; baseline (rovers off, old clearance) p95 9.5-9.6, draws 1322, load 5143-5418 ms. Load is over the 4000 ms budget in BOTH (this machine is busier today than for D-063's 3602 ms); the rover build is not a regression (props are a little fewer with the wider road clearance)",
+  "perf_colony_era20": "with rovers p95 10.0-10.1, p99 15.8-16.6, draws 1680-1684, load 4778-5181 ms; baseline p95 9.8-10.3, p99 16.5-18.1, draws 1684, load 4733-5296 ms (same noise band)",
+  "checks": "CHECK_FAST=1 tools/check.sh: COMPILE 185 scripts, 0 failed; 81 tests 0 fejl; SMOKE 60 checks 0 failures incl. colony_rovers_drive_the_roads (count=1 moved=8.72 m off_road_centre=1.35 m); touch 6/6; loc_exit=0 tests_exit=0 smoke_exit=0 touch_exit=0 campaign_exit=0",
+  "viewer": "evidence/rover/viewer/index.html served locally: loads procedural (rover.glb.txt) and baked (local rover_baked.*) variants, no page errors, renderer.info.programs 15 before and after drive/brake/unload/spin round/night/desert, camera finite at 375x812 phone size"
+ },
+ "fixture": "grown:viridia, grown:umbra, colony:sere, era:ferrum:20",
+ "status": "PASS",
+ "artifacts": [
+  "evidence/rover/probe.txt",
+  "evidence/rover/scan_vs_rebuild.jpg",
+  "evidence/rover/planets.jpg",
+  "evidence/rover/demo.mp4", "evidence/rover/demo.gif", "evidence/rover/sheet_demo.jpg",
+  "evidence/rover/frametimes_unload_turn.json", "evidence/rover/frametimes_baseline_no_beat.json",
+  "evidence/rover/perf/*.json",
+  "evidence/rover/viewer/index.html", "evidence/rover/viewer/rover.glb.txt"
+ ]
+}

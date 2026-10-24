@@ -6,7 +6,7 @@
       "ok": true
     },
     {
-      "detail": "@Button@86:<Button#194129168466>",
+      "detail": "@Button@86:<Button#205336348786>",
       "name": "pad_focuses_menu",
       "ok": true
     },
@@ -36,7 +36,7 @@
       "ok": true
     },
     {
-      "detail": "moved=0.57",
+      "detail": "moved=0.61",
       "name": "riglab_runs",
       "ok": true
     },
@@ -96,12 +96,12 @@
       "ok": true
     },
     {
-      "detail": "dyaw=-0.60",
+      "detail": "dyaw=-0.61",
       "name": "pad_look_turns_camera",
       "ok": true
     },
     {
-      "detail": "I_power_coupling:<Area3D#395757755792>",
+      "detail": "I_power_coupling:<Area3D#404414799280>",
       "name": "prompt_targets_coupling",
       "ok": true
     },
@@ -196,6 +196,11 @@
       "ok": true
     },
     {
+      "detail": "(9.735765, -0.292198, -4.191521)",
+      "name": "surface_drop_pod_lands_clear_and_skips",
+      "ok": true
+    },
+    {
       "detail": "",
       "name": "ga06_sample_recorded",
       "ok": true
@@ -238,6 +243,11 @@
     {
       "detail": "",
       "name": "ga08_habitat_active",
+      "ok": true
+    },
+    {
+      "detail": "count=1 moved=8.72 off_road_centre=1.35",
+      "name": "colony_rovers_drive_the_roads",
       "ok": true
     },
     {
@@ -294,5 +304,5 @@
   "engine_version": "4.7.2-stable (official)",
   "failures": [],
   "status": "PASS",
-  "timestamp": "2026-10-24T22:12:45"
+  "timestamp": "2026-10-24T23:49:11"
 }

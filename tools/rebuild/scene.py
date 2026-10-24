@@ -148,3 +148,13 @@ def align_scan(pos, ref_min, ref_max, axis="x", scale=None, offset=(0, 0, 0)):
     p[:, 1] += ref_min[1]
     p[:, 2] += (ref_min[2] + ref_max[2]) / 2 - size[2] / 2
     return p + np.asarray(offset), s
+
+
+def yaw_points(v, deg):
+    """Rotate points/normals about +Y by `deg` degrees (Godot convention: +90 turns -X to +Z)."""
+    a = np.radians(deg)
+    c, s = np.cos(a), np.sin(a)
+    out = v.copy()
+    out[:, 0] = v[:, 0] * c + v[:, 2] * s
+    out[:, 2] = -v[:, 0] * s + v[:, 2] * c
+    return out

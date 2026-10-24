@@ -1,0 +1,61 @@
+{
+  "cases": [
+    {
+      "census": {
+        "CollisionShape3D": 485,
+        "GPUParticles3D": 5,
+        "Label3D": 15,
+        "MeshInstance3D": 691,
+        "MultiMeshInstance3D": 479,
+        "OmniLight3D": 42,
+        "SpotLight3D": 0
+      },
+      "draw_calls_max": 1322,
+      "fixture_ms": 24,
+      "frame_p50": 8.0,
+      "frame_p95": 9.47,
+      "frame_p99": 9.69,
+      "frames": 360,
+      "id": "colony_grown",
+      "load_ms": 5418,
+      "mesh_lod": {
+        "chunks": 177,
+        "from_disk": 264,
+        "generated": 2,
+        "ms": 304.433,
+        "skipped": 271,
+        "split": 15,
+        "twins": 267
+      },
+      "nodes_max": 2477,
+      "objects_max": 2005,
+      "over_budget": [
+        "load 5418 ms > 4000"
+      ],
+      "primitives_max": 2422583,
+      "quality": "high",
+      "scene": "colony",
+      "setup": "grown:pelagos",
+      "static_mem_peak_mb": 212.9,
+      "video_mem_mb": 2085.4
+    }
+  ],
+  "cpu": "AMD Ryzen 9 9950X3D 16-Core Processor",
+  "device": "NVIDIA GeForce RTX 5090",
+  "engine_version": "4.7.2-stable (official)",
+  "frame_times_judged": true,
+  "limits": {
+    "draw_calls": 2500.0,
+    "load_ms": 4000.0,
+    "nodes": 12000.0,
+    "primitives": 3000000.0
+  },
+  "os": "Windows",
+  "over_budget": [
+    "colony_grown: load 5418 ms > 4000"
+  ],
+  "profile": "desktop",
+  "renderer": "forward_plus",
+  "resolution": "(1920.0, 1080.0)",
+  "timestamp": "2026-10-24T23:51:46"
+}

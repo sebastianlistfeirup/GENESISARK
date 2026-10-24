@@ -1,0 +1,654 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Colony Rover</title>
+<!--
+  GENESIS ARK, D-065: the six-wheeled colony utility rover as a phone-friendly three.js viewer.
+  Built from the image-to-3d-rebuild skill's viewer_template.html. The model is the Godot
+  ProcBuilder rebuild (scripts/runtime/visual/colony_rover.gd) exported at rest as GLB
+  (base64 .txt). When rover_baked.* are present (local only: paint baked from the owner's
+  Meshy scan) the scan's paint is mixed in on UV2, otherwise the procedural look is used.
+  Mirrors 1:1 (same constants): RoverTimeline (unload, point turn, pull-away dip, spring
+  step), ColonyRover (rocker-bogie solve, wheel spin and steer, sprung body, antenna,
+  crates, lamps) and ColonyRovers.throttle (jerk-limited, braking planned to the mark).
+  The whole vehicle is one material; the class rides in vertex colour B (class / 16).
+  Template patterns kept: base64 GLB, onBeforeCompile + customProgramCacheKey, bloom via
+  EffectComposer with prewarm() against composer.readBuffer, NaN-safe camera fit (0x0 first
+  layout), adaptive pixel ratio, lights never added/removed after start (no recompiles),
+  all motion from performance.now() + rAF (fake-clock friendly), fixed 1/120 s sim steps.
+-->
+<style>
+  :root { --bg: #11161a; --ink: #eef3f4; --muted: #9fb3b8; --accent: #f08a2c; --cyan: #4fe0ff; --panel: #141c20; }
+  html, body { margin: 0; height: 100%; background: var(--bg); color: var(--ink); font: 15px/1.4 system-ui, sans-serif; overflow: hidden; }
+  canvas { display: block; touch-action: none; }
+  .hud { position: fixed; left: 16px; right: 16px; top: 12px; pointer-events: none; }
+  .hud h1 { margin: 0; font: 650 21px/1.2 system-ui, sans-serif; letter-spacing: .02em; }
+  .hud p { margin: 3px 0 0; color: var(--muted); font-size: 13px; max-width: 42em; }
+  .beat { position: fixed; left: 16px; top: 74px; font: 600 12px/1.5 ui-monospace, monospace; color: var(--cyan); pointer-events: none; opacity: .9; }
+  .tray { position: fixed; left: 0; right: 0; bottom: 0; padding: 10px 16px calc(12px + env(safe-area-inset-bottom));
+          background: color-mix(in srgb, var(--panel) 90%, transparent); display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; align-items: center; }
+  button { font: 600 14px system-ui; padding: 10px 14px; border-radius: 10px; border: 1px solid #ffffff22; background: #23302f; color: var(--ink); min-height: 44px; }
+  button.primary { background: var(--accent); color: #1a0f05; border: 0; }
+  button[aria-pressed="true"] { border-color: var(--cyan); color: var(--cyan); }
+  button:disabled { opacity: .45; }
+  [hidden] { display: none !important; }
+  @media (max-width: 520px) { .hud p { display: none; } .beat { top: 46px; } button { padding: 9px 11px; font-size: 13px; } }
+  #loader { position: fixed; inset: 0; display: grid; place-items: center; color: var(--muted); }
+</style>
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+} }
+</script>
+</head>
+<body>
+<div class="hud"><h1>Colony rover</h1><p>Genesis Ark · six-wheeled utility rover. Tap the rover (or Drive / Brake): it pulls away with a little rock, rides the bumps on its rocker-bogie, brakes into a stop; Unload tips the bed, Spin round turns it on the spot.</p></div>
+<div class="beat" id="beat"></div>
+<div id="loader">Loading…</div>
+<div class="tray">
+  <button id="drive" class="primary" type="button">Drive</button>
+  <button id="unload" type="button">Unload</button>
+  <button id="turn" type="button">Spin round</button>
+  <button id="night" type="button" aria-pressed="false">Night</button>
+  <button id="dust" type="button" aria-pressed="false">Desert</button>
+  <button id="reduced" type="button" aria-pressed="false">Reduced motion</button>
+  <button id="paint" type="button" aria-pressed="true" hidden>Scan paint</button>
+</div>
+<script type="module">
+import * as THREE from "three";
+import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
+import { EffectComposer } from "three/addons/postprocessing/EffectComposer.js";
+import { RenderPass } from "three/addons/postprocessing/RenderPass.js";
+import { UnrealBloomPass } from "three/addons/postprocessing/UnrealBloomPass.js";
+import { ShaderPass } from "three/addons/postprocessing/ShaderPass.js";
+import { OutputPass } from "three/addons/postprocessing/OutputPass.js";
+
+const $ = (id) => document.getElementById(id);
+const isPhone = matchMedia("(max-width: 700px)").matches;
+const TAU = Math.PI * 2;
+
+// ================= RoverTimeline (scripts/runtime/visual/rover_timeline.gd)
+const TL = { U_GATE_A: 250, U_GATE_B: 700, U_LIFT_A: 450, U_LIFT_B: 1800, U_SLIDE_A: 1000, U_DROP_A: 2900, U_SEAT: 3900, U_BACK_A: 3980,
+  U_GATE_C: 4100, U_LATCH: 4500, U_END: 5200, BED_MAX: 0.40, GATE_MAX: 1.62, CRATE_STAGGER: 120, CRATE_SLIDE: [0.16, 0.12, 0.2, 0.1],
+  T_STEER_B: 550, T_YAW_A: 700, T_YAW_B: 3900, T_UNSTEER_A: 3950, T_UNSTEER_B: 4450, T_END: 4700, DEPART_MS: 380 };
+const clamp = (x, a, b) => Math.min(b, Math.max(a, x));
+const k = (t, a, b) => clamp((t - a) / (b - a), 0, 1);
+const bump = (t, a, b) => (t < a || t > b ? 0 : Math.sin(Math.PI * (t - a) / (b - a)));
+const easeIO = (x) => x * x * (3 - 2 * x);
+const smoother = (x) => x * x * x * (x * (x * 6 - 15) + 10);
+const easeBack = (x, o) => { const c = 1.70158 * o / 0.1, u = x - 1; return 1 + (c + 1) * u * u * u + c * u * u; };
+const lerp = (a, b, x) => a + (b - a) * x;
+
+function unloadPose(t, red) {
+  let bed = 0, gate = 0, jolt = 0, hop = 0;
+  if (!red) bed -= 0.012 * bump(t, 0, 420);
+  if (t >= TL.U_LIFT_A && t < TL.U_DROP_A) {
+    const x = k(t, TL.U_LIFT_A, TL.U_LIFT_B);
+    bed += TL.BED_MAX * (red ? easeIO(x) : easeBack(x, 0.03));
+    if (!red) bed += 0.004 * Math.sin(t * 0.07) * bump(t, TL.U_LIFT_A, TL.U_LIFT_A + 500);
+  } else if (t >= TL.U_DROP_A && t < TL.U_SEAT) {
+    const x = k(t, TL.U_DROP_A, TL.U_SEAT);
+    bed = TL.BED_MAX * (1 - (red ? easeIO(x) : Math.pow(x, 2.4)));
+  } else if (t >= TL.U_SEAT && !red) {
+    const u = t - TL.U_SEAT;
+    bed = 0.012 * Math.exp(-u / 70) * Math.abs(Math.sin(Math.PI * u / 90));
+    jolt = 0.025 * Math.exp(-u / 110) * Math.cos(TAU * u / 240) * k(u, 0, 30);
+    hop = 0.015 * Math.exp(-u / 60) * Math.abs(Math.sin(Math.PI * u / 120));
+  }
+  if (t >= TL.U_GATE_A && t < TL.U_GATE_C) {
+    const x = k(t, TL.U_GATE_A, TL.U_GATE_B);
+    gate = TL.GATE_MAX * (red ? easeIO(x) : easeBack(x, 0.06));
+    if (!red && t > TL.U_GATE_B) { const u = t - TL.U_GATE_B; gate += 0.05 * Math.exp(-u / 150) * Math.sin(TAU * u / 320); }
+  } else if (t >= TL.U_GATE_C && t < TL.U_LATCH) {
+    const x = k(t, TL.U_GATE_C, TL.U_LATCH);
+    gate = TL.GATE_MAX * (1 - (red ? easeIO(x) : Math.pow(x, 2.8)));
+  } else if (t >= TL.U_LATCH && !red) {
+    const u = t - TL.U_LATCH;
+    gate = 0.035 * Math.exp(-u / 60) * Math.abs(Math.sin(Math.PI * u / 55));
+  }
+  const crates = [];
+  for (let i = 0; i < 4; i++) {
+    const slide = TL.CRATE_SLIDE[i], a = TL.U_SLIDE_A + TL.CRATE_STAGGER * i;
+    let off = 0;
+    if (t >= a && t < TL.U_BACK_A + 100 * i) {
+      const x = k(t, a, a + 450);
+      off = slide * (red ? easeIO(x) : Math.pow(x, 2));
+      if (!red && t > a + 450) { const u = t - a - 450; off -= slide * 0.12 * Math.exp(-u / 80) * Math.abs(Math.sin(Math.PI * u / 110)); }
+    } else if (t >= TL.U_BACK_A + 100 * i) {
+      const x = k(t, TL.U_BACK_A + 100 * i, TL.U_BACK_A + 100 * i + 380);
+      off = slide * (1 - (red ? easeIO(x) : easeBack(x, 0.05)));
+    }
+    crates.push(off);
+  }
+  const beacon = t < TL.U_END - 300 ? (0.5 + 0.5 * Math.sin(t * TAU * 2.2 / 1000)) * k(t, 0, 120) : 0;
+  return { bed, gate, crates, hop, jolt, beacon };
+}
+function turnPose(t, red) {
+  let steer;
+  if (t < TL.T_UNSTEER_A) { const x = k(t, 0, TL.T_STEER_B); steer = red ? easeIO(x) : easeBack(x, 0.06); }
+  else { const x = k(t, TL.T_UNSTEER_A, TL.T_UNSTEER_B); steer = 1 - (red ? easeIO(x) : easeBack(x, 0.06)); }
+  const x2 = k(t, TL.T_YAW_A, TL.T_YAW_B);
+  let yaw = Math.PI * smoother(x2);
+  const rate = Math.PI * 30 * x2 * x2 * (x2 * (x2 - 2) + 1) / ((TL.T_YAW_B - TL.T_YAW_A) / 1000);
+  if (!red) {
+    yaw -= 0.03 * bump(t, 420, 820);
+    if (t > TL.T_YAW_B) { const u = t - TL.T_YAW_B; yaw += 0.018 * Math.exp(-u / 180) * Math.sin(TAU * u / 480); }
+  }
+  const beacon = (0.5 + 0.5 * Math.sin(t * TAU * 2.2 / 1000)) * (1 - k(t, TL.T_END - 300, TL.T_END));
+  return { steer, yaw, rate, beacon };
+}
+const departDip = (t, red) => (red ? 0 : 0.009 * bump(t, 0, TL.DEPART_MS));
+function springStep(s, target, hz, zeta, dt) {
+  const w = TAU * hz;
+  s.v += (-w * w * (s.x - target) - 2 * zeta * w * s.v) * dt;
+  s.x += s.v * dt;
+}
+
+// ================= ColonyRover / ColonyRovers constants
+const RV = { WHEEL_R: 0.445, TRACK: 1.045, WZ: [1.456, -0.37, -1.54], Z0: -0.37, PIVOT_X: 0.7, ROCKER_Y: 0.74, ROCKER_Z: 0.30,
+  BOGIE_Y: 0.60, BOGIE_Z: -0.955, BODY_PIVOT: new THREE.Vector3(0, 0.95, -0.2), STEER_PIVOT_F: 1.0757, STEER_PIVOT_R: 0.8418 };
+const DRV = { A_MAX: 1.3, A_BRAKE: 1.15, A_HARD: 3.2, JERK: 3.0, A_LAT: 0.8, CRUISE: 4.2 };
+function throttle(v, a, target, stopD, hard, dt) {
+  let aCmd = clamp((target - v) * 1.7, -(hard ? DRV.A_HARD : DRV.A_BRAKE * 1.4), DRV.A_MAX);
+  if (Number.isFinite(stopD) && v > 0.05) {
+    const need = v * v / (2 * Math.max(stopD - v * 0.06, 0.02));
+    if (need > DRV.A_BRAKE * 0.85) aCmd = Math.min(aCmd, -Math.min(need, DRV.A_HARD));
+  }
+  a += clamp(aCmd - a, -DRV.JERK * dt * (hard ? 3 : 1.4), DRV.JERK * dt);
+  v = Math.max(v + a * dt, 0);
+  if (v <= 0 && a < 0) a = 0;
+  return [a, v];
+}
+
+// ================= renderer / scene
+const renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: "high-performance" });
+renderer.setPixelRatio(Math.min(devicePixelRatio, isPhone ? 1.6 : 2));
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.15;
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+document.body.prepend(renderer.domElement);
+const scene = new THREE.Scene();
+const SKY = { day: new THREE.Color("#9cc7d8"), night: new THREE.Color("#0b1424") };
+scene.background = SKY.day.clone();
+scene.fog = new THREE.Fog(SKY.day.clone(), 30, 110);
+const camera = new THREE.PerspectiveCamera(36, 1, 0.1, 300);
+const controls = new OrbitControls(camera, renderer.domElement);
+camera.position.set(7, 4.6, 8);            // direction only; resize() sets the distance
+controls.enableDamping = true;
+controls.minDistance = 4; controls.maxDistance = 60;
+controls.maxPolarAngle = Math.PI * 0.47;
+const hemi = new THREE.HemisphereLight("#d8ecff", "#55663f", 1.0);
+scene.add(hemi);
+const sun = new THREE.DirectionalLight("#fff0d8", 2.6);
+sun.castShadow = true; sun.shadow.mapSize.set(1024, 1024); sun.shadow.bias = -0.0006;
+Object.assign(sun.shadow.camera, { left: -7, right: 7, top: 7, bottom: -7, near: 1, far: 40 });
+scene.add(sun, sun.target);
+
+// ================= the stage: a looped dirt track with ruts and two bumps on a meadow
+const TRACK_A = 17, TRACK_B = 9;
+function groundH(x, z) {
+  let h = 0.05 * Math.sin(x * 0.31) * Math.cos(z * 0.27) + 0.03 * Math.sin(x * 1.3 + z * 0.7);
+  for (const [bx, bz, r, hh] of [[TRACK_A, 0, 1.6, 0.22], [-TRACK_A * 0.55, TRACK_B * 0.83, 1.3, 0.16], [0, -TRACK_B, 2.2, 0.12]]) {
+    const d = Math.hypot(x - bx, z - bz); if (d < r) h += hh * 0.5 * (1 + Math.cos(Math.PI * d / r));
+  }
+  return h;
+}
+const GROUND_COL = { grass: new THREE.Color("#6f9a45"), sand: new THREE.Color("#c99b62") };
+const ROAD_COL = { grass: new THREE.Color("#8f7a55"), sand: new THREE.Color("#9a7c55") };
+const groundGeo = new THREE.PlaneGeometry(140, 140, 140, 140);
+groundGeo.rotateX(-Math.PI / 2);
+const roadMask = new Float32Array(groundGeo.attributes.position.count);
+{
+  const P = groundGeo.attributes.position;
+  for (let i = 0; i < P.count; i++) {
+    const x = P.getX(i), z = P.getZ(i);
+    P.setY(i, groundH(x, z));
+    const e = Math.abs(Math.hypot(x / TRACK_A, z / TRACK_B) - 1) * Math.min(TRACK_A, TRACK_B);
+    roadMask[i] = 1 - k(e, 1.6, 3.0);
+  }
+  groundGeo.computeVertexNormals();
+  groundGeo.setAttribute("color", new THREE.Float32BufferAttribute(new Float32Array(P.count * 3), 3));
+}
+function paintGround(desert) {
+  const C = groundGeo.attributes.color, g = desert ? GROUND_COL.sand : GROUND_COL.grass, r = desert ? ROAD_COL.sand : ROAD_COL.grass, c = new THREE.Color();
+  for (let i = 0; i < C.count; i++) { c.copy(g).lerp(r, roadMask[i]); C.setXYZ(i, c.r, c.g, c.b); }
+  C.needsUpdate = true;
+}
+paintGround(false);
+const ground = new THREE.Mesh(groundGeo, new THREE.MeshStandardMaterial({ vertexColors: true, roughness: 0.95, flatShading: true }));
+ground.receiveShadow = true; scene.add(ground);
+{ // crates and rocks for scale
+  const rm = new THREE.MeshStandardMaterial({ color: "#7d7466", roughness: 0.9, flatShading: true });
+  [[-6, -2, 0.9], [7, 2.5, 1.2], [-3, 3.5, 0.6], [24, 6, 1.6], [-22, -7, 1.3]].forEach(([x, z, s]) => {
+    const r = new THREE.Mesh(new THREE.DodecahedronGeometry(s, 0), rm); r.position.set(x, groundH(x, z) + s * 0.35, z); r.rotation.set(x, z, 0.3);
+    r.castShadow = r.receiveShadow = true; scene.add(r);
+  });
+}
+// The track as an arc-length table (like ColonyRovers._route): points, tangents, curvature.
+const ROUTE = (() => {
+  const N = 2000, pts = [];
+  for (let i = 0; i <= N; i++) { const a = TAU * i / N; pts.push(new THREE.Vector2(Math.sin(a) * TRACK_A, Math.cos(a) * TRACK_B)); }
+  const cum = [0]; for (let i = 1; i <= N; i++) cum.push(cum[i - 1] + pts[i].distanceTo(pts[i - 1]));
+  const len = cum[N], STEP = 0.5, n = Math.floor(len / STEP), P = [], Tn = [], K = [];
+  let j = 1;
+  for (let i = 0; i < n; i++) { const s = i * STEP; while (cum[j] < s) j++; const f = (s - cum[j - 1]) / (cum[j] - cum[j - 1]); P.push(pts[j - 1].clone().lerp(pts[j], f)); }
+  for (let i = 0; i < n; i++) Tn.push(P[(i + 1) % n].clone().sub(P[(i - 1 + n) % n]).normalize());
+  for (let i = 0; i < n; i++) { const t0 = Tn[(i - 2 + n) % n], t1 = Tn[(i + 2) % n]; const ang = Math.atan2(t0.x * t1.y - t0.y * t1.x, t0.dot(t1)); K.push(ang / (STEP * 4)); }
+  return { P, T: Tn, K, len: n * STEP, n, STEP };
+})();
+function routeAt(s) {
+  s = ((s % ROUTE.len) + ROUTE.len) % ROUTE.len;
+  const f = s / ROUTE.STEP, i = Math.floor(f) % ROUTE.n, i2 = (i + 1) % ROUTE.n, fr = f - Math.floor(f);
+  return { p: ROUTE.P[i].clone().lerp(ROUTE.P[i2], fr), t: ROUTE.T[i].clone().lerp(ROUTE.T[i2], fr).normalize(), k: lerp(ROUTE.K[i], ROUTE.K[i2], fr) };
+}
+// Ruts along each wheel track (ColonyRovers: two sines and the odd pebble).
+const rut = (s, ph) => 0.012 * Math.sin(s * 2.3 + ph) + 0.007 * Math.sin(s * 5.9 + ph * 1.7) + 0.03 * Math.pow(Math.max(0, Math.sin(s * 0.61 + ph)), 24);
+
+// ================= rover material: one material, palette by class (rover.gdshader)
+const loadTex = (url, srgb) => new Promise((res) => new THREE.TextureLoader().load(url, (t) => {
+  t.flipY = false; t.colorSpace = srgb ? THREE.SRGBColorSpace : THREE.NoColorSpace; t.anisotropy = 8; res(t);
+}, undefined, () => res(null)));
+const U = { uBakeAlbedo: { value: null }, uBakeOrm: { value: null }, uPaint: { value: 0 }, uHead: { value: 0.25 }, uBrake: { value: 0.35 },
+  uBeacon: { value: 0 }, uStrip: { value: 1 }, uDirt: { value: 0 }, uDirtCol: { value: new THREE.Color("#c9a878") } };
+const PALETTE = `
+  vec3 pal(int c){ if(c==1) return vec3(0.95,0.5,0.1); if(c==2) return vec3(0.19,0.2,0.22); if(c==3) return vec3(0.62,0.64,0.67);
+    if(c==4) return vec3(0.1,0.1,0.11); if(c==5) return vec3(0.07,0.085,0.1); if(c==6) return vec3(0.12,0.32,0.36); if(c==7) return vec3(0.55,0.62,0.66);
+    if(c==8) return vec3(0.35,0.05,0.04); if(c==9) return vec3(0.5,0.3,0.05); if(c==10) return vec3(0.82,0.83,0.82); if(c==11) return vec3(0.93,0.5,0.12);
+    if(c==12) return vec3(0.19,0.2,0.22); return vec3(0.86,0.86,0.84); }
+  float palRough(int c){ if(c==1) return 0.5; if(c==2||c==12) return 0.55; if(c==3) return 0.35; if(c==4) return 0.92; if(c==5) return 0.12; if(c>=6&&c<=9) return 0.25; if(c==10) return 0.65; if(c==11) return 0.6; return 0.55; }
+  float palMetal(int c){ if(c==2) return 0.15; if(c==3) return 0.55; if(c==5) return 0.3; return 0.0; }
+  float palPaint(int c){ if(c==0) return 0.85; if(c==1) return 0.6; if(c==2) return 0.5; if(c==3) return 0.3; if(c==10||c==11) return 0.4; if(c>=5&&c<=9) return 0.0; return 1.0; }
+  float palWear(int c){ if(c==4) return 0.1; if(c>=5&&c<=9) return 0.0; return 0.35; }`;
+function roverMat(name) {
+  const m = new THREE.MeshStandardMaterial({ color: "#ffffff", roughness: 0.55, metalness: 0.0 });
+  m.name = name;
+  m.onBeforeCompile = (sh) => {
+    Object.assign(sh.uniforms, U);
+    sh.vertexShader = sh.vertexShader
+      .replace("#include <common>", "#include <common>\nattribute vec4 color;\nvarying vec4 vMask; varying vec2 vBakeUv; varying vec2 vUv0; varying float vLy;\n#ifndef USE_UV1\nattribute vec2 uv1;\n#endif")
+      .replace("#include <uv_vertex>", "#include <uv_vertex>\nvMask = color; vBakeUv = uv1; vUv0 = uv; vLy = position.y;");
+    sh.fragmentShader = sh.fragmentShader
+      .replace("#include <common>", `#include <common>
+        uniform sampler2D uBakeAlbedo, uBakeOrm; uniform float uPaint, uHead, uBrake, uBeacon, uStrip, uDirt; uniform vec3 uDirtCol;
+        varying vec4 vMask; varying vec2 vBakeUv; varying vec2 vUv0; varying float vLy; ${PALETTE}
+        float hash12(vec2 p){ vec3 p3 = fract(vec3(p.xyx) * 0.1031); p3 += dot(p3, p3.yzx + 33.33); return fract((p3.x + p3.y) * p3.z); }`)
+      .replace("#include <map_fragment>", `#include <map_fragment>
+        int cls = int(floor(vMask.b * 16.0 + 0.01));
+        vec3 col = pal(cls);
+        if (cls == 12) col = mix(col, vec3(0.92, 0.66, 0.12), step(0.5, fract((vUv0.x + vUv0.y) * 6.0)));
+        col = pow(col, vec3(2.2));
+        col *= 1.0 + (vMask.r - 0.5) * 0.12;
+        float nz = hash12(floor(vUv0 * 150.0)); col *= 0.97 + 0.06 * nz;
+        float wear = vMask.g * palWear(cls); col = mix(col, col * 1.18 + 0.04, wear);
+        vec4 bA = texture2D(uBakeAlbedo, vBakeUv);
+        float lc = dot(col, vec3(0.2126, 0.7152, 0.0722)), lb = dot(bA.rgb, vec3(0.2126, 0.7152, 0.0722));
+        float agree = 1.0 - smoothstep(0.12, 0.3, abs(sqrt(lb) - sqrt(lc)));
+        col = mix(col, bA.rgb, smoothstep(0.55, 0.95, bA.a) * uPaint * palPaint(cls) * agree);
+        float dd = uDirt * (1.0 - smoothstep(0.35, 1.05, vLy)) * (0.7 + 0.3 * nz) * step(0.01, palPaint(cls));
+        col = mix(col, uDirtCol, clamp(dd, 0.0, 0.75));
+        diffuseColor.rgb = col;`)
+      .replace("#include <roughnessmap_fragment>", `#include <roughnessmap_fragment>
+        roughnessFactor = mix(palRough(cls), min(1.0, palRough(cls) + 0.15), wear);`)
+      .replace("#include <metalnessmap_fragment>", "#include <metalnessmap_fragment>\nmetalnessFactor = palMetal(cls);")
+      .replace("#include <emissivemap_fragment>", `#include <emissivemap_fragment>
+        if (cls == 6) totalEmissiveRadiance = vec3(0.2, 0.86, 1.0) * 1.6 * uStrip;
+        else if (cls == 7) totalEmissiveRadiance = vec3(0.82, 0.95, 1.0) * 2.4 * uHead;
+        else if (cls == 8) totalEmissiveRadiance = vec3(1.0, 0.12, 0.06) * 2.2 * uBrake;
+        else if (cls == 9) totalEmissiveRadiance = vec3(1.0, 0.55, 0.08) * 3.0 * uBeacon;`);
+  };
+  m.customProgramCacheKey = () => "rover-" + name;
+  return m;
+}
+const MAT = roverMat("rover");
+
+// ================= post
+const composer = new EffectComposer(renderer);
+composer.addPass(new RenderPass(scene, camera));
+composer.addPass(new ShaderPass({ uniforms: { tDiffuse: { value: null } },
+  vertexShader: "varying vec2 vUv; void main(){ vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }",
+  fragmentShader: "uniform sampler2D tDiffuse; varying vec2 vUv; void main(){ vec4 c = texture2D(tDiffuse, vUv); gl_FragColor = vec4(min(c.rgb, vec3(3.0)), c.a); }" }));
+const bloom = new UnrealBloomPass(new THREE.Vector2(256, 256), 0.35, 0.5, 0.95);
+composer.addPass(bloom);
+composer.addPass(new OutputPass());
+
+// ================= load
+async function loadGlbTxt(url) {
+  const r = await fetch(url);
+  if (!r.ok) throw new Error(url);
+  const bin = Uint8Array.from(atob((await r.text()).trim()), (c) => c.charCodeAt(0));
+  return new GLTFLoader().parseAsync(bin.buffer, "");
+}
+let gltf, baked = false;
+try {
+  const [g, a, o] = await Promise.all([loadGlbTxt("rover_baked.glb.txt"), loadTex("rover_baked_albedo.webp", true), loadTex("rover_baked_orm.webp", false)]);
+  if (!a || !o) throw new Error("textures");
+  gltf = g; U.uBakeAlbedo.value = a; U.uBakeOrm.value = o; U.uPaint.value = 1; baked = true;
+} catch (e) {
+  console.info("procedural look (no local bake):", e && e.message);
+  gltf = await loadGlbTxt("rover.glb.txt");
+  const blank = new THREE.DataTexture(new Uint8Array([0, 0, 0, 0]), 1, 1); blank.needsUpdate = true;
+  U.uBakeAlbedo.value = blank; U.uBakeOrm.value = blank;
+}
+$("paint").hidden = !baked;
+const rover = new THREE.Group();
+const asset = gltf.scene;
+asset.traverse((o) => {
+  if (!o.isMesh) return;
+  o.material = MAT;
+  if (!o.geometry.attributes.uv1) o.geometry.setAttribute("uv1", o.geometry.attributes.uv);
+  o.castShadow = !/^Antenna|Rocker|Bogie/.test(o.name); o.receiveShadow = true;
+});
+rover.add(asset);
+scene.add(rover);
+const N = (n) => asset.getObjectByName(n);
+const chassis = N("Chassis"), body = N("Body"), bedN = N("Bed"), gateN = N("Gate"), antLo = N("Antenna"), antHi = N("AntennaTip");
+const rockers = [N("RockerL"), N("RockerR")], bogies = [N("BogieL"), N("BogieR")];
+const steers = [N("SteerFL"), N("SteerRL"), N("SteerFR"), N("SteerRR")];
+const wheels = ["WheelL0", "WheelL1", "WheelL2", "WheelR0", "WheelR1", "WheelR2"].map((n) => N(n).parent);
+const crates = [0, 1, 2, 3].map((i) => N("Crate" + i));
+const crateRest = crates.map((c) => c.position.clone());
+$("loader").hidden = true;
+
+// lamps (never added/removed later: no recompiles)
+const head = new THREE.SpotLight("#d9f0ff", 0, 22, 0.66, 0.6, 1.4);
+head.position.set(0, 1.0, 2.35 - RV.Z0); head.castShadow = false;
+const headTarget = new THREE.Object3D(); headTarget.position.set(0, -1.2, 9);
+rover.add(head, headTarget); head.target = headTarget;
+
+// dust: CPU particles in world space from the wheels (Godot: GPUParticles3D, same feel)
+const DUSTN = 64;
+const dustG = new THREE.BufferGeometry();
+dustG.setAttribute("position", new THREE.Float32BufferAttribute(new Float32Array(DUSTN * 3), 3));
+dustG.setAttribute("alpha", new THREE.Float32BufferAttribute(new Float32Array(DUSTN), 1));
+dustG.setAttribute("size", new THREE.Float32BufferAttribute(new Float32Array(DUSTN), 1));
+const dustM = new THREE.ShaderMaterial({ uniforms: { color: { value: new THREE.Color("#c9a878") }, pxScale: { value: 600 } }, transparent: true, depthWrite: false,
+  vertexShader: "uniform float pxScale; attribute float alpha; attribute float size; varying float vA; void main(){ vA = alpha; vec4 mv = modelViewMatrix * vec4(position, 1.0); gl_Position = projectionMatrix * mv; gl_PointSize = size * pxScale / -mv.z; }",
+  fragmentShader: "uniform vec3 color; varying float vA; void main(){ float d = length(gl_PointCoord - 0.5) * 2.0; gl_FragColor = vec4(color, vA * smoothstep(1.0, 0.2, d)); }" });
+const dustPts = new THREE.Points(dustG, dustM); dustPts.frustumCulled = false; scene.add(dustPts);
+const dust = Array.from({ length: DUSTN }, () => ({ p: new THREE.Vector3(), v: new THREE.Vector3(), age: 9, life: 1.7 }));
+let dustNext = 0, dustAcc = 0;
+
+// ================= state (mirror of ColonyRovers rv + ColonyRover dynamics)
+const st = { s: 0, v: 0, a: 0, mode: "stop", target: 0, dep: -1, still: 0, yaw: 0, turnT: -1, turnYaw0: 0, turnDir: 1, unloadT: -1,
+  pitch: { x: 0, v: 0 }, roll: { x: 0, v: 0 }, heave: { x: 0, v: 0 }, yawLag: { x: 0, v: 0 }, antX: { x: 0, v: 0 }, antY: { x: 0, v: 0 }, cargo: { x: 0, v: 0 },
+  spin: [0, 0, 0, 0, 0, 0], steerF: 0, steerR: 0, turnSteer: 0, turnRate: 0, lastYawRate: 0, brakeGlow: 0.35, beacon: 0, beaconBeat: -1, acc: 0, simLeft: 0 };
+let dirSign = 1;  // +1 drives the loop forwards, -1 backwards (after a spin round)
+let reduced = matchMedia("(prefers-reduced-motion: reduce)").matches, night = false, desert = false;
+$("reduced").setAttribute("aria-pressed", String(reduced));
+const G = [0, 0, 0, 0, 0, 0];
+const _q = new THREE.Quaternion(), _e = new THREE.Euler(0, 0, 0, "YXZ"), _m = new THREE.Matrix4(), _m2 = new THREE.Matrix4();
+const rotX = (y, z, a) => [y * Math.cos(a) - z * Math.sin(a), y * Math.sin(a) + z * Math.cos(a)];
+
+function stepSim(dt) {
+  // driving (Drive / Brake / Unload / Spin round), the throttle and the depart beat
+  let target = st.mode === "drive" ? DRV.CRUISE : 0;
+  if (st.mode === "drive") {
+    for (let i = 0; i < 24; i += 2) { const kk = Math.abs(routeAt(st.s + dirSign * i * ROUTE.STEP).k); if (kk > 0.001) target = Math.min(target, Math.max(1.2, Math.sqrt(DRV.A_LAT / kk)) + i * ROUTE.STEP * 0.12); }
+  }
+  if (st.v < 0.05) st.still += dt; else if (st.v > 0.3) st.still = 0;
+  if (st.dep >= 0) { st.dep += dt * 1000; if (st.dep > TL.DEPART_MS) st.dep = -1; }
+  if (st.dep < 0 && st.still >= 0.4 && target > 0.4) { st.dep = 0; st.still = -60; }
+  if (st.dep >= 0 && st.dep < TL.DEPART_MS * (reduced ? 0 : 0.75)) target = 0;
+  const stopD = st.mode === "drive" ? Infinity : st.v * st.v / (2 * DRV.A_BRAKE) + 0.3;
+  [st.a, st.v] = throttle(st.v, st.a, target, stopD, false, dt);
+  st.s += dirSign * st.v * dt;
+  // beats
+  if (st.unloadT >= 0) { st.unloadT += dt * 1000; if (st.unloadT >= TL.U_END) st.unloadT = -1; }
+  let yawRate;
+  const r = routeAt(st.s);
+  if (st.turnT >= 0) {
+    st.turnT += dt * 1000;
+    const p = turnPose(st.turnT, reduced);
+    st.turnSteer = st.turnT < TL.T_END ? p.steer : 0; st.turnRate = st.turnT < TL.T_END ? p.rate * st.turnDir : 0;
+    st.beaconBeat = st.turnT < TL.T_END ? p.beacon : -1;
+    st.yaw = st.turnYaw0 + p.yaw * st.turnDir; yawRate = st.turnRate;
+    if (st.turnT >= TL.T_END) { st.turnT = -1; st.turnSteer = 0; st.turnRate = 0; dirSign = -dirSign; st.yaw = st.turnYaw0 + Math.PI * st.turnDir; }
+  } else {
+    const t = r.t.clone().multiplyScalar(dirSign);
+    st.yaw = Math.atan2(t.x, t.y); yawRate = st.v * r.k * dirSign;
+  }
+  if (st.unloadT >= 0) st.beaconBeat = unloadPose(st.unloadT, reduced).beacon;
+  return { curvature: st.turnT >= 0 ? 0 : r.k * dirSign, yawRate };
+}
+
+function stepRover(dt, curvature, yawRate) {
+  // ColonyRover.drive(): steer, spin, dynamics (fixed 1/120 s), lamps
+  const yawAcc = (yawRate - st.lastYawRate) / Math.max(dt, 0.001); st.lastYawRate = yawRate;
+  const lat = st.v * yawRate;
+  const sf = Math.atan(curvature * (RV.WZ[0] - RV.Z0)), sr = Math.atan(curvature * (RV.WZ[2] - RV.Z0));
+  st.steerF = st.turnSteer <= 0 ? sf : lerp(sf, -RV.STEER_PIVOT_F, st.turnSteer);
+  st.steerR = st.turnSteer <= 0 ? sr : lerp(sr, RV.STEER_PIVOT_R, st.turnSteer);
+  for (let i = 0; i < 6; i++) {
+    const side = i < 3 ? 1 : -1, wz = RV.WZ[i % 3] - RV.Z0, wx = side * RV.TRACK;
+    let vw = st.v;
+    if (Math.abs(curvature) > 0.0005) { const rho = 1 / curvature; vw = st.v * Math.hypot(rho - wx, wz) / Math.abs(rho); }
+    vw += -st.turnRate * Math.hypot(wx, wz) * side;
+    st.spin[i] = (st.spin[i] + vw * dt / RV.WHEEL_R) % TAU;
+  }
+  const h = 1 / 120, amp = reduced ? 0.45 : 1, zb = reduced ? 1 : 0.42;
+  const dip = st.dep >= 0 ? departDip(st.dep, reduced) : 0;
+  const jolt = st.unloadT >= 0 ? unloadPose(st.unloadT, reduced).jolt : 0;
+  st.simLeft += dt;
+  while (st.simLeft >= h) {
+    st.simLeft -= h;
+    springStep(st.pitch, clamp(-st.a * 0.016, -0.045, 0.045) * amp + dip, 1.25, zb, h);
+    springStep(st.roll, clamp(lat * 0.012, -0.03, 0.03) * amp, 1.1, zb, h);
+    springStep(st.heave, -jolt, 2.2, reduced ? 1 : 0.35, h);
+    springStep(st.yawLag, clamp(-yawAcc * 0.012, -0.03, 0.03) * amp, 0.9, zb, h);
+    const atx = clamp(-st.a * 0.06, -0.2, 0.2) * amp + st.pitch.x * 2, aty = clamp(lat * 0.05, -0.2, 0.2) * amp;
+    springStep(st.antX, atx, 2.4, reduced ? 1 : 0.16, h);
+    springStep(st.antY, aty, 2.4, reduced ? 1 : 0.16, h);
+    springStep(st.cargo, clamp(st.a * 0.006, -0.012, 0.012) * amp, 1.6, reduced ? 1 : 0.3, h);
+  }
+  const braking = (st.a < -0.25 && st.v > 0.05) || st.v < 0.05;
+  st.brakeGlow = lerp(st.brakeGlow, braking ? 1.6 : 0.35, clamp(dt * 10, 0, 1));
+  if (st.beaconBeat >= 0) { st.beacon = st.beaconBeat; st.beaconBeat = -1; } else st.beacon = Math.max(st.beacon - dt * 1.5, 0);
+}
+
+function applyPose() {
+  // place the root on the track (or spinning on the spot)
+  const r = routeAt(st.s);
+  rover.position.set(r.p.x, 0, r.p.y);
+  rover.rotation.set(0, st.yaw, 0);
+  const cy = Math.cos(st.yaw), sy = Math.sin(st.yaw);
+  for (let w = 0; w < 6; w++) {
+    const side = w < 3 ? 1 : -1, ox = side * RV.TRACK, oz = RV.WZ[w % 3] - RV.Z0;
+    const wx = r.p.x + ox * cy + oz * sy, wz = r.p.y - ox * sy + oz * cy;
+    G[w] = groundH(wx, wz) + (st.turnT >= 0 || reduced ? 0 : rut(st.s + dirSign * oz, side > 0 ? 0.7 : 2.1));
+  }
+  const yc = groundH(r.p.x, r.p.y);
+  rover.position.y = yc;
+  for (let w = 0; w < 6; w++) G[w] -= yc;
+  // rocker-bogie (ColonyRover._apply)
+  const aR = [0, 0], aB = [0, 0], py = [0, 0];
+  for (let s = 0; s < 2; s++) {
+    const yf = G[s * 3] + RV.WHEEL_R, ym = G[s * 3 + 1] + RV.WHEEL_R, yr = G[s * 3 + 2] + RV.WHEEL_R;
+    const zf = RV.WZ[0], zm = RV.WZ[1], zr = RV.WZ[2];
+    const ab = Math.asin(clamp((yr - ym) / (zm - zr), -0.6, 0.6));
+    const bm = rotX(RV.BOGIE_Y - RV.WHEEL_R, RV.BOGIE_Z - zm, ab);
+    const by = ym + bm[0], bz = zm + bm[1];
+    const rest = [RV.BOGIE_Y - RV.WHEEL_R, RV.BOGIE_Z - zf], want = [by - yf, bz - zf];
+    const ar = Math.atan2(rest[0], rest[1]) - Math.atan2(want[0], want[1]);
+    const fp = rotX(RV.ROCKER_Y - RV.WHEEL_R, RV.ROCKER_Z - zf, ar);
+    aR[s] = ar; aB[s] = ab; py[s] = yf + fp[0];
+  }
+  const cPitch = (aR[0] + aR[1]) * 0.5, cRoll = Math.asin(clamp((py[0] - py[1]) / (2 * RV.PIVOT_X), -0.5, 0.5)), cHeave = (py[0] + py[1]) * 0.5 - RV.ROCKER_Y;
+  const piv = new THREE.Vector3(0, RV.ROCKER_Y, RV.ROCKER_Z - RV.Z0);
+  _e.set(cPitch, 0, cRoll, "YXZ"); _q.setFromEuler(_e);
+  _m.makeTranslation(piv.x, piv.y + cHeave, piv.z).multiply(_m2.makeRotationFromQuaternion(_q)).multiply(new THREE.Matrix4().makeTranslation(-piv.x, -piv.y, -piv.z - RV.Z0));
+  _m.decompose(chassis.position, chassis.quaternion, chassis.scale);
+  for (let s = 0; s < 2; s++) { rockers[s].rotation.set(aR[s] - cPitch, 0, 0); bogies[s].rotation.set(aB[s] - aR[s], 0, 0); }
+  const pt = st.turnSteer > 0;
+  steers[0].rotation.y = st.steerF; steers[2].rotation.y = pt ? -st.steerF : st.steerF;
+  steers[1].rotation.y = st.steerR; steers[3].rotation.y = pt ? -st.steerR : st.steerR;
+  for (let i = 0; i < 6; i++) wheels[i].rotation.x = st.spin[i];
+  // sprung body, bed, gate, crates, antenna
+  const up = st.unloadT >= 0 ? unloadPose(st.unloadT, reduced) : null;
+  _e.set(st.pitch.x, st.yawLag.x, st.roll.x, "YXZ"); _q.setFromEuler(_e);
+  const BP = RV.BODY_PIVOT;
+  _m.makeTranslation(BP.x, BP.y + st.heave.x, BP.z).multiply(_m2.makeRotationFromQuaternion(_q)).multiply(new THREE.Matrix4().makeTranslation(-BP.x, -BP.y, -BP.z));
+  _m.decompose(body.position, body.quaternion, body.scale);
+  bedN.rotation.x = -(up ? up.bed : 0);
+  gateN.rotation.x = -(up ? up.gate : 0);
+  for (let i = 0; i < 4; i++) {
+    const off = st.cargo.x * (0.6 + 0.25 * i) + (up ? up.crates[i] : 0);
+    crates[i].position.set(crateRest[i].x, crateRest[i].y + (up ? up.hop : 0) * (1 + 0.4 * i), crateRest[i].z - off);
+  }
+  antLo.rotation.set(st.antX.x, 0, st.antY.x); antHi.rotation.set(st.antX.x * 1.6, 0, st.antY.x * 1.6);
+  U.uHead.value = night ? 1.2 : 0.25; U.uBrake.value = st.brakeGlow; U.uBeacon.value = st.beacon;
+  head.intensity = night ? 28 : 0;
+}
+
+function stepDust(dt) {
+  const moving = st.v + Math.abs(st.turnRate) * 1.5;
+  if (desert && moving > 0.4) {
+    dustAcc += dt * 26 * clamp(moving / 4, 0.15, 1);
+    while (dustAcc >= 1) {
+      dustAcc -= 1;
+      const d = dust[dustNext]; dustNext = (dustNext + 1) % DUSTN;
+      const w = wheels[[1, 2, 4, 5, 0, 3][Math.floor(Math.random() * 6)]];
+      w.getWorldPosition(d.p); d.p.y -= RV.WHEEL_R * 0.8;
+      d.v.set((Math.random() - 0.5) * 0.6, 0.4 + Math.random() * 0.7, (Math.random() - 0.5) * 0.6); d.age = 0; d.life = 1.4 + Math.random() * 0.6;
+    }
+  }
+  const P = dustG.attributes.position, A = dustG.attributes.alpha, S = dustG.attributes.size;
+  for (let i = 0; i < DUSTN; i++) {
+    const d = dust[i]; d.age += dt;
+    if (d.age < d.life) { d.v.multiplyScalar(Math.exp(-dt * 0.9)); d.v.y -= 0.15 * dt; d.p.addScaledVector(d.v, dt); }
+    const u = d.age / d.life;
+    P.setXYZ(i, d.p.x, d.p.y, d.p.z);
+    A.setX(i, u < 1 ? 0.7 * Math.min(1, u / 0.12) * (1 - u) : 0);
+    S.setX(i, 0.5 + 1.6 * Math.min(u, 1));
+  }
+  P.needsUpdate = A.needsUpdate = S.needsUpdate = true;
+}
+
+// ================= controls
+function setMode(m) {
+  st.mode = m;
+  $("drive").textContent = m === "drive" ? "Brake" : "Drive";
+  beatText();
+}
+function drive() { if (st.turnT >= 0 || st.unloadT >= 0) return; setMode(st.mode === "drive" ? "stop" : "drive"); }
+let pending = null;   // "unload" | "turn": waits until the rover stands
+function unload() { if (st.turnT >= 0 || st.unloadT >= 0) return; setMode("stop"); pending = "unload"; }
+function spinRound() { if (st.turnT >= 0 || st.unloadT >= 0) return; setMode("stop"); pending = "turn"; }
+$("drive").addEventListener("click", drive);
+$("unload").addEventListener("click", unload);
+$("turn").addEventListener("click", spinRound);
+$("reduced").addEventListener("click", () => { reduced = !reduced; $("reduced").setAttribute("aria-pressed", String(reduced)); });
+$("night").addEventListener("click", () => { night = !night; $("night").setAttribute("aria-pressed", String(night)); applyWorld(); });
+$("dust").addEventListener("click", () => { desert = !desert; $("dust").setAttribute("aria-pressed", String(desert)); applyWorld(); });
+$("paint").addEventListener("click", () => { U.uPaint.value = U.uPaint.value > 0.5 ? 0 : 1; $("paint").setAttribute("aria-pressed", String(U.uPaint.value > 0.5)); });
+function applyWorld() {
+  const bg = night ? SKY.night : SKY.day;
+  scene.background.copy(bg); scene.fog.color.copy(bg);
+  hemi.intensity = night ? 0.18 : 1.0; sun.intensity = night ? 0.25 : 2.6;
+  sun.color.set(night ? "#7f9cff" : "#fff0d8");
+  paintGround(desert);
+  U.uDirt.value = desert ? 0.55 : 0;
+  dustM.uniforms.color.value.set("#c9a878").multiplyScalar(night ? 0.22 : 1);
+}
+const ray = new THREE.Raycaster(), ndc = new THREE.Vector2();
+let downAt = null;
+renderer.domElement.addEventListener("pointerdown", (e) => { downAt = [e.clientX, e.clientY]; });
+renderer.domElement.addEventListener("pointerup", (e) => {
+  if (!downAt || Math.hypot(e.clientX - downAt[0], e.clientY - downAt[1]) > 6) return;
+  ndc.set(e.clientX / innerWidth * 2 - 1, -(e.clientY / innerHeight) * 2 + 1);
+  ray.setFromCamera(ndc, camera);
+  if (ray.intersectObject(rover, true).length) drive();
+});
+function beatText() {
+  let b = st.mode === "drive" ? (st.dep >= 0 ? "pull-away · body rocks forward first" : "driving · rocker-bogie on the ruts") : (st.v > 0.05 ? "braking · nose dips" : "standing");
+  if (st.unloadT >= 0) b = st.unloadT < TL.U_LIFT_A ? "unload · hiss, tailgate drops" : st.unloadT < TL.U_DROP_A ? "bed tips · crates shuffle back" : st.unloadT < TL.U_LATCH ? "bed drops · seats with a jolt" : "tailgate latches";
+  if (st.turnT >= 0) b = st.turnT < TL.T_YAW_A ? "wheels swivel · leans back" : st.turnT < TL.T_YAW_B ? "spinning on the spot" : "wheels straighten · settles";
+  $("beat").textContent = (reduced ? "reduced motion · " : "") + b + `  ·  ${st.v.toFixed(1)} m/s`;
+}
+
+// ================= performance / sizing
+function prewarm() {
+  head.intensity = 60; desert = true; stepDust(0.016); desert = false;
+  renderer.setRenderTarget(composer.readBuffer); renderer.compile(scene, camera); renderer.setRenderTarget(null);
+  composer.render();
+  head.intensity = 0;
+}
+const perf = { last: 0, acc: 0, n: 0, minRatio: 1 };
+function adaptQuality(now) {
+  if (perf.last) { const dt = now - perf.last; if (dt < 250) { perf.acc += dt; perf.n++; } }
+  perf.last = now;
+  if (perf.n >= 45) {
+    const pr = renderer.getPixelRatio();
+    if (perf.acc / perf.n > 28 && pr > perf.minRatio) { renderer.setPixelRatio(Math.max(perf.minRatio, pr - 0.25)); resize(false); }
+    perf.acc = 0; perf.n = 0;
+  }
+}
+const FIT_PULLBACK = 2.0;
+const DEFAULT_DIR = camera.position.clone().normalize();
+let fitPending = true;
+function resize(refit = true) {
+  const hidden = !(innerWidth > 0 && innerHeight > 0);
+  const w = Math.max(1, innerWidth), h = Math.max(1, innerHeight);
+  renderer.setSize(w, h);
+  composer.setPixelRatio(renderer.getPixelRatio());
+  composer.setSize(w, h);
+  camera.aspect = w / h;
+  const tray = document.querySelector(".tray").getBoundingClientRect().height;
+  camera.setViewOffset(w, h, 0, tray * 0.42, w, h);
+  camera.updateProjectionMatrix();
+  dustM.uniforms.pxScale.value = h * renderer.getPixelRatio() / (2 * Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)));
+  if (hidden) { fitPending = true; return; }
+  if (!refit && !fitPending) return;
+  fitPending = false;
+  const half = THREE.MathUtils.degToRad(camera.fov / 2);
+  const R = 3.4;   // the rover (4.5 m) plus room for its dust and the bumps
+  const fit = FIT_PULLBACK * 0.62 * Math.min(18, Math.max(R / Math.tan(half), (R * 1.15) / (Math.tan(half) * camera.aspect)));
+  const dir = camera.position.clone().sub(controls.target);
+  if (!Number.isFinite(dir.lengthSq()) || dir.lengthSq() < 1e-8) dir.copy(DEFAULT_DIR);
+  camera.position.copy(controls.target).add(dir.normalize().multiplyScalar(fit));
+}
+addEventListener("resize", () => resize(true));
+st.s = ROUTE.len * 0.1;
+stepSim(0); applyPose();
+controls.target.copy(rover.position).add(new THREE.Vector3(0, 1.1, 0));
+camera.position.copy(controls.target).add(DEFAULT_DIR);
+resize();
+prewarm();
+setMode("drive");   // it starts out driving (reduced motion included: just without the bounce)
+
+let last = -1;
+const _tgt = new THREE.Vector3();
+function frame(now) {
+  if (fitPending && innerWidth > 0 && innerHeight > 0) resize(true);   // first real layout after a hidden (0x0) load
+  adaptQuality(now);
+  const dt = last < 0 ? 1 / 60 : Math.min(0.1, (now - last) / 1000);
+  last = now;
+  if (pending && st.v < 0.05 && st.turnT < 0 && st.unloadT < 0) {
+    if (pending === "unload") st.unloadT = 0;
+    else { st.turnT = 0; st.turnYaw0 = st.yaw; st.turnDir = Math.random() < 0.5 ? 1 : -1; }
+    pending = null;
+  }
+  const c = stepSim(dt);
+  stepRover(dt, c.curvature, c.yawRate);
+  applyPose();
+  stepDust(dt);
+  beatText();
+  // camera follows the rover softly (the user can still orbit)
+  _tgt.copy(rover.position).add(new THREE.Vector3(0, 1.1, 0));
+  const delta = _tgt.clone().sub(controls.target).multiplyScalar(clamp(dt * 3, 0, 1));
+  controls.target.add(delta); camera.position.add(delta);
+  sun.position.copy(rover.position).add(new THREE.Vector3(6, 12, 7)); sun.target.position.copy(rover.position);
+  controls.update();
+  composer.render();
+}
+window.__viewer = { THREE, scene, camera, controls, renderer, st, drive, unload, spinRound, unloadPose, turnPose, throttle, baked,
+  programs: () => renderer.info.programs.length };
+renderer.setAnimationLoop(frame);
+</script>
+</body>
+</html>

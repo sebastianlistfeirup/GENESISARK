@@ -1,0 +1,314 @@
+
+UNLOAD FULL  (seat 3900 ms, latch 4500 ms, end 5200 ms)
+   t_ms   bed°  gate°  crate0  crate2   hop   jolt  beacon
+      0   0.00    0.0   0.000   0.000 0.000  0.000   0.00
+    250  -0.66    0.0   0.000   0.000 0.000  0.000   0.35
+    500   2.82   95.1   0.000   0.000 0.000  0.000   0.79
+    750  13.88   94.5   0.000   0.000 0.000  0.000   0.10
+   1000  19.82   92.7   0.000   0.000 0.000  0.000   0.98
+   1250  22.52   92.7   0.049   0.000 0.000  0.000   0.00
+   1500  23.12   92.8   0.150   0.067 0.000  0.000   0.98
+   1750  22.93   92.8   0.160   0.189 0.000  0.000   0.10
+   2000  22.92   92.8   0.160   0.200 0.000  0.000   0.79
+   2250  22.92   92.8   0.160   0.200 0.000  0.000   0.35
+   2500  22.92   92.8   0.160   0.200 0.000  0.000   0.50
+   2750  22.92   92.8   0.160   0.200 0.000  0.000   0.65
+   3000  22.83   92.8   0.160   0.200 0.000  0.000   0.21
+   3250  21.07   92.8   0.160   0.200 0.000  0.000   0.90
+   3500  16.19   92.8   0.160   0.200 0.000  0.000   0.02
+   3750   7.40   92.8   0.160   0.200 0.000  0.000   1.00
+   4000   0.06   92.8   0.130   0.200 0.001 -0.009   0.02
+   4250   0.00   86.9  -0.004   0.088 0.000 -0.001   0.90
+   4500   0.00    0.0   0.000  -0.003 0.000 -0.000   0.21
+   4750   0.00    0.0   0.000   0.000 0.000 -0.000   0.65
+   5000   0.00    0.0   0.000   0.000 0.000 -0.000   0.00
+TURN FULL  (yaw 700..3900 ms, end 4700 ms)
+   t_ms  steer   yaw°   rate°/s
+      0  0.000    0.00     0.00
+    250  0.976    0.00     0.00
+    500  1.007   -1.01     0.00
+    750  1.000   -0.89     0.40
+   1000  1.000    1.28    12.18
+   1250  1.000    6.95    34.19
+   1500  1.000   18.63    59.33
+   1750  1.000   36.40    82.02
+   2000  1.000   59.09    98.18
+   2250  1.000   84.73   105.26
+   2500  1.000  110.88   102.20
+   2750  1.000  135.02    89.44
+   3000  1.000  154.95    68.96
+   3250  1.000  169.14    44.21
+   3500  1.000  177.11    20.19
+   3750  1.000  179.83     3.37
+   4000  0.646  180.57     0.00
+   4250 -0.034  179.85     0.00
+   4500  0.000  180.04     0.00
+UNLOAD REDUCED  (seat 3900 ms, latch 4500 ms, end 5200 ms)
+   t_ms   bed°  gate°  crate0  crate2   hop   jolt  beacon
+      0   0.00    0.0   0.000   0.000 0.000  0.000   0.00
+    250   0.00    0.0   0.000   0.000 0.000  0.000   0.35
+    500   0.09   54.1   0.000   0.000 0.000  0.000   0.79
+    750   2.89   92.8   0.000   0.000 0.000  0.000   0.10
+   1000   8.31   92.8   0.000   0.000 0.000  0.000   0.98
+   1250  14.61   92.8   0.093   0.000 0.000  0.000   0.00
+   1500  20.03   92.8   0.160   0.123 0.000  0.000   0.98
+   1750  22.83   92.8   0.160   0.200 0.000  0.000   0.10
+   2000  22.92   92.8   0.160   0.200 0.000  0.000   0.79
+   2250  22.92   92.8   0.160   0.200 0.000  0.000   0.35
+   2500  22.92   92.8   0.160   0.200 0.000  0.000   0.50
+   2750  22.92   92.8   0.160   0.200 0.000  0.000   0.65
+   3000  22.28   92.8   0.160   0.200 0.000  0.000   0.21
+   3250  16.46   92.8   0.160   0.200 0.000  0.000   0.90
+   3500   8.07   92.8   0.160   0.200 0.000  0.000   0.02
+   3750   1.39   92.8   0.160   0.200 0.000  0.000   1.00
+   4000   0.00   92.8   0.159   0.200 0.000  0.000   0.02
+   4250   0.00   63.5   0.032   0.182 0.000  0.000   0.90
+   4500   0.00    0.0   0.000   0.013 0.000  0.000   0.21
+   4750   0.00    0.0   0.000   0.000 0.000  0.000   0.65
+   5000   0.00    0.0   0.000   0.000 0.000  0.000   0.00
+TURN REDUCED  (yaw 700..3900 ms, end 4700 ms)
+   t_ms  steer   yaw°   rate°/s
+      0  0.000    0.00     0.00
+    250  0.432    0.00     0.00
+    500  0.977    0.00     0.00
+    750  1.000    0.01     0.40
+   1000  1.000    1.28    12.18
+   1250  1.000    6.95    34.19
+   1500  1.000   18.63    59.33
+   1750  1.000   36.40    82.02
+   2000  1.000   59.09    98.18
+   2250  1.000   84.73   105.26
+   2500  1.000  110.88   102.20
+   2750  1.000  135.02    89.44
+   3000  1.000  154.95    68.96
+   3250  1.000  169.14    44.21
+   3500  1.000  177.11    20.19
+   3750  1.000  179.83     3.37
+   4000  0.972  180.00     0.00
+   4250  0.352  180.00     0.00
+   4500  0.000  180.00     0.00
+ROAD FULL
+    t_s     s      v      a  pitch°  roll°  chassis°  contact_cm  spin_err%
+   0.00   0.00   0.00   0.05  -0.001  0.000    0.135       0.76       0.00
+   0.62   0.13   0.55   1.30  -1.330  0.000    0.618       0.15       0.00
+   1.23   0.73   1.35   1.30  -1.166  0.000    1.789       0.90       0.00
+   1.85   1.82   2.16   1.30  -1.191  0.000   -0.031       1.26       0.00
+   2.47   3.40   2.96   1.30  -1.192  0.000   -0.302       0.28       0.00
+   3.08   5.47   3.70   0.87  -1.025  0.000   -0.286       0.45       0.00
+   3.70   7.88   4.03   0.30  -0.302  0.000    1.625       1.07       0.00
+   4.32  10.40   4.14   0.10  -0.107  0.000   -1.383       0.40       0.00
+   4.93  12.97   4.18   0.04  -0.038  0.000   -0.646       0.58       0.00
+   5.55  15.55   4.19   0.01  -0.013  0.000    1.597       0.14       0.00
+   6.17  18.14   4.20   0.00  -0.004  0.000   -0.432       0.09       0.00
+   6.78  20.73   4.20   0.00  -0.002  0.000   -1.161       0.55       0.00
+   7.40  23.32   4.20   0.00  -0.001  0.000    1.219       0.27       0.00
+   8.02  25.91   4.20   0.00  -0.000  0.000    0.208       1.22       0.00
+   8.63  28.50   4.20   0.00  -0.000  0.000   -1.527       0.20       0.00
+   9.25  31.10   4.31   0.80  -0.339  0.000    0.802       1.57       0.00
+   9.87  33.99   5.08   1.30  -1.254  0.000    1.834       1.45       0.00
+  10.48  37.38   5.88   1.30  -1.199  0.000    1.317       0.20       0.00
+  11.10  41.22   6.42  -0.14  -0.386  0.000    1.647       1.14       0.00
+  11.72  45.02   5.82  -1.16   1.199  0.000    1.368       0.59       0.00
+  12.33  48.38   5.11  -1.15   1.061  0.000    1.116       0.38       0.00
+  12.95  51.30   4.40  -1.15   1.050  0.000   -0.898       0.41       0.00
+  13.57  53.79   3.69  -1.14   1.046  0.000   -1.082       0.85       0.00
+  14.18  55.85   2.99  -1.13   1.036  0.000    1.420       0.97       0.00
+  14.80  57.47   2.30  -1.11   1.022  0.000   -0.559       1.08       0.00
+  15.42  58.68   1.63  -1.08   0.997  0.000   -0.865       0.19       0.00
+  16.03  59.47   0.98  -1.02   0.949  0.000    0.988       0.84       0.00
+  16.65  59.89   0.41  -0.84   0.774  0.000    1.478       0.22       0.00
+  17.27  60.01   0.07  -0.12   0.239  0.000    1.587       0.76       0.00
+  17.88  60.03   0.02  -0.04   0.067  0.000    1.605       0.88       0.00
+  18.50  60.04   0.01  -0.01   0.012  0.000    1.611       0.92       0.00
+  19.12  60.04   0.00  -0.00   0.005  0.000    1.613       0.94       0.00
+  19.73  60.04   0.00  -0.00   0.002  0.000    1.614       0.94       0.00
+  20.35  60.05   0.00  -0.00   0.001  0.000    1.614       0.94       0.00
+  20.97  60.05   0.00  -0.00   0.000  0.000    1.614       0.94       0.00
+  21.58  60.05   0.00  -0.00   0.000  0.000    1.614       0.94       0.00
+ROAD full: stopped at 18.40 s (s=60.05), pitch range -1.36..1.27 deg, worst wheel contact 1.7 cm, spin error 0.00 %
+ROAD REDUCED
+    t_s     s      v      a  pitch°  roll°  chassis°  contact_cm  spin_err%
+   0.00   0.00   0.00   0.05  -0.000  0.000    0.135       0.76       0.00
+   0.62   0.13   0.55   1.30  -0.434  0.000    0.618       0.15       0.00
+   1.23   0.73   1.35   1.30  -0.534  0.000    1.789       0.90       0.00
+   1.85   1.82   2.16   1.30  -0.536  0.000   -0.031       1.26       0.00
+   2.47   3.40   2.96   1.30  -0.536  0.000   -0.302       0.28       0.00
+   3.08   5.47   3.70   0.87  -0.483  0.000   -0.286       0.45       0.00
+   3.70   7.88   4.03   0.30  -0.198  0.000    1.625       1.07       0.00
+   4.32  10.40   4.14   0.10  -0.069  0.000   -1.383       0.40       0.00
+   4.93  12.97   4.18   0.04  -0.024  0.000   -0.646       0.58       0.00
+   5.55  15.55   4.19   0.01  -0.008  0.000    1.597       0.14       0.00
+   6.17  18.14   4.20   0.00  -0.003  0.000   -0.432       0.09       0.00
+   6.78  20.73   4.20   0.00  -0.001  0.000   -1.161       0.55       0.00
+   7.40  23.32   4.20   0.00  -0.000  0.000    1.219       0.27       0.00
+   8.02  25.91   4.20   0.00  -0.000  0.000    0.208       1.22       0.00
+   8.63  28.50   4.20   0.00  -0.000  0.000   -1.527       0.20       0.00
+   9.25  31.10   4.31   0.80  -0.106  0.000    0.802       1.57       0.00
+   9.87  33.99   5.08   1.30  -0.512  0.000    1.834       1.45       0.00
+  10.48  37.38   5.88   1.30  -0.536  0.000    1.317       0.20       0.00
+  11.10  41.22   6.42  -0.14  -0.292  0.000    1.647       1.14       0.00
+  11.72  45.02   5.82  -1.16   0.423  0.000    1.368       0.59       0.00
+  12.33  48.38   5.11  -1.15   0.475  0.000    1.116       0.38       0.00
+  12.95  51.30   4.40  -1.15   0.474  0.000   -0.898       0.41       0.00
+  13.57  53.79   3.69  -1.14   0.471  0.000   -1.082       0.85       0.00
+  14.18  55.85   2.99  -1.13   0.467  0.000    1.420       0.97       0.00
+  14.80  57.47   2.30  -1.11   0.461  0.000   -0.559       1.08       0.00
+  15.42  58.68   1.63  -1.08   0.452  0.000   -0.865       0.19       0.00
+  16.03  59.47   0.98  -1.02   0.433  0.000    0.988       0.84       0.00
+  16.65  59.89   0.41  -0.84   0.371  0.000    1.478       0.22       0.00
+  17.27  60.01   0.07  -0.12   0.183  0.000    1.587       0.76       0.00
+  17.88  60.03   0.02  -0.04   0.031  0.000    1.605       0.88       0.00
+  18.50  60.04   0.01  -0.01   0.010  0.000    1.611       0.92       0.00
+  19.12  60.04   0.00  -0.00   0.003  0.000    1.613       0.94       0.00
+  19.73  60.04   0.00  -0.00   0.001  0.000    1.614       0.94       0.00
+  20.35  60.05   0.00  -0.00   0.000  0.000    1.614       0.94       0.00
+  20.97  60.05   0.00  -0.00   0.000  0.000    1.614       0.94       0.00
+  21.58  60.05   0.00  -0.00   0.000  0.000    1.614       0.94       0.00
+ROAD reduced: stopped at 18.40 s (s=60.05), pitch range -0.54..0.48 deg, worst wheel contact 1.7 cm, spin error 0.00 %
+   GDScript backtrace (most recent call first):
+       [0] build (res://scripts/runtime/surface/terrain_builder.gd:245)
+       [1] _ready (res://scripts/runtime/colony/colony_scene.gd:78)
+       [2] _colony (res://tools/rebuild/rover_probe.gd:158)
+       [3] _run (res://tools/rebuild/rover_probe.gd:39)
+       [4] _test_road (res://tools/rebuild/rover_probe.gd:152)
+   GDScript backtrace (most recent call first):
+       [0] build (res://scripts/runtime/surface/terrain_builder.gd:245)
+       [1] _ready (res://scripts/runtime/colony/colony_scene.gd:78)
+       [2] _colony (res://tools/rebuild/rover_probe.gd:158)
+       [3] _run (res://tools/rebuild/rover_probe.gd:39)
+       [4] _test_road (res://tools/rebuild/rover_probe.gd:152)
+   GDScript backtrace (most recent call first):
+       [0] build (res://scripts/runtime/surface/terrain_builder.gd:245)
+       [1] _ready (res://scripts/runtime/colony/colony_scene.gd:78)
+       [2] _colony (res://tools/rebuild/rover_probe.gd:158)
+       [3] _run (res://tools/rebuild/rover_probe.gd:39)
+       [4] _test_road (res://tools/rebuild/rover_probe.gd:152)
+   GDScript backtrace (most recent call first):
+       [0] build (res://scripts/runtime/surface/terrain_builder.gd:245)
+       [1] _ready (res://scripts/runtime/colony/colony_scene.gd:78)
+       [2] _colony (res://tools/rebuild/rover_probe.gd:158)
+       [3] _run (res://tools/rebuild/rover_probe.gd:39)
+       [4] _test_road (res://tools/rebuild/rover_probe.gd:152)
+   GDScript backtrace (most recent call first):
+       [0] build (res://scripts/runtime/surface/terrain_builder.gd:245)
+       [1] _ready (res://scripts/runtime/colony/colony_scene.gd:78)
+       [2] _colony (res://tools/rebuild/rover_probe.gd:158)
+       [3] _run (res://tools/rebuild/rover_probe.gd:39)
+       [4] _test_road (res://tools/rebuild/rover_probe.gd:152)
+   GDScript backtrace (most recent call first):
+       [0] build (res://scripts/runtime/surface/terrain_builder.gd:245)
+       [1] _ready (res://scripts/runtime/colony/colony_scene.gd:78)
+       [2] _colony (res://tools/rebuild/rover_probe.gd:158)
+       [3] _run (res://tools/rebuild/rover_probe.gd:39)
+       [4] _test_road (res://tools/rebuild/rover_probe.gd:152)
+   GDScript backtrace (most recent call first):
+       [0] build (res://scripts/runtime/surface/terrain_builder.gd:245)
+       [1] _ready (res://scripts/runtime/colony/colony_scene.gd:78)
+       [2] _colony (res://tools/rebuild/rover_probe.gd:158)
+       [3] _run (res://tools/rebuild/rover_probe.gd:39)
+       [4] _test_road (res://tools/rebuild/rover_probe.gd:152)
+   GDScript backtrace (most recent call first):
+       [0] build (res://scripts/runtime/surface/terrain_builder.gd:245)
+       [1] _ready (res://scripts/runtime/colony/colony_scene.gd:78)
+       [2] _colony (res://tools/rebuild/rover_probe.gd:158)
+       [3] _run (res://tools/rebuild/rover_probe.gd:39)
+       [4] _test_road (res://tools/rebuild/rover_probe.gd:152)
+   GDScript backtrace (most recent call first):
+       [0] build (res://scripts/runtime/surface/terrain_builder.gd:245)
+       [1] _ready (res://scripts/runtime/colony/colony_scene.gd:78)
+       [2] _colony (res://tools/rebuild/rover_probe.gd:158)
+       [3] _run (res://tools/rebuild/rover_probe.gd:39)
+       [4] _test_road (res://tools/rebuild/rover_probe.gd:152)
+COLONY grown:viridia: 2 rovers on 2 roads
+   t_s  state    s      v      a
+   0.0  drive     27.4   3.42   0.23  
+   5.0  drive     45.5   4.34   0.03  
+  10.0  drive     61.8   1.08  -0.90  
+  15.0  unload    62.5   0.00   0.00  
+  20.0  turn      62.5   0.00   0.00  
+  25.0  drive     57.0   3.75   1.08  
+  30.0  drive     36.4   3.50  -0.46  
+  35.0  drive     18.0   3.17  -1.21  
+  40.0  drive      9.0   0.17  -0.46  
+  45.0  unload     9.0   0.00   0.00  
+  50.0  turn       9.0   0.00   0.00  
+  55.0  drive     17.6   4.20   0.29  
+  60.0  drive     36.1   3.42   1.30  
+  65.0  drive     56.9   3.33  -1.02  
+  70.0  unload    62.5   0.00   0.00  
+  75.0  turn      62.5   0.00   0.00  
+  80.0  drive     62.4   0.57   1.30  
+  85.0  drive     46.3   4.36   0.01  
+  90.0  drive     28.0   3.99   0.65  
+  95.0  drive     12.0   1.91  -0.27  
+ 100.0  unload     9.0   0.00   0.00  
+ 105.0  turn       9.0   0.00   0.00  
+ 110.0  drive     10.1   1.60   1.13  
+ 115.0  drive     28.2   3.67  -0.43  
+ 120.0  drive     46.8   4.35   0.02  
+ 125.0  drive     62.1   0.82  -0.98  
+ 130.0  unload    62.5   0.00   0.00  
+ 135.0  turn      62.5   0.00   0.00  
+ 140.0  drive     56.6   3.87   0.86  
+ 145.0  drive     36.0   3.44  -0.46  
+COLONY: states seen ["drive", "settle", "unload", "turn"], rover 0 turned round 5 times, max distance from the road's centre line 1.43 m
+ARRIVE   t_s  state     s      v      a  why
+ARRIVE  0.00  drive    22.93   4.35  -0.97  
+ARRIVE  0.25  drive    21.86   4.21  -0.22  
+ARRIVE  0.50  drive    20.82   4.13  -0.71  
+ARRIVE  0.75  drive    19.82   3.82  -1.61  
+ARRIVE  1.00  drive    18.92   3.43  -1.45  
+ARRIVE  1.25  drive    18.11   3.12  -1.09  
+ARRIVE  1.50  drive    17.36   2.89  -0.85  
+ARRIVE  1.75  drive    16.66   2.70  -0.62  
+ARRIVE  2.00  drive    16.01   2.55  -0.55  
+ARRIVE  2.25  drive    15.38   2.43  -0.48  
+ARRIVE  2.50  drive    14.79   2.33  -0.34  
+ARRIVE  2.75  drive    14.22   2.24  -0.37  
+ARRIVE  3.00  drive    13.67   2.16  -0.29  
+ARRIVE  3.25  drive    13.14   2.07  -0.31  
+ARRIVE  3.50  drive    12.64   2.01  -0.26  
+ARRIVE  3.75  drive    12.14   1.93  -0.28  
+ARRIVE  4.00  drive    11.67   1.87  -0.23  
+ARRIVE  4.25  drive    11.21   1.81  -0.26  
+ARRIVE  4.50  drive    10.76   1.75  -0.17  
+ARRIVE  4.75  drive    10.34   1.62  -0.98  
+ARRIVE  5.00  drive     9.97   1.36  -1.05  
+ARRIVE  5.25  drive     9.66   1.10  -1.02  
+ARRIVE  5.50  drive     9.42   0.85  -0.99  
+ARRIVE  5.75  drive     9.24   0.63  -0.81  
+ARRIVE  6.00  drive     9.11   0.41  -0.78  
+ARRIVE  6.25  drive     9.04   0.21  -0.63  
+ARRIVE  6.50  drive     9.00   0.11  -0.20  
+ARRIVE  6.75  drive     8.98   0.07  -0.13  
+ARRIVE  7.00  settle    8.96   0.00   0.00  
+ARRIVE  7.25  settle    8.96   0.00   0.00  
+ARRIVE  7.50  unload    8.96   0.00   0.00  
+ARRIVE  7.75  unload    8.96   0.00   0.00  
+ARRIVE  8.00  unload    8.96   0.00   0.00  
+ARRIVE  8.25  unload    8.96   0.00   0.00  
+ARRIVE  8.50  unload    8.96   0.00   0.00  
+ARRIVE  8.75  unload    8.96   0.00   0.00  
+ARRIVE  9.00  unload    8.96   0.00   0.00  
+ARRIVE  9.25  unload    8.96   0.00   0.00  
+ARRIVE  9.50  unload    8.96   0.00   0.00  
+ARRIVE  9.75  unload    8.96   0.00   0.00  
+ARRIVE 10.00  unload    8.96   0.00   0.00  
+ARRIVE 10.25  unload    8.96   0.00   0.00  
+ARRIVE 10.50  unload    8.96   0.00   0.00  
+ARRIVE 10.75  unload    8.96   0.00   0.00  
+ARRIVE 11.00  unload    8.96   0.00   0.00  
+ARRIVE 11.25  unload    8.96   0.00   0.00  
+ARRIVE 11.50  unload    8.96   0.00   0.00  
+ARRIVE 11.75  unload    8.96   0.00   0.00  
+ARRIVE 12.00  unload    8.96   0.00   0.00  
+ARRIVE 12.25  unload    8.96   0.00   0.00  
+ARRIVE 12.50  unload    8.96   0.00   0.00  
+ARRIVE 12.75  turn      8.96   0.00   0.00  
+ARRIVE 13.00  turn      8.96   0.00   0.00  
+ARRIVE 13.25  turn      8.96   0.00   0.00  
+ARRIVE 13.50  turn      8.96   0.00   0.00  
+ARRIVE 13.75  turn      8.96   0.00   0.00  
+ARRIVE: stood still 0.00 s before its unload began
+CAPTAIN: rover 0 stopped with its bumper 2.14 m from the captain (v=0.00), lamps flashed true
+ROVER_PROBE PASS []

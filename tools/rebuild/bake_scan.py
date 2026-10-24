@@ -3,7 +3,7 @@
 
   python3 bake_scan.py --scan scan.glb --rebuild rebuild.glb --out out/ \
       [--map wood=base,brass=metal,iron=metal] [--res 2048] [--tex 2048] \
-      [--align-axis x] [--scale S] [--offset X,Y,Z] [--radius R] [--samples 5000000]
+      [--align-axis x] [--scale S] [--offset X,Y,Z] [--yaw DEG] [--radius R] [--samples 5000000]
 
 How it works
   1. Align: uniform-scale the scan so its extent on --align-axis matches the rebuild's
@@ -33,7 +33,7 @@ from scipy import ndimage
 from scipy.spatial import cKDTree
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from scene import load_rebuild, load_scan, sample_surface, sample_tex, align_scan  # noqa: E402
+from scene import load_rebuild, load_scan, sample_surface, sample_tex, align_scan, yaw_points  # noqa: E402
 from glbio import Writer  # noqa: E402
 
 ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
@@ -46,6 +46,7 @@ ap.add_argument("--tex", type=int, default=2048, help="output texture size")
 ap.add_argument("--align-axis", default="x", choices=list("xyz"))
 ap.add_argument("--scale", type=float, default=None)
 ap.add_argument("--offset", default="0,0,0")
+ap.add_argument("--yaw", type=float, default=0.0, help="turn the scan about +Y first (degrees; 90 maps a scan facing -X onto a rebuild facing +Z)")
 ap.add_argument("--radius", type=float, default=None, help="search radius in rebuild units (default 4.5%% of bbox diagonal)")
 ap.add_argument("--samples", type=int, default=5_000_000)
 ap.add_argument("--metal-threshold", type=float, default=0.35)
@@ -75,6 +76,8 @@ if not bake_ids:
 log("rebuild materials:", sorted({p["mat"] for p in prims}), "-> baking", sorted({prims[i]["mat"] for i in bake_ids}))
 
 spos, snrm, suv, sidx, sbase, smr = load_scan(args.scan)
+if args.yaw:
+    spos, snrm = yaw_points(spos, args.yaw), yaw_points(snrm, args.yaw)
 spos, s = align_scan(spos, rmin, rmax, args.align_axis, args.scale, [float(x) for x in args.offset.split(",")])
 log(f"scan aligned: scale {s:.4f}, scan bbox {spos.min(0).round(3)} .. {spos.max(0).round(3)}, rebuild {rmin.round(3)} .. {rmax.round(3)}")
 
