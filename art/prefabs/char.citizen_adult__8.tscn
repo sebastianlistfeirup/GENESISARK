@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" path="res://assets/Synty/CharactersSrc/City/SK_Character_Garbage_Male_01.fbx" id="1_tunsu"]
 
-[node name="char_citizen_adult" type="Node3D" unique_id=1303746300]
+[node name="char_citizen_adult" type="Node3D" unique_id=976237190]
 metadata/synty_source = "res://assets/Synty/CharactersSrc/City/SK_Character_Garbage_Male_01.fbx"
 metadata/synty_fit = "natural"
 

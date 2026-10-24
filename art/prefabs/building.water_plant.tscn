@@ -1,17 +1,69 @@
 [gd_scene format=3]
 
-[ext_resource type="PackedScene" path="res://assets/Synty/PolygonSciFiWorlds/Prefabs/Buildings/SM_Bld_Pod_Silo_02.tscn" id="1_xixvg"]
-[ext_resource type="ArrayMesh" path="res://assets/Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Pod_Silo_02.res" id="2_mqxu1"]
-[ext_resource type="Material" path="res://assets/Synty/PolygonSciFiWorlds/Materials/Alts/PolygonScifiWorlds_02_A_mat.tres" id="3_f2vq3"]
+[ext_resource type="PackedScene" path="res://assets/Synty/PolygonSciFiWorlds/Prefabs/Buildings/SM_Bld_Pod_Silo_05.tscn" id="1_p78ha"]
+[ext_resource type="ArrayMesh" path="res://assets/Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Pod_Silo_05.res" id="2_2aub7"]
+[ext_resource type="Material" path="res://assets/Synty/PolygonSciFiWorlds/Materials/Alts/PolygonScifiWorlds_02_A_mat.tres" id="3_thqoe"]
+[ext_resource type="PackedScene" path="res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_Crate_08.tscn" id="4_ugp66"]
+[ext_resource type="ArrayMesh" path="res://assets/Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Crate_08.res" id="5_aojke"]
+[ext_resource type="Material" path="res://assets/Synty/PolygonSciFiWorlds/Materials/Alts/PolygonScifiWorlds_01_A_mat.tres" id="6_tedwy"]
+[ext_resource type="PackedScene" path="res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_Crate_04.tscn" id="7_53l4s"]
+[ext_resource type="ArrayMesh" path="res://assets/Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Crate_04.res" id="8_q2346"]
+[ext_resource type="PackedScene" path="res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_Satellite_06.tscn" id="9_575st"]
+[ext_resource type="ArrayMesh" path="res://assets/Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Satellite_06.res" id="10_e6mpp"]
+[ext_resource type="PackedScene" path="res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_Monitor_12.tscn" id="11_unl0x"]
+[ext_resource type="ArrayMesh" path="res://assets/Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Monitor_12.res" id="12_b4a0r"]
 
-[node name="building_water_plant" type="Node3D" unique_id=1306957935]
-metadata/synty_source = "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Buildings/SM_Bld_Pod_Silo_02.tscn"
+[node name="building_water_plant" type="Node3D" unique_id=1522414570]
+metadata/synty_source = "res://art/kits/Explorer_01_15_Pod_Silo_05.tscn"
 metadata/synty_fit = "footprint"
 
-[node name="Model" type="Node3D" parent="." unique_id=278277734]
-transform = Transform3D(0.23015264, 0, 0, 0, 0.23015264, 0, 0, 0, 0.23015264, 0.075000286, 2.9802322e-08, -0.87367976)
+[node name="Model" type="Node3D" parent="." unique_id=131103097]
+transform = Transform3D(0.5218065, 0, 0, 0, 0.5218065, 0, 0, 0, 0.5218065, -0.5236566, 0, -0.8526797)
 
-[node name="SM_Bld_Pod_Silo_02" type="MeshInstance3D" parent="Model" unique_id=395517888 instance=ExtResource("1_xixvg")]
+[node name="SM_Bld_Pod_Silo_05" type="MeshInstance3D" parent="Model" unique_id=557598529 instance=ExtResource("1_p78ha")]
+transform = Transform3D(0.68389666, 0, 0, 0, 0.68389666, 0, 0, 0, 0.68389666, 1.9073486e-06, 0.8890656, 1.0233688)
 gi_mode = 2
-mesh = ExtResource("2_mqxu1")
-surface_material_override/0 = ExtResource("3_f2vq3")
+mesh = ExtResource("2_2aub7")
+surface_material_override/0 = ExtResource("3_thqoe")
+
+[node name="SM_Prop_Crate_08" type="MeshInstance3D" parent="Model" unique_id=425911618 instance=ExtResource("4_ugp66")]
+transform = Transform3D(0.8741516, 0, -0.4856532, 0, 1, 0, 0.4856532, 0, 0.8741516, 2.0621243, 1.1680657, -3.8608093)
+gi_mode = 2
+mesh = ExtResource("5_aojke")
+surface_material_override/0 = ExtResource("6_tedwy")
+
+[node name="SM_Prop_Crate_04" type="MeshInstance3D" parent="Model" unique_id=712271671 instance=ExtResource("7_53l4s")]
+transform = Transform3D(0.7587133, 0, -0.65142447, 0, 1, 0, 0.65142447, 0, 0.7587133, 6.215229, 1.0840657, 6.890709)
+gi_mode = 2
+mesh = ExtResource("8_q2346")
+surface_material_override/0 = ExtResource("6_tedwy")
+
+[node name="_MeshInstance3D_123" type="MeshInstance3D" parent="Model" unique_id=1381095305 instance=ExtResource("7_53l4s")]
+transform = Transform3D(0.86611193, 0, -0.49984986, 0, 1, 0, 0.49984986, 0, 0.86611193, 6.8077354, 1.0840657, 5.7971725)
+gi_mode = 2
+mesh = ExtResource("8_q2346")
+surface_material_override/0 = ExtResource("6_tedwy")
+
+[node name="_MeshInstance3D_124" type="MeshInstance3D" parent="Model" unique_id=847385188 instance=ExtResource("4_ugp66")]
+transform = Transform3D(-0.9717546, 0, 0.23599334, 0, 1, 0, -0.23599334, 0, -0.9717546, 2.9328995, 1.1670656, -3.0704575)
+gi_mode = 2
+mesh = ExtResource("5_aojke")
+surface_material_override/0 = ExtResource("6_tedwy")
+
+[node name="_MeshInstance3D_125" type="MeshInstance3D" parent="Model" unique_id=1085098439 instance=ExtResource("7_53l4s")]
+transform = Transform3D(0.5046975, 0, 0.8632963, 0, 1, 0, -0.8632963, 0, 0.5046975, 6.44627, 2.0740657, 6.2039948)
+gi_mode = 2
+mesh = ExtResource("8_q2346")
+surface_material_override/0 = ExtResource("6_tedwy")
+
+[node name="SM_Prop_Satellite_06" type="MeshInstance3D" parent="Model" unique_id=47793762 instance=ExtResource("9_575st")]
+transform = Transform3D(0.9923873, 0, 0.12315631, 0, 1, 0, -0.12315631, 0, 0.9923873, 4.1161213, 1.2150656, 6.2715645)
+gi_mode = 2
+mesh = ExtResource("10_e6mpp")
+surface_material_override/0 = ExtResource("6_tedwy")
+
+[node name="_MeshInstance3D_126" type="MeshInstance3D" parent="Model" unique_id=1490829951 instance=ExtResource("11_unl0x")]
+transform = Transform3D(0.9937446, 0.10689229, 0.032338396, 0.011815041, -0.38857627, 0.92134106, 0.11105016, -0.9151954, -0.3874086, 6.2517166, 2.4400656, 6.5809555)
+gi_mode = 2
+mesh = ExtResource("12_b4a0r")
+surface_material_override/0 = ExtResource("6_tedwy")

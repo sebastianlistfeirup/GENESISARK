@@ -27,3 +27,6 @@ __pycache__/
 /assets/Synty/
 # Animation libraries are keyframes from purchased Synty clips: local only, rebuilt by tools/synty/build_godot_packs.sh
 /art/animations/*.res
+
+# Building kits lifted from the Synty demo scenes reference vendor prefabs; regenerate locally with tools/synty/extract_kits.gd
+/art/kits/

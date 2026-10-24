@@ -98,6 +98,18 @@ func build_one(slot: String, c: Dictionary, prefab_dir: String, suffix: String =
 		apply_only_mesh(model, only)
 	model.rotation_degrees.y = float(c.get("rotation_y", 0.0))
 	var raw := AssetSlots.aabb_of(model, model.transform)
+	if model_path.contains("/art/kits/") and model.get_child_count() > 1:
+		# A demo-scene assembly: fit by its main building (first part) and keep only
+		# the parts that hug it, so stray pipes or crates do not shrink the building.
+		var main_part := model.get_child(0) as Node3D
+		var main_box := AssetSlots.aabb_of(main_part, model.transform * main_part.transform)
+		var keep := main_box.grow(float(c.get("kit_margin", 1.5)))
+		for ch: Node in model.get_children().slice(1):
+			var b := AssetSlots.aabb_of(ch, model.transform * (ch as Node3D).transform) if ch is Node3D else AABB()
+			if b.size == Vector3.ZERO or not keep.has_point(b.get_center()):
+				model.remove_child(ch)
+				ch.free()
+		raw = main_box
 	var proxy_node := AssetSlots.build_proxy(slot)
 	var proxy := AssetSlots.aabb_of(proxy_node, Transform3D.IDENTITY)
 	proxy_node.free()

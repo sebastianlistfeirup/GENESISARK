@@ -8,7 +8,12 @@
   "building.drone_hub": "res://art/prefabs/building.drone_hub.tscn",
   "building.geothermal_generator": "res://art/prefabs/building.geothermal_generator.tscn",
   "building.greenhouse": "res://art/prefabs/building.greenhouse.tscn",
-  "building.habitat": "res://art/prefabs/building.habitat.tscn",
+  "building.habitat": [
+   "res://art/prefabs/building.habitat.tscn",
+   "res://art/prefabs/building.habitat__2.tscn",
+   "res://art/prefabs/building.habitat__3.tscn",
+   "res://art/prefabs/building.habitat__4.tscn"
+  ],
   "building.mine": "res://art/prefabs/building.mine.tscn",
   "building.module_filter": "res://art/prefabs/building.module_filter.tscn",
   "building.module_heater": "res://art/prefabs/building.module_heater.tscn",

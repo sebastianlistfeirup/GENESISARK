@@ -368,7 +368,7 @@
   "failed": 0,
   "slots": [
     {
-      "atlas_materials": 2,
+      "atlas_materials": 5,
       "fit": "footprint",
       "notes": [
         "no atlas texture staged for res:"
@@ -383,19 +383,25 @@
       "rig": "",
       "scale": 0.7042,
       "scene": "res://art/prefabs/building.habitat.tscn",
+      "scenes": [
+        "res://art/prefabs/building.habitat.tscn",
+        "res://art/prefabs/building.habitat__2.tscn",
+        "res://art/prefabs/building.habitat__3.tscn",
+        "res://art/prefabs/building.habitat__4.tscn"
+      ],
       "size_m": [
-        9.7,
+        11.27,
         5.09,
-        7.04
+        7.32
       ],
       "slot": "building.habitat",
-      "source": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Buildings/SM_Bld_Pod_Hab_Small_01.tscn",
-      "summary": "footprint x0.704 -> 9.7x5.1x7.0 m (proxy 9.7x3.5x7.7)",
+      "source": "res://art/kits/Explorer_01_18_Pod_Hab_Small_01.tscn",
+      "summary": "footprint x0.704 -> 11.3x5.1x7.3 m (proxy 9.7x3.5x7.7)  (+3 varianter)",
       "uses_atlas": false,
       "warnings": []
     },
     {
-      "atlas_materials": 2,
+      "atlas_materials": 3,
       "fit": "footprint",
       "notes": [
         "no atlas texture staged for res:"
@@ -411,18 +417,18 @@
       "scale": 0.9292,
       "scene": "res://art/prefabs/building.care_center.tscn",
       "size_m": [
-        9.7,
-        8.99,
-        9.29
+        9.79,
+        9.77,
+        10.99
       ],
       "slot": "building.care_center",
-      "source": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Buildings/SM_Bld_Pod_Research_04.tscn",
-      "summary": "footprint x0.929 -> 9.7x9.0x9.3 m (proxy 9.7x5.2x9.7)",
+      "source": "res://art/kits/Explorer_01_10_Pod_Research_04.tscn",
+      "summary": "footprint x0.929 -> 9.8x9.8x11.0 m (proxy 9.7x5.2x9.7)",
       "uses_atlas": false,
       "warnings": []
     },
     {
-      "atlas_materials": 2,
+      "atlas_materials": 9,
       "fit": "footprint",
       "notes": [
         "no atlas texture staged for res:"
@@ -438,18 +444,18 @@
       "scale": 0.571,
       "scene": "res://art/prefabs/building.clinic.tscn",
       "size_m": [
-        5.71,
-        3.66,
-        5.71
+        7.09,
+        4.14,
+        7.03
       ],
       "slot": "building.clinic",
-      "source": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Buildings/SM_Bld_Pod_Hub_01.tscn",
-      "summary": "footprint x0.571 -> 5.7x3.7x5.7 m (proxy 7.6x3.1x5.7)",
+      "source": "res://art/kits/Explorer_01_19_Pod_Hub_01.tscn",
+      "summary": "footprint x0.571 -> 7.1x4.1x7.0 m (proxy 7.6x3.1x5.7)",
       "uses_atlas": false,
       "warnings": []
     },
     {
-      "atlas_materials": 2,
+      "atlas_materials": 7,
       "fit": "footprint",
       "notes": [
         "no atlas texture staged for res:"
@@ -462,21 +468,21 @@
       ],
       "reimport": false,
       "rig": "",
-      "scale": 0.4452,
+      "scale": 0.5,
       "scene": "res://art/prefabs/building.school_hall.tscn",
       "size_m": [
-        8.0,
-        2.84,
-        8.0
+        10.43,
+        4.13,
+        7.76
       ],
       "slot": "building.school_hall",
-      "source": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Buildings/SM_Bld_Pod_Research_03.tscn",
-      "summary": "footprint x0.445 -> 8.0x2.8x8.0 m (proxy 10.0x7.0x8.0)",
+      "source": "res://art/kits/Explorer_01_27_Pod_Hab_Large_02.tscn",
+      "summary": "footprint x0.500 -> 10.4x4.1x7.8 m (proxy 10.0x7.0x8.0)",
       "uses_atlas": false,
       "warnings": []
     },
     {
-      "atlas_materials": 3,
+      "atlas_materials": 14,
       "fit": "footprint",
       "notes": [
         "no atlas texture staged for res:"
@@ -492,18 +498,18 @@
       "scale": 0.1449,
       "scene": "res://art/prefabs/building.greenhouse.tscn",
       "size_m": [
-        5.6,
-        3.33,
-        5.6
+        5.94,
+        3.59,
+        6.12
       ],
       "slot": "building.greenhouse",
-      "source": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Buildings/SM_Bld_Pod_Research_05.tscn",
-      "summary": "footprint x0.145 -> 5.6x3.3x5.6 m (proxy 7.6x3.0x5.6)",
+      "source": "res://art/kits/Explorer_01_31_Pod_Research_05.tscn",
+      "summary": "footprint x0.145 -> 5.9x3.6x6.1 m (proxy 7.6x3.0x5.6)",
       "uses_atlas": false,
       "warnings": []
     },
     {
-      "atlas_materials": 1,
+      "atlas_materials": 3,
       "fit": "footprint",
       "notes": [
         "no atlas texture staged for res:"
@@ -516,21 +522,21 @@
       ],
       "reimport": false,
       "rig": "",
-      "scale": 0.2302,
+      "scale": 0.5218,
       "scene": "res://art/prefabs/building.water_plant.tscn",
       "size_m": [
-        5.85,
-        2.67,
-        5.17
+        7.05,
+        5.95,
+        6.99
       ],
       "slot": "building.water_plant",
-      "source": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Buildings/SM_Bld_Pod_Silo_02.tscn",
-      "summary": "footprint x0.230 -> 5.9x2.7x5.2 m (proxy 5.9x4.0x7.2)",
+      "source": "res://art/kits/Explorer_01_15_Pod_Silo_05.tscn",
+      "summary": "footprint x0.522 -> 7.0x6.0x7.0 m (proxy 5.9x4.0x7.2)",
       "uses_atlas": false,
       "warnings": []
     },
     {
-      "atlas_materials": 1,
+      "atlas_materials": 11,
       "fit": "footprint",
       "notes": [
         "no atlas texture staged for res:"
@@ -543,21 +549,21 @@
       ],
       "reimport": false,
       "rig": "",
-      "scale": 0.3139,
+      "scale": 0.2608,
       "scene": "res://art/prefabs/building.mine.tscn",
       "size_m": [
-        7.45,
-        5.14,
-        7.6
+        8.37,
+        7.43,
+        7.19
       ],
       "slot": "building.mine",
-      "source": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Buildings/SM_Bld_Scav_Refinery_01.tscn",
-      "summary": "footprint x0.314 -> 7.5x5.1x7.6 m (proxy 7.6x6.0x7.6)",
+      "source": "res://art/kits/Scavenger_01_00_Scav_Refinery_03.tscn",
+      "summary": "footprint x0.261 -> 8.4x7.4x7.2 m (proxy 7.6x6.0x7.6)",
       "uses_atlas": false,
       "warnings": []
     },
     {
-      "atlas_materials": 1,
+      "atlas_materials": 4,
       "fit": "footprint",
       "notes": [
         "no atlas texture staged for res:"
@@ -573,18 +579,18 @@
       "scale": 0.3387,
       "scene": "res://art/prefabs/building.workshop.tscn",
       "size_m": [
-        7.47,
-        3.46,
-        5.75
+        7.87,
+        5.02,
+        6.9
       ],
       "slot": "building.workshop",
-      "source": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Buildings/SM_Bld_Scav_Garage_01.tscn",
-      "summary": "footprint x0.339 -> 7.5x3.5x5.8 m (proxy 7.6x3.8x5.8)",
+      "source": "res://art/kits/Corporation_01_38_Scav_Garage_01.tscn",
+      "summary": "footprint x0.339 -> 7.9x5.0x6.9 m (proxy 7.6x3.8x5.8)",
       "uses_atlas": false,
       "warnings": []
     },
     {
-      "atlas_materials": 1,
+      "atlas_materials": 2,
       "fit": "footprint",
       "notes": [
         "no atlas texture staged for res:"
@@ -600,18 +606,18 @@
       "scale": 0.236,
       "scene": "res://art/prefabs/building.drone_hub.tscn",
       "size_m": [
-        4.43,
-        1.56,
-        5.6
+        4.72,
+        2.03,
+        5.75
       ],
       "slot": "building.drone_hub",
-      "source": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Buildings/SM_Bld_Corp_LandingPad_02.tscn",
-      "summary": "footprint x0.236 -> 4.4x1.6x5.6 m (proxy 5.6x3.7x5.6)",
+      "source": "res://art/kits/Corporation_01_01_Corp_LandingPad_02.tscn",
+      "summary": "footprint x0.236 -> 4.7x2.0x5.8 m (proxy 5.6x3.7x5.6)",
       "uses_atlas": false,
       "warnings": []
     },
     {
-      "atlas_materials": 1,
+      "atlas_materials": 2,
       "fit": "footprint",
       "notes": [
         "no atlas texture staged for res:"
@@ -624,16 +630,16 @@
       ],
       "reimport": false,
       "rig": "",
-      "scale": 0.4576,
+      "scale": 0.2046,
       "scene": "res://art/prefabs/building.geothermal_generator.tscn",
       "size_m": [
-        5.2,
-        5.12,
-        2.36
+        5.49,
+        2.61,
+        4.75
       ],
       "slot": "building.geothermal_generator",
-      "source": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Buildings/SM_Bld_Corp_Generator_01.tscn",
-      "summary": "footprint x0.458 -> 5.2x5.1x2.4 m (proxy 5.2x6.5x5.2)",
+      "source": "res://art/kits/Explorer_01_14_Pod_Silo_02.tscn",
+      "summary": "footprint x0.205 -> 5.5x2.6x4.7 m (proxy 5.2x6.5x5.2)",
       "uses_atlas": false,
       "warnings": []
     },

@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" path="res://assets/imported/meshy/ark_landed.glb" id="1_f8o4k"]
 
-[node name="building_ark_core" type="Node3D" unique_id=338386893]
+[node name="building_ark_core" type="Node3D" unique_id=836590676]
 metadata/synty_source = "res://assets/imported/meshy/ark_landed.glb"
 metadata/synty_fit = "footprint"
 

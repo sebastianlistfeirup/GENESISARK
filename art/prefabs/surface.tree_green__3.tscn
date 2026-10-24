@@ -4,14 +4,14 @@
 [ext_resource type="ArrayMesh" path="res://assets/Synty/PolygonSciFiWorlds/Models/extracted/SM_Env_Plant_Mushroom_01.res" id="2_4hmiw"]
 [ext_resource type="Material" path="res://assets/Synty/PolygonSciFiWorlds/Materials/Alts/PolygonScifiWorlds_01_A_mat.tres" id="3_1m11w"]
 
-[node name="surface_tree_green" type="Node3D" unique_id=1998755887]
+[node name="surface_tree_green" type="Node3D" unique_id=1349957568]
 metadata/synty_source = "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Plant_Mushroom_01.tscn"
 metadata/synty_fit = "natural"
 
-[node name="Model" type="Node3D" parent="." unique_id=1586468584]
+[node name="Model" type="Node3D" parent="." unique_id=153685244]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.1312939, 0.47852322, -0.56388426)
 
-[node name="SM_Env_Plant_Mushroom_01" type="MeshInstance3D" parent="Model" unique_id=240534454 instance=ExtResource("1_dpvof")]
+[node name="SM_Env_Plant_Mushroom_01" type="MeshInstance3D" parent="Model" unique_id=902965420 instance=ExtResource("1_dpvof")]
 gi_mode = 2
 mesh = ExtResource("2_4hmiw")
 surface_material_override/0 = ExtResource("3_1m11w")

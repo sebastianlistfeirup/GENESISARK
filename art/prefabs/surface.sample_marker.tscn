@@ -4,14 +4,14 @@
 [ext_resource type="ArrayMesh" path="res://assets/Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Tether_Pole_01.res" id="2_4gnw0"]
 [ext_resource type="Material" path="res://assets/Synty/PolygonSciFiWorlds/Materials/Alts/PolygonScifiWorlds_01_A_mat.tres" id="3_e8ohn"]
 
-[node name="surface_sample_marker" type="Node3D" unique_id=799630093]
+[node name="surface_sample_marker" type="Node3D" unique_id=1402038955]
 metadata/synty_source = "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_Tether_Pole_01.tscn"
 metadata/synty_fit = "natural"
 
-[node name="Model" type="Node3D" parent="." unique_id=199722506]
+[node name="Model" type="Node3D" parent="." unique_id=794860963]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.43933523, -0.12903139)
 
-[node name="SM_Prop_Tether_Pole_01" type="MeshInstance3D" parent="Model" unique_id=1511443620 instance=ExtResource("1_wuvvc")]
+[node name="SM_Prop_Tether_Pole_01" type="MeshInstance3D" parent="Model" unique_id=865842630 instance=ExtResource("1_wuvvc")]
 gi_mode = 2
 mesh = ExtResource("2_4gnw0")
 surface_material_override/0 = ExtResource("3_e8ohn")

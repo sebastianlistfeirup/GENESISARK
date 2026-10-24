@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" path="res://assets/Synty/SciFiSpace/FBX/SM_Prop_CryoBed_01.fbx" id="1_3p7gs"]
 
-[node name="ship_cryo_pod" type="Node3D" unique_id=152495886]
+[node name="ship_cryo_pod" type="Node3D" unique_id=569508733]
 metadata/synty_source = "res://assets/Synty/SciFiSpace/FBX/SM_Prop_CryoBed_01.fbx"
 metadata/synty_fit = "natural"
 

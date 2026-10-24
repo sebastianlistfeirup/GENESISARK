@@ -1,17 +1,79 @@
 [gd_scene format=3]
 
-[ext_resource type="PackedScene" path="res://assets/Synty/PolygonSciFiWorlds/Prefabs/Buildings/SM_Bld_Corp_Generator_01.tscn" id="1_roxij"]
-[ext_resource type="ArrayMesh" path="res://assets/Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Corp_Generator_01.res" id="2_4g4fc"]
-[ext_resource type="Material" path="res://assets/Synty/PolygonSciFiWorlds/Materials/Alts/PolygonScifiWorlds_01_A_mat.tres" id="3_wfyoq"]
+[ext_resource type="PackedScene" path="res://assets/Synty/PolygonSciFiWorlds/Prefabs/Buildings/SM_Bld_Pod_Silo_02.tscn" id="1_mrmdt"]
+[ext_resource type="ArrayMesh" path="res://assets/Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Pod_Silo_02.res" id="2_jj6xe"]
+[ext_resource type="Material" path="res://assets/Synty/PolygonSciFiWorlds/Materials/Alts/PolygonScifiWorlds_02_A_mat.tres" id="3_cp72a"]
+[ext_resource type="PackedScene" path="res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_Pod_Pipe_01_Connector_01.tscn" id="4_uut4p"]
+[ext_resource type="ArrayMesh" path="res://assets/Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Pod_Pipe_01_Connector_01.res" id="5_vher6"]
+[ext_resource type="PackedScene" path="res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_Pod_Pipe_01_End_01.tscn" id="6_7d4jj"]
+[ext_resource type="ArrayMesh" path="res://assets/Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Pod_Pipe_01_End_01.res" id="7_oyayn"]
+[ext_resource type="PackedScene" path="res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_Pod_Pipe_01_Connector_02.tscn" id="8_vv8rc"]
+[ext_resource type="ArrayMesh" path="res://assets/Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Pod_Pipe_01_Connector_02.res" id="9_n3wot"]
+[ext_resource type="PackedScene" path="res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_Crate_06.tscn" id="10_ashyr"]
+[ext_resource type="ArrayMesh" path="res://assets/Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Crate_06.res" id="11_yb7k1"]
+[ext_resource type="Material" path="res://assets/Synty/PolygonSciFiWorlds/Materials/Alts/PolygonScifiWorlds_01_A_mat.tres" id="12_v3s6s"]
+[ext_resource type="PackedScene" path="res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_Crate_04.tscn" id="13_y8e6p"]
+[ext_resource type="ArrayMesh" path="res://assets/Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Crate_04.res" id="14_pnrt4"]
+[ext_resource type="PackedScene" path="res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_Crate_03.tscn" id="15_6xmsk"]
+[ext_resource type="ArrayMesh" path="res://assets/Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Crate_03.res" id="16_uu22h"]
 
-[node name="building_geothermal_generator" type="Node3D" unique_id=1751625230]
-metadata/synty_source = "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Buildings/SM_Bld_Corp_Generator_01.tscn"
+[node name="building_geothermal_generator" type="Node3D" unique_id=352370876]
+metadata/synty_source = "res://art/kits/Explorer_01_14_Pod_Silo_02.tscn"
 metadata/synty_fit = "footprint"
 
-[node name="Model" type="Node3D" parent="." unique_id=1221093794]
-transform = Transform3D(0.45758244, 0, 0, 0, 0.45758244, 0, 0, 0, 0.45758244, 0, 0, 0)
+[node name="Model" type="Node3D" parent="." unique_id=679318351]
+transform = Transform3D(0.2045801, 0, 0, 0, 0.2045801, 0, 0, 0, 0.2045801, -0.14506745, 0.2401056, 0.07593608)
 
-[node name="SM_Bld_Corp_Generator_01" type="MeshInstance3D" parent="Model" unique_id=1599738229 instance=ExtResource("1_roxij")]
+[node name="SM_Bld_Pod_Silo_02" type="MeshInstance3D" parent="Model" unique_id=2022887589 instance=ExtResource("1_mrmdt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1920929e-07, -2.9270935)
 gi_mode = 2
-mesh = ExtResource("2_4g4fc")
-surface_material_override/0 = ExtResource("3_wfyoq")
+mesh = ExtResource("2_jj6xe")
+surface_material_override/0 = ExtResource("3_cp72a")
+
+[node name="SM_Prop_Pod_Pipe_01_Connector_01" type="MeshInstance3D" parent="Model" unique_id=1065083717 instance=ExtResource("4_uut4p")]
+transform = Transform3D(0.49999803, 0, 0.8660266, 0, 1, 0, -0.8660266, 0, 0.49999803, 10.4305725, 1.9250002, 8.406616)
+gi_mode = 2
+mesh = ExtResource("5_vher6")
+surface_material_override/0 = ExtResource("3_cp72a")
+
+[node name="SM_Prop_Pod_Pipe_01_End_01" type="MeshInstance3D" parent="Model" unique_id=1810452326 instance=ExtResource("6_7d4jj")]
+transform = Transform3D(0.49999803, 0, 0.8660266, 0, 1, 0, -0.8660266, 0, 0.49999803, 12.376221, 1.9250002, 0.4366684)
+gi_mode = 2
+mesh = ExtResource("7_oyayn")
+surface_material_override/0 = ExtResource("3_cp72a")
+
+[node name="SM_Prop_Pod_Pipe_01_Connector_02" type="MeshInstance3D" parent="Model" unique_id=1301733473 instance=ExtResource("8_vv8rc")]
+transform = Transform3D(0.49999997, 0, 0.86602545, 0, 1, 0, -0.86602545, 0, 0.49999997, 12.859467, 1.9300001, 9.739662)
+gi_mode = 2
+mesh = ExtResource("9_n3wot")
+surface_material_override/0 = ExtResource("3_cp72a")
+
+[node name="SM_Prop_Crate_06" type="MeshInstance3D" parent="Model" unique_id=1017462782 instance=ExtResource("10_ashyr")]
+transform = Transform3D(0.9857403, 0, 0.16827416, 0, 1, 0, -0.16827416, 0, 0.9857403, -1.007721, 0.27200013, -11.299675)
+gi_mode = 2
+mesh = ExtResource("11_yb7k1")
+surface_material_override/0 = ExtResource("12_v3s6s")
+
+[node name="SM_Prop_Crate_04" type="MeshInstance3D" parent="Model" unique_id=2042785721 instance=ExtResource("13_y8e6p")]
+transform = Transform3D(0.92129797, 0, 0.38885704, 0, 1, 0, -0.38885704, 0, 0.92129797, 3.0983505, 3.1740003, -10.090454)
+gi_mode = 2
+mesh = ExtResource("14_pnrt4")
+surface_material_override/0 = ExtResource("12_v3s6s")
+
+[node name="_MeshInstance3D_121" type="MeshInstance3D" parent="Model" unique_id=2106364684 instance=ExtResource("6_7d4jj")]
+transform = Transform3D(0.49999803, 0, 0.8660266, 0, 1, 0, -0.8660266, 0, 0.49999803, 8.438721, 1.9250002, 7.2566147)
+gi_mode = 2
+mesh = ExtResource("7_oyayn")
+surface_material_override/0 = ExtResource("3_cp72a")
+
+[node name="SM_Prop_Crate_03" type="MeshInstance3D" parent="Model" unique_id=1115376833 instance=ExtResource("15_6xmsk")]
+transform = Transform3D(0.94321036, 0, 0.33219686, 0, 1, 0, -0.33219686, 0, 0.94321036, -6.575226, 3.216, -10.150459)
+gi_mode = 2
+mesh = ExtResource("16_uu22h")
+surface_material_override/0 = ExtResource("12_v3s6s")
+
+[node name="_MeshInstance3D_122" type="MeshInstance3D" parent="Model" unique_id=1794880067 instance=ExtResource("15_6xmsk")]
+transform = Transform3D(-0.18351233, 0, 0.8141415, 0, 0.8345676, 0, -0.8141414, 0, -0.18351233, 3.1992798, 4.263, -10.174408)
+gi_mode = 2
+mesh = ExtResource("16_uu22h")
+surface_material_override/0 = ExtResource("12_v3s6s")
