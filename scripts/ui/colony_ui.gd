@@ -18,6 +18,18 @@ static func res_chip(icon_slot: String, text: String, tip: String, color: Color 
 	return p
 
 
+## Trust as a dial (R9): symbol + number, never colour alone. ▼ low, ▲ high, ◆ neutral.
+static func trust_chip(gs: GameState) -> PanelContainer:
+	var band := ChoiceRules.trust_band(GameSession.content, gs)
+	var sym := {"low": "▼", "high": "▲"}.get(band, "◆") as String
+	var why := ChoiceRules.trust_explanation(GameSession.content, gs)
+	var tip := Loc.t("Trust in the plan (0-100). Below %d people work more slowly and incubation needs larger reserves; above %d they work harder and crises cost less.") % [int(GameSession.content.bal("trust_effects.low", 35)), int(GameSession.content.bal("trust_effects.high", 65))]
+	if not why.is_empty():
+		tip += "
+" + why
+	return res_chip("ui.icon_population", Loc.t("%s Trust %d") % [sym, int(gs.society.trust)], tip, UiKit.WARN if band == "low" else (UiKit.OK if band == "high" else UiKit.TEXT))
+
+
 static func resource_bar(gs: GameState) -> HBoxContainer:
 	var h := UiKit.hbox(6)
 	var c := gs.colony
@@ -33,6 +45,7 @@ static func resource_bar(gs: GameState) -> HBoxContainer:
 	h.add_child(res_chip("ui.icon_food", "%d" % int(c.inventory["food"]), Loc.t("Food in person-days (+%.0f/day)") % float(rep.get("produced", {}).get("food", 0.0))))
 	h.add_child(res_chip("ui.icon_water", (UiKit.status_text("warning", Loc.t("Reserve %s d") % rd_text) if rd < 30 else Loc.t("Reserve %s d") % rd_text), Loc.t("Days that water and food will last for the current population."), UiKit.WARN if rd < 30 else UiKit.TEXT))
 	h.add_child(res_chip("ui.icon_population", "%d" % gs.population.alive_count(), Loc.t("Living population (cohorts)")))
+	h.add_child(trust_chip(gs))
 	h.add_child(res_chip("ui.icon_embryo", UiKit.thousands(gs.ark.embryo_viable), Loc.t("Viable embryos (%d in incubation, %d born)") % [gs.ark.embryo_incubating, gs.ark.embryo_born]))
 	h.add_child(res_chip("ui.icon_fuel", Loc.t("Ark %d") % int(c.ark_fuel), Loc.t("The Ark's fuel for emergency power (%d kW). If it runs out, the colony loses the Ark's power.") % int(pw.get("ark_kw", 0))))
 	return h

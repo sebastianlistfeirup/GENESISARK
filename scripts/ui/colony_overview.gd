@@ -125,7 +125,7 @@ func _future_tab() -> Control:
 	var sim: Simulation = GameSession.sim
 	var y := gs.campaign.colony_year()
 	v.add_child(UiKit.title(Loc.t("Generation leap")))
-	v.add_child(UiKit.label(Loc.t("Plan: approx. %d births a year, cohorts of %d, construction as needed.") % [int(EraService.default_plan(20)["births_per_year"]), int(EraService.default_plan(20)["cohort_size"])], 15, UiKit.TEXT, true))
+	v.add_child(UiKit.label(Loc.t("Plan: approx. %d births a year, cohorts of %d, construction as needed.") % [int(ChoiceRules.births_per_year(GameSession.content, gs, float(EraService.default_plan(20)["births_per_year"]))), int(EraService.default_plan(20)["cohort_size"])], 15, UiKit.TEXT, true))
 	v.add_child(UiKit.label(Loc.t("A leap is a forecast, not a fast-forward button. The simulator calculates supply, aging, work and planned events day by day, and stops before an unresolved crisis or a deficit. ARK and the colony's institutions carry daily life according to the plan: incubation when conditions allow, construction as needed."), 15, UiKit.MUTED, true))
 	_target = 20 if y < 20.0 else 40
 	var blockers := sim.era.leap_blockers(gs)
@@ -164,7 +164,8 @@ func _future_tab() -> Control:
 		fp.add_child(fv)
 		v.add_child(fp)
 	v.add_child(UiKit.title(Loc.t("Council and handover")))
-	v.add_child(UiKit.label(Loc.t("Council: %s · Trust %d · Autonomy %d") % ["samlet" if gs.society.council_formed else Loc.t("not convened"), int(gs.society.trust), int(gs.society.autonomy)], 16))
+	v.add_child(UiKit.label(Loc.t("Council: %s · Trust %d · Autonomy %d") % [Loc.t("convened") if gs.society.council_formed else Loc.t("not convened"), int(gs.society.trust), int(gs.society.autonomy)], 16))
+	_choice_lines(v, gs)
 	var m := sim.endings.metrics(gs)
 	var prof := sim.endings.profile_for(m)
 	v.add_child(UiKit.label(Loc.t("If you hand over now: %s — %s") % [GameSession.content.endings.get(prof, {}).get("title", prof), GameSession.content.endings.get(prof, {}).get("criteria_text", "")], 15, UiKit.TEXT, true))
@@ -177,6 +178,21 @@ func _future_tab() -> Control:
 	hb.tooltip_text = Loc.t("Possible from year 20. The ending reflects the colony's actual resilience.")
 	v.add_child(hb)
 	return sv[0]
+
+
+## R9: why the colony behaves as it does now: the chosen course and the trust dial.
+func _choice_lines(v: VBoxContainer, gs: GameState) -> void:
+	var content: ContentDB = GameSession.content
+	var why := ChoiceRules.trust_explanation(content, gs)
+	if not why.is_empty():
+		var band := ChoiceRules.trust_band(content, gs)
+		v.add_child(UiKit.label(("▼ " if band == "low" else "▲ ") + why, 15, UiKit.WARN if band == "low" else UiKit.OK, true))
+	var prio := ChoiceRules.active_priority(gs)
+	if prio.is_empty():
+		return
+	var d := ChoiceRules.describe(content, prio)
+	var names := {"expansion": Loc.t("expansion"), "safety": Loc.t("safety"), "self_determination": Loc.t("self-determination")}
+	v.add_child(UiKit.label(Loc.t("Course: %s. Gain: %s. Price: %s.") % [names.get(prio, prio), ", ".join(d["gain"]), ", ".join(d["price"])], 15, UiKit.TEXT, true))
 
 
 func _start_forecast() -> void:

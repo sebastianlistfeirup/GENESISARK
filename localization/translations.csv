@@ -772,6 +772,19 @@ The number must be positive.,Antallet skal være positivt.
 The planet requires a habitat with a filter module.,Planeten kræver et habitat med filtermodul.
 The planet requires a habitat with a heating module.,Planeten kræver et habitat med varmemodul.
 no power to the care center,ingen strøm til omsorgscentret
+A council can form with %d adults,Et råd kan dannes med %d voksne
+Adults work 1 in %d instead of 1 in %d,Hver %d. voksne arbejder i stedet for hver %d.
+Birth plan %+d per year,Fødselsplan %+d om året
+Construction %+d%% speed,Byggeri %+d%% hastighed
+Crisis damage %+d%%,Kriseskader %+d%%
+Districts grow %+d%% faster,Distrikterne vokser %+d%% hurtigere
+Institutions keep a %d%% larger power margin,Institutionerne holder en %d%% større strømmargin
+Institutions keep a %d%% smaller power margin and lean on the Ark's emergency power,Institutionerne holder en %d%% mindre strømmargin og læner sig op ad Arkens nødstrøm
+"People trust the plan: adult work %d%%, crises cost %d%% less.","Folk stoler på planen: de voksne arbejder %d%%, og kriser koster %d%% mindre."
+"People work more slowly: they don't trust the plan. Adult work %d%%, incubation needs %d days of reserves.","Folk arbejder langsommere: de stoler ikke på planen. De voksne arbejder %d%%, og inkubation kræver reserver til %d dage."
+Storage limits %+d%%,Lagerloft %+d%%
+The Ark's emergency power is wound down %d times faster,Arkens nødstrøm trappes %d gange hurtigere ned
+Wear %+d%%,Slid %+d%%
 The colony's first council has convened.,Koloniens første råd er samlet.
 The council already exists.,Rådet findes allerede.
 The council requires a completed school and town hall.,Rådet kræver et færdigt skole- og rådhus.
@@ -975,6 +988,7 @@ Cohort %d · %d embryos · incubation %d/%d days%s,Kohorte %d · %d embryoner ·
 Cohorts,Kohorter
 Council and handover,Råd og overdragelse
 Council: %s · Trust %d · Autonomy %d,Rådet: %s · Tillid %d · Selvbestemmelse %d
+Course: %s. Gain: %s. Price: %s.,Kurs: %s. Gevinst: %s. Pris: %s.
 Drones: %.1f · Stable days in a row: %d,Droner: %.1f · Stabile dage i træk: %d
 "Embryo ledger (always 50,000)",Embryoregnskab (altid 50.000)
 Forecast: year %.1f → year %.1f (%d days),Prognose: år %.1f → år %.1f (%d dage)
@@ -1002,7 +1016,11 @@ Water and food,Vand og mad
 Year %.1f · day %d · %s,År %.1f · dag %d · %s
 adults,voksne
 children,børn
+convened,samlet
+expansion,ekspansion
 not convened,ikke samlet
+safety,sikkerhed
+self-determination,selvbestemmelse
 storm,storm
 ● None. All completed buildings are running.,● Ingen. Alle færdige bygninger kører.
 "
@@ -1010,6 +1028,7 @@ This planet requires the module before the habitat is safe.","
 Denne planet kræver modulet, før habitatet er sikkert."
  (depends on the planet), (afhænger af planeten)
 %+.1f kW · %d kWh,%+.1f kW · %d kWh
+%s Trust %d,%s Tillid %d
 "Add %s (%d mat., %d comp., %+d kW)","Tilføj %s (%d mat., %d komp., %+d kW)"
 Ark %d,Ark %d
 Building material,Byggemateriale
@@ -1039,6 +1058,7 @@ Produces: %s %s/day,Producerer: %s %s/dag
 Reserve %s d,Reserve %s d
 Start incubation (%d embryos),Start inkubation (%d embryoner)
 "The Ark's fuel for emergency power (%d kW). If it runs out, the colony loses the Ark's power.","Arkens brændstof til nødstrøm (%d kW). Slipper det op, mister kolonien arkens strøm."
+Trust in the plan (0-100). Below %d people work more slowly and incubation needs larger reserves; above %d they work harder and crises cost less.,"Tillid til planen (0-100). Under %d arbejder folk langsommere, og inkubation kræver større reserver; over %d arbejder de hårdere, og kriser koster mindre."
 Under construction: %d%%,Under opførelse: %d%%
 "Viable embryos (%d in incubation, %d born)","Levedygtige embryoner (%d i inkubation, %d født)"
 Water in person-days (+%.0f/day),Vand i persondøgn (+%.0f/dag)
@@ -1052,15 +1072,14 @@ Credits,Krediteringer
 Licenses,Licenser
 "The game uses Godot Engine, released under the MIT license:","Spillet bruger Godot Engine, udgivet under MIT-licensen:"
 Third-party components in Godot Engine:,Tredjepartskomponenter i Godot Engine:
+Gain: %s,Gevinst: %s
+Price: %s,Pris: %s
 Support %s (%s),Støt %s (%s)
-"Those born here have their own answers to what the colony should be. Your choice changes trust, autonomy and what the institutions prioritize. No answer is the right one.","De, der blev født her, har deres egne svar på, hvad kolonien skal være. Dit valg ændrer tillid, selvbestemmelse og hvad institutionerne prioriterer. Ingen svar er det rigtige."
+Those born here have their own answers to what the colony should be. Your choice sets the colony's lasting course until the next decision: each has a gain and a price. No answer is the right one.,"De, der er født her, har deres egne svar på, hvad kolonien skal være. Dit valg sætter koloniens varige kurs indtil næste beslutning: hvert valg har en gevinst og en pris. Intet svar er det rigtige."
 We can't afford to lose anything. Reserves before everything else.,Vi har ikke råd til at miste noget. Reserver før alt andet.
 We have to move on. The valleys to the north could feed thousands.,Vi skal videre. Dalene mod nord kan brødføde tusinder.
 We want to decide for ourselves. Give the council the keys.,Vi vil selv bestemme. Giv rådet nøglerne.
 Year %d: the first generation speaks,År %d: den første generation taler
-expansion,ekspansion
-safety,sikkerhed
-self-determination,selvbestemmelse
 %d people · %s · own power %.0f / %.0f kW · reserve %s days · %d crises resolved · the captain in stasis for %d years,%d mennesker · %s · egen strøm %.0f / %.0f kW · reserve %s dage · %d kriser løst · kaptajnen i stasis i %d år
 Continue from the last save before the handover,Fortsæt fra seneste save før overdragelsen
 EPILOGUE,EPILOG

@@ -28,7 +28,7 @@ func refresh() -> void:
 	var gs: GameState = GameSession.state
 	for o: Dictionary in DictUtil.get_arr(event_def, "options"):
 		var blockers := GameSession.sim.events.option_blockers(gs, event_def, o)
-		var cost: Dictionary = DictUtil.get_dict(o, "cost")
+		var cost: Dictionary = GameSession.sim.events.option_cost(gs, event_def, o)
 		var parts: Array = []
 		for k: String in cost.keys():
 			if float(cost[k]) > 0.0:
