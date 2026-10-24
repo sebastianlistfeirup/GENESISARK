@@ -9,7 +9,7 @@
 | current_phase | 1 · Fundament (port ikke bestået endnu) |
 | last_passed_gate | — (fase 1-porten kræver GA-11 og GA-12 DONE) |
 | active_task | GA-11 (menneskelig gennemspilning) · GA-12 Windows-kørsel bestået · GA-13/14 Synty + figurer integreret (afventer din visuelle godkendelse) |
-| last_commit | se `git log -1` (session 8, 24.10.2026: landing i realtid, nøglebillede-planeter, ny UI, Godot 4.7.2) |
+| last_commit | se `git log -1` (session 9, 24.10.2026: holo-terminaler og menuer, dyreliv, Meshy-heltemotiver, opvågning, ydelse inden for budget) |
 | next_command | `tools/check.sh` og derefter `godot --path .` |
 
 ## Tests kørt (faktiske resultater på dette commit)
@@ -93,6 +93,19 @@
 | Tilgængelighed | Alt kan ombindes, paneler og HUD passer i 1280×720 ved UI-skala 1,5, symboler ved siden af farver, visuel alarm, undertekststørrelse virker overalt; 5 nye scenetests. Åbent: lille tekst ved skala 1,0 i 1280×720 (standardskala er dit valg), ingen ombinding af controller (D-018), ingen advarsel ved dobbelt-bundne taster. | `evidence/a11y/audit.md` |
 | R9-forslag | Tre lag til valg med konsekvens, med målepunkter til kampagnebotten. | `docs/proposals/R9_valg_med_konsekvens.md` |
 | R9 implementeret | Lag 1 (varig kurs ved år 20/40), lag 2 (tillid < 35 / > 65 med HUD-symbol og forklaring i Fremtid-fanen), lag 3 (ét efterspil pr. hændelse), skærpet *skærmet*. Bot: befolkning år 40 spreder 21-24 % mellem spillestile, to slutprofiler blandt normale spillestile, 0 fejl; balance 18/18. 81 domænetests. | D-034, `evidence/R9/result.json` |
+
+## Nyt i session 9 (24.10.2026): holo-konsoller, levende planeter, opvågningen, ydelse
+
+| Område | Hvad | Hvor |
+|---|---|---|
+| Skibets terminaler | Stjernekort, sammenligning, kredsløb, landing, embryobank og værksted som levende holo-konsoller (Synty Sci-Fi Menus + Soldier HUD): opstart med flimmer, drejende planeter, flydende ruter, videnskort med usikkerhedsbjælker, tællere | D-055 |
+| Alle andre menuer | Indstillinger (faner, live-forhåndsvisning), gem/indlæs som kort, journal, kolonioversigt som dashboard, bygningskort, hændelser/beslutninger med de tre stemmer, HUD-chips, epilog | D-059 |
+| Dyreliv | Flokke og kæmper på alle seks planeter, flygter fra kaptajnen | D-053 |
+| Meshy + image-to-3D-skill | Sporetræer (Umbra), malmkrystaller (Ferrum), kronetræer (Viridia), isbuer (Nivalis), havleviathan (Pelagos) – lokale filer | D-057, D-058 |
+| Øjeblikke | Opvågning i kryokapslen, strømmen som bølge, dragtscanner [C], skydække, stedskort mellem scener, planeten i broens vindue | D-060–D-062 |
+| Ydelse | Alle 10 målescener inden for budget (år-20-kolonien 6,5 → 2,9 mio. trekanter) via automatiske LOD'er, opdelte MultiMeshes og skygge-LOD | D-054 |
+| Lyd | ElevenLabs-generatorer for lydeffekter, musik og stemmer (ARK med egen AI-farvet bus); filerne er lokale | tools/audio/ |
+| Værktøjskæde | DeepSeek-review af nedstigning og opvågning (rettet), lokal Qwen-kritik af stjernekortet (gennemført), Meshy tekst-til-billede → billede-til-3D | evidence/advisers/ |
 
 ## Nyt i session 8 (24.10.2026): landing i realtid, planeterne som nøglebillederne, ny brugerflade, Godot 4.7.2
 
