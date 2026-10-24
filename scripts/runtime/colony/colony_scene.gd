@@ -184,16 +184,25 @@ func _draw_districts() -> void:
 		var spec := GroundCover.spec_for(gs_planet_id(), "")
 		var rock := GroundCover.mesh_of(str(spec.get("blocked_rock", "")), DictUtil.get_dict(spec, "look"))
 		if not rock.is_empty():
-			# The world's own rock formation marks ground that cannot be built on.
+			# The world's own rock formation marks ground that cannot be built on: a
+			# low cluster of outcrops across the zone (one big piece scaled to the zone's
+			# width filled the default colony camera), each at most ~0.55 x radius high.
 			var rb: AABB = rock[2]
-			var mi := MeshInstance3D.new()
-			mi.mesh = rock[0]
-			var sc := DictUtil.get_float(bz, "radius") * 2.2 / maxf(maxf(rb.size.x, rb.size.z), 0.1)
-			# A tall formation scaled to the zone's width towered 40-50 m over the town
-			# and filled the default colony camera: keep it a hill (at most 1.3 x radius high).
-			var sy := minf(sc, DictUtil.get_float(bz, "radius") * 1.3 / maxf(rb.size.y, 0.1))
-			mi.transform = Transform3D(Basis(Vector3.UP, float(absi(hash(bc)) % 628) / 100.0).scaled(Vector3(sc, sy, sc)), Vector3(float(bc[0]), terrain.height_at(float(bc[0]), float(bc[1])) - rb.position.y * sy - 0.4, float(bc[1]))) * (rock[1] as Transform3D)
-			add_child(mi)
+			var r := DictUtil.get_float(bz, "radius")
+			var rng := RandomNumberGenerator.new()
+			rng.seed = absi(hash(bc))
+			var pieces := [[Vector2.ZERO, 1.0]]
+			for k: int in 4:
+				pieces.append([Vector2.from_angle(TAU * k / 4.0 + rng.randf_range(-0.5, 0.5)) * r * rng.randf_range(0.45, 0.7), rng.randf_range(0.45, 0.7)])
+			for pc: Array in pieces:
+				var w := r * 1.0 * float(pc[1])
+				var sc := w / maxf(maxf(rb.size.x, rb.size.z), 0.1)
+				var sy := minf(sc, r * 0.55 * float(pc[1]) / maxf(rb.size.y, 0.1))
+				var pos := Vector2(float(bc[0]), float(bc[1])) + (pc[0] as Vector2)
+				var mi := MeshInstance3D.new()
+				mi.mesh = rock[0]
+				mi.transform = Transform3D(Basis(Vector3.UP, rng.randf() * TAU).scaled(Vector3(sc, sy, sc)), Vector3(pos.x, terrain.height_at(pos.x, pos.y) - rb.position.y * sy - 0.4, pos.y)) * (rock[1] as Transform3D)
+				add_child(mi)
 			continue
 		var m := VisualSlot.make("surface.rock_large", "#5f5d58")
 		m.position = Vector3(float(bc[0]), terrain.height_at(float(bc[0]), float(bc[1])) - 0.5, float(bc[1]))
