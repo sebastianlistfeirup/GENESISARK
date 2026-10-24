@@ -574,7 +574,7 @@ func debug_action(action: String) -> void:
 ## already holds the landed state); skipped in tests, evidence captures (unless
 ## --action=intro), saved mid-expedition, and shortened with reduced motion.
 func _maybe_landing_intro(ex: ExpeditionState) -> void:
-	if AppFlow.test_mode or ex.elapsed_s > 0.5 or not ex.samples.is_empty():
+	if AppFlow.test_mode or ex.elapsed_s > 0.5 or not ex.samples.is_empty() or bool(AppFlow.params.get("no_intro", false)):
 		return
 	var action := str(AppFlow.params.get("action", ""))
 	if (DebugCapture.requested() or PerfProbe.requested()) and action != "intro" and not action.begins_with("descent"):
