@@ -7,6 +7,7 @@ extends Node3D
 ## oxygen, evasive burns and the autopilot cost fuel. Autopilot = NAV flies:
 ## cautious, fewer impacts, more fuel.
 ## Controls: W/S speed · A/D sideways · Space/Ctrl up/down · Shift evasive burn · F autopilot.
+## V (camera_view) switches between the chase camera and the cockpit (D-044).
 
 const LENGTH := 1100.0      # metres from the start to orbit insertion
 const SHIP_R := 6.0         # collision radius of the ark
@@ -36,6 +37,11 @@ var _cleared := false
 var _start_integrity := 100.0
 var _start_oxygen := 100.0
 var scenery: SpaceScenery  # non-colliding backdrop + hazard rock models (presentation only)
+## Cockpit or chase camera; remembered for the session (presentation only).
+static var cockpit_view := false
+var cockpit: FlightCockpit
+var _ark_visual: VisualSlot
+var _thr: Node3D
 
 
 func _ready() -> void:
@@ -49,6 +55,19 @@ func _ready() -> void:
 	var backdrop := SpaceBackdrop.new()
 	add_child(backdrop)
 	backdrop.set_depth_haze(Color("2a1f4a"), 0.00045)
+	# The system's sun ahead and to the left, like the key art: its fiery
+	# nebula region and lens streak sit in the frame (sky shader LIGHT0).
+	backdrop.set_sun(Vector3(-4.0, -138.0, 0.0), 1.7)
+	# The sun is ahead, so the rocks the pilot sees face away from it: a lilac
+	# fill from behind the camera and a brighter ambient keep them warm-lit stone
+	# instead of black cut-outs (the key art lights its asteroids from the front).
+	backdrop.fill.rotation_degrees = Vector3(-28.0, 22.0, 0.0)
+	backdrop.fill.light_color = Color("d6a0ff")
+	backdrop.fill.light_energy = 1.15
+	backdrop.environment.ambient_light_energy = 1.0
+	# The cockpit is lit by its own lamps only (FlightCockpit.LAYER).
+	backdrop.sun.light_cull_mask &= ~FlightCockpit.LAYER
+	backdrop.fill.light_cull_mask &= ~FlightCockpit.LAYER
 	var pid := str(GameSession.content.locations.get(_dest, {}).get("planet_id", "viridia"))
 	var p := GameSession.content.planet(pid)
 	scenery = SpaceScenery.new().setup(str(p.get("biome_id", "green")), hash(pid))
@@ -57,18 +76,18 @@ func _ready() -> void:
 	planet.scale = Vector3.ONE * 3.0
 	planet.position = Vector3(0, -120, -LENGTH - 300.0)
 	add_child(planet)
-	PlanetLook.apply(planet, str(p.get("biome_id", "green")), str(p.get("palette", {}).get("nature", "")), hash(pid))
+	PlanetLook.apply(planet, str(p.get("biome_id", "green")), str(p.get("palette", {}).get("nature", "")), hash(pid), pid)
 	ship = Node3D.new()
-	ship.add_child(VisualSlot.make("space.ark_exterior"))
+	_ark_visual = VisualSlot.make("space.ark_exterior")
+	ship.add_child(_ark_visual)
 	add_child(ship)
-	var thr := VisualSlot.make("fx.thruster")
-	thr.position = Vector3(0, -1.5, 15)
-	ship.add_child(thr)
+	_dress_ark()
 	cam = Camera3D.new()
 	cam.far = 5000
 	cam.fov = 70
 	add_child(cam)
 	cam.global_position = Vector3(0, 9, 34)
+	_build_cockpit()
 	_spawn_hazard(hash(str(pa.get("txn", _dest))))
 	hud = GameHud.new()
 	add_child(hud)
@@ -82,8 +101,12 @@ func _ready() -> void:
 		"hint": Loc.t("Steer around the rocks, or let NAV fly. Impacts cost hull and oxygen.")})
 	hud.dock_prompt_low()  # no subtitles here: the controls line sits under the Ark, never on it
 	var k := SettingsService.primary_key
-	hud.set_prompt(Loc.t("%s/%s speed · %s/%s sideways · %s/%s up/down · [%s] evasive burn · [%s] autopilot") % [k.call("move_forward"), k.call("move_back"),
-		k.call("move_left"), k.call("move_right"), k.call("ascend"), k.call("descend"), k.call("sprint"), k.call("autopilot")])
+	if cockpit != null:
+		hud.set_prompt(Loc.t("%s/%s speed · %s/%s sideways · %s/%s up/down · [%s] evasive burn · [%s] autopilot · [%s] view") % [k.call("move_forward"), k.call("move_back"),
+			k.call("move_left"), k.call("move_right"), k.call("ascend"), k.call("descend"), k.call("sprint"), k.call("autopilot"), k.call("camera_view")])
+	else:
+		hud.set_prompt(Loc.t("%s/%s speed · %s/%s sideways · %s/%s up/down · [%s] evasive burn · [%s] autopilot") % [k.call("move_forward"), k.call("move_back"),
+			k.call("move_left"), k.call("move_right"), k.call("ascend"), k.call("descend"), k.call("sprint"), k.call("autopilot")])
 	AudioService.set_ambience("amb_space")
 	_thruster = AudioStreamPlayer.new()
 	_thruster.stream = AudioService.stream("sfx_thruster")
@@ -94,6 +117,70 @@ func _ready() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	if GameSession.has_game():
 		hud.nav.say(GameSession.sim.nav.approach_start(_hazard, _belt_start()))
+
+
+## The Ark exterior like the key art's capital ships (D-044): the carrier is
+## turned so its engines face the chase camera (the model's bow is +Z; the
+## flight flies -Z), lit window strips, glowing nozzles and trails. Without the
+## pack (proxy model) the old thruster effect stays.
+func _dress_ark() -> void:
+	var spec: Dictionary = DictUtil.get_dict(scenery.doc, "ark_fx") if scenery else {}
+	if _ark_visual.using_asset and not spec.is_empty():
+		if bool(spec.get("flip", false)):
+			_ark_visual.rotation_degrees.y = 180.0
+		SpaceFx.dress_ark(_ark_visual, spec)
+	else:
+		_thr = VisualSlot.make("fx.thruster")
+		_thr.position = Vector3(0, -1.5, 15)
+		ship.add_child(_thr)
+
+
+func _build_cockpit() -> void:
+	var spec: Dictionary = DictUtil.get_dict(scenery.doc, "cockpit") if scenery else {}
+	if spec.is_empty() or scenery.atlas == null:
+		return
+	var c := FlightCockpit.new()
+	if not c.build(spec, scenery.atlas):
+		c.free()
+		return
+	cockpit = c
+	var m: Array = DictUtil.get_arr(spec, "mount")
+	cockpit.position = Vector3(float(m[0]), float(m[1]), float(m[2])) if m.size() == 3 else Vector3(0, 0.8, -3)
+	ship.add_child(cockpit)
+	_set_view(cockpit_view)
+
+
+func _set_view(inside: bool) -> void:
+	cockpit_view = inside and cockpit != null
+	if cockpit:
+		cockpit.visible = cockpit_view
+	_ark_visual.visible = not cockpit_view
+	if _thr:
+		_thr.visible = not cockpit_view
+	cam.fov = 74.0 if cockpit_view else 70.0
+	cam.near = 0.03 if cockpit_view else 0.05
+
+
+func _update_camera(delta: float) -> void:
+	if cockpit_view:
+		# Bank with the Ark, but softer than the hull rolls (none with reduced motion).
+		var calm := FxEffect.reduced_motion()
+		var shake := 0.0
+		if _shake > 0.0:
+			shake = clampf(_shake / 0.6, 0.0, 1.0)
+		var xf := cockpit.eye.global_transform * cockpit.sway(shake)
+		var counter := ship.rotation.z * (1.0 if calm else 0.55)
+		xf.basis = xf.basis * Basis(Vector3(0, 0, 1), -counter)
+		cam.global_transform = xf
+		if _shake > 0.0:
+			_shake -= delta
+		return
+	var behind := Vector3(0, 9, 34)
+	cam.global_position = cam.global_position.lerp(ship.global_position + behind, clampf(delta * 5.0, 0, 1))
+	if _shake > 0.0:
+		_shake -= delta
+		cam.global_position += Vector3(randf_range(-0.5, 0.5), randf_range(-0.5, 0.5), 0)
+	cam.look_at(ship.global_position + Vector3(0, 2, -40))
 
 
 func _route_hazard(gs: GameState) -> Dictionary:
@@ -154,6 +241,11 @@ func _spawn_hazard(seed_value: int) -> void:
 func _physics_process(delta: float) -> void:
 	if _done or hud.any_modal_open():
 		return
+	if Input.is_action_just_pressed("camera_view") and cockpit != null:
+		_set_view(not cockpit_view)
+		if not cockpit_view:
+			cam.global_position = ship.global_position + Vector3(0, 9, 34)
+		AudioService.ui("ui_confirm")
 	if Input.is_action_just_pressed("autopilot"):
 		autopilot = not autopilot
 		autopilot_used = autopilot_used or autopilot
@@ -186,12 +278,7 @@ func _physics_process(delta: float) -> void:
 	if _warn_t <= 0.0:
 		_warn_t = 0.4
 		_collision_warnings()
-	var behind := Vector3(0, 9, 34)
-	cam.global_position = cam.global_position.lerp(ship.global_position + behind, clampf(delta * 5.0, 0, 1))
-	if _shake > 0.0:
-		_shake -= delta
-		cam.global_position += Vector3(randf_range(-0.5, 0.5), randf_range(-0.5, 0.5), 0)
-	cam.look_at(ship.global_position + Vector3(0, 2, -40))
+	_update_camera(delta)
 	_thruster.pitch_scale = 0.7 + speed / 100.0 + (0.2 if burning else 0.0)
 	var progress := -ship.position.z
 	if not _cleared and progress > _belt_start() + 330.0 and str(_hazard.get("type")) != "none":
@@ -323,4 +410,10 @@ func debug_action(action: String) -> void:
 		"belt":
 			ship.position.z = -_belt_start() + 40.0
 			for i: int in 60:
+				_physics_process(1.0 / 60.0)
+		"cockpit", "cockpit_belt":  # evidence: the view from the bridge
+			_set_view(true)
+			if action == "cockpit_belt":
+				ship.position.z = -_belt_start() + 40.0
+			for i: int in 30:
 				_physics_process(1.0 / 60.0)

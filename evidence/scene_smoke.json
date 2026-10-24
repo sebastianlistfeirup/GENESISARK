@@ -6,7 +6,7 @@
       "ok": true
     },
     {
-      "detail": "@Button@57:<Button#134167398273>",
+      "detail": "@Button@58:<Button#135895451537>",
       "name": "pad_focuses_menu",
       "ok": true
     },
@@ -96,12 +96,12 @@
       "ok": true
     },
     {
-      "detail": "dyaw=-0.61",
+      "detail": "dyaw=-0.60",
       "name": "pad_look_turns_camera",
       "ok": true
     },
     {
-      "detail": "I_power_coupling:<Area3D#300110846524>",
+      "detail": "I_power_coupling:<Area3D#301872454214>",
       "name": "prompt_targets_coupling",
       "ok": true
     },
@@ -284,5 +284,5 @@
   "engine_version": "4.7.1-stable (official)",
   "failures": [],
   "status": "PASS",
-  "timestamp": "2026-10-24T12:55:11"
+  "timestamp": "2026-10-24T13:27:49"
 }

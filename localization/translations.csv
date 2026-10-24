@@ -620,6 +620,7 @@ Autopilot,Autopilot
 Back,Tilbage
 Build here,Byg her
 Cancel,Fortryd
+Cockpit / chase view (flight),Cockpit / kamera bagfra (flyvning)
 Colony mode,Kolonitilstand
 Confirm,Bekræft
 Descend (flight),Dyk (flyvning)
@@ -649,6 +650,7 @@ Log,Log
 Rotate,Drej
 Rotate your phone to landscape,Drej telefonen til liggende format
 Time,Tid
+View,Visning
 Already registered.,Allerede registreret.
 Emergency power is already running.,Nødstrømmen kører allerede.
 Emergency power restored. The bridge and the star map are back online.,Nødstrøm genoprettet. Broen og stjernekortet er online igen.
@@ -910,6 +912,7 @@ Year %d · day %d   %s,År %d · dag %d   %s
 "
 locked,låst
 %s/%s speed · %s/%s sideways · %s/%s up/down · [%s] evasive burn · [%s] autopilot,%s/%s fart · %s/%s sideværts · %s/%s op/ned · [%s] undvigemanøvre · [%s] autopilot
+%s/%s speed · %s/%s sideways · %s/%s up/down · [%s] evasive burn · [%s] autopilot · [%s] view,%s/%s fart · %s/%s sideværts · %s/%s op/ned · [%s] undvigemanøvre · [%s] autopilot · [%s] visning
 AUTOPILOT (NAV),AUTOPILOT (NAV)
 "Approach: %s
 Orbit in %d m · speed %d
