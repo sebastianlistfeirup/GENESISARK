@@ -4,14 +4,14 @@
 [ext_resource type="ArrayMesh" path="res://assets/Synty/PolygonSciFiWorlds/Models/extracted/SM_Env_Plant_Coral_01.res" id="2_xue0r"]
 [ext_resource type="Material" path="res://assets/Synty/PolygonSciFiWorlds/Materials/Alts/PolygonScifiWorlds_01_A_mat.tres" id="3_posiq"]
 
-[node name="surface_plant_green" type="Node3D" unique_id=1437664372]
+[node name="surface_plant_green" type="Node3D" unique_id=1389101750]
 metadata/synty_source = "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Plant_Coral_01.tscn"
 metadata/synty_fit = "natural"
 
-[node name="Model" type="Node3D" parent="." unique_id=1403044718]
+[node name="Model" type="Node3D" parent="." unique_id=1369272682]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.021432161, -0.06606771, -0.14069575)
 
-[node name="SM_Env_Plant_Coral_01" type="MeshInstance3D" parent="Model" unique_id=500579865 instance=ExtResource("1_anrd0")]
+[node name="SM_Env_Plant_Coral_01" type="MeshInstance3D" parent="Model" unique_id=330875677 instance=ExtResource("1_anrd0")]
 gi_mode = 2
 mesh = ExtResource("2_xue0r")
 surface_material_override/0 = ExtResource("3_posiq")

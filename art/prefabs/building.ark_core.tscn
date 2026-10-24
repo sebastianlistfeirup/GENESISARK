@@ -4,14 +4,14 @@
 [ext_resource type="ArrayMesh" path="res://assets/Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Corp_Comms_01.res" id="2_nfao1"]
 [ext_resource type="Material" path="res://assets/Synty/PolygonSciFiWorlds/Materials/Alts/PolygonScifiWorlds_01_A_mat.tres" id="3_mcijx"]
 
-[node name="building_ark_core" type="Node3D" unique_id=38710223]
+[node name="building_ark_core" type="Node3D" unique_id=2030376226]
 metadata/synty_source = "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Buildings/SM_Bld_Corp_Comms_01.tscn"
 metadata/synty_fit = "footprint"
 
-[node name="Model" type="Node3D" parent="." unique_id=438234385]
+[node name="Model" type="Node3D" parent="." unique_id=1605834251]
 transform = Transform3D(0.6188342, 0, 0, 0, 0.6188342, 0, 0, 0, 0.6188342, 0, 0.17477976, -4.7683716e-07)
 
-[node name="SM_Bld_Corp_Comms_01" type="MeshInstance3D" parent="Model" unique_id=130255915 instance=ExtResource("1_y615o")]
+[node name="SM_Bld_Corp_Comms_01" type="MeshInstance3D" parent="Model" unique_id=266574557 instance=ExtResource("1_y615o")]
 gi_mode = 2
 mesh = ExtResource("2_nfao1")
 surface_material_override/0 = ExtResource("3_mcijx")
