@@ -44,6 +44,9 @@ func _run() -> void:
 		GameSession.reload_content()
 	if ui_scale > 0.0:
 		get_tree().root.content_scale_factor = ui_scale  # never written to settings.cfg
+	if extra.has("reduced_motion"):  # --reduced_motion=1: in memory only, never saved
+		SettingsService.values["reduced_motion"] = str(extra["reduced_motion"]) == "1"
+		UiKit.reset_theme()
 	DebugFixtures.prepare(setup)
 	if scene_key != "menu" and not extra.has("no_scene"):
 		AppFlow.params = extra

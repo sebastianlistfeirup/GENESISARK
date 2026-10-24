@@ -58,6 +58,10 @@ func open() -> void:
 	HoloAnim.boot_in(panel)
 	frame.boot()
 	HoloAnim.stagger(body, 0.05, 0.12)
+	# With a controller, focus lands on the panel's main control (bible p.26).
+	var f := focus_target()
+	if f and SettingsService.using_pad:
+		f.grab_focus.call_deferred()
 
 
 func close() -> void:
@@ -70,6 +74,23 @@ func close() -> void:
 
 func refresh() -> void:
 	pass
+
+
+## The control that takes focus when the panel opens with a controller:
+## the Close button unless a panel names a better one.
+func focus_target() -> Control:
+	return _close_btn
+
+
+var _close_btn: Button
+
+
+## After a panel rebuilt itself (a repair, a probe), a controller keeps a
+## focused control. Call deferred from refresh().
+func regrab_focus() -> void:
+	var f := focus_target()
+	if visible and f and f.is_inside_tree() and SettingsService.using_pad:
+		f.grab_focus()
 
 
 ## Panel header: badge, title, sub line, optional status chips
@@ -86,6 +107,7 @@ func header(text: String, sub: String = "", icon_slot: String = "", chips: Array
 	var cb := UiKit.button(Loc.t("Close  [%s]") % SettingsService.primary_key("pause"), close)
 	UiKit.with_icon(cb, "ui.icon_close", 16)
 	cb.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	_close_btn = cb
 	# On a controller, show the real button glyph instead of its name.
 	var glyph := SyntySkin.pad_glyph(str(SettingsService.PAD["pause"][0])) if SettingsService.using_pad else null
 	if glyph:

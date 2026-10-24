@@ -16,6 +16,7 @@ signal landing_committed(site_id: String)
 var _landing_site := ""
 var _landing_txn := ""
 var _drone := false
+var _focus: Control  # pad focus on open: the scan, else a site's landing button, else Back
 
 
 func _init() -> void:
@@ -26,6 +27,8 @@ func _init() -> void:
 
 func refresh() -> void:
 	UiKit.clear(body)
+	_focus = null
+	regrab_focus.call_deferred()
 	_shrink_to_content()
 	var content := GameSession.content
 	var gs: GameState = GameSession.state
@@ -61,6 +64,8 @@ func refresh() -> void:
 		GameSession.cmd_orbital_scan(pid)
 		refresh())
 	scan.disabled = done
+	if not done:
+		_focus = scan
 	if not done:
 		scan.set_cost("1", "ui.icon_time", Loc.t("day"))
 	left.add_child(scan)
@@ -147,6 +152,8 @@ func _site_card(pid: String, sid: String, all_sites: Array) -> PanelContainer:
 		refresh())
 	UiKit.with_icon(land, "ui.icon_lander", 18)
 	land.add_theme_color_override("font_color", UiKit.AMBER.lightened(0.3))
+	if _focus == null:
+		_focus = land
 	row.add_child(land)
 	v.add_child(row)
 	h.add_child(v)
@@ -255,6 +262,7 @@ func _landing_preview(pid: String, sid: String) -> void:
 		refresh())
 	UiKit.with_icon(back, "ui.icon_back", 20)
 	back.custom_minimum_size = Vector2(0, 54)
+	_focus = back  # never the irreversible button
 	row.add_child(back)
 	var commit := GlowButton.make(Loc.t("Confirm landing (final)"), "ui.icon_lander", "danger", func() -> void:
 		var r := GameSession.cmd_commit_landing(sid, _landing_txn)
@@ -272,6 +280,10 @@ func _landing_preview(pid: String, sid: String) -> void:
 func close() -> void:
 	_landing_site = ""
 	super()
+
+
+func focus_target() -> Control:
+	return _focus if is_instance_valid(_focus) else super()
 
 
 ## A Control never shrinks on its own once it has grown: once the new page is

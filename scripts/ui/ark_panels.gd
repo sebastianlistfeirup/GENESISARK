@@ -108,11 +108,18 @@ class EmbryoBankPanel extends OverlayPanel:
 
 
 class WorkshopPanel extends OverlayPanel:
+	var _focus: Control
+
 	func _init() -> void:
 		super(Vector2(940, 560))
 
+	func focus_target() -> Control:
+		return _focus if is_instance_valid(_focus) else super()
+
 	func refresh() -> void:
 		UiKit.clear(body)
+		_focus = null
+		regrab_focus.call_deferred()
 		var gs: GameState = GameSession.state
 		header(Loc.t("The workshop"), Loc.t("Robots, components and repairs."), "ui.icon_repair")
 		var top := UiKit.hbox(14)
@@ -137,6 +144,8 @@ class WorkshopPanel extends OverlayPanel:
 			b.custom_minimum_size = Vector2(0, 46)
 			UiKit.with_icon(b, "ui.icon_repair", 20)
 			row.add_child(b)
+			if _focus == null and not b.disabled:
+				_focus = b
 		body.add_child(row)
 		body.add_child(UiKit.section(Loc.t("Repair scrubbers"), "ui.icon_suit"))
 		var orow := UiKit.hbox(10)

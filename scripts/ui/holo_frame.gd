@@ -50,7 +50,7 @@ func _init() -> void:
 func _ready() -> void:
 	_calm = HoloAnim.calm()
 	_mat.set_shader_parameter("glow_color", Color(tint, 0.9))
-	_mat.set_shader_parameter("fill_color", UiKit.PANEL.darkened(0.3))
+	_mat.set_shader_parameter("fill_color", Color(0.012, 0.03, 0.045))
 	_mat.set_shader_parameter("motion", 0.0 if _calm else 1.0)
 	resized.connect(_fit)
 	_fit()
@@ -141,17 +141,37 @@ func _draw() -> void:
 		draw_line(Vector2(r.end.x + 2.0, ty), Vector2(r.end.x + 2.0 - l, ty), Color(tint, 0.5 * a), 1.0)
 
 
-## Behind the content: a faint hexagon grid (Synty) and a cool light from the top.
+## Behind the content: a faint hexagon grid (Synty, one tiled draw) and a
+## cool light from the top.
 class _Back extends Control:
 	var frame: HoloFrame
-	var _hex: Texture2D
+	var _grid: TextureRect
 
 	func _init() -> void:
 		mouse_filter = Control.MOUSE_FILTER_IGNORE
 
 	func _ready() -> void:
-		_hex = Holo.tex(Holo.HUDP + "Background_Hexagons.png", 256)
-		resized.connect(queue_redraw)
+		var hex := Holo.tex(Holo.HUDP + "Background_Hexagons.png", 128)
+		if hex:
+			_grid = TextureRect.new()
+			_grid.texture = hex
+			_grid.stretch_mode = TextureRect.STRETCH_TILE
+			_grid.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+			_grid.texture_repeat = CanvasItem.TEXTURE_REPEAT_ENABLED
+			_grid.mouse_filter = Control.MOUSE_FILTER_IGNORE
+			_grid.modulate = Color(frame.tint if frame else Color.WHITE, 0.035)
+			add_child(_grid)
+		resized.connect(_fit)
+		_fit.call_deferred()
+
+	func _fit() -> void:
+		if frame == null:
+			return
+		var r := frame.outer_rect().grow(-4.0)
+		if _grid:
+			_grid.position = r.position
+			_grid.size = r.size
+		queue_redraw()
 
 	func _draw() -> void:
 		if frame == null:
@@ -161,14 +181,3 @@ class _Back extends Control:
 		for i: int in 6:
 			var h := r.size.y * (0.06 + i * 0.05)
 			draw_rect(Rect2(r.position, Vector2(r.size.x, h)), Color(frame.tint, 0.012), true)
-		if _hex:
-			var ts := 128.0
-			var y := r.position.y
-			while y < r.end.y:
-				var x := r.position.x
-				while x < r.end.x:
-					var w := minf(ts, r.end.x - x)
-					var h2 := minf(ts, r.end.y - y)
-					draw_texture_rect_region(_hex, Rect2(x, y, w, h2), Rect2(0, 0, _hex.get_width() * w / ts, _hex.get_height() * h2 / ts), Color(frame.tint, 0.035))
-					x += ts
-				y += ts

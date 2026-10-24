@@ -130,6 +130,9 @@ func _build_hero() -> Control:
 	_hero_tag.add_theme_font_override("font", UiKit.display_variant(3))
 	_hero_tag.add_theme_color_override("font_shadow_color", Color(0, 0, 0, 0.9))
 	_hero_tag.add_theme_constant_override("shadow_outline_size", 5)
+	_hero_tag.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	_hero_tag.custom_minimum_size = Vector2(300, 0)
+	_hero_tag.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
 	v.add_child(_hero_tag)
 	_hero_name = UiKit.label("", 34, Color.WHITE)
 	_hero_name.add_theme_font_override("font", Holo.name_font())
@@ -355,8 +358,8 @@ func _build_compare() -> void:
 	compare_box.add_child(row)
 
 
-const CARD_HEAD := 124.0
-const CELL_H := 56.0
+const CARD_HEAD := 140.0
+const CELL_H := 54.0
 
 
 ## One world as a card: a still render, its name in its colour, the tagline,
@@ -411,6 +414,7 @@ func _compare_card(pid: String, props: Array, best: Dictionary, loc: String) -> 
 	var tl := UiKit.label(str(p.get("tagline", "")), 11, UiKit.MUTED, true)
 	tl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	tl.custom_minimum_size = Vector2(140, 0)
+	tl.max_lines_visible = 2
 	head.add_child(tl)
 	v.add_child(head)
 	var cmp := GameSession.sim.survey.comparison(gs, pid)
@@ -490,6 +494,11 @@ func _compare_cell(pid: String, prop: String, row: Dictionary, is_best: bool) ->
 		v.add_child(word)
 	cell.add_child(v)
 	return cell
+
+
+## Pad: the map takes focus first (left/right step through the worlds).
+func focus_target() -> Control:
+	return map_view if map_view else super()
 
 
 func _travel(loc: String, q: Dictionary) -> void:

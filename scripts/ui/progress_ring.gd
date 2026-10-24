@@ -20,6 +20,7 @@ static func make(fraction: float, value_text: String, caption: String, colour: C
 	g.frac = clampf(fraction, 0.0, 1.0)
 	g.col = colour
 	g.custom_minimum_size = Vector2(px, px + 22)
+	g.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	g.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	# The value sits inside the ring, the caption under it.
 	var v := VBoxContainer.new()
@@ -39,9 +40,8 @@ static func make(fraction: float, value_text: String, caption: String, colour: C
 	g.caption_label.add_theme_font_override("font", UiKit.display_variant(2))
 	g.caption_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	g.caption_label.anchor_right = 1.0
-	g.caption_label.anchor_top = 1.0
-	g.caption_label.anchor_bottom = 1.0
-	g.caption_label.offset_top = -18
+	g.caption_label.offset_top = px + 2
+	g.caption_label.offset_bottom = px + 20
 	g.add_child(g.caption_label)
 	return g
 

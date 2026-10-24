@@ -42,17 +42,22 @@ void fragment() {
 	// Grain.
 	a += (hash(floor(px * 0.5) + floor(t * 24.0)) - 0.5) * grain * motion;
 	vec4 col = vec4(glow_color.rgb, clamp(a, 0.0, 0.85) * glow_color.a);
+	// Boot flash over the printed part only (the unprinted plate stays dark).
+	col.rgb = mix(col.rgb, vec3(0.8, 1.0, 1.0), flash);
+	col.a = max(col.a, flash * 0.5);
 	// Boot: below the reveal line the content is still hidden behind the fill;
 	// the line itself is a bright cyan stroke with a falling glow.
 	float line_y = boot * (px_size.y + 24.0) - 12.0;
 	if (boot < 1.0) {
 		float below = smoothstep(line_y - 2.0, line_y + 2.0, px.y);
-		col = mix(col, vec4(fill_color.rgb, 1.0), below);
+		// Not yet printed: the dark plate with a faint blueprint grid.
+		vec2 cell = abs(fract(px / 24.0) - 0.5);
+		float gridl = smoothstep(0.47, 0.5, max(cell.x, cell.y));
+		vec3 plate = fill_color.rgb + glow_color.rgb * gridl * 0.08;
+		col = mix(col, vec4(plate, 1.0), below);
 		float stroke = exp(-abs(px.y - line_y) / 3.0) + exp(-max(0.0, line_y - px.y) / 40.0) * 0.35 * (1.0 - below);
 		col.rgb = mix(col.rgb, vec3(0.75, 1.0, 1.0), clamp(stroke, 0.0, 1.0));
 		col.a = max(col.a, clamp(stroke, 0.0, 1.0));
 	}
-	col.rgb = mix(col.rgb, vec3(0.8, 1.0, 1.0), flash);
-	col.a = max(col.a, flash * 0.5);
 	COLOR = col;
 }
