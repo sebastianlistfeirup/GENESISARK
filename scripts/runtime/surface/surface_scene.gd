@@ -188,13 +188,15 @@ func _place_routes() -> void:
 			var steps := int(seg.length() / 4.0)
 			for i: int in steps:
 				var q := prev + seg * (float(i) / maxf(1.0, float(steps)))
+				# A flat glowing chevron on the ground pointing along the route (shape + colour, a11y).
 				var dot := MeshInstance3D.new()
-				var sm := SphereMesh.new()
-				sm.radius = 0.18
-				sm.height = 0.36
-				dot.mesh = sm
-				dot.material_override = AssetSlots.material(col, 1.5)
-				dot.position = _ground(q) + Vector3(0, 0.25, 0)
+				var pm := PrismMesh.new()
+				pm.size = Vector3(0.55, 0.5, 0.05)
+				dot.mesh = pm
+				dot.material_override = AssetSlots.material(col, 2.2)
+				dot.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+				dot.position = _ground(q) + Vector3(0, 0.06, 0)
+				dot.rotation = Vector3(-PI * 0.5, atan2(-seg.x, -seg.y), 0)
 				add_child(dot)
 			prev = p
 		var lbl := Label3D.new()
