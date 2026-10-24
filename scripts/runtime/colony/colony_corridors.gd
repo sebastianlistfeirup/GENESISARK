@@ -10,6 +10,7 @@ extends RefCounted
 const MODULES := ["res://assets/Synty/PolygonSciFiWorlds/Prefabs/Buildings/SM_Bld_Pod_Corridor_Square_01.tscn",
 	"res://assets/Synty/PolygonSciFiWorlds/Prefabs/Buildings/SM_Bld_Pod_Corridor_Square_03.tscn",
 	"res://assets/Synty/PolygonSciFiWorlds/Prefabs/Buildings/SM_Bld_Pod_Corridor_Round_02.tscn"]
+const JOINT := "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Buildings/SM_Bld_Pod_Corridor_Round_Connector_01.tscn"
 const WIDTH := 2.4  # metres across, to sit with the scaled-down pods
 const NO_TUBE := ["solar_array", "battery", "geothermal_generator", "drone_hub"]  # power/pad pieces stand free
 
@@ -56,6 +57,22 @@ static func _pos(b: Dictionary) -> Vector2:
 	return Vector2(float(b["x"]), float(b["z"]))
 
 
+## How far from the building's centre its walls are in direction dir: the
+## drawn model's extent (data "tube_extent", e.g. the landed Ark is narrower
+## than its footprint) or the footprint, so a tube always meets the hull.
+static func _reach(b: Dictionary, dir: Vector2) -> float:
+	var def := GameSession.content.building(str(b["def_id"]))
+	var ext: Array = DictUtil.get_arr(DictUtil.get_dict(BuildingDressing.doc(), "tube_extent"), str(b["def_id"]))
+	var size := ColonySimulation.footprint_size(def, int(b.get("rot", 0)))
+	if ext.size() == 2:
+		size = Vector2(float(ext[0]), float(ext[1]))
+		if posmod(int(b.get("rot", 0)), 2) == 1:
+			size = Vector2(size.y, size.x)
+	var tx := size.x * 0.5 / maxf(absf(dir.x), 0.001)
+	var tz := size.y * 0.5 / maxf(absf(dir.y), 0.001)
+	return minf(tx, tz)
+
+
 static func _half(b: Dictionary) -> float:
 	var fp: Array = DictUtil.get_arr(GameSession.content.building(str(b["def_id"])), "footprint")
 	return (minf(float(fp[0]), float(fp[1])) * 0.5) if fp.size() == 2 else 3.0
@@ -65,8 +82,8 @@ static func _tube(root: Node3D, a: Dictionary, b: Dictionary, terrain: TerrainBu
 	var pa := _pos(a)
 	var pb := _pos(b)
 	var dir := (pb - pa).normalized()
-	var start := pa + dir * (_half(a) - 0.4)
-	var end := pb - dir * (_half(b) - 0.4)
+	var start := pa + dir * (_reach(a, dir) - 0.4)
+	var end := pb - dir * (_reach(b, -dir) - 0.4)
 	var length := start.distance_to(end)
 	if length < 1.0 or (pb - pa).dot(end - start) <= 0.0:
 		return
@@ -78,6 +95,20 @@ static func _tube(root: Node3D, a: Dictionary, b: Dictionary, terrain: TerrainBu
 	var stretch := length / (n * seg)
 	var yaw := atan2(dir.x, dir.y)
 	var basis := Basis(Vector3.UP, yaw) * Basis.from_scale(Vector3(s, s, s * stretch))
+	# A connector collar at every joint so a tube reads as built modules, not a pipe.
+	var joint: Array = GroundCover._mesh_of(JOINT) if ResourceLoader.exists(JOINT) else []
+	if not joint.is_empty():
+		var jb: AABB = joint[2]
+		var js := WIDTH * 1.08 / maxf(jb.size.x, 0.1)
+		var jbasis := Basis(Vector3.UP, yaw) * Basis.from_scale(Vector3(js, js, js))
+		for i: int in range(1, n):
+			var c := start + dir * (seg * stretch * i)
+			var y := terrain.height_at(c.x, c.y) - jb.position.y * js - 0.02
+			var mi := MeshInstance3D.new()
+			mi.mesh = joint[0]
+			mi.transform = Transform3D(jbasis, Vector3(c.x, y, c.y)) * Transform3D(Basis.IDENTITY, -Vector3(jb.get_center().x, 0, jb.get_center().z)) * (joint[1] as Transform3D)
+			mi.set_meta("joint", true)
+			root.add_child(mi)
 	for i: int in n:
 		var c := start + dir * (seg * stretch * (i + 0.5))
 		var y := terrain.height_at(c.x, c.y) - box.position.y * s

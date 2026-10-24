@@ -15,7 +15,38 @@
   ],
   "tile_m": 3.6,
   "margin": 0.7,
-  "skirt": "#2a3036"
+  "skirt": "#2a3036",
+  "district_tiles": {
+   "living": [
+    "W:Buildings/SM_Bld_Platform_Large_03",
+    "W:Buildings/SM_Bld_Platform_Large_01"
+   ],
+   "resource": [
+    "W:Buildings/SM_Bld_Platform_Large_01",
+    "W:Buildings/SM_Bld_Platform_Large_03"
+   ],
+   "landing": [
+    "W:Buildings/SM_Bld_Platform_Large_01",
+    "W:Buildings/SM_Bld_Platform_Large_03"
+   ]
+  },
+  "tint": {
+   "living": [
+    1.5,
+    1.36,
+    1.15
+   ],
+   "resource": [
+    1.42,
+    1.34,
+    1.2
+   ],
+   "landing": [
+    1.25,
+    1.36,
+    1.5
+   ]
+  }
  },
  "lights": {
   "_default": 0.45,
@@ -119,9 +150,6 @@
   "planters": [
    {
     "mesh": "W:Props/SM_Prop_Hydroponic_Planter_01"
-   },
-   {
-    "mesh": "W:Props/SM_Prop_Hydroponic_Planter_02_Insert_01"
    }
   ],
   "pots": [
@@ -260,6 +288,108 @@
      2.1
     ]
    }
+  ],
+  "bins": [
+   {
+    "mesh": "C:Props/SM_Prop_Rubbish_Bin_01"
+   },
+   {
+    "mesh": "W:Props/SM_Prop_TrashBin_01"
+   }
+  ],
+  "vases": [
+   {
+    "mesh": "C:Props/SM_Prop_Plant_Vase_01"
+   },
+   {
+    "mesh": "C:Props/SM_Prop_Plant_Vase_02"
+   }
+  ],
+  "bollards": [
+   {
+    "mesh": "C:Props/SM_Prop_Barrier_Pole_01",
+    "scale": 1.2
+   }
+  ],
+  "street_benches": [
+   {
+    "mesh": "C:Props/SM_Prop_Bench_01"
+   },
+   {
+    "mesh": "W:Props/SM_Prop_Bench_Seat_01"
+   }
+  ],
+  "vending": [
+   {
+    "mesh": "W:Props/SM_Prop_Vending_Machine_01"
+   },
+   {
+    "mesh": "W:Props/SM_Prop_Vending_Machine_02"
+   },
+   {
+    "mesh": "W:Props/SM_Prop_Vending_Machine_04"
+   }
+  ],
+  "barrels": [
+   {
+    "mesh": "W:Props/SM_Prop_Scav_Barrel_01"
+   },
+   {
+    "mesh": "C:Props/SM_Prop_Cylinder_01"
+   }
+  ],
+  "chargers": [
+   {
+    "mesh": "C:Props/SM_Prop_ChargingStation_01"
+   },
+   {
+    "mesh": "W:Props/SM_Prop_PowerCellCharger_01"
+   }
+  ],
+  "small_lamps": [
+   {
+    "mesh": "W:Buildings/SM_Bld_Light_07",
+    "scale": 1.0,
+    "light": "#ffc46e"
+   }
+  ],
+  "roof_units": [
+   {
+    "mesh": "C:Props/SM_Prop_AirConditioningUnit_01",
+    "scale": 1.5
+   },
+   {
+    "mesh": "C:Props/SM_Prop_AirConditioningUnit_02",
+    "scale": 1.5
+   }
+  ],
+  "roof_vents": [
+   {
+    "mesh": "C:Props/SM_Prop_Vent_02",
+    "scale": 0.8
+   },
+   {
+    "mesh": "C:Props/SM_Prop_Vent_03",
+    "scale": 0.7
+   }
+  ],
+  "roof_masts": [
+   {
+    "mesh": "W:Props/SM_Prop_Antenna_09"
+   },
+   {
+    "mesh": "W:Props/SM_Prop_Antenna_10"
+   },
+   {
+    "mesh": "W:Props/SM_Prop_Antenna_01",
+    "scale": 0.8
+   }
+  ],
+  "roof_dishes": [
+   {
+    "mesh": "C:Props/SM_Prop_SatDish_03",
+    "scale": 0.8
+   }
   ]
  },
  "buildings": {
@@ -293,7 +423,7 @@
    ]
   },
   "ark_core": {
-   "platform": "none",
+   "platform": "landing",
    "groups": [
     {
      "kind": "cluster",
@@ -351,7 +481,7 @@
    ]
   },
   "solar_array": {
-   "platform": "tiles",
+   "platform": "none",
    "groups": [
     {
      "kind": "cluster",
@@ -884,7 +1014,604 @@
   "width": 3.0,
   "shoulder": 1.4,
   "darken": 0.62,
-  "colors": {"viridia": "#8f7a55", "pelagos": "#9c8c6a", "ferrum": "#8e5638", "sere": "#9a7c55", "nivalis": "#7d8a9c", "umbra": "#2e3646"},
-  "cell": 1.5
+  "colors": {
+   "viridia": "#8f7a55",
+   "pelagos": "#9c8c6a",
+   "ferrum": "#8e5638",
+   "sere": "#9a7c55",
+   "nivalis": "#7d8a9c",
+   "umbra": "#2e3646"
+  },
+  "cell": 1.5,
+  "night": {
+   "umbra": {
+    "color": "#4f6a8c",
+    "glow": 0.45
+   }
+  },
+  "markers": {
+   "umbra": {
+    "color": "#63e8ff",
+    "energy": 6.0,
+    "every": 3.0
+   },
+   "nivalis": {
+    "color": "#ffb45c",
+    "energy": 1.6,
+    "every": 4.5
+   },
+   "pelagos": {
+    "color": "#ffb45c",
+    "energy": 1.0,
+    "every": 5.0
+   },
+   "_default": {
+    "color": "#d99a3a",
+    "energy": 0.0,
+    "every": 6.0
+   }
+  },
+  "gate_cap": "W:Buildings/SM_Bld_Pod_Corridor_Round_End_01"
+ },
+ "infill": {
+  "_note": "Street furniture in the lanes between buildings (ColonyInfill, D-041): a regular grid, spots that keep spot_r clear of footprints/tubes/roads/props and sit within 'near' of at least min_buildings footprints get one kit by district. parts: [set, across, forward, extra yaw deg] in metres, forward = away from the nearest wall.",
+  "step": 3.2,
+  "near": 6.5,
+  "min_buildings": 2,
+  "spot_r": 0.8,
+  "fill": 0.8,
+  "kits": {
+   "living": [
+    {
+     "w": 3,
+     "parts": [
+      [
+       "vases",
+       0,
+       0
+      ],
+      [
+       "vases",
+       1.2,
+       0.3
+      ],
+      [
+       "vases",
+       -1.2,
+       0.3
+      ]
+     ]
+    },
+    {
+     "w": 2,
+     "parts": [
+      [
+       "street_benches",
+       0,
+       0.2
+      ],
+      [
+       "small_lamps",
+       1.3,
+       -0.2
+      ],
+      [
+       "bins",
+       -1.2,
+       0.2
+      ]
+     ]
+    },
+    {
+     "w": 2,
+     "parts": [
+      [
+       "pots",
+       0,
+       0
+      ],
+      [
+       "pots",
+       0.8,
+       0.6
+      ],
+      [
+       "pots",
+       -0.7,
+       0.6
+      ]
+     ]
+    },
+    {
+     "w": 1,
+     "parts": [
+      [
+       "vending",
+       0,
+       0,
+       180
+      ],
+      [
+       "bins",
+       0.9,
+       0.3
+      ]
+     ]
+    },
+    {
+     "w": 1,
+     "parts": [
+      [
+       "small_lamps",
+       0,
+       0
+      ],
+      [
+       "vases",
+       0.8,
+       0.3
+      ]
+     ]
+    }
+   ],
+   "resource": [
+    {
+     "w": 3,
+     "parts": [
+      [
+       "crates",
+       0,
+       0
+      ],
+      [
+       "crates",
+       1.0,
+       0.3
+      ],
+      [
+       "canisters",
+       -1.0,
+       0.2
+      ]
+     ]
+    },
+    {
+     "w": 2,
+     "parts": [
+      [
+       "barrels",
+       0,
+       0
+      ],
+      [
+       "barrels",
+       0.7,
+       0.45
+      ],
+      [
+       "barrels",
+       -0.6,
+       0.5
+      ]
+     ]
+    },
+    {
+     "w": 1,
+     "parts": [
+      [
+       "chargers",
+       0,
+       0
+      ],
+      [
+       "small_lamps",
+       1.2,
+       0
+      ]
+     ]
+    },
+    {
+     "w": 1,
+     "parts": [
+      [
+       "machines",
+       0,
+       0
+      ]
+     ]
+    }
+   ],
+   "landing": [
+    {
+     "w": 2,
+     "parts": [
+      [
+       "bollards",
+       -0.9,
+       0
+      ],
+      [
+       "bollards",
+       0.9,
+       0
+      ],
+      [
+       "small_lamps",
+       0,
+       -0.3
+      ]
+     ]
+    },
+    {
+     "w": 2,
+     "parts": [
+      [
+       "crates",
+       0,
+       0
+      ],
+      [
+       "cells",
+       0.9,
+       0.3
+      ]
+     ]
+    },
+    {
+     "w": 1,
+     "parts": [
+      [
+       "chargers",
+       0,
+       0
+      ],
+      [
+       "bins",
+       0.9,
+       0.2
+      ]
+     ]
+    }
+   ],
+   "_default": [
+    {
+     "w": 1,
+     "parts": [
+      [
+       "crates",
+       0,
+       0
+      ],
+      [
+       "small_lamps",
+       1.1,
+       0
+      ]
+     ]
+    }
+   ]
+  },
+  "lane_r": 0.4,
+  "lanes": {
+   "living": [
+    {
+     "w": 2,
+     "parts": [
+      [
+       "vases",
+       0,
+       0
+      ]
+     ]
+    },
+    {
+     "w": 2,
+     "parts": [
+      [
+       "small_lamps",
+       0,
+       0
+      ]
+     ]
+    },
+    {
+     "w": 1,
+     "parts": [
+      [
+       "bins",
+       0,
+       0
+      ]
+     ]
+    },
+    {
+     "w": 2,
+     "parts": [
+      [
+       "pots",
+       0,
+       0
+      ]
+     ]
+    }
+   ],
+   "resource": [
+    {
+     "w": 2,
+     "parts": [
+      [
+       "barrels",
+       0,
+       0
+      ]
+     ]
+    },
+    {
+     "w": 1,
+     "parts": [
+      [
+       "small_lamps",
+       0,
+       0
+      ]
+     ]
+    },
+    {
+     "w": 2,
+     "parts": [
+      [
+       "canisters",
+       0,
+       0
+      ]
+     ]
+    }
+   ],
+   "landing": [
+    {
+     "w": 1,
+     "parts": [
+      [
+       "small_lamps",
+       0,
+       0
+      ]
+     ]
+    },
+    {
+     "w": 1,
+     "parts": [
+      [
+       "crates",
+       0,
+       0
+      ]
+     ]
+    }
+   ],
+   "_default": [
+    {
+     "w": 1,
+     "parts": [
+      [
+       "small_lamps",
+       0,
+       0
+      ]
+     ]
+    }
+   ]
+  }
+ },
+ "night": {
+  "_note": "Night look per world (ColonyDressing._add_night, D-041): windows = emissive boost on the building models, pool = warm light spilling around each building (capped), beacon = slow red roof blink on buildings taller than beacon_min_h.",
+  "umbra": {
+   "windows": 2.4,
+   "pool": "#ffc98a",
+   "pool_energy": 1.4,
+   "pool_max": 36,
+   "beacon": "#ff4a3a",
+   "beacon_min_h": 4.5,
+   "cool_defs": [
+    "solar_array",
+    "battery",
+    "geothermal_generator",
+    "water_plant",
+    "workshop",
+    "drone_hub",
+    "mine"
+   ],
+   "pool_cool": "#8fd6ff"
+  },
+  "nivalis": {
+   "windows": 1.4,
+   "beacon": "#ff4a3a",
+   "beacon_min_h": 6.0,
+   "pool": "#ffd6a0",
+   "pool_energy": 0.5,
+   "pool_max": 16
+  },
+  "pelagos": {
+   "windows": 1.3,
+   "beacon": "#ff4a3a",
+   "beacon_min_h": 6.0
+  }
+ },
+ "roofs": {
+  "_note": "Rooftop greebles (ColonyRoofs, D-041): sampled from the model's own triangles; only level spots above min_height get a piece no wider than max_r.",
+  "min_height": 2.0,
+  "flat": 0.06,
+  "max_r": 0.75,
+  "buildings": {
+   "habitat": {
+    "min": 3,
+    "max": 6,
+    "sets": [
+     "roof_units",
+     "roof_units",
+     "roof_vents",
+     "roof_masts",
+     "roof_dishes"
+    ]
+   },
+   "workshop": {
+    "min": 3,
+    "max": 6,
+    "sets": [
+     "roof_units",
+     "roof_vents",
+     "roof_vents",
+     "roof_masts"
+    ]
+   },
+   "clinic": {
+    "min": 2,
+    "max": 5,
+    "sets": [
+     "roof_units",
+     "roof_units",
+     "roof_vents",
+     "roof_masts",
+     "roof_dishes"
+    ]
+   },
+   "school_hall": {
+    "min": 3,
+    "max": 6,
+    "sets": [
+     "roof_units",
+     "roof_units",
+     "roof_vents",
+     "roof_masts",
+     "roof_dishes"
+    ]
+   },
+   "care_center": {
+    "min": 2,
+    "max": 5,
+    "sets": [
+     "roof_units",
+     "roof_units",
+     "roof_vents",
+     "roof_masts",
+     "roof_dishes"
+    ]
+   },
+   "water_plant": {
+    "min": 2,
+    "max": 5,
+    "sets": [
+     "roof_vents",
+     "roof_units",
+     "roof_masts"
+    ]
+   },
+   "battery": {
+    "min": 1,
+    "max": 4,
+    "sets": [
+     "roof_vents",
+     "roof_masts"
+    ]
+   },
+   "geothermal_generator": {
+    "min": 2,
+    "max": 4,
+    "sets": [
+     "roof_vents",
+     "roof_masts"
+    ]
+   }
+  }
+ },
+ "weathering": {
+  "_note": "Soft mounds half over each foundation edge (ColonyDressing._add_weathering, D-041): dust on desert worlds, snow on ice, mud on wet worlds.",
+  "sere": {
+   "color": "#e4c48f",
+   "per_m": 0.4,
+   "size": [
+    0.7,
+    1.6
+   ],
+   "height": 0.13
+  },
+  "ferrum": {
+   "color": "#dea36c",
+   "per_m": 0.4,
+   "size": [
+    0.7,
+    1.6
+   ],
+   "height": 0.13
+  },
+  "nivalis": {
+   "color": "#eef3f8",
+   "per_m": 0.5,
+   "size": [
+    0.8,
+    1.8
+   ],
+   "height": 0.24,
+   "roughness": 0.7
+  },
+  "pelagos": {
+   "color": "#4a5038",
+   "per_m": 0.25,
+   "size": [
+    0.6,
+    1.3
+   ],
+   "height": 0.07,
+   "roughness": 0.25
+  },
+  "umbra": {
+   "color": "#c9d4e6",
+   "per_m": 0.35,
+   "size": [
+    0.7,
+    1.5
+   ],
+   "height": 0.15
+  }
+ },
+ "fx": {
+  "_note": "Effects on finished buildings (ColonyDressing._add_fx, D-041): at = [x, z] in footprint halves; top = fraction of the model height, else y.",
+  "geothermal_generator": {
+   "slot": "fx.steam_vent",
+   "scale": 0.35,
+   "max": 8,
+   "at": [
+    0,
+    0
+   ],
+   "top": 0.9
+  },
+  "water_plant": {
+   "slot": "fx.steam_vent",
+   "scale": 0.25,
+   "max": 6,
+   "at": [
+    0.3,
+    0
+   ],
+   "top": 0.9
+  },
+  "workshop": {
+   "slot": "fx.construction_sparks",
+   "scale": 0.25,
+   "max": 4,
+   "at": [
+    0.9,
+    0.9
+   ],
+   "y": 0.4
+  }
+ },
+ "tube_extent": {
+  "_note": "Drawn width x depth (m, unrotated) where a corridor tube should meet the model, when it differs from the footprint.",
+  "ark_core": [
+   13.6,
+   5.0
+  ]
  }
 }

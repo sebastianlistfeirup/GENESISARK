@@ -123,7 +123,8 @@ static func platform_margin() -> float:
 
 ## Building-local placements: [{"mesh", "xf", "r", "light", "top", "build", "kind"}].
 ## "kind" is "platform" for the floor tiles (inside the footprint, never culled).
-static func plan(def_id: String, size: Vector2, building_id: int) -> Array:
+## district: picks that district's platform tiles and paving tint.
+static func plan(def_id: String, size: Vector2, building_id: int, district: String = "") -> Array:
 	var out: Array = []
 	if doc().is_empty():
 		return out
@@ -134,7 +135,7 @@ static func plan(def_id: String, size: Vector2, building_id: int) -> Array:
 	var margin := 0.0
 	if pad_style(def_id) == "skirt":
 		margin = platform_margin()
-		_plan_platform(out, size, margin, mode == "landing", rng)
+		_plan_platform(out, size, margin, mode == "landing", rng, district)
 	var ps := DictUtil.get_float(doc(), "prop_scale", 0.72)
 	for g: Variant in DictUtil.get_arr(sp, "groups"):
 		var gd: Dictionary = g
@@ -244,8 +245,20 @@ static func _add(out: Array, it: Dictionary, p: Vector2, yaw: float, ps: float, 
 		"build": build, "kind": kind})
 
 
-static func _plan_platform(out: Array, size: Vector2, margin: float, landing: bool, rng: RandomNumberGenerator) -> void:
+static func _plan_platform(out: Array, size: Vector2, margin: float, landing: bool, rng: RandomNumberGenerator, district: String = "") -> void:
 	var tiles := _tiles(landing)
+	var pcfg: Dictionary = DictUtil.get_dict(doc(), "platform")
+	if not landing:
+		var own: Array = []
+		for s: Variant in DictUtil.get_arr(DictUtil.get_dict(pcfg, "district_tiles"), district):
+			if not parts(str(s)).is_empty():
+				own.append(str(s))
+		if not own.is_empty():
+			tiles = own
+	var tint := ""
+	var tc: Array = DictUtil.get_arr(DictUtil.get_dict(pcfg, "tint"), district)
+	if tc.size() >= 3:
+		tint = "%.3f,%.3f,%.3f" % [float(tc[0]), float(tc[1]), float(tc[2])]
 	var tile_m := DictUtil.get_float(DictUtil.get_dict(doc(), "platform"), "tile_m", 3.6)
 	var w := size.x + margin * 2.0
 	var d := size.y + margin * 2.0
@@ -261,4 +274,4 @@ static func _plan_platform(out: Array, size: Vector2, margin: float, landing: bo
 			var c := Vector3(-w * 0.5 + (ix + 0.5) * w / nx, 0.04, -d * 0.5 + (iz + 0.5) * d / nz)
 			var flip := PI if rng.randf() < 0.5 else 0.0
 			var xf := Transform3D(Basis(Vector3.UP, flip).scaled(Vector3(sx, sy, sz)), c) * Transform3D(Basis.IDENTITY, -Vector3(box.get_center().x, box.end.y, box.get_center().z))
-			out.append({"mesh": t, "xf": xf, "r": 0.0, "light": "", "top": 0.0, "build": true, "kind": "platform"})
+			out.append({"mesh": t, "xf": xf, "r": 0.0, "light": "", "top": 0.0, "build": true, "kind": "platform", "tint": tint})
