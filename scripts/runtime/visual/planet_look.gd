@@ -13,6 +13,10 @@ const BIOMES := {
 
 
 static func apply(slot: VisualSlot, biome: String, tint: String, seed: int) -> void:
+	if not slot.is_inside_tree() or slot.get_child_count() == 0:
+		# Not built yet (VisualSlot builds in _ready): apply right after it is.
+		slot.rebuilt.connect(apply.bind(slot, biome, tint, seed), CONNECT_ONE_SHOT)
+		return
 	if slot.using_asset:
 		return
 	var b: Dictionary = BIOMES.get(biome, BIOMES["green"])

@@ -252,7 +252,7 @@ func _draw_corridors() -> void:
 
 func _process_network_visibility() -> void:
 	# The raw link lines are a build-mode aid; outside it the corridors carry the read.
-	if _net and ghost:
+	if _net:
 		_net.visible = not build_def.is_empty() or _corridors == null or _corridors.get_child_count() == 0
 
 

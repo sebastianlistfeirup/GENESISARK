@@ -112,7 +112,9 @@ func _build_world() -> void:
 	add_child(neb)
 	_planet = Node3D.new()
 	_planet.position = Vector3(112, -96, -215)
-	_planet.add_child(VisualSlot.make("space.planet_green"))
+	var planet_slot := VisualSlot.make("space.planet_green", "#4f8a3a")
+	_planet.add_child(planet_slot)
+	PlanetLook.apply(planet_slot, "green", "#4f8a3a", 11)
 	var atmo := MeshInstance3D.new()
 	var am := SphereMesh.new()
 	am.radius = 66.0
@@ -174,7 +176,7 @@ func _build_ui() -> void:
 	_col.add_child(_body)
 	_col.add_child(_gap(30))
 	_col.add_child(UiKit.label(Loc.t("50,000 embryos. Six possible worlds. One choice you must live with."), 16, UiKit.AMBER))
-	var ver := UiKit.label(Loc.t("v%s · Godot %s · greybox-proxies") % [ProjectSettings.get_setting("application/config/version"), Engine.get_version_info().get("string")], 13, UiKit.MUTED)
+	var ver := UiKit.label(Loc.t("v%s · Godot %s") % [ProjectSettings.get_setting("application/config/version"), Engine.get_version_info().get("string")], 13, UiKit.MUTED)
 	ver.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_RIGHT)
 	ver.grow_horizontal = Control.GROW_DIRECTION_BEGIN
 	ver.grow_vertical = Control.GROW_DIRECTION_BEGIN

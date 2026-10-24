@@ -6,7 +6,7 @@
       "ok": true
     },
     {
-      "detail": "@Button@47:<Button#120577853226>",
+      "detail": "@Button@57:<Button#130728068990>",
       "name": "pad_focuses_menu",
       "ok": true
     },
@@ -36,7 +36,7 @@
       "ok": true
     },
     {
-      "detail": "moved=0.39",
+      "detail": "moved=0.36",
       "name": "riglab_runs",
       "ok": true
     },
@@ -96,7 +96,7 @@
       "ok": true
     },
     {
-      "detail": "I_power_coupling:<Area3D#271371475131>",
+      "detail": "I_power_coupling:<Area3D#282092116206>",
       "name": "prompt_targets_coupling",
       "ok": true
     },
@@ -251,12 +251,12 @@
       "ok": true
     },
     {
-      "detail": "bottom=[P: (24.0, 586.0), S: (1232.0, 114.0)]",
+      "detail": "bottom=[P: (24.0, 598.0), S: (1232.0, 102.0)]",
       "name": "a11y_build_bar_wraps",
       "ok": true
     },
     {
-      "detail": "[P: (129.5, 16.0), S: (1021.0, 93.0)] vs [P: (24.0, 117.0), S: (420.0, 123.0)]",
+      "detail": "[P: (114.0, 16.0), S: (1052.0, 93.0)] vs [P: (24.0, 117.0), S: (420.0, 123.0)]",
       "name": "a11y_top_bar_clear_of_objectives",
       "ok": true
     },
@@ -274,5 +274,5 @@
   "engine_version": "4.7.1-stable (official)",
   "failures": [],
   "status": "PASS",
-  "timestamp": "2026-10-24T09:49:05"
+  "timestamp": "2026-10-24T09:55:17"
 }
