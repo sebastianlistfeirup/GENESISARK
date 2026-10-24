@@ -42,3 +42,7 @@ __pycache__/
 /assets/audio/vo/*.mp3
 /tools/audio/eleven_log.jsonl
 /assets/audio/raw/
+# D-056: the drop pod viewer's baked paint is derived from the owner's Meshy scan (local only)
+/evidence/droppod/viewer/drop_pod_baked*
+/assets/audio/final/*.mp3.import
+/assets/audio/vo/*.mp3.import

@@ -82,9 +82,23 @@ func _run() -> void:
 		elif sc and sc.has_method("debug_action"):
 			sc.call("debug_action", act)
 		# The alarm banner hides after a few real seconds; software rendering is slow.
-		# --post=N waits N frames instead (panels that boot in, D-055).
-		for i: int in (4 if act == "alarm" else int(extra.get("post", 40))):
+		# --post=N / --hold=N wait N frames (panels that boot in D-055, Movie Maker
+		# sequences D-056); --frametimes=<json> records every frame's time over that window.
+		var hold := int(extra.get("hold", extra.get("post", 4 if act == "alarm" else 40)))
+		var times: Array = []
+		var last := Time.get_ticks_usec()
+		for i: int in hold:
 			await get_tree().process_frame
+			var now := Time.get_ticks_usec()
+			times.append(snappedf((now - last) / 1000.0, 0.001))
+			last = now
+		if extra.has("frametimes"):
+			var fp := str(extra["frametimes"])
+			var fabs := fp if fp.is_absolute_path() else ProjectSettings.globalize_path("res://" + fp)
+			DirAccess.make_dir_recursive_absolute(fabs.get_base_dir())
+			var f := FileAccess.open(fabs, FileAccess.WRITE)
+			f.store_string(JSON.stringify({"action": act, "frame_ms": times, "device": RenderingServer.get_video_adapter_name()}))
+			f.close()
 		if extra.has("park"):  # --park=1: cursor to the corner, so no hover/tooltip shows
 			get_viewport().warp_mouse(Vector2(2, 2))
 			for i: int in 6:

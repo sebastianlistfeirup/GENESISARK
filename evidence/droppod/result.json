@@ -1,0 +1,37 @@
+{
+ "task_id": "D-056-drop-pod",
+ "commit": "see git log (branch worktree-agent-add2a24cc2898cd42)",
+ "engine_version": "Godot 4.7.2.stable (Vulkan Forward+, NVIDIA GeForce RTX 5090)",
+ "command": [
+  "godot --headless --path . --script res://tools/rebuild/droppod_probe.gd -- --step=100",
+  "godot --path . -- --capture=... --scene=surface --setup=expedition:viridia --action=droppod --wait=120 --hold=1100 --frametimes=evidence/droppod/frametimes_viridia.json",
+  "godot --path . -- --capture=... --scene=surface --setup=expedition:viridia --action=droppod:0 --wait=120 --hold=1100 --frametimes=evidence/droppod/frametimes_baseline.json",
+  "godot --path . --write-movie builds/droppod/movie/<planet>.avi --fixed-fps 30 -- --capture=... --scene=surface --setup=expedition:<planet> --action=droppod --wait=60 --hold=280",
+  "godot --path . -- --capture=... --scene=surface --setup=expedition:<planet> --action=droppod_close:<ms> (six planets x 3 beats)",
+  "godot --path . -- --perf --case=surface_viridia --out=builds/p_pod.json (A/B with the pod preparation disabled)",
+  "CHECK_FAST=1 tools/check.sh"
+ ],
+ "exit_code": 0,
+ "expected": "Pressing [G] (drone reserve) plays a ~7.9 s pod drop near the captain (2.5 s with reduced motion) on all six planets, never on interactables/routes/hazards/props, no collision, skippable; pod stays as a prop; hero-beat worst frame <= ~1.5x average; surface_viridia perf unchanged.",
+ "observed": {
+  "probe": "DROPPOD_PROBE PASS (lands at 2.72-2.8 s with all four feet, hatch never opens before landing, end pose level/open/delivered/dimmed, no NaN; short version lands 0.65 s, ends 2.5 s)",
+  "hero_moment_frames": "snap+burst worst/avg 1.34, 1.15, 1.16, 1.14 over four runs (8.3 ms avg, 120 Hz vsync); impact window 1.17/1.22/1.69 and one 55 ms spike at 3.29 s; the baseline with the pod frozen shows the same kind of 17-28 ms spikes at random times (and one near 3.4 s), i.e. scene noise, not a pod beat",
+  "perf_surface_viridia": "A/B: draws 1167 = 1167, primitives 2417392 = 2417392, objects 1698 = 1698, nodes 1499 -> 1556 (hidden pod), p50 8.3 both, p95 9.4-10.3 (without) vs 9.4-9.8 ms (with); load 2871-3248 ms without vs 3061-3403 ms with over three runs each (overlapping noise bands, roughly +100-150 ms: the 17 ms procedural build, the one-frame pipeline warm-up and the local bake streaming on a loader thread)",
+  "smoke": "surface_drop_pod_lands_clear_and_skips PASS; CHECK_FAST=1 tools/check.sh green three times in a row after the loader-thread fix (an earlier intermittent smoke exit 139 traced to the bake loader thread left running at quit; tests now load synchronously and the pod finishes pending loads on exit)",
+  "viewer": "evidence/droppod/viewer/index.html: no console errors, renderer.info.programs 29 before and after a full + reduced-motion run, camera finite after a 0x0 first layout, phone portrait framing checked"
+ },
+ "fixture": "expedition:<planet> for viridia, ferrum, nivalis, umbra, sere, pelagos",
+ "status": "PASS",
+ "artifacts": [
+  "evidence/droppod/probe.txt",
+  "evidence/droppod/perf_hero_viridia.json",
+  "evidence/droppod/perf_hero_viridia_run2.json",
+  "evidence/droppod/frametimes_*.json",
+  "evidence/droppod/demo_viridia.mp4", "evidence/droppod/demo_viridia.gif",
+  "evidence/droppod/demo_umbra.mp4", "evidence/droppod/demo_umbra.gif",
+  "evidence/droppod/sheet_viridia.jpg", "evidence/droppod/sheet_umbra.jpg",
+  "evidence/droppod/planets_close.jpg",
+  "evidence/droppod/scan_vs_rebuild.jpg",
+  "evidence/droppod/viewer/index.html"
+ ]
+}

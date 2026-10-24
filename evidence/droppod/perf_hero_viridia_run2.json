@@ -1,0 +1,55 @@
+{
+ "device": "NVIDIA GeForce RTX 5090",
+ "overall_avg_ms": 8.35,
+ "overall_worst_ms": 54.95,
+ "beats": {
+  "call+descent": {
+   "frames": 212,
+   "avg_ms": 8.24,
+   "worst_ms": 12.14,
+   "worst_over_avg": 1.47
+  },
+  "hover": {
+   "frames": 77,
+   "avg_ms": 8.44,
+   "worst_ms": 17.37,
+   "worst_over_avg": 2.06
+  },
+  "drop+impact": {
+   "frames": 105,
+   "avg_ms": 8.57,
+   "worst_ms": 54.95,
+   "worst_over_avg": 6.41
+  },
+  "unlock+strain": {
+   "frames": 132,
+   "avg_ms": 8.33,
+   "worst_ms": 12.15,
+   "worst_over_avg": 1.46
+  },
+  "snap+burst": {
+   "frames": 72,
+   "avg_ms": 8.33,
+   "worst_ms": 9.55,
+   "worst_over_avg": 1.15
+  },
+  "cell rise/hover/zip": {
+   "frames": 192,
+   "avg_ms": 8.33,
+   "worst_ms": 9.96,
+   "worst_over_avg": 1.2
+  },
+  "dim": {
+   "frames": 155,
+   "avg_ms": 8.39,
+   "worst_ms": 16.55,
+   "worst_over_avg": 1.97
+  },
+  "after": {
+   "frames": 155,
+   "avg_ms": 8.33,
+   "worst_ms": 11.6,
+   "worst_over_avg": 1.39
+  }
+ }
+}

@@ -30,6 +30,11 @@ var _nav_t := 0.0
 var scanner: SurfaceScanner
 var _descending := false  # PlanetDescent in progress: no suit drain, no HUD
 var _poi_labels: Dictionary = {}  # key -> Label3D: far-off signage, handed to the waypoint layer up close
+var _pod: DropPod  # D-056: the drone reserve's supply pod (visual only, built early so its shaders are warm)
+var _suit_hold := 0.0  # refill not yet shown on the suit bar: it fills when the cell reaches the suit
+var _route_lines: Array = []  # route polylines from the lander, kept clear of the pod
+var _dressing: Node3D  # the site's hand-placed set dressing (the pod keeps clear of it)
+var _pod_blockers: Array = []  # [Vector2, radius]: trees, rocks, bushes the pod must not land in
 
 
 func _ready() -> void:
@@ -82,7 +87,7 @@ func _ready() -> void:
 	add_child(cover)
 	add_child(PlanetSky.build(str(planet.get("id")), str(planet.get("biome_id")), terrain))
 	_place_lander()
-	SceneDressing.attach(self, str(site.get("id", "")), terrain)
+	_dressing = SceneDressing.attach(self, str(site.get("id", "")), terrain)
 	_place_points(pts)
 	_place_routes()
 	_place_hazards()
@@ -129,6 +134,8 @@ func _ready() -> void:
 	captain.interact_target_changed.connect(func(t: Interactable) -> void: hud.set_prompt(t.prompt_text() + ("\n" + t.consequence if t and not t.consequence.is_empty() else "") if t else ""))
 	captain.hold_progress.connect(hud.set_hold)
 	_build_suit_hud()
+	if ex.drone_refill_available and not ex.drone_refill_used:
+		_prepare_drop_pod()
 	AudioService.set_ambience_any(["amb_surface_" + str(planet.get("biome_id")), "amb_colony_wind"])
 	# "The lander's hatch slides open": told at touchdown, not kilometres up.
 	var descent := get_node_or_null("Descent") as PlanetDescent
@@ -364,11 +371,12 @@ func _physics_process(delta: float) -> void:
 	if not hud.any_modal_open() and not _descending:
 		GameSession.sim.expedition.tick(gs, delta, hm[0])
 	var reserve := float(GameSession.content.bal("suit.reserve_warning", 30.0))
-	_suit_bar.value = ex.suit_energy
+	var shown := maxf(0.0, ex.suit_energy - _suit_hold)
+	_suit_bar.value = shown
 	var fill := UiKit.DANGER if ex.suit_energy <= reserve else (UiKit.WARN if hm[0] > 1.0 else UiKit.PETROL)
 	(_suit_bar.get_theme_stylebox("fill") as StyleBoxFlat).bg_color = fill
 	var drain := float(GameSession.content.bal("suit.drain_per_s", 0.12)) * float(hm[0])
-	_suit_label.text = Loc.t("%s %d%%  (−%.2f/s · ~%d s left)") % [UiKit.status_icon("critical" if ex.suit_energy <= reserve else "ok"), int(ex.suit_energy), drain, int(ex.suit_energy / maxf(drain, 0.01))]
+	_suit_label.text = Loc.t("%s %d%%  (−%.2f/s · ~%d s left)") % [UiKit.status_icon("critical" if ex.suit_energy <= reserve else "ok"), int(shown), drain, int(shown / maxf(drain, 0.01))]
 	var lines: Array = []
 	if hm[0] > 1.0:
 		lines.append(Loc.t("▲ In hazard zone: %s (×%.1f consumption)") % [hm[1], hm[0]])
@@ -412,9 +420,16 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("scan") and scanner and not _descending and not _finishing:
 		scanner.pulse()
 	if event.is_action_pressed("drone_refill"):
+		if _pod and _pod.is_busy():
+			_pod.skip()  # pressing again skips the delivery to its end
+			get_viewport().set_input_as_handled()
+			return
+		var before := GameSession.state.expedition.suit_energy if GameSession.state.expedition else 0.0
 		var r := GameSession.cmd_drone_refill()
 		if r.ok:
 			hud.toast(Loc.t("The drone delivers an energy cell."), "ok")
+			_suit_hold = maxf(0.0, GameSession.state.expedition.suit_energy - before)
+			_call_drop_pod()
 
 
 func _on_use(it: Interactable) -> void:
@@ -545,6 +560,46 @@ func debug_action(action: String) -> void:
 		if hud:
 			hud.visible = false
 		return
+	if action.begins_with("droppod"):  # evidence: droppod / droppod_short / droppod:<ms> (frozen scrub); no domain change
+		var lander: Node3D = _markers.get("lander")
+		if lander and captain.global_position.distance_to(lander.global_position) < 12.0:
+			# Out of the camp first, as when the reserve is really called: 15 m out, facing
+			# away, where the ground ahead is open (first of 16 bearings that passes).
+			# The pod must then land in view (the same search _drop_spot does, front ring only).
+			var out := Vector2(1, 1).normalized() * 15.0
+			var found := false
+			for pass_i: int in 3:  # strict first: nothing in the captain's face, pod close; then relaxed
+				var clear_m: float = [2.0, 1.0, 0.0][pass_i]
+				var max_r: float = [5.3, 6.6, 10.5][pass_i]
+				for r: float in [15.0, 19.0, 12.0, 23.0, 27.0, 31.0]:
+					for i: int in 16:
+						var dir := Vector2(1, 1).normalized().rotated(TAU * i / 16.0)
+						var o := dir * r
+						if found or terrain.height_at(o.x, o.y) < terrain.water_level + 0.3 or _in_hazard(o, 2.0):
+							continue
+						var near_prop := false
+						for ob: Array in _pod_obstacles():
+							near_prop = near_prop or o.distance_to(ob[0]) < float(ob[1]) + clear_m
+						var sp: Variant = null if near_prop else _find_spot(o, dir, [POD_RINGS[0]])
+						if sp != null and o.distance_to(sp) < max_r:
+							out = o
+							found = true
+			captain.teleport(Vector3(out.x, terrain.height_at(out.x, out.y) + 0.3, out.y), atan2(-out.x, -out.y))
+		var head := action.get_slice(":", 0)
+		if action.contains(":"):
+			_call_drop_pod(head.contains("short"), float(action.get_slice(":", 1)))
+		else:
+			_call_drop_pod(head.contains("short"))
+		if head.contains("close"):  # droppod_close[...]: a 3/4 evidence camera on the pod
+			var cam := Camera3D.new()
+			add_child(cam)
+			cam.global_position = _pod.global_transform * Vector3(2.4, 1.5, 3.0)
+			cam.look_at(_pod.global_position + Vector3(0, 1.0, 0))
+			cam.fov = 50.0
+			cam.current = true
+			if hud:
+				hud.visible = false
+		return
 	if action.begins_with("sky"):  # evidence: look up at the sky bodies (sky / sky:<azimuth deg>)
 		var az := deg_to_rad(float(action.get_slice(":", 1))) if action.contains(":") else 0.0
 		captain.camera_rig.yaw = -az
@@ -655,6 +710,204 @@ func _start_descent(lander: Node3D, body: Node3D, start_alt: float) -> void:
 		captain.camera_rig.camera.current = true
 		captain.camera_rig.pitch = CaptainCamera.REST_PITCH
 		captain.camera_rig.snap())
+
+
+## The supply pod is built (hidden) as soon as the expedition has a drone reserve,
+## and drawn once, tiny, in front of the camera so every pipeline is compiled
+## before the hero moment (no hitch when it lands).
+func _prepare_drop_pod() -> void:
+	if _pod:
+		return
+	_pod = DropPod.new()
+	_pod.name = "DropPod"
+	_pod.async_bake = not AppFlow.test_mode  # the local scan paint streams in while the pod is hidden
+	add_child(_pod)
+	_pod.target = captain
+	var ground := Color(str(terrain.style.get("ground", terrain.palette.get("nature", "#8a7a60"))))
+	_pod.set_environment(ground, 1.0)  # the dust is lit by the scene itself
+	_pod.visible = false
+	if AppFlow.test_mode:
+		return
+	_warm_pod.call_deferred()
+
+
+func _warm_pod() -> void:
+	_pod_obstacles()  # the spot search's obstacle list, built now rather than on the key press
+	for slot: String in ["sfx_landing", "sfx_interact", "sfx_drone_refill"]:
+		AudioService.stream(slot)  # decoded and cached before the landing
+	var cam := get_viewport().get_camera_3d()
+	if cam == null or _pod == null or _pod.is_busy():
+		return
+	_pod.warm_up(cam)
+	for i: int in 3:
+		await get_tree().process_frame
+	if _pod and not _pod.is_busy():
+		_pod.end_warm_up()
+
+
+## Drop the pod beside the captain: a clear, level spot in view, away from the
+## interactables, the routes, water, trees and anything with a collider.
+func _call_drop_pod(reduced: bool = FxEffect.reduced_motion(), scrub_ms: float = -1.0) -> void:
+	if _pod == null:
+		_prepare_drop_pod()
+	if _pod.is_busy():
+		_pod.skip()
+	_pod.end_warm_up()
+	var spot := _drop_spot()
+	_pod.global_position = spot
+	var to_cap := captain.global_position - spot
+	_pod.rotation = Vector3(0, atan2(to_cap.x, to_cap.z), 0)  # front (+Z) toward the captain
+	_pod.fit_ground(terrain.height_at)
+	if DebugCapture.requested():
+		print("DROPPOD spot ", spot, " captain ", captain.global_position)
+	if not _pod.impact.is_connected(_on_pod_impact):
+		_pod.impact.connect(_on_pod_impact)
+		_pod.hatch_snapped.connect(_on_pod_snap)
+		_pod.cell_delivered.connect(_on_pod_delivered)
+	if scrub_ms >= 0.0:
+		_pod.set_time(scrub_ms, reduced)
+	else:
+		_pod.play(reduced)
+
+
+const POD_RINGS := [[35.0, -35.0, 50.0, -50.0, 20.0, -20.0], [70.0, -70.0, 90.0, -90.0], [120.0, -120.0, 150.0, -150.0, 180.0]]
+
+
+func _drop_spot() -> Vector3:
+	var c := Vector2(captain.global_position.x, captain.global_position.z)
+	var yaw := captain.camera_rig.yaw  # where the player is looking (the rig's target, not its lagging view)
+	var fwd := Vector2(-sin(yaw), -cos(yaw))
+	# In view first (the camera looks past the captain), close before far, then the sides, then behind.
+	var spot: Variant = _find_spot(c, fwd, POD_RINGS)
+	if spot == null:
+		spot = c + fwd * 4.0
+	var q: Vector2 = spot
+	return Vector3(q.x, terrain.height_at(q.x, q.y), q.y)
+
+
+## First clear, level spot around c (bearings in degrees from fwd, per ring), or null.
+func _find_spot(c: Vector2, fwd: Vector2, rings: Array) -> Variant:
+	var obstacles := _pod_obstacles()
+	var ground := terrain.height_at(c.x, c.y)  # the ground under the captain, even if he stands on a prop
+	for ring: Array in rings:
+		for r: float in [3.7, 4.4, 5.2, 6.5, 8.0, 10.0]:
+			for deg: float in ring:
+				var p := c + fwd.rotated(deg_to_rad(deg)) * r
+				if absf(terrain.height_at(p.x, p.y) - ground) < 1.0 and _spot_clear(p, obstacles):  # level with the captain, not up a mound
+					return p
+	return null
+
+
+## Trees, rocks and every ground-cover piece taller than a tuft (bushes would
+## poke through the pod); built once, on the first call.
+func _pod_obstacles() -> Array:
+	if not _pod_blockers.is_empty():
+		return _pod_blockers
+	for rt: Dictionary in DictUtil.get_arr(survey, "routes"):
+		var line: Array = [Vector2.ZERO]
+		for w: Variant in DictUtil.get_arr(rt, "waypoints"):
+			line.append(Vector2(float(w[0]), float(w[1])))
+		_route_lines.append(line)
+	var cover := get_node_or_null("GroundCover")
+	_pod_blockers = GroundWildlife.obstacles(cover)
+	if cover:
+		for n: Node in cover.find_children("*", "MultiMeshInstance3D", true, false):
+			var mmi := n as MultiMeshInstance3D
+			var mm := mmi.multimesh
+			if mm == null or mm.mesh == null:
+				continue
+			var piece := mm.mesh.get_aabb().size
+			var count := mm.instance_count if mm.visible_instance_count < 0 else mm.visible_instance_count
+			for i: int in count:
+				var xf := mmi.global_transform * mm.get_instance_transform(i)
+				var sz := piece * xf.basis.get_scale()
+				if sz.y > 0.4:
+					_pod_blockers.append([Vector2(xf.origin.x, xf.origin.z), maxf(sz.x, sz.z) * 0.5])
+	# Set dressing and hazard beacons (look-only props without colliders).
+	for n: Node in find_children("Beacon*", "Node3D", true, false):
+		var b := n as Node3D
+		_pod_blockers.append([Vector2(b.global_position.x, b.global_position.z), 1.0])
+	for dressing: Node in [get_node_or_null("PoiDressing"), _dressing]:
+		if dressing == null:
+			continue
+		for n: Node in dressing.get_children() + dressing.find_children("*", "VisualSlot", true, false):
+			if n is Node3D:
+				var v := n as Node3D
+				_pod_blockers.append([Vector2(v.global_position.x, v.global_position.z), 1.2])
+	_pod_blockers.append([Vector2(1e6, 1e6), 0.0])  # never empty again
+	return _pod_blockers
+
+
+func _spot_clear(p: Vector2, obstacles: Array) -> bool:
+	for key: String in _markers.keys():
+		var m: Node3D = _markers[key]
+		if p.distance_to(Vector2(m.global_position.x, m.global_position.z)) < (6.5 if key == "lander" else 4.0):
+			return false
+	for line: Array in _route_lines:
+		for i: int in line.size() - 1:
+			if Geometry2D.get_closest_point_to_segment(p, line[i], line[i + 1]).distance_to(p) < 2.2:
+				return false
+	for o: Array in obstacles:
+		if p.distance_to(o[0]) < float(o[1]) + 0.8:
+			return false
+	if _in_hazard(p, 3.5):  # the zone, its tape ring and beacons
+		return false
+	var h := terrain.height_at(p.x, p.y)
+	if h < terrain.water_level + 0.25:
+		return false
+	var lo := h
+	var hi := h
+	var space := get_world_3d().direct_space_state
+	for k: int in 5:
+		var q := p if k == 4 else p + Vector2.from_angle(PI * 0.5 * k + PI * 0.25) * 0.9
+		var hq := terrain.height_at(q.x, q.y)
+		lo = minf(lo, hq)
+		hi = maxf(hi, hq)
+		var ray := PhysicsRayQueryParameters3D.create(Vector3(q.x, hq + 8.0, q.y), Vector3(q.x, hq - 0.5, q.y))
+		ray.collide_with_areas = false
+		var hit := space.intersect_ray(ray)
+		if not hit.is_empty() and (hit["position"] as Vector3).y > hq + 0.3:
+			return false
+	return hi - lo < 0.25
+
+
+func _in_hazard(p: Vector2, margin: float) -> bool:
+	for hz: Dictionary in hazard_areas:
+		var ar := hz["area"] as Area3D
+		var rad := float((ar.get_child(0) as CollisionShape3D).shape.get("radius"))
+		if p.distance_to(Vector2(ar.global_position.x, ar.global_position.z)) < rad + margin:
+			return true
+	return false
+
+
+func _on_pod_impact(strength: float) -> void:
+	AudioService.play("sfx_landing", "SFX", -14.0 + 4.0 * strength, 1.7)
+	if not SettingsService.get_value("camera_shake", true) or FxEffect.reduced_motion() or strength < 0.5:
+		return
+	# A small camera bump, distance-scaled, ~200 ms (bible: respects camera_shake / reduced_motion).
+	var cam := captain.camera_rig.camera
+	var dist := cam.global_position.distance_to(_pod.global_position)
+	var a := 0.03 * strength * clampf(7.0 / maxf(dist, 1.0), 0.35, 1.0)
+	var t := create_tween()
+	t.tween_method(func(u: float) -> void:
+		var e := exp(-u / 0.05)
+		cam.v_offset = -a * e * cos(TAU * u / 0.1)
+		cam.h_offset = a * 0.45 * e * sin(TAU * u / 0.075), 0.0, 0.22, 0.22)
+	t.tween_callback(func() -> void:
+		cam.v_offset = 0.0
+		cam.h_offset = 0.0)
+
+
+func _on_pod_snap() -> void:
+	AudioService.play("sfx_interact", "SFX", -6.0, 0.75)
+
+
+func _on_pod_delivered() -> void:
+	AudioService.play("sfx_interact", "SFX", -2.0, 1.3)
+	if _suit_hold <= 0.0:
+		return
+	var t := create_tween()
+	t.tween_method(func(v: float) -> void: _suit_hold = v, _suit_hold, 0.0, 0.6).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
 
 
 func _exit_tree() -> void:
