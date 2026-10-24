@@ -36,7 +36,7 @@
       "ok": true
     },
     {
-      "detail": "moved=0.61",
+      "detail": "moved=0.56",
       "name": "riglab_runs",
       "ok": true
     },
@@ -96,7 +96,7 @@
       "ok": true
     },
     {
-      "detail": "dyaw=-0.60",
+      "detail": "dyaw=-0.61",
       "name": "pad_look_turns_camera",
       "ok": true
     },
@@ -284,5 +284,5 @@
   "engine_version": "4.7.1-stable (official)",
   "failures": [],
   "status": "PASS",
-  "timestamp": "2026-10-24T11:56:50"
+  "timestamp": "2026-10-24T12:04:23"
 }

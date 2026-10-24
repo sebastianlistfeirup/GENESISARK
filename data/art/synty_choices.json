@@ -2,44 +2,63 @@
  "_note": "Chosen by eye from contact sheets (tools/synty/gallery.gd). Sources live in assets/Synty (local only, never committed); rebuild with tools/synty/build_godot_packs.sh.",
  "choices": {
   "building.habitat": {
-   "source": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Buildings/SM_Bld_Pod_Hab_Small_01.tscn",
-   "status": "approved"
+   "source": "res://art/kits/Explorer_01_18_Pod_Hab_Small_01.tscn",
+   "status": "approved",
+   "note": "Synty demo-scene assembly (tools/synty/extract_kits.gd)",
+   "variants": [
+    "res://art/kits/Explorer_01_18_Pod_Hab_Small_01.tscn",
+    "res://art/kits/Explorer_01_03_Pod_Hab_Small_04.tscn",
+    "res://art/kits/Explorer_01_16_Pod_Hab_Small_05.tscn",
+    "res://art/kits/Explorer_01_05_Pod_Hab_Small_03.tscn"
+   ],
+   "kit_margin": 0.8
   },
   "building.care_center": {
-   "source": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Buildings/SM_Bld_Pod_Research_04.tscn",
-   "status": "approved"
+   "source": "res://art/kits/Explorer_01_10_Pod_Research_04.tscn",
+   "status": "approved",
+   "note": "Synty demo-scene assembly (tools/synty/extract_kits.gd)"
   },
   "building.clinic": {
-   "source": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Buildings/SM_Bld_Pod_Hub_01.tscn",
-   "status": "approved"
+   "source": "res://art/kits/Explorer_01_19_Pod_Hub_01.tscn",
+   "status": "approved",
+   "note": "Synty demo-scene assembly (tools/synty/extract_kits.gd)"
   },
   "building.school_hall": {
-   "source": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Buildings/SM_Bld_Pod_Research_03.tscn",
-   "status": "approved"
+   "source": "res://art/kits/Explorer_01_27_Pod_Hab_Large_02.tscn",
+   "status": "approved",
+   "note": "Synty demo-scene assembly (tools/synty/extract_kits.gd)",
+   "kit_margin": 0.6
   },
   "building.greenhouse": {
-   "source": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Buildings/SM_Bld_Pod_Research_05.tscn",
-   "status": "approved"
+   "source": "res://art/kits/Explorer_01_31_Pod_Research_05.tscn",
+   "status": "approved",
+   "note": "Synty demo-scene assembly (tools/synty/extract_kits.gd)"
   },
   "building.water_plant": {
-   "source": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Buildings/SM_Bld_Pod_Silo_02.tscn",
-   "status": "approved"
+   "source": "res://art/kits/Explorer_01_15_Pod_Silo_05.tscn",
+   "status": "approved",
+   "note": "Synty demo-scene assembly (tools/synty/extract_kits.gd)"
   },
   "building.mine": {
-   "source": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Buildings/SM_Bld_Scav_Refinery_01.tscn",
-   "status": "approved"
+   "source": "res://art/kits/Scavenger_01_00_Scav_Refinery_03.tscn",
+   "status": "approved",
+   "note": "Synty demo-scene assembly (tools/synty/extract_kits.gd)"
   },
   "building.workshop": {
-   "source": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Buildings/SM_Bld_Scav_Garage_01.tscn",
-   "status": "approved"
+   "source": "res://art/kits/Corporation_01_38_Scav_Garage_01.tscn",
+   "status": "approved",
+   "note": "Synty demo-scene assembly (tools/synty/extract_kits.gd)"
   },
   "building.drone_hub": {
-   "source": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Buildings/SM_Bld_Corp_LandingPad_02.tscn",
-   "status": "approved"
+   "source": "res://art/kits/Corporation_01_01_Corp_LandingPad_02.tscn",
+   "status": "approved",
+   "note": "Synty demo-scene assembly (tools/synty/extract_kits.gd)"
   },
   "building.geothermal_generator": {
-   "source": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Buildings/SM_Bld_Corp_Generator_01.tscn",
-   "status": "approved"
+   "source": "res://art/kits/Explorer_01_14_Pod_Silo_02.tscn",
+   "status": "approved",
+   "note": "Synty demo-scene assembly (tools/synty/extract_kits.gd)",
+   "kit_margin": 0.3
   },
   "building.battery": {
    "source": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_PowerGenerator_02.tscn",
