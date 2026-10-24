@@ -15,6 +15,8 @@ var _ai: Node3D
 var _ai_t := 0.0
 var _zone := ""
 var waypoints: WaypointLayer
+var _was_powered := false
+var _wave_origin := Vector3.INF  # set when the player closes the coupling: the power-up wave starts here
 var _window_planet: Node3D
 var _voyage_label: Label
 var _voyage_title: Label
@@ -241,12 +243,24 @@ func _window_view() -> void:
 func _on_state(_kind: String) -> void:
 	var gs: GameState = GameSession.state
 	var powered: bool = gs.ark.systems.get("power") != "offline"
-	builder.set_power(powered)
 	var amb := builder.ambient_for(powered)
 	var we := get_node_or_null("WorldEnvironment") as WorldEnvironment
-	if we and amb.size() == 2:
-		we.environment.ambient_light_color = amb[0]
-		we.environment.ambient_light_energy = amb[1]
+	if powered and not _was_powered and _kind != "init" and _wave_origin != Vector3.INF:
+		# The player just closed the coupling: the light rolls back through the ship (D-061).
+		builder.power_wave(_wave_origin)
+		if we and amb.size() == 2:
+			var tw := create_tween()
+			tw.tween_property(we.environment, "ambient_light_energy", 0.0, 0.45)
+			tw.tween_interval(0.4)
+			tw.tween_property(we.environment, "ambient_light_color", amb[0], 0.01)
+			tw.tween_property(we.environment, "ambient_light_energy", amb[1], 1.6).set_trans(Tween.TRANS_SINE)
+		_wave_origin = Vector3.INF
+	elif powered != _was_powered or _kind == "init":
+		builder.set_power(powered)
+		if we and amb.size() == 2:
+			we.environment.ambient_light_color = amb[0]
+			we.environment.ambient_light_energy = amb[1]
+	_was_powered = powered
 	_display.visible = powered
 	for id: String in ["starmap", "bridge_terminal", "orbit_terminal", "embryo_bank"]:
 		var it: Interactable = interactables.get(id)
@@ -286,6 +300,7 @@ func _on_state(_kind: String) -> void:
 func _on_use(it: Interactable) -> void:
 	match it.interact_id:
 		"power_coupling":
+			_wave_origin = it.global_position
 			GameSession.cmd_restore_power()
 		"embryo_bank":
 			GameSession.cmd_mark("embryo_bank_checked", "embryo_bank")
@@ -363,6 +378,12 @@ func _any_panel() -> bool:
 
 ## DEBUG/evidence hook used by DebugCapture (--action=...).
 func debug_action(action: String) -> void:
+	if action == "powerwave":  # evidence: close the coupling from a wide view of the corridor
+		var it: Interactable = interactables.get("power_coupling")
+		captain.teleport(builder._cell_center(1, 9), PI)
+		_wave_origin = it.global_position
+		GameSession.cmd_restore_power()
+		return
 	if action == "corridor":  # evidence: down the west leg of the ring corridor
 		captain.teleport(builder._cell_center(1, 10), 0.0)
 		return

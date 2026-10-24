@@ -279,6 +279,52 @@ func set_power(restored: bool) -> void:
 			n.visible = restored == bool(p["on"])
 
 
+## Power coming back (D-061): a stutter, a beat of total darkness, then the lights
+## and consoles switch on in a wave rolling outward from the coupling, each lamp
+## flaring past its level and settling (anticipation, action, follow-through).
+## Calls `done` when the last lamp is on. Reduced motion: instant.
+func power_wave(origin: Vector3, done: Callable = Callable()) -> void:
+	if FxEffect.reduced_motion():
+		set_power(true)
+		if done.is_valid():
+			done.call()
+		return
+	_flicker.clear()
+	set_process(false)
+	var tw := create_tween().set_parallel(true)
+	var last := 0.0
+	for i: int in lights.size():
+		var l: Dictionary = lights[i]
+		var ol: OmniLight3D = l["light"]
+		var lamp: Node3D = l["lamp"]
+		var e0 := ol.light_energy
+		# Stutter, then everything drops out.
+		tw.tween_property(ol, "light_energy", e0 * 1.6, 0.06).set_delay(0.05 + (i % 3) * 0.04)
+		tw.tween_property(ol, "light_energy", 0.0, 0.05).set_delay(0.18 + (i % 3) * 0.04)
+		tw.tween_property(ol, "light_energy", e0, 0.04).set_delay(0.3)
+		tw.tween_property(ol, "light_energy", 0.0, 0.08).set_delay(0.42)
+		var delay := 0.85 + ol.global_position.distance_to(origin) / 42.0
+		last = maxf(last, delay)
+		var col := Color.from_string(str(zones.get(l["zone"], {}).get("light", "#d8e2e6")), Color.WHITE)
+		tw.tween_callback(func() -> void:
+			ol.light_color = col
+			lamp.visible = true).set_delay(delay)
+		tw.tween_property(ol, "light_energy", 3.4, 0.09).set_delay(delay)
+		tw.tween_property(ol, "light_energy", 2.1, 0.45).set_delay(delay + 0.09).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+	for p: Dictionary in power_nodes:
+		var n: Node3D = p["node"]
+		if not is_instance_valid(n):
+			continue
+		var d := 0.95 + n.global_position.distance_to(origin) / 42.0
+		if p.has("screen"):
+			tw.tween_callback((n as HoloScreen).set_powered.bind(true)).set_delay(d)
+		else:
+			tw.tween_callback(func() -> void: n.visible = bool(p["on"])).set_delay(d)
+	tw.tween_callback(set_strip_glow.bind(true)).set_delay(0.85 + (last - 0.85) * 0.4)
+	if done.is_valid():
+		tw.tween_callback(done).set_delay(last + 0.6)
+
+
 ## Ambient light for the power state (ship_dressing.json "ambient"): darker on emergency power.
 func ambient_for(restored: bool) -> Array:
 	var a: Array = DictUtil.get_arr(ambient, "power" if restored else "emergency")

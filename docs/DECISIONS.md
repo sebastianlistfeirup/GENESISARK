@@ -2,6 +2,9 @@
 
 Biblen er baseline. Her står begrundede valg og afvigelser. Nyeste øverst.
 
+### D-061 · Strømmen vender tilbage som en bølge gennem skibet (kun præsentation)
+Når kaptajnen lukker nødkoblingen, skifter skibet ikke længere øjeblikkeligt: nødlamperne hakker, alt går i sort i et slag, og så tænder lys, konsoller og holoskærme i en bølge, der ruller ud fra koblingen (~42 m/s), hver lampe blusser forbi sit niveau og lægger sig (forventning, handling, efterslæb); atlassets lysstriber og den omgivende tone følger efter. `ShipBuilder.power_wave(origin)`; uændret ved indlæsning af et gemt spil, øjeblikkeligt med nedsat bevægelse. Bevis: `--setup=fresh --scene=ship --action=powerwave --post=<frames>`.
+
 ### D-060 · Opvågningen i kryokapslen (kun præsentation)
 Et nyt spil starter nu med kaptajnens opvågning i stedet for et klip til en stående figur: mørke, derefter frostet kapselglas set liggende med den røde nødlampe i loftet og et åndedrag, der klarer midten (`cryo_frost.gdshader`); glasset revner og kapslen ryster (forventning), lugen smækker op med en lille overshoot og kold damp ruller ud og synker (handling), og blikket sætter sig op med en tung, svajende bevægelse, hvor rullet halter efter (efterslæb), til de andre sovende i deres kapsler står foran én – så overtager det normale kamera. Første undertekst starter, når lugen åbner. Springes over med Enter/Escape, kort med nedsat bevægelse, kun første gang (`story:intro_wakeup` endnu ikke anvendt); domænet er uændret. Bevis: `--setup=fresh --scene=ship --action=wakeup:<sekunder>`.
 
