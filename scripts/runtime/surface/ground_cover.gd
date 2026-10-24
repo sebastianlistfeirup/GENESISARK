@@ -150,7 +150,15 @@ static func build(terrain: Node3D, key: String, seed_value: int, avoid: Array, s
 			var s := rng.randf_range(float(sc[0]), float(sc[1])) if sc.size() == 2 else 1.0
 			var mi := MeshInstance3D.new()
 			mi.mesh = src[0]
-			var y: float = terrain.call("height_at", clampf(p.x, -size_m * 0.49, size_m * 0.49), clampf(p.y, -size_m * 0.49, size_m * 0.49)) - 1.5
+			# Anchor by the mesh's own base, on the LOWEST ground under its footprint, sunk a
+			# little, so big pieces never hover whatever their pivot (Synty cliffs pivot mid-air).
+			var box: AABB = src[2]
+			var half_w := maxf(box.size.x, box.size.z) * s * 0.4
+			var lo := INF
+			for k: int in 9:
+				var qq := p + (Vector2.from_angle(TAU * k / 8.0) * half_w if k < 8 else Vector2.ZERO)
+				lo = minf(lo, float(terrain.call("height_at", clampf(qq.x, -size_m * 0.49, size_m * 0.49), clampf(qq.y, -size_m * 0.49, size_m * 0.49))))
+			var y := lo - box.position.y * s - box.size.y * s * 0.06
 			mi.transform = Transform3D(Basis(Vector3.UP, rng.randf() * TAU).scaled(Vector3.ONE * s), Vector3(p.x, y, p.y)) * (src[1] as Transform3D)
 			mi.visibility_range_end = 600.0
 			root.add_child(mi)

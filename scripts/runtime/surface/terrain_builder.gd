@@ -220,6 +220,7 @@ func build() -> void:
 		dm.set_shader_parameter("cliff_tex", load(ct if ResourceLoader.exists(ct) else gt))
 		mi.material_override = dm
 	add_child(mi)
+	_build_far_ring(mi.material_override, ground, patch, cliff)
 	var body := StaticBody3D.new()
 	body.name = "TerrainBody"
 	body.collision_layer = 16 | 1
@@ -296,3 +297,47 @@ static func environment_for(p: Dictionary, biome: String) -> Array:
 	if not planet.has("biome_id"):
 		planet["biome_id"] = biome
 	return Lighting.build(planet)
+
+
+## Distant land out to the horizon (no collision, coarse facets): the playable map
+## no longer ends in a cut edge against the sky. Same height function and colours,
+## so the rim hills continue into the haze.
+func _build_far_ring(mat: Material, ground: Color, patch: Color, cliff: Color) -> void:
+	var far := 460.0
+	var fs := 10.0
+	var inner := size_m * 0.5 - step * 2.0
+	var n := int(far * 2.0 / fs)
+	var st := SurfaceTool.new()
+	st.begin(Mesh.PRIMITIVE_TRIANGLES)
+	for iz: int in n:
+		for ix: int in n:
+			var x0 := -far + ix * fs
+			var z0 := -far + iz * fs
+			if maxf(absf(x0 + fs * 0.5), absf(z0 + fs * 0.5)) < inner - fs:
+				continue
+			var q := [Vector2(x0, z0), Vector2(x0 + fs, z0), Vector2(x0, z0 + fs), Vector2(x0 + fs, z0), Vector2(x0 + fs, z0 + fs), Vector2(x0, z0 + fs)]
+			for t: int in 2:
+				var vs: Array[Vector3] = []
+				for k: int in 3:
+					var v: Vector2 = q[t * 3 + k]
+					var h := height_at(v.x, v.y)
+					var dist := maxf(absf(v.x), absf(v.y))
+					h += smoothstep(size_m * 0.5, far, dist) * height_scale * 2.5 * (0.6 + 0.4 * detail.get_noise_2d(v.x * 0.05, v.y * 0.05))
+					if dist < inner:
+						h -= 3.0  # tucked under the playable mesh where they overlap
+					vs.append(Vector3(v.x, h, v.y))
+				var fn := (vs[2] - vs[0]).cross(vs[1] - vs[0]).normalized()
+				var slope := 1.0 - fn.y
+				var c := ground.lerp(patch, clampf(detail.get_noise_2d(vs[0].x * 0.08, vs[0].z * 0.08) * 0.5 + 0.5, 0, 1)).lerp(cliff, smoothstep(0.1, 0.35, slope))
+				if biome_id == "ice" and vs[0].y > height_scale * 0.6:
+					c = c.lerp(Color.WHITE, 0.6)
+				st.set_color(c)
+				st.set_normal(fn)
+				for v: Vector3 in vs:
+					st.add_vertex(v)
+	var ring := MeshInstance3D.new()
+	ring.name = "FarTerrain"
+	ring.mesh = st.commit()
+	ring.material_override = mat
+	ring.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	add_child(ring)

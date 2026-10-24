@@ -121,7 +121,8 @@ static func _material(pack: String, slot: Dictionary, look: Dictionary) -> Mater
 		var rm := ShaderMaterial.new()
 		rm.shader = ROCK
 		rm.set_shader_parameter("side_tex", _tex(pack, str(tex["_Triplanar_Texture_Side"])))
-		rm.set_shader_parameter("top_tex", _tex(pack, str(tex.get("_Triplanar_Texture_Top", tex["_Triplanar_Texture_Side"]))))
+		var top_override := str(look.get("rock_top_tex", ""))
+		rm.set_shader_parameter("top_tex", load(top_override) if not top_override.is_empty() and ResourceLoader.exists(top_override) else _tex(pack, str(tex.get("_Triplanar_Texture_Top", tex["_Triplanar_Texture_Side"]))))
 		rm.set_shader_parameter("side_tint", Color(str(look.get("rock_tint", "#ffffff"))))
 		rm.set_shader_parameter("top_tint", Color(str(look.get("rock_top_tint", look.get("rock_tint", "#ffffff")))))
 		rm.set_shader_parameter("top_amount", float(look.get("rock_top_amount", 0.55)))

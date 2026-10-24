@@ -50,6 +50,7 @@
    "cliff": "#3f4a33"
   },
   "look": {
+   "rock_top_tex": "res://assets/Synty/Nature/Jungle/Textures/Terrain/Grass_Debris_Texture_01.png",
    "hue_shift": -0.02,
    "sat": 1.15,
    "wind": 0.07,
@@ -193,6 +194,22 @@
   "landmarks": [
    {
     "meshes": [
+     "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Artifact_AlienRuin_02.tscn",
+     "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Artifact_AlienRuin_03.tscn",
+     "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Artifact_AlienRuin_09.tscn"
+    ],
+    "count": 4,
+    "scale": [
+     2.2,
+     3.0
+    ],
+    "ring": [
+     66,
+     80
+    ]
+   },
+   {
+    "meshes": [
      "res://assets/Synty/Nature/Jungle/FBX/SM_Env_Rock_Cliff_01.fbx",
      "res://assets/Synty/Nature/Jungle/FBX/SM_Env_Rock_Cliff_02.fbx",
      "res://assets/Synty/Nature/Jungle/FBX/SM_Env_Rock_Cliff_03.fbx",
@@ -239,6 +256,7 @@
    "cliff": "#46564c"
   },
   "look": {
+   "rock_top_tex": "res://assets/Synty/Nature/Jungle/Textures/Terrain/Grass_Debris_Texture_01.png",
    "hue_shift": 0.07,
    "sat": 1.05,
    "wind": 0.12,
@@ -373,6 +391,22 @@
    }
   ],
   "landmarks": [
+   {
+    "meshes": [
+     "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Floating_Rocks_Spiral_01.tscn",
+     "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Floating_Rocks_Spiral_02.tscn",
+     "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Artifact_AlienRuin_04.tscn"
+    ],
+    "count": 4,
+    "scale": [
+     1.6,
+     2.4
+    ],
+    "ring": [
+     60,
+     82
+    ]
+   },
    {
     "meshes": [
      "res://assets/Synty/Nature/Jungle/FBX/SM_Env_Rock_Cliff_01.fbx",
@@ -531,6 +565,23 @@
   "landmarks": [
    {
     "meshes": [
+     "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Skeleton_Preset_01.tscn",
+     "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Skeleton_Preset_03.tscn",
+     "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Artifact_Head_01.tscn",
+     "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Artifact_AlienRuin_06.tscn"
+    ],
+    "count": 4,
+    "scale": [
+     1.6,
+     2.2
+    ],
+    "ring": [
+     60,
+     80
+    ]
+   },
+   {
+    "meshes": [
      "res://assets/Synty/Nature/Arid/FBX/Environment/SM_Env_Rock_Cliff_05.fbx",
      "res://assets/Synty/Nature/Arid/FBX/Environment/SM_Env_Rock_Cliff_06.fbx",
      "res://assets/Synty/Nature/Arid/FBX/Environment/SM_Env_Rock_Cliff_10.fbx",
@@ -580,6 +631,7 @@
    "cliff": "#9a7650"
   },
   "look": {
+   "rock_top_tex": "res://assets/Synty/Nature/Jungle/Textures/Terrain/Sand_Wavy_Texture_01.png",
    "rock_tint": "#e7cfa3",
    "rock_top_tint": "#f0dcb0",
    "hue_shift": 0.03,
@@ -670,6 +722,23 @@
   "landmarks": [
    {
     "meshes": [
+     "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Skeleton_Preset_02.tscn",
+     "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Skeleton_Preset_04.tscn",
+     "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Artifact_AlienRuin_05.tscn",
+     "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Artifact_Arm_01.tscn"
+    ],
+    "count": 5,
+    "scale": [
+     1.6,
+     2.4
+    ],
+    "ring": [
+     58,
+     80
+    ]
+   },
+   {
+    "meshes": [
      "res://assets/Synty/Nature/Arid/FBX/Environment/SM_Env_Backrgound_Hill_01.fbx",
      "res://assets/Synty/Nature/Arid/FBX/Environment/SM_Env_Backrgound_Hill_02.fbx",
      "res://assets/Synty/Nature/Arid/FBX/Environment/SM_Env_Backrgound_Hill_03.fbx"
@@ -729,6 +798,7 @@
    "cliff": "#6a7c8c"
   },
   "look": {
+   "rock_top_tex": "res://assets/Synty/Nature/Alpine/Textures/Snow_01.png",
    "sat": 0.45,
    "leaf_tint": "#d6e6ee",
    "trunk_tint": "#8a8f96",
@@ -825,6 +895,22 @@
   "landmarks": [
    {
     "meshes": [
+     "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Artifact_AlienRuin_07.tscn",
+     "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Artifact_AlienRuin_08.tscn",
+     "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Detail_Spire_Group_01.tscn"
+    ],
+    "count": 4,
+    "scale": [
+     1.8,
+     2.6
+    ],
+    "ring": [
+     62,
+     82
+    ]
+   },
+   {
+    "meshes": [
      "res://assets/Synty/Nature/Alpine/FBX/Environment/SM_Env_MountainRange_01.fbx",
      "res://assets/Synty/Nature/Alpine/FBX/Environment/SM_Env_MountainRange_02.fbx",
      "res://assets/Synty/Nature/Alpine/FBX/Environment/SM_Env_MountainRange_03.fbx",
@@ -842,15 +928,16 @@
    },
    {
     "meshes": [
-     "res://assets/Synty/Nature/Alpine/FBX/Environment/SM_Env_Rock_Cliff_01.fbx",
-     "res://assets/Synty/Nature/Alpine/FBX/Environment/SM_Env_Rock_Cliff_04.fbx",
-     "res://assets/Synty/Nature/Alpine/FBX/Environment/SM_Env_Rock_Cliff_06.fbx",
-     "res://assets/Synty/Nature/Alpine/FBX/Environment/SM_Env_Rock_Cliff_Arch_01.fbx"
+     "res://assets/Synty/Nature/Alpine/FBX/Environment/SM_Env_Rock_08.fbx",
+     "res://assets/Synty/Nature/Alpine/FBX/Environment/SM_Env_Rock_09.fbx",
+     "res://assets/Synty/Nature/Alpine/FBX/Environment/SM_Env_Rock_010.fbx",
+     "res://assets/Synty/Nature/Alpine/FBX/Environment/SM_Env_Rock_Cliff_Arch_01.fbx",
+     "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Detail_Spire_Group_01.tscn"
     ],
     "count": 16,
     "scale": [
-     1.4,
-     2.2
+     2.4,
+     3.6
     ],
     "ring": [
      60,
@@ -891,13 +978,14 @@
    "cliff": "#242b3a"
   },
   "look": {
+   "rock_top_tex": "res://assets/Synty/Nature/Alpine/Textures/Snow_01.png",
    "glow": 1.6,
    "glow_color": "#54ffe0",
    "hue_shift": 0.38,
    "sat": 1.2,
    "rock_tint": "#6a7896",
    "rock_top_tint": "#c8d4ec",
-   "rock_top_amount": 0.3,
+   "rock_top_amount": 0.25,
    "trunk_tint": "#4a4f5c",
    "wind": 0.03
   },
@@ -989,6 +1077,23 @@
   "landmarks": [
    {
     "meshes": [
+     "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Artifact_AlienRuin_01.tscn",
+     "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Artifact_AlienRuin_08.tscn",
+     "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Floating_Rocks_Spiral_01.tscn",
+     "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Artifact_AlienRuin_11.tscn"
+    ],
+    "count": 5,
+    "scale": [
+     1.8,
+     2.6
+    ],
+    "ring": [
+     60,
+     82
+    ]
+   },
+   {
+    "meshes": [
      "res://assets/Synty/Nature/Alpine/FBX/Environment/SM_Env_MountainRange_02.fbx",
      "res://assets/Synty/Nature/Alpine/FBX/Environment/SM_Env_MountainRange_04.fbx"
     ],
@@ -1004,15 +1109,16 @@
    },
    {
     "meshes": [
-     "res://assets/Synty/Nature/Alpine/FBX/Environment/SM_Env_Rock_Cliff_02.fbx",
-     "res://assets/Synty/Nature/Alpine/FBX/Environment/SM_Env_Rock_Cliff_05.fbx",
-     "res://assets/Synty/Nature/Alpine/FBX/Environment/SM_Env_Rock_Cliff_07.fbx",
+     "res://assets/Synty/Nature/Alpine/FBX/Environment/SM_Env_Rock_08.fbx",
+     "res://assets/Synty/Nature/Alpine/FBX/Environment/SM_Env_Rock_010.fbx",
+     "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Rock_Spike_02.tscn",
+     "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Rock_Spike_04.tscn",
      "res://assets/Synty/Nature/Alpine/FBX/Environment/SM_Env_Stalactite_03.fbx"
     ],
     "count": 18,
     "scale": [
-     1.4,
-     2.4
+     2.2,
+     3.4
     ],
     "ring": [
      58,
