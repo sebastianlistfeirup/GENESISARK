@@ -67,8 +67,9 @@ static func build(planet: Dictionary) -> Array:
 	e.ssao_radius = float(p.get("ssao_radius", 1.0))
 	e.ssao_intensity = float(p.get("ssao_intensity", 2.0))
 	e.ssao_power = float(p.get("ssao_power", 1.5))
-	e.adjustment_enabled = not is_equal_approx(float(p["adjust_saturation"]), 1.0)
+	e.adjustment_enabled = not is_equal_approx(float(p["adjust_saturation"]), 1.0) or p.has("adjust_contrast")
 	e.adjustment_saturation = float(p["adjust_saturation"])
+	e.adjustment_contrast = float(p.get("adjust_contrast", 1.0))
 	var env := WorldEnvironment.new()
 	env.environment = e
 	var sun := DirectionalLight3D.new()

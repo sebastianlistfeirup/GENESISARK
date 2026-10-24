@@ -1212,28 +1212,46 @@
    },
    {
     "mesh": "res://assets/Synty/SciFiSpace/FBX/SM_Env_Debris_Shell_04.fbx",
-    "count": 14,
+    "count": 26,
     "scale": [
      0.8,
-     1.2
+     1.3
     ],
     "cluster": 3
    },
    {
     "mesh": "res://assets/Synty/SciFiSpace/FBX/SM_Env_Debris_Shell_07.fbx",
-    "count": 6,
+    "count": 12,
     "scale": [
      0.6,
-     0.9
+     1.0
     ],
     "cluster": 2
    },
    {
     "mesh": "res://assets/Synty/SciFiSpace/FBX/SM_Env_Debris_Pipe_01.fbx",
-    "count": 8,
+    "count": 14,
     "scale": [
      0.7,
+     1.1
+    ],
+    "cluster": 2
+   },
+   {
+    "mesh": "res://assets/Synty/SciFiSpace/FBX/SM_Env_Debris_Structure_01.fbx",
+    "count": 10,
+    "scale": [
+     0.6,
      1.0
+    ],
+    "cluster": 2
+   },
+   {
+    "mesh": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Ground_Junk_04.tscn",
+    "count": 20,
+    "scale": [
+     0.8,
+     1.2
     ],
     "cluster": 2
    },
@@ -1288,12 +1306,12 @@
     ],
     "count": 1,
     "scale": [
-     0.21,
-     0.23
+     0.27,
+     0.3
     ],
     "ring": [
-     84,
-     90
+     78,
+     86
     ],
     "tilt": 6,
     "sink": 0.3

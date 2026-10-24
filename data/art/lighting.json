@@ -94,13 +94,20 @@
       "fog_color": "#e8a35a"
     },
     "sere": {
-      "sky_top": "#9fa8a0",
-      "sky_horizon": "#e2cda6",
-      "sun_color": "#ffd9a8",
-      "sun_energy": 1.1,
-      "sun_pitch": -40,
-      "fog_sun_scatter": 0.35,
-      "fog_color": "#b89a6a"
+      "sky_top": "#d8a46a",
+      "sky_horizon": "#f6cf8c",
+      "sun_color": "#ffbf78",
+      "sun_energy": 1.55,
+      "sun_pitch": -24,
+      "sun_yaw": 200,
+      "fog_sun_scatter": 0.65,
+      "fog_color": "#e0a864",
+      "ambient_color": "#e4a274",
+      "ambient_energy": 0.5,
+      "adjust_saturation": 1.2,
+      "adjust_contrast": 1.08,
+      "fog_depth_end": 360,
+      "glow": 0.9
     },
     "nivalis": {
       "sky_top": "#6f9cc4",
