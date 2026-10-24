@@ -15,6 +15,7 @@ func _ready() -> void:
 		DebugFixtures.prepare("era:pelagos:40")
 		GameSession.cmd_handover()
 	var gs: GameState = GameSession.state
+	_backdrop(gs)
 	var def: Dictionary = GameSession.content.endings.get(gs.campaign.ending_id, {})
 	AudioService.set_music_any(["music_ending_" + gs.campaign.ending_id, "music_hope"])
 	# Text scrolls, the buttons stay on screen: nothing is cut off at 1280x720
@@ -54,3 +55,83 @@ func _ready() -> void:
 	pre.tooltip_text = Loc.t("Loading the backup from before the ending.")
 	row.add_child(pre)
 	outer.add_child(row)
+
+
+var _world: Node3D
+var _cam: Camera3D
+var _t := 0.0
+
+
+## The world they made home, seen from orbit: the colony's lights on the night
+## side, the Ark drifting past, the painted nebula. Text stays legible on a
+## navy gradient from the left. Static with reduced motion.
+func _backdrop(gs: GameState) -> void:
+	var svc := SubViewportContainer.new()
+	svc.stretch = true
+	svc.set_anchors_preset(Control.PRESET_FULL_RECT)
+	svc.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	add_child(svc)
+	var sv := SubViewport.new()
+	sv.own_world_3d = true
+	sv.msaa_3d = Viewport.MSAA_4X
+	svc.add_child(sv)
+	_world = Node3D.new()
+	sv.add_child(_world)
+	var back := SpaceBackdrop.new()
+	back.seed_value = 23
+	_world.add_child(back)
+	var pid := gs.colony.planet_id if gs.colony else "viridia"
+	var p := GameSession.content.planet(pid)
+	var biome := str(p.get("biome_id", "green"))
+	var tint := str(DictUtil.get_dict(p, "palette").get("nature", ""))
+	var planet := VisualSlot.make("space.planet_" + biome, tint)
+	planet.position = Vector3(95, -10, -175)
+	planet.scale = Vector3.ONE * 1.0
+	_world.add_child(planet)
+	PlanetLook.apply(planet, biome, tint, hash(pid))
+	planet.rebuilt.connect(func() -> void: _lights_on(planet), CONNECT_ONE_SHOT)
+	_lights_on(planet)
+	var ark := VisualSlot.make("space.ark_exterior")
+	ark.position = Vector3(44, 10, -62)
+	ark.rotation_degrees = Vector3(4, -70, -6)
+	ark.name = "Ark"
+	_world.add_child(ark)
+	_cam = Camera3D.new()
+	_cam.position = Vector3(0, 2, 0)
+	_cam.fov = 50
+	_world.add_child(_cam)
+	_cam.look_at(Vector3(22, 0, -100))
+	_cam.current = true
+	var shade := TextureRect.new()
+	var g := Gradient.new()
+	g.set_color(0, Color(UiKit.BG, 0.94))
+	g.set_color(1, Color(UiKit.BG, 0.0))
+	g.add_point(0.55, Color(UiKit.BG, 0.8))
+	var gt := GradientTexture2D.new()
+	gt.gradient = g
+	gt.fill_to = Vector2(1, 0)
+	shade.texture = gt
+	shade.stretch_mode = TextureRect.STRETCH_SCALE
+	shade.set_anchors_preset(Control.PRESET_FULL_RECT)
+	shade.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	add_child(shade)
+
+
+func _lights_on(planet: VisualSlot) -> void:
+	for mi: Node in planet.find_children("*", "MeshInstance3D", true, false):
+		var m := (mi as MeshInstance3D).material_override as ShaderMaterial
+		if m:
+			m.set_shader_parameter("city_lights", 1.0)
+			m.set_shader_parameter("sun_dir", Vector3(-0.58, 0.42, 0.69))  # towards the backdrop key light
+			m.set_shader_parameter("settlement", Vector3(0.95, 0.1, 0.3))  # on the night limb, facing the camera
+
+
+func _process(delta: float) -> void:
+	if _world == null or FxEffect.reduced_motion():
+		return
+	_t += delta
+	var ark := _world.get_node_or_null("Ark") as Node3D
+	if ark:
+		ark.position.x = 44.0 - _t * 0.25
+	if _cam:
+		_cam.rotation.y += delta * 0.002
