@@ -103,6 +103,21 @@
     ],
     "radius": 0.6,
     "cluster": 3
+   },
+   {
+    "meshes": [
+     "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Plant_Palm_01.tscn",
+     "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Plant_Palm_02.tscn",
+     "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Plant_Mushroom_01.tscn",
+     "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Plant_Mushroom_02.tscn"
+    ],
+    "count": 28,
+    "scale": [
+     0.8,
+     1.2
+    ],
+    "radius": 0.7,
+    "cluster": 2
    }
   ],
   "cover": [
@@ -250,6 +265,78 @@
      1.0
     ],
     "cluster": 2
+   },
+   {
+    "mesh": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Plant_Flower_Large_01.tscn",
+    "count": 9,
+    "scale": [
+     0.35,
+     0.5
+    ],
+    "cluster": 2
+   },
+   {
+    "mesh": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Plant_Flower_Large_03.tscn",
+    "count": 7,
+    "scale": [
+     0.35,
+     0.5
+    ],
+    "cluster": 2
+   },
+   {
+    "mesh": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Plant_Spikey_02.tscn",
+    "count": 16,
+    "scale": [
+     0.35,
+     0.55
+    ],
+    "cluster": 2
+   },
+   {
+    "mesh": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Plant_Spikey_03.tscn",
+    "count": 22,
+    "scale": [
+     0.5,
+     0.8
+    ],
+    "cluster": 3
+   },
+   {
+    "mesh": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Plant_Fern_02.tscn",
+    "count": 60,
+    "scale": [
+     0.6,
+     1.0
+    ],
+    "cluster": 4
+   },
+   {
+    "mesh": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Plant_Grass_Flower_01.tscn",
+    "count": 90,
+    "scale": [
+     0.6,
+     1.0
+    ],
+    "cluster": 5
+   },
+   {
+    "mesh": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Plant_Flower_Large_Pod_01.tscn",
+    "count": 26,
+    "scale": [
+     0.5,
+     0.8
+    ],
+    "cluster": 3
+   },
+   {
+    "mesh": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Plant_Flower_01.tscn",
+    "count": 80,
+    "scale": [
+     0.8,
+     1.2
+    ],
+    "cluster": 5
    }
   ],
   "landmarks": [
@@ -508,6 +595,69 @@
     ],
     "cluster": 4,
     "on_water": true
+   },
+   {
+    "mesh": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Plant_Coral_01.tscn",
+    "count": 40,
+    "scale": [
+     0.35,
+     0.6
+    ],
+    "cluster": 4,
+    "shore": true
+   },
+   {
+    "mesh": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Plant_Coral_03.tscn",
+    "count": 50,
+    "scale": [
+     0.4,
+     0.7
+    ],
+    "cluster": 4,
+    "shore": true
+   },
+   {
+    "mesh": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Plant_Kelp_01.tscn",
+    "count": 90,
+    "scale": [
+     0.6,
+     1.0
+    ],
+    "cluster": 6,
+    "on_water": true
+   },
+   {
+    "mesh": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Plant_Kelp_02.tscn",
+    "count": 70,
+    "scale": [
+     0.5,
+     0.9
+    ],
+    "cluster": 5,
+    "on_water": true
+   },
+   {
+    "mesh": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Plant_Balloon_Group_01.tscn",
+    "count": 40,
+    "scale": [
+     0.7,
+     1.1
+    ],
+    "cluster": 3,
+    "glow": [
+     1.2,
+     0.3,
+     0.7
+    ]
+   },
+   {
+    "mesh": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Plant_Small_02.tscn",
+    "count": 80,
+    "scale": [
+     0.6,
+     1.0
+    ],
+    "cluster": 4
    }
   ],
   "landmarks": [
@@ -610,6 +760,20 @@
     "scale": [
      0.7,
      1.2
+    ],
+    "radius": 1.2,
+    "cluster": 2
+   },
+   {
+    "meshes": [
+     "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Plant_Hallowed_01.tscn",
+     "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Plant_Hallowed_02.tscn",
+     "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Plant_Hallowed_03.tscn"
+    ],
+    "count": 14,
+    "scale": [
+     0.35,
+     0.55
     ],
     "radius": 1.2,
     "cluster": 2
@@ -717,6 +881,51 @@
      1.4
     ],
     "cluster": 6
+   },
+   {
+    "mesh": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Plant_Cactus_01.tscn",
+    "count": 60,
+    "scale": [
+     0.9,
+     1.4
+    ],
+    "cluster": 4
+   },
+   {
+    "mesh": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Plant_Cactus_02.tscn",
+    "count": 50,
+    "scale": [
+     0.9,
+     1.4
+    ],
+    "cluster": 4
+   },
+   {
+    "mesh": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Plant_Cactus_03.tscn",
+    "count": 50,
+    "scale": [
+     0.9,
+     1.4
+    ],
+    "cluster": 4
+   },
+   {
+    "mesh": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Plant_Pinecone_02.tscn",
+    "count": 18,
+    "scale": [
+     0.5,
+     0.8
+    ],
+    "cluster": 2
+   },
+   {
+    "mesh": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Plant_Succulent_Large_01.tscn",
+    "count": 12,
+    "scale": [
+     0.35,
+     0.55
+    ],
+    "cluster": 2
    }
   ],
   "landmarks": [
@@ -948,6 +1157,33 @@
     "scale": [
      0.7,
      1.0
+    ],
+    "cluster": 2
+   },
+   {
+    "mesh": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Plant_Succulent_Large_01.tscn",
+    "count": 14,
+    "scale": [
+     0.3,
+     0.5
+    ],
+    "cluster": 2
+   },
+   {
+    "mesh": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Plant_Cactus_01.tscn",
+    "count": 30,
+    "scale": [
+     0.9,
+     1.3
+    ],
+    "cluster": 3
+   },
+   {
+    "mesh": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Plant_Pinecone_03.tscn",
+    "count": 14,
+    "scale": [
+     0.5,
+     0.8
     ],
     "cluster": 2
    }
@@ -1247,6 +1483,43 @@
     ],
     "cluster": 3,
     "emissive": "#9fe8ff"
+   },
+   {
+    "mesh": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Plant_Fester_03.tscn",
+    "count": 14,
+    "scale": [
+     0.4,
+     0.7
+    ],
+    "cluster": 2,
+    "glow": [
+     1.4,
+     0.25,
+     0.75
+    ]
+   },
+   {
+    "mesh": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Plant_Fester_04.tscn",
+    "count": 24,
+    "scale": [
+     0.5,
+     0.8
+    ],
+    "cluster": 3,
+    "glow": [
+     1.4,
+     0.25,
+     0.75
+    ]
+   },
+   {
+    "mesh": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Plant_Shrub_01.tscn",
+    "count": 60,
+    "scale": [
+     0.8,
+     1.2
+    ],
+    "cluster": 4
    }
   ],
   "landmarks": [
@@ -1400,6 +1673,40 @@
     ],
     "radius": 0.6,
     "cluster": 3
+   },
+   {
+    "meshes": [
+     "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Plant_Balloon_Tall_01.tscn",
+     "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Plant_Balloon_Tall_02.tscn",
+     "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Plant_Kelp_04.tscn",
+     "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Plant_Kelp_05.tscn"
+    ],
+    "count": 70,
+    "scale": [
+     0.9,
+     1.5
+    ],
+    "radius": 0.4,
+    "cluster": 4,
+    "glow": [
+     3.0,
+     0.22,
+     0.7
+    ]
+   },
+   {
+    "meshes": [
+     "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Plant_Mushroom_01.tscn",
+     "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Plant_Mushroom_02.tscn",
+     "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Plant_Mushroom_03.tscn"
+    ],
+    "count": 16,
+    "scale": [
+     0.7,
+     1.1
+    ],
+    "radius": 0.9,
+    "cluster": 2
    }
   ],
   "cover": [
@@ -1485,6 +1792,118 @@
      1.2
     ],
     "cluster": 3
+   },
+   {
+    "mesh": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Plant_Balloon_01.tscn",
+    "count": 60,
+    "scale": [
+     0.8,
+     1.3
+    ],
+    "cluster": 5,
+    "glow": [
+     3.0,
+     0.22,
+     0.7
+    ]
+   },
+   {
+    "mesh": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Plant_Balloon_Group_01.tscn",
+    "count": 70,
+    "scale": [
+     0.8,
+     1.3
+    ],
+    "cluster": 5,
+    "glow": [
+     3.0,
+     0.22,
+     0.7
+    ]
+   },
+   {
+    "mesh": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Plant_Balloon_Group_02.tscn",
+    "count": 90,
+    "scale": [
+     0.8,
+     1.3
+    ],
+    "cluster": 6,
+    "glow": [
+     3.0,
+     0.22,
+     0.7
+    ]
+   },
+   {
+    "mesh": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Plant_Kelp_06.tscn",
+    "count": 60,
+    "scale": [
+     0.8,
+     1.2
+    ],
+    "cluster": 4,
+    "glow": [
+     3.0,
+     0.22,
+     0.7
+    ]
+   },
+   {
+    "mesh": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Plant_Fester_01.tscn",
+    "count": 8,
+    "scale": [
+     0.4,
+     0.6
+    ],
+    "cluster": 1,
+    "glow": [
+     2.4,
+     0.22,
+     0.7
+    ]
+   },
+   {
+    "mesh": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Plant_Fester_02.tscn",
+    "count": 10,
+    "scale": [
+     0.4,
+     0.6
+    ],
+    "cluster": 2,
+    "glow": [
+     2.4,
+     0.22,
+     0.7
+    ]
+   },
+   {
+    "mesh": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Plant_Fester_04.tscn",
+    "count": 30,
+    "scale": [
+     0.6,
+     0.9
+    ],
+    "cluster": 3,
+    "glow": [
+     2.4,
+     0.22,
+     0.7
+    ]
+   },
+   {
+    "mesh": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Plant_Tall_01.tscn",
+    "count": 60,
+    "scale": [
+     0.7,
+     1.1
+    ],
+    "cluster": 4,
+    "glow": [
+     1.6,
+     0.5,
+     0.6
+    ]
    }
   ],
   "landmarks": [

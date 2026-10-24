@@ -25,8 +25,10 @@ def c(mesh, count, s=(0.8, 1.3), cluster=5, **kw):
     return d
 
 
-def t(meshes, count, s=(0.8, 1.3), radius=0.5, cluster=1):
-    return {"meshes": meshes, "count": count, "scale": list(s), "radius": radius, "cluster": cluster}
+def t(meshes, count, s=(0.8, 1.3), radius=0.5, cluster=1, **kw):
+    d = {"meshes": meshes, "count": count, "scale": list(s), "radius": radius, "cluster": cluster}
+    d.update(kw)
+    return d
 
 
 def lm(meshes, count, s=(1, 1.4), ring=(70, 86), tilt=0, sink=0.06):
@@ -138,6 +140,48 @@ PLANETS = {
                       lm([A("SM_Env_Rock_08"), A("SM_Env_Rock_010"), Wp("SM_Env_Rock_Spike_02"), Wp("SM_Env_Rock_Spike_04"), A("SM_Env_Stalactite_03")], 18, (2.2, 3.4), (58, 84))],
     },
 }
+
+# Alien flora from POLYGON Sci-Fi Worlds (the key art's plants): layered on top of
+# the Nature Biomes base so every world reads as another planet, not Earth.
+# glow = [energy, sat_min, val_min] -> only bright saturated texels emit.
+P = lambda n: Wp("SM_Env_Plant_" + n)
+ALIEN = {
+    "viridia": {
+        "trees": [t([P("Palm_01"), P("Palm_02"), P("Mushroom_01"), P("Mushroom_02")], 28, (0.8, 1.2), 0.7, 2)],
+        "cover": [c(P("Flower_Large_01"), 9, (0.35, 0.5), 2), c(P("Flower_Large_03"), 7, (0.35, 0.5), 2), c(P("Spikey_02"), 16, (0.35, 0.55), 2),
+                  c(P("Spikey_03"), 22, (0.5, 0.8), 3), c(P("Fern_02"), 60, (0.6, 1.0), 4), c(P("Grass_Flower_01"), 90, (0.6, 1.0), 5),
+                  c(P("Flower_Large_Pod_01"), 26, (0.5, 0.8), 3), c(P("Flower_01"), 80, (0.8, 1.2), 5)],
+    },
+    "pelagos": {
+        "cover": [c(P("Coral_01"), 40, (0.35, 0.6), 4, shore=True), c(P("Coral_03"), 50, (0.4, 0.7), 4, shore=True),
+                  c(P("Kelp_01"), 90, (0.6, 1.0), 6, on_water=True), c(P("Kelp_02"), 70, (0.5, 0.9), 5, on_water=True),
+                  c(P("Balloon_Group_01"), 40, (0.7, 1.1), 3, glow=[1.2, 0.3, 0.7]), c(P("Small_02"), 80, (0.6, 1.0), 4)],
+    },
+    "ferrum": {
+        "trees": [t([P("Hallowed_01"), P("Hallowed_02"), P("Hallowed_03")], 14, (0.35, 0.55), 1.2, 2)],
+        "cover": [c(P("Cactus_01"), 60, (0.9, 1.4), 4), c(P("Cactus_02"), 50, (0.9, 1.4), 4), c(P("Cactus_03"), 50, (0.9, 1.4), 4),
+                  c(P("Pinecone_02"), 18, (0.5, 0.8), 2), c(P("Succulent_Large_01"), 12, (0.35, 0.55), 2)],
+    },
+    "sere": {
+        "cover": [c(P("Succulent_Large_01"), 14, (0.3, 0.5), 2), c(P("Cactus_01"), 30, (0.9, 1.3), 3), c(P("Pinecone_03"), 14, (0.5, 0.8), 2)],
+    },
+    "nivalis": {
+        "cover": [c(P("Fester_03"), 14, (0.4, 0.7), 2, glow=[1.4, 0.25, 0.75]), c(P("Fester_04"), 24, (0.5, 0.8), 3, glow=[1.4, 0.25, 0.75]),
+                  c(P("Shrub_01"), 60, (0.8, 1.2), 4)],
+    },
+    "umbra": {
+        "trees": [t([P("Balloon_Tall_01"), P("Balloon_Tall_02"), P("Kelp_04"), P("Kelp_05")], 70, (0.9, 1.5), 0.4, 4, glow=[3.0, 0.22, 0.7]),
+                  t([P("Mushroom_01"), P("Mushroom_02"), P("Mushroom_03")], 16, (0.7, 1.1), 0.9, 2)],
+        "cover": [c(P("Balloon_01"), 60, (0.8, 1.3), 5, glow=[3.0, 0.22, 0.7]), c(P("Balloon_Group_01"), 70, (0.8, 1.3), 5, glow=[3.0, 0.22, 0.7]),
+                  c(P("Balloon_Group_02"), 90, (0.8, 1.3), 6, glow=[3.0, 0.22, 0.7]), c(P("Kelp_06"), 60, (0.8, 1.2), 4, glow=[3.0, 0.22, 0.7]),
+                  c(P("Fester_01"), 8, (0.4, 0.6), 1, glow=[2.4, 0.22, 0.7]), c(P("Fester_02"), 10, (0.4, 0.6), 2, glow=[2.4, 0.22, 0.7]),
+                  c(P("Fester_04"), 30, (0.6, 0.9), 3, glow=[2.4, 0.22, 0.7]), c(P("Tall_01"), 60, (0.7, 1.1), 4, glow=[1.6, 0.5, 0.6])],
+    },
+}
+for _pid, _extra in ALIEN.items():
+    for _k, _v in _extra.items():
+        PLANETS[_pid].setdefault(_k, []).extend(_v)
+
 
 if __name__ == "__main__":
     path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "data", "art", "ground_cover.json")
