@@ -260,6 +260,8 @@ for _pid, _w in WILDLIFE.items():
 HERO = {
     "umbra": [dict(lm([MS("landmark_sporetree")], 4, (14.0, 19.0), (52, 74)), glow=[2.6, 0.25, 0.55])],
     "ferrum": [dict(lm([MS("landmark_orecrystal")], 4, (10.0, 14.0), (52, 74)), glow=[2.2, 0.35, 0.6])],
+    "viridia": [dict(lm([MS("landmark_canopytree")], 3, (24.0, 30.0), (56, 76)), glow=[1.6, 0.35, 0.7])],
+    "nivalis": [dict(lm([MS("landmark_icearch")], 2, (16.0, 20.0), (60, 78)), glow=[0.8, 0.3, 0.85])],
 }
 PLANETS["pelagos"]["sky"]["leviathan"] = {"model": MS("creature_leviathan"), "size": 150, "radius": [240, 340], "glow": [2.4, 0.4, 0.7]}
 for _pid, _l in HERO.items():

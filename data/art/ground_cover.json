@@ -342,6 +342,25 @@
   "landmarks": [
    {
     "meshes": [
+     "res://assets/imported/meshy/landmark_canopytree.glb"
+    ],
+    "count": 3,
+    "scale": [
+     24.0,
+     30.0
+    ],
+    "ring": [
+     56,
+     76
+    ],
+    "glow": [
+     1.6,
+     0.35,
+     0.7
+    ]
+   },
+   {
+    "meshes": [
      "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Artifact_AlienRuin_02.tscn",
      "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Artifact_AlienRuin_03.tscn",
      "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Artifact_AlienRuin_09.tscn"
@@ -2071,6 +2090,25 @@
    }
   ],
   "landmarks": [
+   {
+    "meshes": [
+     "res://assets/imported/meshy/landmark_icearch.glb"
+    ],
+    "count": 2,
+    "scale": [
+     16.0,
+     20.0
+    ],
+    "ring": [
+     60,
+     78
+    ],
+    "glow": [
+     0.8,
+     0.3,
+     0.85
+    ]
+   },
    {
     "meshes": [
      "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Skeleton_Preset_02.tscn",
