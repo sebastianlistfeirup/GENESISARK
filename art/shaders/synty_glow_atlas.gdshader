@@ -10,6 +10,9 @@ uniform float sat_min = 0.55;
 uniform float val_min = 0.75;
 uniform vec3 glow_tint : source_color = vec3(1.0);  // ship on emergency power: strips shift to this colour
 uniform float tint_amount = 0.0;
+// Painted trim that should read as paint, not as a lamp (dim-strip variant):
+// scales the strip texels' albedo; 1.0 = unchanged.
+uniform float strip_albedo = 1.0;
 // Atlas regions that are painted, not lit (yellow/black hazard stripes): never
 // emit, so floors and doors do not read as neon. Rects are (u0, v0, u1, v1).
 uniform vec4 no_glow_a = vec4(0.0);
@@ -31,5 +34,5 @@ void fragment() {
 	mask *= 1.0 - max(in_rect(UV, no_glow_a), in_rect(UV, no_glow_b));
 	vec3 strip = mix(c, glow_tint * mx, tint_amount);
 	EMISSION = strip * mask * glow_energy;
-	ALBEDO = mix(c, strip, mask);
+	ALBEDO = mix(c, strip * strip_albedo, mask);
 }

@@ -1,0 +1,243 @@
+{
+ "_note": "Expedition hazard zone look (HazardZoneVisual, D-043). Presentation only: the zone's Area3D, radius and drain multiplier stay in surface_scene/hazards.json. Per hazard id: ring = edge line + hazard-tape band colour (shape + colour, a11y), haze = soft volumetric puffs inside the zone (color, alpha, size [min,max] m, height [min,max] m above the zone floor, speed m/s, swirl = tangential drift, density = puffs per 10 m^2, blend mix|add), motes = small bright particles (color, count, size, rise m/s; omit for none), interior = ground tint inside the zone (color, alpha; default the ring colour at 0.10), curtain = low animated wall of haze at the edge (height m, alpha), shimmer = heat-haze refraction curtains (strength), flash = storm lightning (interval [min,max] s, energy), beacons = warning poles at the edge (spacing m). Unknown ids fall back to 'default'. Reduced motion slows all motion and stops blinking and lightning.",
+ "default": {
+  "ring": "#d6c447",
+  "haze": {
+   "color": "#d6c447",
+   "alpha": 0.26,
+   "size": [
+    3.0,
+    5.5
+   ],
+   "height": [
+    0.6,
+    2.4
+   ],
+   "speed": 0.25,
+   "swirl": 0.15,
+   "density": 1.4,
+   "blend": "mix"
+  },
+  "curtain": {
+   "height": 2.4,
+   "alpha": 0.42
+  },
+  "beacons": {
+   "spacing": 7.5
+  }
+ },
+ "spores": {
+  "ring": "#e3d24a",
+  "haze": {
+   "color": "#c9c25a",
+   "alpha": 0.32,
+   "size": [
+    3.0,
+    6.0
+   ],
+   "height": [
+    0.5,
+    2.6
+   ],
+   "speed": 0.18,
+   "swirl": 0.12,
+   "density": 1.6,
+   "blend": "mix"
+  },
+  "motes": {
+   "color": "#fff18a",
+   "count": 160,
+   "size": 0.09,
+   "rise": 0.18
+  },
+  "curtain": {
+   "height": 2.6,
+   "alpha": 0.39
+  },
+  "beacons": {
+   "spacing": 7.5
+  }
+ },
+ "dust": {
+  "ring": "#e08a3c",
+  "haze": {
+   "color": "#a8865c",
+   "alpha": 0.42,
+   "size": [
+    3.5,
+    7.0
+   ],
+   "height": [
+    0.4,
+    3.2
+   ],
+   "speed": 0.9,
+   "swirl": 1.1,
+   "density": 1.7,
+   "blend": "mix"
+  },
+  "motes": {
+   "color": "#d8b98a",
+   "count": 140,
+   "size": 0.05,
+   "rise": 0.05
+  },
+  "curtain": {
+   "height": 3.2,
+   "alpha": 0.47
+  },
+  "beacons": {
+   "spacing": 7.5
+  },
+  "interior": {
+   "color": "#8a6a45",
+   "alpha": 0.18
+  }
+ },
+ "heat": {
+  "ring": "#ff7a2e",
+  "haze": {
+   "color": "#ffb070",
+   "alpha": 0.16,
+   "size": [
+    3.0,
+    5.0
+   ],
+   "height": [
+    0.3,
+    1.6
+   ],
+   "speed": 0.35,
+   "swirl": 0.1,
+   "density": 1.0,
+   "blend": "add"
+  },
+  "motes": {
+   "color": "#ffb45a",
+   "count": 90,
+   "size": 0.05,
+   "rise": 0.9
+  },
+  "curtain": {
+   "height": 2.2,
+   "alpha": 0.29
+  },
+  "shimmer": {
+   "strength": 0.025,
+   "color": "#ffb070"
+  },
+  "beacons": {
+   "spacing": 7.5
+  },
+  "interior": {
+   "color": "#ff8a3a",
+   "alpha": 0.12
+  }
+ },
+ "cold": {
+  "ring": "#5cc8ff",
+  "haze": {
+   "color": "#d8f0ff",
+   "alpha": 0.48,
+   "size": [
+    3.5,
+    7.0
+   ],
+   "height": [
+    0.2,
+    1.1
+   ],
+   "speed": 0.2,
+   "swirl": 0.2,
+   "density": 1.8,
+   "blend": "mix"
+  },
+  "curtain": {
+   "height": 2.6,
+   "alpha": 0.5,
+   "color": "#8fd8ff"
+  },
+  "beacons": {
+   "spacing": 7.5
+  },
+  "interior": {
+   "color": "#e8f6ff",
+   "alpha": 0.2
+  }
+ },
+ "storms": {
+  "ring": "#7f95ff",
+  "haze": {
+   "color": "#56607e",
+   "alpha": 0.48,
+   "size": [
+    4.0,
+    8.0
+   ],
+   "height": [
+    1.0,
+    5.0
+   ],
+   "speed": 1.6,
+   "swirl": 1.4,
+   "density": 1.4,
+   "blend": "mix"
+  },
+  "curtain": {
+   "height": 4.5,
+   "alpha": 0.44
+  },
+  "flash": {
+   "interval": [
+    2.5,
+    6.5
+   ],
+   "energy": 7.0,
+   "color": "#c9d6ff"
+  },
+  "beacons": {
+   "spacing": 7.5
+  },
+  "interior": {
+   "color": "#2a3150",
+   "alpha": 0.22
+  }
+ },
+ "long_night": {
+  "ring": "#f0a83a",
+  "haze": {
+   "color": "#120d1c",
+   "alpha": 0.75,
+   "size": [
+    4.0,
+    7.5
+   ],
+   "height": [
+    0.4,
+    3.0
+   ],
+   "speed": 0.15,
+   "swirl": 0.1,
+   "density": 2.0,
+   "blend": "mix"
+  },
+  "motes": {
+   "color": "#a68cff",
+   "count": 70,
+   "size": 0.05,
+   "rise": 0.06
+  },
+  "curtain": {
+   "height": 3.0,
+   "alpha": 0.65,
+   "color": "#1a1226"
+  },
+  "beacons": {
+   "spacing": 7.0
+  },
+  "interior": {
+   "color": "#07050c",
+   "alpha": 0.42
+  }
+ }
+}

@@ -229,6 +229,16 @@ func _place_routes() -> void:
 
 
 func _place_hazards() -> void:
+	var lines: Array = []  # beacons keep off the routes and the interactables
+	for rt: Dictionary in DictUtil.get_arr(survey, "routes"):
+		var line: Array = [Vector2.ZERO]
+		for w: Variant in DictUtil.get_arr(rt, "waypoints"):
+			line.append(Vector2(float(w[0]), float(w[1])))
+		lines.append(line)
+	var keep: Array = []
+	for key: String in _markers.keys():
+		var m: Node3D = _markers[key]
+		keep.append([Vector2(m.global_position.x, m.global_position.z), 5.5 if key == "lander" else 3.2])
 	for hz: Dictionary in DictUtil.get_arr(survey, "hazard_zones"):
 		var hid := str(hz.get("hazard_id"))
 		var hdef: Dictionary = GameSession.content.hazards.get(hid, {})
@@ -245,15 +255,8 @@ func _place_hazards() -> void:
 		area.add_child(cs)
 		add_child(area)
 		area.global_position = _ground(c)
-		var vis := MeshInstance3D.new()
-		var cm := CylinderMesh.new()
-		cm.top_radius = r
-		cm.bottom_radius = r
-		cm.height = 6.0
-		vis.mesh = cm
-		vis.position.y = 2.0
-		vis.material_override = AssetSlots.material(str(hdef.get("color", "#d6c447")), 0.3, 0.18)
-		area.add_child(vis)
+		# D-043: glowing ground ring + hazard-tape band, edge haze, per-type haze and beacons.
+		area.add_child(HazardZoneVisual.build(terrain, c, r, hid, str(hdef.get("color", "#d6c447")), lines, keep))
 		var fx := VisualSlot.make(FX_FOR_HAZARD.get(hid, "fx.dust"))
 		area.add_child(fx)
 		var lbl := Label3D.new()
@@ -455,6 +458,25 @@ func debug_action(action: String) -> void:
 				captain.teleport(Vector3(at.x, terrain.height_at(at.x, at.y) + 0.5, at.y), 0.0)
 				captain.camera_rig.pitch = -0.2
 				captain.camera_rig.distance = 6.0
+		"hazard_far", "hazard_edge":  # evidence: the whole zone from above the lander side / the edge at eye level beside a beacon
+			if not hazard_areas.is_empty():
+				var c: Vector3 = (hazard_areas[0]["area"] as Area3D).global_position
+				var r := float(((hazard_areas[0]["area"] as Area3D).get_child(0) as CollisionShape3D).shape.get("radius"))
+				var dir := Vector2(-c.x, -c.z).normalized()  # toward the open landing site
+				var cam := Camera3D.new()
+				add_child(cam)
+				if action == "hazard_far":
+					var p := Vector2(c.x, c.z) + dir * (r + 12.0)
+					cam.position = Vector3(p.x, c.y + 15.0, p.y)
+					cam.look_at(c + Vector3(0, 1.0, 0))
+				else:
+					var p := Vector2(c.x, c.z) + dir.rotated(0.35) * (r + 6.0)
+					cam.position = Vector3(p.x, terrain.height_at(p.x, p.y) + 2.2, p.y)
+					cam.look_at(c + Vector3(0, 1.2, 0))
+				cam.fov = 62.0
+				cam.current = true
+				if hud:
+					hud.visible = false
 		"overview":
 			captain.teleport(Vector3(0, terrain.height_at(0, 12) + 0.5, 12), 0.0)
 			captain.camera_rig.pitch = -0.6
