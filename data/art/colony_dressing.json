@@ -150,9 +150,6 @@
   "planters": [
    {
     "mesh": "W:Props/SM_Prop_Hydroponic_Planter_01"
-   },
-   {
-    "mesh": "W:Props/SM_Prop_Hydroponic_Planter_02_Insert_01"
    }
   ],
   "pots": [
@@ -1069,7 +1066,7 @@
      "w": 3,
      "parts": [
       [
-       "planters",
+       "vases",
        0,
        0
       ],

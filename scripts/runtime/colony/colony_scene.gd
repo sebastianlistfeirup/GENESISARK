@@ -809,6 +809,24 @@ func debug_action(action: String) -> void:
 			if event_dialog.visible:
 				event_dialog.hide()
 			get_viewport().warp_mouse(Vector2(get_viewport().get_visible_rect().size.x * 0.5, 160))
+		"tri_audit":  # evidence: triangles per dressing batch (instances x mesh), biggest first
+			var rows: Array = []
+			for c: Node in _dressing.get_children():
+				if c is MultiMeshInstance3D:
+					var mm := (c as MultiMeshInstance3D).multimesh
+					var tris := 0
+					for s: int in mm.mesh.get_surface_count():
+						var arr := mm.mesh.surface_get_arrays(s)
+						var idx: Variant = arr[Mesh.ARRAY_INDEX]
+						tris += (idx as PackedInt32Array).size() / 3 if idx != null else (arr[Mesh.ARRAY_VERTEX] as PackedVector3Array).size() / 3
+					rows.append([tris * mm.instance_count, mm.instance_count, tris, str(mm.mesh.get_meta("short", "?"))])
+			rows.sort_custom(func(a: Array, b: Array) -> bool: return int(a[0]) > int(b[0]))
+			var total := 0
+			for r: Array in rows:
+				total += int(r[0])
+			print("TRI_AUDIT total=", total)
+			for r: Array in rows.slice(0, 25):
+				print("TRI_AUDIT ", r)
 		"walk_audit":  # evidence: how close walker routes come to footprints and corridor tubes
 			print("WALK_AUDIT ", _walk_audit(400))
 		"ghost":

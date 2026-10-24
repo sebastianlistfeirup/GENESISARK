@@ -18,9 +18,28 @@ func _ready() -> void:
 	_apply()
 
 
+## Zoom-dependent tilt, like modern city builders: close in, the camera pitches
+## down to ~33 degrees so buildings are seen from the side; from TILT_FAR_ZOOM
+## out it keeps the classic ~53 degree overview. It follows the zoom directly
+## (no extra easing), so reduced motion behaves exactly as before.
+const PITCH_NEAR := 33.0
+const PITCH_FAR := 52.9  # atan(0.82 / 0.62), the original overview
+const TILT_NEAR_ZOOM := 18.0
+const TILT_FAR_ZOOM := 80.0
+
+
+static func pitch_for(z: float) -> float:
+	var t := smoothstep(TILT_NEAR_ZOOM, TILT_FAR_ZOOM, z)
+	return deg_to_rad(lerpf(PITCH_NEAR, PITCH_FAR, t))
+
+
 func _apply() -> void:
-	cam.position = Vector3(0, zoom * 0.82, zoom * 0.62)
-	cam.look_at(global_position, Vector3.UP)
+	var p := pitch_for(zoom)
+	var dist := zoom * 1.0283  # same distance as the old (0.82, 0.62) offset
+	cam.position = Vector3(0, dist * sin(p), dist * cos(p))
+	# Close in, aim a little above the ground so the street and facades fill the frame.
+	var lift := lerpf(1.6, 0.0, smoothstep(TILT_NEAR_ZOOM, TILT_FAR_ZOOM, zoom))
+	cam.look_at(global_position + Vector3(0, lift, 0), Vector3.UP)
 
 
 func make_current() -> void:

@@ -318,6 +318,8 @@ func _emit(batches: Dictionary, ranges: Dictionary, lights: Array, it: Dictionar
 		var m: Mesh = part[0]
 		if not tint.is_empty():
 			m = _tinted(m, tint)
+		if not m.has_meta("short"):
+			m.set_meta("short", str(it["mesh"]))  # debug/evidence name (tri_audit)
 		if not batches.has(m):
 			batches[m] = []
 			ranges[m] = 0.0
