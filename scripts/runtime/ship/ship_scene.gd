@@ -212,10 +212,14 @@ func _window_view() -> void:
 	# The orbited world framed in the port bridge window (azimuth ~41 deg left of
 	# the console, seen from the bridge centre): its curved limb crosses the
 	# window strip. Before, it sat behind the wall between the windows.
+	# Key art #2: the world fills the port window group, its curved limb rising across
+	# the glass, the night side and its moon toward the bow.
 	var eye := builder.cell_to_world(7.5, 3.6) + Vector3(0, 2.0, 0)
-	var dir := Vector3(-sin(deg_to_rad(41.0)), 0, -cos(deg_to_rad(41.0)))
-	_window_planet.position = eye + dir * 250.0 + Vector3(0, -80.0, 0)
-	_window_planet.scale = Vector3.ONE * 1.6  # radius 96 m at 250 m: a big curved limb across the window
+	var az := deg_to_rad(44.0)
+	var el := deg_to_rad(-37.0)
+	var dir := Vector3(-sin(az) * cos(el), sin(el), -cos(az) * cos(el))
+	_window_planet.position = eye + dir * 420.0
+	_window_planet.scale = Vector3.ONE * 4.4  # radius ~264 m at 420 m: ~39 deg across
 
 
 func _on_state(_kind: String) -> void:
