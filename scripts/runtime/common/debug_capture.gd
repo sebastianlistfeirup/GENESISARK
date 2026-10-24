@@ -79,8 +79,13 @@ func _run() -> void:
 		elif sc and sc.has_method("debug_action"):
 			sc.call("debug_action", act)
 		# The alarm banner hides after a few real seconds; software rendering is slow.
-		for i: int in (4 if act == "alarm" else 40):
+		# --post=N waits N frames instead (panels that boot in, D-055).
+		for i: int in (4 if act == "alarm" else int(extra.get("post", 40))):
 			await get_tree().process_frame
+		if extra.has("park"):  # --park=1: cursor to the corner, so no hover/tooltip shows
+			get_viewport().warp_mouse(Vector2(2, 2))
+			for i: int in 6:
+				await get_tree().process_frame
 	var img := get_viewport().get_texture().get_image()
 	var abs_path := out_path if out_path.is_absolute_path() else ProjectSettings.globalize_path("res://" + out_path)
 	DirAccess.make_dir_recursive_absolute(abs_path.get_base_dir())

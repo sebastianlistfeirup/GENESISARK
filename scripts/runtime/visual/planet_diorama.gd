@@ -6,8 +6,11 @@ extends SubViewportContainer
 ##   "orbit"   - the orbital terminal: the painted nebula, the sun, the Ark on
 ##               a tilted orbit, satellites, a station and passing traffic.
 ##   "preview" - the star map's selected world: nebula, planet and moons.
+##   "hero"    - the star map's detail column (D-055): the world large, turning
+##               visibly, right of centre with its moons, under HUD rings.
 ##   "icon"    - a still, transparent render for map markers (drawn a few
-##               frames, then frozen).
+##               frames, then frozen). spin_icon() turns it a step and
+##               renders one frame (the star map round-robins its icons).
 ## Presentation only; everything reads data/art/space_planets.json
 ## ("orbit_view") and the local pack models, and degrades to the proxy sphere
 ## without them. Reduced motion: nothing moves, the frame stays put.
@@ -90,6 +93,15 @@ func _ready() -> void:
 	_build()
 
 
+## Icon mode: turn the world by `angle` and render one frame (no-op until the
+## first frames are drawn, and with reduced motion).
+func spin_icon(angle: float) -> void:
+	if mode != "icon" or _still or _frames < 8 or _planet == null or _vp == null:
+		return
+	_planet.rotate_y(angle)
+	_vp.render_target_update_mode = SubViewport.UPDATE_ONCE
+
+
 ## Shows another world in the same view (star map selection).
 func set_planet(pid: String) -> void:
 	if pid == planet_id and _planet != null:
@@ -111,7 +123,7 @@ func _process(delta: float) -> void:
 	if _still or not is_visible_in_tree():
 		return
 	if _planet:
-		_planet.rotate_y(delta * 0.03)
+		_planet.rotate_y(delta * (0.11 if mode == "hero" else 0.03))
 	for m: Dictionary in _movers:
 		(m["pivot"] as Node3D).rotate_object_local(Vector3.UP, float(m["speed"]) * delta)
 
@@ -155,6 +167,11 @@ func _build() -> void:
 			_cam.position = Vector3(0, 0, R * 4.2)
 			_cam.look_at(Vector3.ZERO)
 			_planet.rebuilt.connect(_icon_only, CONNECT_ONE_SHOT)
+		"hero":
+			# Big and right of centre: the left side carries the name and tags.
+			_cam.fov = 30.0
+			_cam.position = Vector3(-78.0, 26.0, 300.0)
+			_cam.look_at(Vector3(-70.0, 0.0, 0.0))
 		_:
 			_cam.fov = 34.0
 			# Wide strip: the world on the right third, its moons beside it.

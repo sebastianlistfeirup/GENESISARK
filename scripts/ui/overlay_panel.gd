@@ -1,11 +1,16 @@
 class_name OverlayPanel
 extends CanvasLayer
 ## Modal overlay base: dims the scene, frees the mouse, emits closed. Esc closes.
+## Holo-console look (D-055): every overlay wears a HoloFrame (brackets,
+## scanlines, edge glow), boots in (unfolds, flickers on, content prints
+## top-down and fades in one block after another) and powers off like an old
+## screen when it closes. Reduced motion: shown and hidden at once.
 
 signal closed
 
 var panel: PanelContainer
 var body: VBoxContainer
+var frame: HoloFrame
 var _dim: ColorRect
 
 
@@ -26,6 +31,7 @@ func _init(size: Vector2 = Vector2(1100, 720)) -> void:
 	panel.grow_vertical = Control.GROW_DIRECTION_BOTH
 	body = UiKit.vbox(10)
 	panel.add_child(body)
+	frame = HoloFrame.attach(panel)
 	add_child(panel)
 	panel.minimum_size_changed.connect(fit)
 	visible = false
@@ -49,12 +55,15 @@ func open() -> void:
 	fit()
 	fit.call_deferred()
 	UiKit.fade_in(_dim, 0.22)
-	UiKit.fade_in(panel)
+	HoloAnim.boot_in(panel)
+	frame.boot()
+	HoloAnim.stagger(body, 0.05, 0.12)
 
 
 func close() -> void:
 	if not visible:
 		return
+	HoloAnim.power_off(self, Rect2(offset + panel.position * scale, panel.size * scale), layer + 1)
 	visible = false
 	closed.emit()
 
@@ -63,9 +72,17 @@ func refresh() -> void:
 	pass
 
 
-func header(text: String, sub: String = "", icon_slot: String = "") -> void:
+## Panel header: badge, title, sub line, optional status chips
+## ([icon_slot, text, Color] each) and the Close button.
+func header(text: String, sub: String = "", icon_slot: String = "", chips: Array = []) -> void:
 	var blk := UiKit.header_block(text, sub, icon_slot)
 	var h := blk.get_child(0) as HBoxContainer
+	if not chips.is_empty():
+		var row := UiKit.hbox(6)
+		row.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+		for c: Array in chips:
+			row.add_child(Holo.chip(str(c[1]), c[2] if c.size() > 2 else UiKit.PETROL.lightened(0.35), str(c[0]), 13))
+		h.add_child(row)
 	var cb := UiKit.button(Loc.t("Close  [%s]") % SettingsService.primary_key("pause"), close)
 	UiKit.with_icon(cb, "ui.icon_close", 16)
 	cb.size_flags_vertical = Control.SIZE_SHRINK_CENTER

@@ -59,8 +59,10 @@ Sound and voices,Lyd og stemmer
 Synty Studios,Synty Studios
 "Terrain, planets, sky, particle effects and shaders","Terræn, planeter, himmel, partikeleffekter og shadere"
 Thanks,Tak
+The Dots Project Authors,The Dots Project Authors
 The team,Holdet
 Used under license from Synty Studios. The packs are not included in the source code.,Bruges under Synty Studios' licens. Pakkerne ligger ikke i kildekoden.
+Zen Dots typeface (SIL Open Font License),Zen Dots-skrifttype (SIL Open Font License)
 ARK wrote a last line in the log: “There is still life in the embryo bank. It is no longer for me to decide when they wake.”,"ARK skrev en sidste linje i loggen: »Der er stadig liv i embryobanken. Det er ikke længere mig, der bestemmer, hvornår de vækkes.«"
 "After {years} on {planet}, {settlement} is a real community: {population} people, a school, a clinic and a council of {council} members.","Efter {years} på {planet} er {settlement} et rigtigt samfund: {population} mennesker, en skole, en klinik og et råd med {council} medlemmer."
 "At least 500 inhabitants, a robust supply without the Ark's power, and a working council.","Mindst 500 indbyggere, robust forsyning uden arkens strøm og et råd, der fungerer."
@@ -998,12 +1000,15 @@ the lander,landeren
 the relay is here,relæet står her
 the sample is taken,prøven er taget
 ▲ In hazard zone: %s (×%.1f consumption),▲ I fareområde: %s (×%.1f forbrug)
+"Below 50% hull, the Ark gives only 60% emergency power after landing.",Under 50% skrog giver arken kun 60% nødstrøm efter landing.
 Born,Født
 Components,Komponenter
+Embryos in the bank,Embryoner i banken
 "Every component you use here will be missing later in the colony. Probes cost 3, a drone reserve 2. Whatever remains at landing becomes the colony's starting stock.","Hver komponent, du bruger her, mangler senere i kolonien. Sonder koster 3, en dronereserve 2. Det, der er tilbage ved landing, bliver koloniens startlager."
 Fuel,Brændstof
 Hull,Skrog
 In incubation,I inkubation
+Loop %d,Kreds %d
 Lost,Tabt
 Oxygen,Ilt
 Redundancy,Redundans
@@ -1013,12 +1018,13 @@ Repair scrubbers: %d comp. → +%d%%,Reparér iltrensere: %d komp. → +%d%%
 Repair the hull,Reparér skroget
 Repair the hull: %d comp. → +%d%%,Reparér skroget: %d komp. → +%d%%
 "Robots, components and repairs.","Robotter, komponenter og reparationer."
+Stable,Stabil
+Stasis stable · emergency power,Stasis stabil · nødstrøm
 "Storage status, redundancy and the later care plan.","Lagerstatus, redundans og den senere omsorgsplan."
 The embryo bank,Embryobanken
 The number is not a score. It is everyone who may yet become someone.,"Tallet er ikke en score. Det er alle, der endnu kan blive til nogen."
 The workshop,Værkstedet
 Viable in cryo,Levedygtige i kryo
-"▲ Below 50% hull, the Ark gives only 60% emergency power after landing.",▲ Under 50% skrog giver arken kun 60% nødstrøm efter landing.
   [color=#d25b4c]%d cut off[/color],  [color=#d25b4c]%d afbrudt[/color]
  · NIGHT, · NAT
  · STORM, · STORM
@@ -1137,6 +1143,7 @@ Time stands still until you have chosen. Time leaps stop at unresolved crises.,"
 ALARM: warning,ALARM: advarsel
 Objectives,Mål
 The colony is self-sufficient.,Kolonien klarer sig selv.
+Travel here,Rejs hertil
 Logbook,Logbog
 [color=#8fa3ad]Day %d[/color]  %s,[color=#8fa3ad]Dag %d[/color]  %s
 [color=#8fa3ad]Embryo ledger:[/color] %s viable · %s in incubation · %s born · %s lost   [color=#8fa3ad](total %s)[/color],[color=#8fa3ad]Embryoregnskab:[/color] %s levedygtige · %s i inkubation · %s født · %s tabt   [color=#8fa3ad](i alt %s)[/color]
@@ -1150,12 +1157,15 @@ Quit,Afslut
 Select,Vælg
 Settings,Indstillinger
 v%s · Godot %s,v%s · Godot %s
+%d of %d known,%d af %d kendt
 Back — continue the voyage,Tilbage — fortsæt rejsen
-Building material %d · Components %d · Water %d person-days · Food %d person-days,Byggemateriale %d · Komponenter %d · Vand %d persondøgn · Mad %d persondøgn
-Components %d · Fuel %d · Hull %d%%,Komponenter %d · Brændstof %d · Skrog %d%%
+Components %d,Komponenter %d
 Confirm landing (final),Bekræft landing (endelig)
+Explored,Udforsket
+Food (person-days),Mad (persondøgn)
+Fuel %d,Brændstof %d
+Hull %d%%,Skrog %d%%
 Known risks,Kendte risici
-Known: ,Kendt: 
 Landing sites,Landingssites
 "Landing: %s, %s","Landing: %s, %s"
 No mapped risks — that doesn't mean there are none.,"Ingen kortlagte risici — det betyder ikke, at der ingen er."
@@ -1166,23 +1176,22 @@ Orbital scan complete,Orbital scanning udført
 Orbiting %s,Kredsløb om %s
 "Plan drone reserve for the expedition (2 components, one refill)","Planlæg dronereserve til ekspeditionen (2 komponenter, én genopfyldning)"
 Prepare landing…,Forbered landing…
+Probed,Sonderet
 "Reveals water distance, heat source and exposure at this site.","Afslører vandafstand, varmekilde og eksponering på dette site."
+Site,Stedet
 Site probe (3),Sitesonde (3)
 Starting stock and energy,Startlager og energi
 The Ark is not in orbit around a planet. Use the star map to travel.,Arken er ikke i kredsløb om en planet. Brug stjernekortet til at rejse.
 "The captain goes down in person: samples, relay and assessment of the landing site.","Kaptajnen går selv ned: prøver, relæ og vurdering af landingspladsen."
 The planet,Planeten
 Unknown,Ukendt
-"[color=#5fae6e]+[/color] %s
-[color=#e8a33d]−[/color] %s","[color=#5fae6e]+[/color] %s
-[color=#e8a33d]−[/color] %s"
+Water (person-days),Vand (persondøgn)
+day,dag
 high,høj
 low,lav
 medium,middel
 no,nej
-nothing yet,intet endnu
 yes,ja
-● Explored by the captain,● Udforsket af kaptajnen
 exposure,eksponering
 flatness,fladhed
 heat source,varmekilde
@@ -1226,26 +1235,28 @@ UI scale,UI-skalering
 Choose a world on the map.,Vælg en verden på kortet.
 Comparison,Sammenligning
 Confirm risky voyage,Bekræft risikabel rejse
-Estimate,Skøn
-Fuel %d · Hull %d%% · Components %d · Position: %s,Brændstof %d · Skrog %d%% · Komponenter %d · Position: %s
-"Fuel [b]%d[/b] (after: %d) · Hull −%d%% · %d days in stasis
-Reserve to nearest alternative: %s","Brændstof [b]%d[/b] (efter: %d) · Skrog −%d%% · %d dage i stasis
-Reserve til nærmeste alternativ: %s"
+Desert world,Ørkenverden
+Green world,Grøn verden
+Ice world,Isverden
+In stasis,I stasis
 Knowledge,Viden
-Known,Kendt
-Known and missing knowledge are shown in separate columns. No world is best at everything.,Kendt viden og manglende viden vises i hver sin kolonne. Ingen verden er bedst i alt.
 Known values and uncertainties are shown separately. A probe costs 3 components and narrows the archive's estimate. Traveling costs fuel and wears on the hull.,Kendte værdier og usikkerheder vises separat. En sonde koster 3 komponenter og indsnævrer arkivets skøn. At rejse koster brændstof og slider på skroget.
-Missing,Mangler
+"Known values, estimates and gaps side by side. The best known or estimated value in each row is marked. No world is best at everything.","Kendte værdier, skøn og huller side om side. Den bedste kendte eller skønnede værdi i hver række er markeret. Ingen verden er bedst i alt."
 Narrows the archive's estimate of %s without traveling.,Indsnævrer arkivets skøn om %s uden at rejse.
+Position: %s,Position: %s
 Press again to confirm. The voyage cannot be undone.,Tryk igen for at bekræfte. Rejsen kan ikke fortrydes.
+Reserve to nearest alternative: ok (%d required),Reserve til nærmeste alternativ: ok (%d krævet)
+Reserve to nearest alternative: too low (%d required),Reserve til nærmeste alternativ: for lav (%d krævet)
 Route,Rute
 Send remote probe (3 components),Send fjernsonde (3 komponenter)
+Show %s on the map,Vis %s på kortet
 Star map,Stjernekort
-Travel here,Rejs hertil
-World,Verden
-[color=#5fae6e]● ok (%d required)[/color],[color=#5fae6e]● ok (%d krævet)[/color]
-[color=#e8a33d]▲ too low (%d required)[/color],[color=#e8a33d]▲ for lav (%d krævet)[/color]
+Visited,Besøgt
+days,dage
 estimate,skøn
 known,kendt
+→ %d left,→ %d tilbage
 %d fuel,%d brændstof
+%d candidates,%d kandidater
+Not yet measured. A probe or a scan can reveal it.,Endnu ikke målt. En sonde eller en scanning kan afsløre det.
 The captain,Kaptajnen

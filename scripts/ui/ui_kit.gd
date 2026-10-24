@@ -467,15 +467,16 @@ static func badge(icon_slot: String, px: int = 46, tint: Color = AMBER) -> Contr
 ## Panel header: badge + heading (+ muted sub line) and a techy rule under it.
 static func header_block(text: String, sub: String = "", icon_slot: String = "", size: int = 26) -> VBoxContainer:
 	var outer := vbox(4)
-	var h := hbox(12)
+	var h := hbox(14)
 	if not icon_slot.is_empty():
-		var b := badge(icon_slot)
-		if b.custom_minimum_size.x > 0.0:
-			h.add_child(b)
+		# D-055: the holo badge, a dashed ring turning around it (still with reduced motion).
+		h.add_child(IconBadge.make(icon_slot, 48, AMBER, true))
 	var v := vbox(0)
 	v.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	v.alignment = BoxContainer.ALIGNMENT_CENTER
-	v.add_child(heading(text, size))
+	var hd := heading(text.to_upper(), size)
+	hd.add_theme_font_override("font", display_variant(2))
+	v.add_child(hd)
 	if not sub.is_empty():
 		v.add_child(label(sub, 15, MUTED, true))
 	h.add_child(v)
@@ -616,6 +617,7 @@ static func button(text: String, cb: Callable = Callable(), tooltip: String = ""
 		b.pressed.connect(cb)
 	b.pressed.connect(func() -> void: AudioService.ui("ui_click"))
 	b.mouse_entered.connect(func() -> void: AudioService.ui("ui_hover"))
+	HoloAnim.hover_lift(b, 0.02, 0.12)  # D-055: hover/focus lift + glow on every button
 	return b
 
 
