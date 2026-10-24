@@ -23,10 +23,13 @@ static func build(planet_id: String, fallback: String, terrain: Node3D = null) -
 		slot.position = dir * DISTANCE
 		slot.scale = Vector3.ONE * radius / 60.0  # planet slots are 60 m spheres
 		slot.rotation = Vector3(DictUtil.get_float(body, "tilt") * 0.0174, az, 0.3)
+		slot.set_meta("sky_far", true)  # hangs at sky distance: the descent keeps it around the camera
 		root.add_child(slot)
 		PlanetLook.apply(slot, str(body.get("biome", "ice")), str(body.get("tint", "#9aa8b8")), hash(planet_id) + i)
 		if body.has("ring"):
-			root.add_child(_ring(slot.position, radius, Color(str(body["ring"])), az))
+			var rg := _ring(slot.position, radius, Color(str(body["ring"])), az)
+			rg.set_meta("sky_far", true)
+			root.add_child(rg)
 		i += 1
 	for key: String in ["fauna", "fauna_low"]:
 		if sky.has(key):
@@ -38,11 +41,15 @@ static func build(planet_id: String, fallback: String, terrain: Node3D = null) -
 		if cr:
 			root.add_child(cr)
 	if sky.has("sun_size"):
-		root.add_child(_sun(planet_id, fallback, DictUtil.get_float(sky, "sun_size"), Color(str(sky.get("sun_color", "#fff2c8")))))
+		var sun := _sun(planet_id, fallback, DictUtil.get_float(sky, "sun_size"), Color(str(sky.get("sun_color", "#fff2c8"))))
+		sun.set_meta("sky_far", true)
+		root.add_child(sun)
 	if sky.has("debris"):
 		root.add_child(_debris(DictUtil.get_dict(sky, "debris"), hash(planet_id + "debris")))
 	if sky.has("aurora"):
-		root.add_child(_aurora(Color(str(sky["aurora"])), Color(str(sky.get("aurora_high", "#9a5cff")))))
+		var au := _aurora(Color(str(sky["aurora"])), Color(str(sky.get("aurora_high", "#9a5cff"))))
+		au.set_meta("sky_far", true)
+		root.add_child(au)
 	return root
 
 

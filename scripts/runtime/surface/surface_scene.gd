@@ -110,13 +110,22 @@ func _ready() -> void:
 	captain.hold_progress.connect(hud.set_hold)
 	_build_suit_hud()
 	AudioService.set_ambience_any(["amb_surface_" + str(planet.get("biome_id")), "amb_colony_wind"])
-	GameSession.trigger_story("expedition_start")
+	# "The lander's hatch slides open": told at touchdown, not kilometres up.
+	var descent := get_node_or_null("Descent") as PlanetDescent
+	if descent:
+		descent.finished.connect(GameSession.trigger_story.bind("expedition_start"))
+	else:
+		GameSession.trigger_story("expedition_start")
 	# On the ground the voyage objective's hint ("choose a landing site ...") is
 	# stale: the panel shows this site's goal instead (it used to be a toast).
 	var o := GameSession.sim.objectives.current(GameSession.state)
 	hud.override_objective({"title": str(o.get("title", "")), "hint": str(survey.get("goal", o.get("hint", "")))})
 	_update_waypoint(ex)
-	hud.nav.say(GameSession.sim.nav.surface_brief(ex, _nav_context(ex, [1.0, "", "", ""])))
+	var brief := GameSession.sim.nav.surface_brief(ex, _nav_context(ex, [1.0, "", "", ""]))
+	if descent:  # NAV's landing brief would type itself out unseen behind the descent
+		descent.finished.connect(hud.nav.say.bind(brief))
+	else:
+		hud.nav.say(brief)
 
 
 func _pt(v: Variant) -> Vector2:

@@ -44,12 +44,6 @@
 [ext_resource type="ArrayMesh" path="res://assets/Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Door_Single_05.res" id="42_wdrpc"]
 [ext_resource type="PackedScene" path="res://assets/Synty/PolygonSciFiWorlds/Prefabs/Buildings/SM_Bld_Platform_Base_Small_01.tscn" id="43_una2x"]
 [ext_resource type="ArrayMesh" path="res://assets/Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Platform_Base_Small_01.res" id="44_p7tim"]
-[ext_resource type="PackedScene" path="res://assets/Synty/PolygonSciFiWorlds/Prefabs/Weapons/Melee/SM_Wep_BigAxe_04.tscn" id="45_qslkj"]
-[ext_resource type="ArrayMesh" path="res://assets/Synty/PolygonSciFiWorlds/Models/extracted/SM_Wep_BigAxe_04.res" id="46_hi3yi"]
-[ext_resource type="PackedScene" path="res://assets/Synty/PolygonSciFiWorlds/Prefabs/Weapons/Melee/SM_Wep_BigAxe_01.tscn" id="47_ufipw"]
-[ext_resource type="ArrayMesh" path="res://assets/Synty/PolygonSciFiWorlds/Models/extracted/SM_Wep_BigAxe_01.res" id="48_bbdpp"]
-[ext_resource type="PackedScene" path="res://assets/Synty/PolygonSciFiWorlds/Prefabs/Weapons/Melee/SM_Wep_BigAxe_07.tscn" id="49_s8sny"]
-[ext_resource type="ArrayMesh" path="res://assets/Synty/PolygonSciFiWorlds/Models/extracted/SM_Wep_BigAxe_07.res" id="50_tytl1"]
 
 [node name="building_care_center_scav" type="Node3D" unique_id=980608403]
 metadata/synty_source = "res://art/kits/BlackMarket_01_55_Pod_Hab_Small_04.tscn"
@@ -507,64 +501,4 @@ visibility_range_end = 160.0
 visibility_range_end_margin = 8.0
 visibility_range_fade_mode = 1
 mesh = ExtResource("38_veksh")
-surface_material_override/0 = ExtResource("6_jurpv")
-
-[node name="SM_Wep_BigAxe_04" type="MeshInstance3D" parent="Model" unique_id=2130885508 instance=ExtResource("45_qslkj")]
-transform = Transform3D(0, -0.54586816, 0.83787113, -1, 0, 0, 0, -0.83787113, -0.54586816, -2.8080053, 2.007, 2.0094967)
-cast_shadow = 0
-gi_mode = 2
-visibility_range_end = 70.0
-visibility_range_end_margin = 8.0
-visibility_range_fade_mode = 1
-mesh = ExtResource("46_hi3yi")
-surface_material_override/0 = ExtResource("6_jurpv")
-
-[node name="SM_Wep_BigAxe_01" type="MeshInstance3D" parent="Model" unique_id=1667642664 instance=ExtResource("47_ufipw")]
-transform = Transform3D(0, -0.59579223, 0.80313855, -1, 0, 0, 0, -0.80313855, -0.59579223, -3.6520061, 2.002, 2.1164942)
-cast_shadow = 0
-gi_mode = 2
-visibility_range_end = 70.0
-visibility_range_end_margin = 8.0
-visibility_range_fade_mode = 1
-mesh = ExtResource("48_bbdpp")
-surface_material_override/0 = ExtResource("6_jurpv")
-
-[node name="_MeshInstance3D_1037" type="MeshInstance3D" parent="Model" unique_id=1874715468 instance=ExtResource("47_ufipw")]
-transform = Transform3D(0, -0.59579223, 0.80313855, -1, 0, 0, 0, -0.80313855, -0.59579223, -3.1710062, 2.002, 2.1164956)
-cast_shadow = 0
-gi_mode = 2
-visibility_range_end = 70.0
-visibility_range_end_margin = 8.0
-visibility_range_fade_mode = 1
-mesh = ExtResource("48_bbdpp")
-surface_material_override/0 = ExtResource("6_jurpv")
-
-[node name="SM_Wep_BigAxe_07" type="MeshInstance3D" parent="Model" unique_id=328870545 instance=ExtResource("49_s8sny")]
-transform = Transform3D(0.8876291, -4.1606874, -2.6764178, 0.17177762, 2.743437, -4.207906, 4.9441943, 0.6516504, 0.62669265, -1.3230972, 6.909276, -3.9764605)
-cast_shadow = 0
-gi_mode = 2
-visibility_range_end = 70.0
-visibility_range_end_margin = 8.0
-visibility_range_fade_mode = 1
-mesh = ExtResource("50_tytl1")
-surface_material_override/0 = ExtResource("6_jurpv")
-
-[node name="_MeshInstance3D_1038" type="MeshInstance3D" parent="Model" unique_id=1172195113 instance=ExtResource("45_qslkj")]
-transform = Transform3D(0, -0.54586816, 0.83787113, -1, 0, 0, 0, -0.83787113, -0.54586816, -2.3250055, 2.007, 1.9134979)
-cast_shadow = 0
-gi_mode = 2
-visibility_range_end = 70.0
-visibility_range_end_margin = 8.0
-visibility_range_fade_mode = 1
-mesh = ExtResource("46_hi3yi")
-surface_material_override/0 = ExtResource("6_jurpv")
-
-[node name="_MeshInstance3D_1039" type="MeshInstance3D" parent="Model" unique_id=1609493557 instance=ExtResource("45_qslkj")]
-transform = Transform3D(1.9760648e-05, 4.913626, 4.597762, 0, 4.597762, -4.913626, -6.7292724, 1.4428965e-05, 1.3501424e-05, 1.7870121, 7.1460004, -4.31549)
-cast_shadow = 0
-gi_mode = 2
-visibility_range_end = 70.0
-visibility_range_end_margin = 8.0
-visibility_range_fade_mode = 1
-mesh = ExtResource("46_hi3yi")
 surface_material_override/0 = ExtResource("6_jurpv")

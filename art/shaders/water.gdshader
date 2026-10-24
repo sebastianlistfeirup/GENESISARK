@@ -9,6 +9,7 @@ uniform vec3 foam_color : source_color = vec3(0.95, 0.98, 1.0);
 uniform float depth_fade = 2.5;
 uniform float foam_width = 0.35;
 uniform float wave_speed = 0.35;
+uniform float foam_strength = 1.0;  // 0 for the descent's far sea (no shore foam at km range)
 uniform sampler2D depth_tex : hint_depth_texture, filter_linear_mipmap;
 
 float h2(vec2 p) { vec3 p3 = fract(vec3(p.xyx) * 0.1031); p3 += dot(p3, p3.yzx + 33.33); return fract((p3.x + p3.y) * p3.z); }
@@ -33,7 +34,7 @@ void fragment() {
 	float water_depth = clamp((-world.z) - (-VERTEX.z), 0.0, 100.0);
 	float k = clamp(water_depth / depth_fade, 0.0, 1.0);
 	vec3 col = mix(shallow, deep, k);
-	float foam = (1.0 - smoothstep(0.0, foam_width, water_depth)) * smoothstep(0.45, 0.6, n2(wpos.xz * 1.3 + t * 1.5)) * 0.7;
+	float foam = (1.0 - smoothstep(0.0, foam_width, water_depth)) * smoothstep(0.45, 0.6, n2(wpos.xz * 1.3 + t * 1.5)) * 0.7 * foam_strength;
 	col = mix(col, foam_color, foam * 0.85);
 	ALBEDO = col;
 	ALPHA = clamp(0.55 + k * 0.4 + foam, 0.0, 0.95);
