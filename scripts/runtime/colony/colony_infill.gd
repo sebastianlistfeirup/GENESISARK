@@ -52,6 +52,8 @@ static func _pass(out: Array, clear: ColonyClearance, taken: ColonyClearance, di
 			var p := Vector2(x0 + ix * step, z0 + iz * step)
 			if clear.blocked(p, spot_r) or taken.blocked(p, spot_r):
 				continue
+			if shift > 0.0 and not clear.blocked(p, spot_r + 1.4):  # lane pass: only where it is really tight
+				continue
 			var hood := clear.rects_near(p, near)
 			if hood.size() < need:
 				continue
