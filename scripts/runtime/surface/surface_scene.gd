@@ -123,6 +123,7 @@ func _ready() -> void:
 	waypoints = WaypointLayer.new()
 	add_child(waypoints)
 	waypoints.visible = not _descending
+	scanner.tagged.connect(_on_scan_tag)
 	for key: String in _markers.keys():
 		var m: Interactable = _markers[key]
 		waypoints.add_place(m, WaypointLayer.nice(m.title), 3.6 if key != "lander" else 4.2)
@@ -300,7 +301,7 @@ func _place_hazards() -> void:
 		lbl.outline_size = 10
 		lbl.outline_modulate = Color(0.02, 0.05, 0.06, 0.85)
 		area.add_child(lbl)
-		hazard_areas.append({"area": area, "mult": DictUtil.get_float(DictUtil.get_dict(hdef, "expedition"), "suit_drain_multiplier", 2.0),
+		hazard_areas.append({"area": area, "sign": lbl, "mult": DictUtil.get_float(DictUtil.get_dict(hdef, "expedition"), "suit_drain_multiplier", 2.0),
 			"label": str(hz.get("label", hdef.get("name", hid))), "sound": str(HAZARD_SOUND.get(hid, "")), "id": hid + "@" + str(hazard_areas.size())})
 
 
@@ -340,10 +341,23 @@ func _update_waypoint(ex: ExpeditionState) -> void:
 func _process(_delta: float) -> void:
 	if captain == null:
 		return
+	var now := Time.get_ticks_msec()
 	for key: String in _poi_labels:
 		var lbl: Label3D = _poi_labels[key]
 		var far := captain.global_position.distance_to(lbl.global_position) > WaypointLayer.PLACE_RANGE
-		lbl.visible = far and key != _objective_key
+		lbl.visible = far and key != _objective_key and int(_scan_hush.get(_markers.get(key), 0)) < now
+	for h: Dictionary in hazard_areas:
+		(h["sign"] as Label3D).visible = int(_scan_hush.get(h["area"], 0)) < now
+
+
+var _scan_hush: Dictionary = {}  # node -> msec until which a scanner tag names it
+
+
+## A scanner tag names the place for a while: its own sign and waypoint name step aside.
+func _on_scan_tag(node: Node3D, seconds: float) -> void:
+	_scan_hush[node] = Time.get_ticks_msec() + int(seconds * 1000.0)
+	if waypoints:
+		waypoints.hush(node, seconds)
 
 
 func _hazard_mult() -> Array:
@@ -474,6 +488,13 @@ func debug_action(action: String) -> void:
 		var body := _lander_body()
 		if lander and body:
 			_start_descent(lander, body, float(action.get_slice(":", 1)) if action.contains(":") else PlanetDescent.START_ALT)
+		return
+	if action == "finish":  # evidence: end the expedition as at the lander (real command, ascent, then the ship)
+		_finish(false)
+		return
+	if action == "scan_ground":  # evidence: a pulse from beside the main sample, through the player's own camera (tags vs. waypoint names)
+		debug_action("at_sample")
+		scanner.pulse()
 		return
 	if action == "scan":  # evidence: a scanner pulse from the camp, seen from a vista
 		scanner.pulse()

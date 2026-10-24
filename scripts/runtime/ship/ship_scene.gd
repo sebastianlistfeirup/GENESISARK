@@ -20,6 +20,7 @@ var _wave_origin := Vector3.INF  # set when the player closes the coupling: the 
 var _window_planet: Node3D
 var _voyage_label: Label
 var _voyage_title: Label
+var _wakeup: ShipWakeup  # the cryo-pod opening (D-060) while it runs
 
 
 func _ready() -> void:
@@ -128,6 +129,7 @@ func _ready() -> void:
 		w.name = "Wakeup"
 		add_child(w)
 		w.start(captain, hud, builder.spawn, builder.spawn_yaw)
+		_wakeup = w
 		w.opened.connect(func() -> void: GameSession.trigger_story("intro_wakeup"))
 		if waypoints:
 			waypoints.visible = false
@@ -338,8 +340,13 @@ func _process(delta: float) -> void:
 		_ai.position.y = builder.ai_pos.y + sin(_ai_t * 1.3) * 0.08
 	# A terminal panel covers the lower screen: the story subtitle waits under it
 	# instead of peeking out below the panel's edge.
+	# During the wake-up the HUD is hidden, but its first line (from the hatch
+	# opening) must read over the cinematic, not run out unseen behind it.
+	var waking := is_instance_valid(_wakeup) and not _wakeup.is_queued_for_deletion()
 	if hud.story:
-		hud.story.visible = hud.visible and not _any_panel()
+		hud.story.visible = (hud.visible or (waking and _wakeup.is_open())) and not _any_panel()
+	if waking:
+		return  # the cinematic owns the captain until it hands over (it re-enables input itself)
 	if hud.any_modal_open() and captain.input_enabled:
 		captain.set_active(false)
 	elif not hud.any_modal_open() and not captain.input_enabled and not _any_panel():

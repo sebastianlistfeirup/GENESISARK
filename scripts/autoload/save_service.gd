@@ -9,6 +9,14 @@ var store := SaveStore.new("user://saves")
 var _counter := 0
 
 
+func _ready() -> void:
+	# Evidence captures and perf runs build fixture campaigns whose commands
+	# autosave: they keep to their own folder instead of overwriting the
+	# player's real slots.
+	if DebugCapture.requested() or PerfProbe.requested():
+		store = SaveStore.new("user://saves_debug")
+
+
 func save_state(slot: String, gs: GameState, content: ContentDB) -> Dictionary:
 	_counter += 1
 	var env := SaveCodec.encode(gs, content.content_version, "%s-%d-%d" % [slot, Time.get_unix_time_from_system(), _counter])

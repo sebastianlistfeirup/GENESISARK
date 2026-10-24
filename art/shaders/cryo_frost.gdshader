@@ -8,7 +8,9 @@ uniform float slide = 0.0;       // 0 = closed, 1 = hatch fully up
 uniform float breath = 0.0;      // 0..1 pulse that clears the middle a little
 uniform vec4 tint : source_color = vec4(0.72, 0.86, 0.95, 1.0);
 
-float h(vec2 p) { return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }
+// Sine-free hash: the old fract(sin()) one lost precision on the fine frost octaves
+// (inputs in the hundreds) and broke the glass into rectangular blocks.
+float h(vec2 p) { vec3 q = fract(vec3(p.xyx) * 0.1031); q += dot(q, q.yzx + 33.33); return fract((q.x + q.y) * q.z); }
 float n(vec2 p) {
 	vec2 i = floor(p); vec2 f = fract(p);
 	f = f * f * (3.0 - 2.0 * f);

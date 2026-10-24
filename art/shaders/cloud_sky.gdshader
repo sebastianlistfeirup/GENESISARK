@@ -13,7 +13,8 @@ uniform float presence = 1.0;  // the descent fades the deck in on the way down
 varying float cam_dist;
 varying float seed;
 
-float h(vec2 p) { return fract(sin(dot(p, vec2(12.9898, 78.233))) * 43758.5453); }
+// Sine-free hash (the fract(sin()) one showed square blocks inside the puffs).
+float h(vec2 p) { vec3 q = fract(vec3(p.xyx) * 0.1031); q += dot(q, q.yzx + 33.33); return fract((q.x + q.y) * q.z); }
 float n2(vec2 p) {
 	vec2 i = floor(p); vec2 f = fract(p);
 	f = f * f * (3.0 - 2.0 * f);

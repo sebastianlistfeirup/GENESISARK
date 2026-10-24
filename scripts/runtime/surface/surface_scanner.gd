@@ -11,6 +11,10 @@ const SPEED := 60.0        # metres per second of the wavefront
 const COOLDOWN := 5.0
 const HOLD := 7.0
 
+## A tag popped up over `node` for `seconds`: the scene hides its own sign and
+## waypoint name there meanwhile, so the two never stack.
+signal tagged(node: Node3D, seconds: float)
+
 var captain: Node3D
 var targets: Array = []    # [{node: Node3D, name: String, color: Color}]
 var _cool := 0.0
@@ -83,9 +87,11 @@ func _process(delta: float) -> void:
 func _tag(t: Dictionary, dist: float) -> void:
 	var n: Node3D = t["node"]
 	var lbl := Label3D.new()
-	lbl.text = "◆ %s · %d m" % [str(t["name"]), int(round(dist))]
+	var nm := str(t["name"])
+	lbl.text = ("%s · %d m" if nm.begins_with("▲") else "◆ %s · %d m") % [nm, int(round(dist))]  # hazards keep their own ▲
 	lbl.billboard = BaseMaterial3D.BILLBOARD_ENABLED
 	lbl.no_depth_test = true
+	lbl.render_priority = 10  # drawn after glowing props (the relay beacon's orb cut through the text)
 	lbl.fixed_size = true
 	lbl.pixel_size = 0.0011
 	lbl.font_size = 30
@@ -105,3 +111,4 @@ func _tag(t: Dictionary, dist: float) -> void:
 		tw.tween_interval(HOLD)
 	tw.tween_property(lbl, "modulate:a", 0.0, 0.6)
 	tw.tween_callback(lbl.queue_free)
+	tagged.emit(n, HOLD + 0.85)

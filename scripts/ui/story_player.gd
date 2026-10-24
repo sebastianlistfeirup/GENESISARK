@@ -12,11 +12,19 @@ var _timer := 0.0
 var _lines: Array = []
 var _index := 0
 var _scene_id := ""
+## Lines still unsaid when the scene changed (the expedition's "hatch closes" on the
+## climb to orbit, the landing order as the colony loads): the next scene's player
+## picks them up instead of the subtitles vanishing mid-scene.
+static var _carry: Array = []
+static var _carry_state := 0
+static var _carry_ms := 0
 
 
 func _ready() -> void:
 	layer = 20
-	process_mode = Node.PROCESS_MODE_ALWAYS
+	# Pausable: a line (and its voice) holds while the pause menu is open instead of
+	# running out unseen behind it; the box steps aside meanwhile.
+	process_mode = Node.PROCESS_MODE_PAUSABLE
 	_box = UiKit.panel()
 	_box.set_anchors_and_offsets_preset(Control.PRESET_CENTER_BOTTOM)
 	_box.grow_horizontal = Control.GROW_DIRECTION_BOTH
@@ -34,6 +42,35 @@ func _ready() -> void:
 	_box.add_child(v)
 	_box.visible = false
 	add_child(_box)
+	_resume_carry()  # before the new scene's own triggers: the interrupted lines come first
+
+
+func _notification(what: int) -> void:
+	if _box and (what == NOTIFICATION_PAUSED or what == NOTIFICATION_UNPAUSED):
+		_box.modulate.a = 0.0 if what == NOTIFICATION_PAUSED else 1.0
+
+
+func _exit_tree() -> void:
+	if not is_playing() or AppFlow.test_mode or not GameSession.has_game():
+		return
+	var rest: Array = [{"id": _scene_id, "lines": _lines, "start": _index}]
+	rest.append_array(_queue)
+	_carry = rest
+	_carry_state = GameSession.state.get_instance_id()
+	_carry_ms = Time.get_ticks_msec()
+
+
+## Same campaign, a moment ago: carry on where the last scene's player stopped
+## (the interrupted line starts over, with its voice).
+func _resume_carry() -> void:
+	if _carry.is_empty():
+		return
+	var rest := _carry
+	_carry = []
+	if not GameSession.has_game() or GameSession.state.get_instance_id() != _carry_state or Time.get_ticks_msec() - _carry_ms > 15000:
+		return
+	for sc: Dictionary in rest:
+		play_scene(sc)
 
 
 ## Moves the subtitle box up by `px` (more when a scene's bottom bar grows).
@@ -55,7 +92,7 @@ func _next_scene() -> void:
 	var sc: Dictionary = _queue.pop_front()
 	_scene_id = str(sc.get("id", ""))
 	_lines = DictUtil.get_arr(sc, "lines")
-	_index = 0
+	_index = int(sc.get("start", 0))
 	_show_line()
 
 

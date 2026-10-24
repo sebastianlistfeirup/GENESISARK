@@ -146,5 +146,7 @@ func _place() -> void:
 	# Foam swells just before it breaks the surface and as the tail goes under.
 	var surf := (c > RISE * 0.05 and c < RISE * 0.5) or (c > RISE + GLIDE + DIVE * 0.55 and c < RISE + GLIDE + DIVE)
 	_spray.emitting = surf
-	_spray.global_position = Vector3(p.x, water_y, p.y)
-	_spray.global_basis = Basis(Vector3.UP, -_dir.angle())
+	# Local to the serpent (itself unrotated, placed in its parent's space like
+	# `position` above): build() runs before the node is in the tree.
+	_spray.position = Vector3(p.x, water_y, p.y) - position
+	_spray.basis = Basis(Vector3.UP, -_dir.angle())

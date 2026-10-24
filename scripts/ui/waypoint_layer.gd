@@ -72,6 +72,19 @@ func add_place(node: Node3D, label: String, height: float = 2.0) -> void:
 	places.append({"node": node, "label": label, "height": height})
 
 
+var _hush: Dictionary = {}  # node -> _t until which its names stay quiet
+
+
+## Something else names `node` for a while (a scanner tag): its place label is
+## hidden and the objective marker keeps only its diamond, so texts never stack.
+func hush(node: Node3D, seconds: float) -> void:
+	_hush[node] = _t + seconds
+
+
+func _hushed(n: Node3D) -> bool:
+	return float(_hush.get(n, -1.0)) > _t
+
+
 func _process(delta: float) -> void:
 	_t += delta
 	var ok := objective != null and is_instance_valid(objective) and objective.is_inside_tree()
@@ -95,7 +108,7 @@ func _draw_markers() -> void:
 		player_pos = me.global_position
 	for p: Dictionary in places:
 		var n: Node3D = p["node"]
-		if not is_instance_valid(n) or not n.is_inside_tree() or n == objective or not n.visible:
+		if not is_instance_valid(n) or not n.is_inside_tree() or n == objective or not n.visible or _hushed(n):
 			continue
 		var d := player_pos.distance_to(n.global_position)
 		if d > PLACE_RANGE or d < PROMPT_RANGE:
@@ -128,6 +141,8 @@ func _draw_markers() -> void:
 	var dist_txt := "%d m" % roundi(dist)
 	if on_screen:
 		_diamond(pos, 15.0 * pulse + 2.0, col)
+		if _hushed(objective):
+			return
 		_text(font, pos + Vector2(0, -28), objective_label, 19, Color(UiKit.TEXT, 0.95), true)
 		_text(font, pos + Vector2(0, 40), dist_txt, 16, Color(UiKit.AMBER, 0.95), true)
 		return
