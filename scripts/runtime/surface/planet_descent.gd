@@ -70,7 +70,8 @@ var _glow_light: OmniLight3D
 var _streaks: MultiMeshInstance3D
 var _streak_mat: ShaderMaterial
 var _streak_pts: Array = []
-var _roar := false  # [local offset (ship frame), length]
+var _roar := false
+var _engine: AudioStreamPlayer  # thruster loop owned by the descent (stops with it)  # [local offset (ship frame), length]
 var _vignette: ColorRect
 var _thruster: Node3D
 var _marker: Label3D
@@ -107,7 +108,7 @@ func start(p_root: Node3D, p_terrain: TerrainBuilder, p_planet: Dictionary, p_ta
 	_phase = _phase_for(alt)
 	_set_sky(alt > SWITCH_ALT)
 	AudioService.set_ambience_any(["amb_space"])
-	AudioService.play("sfx_thruster", "SFX", -10.0)
+	_start_engine()
 
 
 ## The way home: lift-off from the pad, a climbing turn out over the land, up
@@ -132,7 +133,7 @@ func start_ascent(p_root: Node3D, p_terrain: TerrainBuilder, p_planet: Dictionar
 	if lander:
 		lander.add_child(dust)
 		get_tree().create_timer(4.0).timeout.connect(dust.queue_free)
-	AudioService.play("sfx_thruster", "SFX", -6.0)
+	_start_engine()
 
 
 ## Evidence captures: run the flight forward by `seconds` of simulated time.
@@ -688,6 +689,7 @@ func _process(delta: float) -> void:
 		_fog_for_alt(_alt)
 	_update_fx(delta, pos)
 	_update_camera(delta, pos)
+	_update_engine(delta)
 	if _ark_pending:
 		# Just undocked: the Ark hangs in orbit high in the frame, the lander dives away from it.
 		_ark_pending = false
@@ -830,6 +832,14 @@ func _finish() -> void:
 		_world_env.environment = _planet_env
 	_restore_fog()
 	AudioService.set_layer("", -2.0)
+	if _engine:
+		# Outlive the descent node so the engine spools down instead of cutting off.
+		var e := _engine
+		_engine = null
+		e.reparent(surface_root)
+		var tw := e.create_tween()
+		tw.tween_property(e, "volume_db", -40.0, 1.4)
+		tw.tween_callback(e.queue_free)
 	_stretch_cover(false)
 	if is_instance_valid(_site_water):
 		_site_water.visible = true
@@ -849,6 +859,39 @@ func _finish() -> void:
 			l.visible = true
 	finished.emit()
 	queue_free()
+
+
+func _start_engine() -> void:
+	if _engine:
+		return
+	var st := AudioService.stream("sfx_thruster")
+	if st == null:
+		return
+	_engine = AudioStreamPlayer.new()
+	_engine.stream = st
+	_engine.bus = "SFX"
+	_engine.volume_db = -30.0
+	add_child(_engine)
+	_engine.play()
+
+
+## Engine loudness follows the work the thrusters do: quiet coasting in orbit,
+## a roar on landing burns and on lift-off.
+func _update_engine(delta: float) -> void:
+	if _engine == null:
+		return
+	var want := -22.0
+	if _landing or (_ascent and _alt < 400.0):
+		want = -6.0
+	elif _alt < 600.0:
+		want = -12.0
+	_engine.volume_db = lerpf(_engine.volume_db, want, clampf(delta * 2.0, 0.0, 1.0))
+	_engine.pitch_scale = lerpf(_engine.pitch_scale, 1.0 + clampf(_vel.length() / 600.0, 0.0, 0.25), clampf(delta, 0.0, 1.0))
+
+
+func _exit_tree() -> void:
+	if _engine:
+		_engine.stop()
 
 
 func _shake_ok() -> bool:
