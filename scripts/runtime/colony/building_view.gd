@@ -136,6 +136,11 @@ func constructing() -> bool:
 	return _constructing
 
 
+## The building's model (for roof sampling).
+func visual() -> Node3D:
+	return _visual
+
+
 ## Footprint in building space (before the view's rotation).
 func footprint() -> Vector2:
 	return _size

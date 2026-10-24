@@ -21,6 +21,8 @@ var stats := {}
 static var _tint_cache: Dictionary = {}  # "mesh id|tint" -> Mesh
 var _on_platform: ColonyClearance  # footprints of the buildings that stand on platform tiles
 var _margin := 0.0
+## World id for the weathering look (set by the scene before rebuild).
+var weather_world := ""
 
 
 ## views: building id -> BuildingView. clear: ColonyClearance with footprints,
@@ -65,6 +67,15 @@ func rebuild(views: Dictionary, terrain: TerrainBuilder, clear: ColonyClearance,
 				stats["first"] += 1
 				kept.append([p, float(it["r"])])
 			_emit(batches, ranges, lights, it, xf, vxf.origin.y, terrain)
+	# Rooftop greebles on the flat parts of finished roofs.
+	for bid: int in views.keys():
+		var v: BuildingView = views[bid]
+		if not is_instance_valid(v) or v.constructing():
+			continue
+		var vxf := v.global_transform if v.is_inside_tree() else v.transform
+		for it: Dictionary in ColonyRoofs.plan(v):
+			stats["roof"] = int(stats.get("roof", 0)) + 1
+			_emit(batches, ranges, lights, it, vxf * (it["xf"] as Transform3D), vxf.origin.y, terrain)
 	# Second chance: the same prop on the opposite side (or, for a square
 	# footprint, a quarter turn) of its own building, if that side is free.
 	var taken := ColonyClearance.new()
@@ -109,6 +120,99 @@ func rebuild(views: Dictionary, terrain: TerrainBuilder, clear: ColonyClearance,
 		add_child(mmi)
 	_add_lights(lights, light_scale)
 	_add_night(views, night)
+	_add_weathering(views, terrain, clear)
+	_add_fx(views)
+
+
+## Biome weathering at the foundations (data "weathering" per world): soft,
+## flattened mounds of dust, snow or mud half over each platform edge, so the
+## buildings sit in the ground instead of on it. One MultiMesh, no collision.
+func _add_weathering(views: Dictionary, terrain: TerrainBuilder, clear: ColonyClearance) -> void:
+	var cfg: Dictionary = DictUtil.get_dict(DictUtil.get_dict(BuildingDressing.doc(), "weathering"), weather_world)
+	if cfg.is_empty():
+		return
+	var xfs: Array = []
+	var per := DictUtil.get_float(cfg, "per_m", 0.35)
+	var sz: Array = DictUtil.get_arr(cfg, "size")
+	for bid: int in views.keys():
+		var v: BuildingView = views[bid]
+		if not is_instance_valid(v) or v.constructing():
+			continue
+		var rng := RandomNumberGenerator.new()
+		rng.seed = hash("weather#%d" % bid)
+		var fs: Vector2 = v.footprint()
+		if BuildingDressing.pad_style(v.def_id) != "skirt":
+			continue  # drifts lean on platform edges; free-standing machines stay clean
+		var m := _margin
+		var hx := fs.x * 0.5 + m
+		var hz := fs.y * 0.5 + m
+		var vxf := v.global_transform if v.is_inside_tree() else v.transform
+		for side: int in 4:
+			var along := hx * 2.0 if side < 2 else hz * 2.0
+			var n := int(along * per * rng.randf_range(0.6, 1.2))
+			for k: int in n:
+				var t := rng.randf_range(-0.5, 0.5) * along
+				var local := Vector3(t, 0, (hz + 0.1) * (1.0 if side == 0 else -1.0)) if side < 2 else Vector3((hx + 0.1) * (1.0 if side == 2 else -1.0), 0, t)
+				var w: Vector3 = vxf * local
+				var p := Vector2(w.x, w.z)
+				if clear.blocked(p, 0.2, bid):
+					continue
+				var s := rng.randf_range(float(sz[0]) if sz.size() == 2 else 0.6, float(sz[1]) if sz.size() == 2 else 1.4)
+				# Long and low along the edge, the way wind piles dust or snow against a wall.
+				var edge_yaw := (0.0 if side < 2 else PI * 0.5) + rng.randf_range(-0.15, 0.15)
+				var basis := (vxf.basis.orthonormalized() * Basis(Vector3.UP, edge_yaw)).scaled(Vector3(s * rng.randf_range(1.6, 2.6), s * DictUtil.get_float(cfg, "height", 0.18), s * rng.randf_range(0.55, 0.85)))
+				xfs.append(Transform3D(basis, Vector3(p.x, terrain.height_at(p.x, p.y) - 0.02, p.y)))
+	if xfs.is_empty():
+		return
+	var sm := SphereMesh.new()
+	sm.radius = 0.5
+	sm.height = 1.0
+	sm.radial_segments = 10
+	sm.rings = 4
+	sm.is_hemisphere = true
+	var mm := MultiMesh.new()
+	mm.transform_format = MultiMesh.TRANSFORM_3D
+	mm.mesh = sm
+	mm.instance_count = xfs.size()
+	for i: int in xfs.size():
+		mm.set_instance_transform(i, xfs[i])
+	var mmi := MultiMeshInstance3D.new()
+	mmi.multimesh = mm
+	var mat := StandardMaterial3D.new()
+	mat.albedo_color = Color(str(cfg.get("color", "#c8a878")))
+	mat.roughness = DictUtil.get_float(cfg, "roughness", 1.0)
+	mmi.material_override = mat
+	mmi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	mmi.visibility_range_end = 160.0
+	add_child(mmi)
+
+
+## Life on the machines (data "fx" per building type): steam over geothermal
+## generators and water plants, sparks at workshops. Capped per type and only
+## on finished buildings; missing effect scenes fall back to the slot proxy.
+func _add_fx(views: Dictionary) -> void:
+	var cfg: Dictionary = DictUtil.get_dict(BuildingDressing.doc(), "fx")
+	if cfg.is_empty():
+		return
+	var count := {}
+	var ids := views.keys()
+	ids.sort()
+	for bid: int in ids:
+		var v: BuildingView = views[bid]
+		if not is_instance_valid(v) or v.constructing() or not cfg.has(v.def_id):
+			continue
+		var f: Dictionary = cfg[v.def_id]
+		if int(count.get(v.def_id, 0)) >= DictUtil.get_int(f, "max", 4):
+			continue
+		count[v.def_id] = int(count.get(v.def_id, 0)) + 1
+		var n := VisualSlot.make(str(f.get("slot", "fx.steam_vent")))
+		var at: Array = DictUtil.get_arr(f, "at")  # [x, z] in footprint halves, y = roof or given
+		var fs: Vector2 = v.footprint()
+		var y := v.visual_top() * DictUtil.get_float(f, "top", 1.0) if f.has("top") else DictUtil.get_float(f, "y", 0.2)
+		var local := Vector3((float(at[0]) if at.size() == 2 else 0.0) * fs.x * 0.5, y, (float(at[1]) if at.size() == 2 else 0.0) * fs.y * 0.5)
+		n.scale = Vector3.ONE * DictUtil.get_float(f, "scale", 0.5)
+		add_child(n)
+		n.global_transform = Transform3D(Basis.from_scale(n.scale), (v.global_transform if v.is_inside_tree() else v.transform) * local)
 
 
 ## Night worlds: every active building's emissive windows burn brighter, a soft
@@ -127,7 +231,8 @@ func _add_night(views: Dictionary, night: Dictionary) -> void:
 		if night.is_empty() or v.constructing():
 			continue
 		var fs: Vector2 = v.footprint()
-		pools.append([v.position + Vector3(0, 1.2, 0), maxf(fs.x, fs.y) * 0.75 + 3.0])
+		var cool := v.def_id in DictUtil.get_arr(night, "cool_defs")
+		pools.append([v.position + Vector3(0, 1.2, 0), maxf(fs.x, fs.y) * 0.75 + 3.0, cool])
 		var top := v.visual_top()
 		if top >= min_h:
 			beacons.append(v.global_transform * Vector3(0, top + 0.15, 0) if v.is_inside_tree() else v.position + Vector3(0, top + 0.15, 0))
@@ -136,10 +241,11 @@ func _add_night(views: Dictionary, night: Dictionary) -> void:
 	var cap := DictUtil.get_int(night, "pool_max", 36)
 	var step := maxi(1, int(ceil(pools.size() / float(cap))))
 	var pc := Color(str(night.get("pool", "#ffc98a")))
+	var pcool := Color(str(night.get("pool_cool", "#8fd6ff")))
 	for i: int in range(0, pools.size(), step):
 		var ol := OmniLight3D.new()
 		ol.position = pools[i][0]
-		ol.light_color = pc
+		ol.light_color = pcool if bool(pools[i][2]) else pc
 		ol.light_energy = DictUtil.get_float(night, "pool_energy", 1.0)
 		ol.omni_range = float(pools[i][1])
 		ol.omni_attenuation = 1.6
@@ -199,7 +305,7 @@ void fragment() {
 ## Queue one placed item (world transform xf; base_y = its building's ground).
 func _emit(batches: Dictionary, ranges: Dictionary, lights: Array, it: Dictionary, xf: Transform3D, base_y: float, terrain: TerrainBuilder) -> void:
 	var kind := str(it["kind"])
-	if kind != "platform":
+	if kind != "platform" and kind != "roof":
 		# Stand on the real ground (the ring can leave the flattened district),
 		# or on the platform tiles where the prop's base reaches over them.
 		var p := Vector2(xf.origin.x, xf.origin.z)

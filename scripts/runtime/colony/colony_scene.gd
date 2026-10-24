@@ -307,6 +307,7 @@ func _relayout() -> void:
 	if _dressing == null:
 		_dressing = ColonyDressing.new()
 		_dressing.name = "Dressing"
+		_dressing.weather_world = str(planet.get("id", ""))
 		add_child(_dressing)
 	var lights: Dictionary = DictUtil.get_dict(BuildingDressing.doc(), "lights")
 	_open_crossings()
@@ -338,7 +339,7 @@ func _open_crossings() -> void:
 		var best: MeshInstance3D = null
 		var bd := INF
 		for c: Node in _corridors.get_children():
-			if c is MeshInstance3D and not c.has_meta("gate_cap"):
+			if c is MeshInstance3D and not c.has_meta("gate_cap") and not c.has_meta("joint"):
 				var w: Vector3 = (c as MeshInstance3D).transform * (c as MeshInstance3D).get_aabb().get_center()
 				if Vector2(w.x, w.z).distance_to(h) < bd:
 					bd = Vector2(w.x, w.z).distance_to(h)

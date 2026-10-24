@@ -10,6 +10,7 @@ extends RefCounted
 const MODULES := ["res://assets/Synty/PolygonSciFiWorlds/Prefabs/Buildings/SM_Bld_Pod_Corridor_Square_01.tscn",
 	"res://assets/Synty/PolygonSciFiWorlds/Prefabs/Buildings/SM_Bld_Pod_Corridor_Square_03.tscn",
 	"res://assets/Synty/PolygonSciFiWorlds/Prefabs/Buildings/SM_Bld_Pod_Corridor_Round_02.tscn"]
+const JOINT := "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Buildings/SM_Bld_Pod_Corridor_Round_Connector_01.tscn"
 const WIDTH := 2.4  # metres across, to sit with the scaled-down pods
 const NO_TUBE := ["solar_array", "battery", "geothermal_generator", "drone_hub"]  # power/pad pieces stand free
 
@@ -78,6 +79,20 @@ static func _tube(root: Node3D, a: Dictionary, b: Dictionary, terrain: TerrainBu
 	var stretch := length / (n * seg)
 	var yaw := atan2(dir.x, dir.y)
 	var basis := Basis(Vector3.UP, yaw) * Basis.from_scale(Vector3(s, s, s * stretch))
+	# A connector collar at every joint so a tube reads as built modules, not a pipe.
+	var joint: Array = GroundCover._mesh_of(JOINT) if ResourceLoader.exists(JOINT) else []
+	if not joint.is_empty():
+		var jb: AABB = joint[2]
+		var js := WIDTH * 1.08 / maxf(jb.size.x, 0.1)
+		var jbasis := Basis(Vector3.UP, yaw) * Basis.from_scale(Vector3(js, js, js))
+		for i: int in range(1, n):
+			var c := start + dir * (seg * stretch * i)
+			var y := terrain.height_at(c.x, c.y) - jb.position.y * js - 0.02
+			var mi := MeshInstance3D.new()
+			mi.mesh = joint[0]
+			mi.transform = Transform3D(jbasis, Vector3(c.x, y, c.y)) * Transform3D(Basis.IDENTITY, -Vector3(jb.get_center().x, 0, jb.get_center().z)) * (joint[1] as Transform3D)
+			mi.set_meta("joint", true)
+			root.add_child(mi)
 	for i: int in n:
 		var c := start + dir * (seg * stretch * (i + 0.5))
 		var y := terrain.height_at(c.x, c.y) - box.position.y * s
