@@ -30,6 +30,24 @@ static func name() -> String:
 	return "low" if low() else "high"
 
 
+## Mesh LOD switch threshold in pixels of geometric error for the root viewport
+## (engine default 1.0). Data: budget.json "mesh_lod_px" (high) and
+## "quality_low.mesh_lod_threshold". Dev override: `-- --mesh_lod_px=N`.
+static func mesh_lod_threshold() -> float:
+	for a: String in OS.get_cmdline_user_args():
+		if a.begins_with("--mesh_lod_px="):
+			return float(a.substr(14))
+	if not _high_lod_read:
+		_high_lod_read = true
+		var b: Variant = DictUtil.load_json("res://data/perf/budget.json")
+		_high_lod_px = DictUtil.get_float(b, "mesh_lod_px", 1.0) if b is Dictionary else 1.0
+	return value("mesh_lod_threshold", _high_lod_px)
+
+
+static var _high_lod_read := false
+static var _high_lod_px := 1.0
+
+
 ## A low-profile value, or `fallback` on the high profile.
 static func value(key: String, fallback: float) -> float:
 	if not low():

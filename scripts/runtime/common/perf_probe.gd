@@ -5,7 +5,8 @@ extends Node
 ## p50/p95/p99 plus draw calls, primitives, objects, nodes, memory and load time.
 ## Hardware-independent counts are checked against the budget everywhere; frame
 ## times only count on real hardware (not under software rendering).
-##   godot --path . -- --perf [--profile=desktop|web] [--case=colony_grown] [--frames=N] [--out=evidence/perf/perf_report.json]
+##   godot --path . -- --perf [--profile=desktop|web] [--case=colony_grown] [--frames=N] [--out=evidence/perf/perf_report.json] [--tris]
+## --tris adds a triangle breakdown per case (tools/perf/tri_probe.gd, D-054).
 ## Exit code 1 if a counted budget is exceeded. Dev-only text, not localized.
 
 var budget: Dictionary = {}
@@ -61,6 +62,10 @@ func _run() -> void:
 		if not only_case.is_empty() and str(c["id"]) != only_case:
 			continue
 		var r := await _measure(c)
+		if "--tris" in OS.get_cmdline_user_args() and ResourceLoader.exists("res://tools/perf/tri_probe.gd") and get_tree().current_scene:
+			print("TRIS case ", c["id"])
+			var probe: Variant = load("res://tools/perf/tri_probe.gd").new()
+			r["tris"] = await probe.run(get_tree().current_scene)
 		var fails: Array = []
 		for k: String in ["draw_calls", "primitives", "nodes"]:
 			if limits.has(k) and float(r[k + "_max"]) > float(limits[k]):
@@ -77,9 +82,9 @@ func _run() -> void:
 		if not fails.is_empty():
 			over.append("%s: %s" % [c["id"], ", ".join(fails)])
 		results.append(r)
-		print("PERF %-16s p50 %5.1f  p95 %5.1f  p99 %5.1f ms | draws %5d  prims %8d  objs %5d  nodes %5d | load %5d ms  %s" % [c["id"],
+		print("PERF %-16s p50 %5.1f  p95 %5.1f  p99 %5.1f ms | draws %5d  prims %8d  objs %5d  nodes %5d | load %5d ms (fixture %d)  %s" % [c["id"],
 			r["frame_p50"], r["frame_p95"], r["frame_p99"], r["draw_calls_max"], r["primitives_max"], r["objects_max"], r["nodes_max"],
-			r["load_ms"], "OK" if fails.is_empty() else "OVER: " + ", ".join(fails)])
+			r["load_ms"], r["fixture_ms"], "OK" if fails.is_empty() else "OVER: " + ", ".join(fails)])
 		print("PERF   census %s" % JSON.stringify(r["census"]))
 	var report := {"engine_version": Engine.get_version_info().get("string"), "renderer": renderer, "device": device,
 		"cpu": OS.get_processor_name(), "os": OS.get_name(), "resolution": get_viewport().get_visible_rect().size,
@@ -96,14 +101,23 @@ func _run() -> void:
 
 
 func _measure(c: Dictionary) -> Dictionary:
-	var t0 := Time.get_ticks_usec()
+	# load_ms = scene switch until the new scene is current (what a player waits
+	# for); fixture_ms = building the test state through domain commands (an
+	# era fixture simulates 20 years), reported apart (D-054).
+	var tf := Time.get_ticks_usec()
+	# The scene being replaced: two colony cases in a row share a scene file, and
+	# the old instance must not count as loaded (D-054: the second case's action
+	# used to reach the outgoing scene and its load time read ~40 ms).
+	var old := get_tree().current_scene
 	DebugFixtures.prepare(str(c.get("setup", "fresh")))
+	var fixture_ms := (Time.get_ticks_usec() - tf) / 1000.0
+	var t0 := Time.get_ticks_usec()
 	AppFlow.goto(str(c["scene"]), {})
 	var want := str(AppFlow.SCENES.get(str(c["scene"]), ""))
 	for i: int in 600:
 		await get_tree().process_frame
 		var sc := get_tree().current_scene
-		if sc and sc.scene_file_path == want:
+		if sc and sc != old and is_instance_valid(sc) and sc.scene_file_path == want:
 			break
 	var load_ms := (Time.get_ticks_usec() - t0) / 1000.0
 	if c.has("action"):
@@ -130,10 +144,10 @@ func _measure(c: Dictionary) -> Dictionary:
 	var census := {}
 	for t: String in ["MeshInstance3D", "MultiMeshInstance3D", "Label3D", "GPUParticles3D", "OmniLight3D", "SpotLight3D", "CollisionShape3D"]:
 		census[t] = get_tree().current_scene.find_children("*", t, true, false).size() if get_tree().current_scene else 0
-	return {"id": c["id"], "scene": c["scene"], "setup": c.get("setup", ""), "load_ms": int(load_ms), "census": census, "quality": Quality.name(),
+	return {"id": c["id"], "scene": c["scene"], "setup": c.get("setup", ""), "load_ms": int(load_ms), "fixture_ms": int(fixture_ms), "census": census, "quality": Quality.name(),
 		"frame_p50": snappedf(percentile(frames, 0.5), 0.01), "frame_p95": snappedf(percentile(frames, 0.95), 0.01),
 		"frame_p99": snappedf(percentile(frames, 0.99), 0.01), "frames": frames.size(),
 		"draw_calls_max": int(maxes["draw_calls"]), "primitives_max": int(maxes["primitives"]),
-		"objects_max": int(maxes["objects"]), "nodes_max": int(maxes["nodes"]),
+		"objects_max": int(maxes["objects"]), "nodes_max": int(maxes["nodes"]), "mesh_lod": MeshLod.stats.duplicate(),
 		"video_mem_mb": snappedf(Performance.get_monitor(Performance.RENDER_VIDEO_MEM_USED) / 1048576.0, 0.1),
 		"static_mem_peak_mb": snappedf(mem_peak / 1048576.0, 0.1)}

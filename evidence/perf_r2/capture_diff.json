@@ -1,0 +1,42 @@
+{
+  "era20_zoomout": {
+    "mean_abs_diff": 0.9,
+    "pct_pixels_diff_gt24": 1.66
+  },
+  "era20_living": {
+    "mean_abs_diff": 0.04,
+    "pct_pixels_diff_gt24": 0.07
+  },
+  "umbra_zoomout": {
+    "mean_abs_diff": 2.93,
+    "pct_pixels_diff_gt24": 4.93
+  },
+  "umbra_living": {
+    "mean_abs_diff": 0.2,
+    "pct_pixels_diff_gt24": 0.38
+  },
+  "pelagos_grown": {
+    "mean_abs_diff": 2.68,
+    "pct_pixels_diff_gt24": 4.43
+  },
+  "ferrum_era20_zoomout": {
+    "mean_abs_diff": 0.69,
+    "pct_pixels_diff_gt24": 1.12
+  },
+  "ferrum_hazard": {
+    "mean_abs_diff": 4.81,
+    "pct_pixels_diff_gt24": 9.0
+  },
+  "viridia_surface": {
+    "mean_abs_diff": 7.26,
+    "pct_pixels_diff_gt24": 6.04
+  },
+  "viridia_vista": {
+    "mean_abs_diff": 5.7,
+    "pct_pixels_diff_gt24": 9.9
+  },
+  "ferrum_vista": {
+    "mean_abs_diff": 2.25,
+    "pct_pixels_diff_gt24": 3.93
+  }
+}

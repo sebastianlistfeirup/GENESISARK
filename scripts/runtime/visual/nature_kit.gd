@@ -8,6 +8,13 @@ extends RefCounted
 ## trunk_tint, rock_tint, rock_top_tint, glow, glow_color, wind.
 ## Only LOD0 parts are kept and merged into one ArrayMesh (one draw per surface).
 ## Purchased files live only locally; missing files return an empty result.
+## D-054: the merged geometry with its LODs is built once per file and kept in
+## user://mesh_lods (derived local data); each look only re-skins a copy.
+## Small pieces (< SMALL_GEO_M) and triplanar rocks switch LOD by measured
+## silhouette error (MeshLod.with_geometric_lods) instead of the importer's normal-weighted
+## error, which kept a 7k-triangle succulent at full detail 190 m away. Rocks are
+## textured in world space and a small plant is a few pixels by then, so the
+## colours cannot pop; trees and large plants keep the importer's rule.
 
 const FOLIAGE := preload("res://art/shaders/synty_foliage.gdshader")
 const ROCK := preload("res://art/shaders/synty_triplanar_rock.gdshader")
@@ -16,6 +23,10 @@ static var _lists: Dictionary = {}   # pack dir -> {mesh_name: [ {slot, tex: {ke
 static var _tex_index: Dictionary = {}  # pack dir -> {file name: res path}
 static var _mats: Dictionary = {}
 static var _meshes: Dictionary = {}
+static var _bases: Dictionary = {}  # path -> [ArrayMesh without materials, slots per surface, AABB] or []
+
+const CACHE_VERSION := 1
+const SMALL_GEO_M := 2.0
 
 
 ## [ArrayMesh, Transform3D local, AABB] like GroundCover._mesh_of, or [] if missing.
@@ -24,34 +35,70 @@ static func mesh(path: String, look: Dictionary = {}) -> Array:
 	if _meshes.has(key):
 		return _meshes[key]
 	var out: Array = []
-	if ResourceLoader.exists(path) and load(path) is PackedScene:
+	var base := _base(path)
+	if not base.is_empty():
 		var pack := pack_root(path)
-		var list := _list(pack)
-		var inst: Node = (load(path) as PackedScene).instantiate()
-		var merged := ArrayMesh.new()
-		var box := AABB()
-		var first := true
-		for n: Node in inst.find_children("*", "MeshInstance3D", true, false):
-			var mi := n as MeshInstance3D
-			var nm := String(mi.name)
-			if mi.mesh == null or (nm.contains("_LOD") and not nm.ends_with("_LOD0")):
-				continue
-			var xf := _local(mi, inst)
-			var slots: Array = _slots_for(pack, nm)
-			for s: int in mi.mesh.get_surface_count():
-				var arrays := mi.mesh.surface_get_arrays(s)
-				_transform_arrays(arrays, xf)
-				var mat: Material = _material(pack, slots[s] if s < slots.size() else {}, look)
-				merged.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
-				merged.surface_set_material(merged.get_surface_count() - 1, mat)
-			var b: AABB = xf * mi.mesh.get_aabb()
-			box = b if first else box.merge(b)
-			first = false
-		inst.free()
-		if merged.get_surface_count() > 0:
-			out = [_with_lods(merged), Transform3D.IDENTITY, box]
+		var m := (base[0] as ArrayMesh).duplicate() as ArrayMesh  # keeps the LODs and the shadow bias
+		var slots: Array = base[1]
+		for s: int in m.get_surface_count():
+			m.surface_set_material(s, _material(pack, slots[s] if s < slots.size() else {}, look))
+		out = [m, Transform3D.IDENTITY, base[2]]
 	_meshes[key] = out
 	return out
+
+
+## The merged LOD0 geometry of a file with LODs and per-surface material slots,
+## from memory, the disk cache, or built (and cached) now.
+static func _base(path: String) -> Array:
+	if _bases.has(path):
+		return _bases[path]
+	var out: Array = []
+	if ResourceLoader.exists(path):
+		var ck := MeshLod.CACHE_DIR.path_join("nk_%s.res" % ("%s|%d|%d" % [path, FileAccess.get_modified_time(path), CACHE_VERSION]).md5_text())
+		var cached := ResourceLoader.load(ck, "ArrayMesh", ResourceLoader.CACHE_MODE_IGNORE) as ArrayMesh if FileAccess.file_exists(ck) else null
+		if cached != null and cached.has_meta("nk_slots"):
+			out = [cached, cached.get_meta("nk_slots"), cached.get_meta("nk_box")]
+		elif load(path) is PackedScene:
+			out = _build(path)
+			if not out.is_empty():
+				DirAccess.make_dir_recursive_absolute(MeshLod.CACHE_DIR)
+				ResourceSaver.save(out[0], ck)
+	_bases[path] = out
+	return out
+
+
+static func _build(path: String) -> Array:
+	var pack := pack_root(path)
+	var inst: Node = (load(path) as PackedScene).instantiate()
+	var merged := ArrayMesh.new()
+	var all_slots: Array = []
+	var box := AABB()
+	var first := true
+	for n: Node in inst.find_children("*", "MeshInstance3D", true, false):
+		var mi := n as MeshInstance3D
+		var nm := String(mi.name)
+		if mi.mesh == null or (nm.contains("_LOD") and not nm.ends_with("_LOD0")):
+			continue
+		var xf := _local(mi, inst)
+		var slots: Array = _slots_for(pack, nm)
+		for s: int in mi.mesh.get_surface_count():
+			var arrays := mi.mesh.surface_get_arrays(s)
+			_transform_arrays(arrays, xf)
+			merged.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
+			all_slots.append(slots[s] if s < slots.size() else {})
+		var b: AABB = xf * mi.mesh.get_aabb()
+		box = b if first else box.merge(b)
+		first = false
+	inst.free()
+	if merged.get_surface_count() == 0:
+		return []
+	var rock := true
+	for sl: Variant in all_slots:
+		rock = rock and DictUtil.get_dict(sl, "tex").has("_Triplanar_Texture_Side")
+	var out := _with_lods(merged, rock or maxf(box.size.x, maxf(box.size.y, box.size.z)) < SMALL_GEO_M)
+	out.set_meta("nk_slots", all_slots)
+	out.set_meta("nk_box", box)
+	return [out, all_slots, box]
 
 
 ## "res://assets/Synty/Nature/Alpine/FBX/Environment/x.fbx" -> "res://assets/Synty/Nature/Alpine".
@@ -62,13 +109,22 @@ static func pack_root(path: String) -> String:
 
 ## Automatic LODs (what the importer does for imported meshes; a merged
 ## runtime mesh would otherwise draw its full detail at every distance).
-static func _with_lods(m: ArrayMesh) -> ArrayMesh:
+## geometric: switch levels by measured silhouette error (see the header).
+static func _with_lods(m: ArrayMesh, geometric: bool) -> ArrayMesh:
 	var im := ImporterMesh.new()
 	for s: int in m.get_surface_count():
 		im.add_surface(Mesh.PRIMITIVE_TRIANGLES, m.surface_get_arrays(s), [], {}, m.surface_get_material(s))
 	im.generate_lods(25.0, 60.0, [])
 	var out := im.get_mesh()
-	return out if out != null and out.get_surface_count() > 0 else m
+	if out == null or out.get_surface_count() == 0:
+		return m
+	var diag := m.get_aabb().size.length()
+	if geometric and MeshLod.lod_count(out) > 0:
+		out = MeshLod.with_geometric_lods(im, diag)
+		out.set_meta("lod_rule", "geometric")
+	if MeshLod.tris_of(out) >= MeshLod.TWIN_MIN_TRIS and MeshLod.lod_count(out) > 0:
+		out.set_meta("shadow_lod_bias", 1.0 if geometric else MeshLod.geometric_bias(im, diag))  # D-054 shadow twins
+	return out
 
 
 static func _local(n: Node, root: Node) -> Transform3D:

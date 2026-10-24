@@ -156,8 +156,6 @@ func build() -> void:
 	for iz: int in n + 1:
 		for ix: int in n + 1:
 			heights[iz * (n + 1) + ix] = height_at(-half + ix * step, -half + iz * step)
-	var st := SurfaceTool.new()
-	st.begin(Mesh.PRIMITIVE_TRIANGLES)
 	var base := Color(str(palette.get("nature", DictUtil.get_str(map_def, "base_color", "#556b4a"))))
 	var rock := Color(DictUtil.get_str(map_def, "rock_color", "#6f6a60"))
 	var ground := base.darkened(0.25) if biome_id == "green" else (base.darkened(0.12) if biome_id == "ice" else base)
@@ -191,23 +189,60 @@ func build() -> void:
 				c = sand.lerp(sand.darkened(0.45), clampf((water_level - h) / 2.0, 0.0, 1.0))  # beaches and wet sea floor
 			cols[iz * (n + 1) + ix] = c
 	# Faceted (flat-shaded) triangles: one normal and one colour per face, the low-poly look of the packs.
+	# Written straight into packed arrays (same vertices, order and format as the
+	# SurfaceTool version, D-054: ~3x faster, the colony loads sooner).
+	var verts := PackedVector3Array()
+	var norms := PackedVector3Array()
+	var vcols := PackedColorArray()
+	verts.resize(n * n * 6)
+	norms.resize(n * n * 6)
+	vcols.resize(n * n * 6)
+	var wi := 0
 	for iz: int in n:
+		var z0 := -half + iz * step
+		var z1 := -half + (iz + 1) * step
 		for ix: int in n:
 			var i := iz * (n + 1) + ix
-			var quad := [i, i + 1, i + n + 1, i + 1, i + n + 2, i + n + 1]
-			for t: int in 2:
-				var ids := [quad[t * 3], quad[t * 3 + 1], quad[t * 3 + 2]]
-				var vs: Array[Vector3] = []
-				var fc := Color(0, 0, 0, 0)
-				for k: int in ids:
-					vs.append(Vector3(-half + (k % (n + 1)) * step, heights[k], -half + (k / (n + 1)) * step))
-					fc += cols[k] / 3.0
-				var fn := (vs[2] - vs[0]).cross(vs[1] - vs[0]).normalized()
-				st.set_color(Color(fc.r, fc.g, fc.b, 1.0))
-				st.set_normal(fn)
-				for v: Vector3 in vs:
-					st.add_vertex(v)
-	var mesh := st.commit()
+			var x0 := -half + ix * step
+			var x1 := -half + (ix + 1) * step
+			var a := Vector3(x0, heights[i], z0)
+			var b := Vector3(x1, heights[i + 1], z0)
+			var c := Vector3(x0, heights[i + n + 1], z1)
+			var d := Vector3(x1, heights[i + n + 2], z1)
+			# Triangle 1: i, i + 1, i + n + 1 -> a, b, c
+			var fc := cols[i] / 3.0 + cols[i + 1] / 3.0 + cols[i + n + 1] / 3.0
+			var fn := (c - a).cross(b - a).normalized()
+			var col := Color(fc.r, fc.g, fc.b, 1.0)
+			verts[wi] = a
+			verts[wi + 1] = b
+			verts[wi + 2] = c
+			norms[wi] = fn
+			norms[wi + 1] = fn
+			norms[wi + 2] = fn
+			vcols[wi] = col
+			vcols[wi + 1] = col
+			vcols[wi + 2] = col
+			# Triangle 2: i + 1, i + n + 2, i + n + 1 -> b, d, c
+			fc = cols[i + 1] / 3.0 + cols[i + n + 2] / 3.0 + cols[i + n + 1] / 3.0
+			fn = (c - b).cross(d - b).normalized()
+			col = Color(fc.r, fc.g, fc.b, 1.0)
+			verts[wi + 3] = b
+			verts[wi + 4] = d
+			verts[wi + 5] = c
+			norms[wi + 3] = fn
+			norms[wi + 4] = fn
+			norms[wi + 5] = fn
+			vcols[wi + 3] = col
+			vcols[wi + 4] = col
+			vcols[wi + 5] = col
+			wi += 6
+	var arrays := []
+	arrays.resize(Mesh.ARRAY_MAX)
+	arrays[Mesh.ARRAY_VERTEX] = verts
+	arrays[Mesh.ARRAY_NORMAL] = norms
+	arrays[Mesh.ARRAY_COLOR] = vcols
+	var mesh := ArrayMesh.new()
+	mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
 	var mi := MeshInstance3D.new()
 	mi.name = "TerrainMesh"
 	mi.mesh = mesh

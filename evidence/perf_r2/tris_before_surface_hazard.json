@@ -1,0 +1,1005 @@
+{
+  "cases": [
+    {
+      "census": {
+        "CollisionShape3D": 105,
+        "GPUParticles3D": 6,
+        "Label3D": 6,
+        "MeshInstance3D": 248,
+        "MultiMeshInstance3D": 27,
+        "OmniLight3D": 9,
+        "SpotLight3D": 0
+      },
+      "draw_calls_max": 491,
+      "frame_p50": 7.98,
+      "frame_p95": 9.2,
+      "frame_p99": 9.44,
+      "frames": 90,
+      "id": "surface_hazard",
+      "load_ms": 3782,
+      "nodes_max": 653,
+      "objects_max": 1039,
+      "over_budget": [
+        "primitives 3614727 > 3000000"
+      ],
+      "primitives_max": 3614727,
+      "quality": "high",
+      "scene": "surface",
+      "setup": "expedition:ferrum",
+      "static_mem_peak_mb": 135.5,
+      "tris": {
+        "ablation": [
+          {
+            "base": 3614729
+          },
+          {
+            "branch": "GroundCover",
+            "class": "Node3D",
+            "prims": 2923871,
+            "script": ""
+          },
+          {
+            "branch": "@DirectionalLight3D@18",
+            "class": "DirectionalLight3D",
+            "prims": 2876346,
+            "script": ""
+          },
+          {
+            "branch": "Terrain",
+            "class": "Node3D",
+            "prims": 340416,
+            "script": "terrain_builder.gd"
+          },
+          {
+            "branch": "PoiDressing",
+            "class": "Node3D",
+            "prims": 254474,
+            "script": ""
+          },
+          {
+            "branch": "PoiDressing/@Node3D@344",
+            "class": "Node3D",
+            "prims": 52758,
+            "script": ""
+          },
+          {
+            "branch": "PlanetSky",
+            "class": "Node3D",
+            "prims": 32542,
+            "script": ""
+          },
+          {
+            "branch": "@CharacterBody3D@379",
+            "class": "CharacterBody3D",
+            "prims": 30086,
+            "script": "captain.gd"
+          },
+          {
+            "branch": "@CharacterBody3D@379/VisualPivot",
+            "class": "Node3D",
+            "prims": 29722,
+            "script": ""
+          },
+          {
+            "branch": "PoiDressing/@Node3D@341",
+            "class": "Node3D",
+            "prims": 22478,
+            "script": ""
+          }
+        ],
+        "branches": [
+          {
+            "branch": "GroundCover/",
+            "tris": 969889
+          },
+          {
+            "branch": "Terrain/TerrainMesh",
+            "tris": 64800
+          },
+          {
+            "branch": "PlanetSky/space_planet_desert",
+            "tris": 16640
+          },
+          {
+            "branch": "PlanetSky/space_planet_ice",
+            "tris": 16640
+          },
+          {
+            "branch": "Terrain/FarTerrain",
+            "tris": 16416
+          },
+          {
+            "branch": "PlanetSky/SkyDebris",
+            "tris": 15326
+          },
+          {
+            "branch": "PoiDressing/ [SM_Env_Skeleton_Preset_01.tscn]",
+            "tris": 13144
+          },
+          {
+            "branch": "/HazardZoneVisual",
+            "tris": 11370
+          },
+          {
+            "branch": "PoiDressing/ [SM_Prop_SolarPanel_02.tscn]",
+            "tris": 9988
+          },
+          {
+            "branch": "PoiDressing/ [SM_Prop_Satellite_04.tscn]",
+            "tris": 7750
+          },
+          {
+            "branch": "PoiDressing/ [SM_Prop_SolarPanel_01.tscn]",
+            "tris": 6332
+          },
+          {
+            "branch": "PoiDressing/ [SM_Env_Skeleton_Preset_02.tscn]",
+            "tris": 5574
+          },
+          {
+            "branch": "/VisualPivot [Characters.fbx]",
+            "tris": 5368
+          },
+          {
+            "branch": "PoiDressing/ [SM_Prop_Drill_04.tscn]",
+            "tris": 5230
+          },
+          {
+            "branch": "/surface_lander [SM_Ship_Bomber_01.fbx]",
+            "tris": 3898
+          },
+          {
+            "branch": "PoiDressing/ [SM_Prop_Scav_Barrel_01.tscn]",
+            "tris": 3860
+          },
+          {
+            "branch": "PoiDressing/ [SM_Prop_BatteryPack_03.tscn]",
+            "tris": 3496
+          },
+          {
+            "branch": "PoiDressing/ [SM_Prop_PowerGenerator_02.tscn]",
+            "tris": 3464
+          },
+          {
+            "branch": "PoiDressing/ [SM_Prop_SolarPanel_03.tscn]",
+            "tris": 3310
+          },
+          {
+            "branch": "PoiDressing/ [SM_Prop_Crate_10.tscn]",
+            "tris": 3150
+          },
+          {
+            "branch": "PoiDressing/ [SM_Prop_Container_01.tscn]",
+            "tris": 2708
+          },
+          {
+            "branch": "PoiDressing/ [SM_Env_Artifact_AlienRuin_06.tscn]",
+            "tris": 2630
+          },
+          {
+            "branch": "PoiDressing/ [SM_Env_Artifact_AlienRuin_05.tscn]",
+            "tris": 2382
+          },
+          {
+            "branch": "PoiDressing/ [SM_Prop_Tether_Pole_01.tscn]",
+            "tris": 2376
+          },
+          {
+            "branch": "PoiDressing/ [SM_Bld_Pod_Pad_01.tscn]",
+            "tris": 2226
+          },
+          {
+            "branch": "PoiDressing/ [SM_Prop_Tether_Pole_Tall_01.tscn]",
+            "tris": 1980
+          },
+          {
+            "branch": "PoiDressing/ [SM_Prop_Crate_13.tscn]",
+            "tris": 1802
+          },
+          {
+            "branch": "PoiDressing/ [SM_Env_Artifact_Head_02.tscn]",
+            "tris": 1714
+          },
+          {
+            "branch": "PoiDressing/ [SM_Env_Artifact_Head_01.tscn]",
+            "tris": 1512
+          },
+          {
+            "branch": "PoiDressing/ [SM_Prop_Skeleton_Skull_01.tscn]",
+            "tris": 1502
+          }
+        ],
+        "lodless": {
+          "ArrayMesh(1 surf, 11316 tris)": 11316,
+          "ArrayMesh(1 surf, 11848 tris)": 11848,
+          "ArrayMesh(1 surf, 1192 tris)": 143040,
+          "ArrayMesh(1 surf, 13144 tris)": 13144,
+          "ArrayMesh(1 surf, 1315 tris)": 1315,
+          "ArrayMesh(1 surf, 13341 tris)": 13341,
+          "ArrayMesh(1 surf, 1356 tris)": 5424,
+          "ArrayMesh(1 surf, 138 tris)": 138,
+          "ArrayMesh(1 surf, 140 tris)": 7000,
+          "ArrayMesh(1 surf, 1416 tris)": 16992,
+          "ArrayMesh(1 surf, 1512 tris)": 1512,
+          "ArrayMesh(1 surf, 156 tris)": 1248,
+          "ArrayMesh(1 surf, 16416 tris)": 16416,
+          "ArrayMesh(1 surf, 198 tris)": 5940,
+          "ArrayMesh(1 surf, 20593 tris)": 41186,
+          "ArrayMesh(1 surf, 2122 tris)": 14854,
+          "ArrayMesh(1 surf, 2164 tris)": 15148,
+          "ArrayMesh(1 surf, 220 tris)": 220,
+          "ArrayMesh(1 surf, 230 tris)": 11730,
+          "ArrayMesh(1 surf, 296 tris)": 5624,
+          "ArrayMesh(1 surf, 410 tris)": 24600,
+          "ArrayMesh(1 surf, 436 tris)": 7848,
+          "ArrayMesh(1 surf, 474 tris)": 8058,
+          "ArrayMesh(1 surf, 594 tris)": 17820,
+          "ArrayMesh(1 surf, 64800 tris)": 64800,
+          "ArrayMesh(1 surf, 662 tris)": 1986,
+          "ArrayMesh(1 surf, 7038 tris)": 7038,
+          "ArrayMesh(1 surf, 7402 tris)": 185050,
+          "ArrayMesh(1 surf, 75 tris)": 75,
+          "CylinderMesh(1 surf, 120 tris)": 960,
+          "CylinderMesh(1 surf, 768 tris)": 768,
+          "CylinderMesh(1 surf, 96 tris)": 1536,
+          "SphereMesh(1 surf, 140 tris)": 1120,
+          "SphereMesh(1 surf, 16640 tris)": 33280,
+          "SphereMesh(1 surf, 80 tris)": 1120,
+          "Synty/CharactersSrc/Characters.fbx::ArrayMesh_tb2k0": 5368,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Pod_Pad_01.res": 2226,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Chr_Attach_Helmet_Space_01.res": 484,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Env_Artifact_AlienRuin_05.res": 1620,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Env_Artifact_AlienRuin_05_Cables_01.res": 762,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Env_Artifact_AlienRuin_06.res": 2630,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Env_Artifact_Head_01.res": 1512,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Env_Artifact_Head_02.res": 1714,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Env_Detail_Crater_04.res": 448,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Env_Ground_Greeble_01.res": 80,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Env_Ground_Greeble_01_Metal_01.res": 232,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Env_Ground_Greeble_03.res": 224,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Env_Rock_Spike_01.res": 444,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Env_Skeleton_Preset_01.res": 13144,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Env_Skeleton_Preset_02.res": 5574,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Antenna_02.res": 532,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Antenna_03.res": 368,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Antenna_04.res": 644,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Antenna_11.res": 296,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_BatteryPack_01.res": 1036,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_BatteryPack_03.res": 3496,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Cable_04.res": 1320,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Cable_05.res": 332,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Canopy_Preset_01.res": 624,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Container_01.res": 2140,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Container_01_Door_01.res": 564,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Crate_01.res": 308,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Crate_01_Lid_01.res": 156,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Crate_02.res": 672,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Crate_02_Lid_01.res": 176,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Crate_06.res": 476,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Crate_06_Lid_01.res": 248,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Crate_10.res": 2664,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Crate_10_Lid_01.res": 486,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Crate_13.res": 1370,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Crate_13_Lid_01.res": 216,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Crate_13_Lid_02.res": 216,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Drill_04.res": 2012,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Drill_04_Drill_Head_01.res": 286,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Drill_04_Extension_01.res": 296,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Drill_04_Leg_01.res": 760,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Drill_04_Leg_01_Foot_01.res": 306,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Drill_04_Leg_02.res": 760,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Drill_04_Leg_02_Foot_01.res": 306,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Drill_04_Motor_01.res": 504,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Fuel_Cell_01.res": 342,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Fuel_Cell_01_Lid.res": 80,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_PowerGenerator_02.res": 1268,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_PowerGenerator_02_Chamber_01.res": 2172,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Satellite_04.res": 164,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Satellite_04_Dish_01.res": 5304,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Satellite_04_Swivel_01.res": 372,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Satellite_04_Swivel_02.res": 1910,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Scanner_01.res": 96,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Scav_Barrel_01.res": 3860,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Sign_01.res": 775,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Skeleton_Skull_01.res": 1502,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Skeleton_Spine_02.res": 642,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Skeleton_Spine_Broken_01.res": 620,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_SolarPanel_01.res": 1618,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_SolarPanel_01_Panel_01.res": 1252,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_SolarPanel_01_Panel_02.res": 1252,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_SolarPanel_01_Panel_03.res": 1252,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_SolarPanel_01_Swivel_01.res": 958,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_SolarPanel_02.res": 1744,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_SolarPanel_02_Panel_01.res": 8132,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_SolarPanel_03.res": 280,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_SolarPanel_03_Panel_01.res": 3030,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Tether_Pole_01.res": 3168,
+          "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Tether_Pole_Tall_01.res": 1980,
+          "TorusMesh(1 surf, 576 tris)": 576
+        },
+        "meshes": [
+          {
+            "far_m": 0.0,
+            "instances": 25,
+            "lod0": 7402,
+            "lods": 0,
+            "mesh": "ArrayMesh(1 surf, 7402 tris)",
+            "near_m": 0.0,
+            "nodes": 1,
+            "shadow_inst": 25,
+            "tris": 185050
+          },
+          {
+            "far_m": 0.0,
+            "instances": 90,
+            "lod0": 1808,
+            "lods": 3,
+            "mesh": "ArrayMesh(1 surf, 1808 tris)",
+            "near_m": 0.0,
+            "nodes": 1,
+            "shadow_inst": 90,
+            "tris": 162720
+          },
+          {
+            "far_m": 0.0,
+            "instances": 120,
+            "lod0": 1192,
+            "lods": 0,
+            "mesh": "ArrayMesh(1 surf, 1192 tris)",
+            "near_m": 0.0,
+            "nodes": 1,
+            "shadow_inst": 120,
+            "tris": 143040
+          },
+          {
+            "far_m": 0.0,
+            "instances": 120,
+            "lod0": 900,
+            "lods": 1,
+            "mesh": "ArrayMesh(1 surf, 900 tris)",
+            "near_m": 0.0,
+            "nodes": 3,
+            "shadow_inst": 120,
+            "tris": 108000
+          },
+          {
+            "far_m": 0.0,
+            "instances": 1,
+            "lod0": 64800,
+            "lods": 0,
+            "mesh": "ArrayMesh(1 surf, 64800 tris)",
+            "near_m": 0.0,
+            "nodes": 1,
+            "shadow_inst": 1,
+            "tris": 64800
+          },
+          {
+            "far_m": 85.1,
+            "instances": 2,
+            "lod0": 20593,
+            "lods": 0,
+            "mesh": "ArrayMesh(1 surf, 20593 tris)",
+            "near_m": 38.8,
+            "nodes": 2,
+            "shadow_inst": 2,
+            "tris": 41186
+          },
+          {
+            "far_m": 0.0,
+            "instances": 260,
+            "lod0": 150,
+            "lods": 1,
+            "mesh": "ArrayMesh(1 surf, 150 tris)",
+            "near_m": 0.0,
+            "nodes": 1,
+            "shadow_inst": 260,
+            "tris": 39000
+          },
+          {
+            "far_m": 0.0,
+            "instances": 20,
+            "lod0": 1860,
+            "lods": 2,
+            "mesh": "ArrayMesh(1 surf, 1860 tris)",
+            "near_m": 0.0,
+            "nodes": 1,
+            "shadow_inst": 20,
+            "tris": 37200
+          },
+          {
+            "far_m": 0.0,
+            "instances": 200,
+            "lod0": 168,
+            "lods": 3,
+            "mesh": "ArrayMesh(1 surf, 168 tris)",
+            "near_m": 0.0,
+            "nodes": 1,
+            "shadow_inst": 200,
+            "tris": 33600
+          },
+          {
+            "far_m": 1317.2,
+            "instances": 2,
+            "lod0": 16640,
+            "lods": 0,
+            "mesh": "SphereMesh(1 surf, 16640 tris)",
+            "near_m": 826.2,
+            "nodes": 2,
+            "shadow_inst": 2,
+            "tris": 33280
+          },
+          {
+            "far_m": 0.0,
+            "instances": 60,
+            "lod0": 410,
+            "lods": 0,
+            "mesh": "ArrayMesh(1 surf, 410 tris)",
+            "near_m": 0.0,
+            "nodes": 1,
+            "shadow_inst": 60,
+            "tris": 24600
+          },
+          {
+            "far_m": 0.0,
+            "instances": 30,
+            "lod0": 594,
+            "lods": 0,
+            "mesh": "ArrayMesh(1 surf, 594 tris)",
+            "near_m": 0.0,
+            "nodes": 1,
+            "shadow_inst": 30,
+            "tris": 17820
+          },
+          {
+            "far_m": 7.7,
+            "instances": 12,
+            "lod0": 1416,
+            "lods": 0,
+            "mesh": "ArrayMesh(1 surf, 1416 tris)",
+            "near_m": 7.7,
+            "nodes": 1,
+            "shadow_inst": 12,
+            "tris": 16992
+          },
+          {
+            "far_m": 6.3,
+            "instances": 1,
+            "lod0": 16416,
+            "lods": 0,
+            "mesh": "ArrayMesh(1 surf, 16416 tris)",
+            "near_m": 6.3,
+            "nodes": 1,
+            "shadow_inst": 0,
+            "tris": 16416
+          },
+          {
+            "far_m": 0.0,
+            "instances": 7,
+            "lod0": 2164,
+            "lods": 0,
+            "mesh": "ArrayMesh(1 surf, 2164 tris)",
+            "near_m": 0.0,
+            "nodes": 1,
+            "shadow_inst": 7,
+            "tris": 15148
+          },
+          {
+            "far_m": 0.0,
+            "instances": 7,
+            "lod0": 2122,
+            "lods": 0,
+            "mesh": "ArrayMesh(1 surf, 2122 tris)",
+            "near_m": 0.0,
+            "nodes": 1,
+            "shadow_inst": 7,
+            "tris": 14854
+          },
+          {
+            "far_m": 60.0,
+            "instances": 1,
+            "lod0": 13341,
+            "lods": 0,
+            "mesh": "ArrayMesh(1 surf, 13341 tris)",
+            "near_m": 60.0,
+            "nodes": 1,
+            "shadow_inst": 1,
+            "tris": 13341
+          },
+          {
+            "far_m": 54.5,
+            "instances": 1,
+            "lod0": 13144,
+            "lods": 0,
+            "mesh": "ArrayMesh(1 surf, 13144 tris)",
+            "near_m": 54.5,
+            "nodes": 1,
+            "shadow_inst": 1,
+            "tris": 13144
+          },
+          {
+            "far_m": 25.9,
+            "instances": 1,
+            "lod0": 13144,
+            "lods": 0,
+            "mesh": "Synty/PolygonSciFiWorlds/Models/extracted/SM_Env_Skeleton_Preset_01.res",
+            "near_m": 25.9,
+            "nodes": 1,
+            "shadow_inst": 1,
+            "tris": 13144
+          },
+          {
+            "far_m": 31.9,
+            "instances": 1,
+            "lod0": 11848,
+            "lods": 0,
+            "mesh": "ArrayMesh(1 surf, 11848 tris)",
+            "near_m": 31.9,
+            "nodes": 1,
+            "shadow_inst": 1,
+            "tris": 11848
+          },
+          {
+            "far_m": 10.8,
+            "instances": 51,
+            "lod0": 230,
+            "lods": 0,
+            "mesh": "ArrayMesh(1 surf, 230 tris)",
+            "near_m": 0.0,
+            "nodes": 2,
+            "shadow_inst": 50,
+            "tris": 11730
+          },
+          {
+            "far_m": 0.0,
+            "instances": 13,
+            "lod0": 896,
+            "lods": 1,
+            "mesh": "ArrayMesh(1 surf, 896 tris)",
+            "near_m": 0.0,
+            "nodes": 1,
+            "shadow_inst": 13,
+            "tris": 11648
+          },
+          {
+            "far_m": 97.5,
+            "instances": 1,
+            "lod0": 11316,
+            "lods": 0,
+            "mesh": "ArrayMesh(1 surf, 11316 tris)",
+            "near_m": 97.5,
+            "nodes": 1,
+            "shadow_inst": 1,
+            "tris": 11316
+          },
+          {
+            "far_m": 57.5,
+            "instances": 2,
+            "lod0": 4344,
+            "lods": 2,
+            "mesh": "name:SM_Ship_Fighter_Heavy_01",
+            "near_m": 42.2,
+            "nodes": 2,
+            "shadow_inst": 2,
+            "tris": 8688
+          },
+          {
+            "far_m": 37.9,
+            "instances": 2,
+            "lod0": 4066,
+            "lods": 0,
+            "mesh": "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_SolarPanel_02_Panel_01.res",
+            "near_m": 29.0,
+            "nodes": 2,
+            "shadow_inst": 2,
+            "tris": 8132
+          },
+          {
+            "far_m": 37.8,
+            "instances": 17,
+            "lod0": 474,
+            "lods": 0,
+            "mesh": "ArrayMesh(1 surf, 474 tris)",
+            "near_m": 37.8,
+            "nodes": 1,
+            "shadow_inst": 0,
+            "tris": 8058
+          },
+          {
+            "far_m": 0.0,
+            "instances": 18,
+            "lod0": 436,
+            "lods": 0,
+            "mesh": "ArrayMesh(1 surf, 436 tris)",
+            "near_m": 0.0,
+            "nodes": 1,
+            "shadow_inst": 18,
+            "tris": 7848
+          },
+          {
+            "far_m": 9.8,
+            "instances": 1,
+            "lod0": 7038,
+            "lods": 0,
+            "mesh": "ArrayMesh(1 surf, 7038 tris)",
+            "near_m": 9.8,
+            "nodes": 1,
+            "shadow_inst": 0,
+            "tris": 7038
+          },
+          {
+            "far_m": 0.0,
+            "instances": 50,
+            "lod0": 140,
+            "lods": 0,
+            "mesh": "ArrayMesh(1 surf, 140 tris)",
+            "near_m": 0.0,
+            "nodes": 1,
+            "shadow_inst": 50,
+            "tris": 7000
+          },
+          {
+            "far_m": 0.0,
+            "instances": 30,
+            "lod0": 198,
+            "lods": 0,
+            "mesh": "ArrayMesh(1 surf, 198 tris)",
+            "near_m": 0.0,
+            "nodes": 1,
+            "shadow_inst": 0,
+            "tris": 5940
+          },
+          {
+            "far_m": 28.0,
+            "instances": 19,
+            "lod0": 296,
+            "lods": 0,
+            "mesh": "ArrayMesh(1 surf, 296 tris)",
+            "near_m": 28.0,
+            "nodes": 1,
+            "shadow_inst": 0,
+            "tris": 5624
+          },
+          {
+            "far_m": 56.2,
+            "instances": 1,
+            "lod0": 5584,
+            "lods": 2,
+            "mesh": "ArrayMesh(1 surf, 5584 tris)",
+            "near_m": 56.2,
+            "nodes": 1,
+            "shadow_inst": 1,
+            "tris": 5584
+          },
+          {
+            "far_m": 25.1,
+            "instances": 1,
+            "lod0": 5574,
+            "lods": 0,
+            "mesh": "Synty/PolygonSciFiWorlds/Models/extracted/SM_Env_Skeleton_Preset_02.res",
+            "near_m": 25.1,
+            "nodes": 1,
+            "shadow_inst": 1,
+            "tris": 5574
+          },
+          {
+            "far_m": 6.2,
+            "instances": 4,
+            "lod0": 1356,
+            "lods": 0,
+            "mesh": "ArrayMesh(1 surf, 1356 tris)",
+            "near_m": 6.2,
+            "nodes": 1,
+            "shadow_inst": 4,
+            "tris": 5424
+          },
+          {
+            "far_m": 5.7,
+            "instances": 1,
+            "lod0": 5368,
+            "lods": 0,
+            "mesh": "Synty/CharactersSrc/Characters.fbx::ArrayMesh_tb2k0",
+            "near_m": 5.7,
+            "nodes": 1,
+            "shadow_inst": 1,
+            "tris": 5368
+          },
+          {
+            "far_m": 29.1,
+            "instances": 1,
+            "lod0": 5304,
+            "lods": 0,
+            "mesh": "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Satellite_04_Dish_01.res",
+            "near_m": 29.1,
+            "nodes": 1,
+            "shadow_inst": 1,
+            "tris": 5304
+          },
+          {
+            "far_m": 65.0,
+            "instances": 1,
+            "lod0": 4874,
+            "lods": 1,
+            "mesh": "name:SM_Ship_Bomber_02",
+            "near_m": 65.0,
+            "nodes": 1,
+            "shadow_inst": 1,
+            "tris": 4874
+          },
+          {
+            "far_m": 76.7,
+            "instances": 2,
+            "lod0": 2016,
+            "lods": 1,
+            "mesh": "ArrayMesh(1 surf, 2016 tris)",
+            "near_m": 52.8,
+            "nodes": 2,
+            "shadow_inst": 2,
+            "tris": 4032
+          },
+          {
+            "far_m": 12.1,
+            "instances": 1,
+            "lod0": 3898,
+            "lods": 1,
+            "mesh": "Synty/SciFiSpace/FBX/SM_Ship_Bomber_01.fbx::ArrayMesh_e32jk",
+            "near_m": 12.1,
+            "nodes": 1,
+            "shadow_inst": 1,
+            "tris": 3898
+          },
+          {
+            "far_m": 31.3,
+            "instances": 5,
+            "lod0": 772,
+            "lods": 0,
+            "mesh": "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Scav_Barrel_01.res",
+            "near_m": 9.4,
+            "nodes": 5,
+            "shadow_inst": 5,
+            "tris": 3860
+          },
+          {
+            "far_m": 37.9,
+            "instances": 1,
+            "lod0": 3496,
+            "lods": 0,
+            "mesh": "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_BatteryPack_03.res",
+            "near_m": 37.9,
+            "nodes": 1,
+            "shadow_inst": 1,
+            "tris": 3496
+          },
+          {
+            "far_m": 48.9,
+            "instances": 8,
+            "lod0": 396,
+            "lods": 0,
+            "mesh": "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Tether_Pole_01.res",
+            "near_m": 18.2,
+            "nodes": 8,
+            "shadow_inst": 8,
+            "tris": 3168
+          },
+          {
+            "far_m": 5.4,
+            "instances": 1,
+            "lod0": 3030,
+            "lods": 0,
+            "mesh": "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_SolarPanel_03_Panel_01.res",
+            "near_m": 5.4,
+            "nodes": 1,
+            "shadow_inst": 1,
+            "tris": 3030
+          },
+          {
+            "far_m": 22.5,
+            "instances": 3,
+            "lod0": 888,
+            "lods": 0,
+            "mesh": "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Crate_10.res",
+            "near_m": 8.0,
+            "nodes": 3,
+            "shadow_inst": 3,
+            "tris": 2664
+          },
+          {
+            "far_m": 51.6,
+            "instances": 2,
+            "lod0": 1315,
+            "lods": 0,
+            "mesh": "Synty/PolygonSciFiWorlds/Models/extracted/SM_Env_Artifact_AlienRuin_06.res",
+            "near_m": 37.9,
+            "nodes": 2,
+            "shadow_inst": 2,
+            "tris": 2630
+          },
+          {
+            "far_m": 10.3,
+            "instances": 1,
+            "lod0": 2226,
+            "lods": 0,
+            "mesh": "Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Pod_Pad_01.res",
+            "near_m": 10.3,
+            "nodes": 1,
+            "shadow_inst": 1,
+            "tris": 2226
+          },
+          {
+            "far_m": 15.3,
+            "instances": 1,
+            "lod0": 2172,
+            "lods": 0,
+            "mesh": "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_PowerGenerator_02_Chamber_01.res",
+            "near_m": 15.3,
+            "nodes": 1,
+            "shadow_inst": 1,
+            "tris": 2172
+          },
+          {
+            "far_m": 23.9,
+            "instances": 1,
+            "lod0": 2140,
+            "lods": 0,
+            "mesh": "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Container_01.res",
+            "near_m": 23.9,
+            "nodes": 1,
+            "shadow_inst": 1,
+            "tris": 2140
+          },
+          {
+            "far_m": 48.7,
+            "instances": 1,
+            "lod0": 2012,
+            "lods": 0,
+            "mesh": "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Drill_04.res",
+            "near_m": 48.7,
+            "nodes": 1,
+            "shadow_inst": 1,
+            "tris": 2012
+          },
+          {
+            "far_m": 0.0,
+            "instances": 3,
+            "lod0": 662,
+            "lods": 0,
+            "mesh": "ArrayMesh(1 surf, 662 tris)",
+            "near_m": 0.0,
+            "nodes": 1,
+            "shadow_inst": 3,
+            "tris": 1986
+          },
+          {
+            "far_m": 33.7,
+            "instances": 5,
+            "lod0": 396,
+            "lods": 0,
+            "mesh": "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Tether_Pole_Tall_01.res",
+            "near_m": 9.3,
+            "nodes": 5,
+            "shadow_inst": 5,
+            "tris": 1980
+          },
+          {
+            "far_m": 31.8,
+            "instances": 1,
+            "lod0": 1910,
+            "lods": 0,
+            "mesh": "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Satellite_04_Swivel_02.res",
+            "near_m": 31.8,
+            "nodes": 1,
+            "shadow_inst": 1,
+            "tris": 1910
+          },
+          {
+            "far_m": 39.2,
+            "instances": 2,
+            "lod0": 872,
+            "lods": 0,
+            "mesh": "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_SolarPanel_02.res",
+            "near_m": 30.7,
+            "nodes": 2,
+            "shadow_inst": 2,
+            "tris": 1744
+          },
+          {
+            "far_m": 17.3,
+            "instances": 1,
+            "lod0": 1714,
+            "lods": 0,
+            "mesh": "Synty/PolygonSciFiWorlds/Models/extracted/SM_Env_Artifact_Head_02.res",
+            "near_m": 17.3,
+            "nodes": 1,
+            "shadow_inst": 1,
+            "tris": 1714
+          },
+          {
+            "far_m": 33.2,
+            "instances": 1,
+            "lod0": 1620,
+            "lods": 0,
+            "mesh": "Synty/PolygonSciFiWorlds/Models/extracted/SM_Env_Artifact_AlienRuin_05.res",
+            "near_m": 33.2,
+            "nodes": 1,
+            "shadow_inst": 1,
+            "tris": 1620
+          },
+          {
+            "far_m": 26.5,
+            "instances": 1,
+            "lod0": 1618,
+            "lods": 0,
+            "mesh": "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_SolarPanel_01.res",
+            "near_m": 26.5,
+            "nodes": 1,
+            "shadow_inst": 1,
+            "tris": 1618
+          },
+          {
+            "far_m": 33.2,
+            "instances": 16,
+            "lod0": 96,
+            "lods": 0,
+            "mesh": "CylinderMesh(1 surf, 96 tris)",
+            "near_m": 10.7,
+            "nodes": 16,
+            "shadow_inst": 16,
+            "tris": 1536
+          },
+          {
+            "far_m": 29.3,
+            "instances": 1,
+            "lod0": 1512,
+            "lods": 0,
+            "mesh": "Synty/PolygonSciFiWorlds/Models/extracted/SM_Env_Artifact_Head_01.res",
+            "near_m": 29.3,
+            "nodes": 1,
+            "shadow_inst": 1,
+            "tris": 1512
+          },
+          {
+            "far_m": 62.1,
+            "instances": 1,
+            "lod0": 1512,
+            "lods": 0,
+            "mesh": "ArrayMesh(1 surf, 1512 tris)",
+            "near_m": 62.1,
+            "nodes": 1,
+            "shadow_inst": 1,
+            "tris": 1512
+          },
+          {
+            "far_m": 10.1,
+            "instances": 1,
+            "lod0": 1502,
+            "lods": 0,
+            "mesh": "Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Skeleton_Skull_01.res",
+            "near_m": 10.1,
+            "nodes": 1,
+            "shadow_inst": 1,
+            "tris": 1502
+          }
+        ],
+        "static_total": 1221748
+      },
+      "video_mem_mb": 1244.3
+    }
+  ],
+  "cpu": "AMD Ryzen 9 9950X3D 16-Core Processor",
+  "device": "NVIDIA GeForce RTX 5090",
+  "engine_version": "4.7.2-stable (official)",
+  "frame_times_judged": true,
+  "limits": {
+    "draw_calls": 2500.0,
+    "load_ms": 4000.0,
+    "nodes": 12000.0,
+    "primitives": 3000000.0
+  },
+  "os": "Windows",
+  "over_budget": [
+    "surface_hazard: primitives 3614727 > 3000000"
+  ],
+  "profile": "desktop",
+  "renderer": "forward_plus",
+  "resolution": "(1920.0, 1080.0)",
+  "timestamp": "2026-10-24T17:32:47"
+}

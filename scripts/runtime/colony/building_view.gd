@@ -36,6 +36,7 @@ func setup(b: Dictionary, terrain_height: float) -> void:
 	_visual = VisualSlot.make(str(def.get("visual_slot", "building." + def_id)))
 	_visual.rebuilt.connect(func() -> void:
 		_body_for = ""
+		MeshLod.add_shadow_twins(_visual)  # D-054: heavy pieces cast through a geometric-LOD twin
 		_apply_glow()
 		if is_inside_tree():
 			_fit_body(_constructing))

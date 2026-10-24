@@ -84,6 +84,7 @@ func set_value(key: String, v: Variant) -> void:
 func apply() -> void:
 	Loc.set_language(str(values["language"]))
 	get_tree().root.content_scale_factor = float(values["ui_scale"])
+	get_tree().root.mesh_lod_threshold = Quality.mesh_lod_threshold()  # D-054
 	if not DisplayServer.get_name() == "headless":
 		var mode := DisplayServer.WINDOW_MODE_FULLSCREEN if values["fullscreen"] else DisplayServer.WINDOW_MODE_WINDOWED
 		if DisplayServer.window_get_mode() != mode and (values["fullscreen"] or DisplayServer.window_get_mode() == DisplayServer.WINDOW_MODE_FULLSCREEN):

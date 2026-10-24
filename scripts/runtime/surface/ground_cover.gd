@@ -293,7 +293,7 @@ static func _mesh_of(path: String) -> Array:
 			var mi := n as MeshInstance3D
 			if mi == null or mi.mesh == null or not mi.visible:
 				continue
-			var mesh := mi.mesh.duplicate() as Mesh
+			var mesh := MeshLod.lodded(mi.mesh).duplicate() as Mesh  # D-054: LODs for pack meshes without them
 			var atlas: Material = load("res://art/materials/scifi_space_atlas.tres") if path.contains("/SciFiSpace/") and ResourceLoader.exists("res://art/materials/scifi_space_atlas.tres") else null
 			if mesh is ArrayMesh:
 				for s: int in mesh.get_surface_count():
