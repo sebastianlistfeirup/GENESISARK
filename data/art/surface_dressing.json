@@ -24,6 +24,51 @@
     5
    ],
    "radius": 2.5
+  },
+  {
+   "_why": "camera corridor behind the captain spawn (rest view and landing-intro view)",
+   "anchor": "lander",
+   "offset": [
+    6.12,
+    6.12
+   ],
+   "radius": 2.2
+  },
+  {
+   "_why": "camera corridor behind the captain spawn (rest view and landing-intro view)",
+   "anchor": "lander",
+   "offset": [
+    7.82,
+    7.82
+   ],
+   "radius": 2.6
+  },
+  {
+   "_why": "camera corridor behind the captain spawn (rest view and landing-intro view)",
+   "anchor": "lander",
+   "offset": [
+    7.78,
+    6.24
+   ],
+   "radius": 2.2
+  },
+  {
+   "_why": "camera corridor behind the captain spawn (rest view and landing-intro view)",
+   "anchor": "lander",
+   "offset": [
+    6.88,
+    4.84
+   ],
+   "radius": 2.2
+  },
+  {
+   "_why": "camera corridor behind the captain spawn (rest view and landing-intro view)",
+   "anchor": "lander",
+   "offset": [
+    9.18,
+    5.52
+   ],
+   "radius": 2.6
   }
  ],
  "kits": {
