@@ -1,0 +1,232 @@
+{
+ "_note": "Chosen by eye from contact sheets (tools/synty/gallery.gd). Sources live in assets/Synty (local only, never committed); rebuild with tools/synty/build_godot_packs.sh.",
+ "choices": {
+  "building.habitat": {
+   "source": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Buildings/SM_Bld_Pod_Hab_Small_01.tscn",
+   "status": "approved"
+  },
+  "building.care_center": {
+   "source": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Buildings/SM_Bld_Pod_Research_04.tscn",
+   "status": "approved"
+  },
+  "building.clinic": {
+   "source": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Buildings/SM_Bld_Pod_Hub_01.tscn",
+   "status": "approved"
+  },
+  "building.school_hall": {
+   "source": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Buildings/SM_Bld_Pod_Research_03.tscn",
+   "status": "approved"
+  },
+  "building.greenhouse": {
+   "source": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Buildings/SM_Bld_Pod_Research_05.tscn",
+   "status": "approved"
+  },
+  "building.water_plant": {
+   "source": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Buildings/SM_Bld_Pod_Silo_02.tscn",
+   "status": "approved"
+  },
+  "building.mine": {
+   "source": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Buildings/SM_Bld_Scav_Refinery_01.tscn",
+   "status": "approved"
+  },
+  "building.workshop": {
+   "source": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Buildings/SM_Bld_Scav_Garage_01.tscn",
+   "status": "approved"
+  },
+  "building.drone_hub": {
+   "source": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Buildings/SM_Bld_Corp_LandingPad_02.tscn",
+   "status": "approved"
+  },
+  "building.geothermal_generator": {
+   "source": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Buildings/SM_Bld_Corp_Generator_01.tscn",
+   "status": "approved"
+  },
+  "building.battery": {
+   "source": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_PowerGenerator_02.tscn",
+   "status": "approved"
+  },
+  "building.solar_array": {
+   "source": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_SolarPanel_02.tscn",
+   "status": "approved"
+  },
+  "building.ark_core": {
+   "source": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Buildings/SM_Bld_Corp_Comms_01.tscn",
+   "status": "approved"
+  },
+  "building.module_filter": {
+   "source": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_PowerCellCharger_01.tscn",
+   "status": "approved",
+   "extra_scale": 3.0
+  },
+  "building.module_heater": {
+   "source": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_Fuel_Cell_01.tscn",
+   "status": "approved",
+   "extra_scale": 1.4
+  },
+  "building.construction_frame": {
+   "source": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Buildings/SM_Bld_Crate_Building_Frame_01.tscn",
+   "status": "skip"
+  },
+  "surface.rock_small": {
+   "source": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Rock_01.tscn",
+   "variants": [
+    "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Rock_01.tscn",
+    "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Rock_02.tscn",
+    "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Rock_03.tscn",
+    "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Rock_04.tscn",
+    "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Rock_05.tscn",
+    "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Rock_06.tscn"
+   ],
+   "status": "approved",
+   "extra_scale": 0.12
+  },
+  "surface.rock_large": {
+   "source": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Rock_Large_01.tscn",
+   "variants": [
+    "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Rock_Large_01.tscn",
+    "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Rock_Large_02.tscn",
+    "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Rock_Large_03.tscn",
+    "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Rock_Large_04.tscn"
+   ],
+   "status": "approved",
+   "extra_scale": 0.22
+  },
+  "surface.desert_rock": {
+   "source": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Rock_Spike_01.tscn",
+   "variants": [
+    "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Rock_Spike_01.tscn",
+    "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Rock_Spike_02.tscn",
+    "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Rock_Spike_03.tscn",
+    "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Rock_Spike_04.tscn"
+   ],
+   "status": "approved",
+   "extra_scale": 0.55
+  },
+  "surface.tree_green": {
+   "source": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Plant_Balloon_Tall_01.tscn",
+   "variants": [
+    "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Plant_Balloon_Tall_01.tscn",
+    "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Plant_Large_Spiral_01.tscn",
+    "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Plant_Mushroom_01.tscn",
+    "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Plant_Palm_01.tscn",
+    "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Plant_Tall_01.tscn",
+    "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Plant_Balloon_Group_01.tscn"
+   ],
+   "status": "approved"
+  },
+  "surface.plant_green": {
+   "source": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Plant_Fern_01.tscn",
+   "variants": [
+    "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Plant_Fern_01.tscn",
+    "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Plant_Shrub_01.tscn",
+    "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Plant_Coral_01.tscn",
+    "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Plant_Spikey_01.tscn",
+    "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Plant_Balloon_01.tscn",
+    "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Plant_Kelp_01.tscn"
+   ],
+   "status": "approved"
+  },
+  "surface.crystal_ice": {
+   "source": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Floating_Crystal_01.tscn",
+   "variants": [
+    "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Floating_Crystal_01.tscn",
+    "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Floating_Crystal_02.tscn"
+   ],
+   "status": "approved",
+   "extra_scale": 0.3
+  },
+  "surface.ice_spire": {
+   "source": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Detail_Spire_01.tscn",
+   "variants": [
+    "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Detail_Spire_01.tscn",
+    "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Detail_Spire_02.tscn"
+   ],
+   "status": "approved"
+  },
+  "surface.lander": {
+   "source": "res://assets/Synty/PolygonSciFiCity/Prefabs/Vehicles/SM_Veh_Armored_Truck_01_Hover.tscn",
+   "status": "approved"
+  },
+  "surface.relay_beacon": {
+   "source": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_Antenna_02.tscn",
+   "status": "approved"
+  },
+  "surface.sample_marker": {
+   "source": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_Tether_Pole_01.tscn",
+   "status": "approved"
+  },
+  "space.asteroid": {
+   "source": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Asteroid_01.tscn",
+   "variants": [
+    "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Asteroid_01.tscn",
+    "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Asteroid_02.tscn"
+   ],
+   "status": "approved"
+  },
+  "char.captain": {
+   "source": "res://assets/Synty/CharactersSrc/Characters.fbx",
+   "status": "approved",
+   "only_mesh": "SM_Chr_ScifiWorlds_SpaceSuit_Male_01",
+   "material": "res://assets/Synty/PolygonSciFiWorlds/Materials/Alts/PolygonScifiWorlds_01_A_mat.tres",
+   "rotation_y": 180
+  },
+  "char.citizen_adult": {
+   "source": "res://assets/Synty/CharactersSrc/Characters.fbx",
+   "variants": [
+    "res://assets/Synty/CharactersSrc/Characters.fbx",
+    "res://assets/Synty/CharactersSrc/Characters.fbx",
+    "res://assets/Synty/CharactersSrc/Characters.fbx",
+    "res://assets/Synty/CharactersSrc/Characters.fbx"
+   ],
+   "status": "approved",
+   "only_mesh": "SM_Chr_ScifiWorlds_Male_01",
+   "material": "res://assets/Synty/PolygonSciFiWorlds/Materials/Alts/PolygonScifiWorlds_01_A_mat.tres",
+   "rotation_y": 180
+  },
+  "char.robot_drone": {
+   "source": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_Drone_01.tscn",
+   "status": "approved",
+   "extra_scale": 0.6
+  },
+  "ship.crate": {
+   "source": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_Crate_01.tscn",
+   "variants": [
+    "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_Crate_01.tscn",
+    "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_Crate_02.tscn",
+    "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_Crate_03.tscn",
+    "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_Crate_04.tscn"
+   ],
+   "status": "approved"
+  },
+  "ship.terminal": {
+   "source": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_Monitor_03.tscn",
+   "status": "approved"
+  },
+  "ship.starmap_table": {
+   "source": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_Projection_Table_01.tscn",
+   "status": "approved"
+  }
+ },
+ "animations": {
+  "char.captain": {
+   "status": "approved",
+   "states": {
+    "idle": "res://assets/Synty/Animations/A_Idle_Standing_Masc.fbx",
+    "walk": "res://assets/Synty/Animations/A_Walk_F_Masc.fbx",
+    "run": "res://assets/Synty/Animations/A_Run_F_Masc.fbx",
+    "interact": "res://assets/Synty/Animations/A_POLY_IDL_Inspect_Hands_Masc.fbx",
+    "sample": "res://assets/Synty/Animations/A_Idle_Crouching_Masc.fbx",
+    "build": "res://assets/Synty/Animations/A_POLY_IDL_CheckWatch_Masc.fbx"
+   }
+  },
+  "char.citizen_adult": {
+   "status": "approved",
+   "states": {
+    "idle": "res://assets/Synty/Animations/A_POLY_IDL_Base_Masc.fbx",
+    "walk": "res://assets/Synty/Animations/A_Walk_F_Masc.fbx",
+    "run": "res://assets/Synty/Animations/A_Run_F_Masc.fbx",
+    "interact": "res://assets/Synty/Animations/A_POLY_IDL_HandsOnHips_Base_Loop_Masc.fbx"
+   }
+  }
+ }
+}

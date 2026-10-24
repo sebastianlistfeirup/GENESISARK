@@ -1,0 +1,1004 @@
+{
+  "animations": [
+    {
+      "clips": {
+        "build": {
+          "length_s": 2.63,
+          "removed_travel_m": 0.0,
+          "retargeted": true,
+          "source": "res://assets/Synty/Animations/A_POLY_IDL_CheckWatch_Masc.fbx"
+        },
+        "idle": {
+          "length_s": 1.77,
+          "removed_travel_m": 0.0,
+          "retargeted": true,
+          "source": "res://assets/Synty/Animations/A_Idle_Standing_Masc.fbx"
+        },
+        "interact": {
+          "length_s": 4.37,
+          "removed_travel_m": 0.0,
+          "retargeted": true,
+          "source": "res://assets/Synty/Animations/A_POLY_IDL_Inspect_Hands_Masc.fbx"
+        },
+        "run": {
+          "length_s": 0.7,
+          "removed_travel_m": 0.0,
+          "retargeted": true,
+          "source": "res://assets/Synty/Animations/A_Run_F_Masc.fbx"
+        },
+        "sample": {
+          "length_s": 1.77,
+          "removed_travel_m": 0.0,
+          "retargeted": true,
+          "source": "res://assets/Synty/Animations/A_Idle_Crouching_Masc.fbx"
+        },
+        "walk": {
+          "length_s": 1.03,
+          "removed_travel_m": 0.0,
+          "retargeted": true,
+          "source": "res://assets/Synty/Animations/A_Walk_F_Masc.fbx"
+        }
+      },
+      "errors": [],
+      "library": "res://art/animations/char.captain.res",
+      "ok": true,
+      "slot": "char.captain"
+    },
+    {
+      "clips": {
+        "idle": {
+          "length_s": 1.77,
+          "removed_travel_m": 0.0,
+          "retargeted": true,
+          "source": "res://assets/Synty/Animations/A_POLY_IDL_Base_Masc.fbx"
+        },
+        "interact": {
+          "length_s": 1.77,
+          "removed_travel_m": 0.0,
+          "retargeted": true,
+          "source": "res://assets/Synty/Animations/A_POLY_IDL_HandsOnHips_Base_Loop_Masc.fbx"
+        },
+        "run": {
+          "length_s": 0.7,
+          "removed_travel_m": 0.0,
+          "retargeted": true,
+          "source": "res://assets/Synty/Animations/A_Run_F_Masc.fbx"
+        },
+        "walk": {
+          "length_s": 1.03,
+          "removed_travel_m": 0.0,
+          "retargeted": true,
+          "source": "res://assets/Synty/Animations/A_Walk_F_Masc.fbx"
+        }
+      },
+      "errors": [],
+      "library": "res://art/animations/char.citizen_adult.res",
+      "ok": true,
+      "slot": "char.citizen_adult"
+    }
+  ],
+  "built": 32,
+  "failed": 0,
+  "slots": [
+    {
+      "atlas_materials": 2,
+      "fit": "footprint",
+      "notes": [
+        "no atlas texture staged for res:"
+      ],
+      "ok": true,
+      "proxy_m": [
+        9.7,
+        3.45,
+        7.7
+      ],
+      "reimport": false,
+      "rig": "",
+      "scale": 0.7042,
+      "scene": "res://art/prefabs/building.habitat.tscn",
+      "size_m": [
+        9.7,
+        5.09,
+        7.04
+      ],
+      "slot": "building.habitat",
+      "source": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Buildings/SM_Bld_Pod_Hab_Small_01.tscn",
+      "summary": "footprint x0.704 -> 9.7x5.1x7.0 m (proxy 9.7x3.5x7.7)",
+      "uses_atlas": false,
+      "warnings": []
+    },
+    {
+      "atlas_materials": 2,
+      "fit": "footprint",
+      "notes": [
+        "no atlas texture staged for res:"
+      ],
+      "ok": true,
+      "proxy_m": [
+        9.7,
+        5.2,
+        9.7
+      ],
+      "reimport": false,
+      "rig": "",
+      "scale": 0.9292,
+      "scene": "res://art/prefabs/building.care_center.tscn",
+      "size_m": [
+        9.7,
+        8.99,
+        9.29
+      ],
+      "slot": "building.care_center",
+      "source": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Buildings/SM_Bld_Pod_Research_04.tscn",
+      "summary": "footprint x0.929 -> 9.7x9.0x9.3 m (proxy 9.7x5.2x9.7)",
+      "uses_atlas": false,
+      "warnings": []
+    },
+    {
+      "atlas_materials": 2,
+      "fit": "footprint",
+      "notes": [
+        "no atlas texture staged for res:"
+      ],
+      "ok": true,
+      "proxy_m": [
+        7.6,
+        3.1,
+        5.71
+      ],
+      "reimport": false,
+      "rig": "",
+      "scale": 0.571,
+      "scene": "res://art/prefabs/building.clinic.tscn",
+      "size_m": [
+        5.71,
+        3.66,
+        5.71
+      ],
+      "slot": "building.clinic",
+      "source": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Buildings/SM_Bld_Pod_Hub_01.tscn",
+      "summary": "footprint x0.571 -> 5.7x3.7x5.7 m (proxy 7.6x3.1x5.7)",
+      "uses_atlas": false,
+      "warnings": []
+    },
+    {
+      "atlas_materials": 2,
+      "fit": "footprint",
+      "notes": [
+        "no atlas texture staged for res:"
+      ],
+      "ok": true,
+      "proxy_m": [
+        10.0,
+        7.0,
+        8.0
+      ],
+      "reimport": false,
+      "rig": "",
+      "scale": 0.4452,
+      "scene": "res://art/prefabs/building.school_hall.tscn",
+      "size_m": [
+        8.0,
+        2.84,
+        8.0
+      ],
+      "slot": "building.school_hall",
+      "source": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Buildings/SM_Bld_Pod_Research_03.tscn",
+      "summary": "footprint x0.445 -> 8.0x2.8x8.0 m (proxy 10.0x7.0x8.0)",
+      "uses_atlas": false,
+      "warnings": []
+    },
+    {
+      "atlas_materials": 3,
+      "fit": "footprint",
+      "notes": [
+        "no atlas texture staged for res:"
+      ],
+      "ok": true,
+      "proxy_m": [
+        7.6,
+        3.0,
+        5.6
+      ],
+      "reimport": false,
+      "rig": "",
+      "scale": 0.1449,
+      "scene": "res://art/prefabs/building.greenhouse.tscn",
+      "size_m": [
+        5.6,
+        3.33,
+        5.6
+      ],
+      "slot": "building.greenhouse",
+      "source": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Buildings/SM_Bld_Pod_Research_05.tscn",
+      "summary": "footprint x0.145 -> 5.6x3.3x5.6 m (proxy 7.6x3.0x5.6)",
+      "uses_atlas": false,
+      "warnings": []
+    },
+    {
+      "atlas_materials": 1,
+      "fit": "footprint",
+      "notes": [
+        "no atlas texture staged for res:"
+      ],
+      "ok": true,
+      "proxy_m": [
+        5.85,
+        4.0,
+        7.2
+      ],
+      "reimport": false,
+      "rig": "",
+      "scale": 0.2302,
+      "scene": "res://art/prefabs/building.water_plant.tscn",
+      "size_m": [
+        5.85,
+        2.67,
+        5.17
+      ],
+      "slot": "building.water_plant",
+      "source": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Buildings/SM_Bld_Pod_Silo_02.tscn",
+      "summary": "footprint x0.230 -> 5.9x2.7x5.2 m (proxy 5.9x4.0x7.2)",
+      "uses_atlas": false,
+      "warnings": []
+    },
+    {
+      "atlas_materials": 1,
+      "fit": "footprint",
+      "notes": [
+        "no atlas texture staged for res:"
+      ],
+      "ok": true,
+      "proxy_m": [
+        7.6,
+        6.0,
+        7.6
+      ],
+      "reimport": false,
+      "rig": "",
+      "scale": 0.3139,
+      "scene": "res://art/prefabs/building.mine.tscn",
+      "size_m": [
+        7.45,
+        5.14,
+        7.6
+      ],
+      "slot": "building.mine",
+      "source": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Buildings/SM_Bld_Scav_Refinery_01.tscn",
+      "summary": "footprint x0.314 -> 7.5x5.1x7.6 m (proxy 7.6x6.0x7.6)",
+      "uses_atlas": false,
+      "warnings": []
+    },
+    {
+      "atlas_materials": 1,
+      "fit": "footprint",
+      "notes": [
+        "no atlas texture staged for res:"
+      ],
+      "ok": true,
+      "proxy_m": [
+        7.6,
+        3.8,
+        5.75
+      ],
+      "reimport": false,
+      "rig": "",
+      "scale": 0.3387,
+      "scene": "res://art/prefabs/building.workshop.tscn",
+      "size_m": [
+        7.47,
+        3.46,
+        5.75
+      ],
+      "slot": "building.workshop",
+      "source": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Buildings/SM_Bld_Scav_Garage_01.tscn",
+      "summary": "footprint x0.339 -> 7.5x3.5x5.8 m (proxy 7.6x3.8x5.8)",
+      "uses_atlas": false,
+      "warnings": []
+    },
+    {
+      "atlas_materials": 1,
+      "fit": "footprint",
+      "notes": [
+        "no atlas texture staged for res:"
+      ],
+      "ok": true,
+      "proxy_m": [
+        5.6,
+        3.7,
+        5.6
+      ],
+      "reimport": false,
+      "rig": "",
+      "scale": 0.236,
+      "scene": "res://art/prefabs/building.drone_hub.tscn",
+      "size_m": [
+        4.43,
+        1.56,
+        5.6
+      ],
+      "slot": "building.drone_hub",
+      "source": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Buildings/SM_Bld_Corp_LandingPad_02.tscn",
+      "summary": "footprint x0.236 -> 4.4x1.6x5.6 m (proxy 5.6x3.7x5.6)",
+      "uses_atlas": false,
+      "warnings": []
+    },
+    {
+      "atlas_materials": 1,
+      "fit": "footprint",
+      "notes": [
+        "no atlas texture staged for res:"
+      ],
+      "ok": true,
+      "proxy_m": [
+        5.2,
+        6.5,
+        5.2
+      ],
+      "reimport": false,
+      "rig": "",
+      "scale": 0.4576,
+      "scene": "res://art/prefabs/building.geothermal_generator.tscn",
+      "size_m": [
+        5.2,
+        5.12,
+        2.36
+      ],
+      "slot": "building.geothermal_generator",
+      "source": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Buildings/SM_Bld_Corp_Generator_01.tscn",
+      "summary": "footprint x0.458 -> 5.2x5.1x2.4 m (proxy 5.2x6.5x5.2)",
+      "uses_atlas": false,
+      "warnings": []
+    },
+    {
+      "atlas_materials": 2,
+      "fit": "footprint",
+      "notes": [
+        "no atlas texture staged for res:"
+      ],
+      "ok": true,
+      "proxy_m": [
+        3.6,
+        2.38,
+        3.6
+      ],
+      "reimport": false,
+      "rig": "",
+      "scale": 0.4918,
+      "scene": "res://art/prefabs/building.battery.tscn",
+      "size_m": [
+        1.28,
+        1.39,
+        3.6
+      ],
+      "slot": "building.battery",
+      "source": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_PowerGenerator_02.tscn",
+      "summary": "footprint x0.492 -> 1.3x1.4x3.6 m (proxy 3.6x2.4x3.6)",
+      "uses_atlas": false,
+      "warnings": []
+    },
+    {
+      "atlas_materials": 1,
+      "fit": "footprint",
+      "notes": [
+        "no atlas texture staged for res:"
+      ],
+      "ok": true,
+      "proxy_m": [
+        5.6,
+        1.35,
+        5.6
+      ],
+      "reimport": false,
+      "rig": "",
+      "scale": 0.6666,
+      "scene": "res://art/prefabs/building.solar_array.tscn",
+      "size_m": [
+        4.87,
+        2.47,
+        5.6
+      ],
+      "slot": "building.solar_array",
+      "source": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_SolarPanel_02.tscn",
+      "summary": "footprint x0.667 -> 4.9x2.5x5.6 m (proxy 5.6x1.3x5.6)",
+      "uses_atlas": false,
+      "warnings": []
+    },
+    {
+      "atlas_materials": 2,
+      "fit": "footprint",
+      "notes": [
+        "no atlas texture staged for res:"
+      ],
+      "ok": true,
+      "proxy_m": [
+        14.2,
+        10.0,
+        10.2
+      ],
+      "reimport": false,
+      "rig": "",
+      "scale": 0.6188,
+      "scene": "res://art/prefabs/building.ark_core.tscn",
+      "size_m": [
+        12.35,
+        7.83,
+        10.2
+      ],
+      "slot": "building.ark_core",
+      "source": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Buildings/SM_Bld_Corp_Comms_01.tscn",
+      "summary": "footprint x0.619 -> 12.3x7.8x10.2 m (proxy 14.2x10.0x10.2)",
+      "uses_atlas": false,
+      "warnings": []
+    },
+    {
+      "atlas_materials": 1,
+      "fit": "natural",
+      "notes": [
+        "no atlas texture staged for res:"
+      ],
+      "ok": true,
+      "proxy_m": [
+        1.6,
+        1.6,
+        1.6
+      ],
+      "reimport": false,
+      "rig": "",
+      "scale": 3.0,
+      "scene": "res://art/prefabs/building.module_filter.tscn",
+      "size_m": [
+        1.22,
+        1.54,
+        1.25
+      ],
+      "slot": "building.module_filter",
+      "source": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_PowerCellCharger_01.tscn",
+      "summary": "natural x3.000 -> 1.2x1.5x1.2 m (proxy 1.6x1.6x1.6)",
+      "uses_atlas": false,
+      "warnings": []
+    },
+    {
+      "atlas_materials": 1,
+      "fit": "natural",
+      "notes": [
+        "no atlas texture staged for res:"
+      ],
+      "ok": true,
+      "proxy_m": [
+        1.6,
+        1.6,
+        1.6
+      ],
+      "reimport": false,
+      "rig": "",
+      "scale": 1.4,
+      "scene": "res://art/prefabs/building.module_heater.tscn",
+      "size_m": [
+        0.8,
+        1.54,
+        0.84
+      ],
+      "slot": "building.module_heater",
+      "source": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_Fuel_Cell_01.tscn",
+      "summary": "natural x1.400 -> 0.8x1.5x0.8 m (proxy 1.6x1.6x1.6)",
+      "uses_atlas": false,
+      "warnings": []
+    },
+    {
+      "atlas_materials": 1,
+      "fit": "natural",
+      "notes": [
+        "no atlas texture staged for res:"
+      ],
+      "ok": true,
+      "proxy_m": [
+        1.58,
+        1.6,
+        1.58
+      ],
+      "reimport": false,
+      "rig": "",
+      "scale": 0.12,
+      "scene": "res://art/prefabs/surface.rock_small.tscn",
+      "scenes": [
+        "res://art/prefabs/surface.rock_small.tscn",
+        "res://art/prefabs/surface.rock_small__2.tscn",
+        "res://art/prefabs/surface.rock_small__3.tscn",
+        "res://art/prefabs/surface.rock_small__4.tscn",
+        "res://art/prefabs/surface.rock_small__5.tscn",
+        "res://art/prefabs/surface.rock_small__6.tscn"
+      ],
+      "size_m": [
+        1.59,
+        2.07,
+        0.99
+      ],
+      "slot": "surface.rock_small",
+      "source": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Rock_01.tscn",
+      "summary": "natural x0.120 -> 1.6x2.1x1.0 m (proxy 1.6x1.6x1.6)  (+5 varianter)",
+      "uses_atlas": false,
+      "warnings": []
+    },
+    {
+      "atlas_materials": 1,
+      "fit": "natural",
+      "notes": [
+        "no atlas texture staged for res:"
+      ],
+      "ok": true,
+      "proxy_m": [
+        3.78,
+        2.4,
+        3.56
+      ],
+      "reimport": false,
+      "rig": "",
+      "scale": 0.22,
+      "scene": "res://art/prefabs/surface.rock_large.tscn",
+      "scenes": [
+        "res://art/prefabs/surface.rock_large.tscn",
+        "res://art/prefabs/surface.rock_large__2.tscn",
+        "res://art/prefabs/surface.rock_large__3.tscn",
+        "res://art/prefabs/surface.rock_large__4.tscn"
+      ],
+      "size_m": [
+        3.34,
+        5.14,
+        3.59
+      ],
+      "slot": "surface.rock_large",
+      "source": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Rock_Large_01.tscn",
+      "summary": "natural x0.220 -> 3.3x5.1x3.6 m (proxy 3.8x2.4x3.6)  ▲ height 214% of the proxy: check the scale or choose another model  (+3 varianter)",
+      "uses_atlas": false,
+      "warnings": [
+        "height 214% of the proxy: check the scale or choose another model"
+      ]
+    },
+    {
+      "atlas_materials": 1,
+      "fit": "natural",
+      "notes": [
+        "no atlas texture staged for res:"
+      ],
+      "ok": true,
+      "proxy_m": [
+        5.15,
+        6.7,
+        4.05
+      ],
+      "reimport": false,
+      "rig": "",
+      "scale": 0.55,
+      "scene": "res://art/prefabs/surface.desert_rock.tscn",
+      "scenes": [
+        "res://art/prefabs/surface.desert_rock.tscn",
+        "res://art/prefabs/surface.desert_rock__2.tscn",
+        "res://art/prefabs/surface.desert_rock__3.tscn",
+        "res://art/prefabs/surface.desert_rock__4.tscn"
+      ],
+      "size_m": [
+        3.78,
+        8.44,
+        4.11
+      ],
+      "slot": "surface.desert_rock",
+      "source": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Rock_Spike_01.tscn",
+      "summary": "natural x0.550 -> 3.8x8.4x4.1 m (proxy 5.2x6.7x4.0)  (+3 varianter)",
+      "uses_atlas": false,
+      "warnings": []
+    },
+    {
+      "atlas_materials": 1,
+      "fit": "natural",
+      "notes": [
+        "no atlas texture staged for res:"
+      ],
+      "ok": true,
+      "proxy_m": [
+        3.26,
+        5.9,
+        3.15
+      ],
+      "reimport": false,
+      "rig": "",
+      "scale": 1.0,
+      "scene": "res://art/prefabs/surface.tree_green.tscn",
+      "scenes": [
+        "res://art/prefabs/surface.tree_green.tscn",
+        "res://art/prefabs/surface.tree_green__2.tscn",
+        "res://art/prefabs/surface.tree_green__3.tscn",
+        "res://art/prefabs/surface.tree_green__4.tscn",
+        "res://art/prefabs/surface.tree_green__5.tscn",
+        "res://art/prefabs/surface.tree_green__6.tscn"
+      ],
+      "size_m": [
+        1.59,
+        4.54,
+        1.54
+      ],
+      "slot": "surface.tree_green",
+      "source": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Plant_Balloon_Tall_01.tscn",
+      "summary": "natural x1.000 -> 1.6x4.5x1.5 m (proxy 3.3x5.9x3.2)  (+5 varianter)",
+      "uses_atlas": false,
+      "warnings": []
+    },
+    {
+      "atlas_materials": 1,
+      "fit": "natural",
+      "notes": [
+        "no atlas texture staged for res:"
+      ],
+      "ok": true,
+      "proxy_m": [
+        1.19,
+        1.4,
+        1.18
+      ],
+      "reimport": false,
+      "rig": "",
+      "scale": 1.0,
+      "scene": "res://art/prefabs/surface.plant_green.tscn",
+      "scenes": [
+        "res://art/prefabs/surface.plant_green.tscn",
+        "res://art/prefabs/surface.plant_green__2.tscn",
+        "res://art/prefabs/surface.plant_green__3.tscn",
+        "res://art/prefabs/surface.plant_green__4.tscn",
+        "res://art/prefabs/surface.plant_green__5.tscn",
+        "res://art/prefabs/surface.plant_green__6.tscn"
+      ],
+      "size_m": [
+        2.6,
+        1.01,
+        2.99
+      ],
+      "slot": "surface.plant_green",
+      "source": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Plant_Fern_01.tscn",
+      "summary": "natural x1.000 -> 2.6x1.0x3.0 m (proxy 1.2x1.4x1.2)  (+5 varianter)",
+      "uses_atlas": false,
+      "warnings": []
+    },
+    {
+      "atlas_materials": 0,
+      "fit": "natural",
+      "notes": [],
+      "ok": true,
+      "proxy_m": [
+        1.0,
+        2.2,
+        1.0
+      ],
+      "reimport": false,
+      "rig": "",
+      "scale": 0.3,
+      "scene": "res://art/prefabs/surface.crystal_ice.tscn",
+      "scenes": [
+        "res://art/prefabs/surface.crystal_ice.tscn",
+        "res://art/prefabs/surface.crystal_ice__2.tscn"
+      ],
+      "size_m": [
+        0.99,
+        3.24,
+        1.13
+      ],
+      "slot": "surface.crystal_ice",
+      "source": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Floating_Crystal_01.tscn",
+      "summary": "natural x0.300 -> 1.0x3.2x1.1 m (proxy 1.0x2.2x1.0)  (+1 varianter)",
+      "uses_atlas": false,
+      "warnings": []
+    },
+    {
+      "atlas_materials": 1,
+      "fit": "natural",
+      "notes": [
+        "no atlas texture staged for res:"
+      ],
+      "ok": true,
+      "proxy_m": [
+        2.4,
+        6.0,
+        2.4
+      ],
+      "reimport": false,
+      "rig": "",
+      "scale": 1.0,
+      "scene": "res://art/prefabs/surface.ice_spire.tscn",
+      "scenes": [
+        "res://art/prefabs/surface.ice_spire.tscn",
+        "res://art/prefabs/surface.ice_spire__2.tscn"
+      ],
+      "size_m": [
+        2.56,
+        6.77,
+        2.85
+      ],
+      "slot": "surface.ice_spire",
+      "source": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Detail_Spire_01.tscn",
+      "summary": "natural x1.000 -> 2.6x6.8x2.9 m (proxy 2.4x6.0x2.4)  (+1 varianter)",
+      "uses_atlas": false,
+      "warnings": []
+    },
+    {
+      "atlas_materials": 1,
+      "fit": "natural",
+      "notes": [
+        "no atlas texture staged for res:"
+      ],
+      "ok": true,
+      "proxy_m": [
+        4.4,
+        3.15,
+        4.4
+      ],
+      "reimport": false,
+      "rig": "",
+      "scale": 1.0,
+      "scene": "res://art/prefabs/surface.lander.tscn",
+      "size_m": [
+        3.27,
+        2.47,
+        7.05
+      ],
+      "slot": "surface.lander",
+      "source": "res://assets/Synty/PolygonSciFiCity/Prefabs/Vehicles/SM_Veh_Armored_Truck_01_Hover.tscn",
+      "summary": "natural x1.000 -> 3.3x2.5x7.1 m (proxy 4.4x3.2x4.4)",
+      "uses_atlas": false,
+      "warnings": []
+    },
+    {
+      "atlas_materials": 1,
+      "fit": "natural",
+      "notes": [
+        "no atlas texture staged for res:"
+      ],
+      "ok": true,
+      "proxy_m": [
+        0.6,
+        3.5,
+        0.6
+      ],
+      "reimport": false,
+      "rig": "",
+      "scale": 1.0,
+      "scene": "res://art/prefabs/surface.relay_beacon.tscn",
+      "size_m": [
+        0.51,
+        5.96,
+        1.31
+      ],
+      "slot": "surface.relay_beacon",
+      "source": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_Antenna_02.tscn",
+      "summary": "natural x1.000 -> 0.5x6.0x1.3 m (proxy 0.6x3.5x0.6)",
+      "uses_atlas": false,
+      "warnings": []
+    },
+    {
+      "atlas_materials": 1,
+      "fit": "natural",
+      "notes": [
+        "no atlas texture staged for res:"
+      ],
+      "ok": true,
+      "proxy_m": [
+        0.49,
+        2.55,
+        0.49
+      ],
+      "reimport": false,
+      "rig": "",
+      "scale": 1.0,
+      "scene": "res://art/prefabs/surface.sample_marker.tscn",
+      "size_m": [
+        1.13,
+        2.55,
+        1.0
+      ],
+      "slot": "surface.sample_marker",
+      "source": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_Tether_Pole_01.tscn",
+      "summary": "natural x1.000 -> 1.1x2.6x1.0 m (proxy 0.5x2.5x0.5)",
+      "uses_atlas": false,
+      "warnings": []
+    },
+    {
+      "atlas_materials": 1,
+      "fit": "size",
+      "notes": [
+        "no atlas texture staged for res:"
+      ],
+      "ok": true,
+      "proxy_m": [
+        3.94,
+        4.0,
+        3.94
+      ],
+      "reimport": false,
+      "rig": "",
+      "scale": 0.2913,
+      "scene": "res://art/prefabs/space.asteroid.tscn",
+      "scenes": [
+        "res://art/prefabs/space.asteroid.tscn",
+        "res://art/prefabs/space.asteroid__2.tscn"
+      ],
+      "size_m": [
+        3.7,
+        3.63,
+        4.0
+      ],
+      "slot": "space.asteroid",
+      "source": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Asteroid_01.tscn",
+      "summary": "size x0.291 -> 3.7x3.6x4.0 m (proxy 3.9x4.0x3.9)  (+1 varianter)",
+      "uses_atlas": false,
+      "warnings": []
+    },
+    {
+      "atlas_materials": 0,
+      "fit": "natural",
+      "notes": [],
+      "ok": true,
+      "proxy_m": [
+        0.64,
+        1.75,
+        0.68
+      ],
+      "reimport": false,
+      "rig": "GeneralSkeleton",
+      "scale": 1.0,
+      "scene": "res://art/prefabs/char.captain.tscn",
+      "size_m": [
+        2.05,
+        1.79,
+        0.4
+      ],
+      "slot": "char.captain",
+      "source": "res://assets/Synty/CharactersSrc/Characters.fbx",
+      "summary": "natural x1.000 -> 2.0x1.8x0.4 m (proxy 0.6x1.7x0.7)",
+      "uses_atlas": false,
+      "warnings": []
+    },
+    {
+      "atlas_materials": 0,
+      "fit": "natural",
+      "notes": [],
+      "ok": true,
+      "proxy_m": [
+        0.56,
+        1.7,
+        0.56
+      ],
+      "reimport": false,
+      "rig": "GeneralSkeleton",
+      "scale": 1.0,
+      "scene": "res://art/prefabs/char.citizen_adult.tscn",
+      "scenes": [
+        "res://art/prefabs/char.citizen_adult.tscn",
+        "res://art/prefabs/char.citizen_adult__2.tscn",
+        "res://art/prefabs/char.citizen_adult__3.tscn",
+        "res://art/prefabs/char.citizen_adult__4.tscn"
+      ],
+      "size_m": [
+        2.05,
+        1.79,
+        0.31
+      ],
+      "slot": "char.citizen_adult",
+      "source": "res://assets/Synty/CharactersSrc/Characters.fbx",
+      "summary": "natural x1.000 -> 2.0x1.8x0.3 m (proxy 0.6x1.7x0.6)  (+3 varianter)",
+      "uses_atlas": false,
+      "warnings": []
+    },
+    {
+      "atlas_materials": 1,
+      "fit": "natural",
+      "notes": [
+        "no atlas texture staged for res:"
+      ],
+      "ok": true,
+      "proxy_m": [
+        0.9,
+        0.6,
+        0.59
+      ],
+      "reimport": false,
+      "rig": "",
+      "scale": 0.6,
+      "scene": "res://art/prefabs/char.robot_drone.tscn",
+      "size_m": [
+        0.71,
+        0.73,
+        0.75
+      ],
+      "slot": "char.robot_drone",
+      "source": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_Drone_01.tscn",
+      "summary": "natural x0.600 -> 0.7x0.7x0.7 m (proxy 0.9x0.6x0.6)",
+      "uses_atlas": false,
+      "warnings": []
+    },
+    {
+      "atlas_materials": 1,
+      "fit": "natural",
+      "notes": [
+        "no atlas texture staged for res:"
+      ],
+      "ok": true,
+      "proxy_m": [
+        1.0,
+        0.8,
+        1.0
+      ],
+      "reimport": false,
+      "rig": "",
+      "scale": 1.0,
+      "scene": "res://art/prefabs/ship.crate.tscn",
+      "scenes": [
+        "res://art/prefabs/ship.crate.tscn",
+        "res://art/prefabs/ship.crate__2.tscn",
+        "res://art/prefabs/ship.crate__3.tscn",
+        "res://art/prefabs/ship.crate__4.tscn"
+      ],
+      "size_m": [
+        1.12,
+        1.14,
+        1.12
+      ],
+      "slot": "ship.crate",
+      "source": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_Crate_01.tscn",
+      "summary": "natural x1.000 -> 1.1x1.1x1.1 m (proxy 1.0x0.8x1.0)  (+3 varianter)",
+      "uses_atlas": false,
+      "warnings": []
+    },
+    {
+      "atlas_materials": 2,
+      "fit": "natural",
+      "notes": [
+        "no atlas texture staged for res:"
+      ],
+      "ok": true,
+      "proxy_m": [
+        0.9,
+        1.57,
+        0.6
+      ],
+      "reimport": false,
+      "rig": "",
+      "scale": 1.0,
+      "scene": "res://art/prefabs/ship.terminal.tscn",
+      "size_m": [
+        1.11,
+        1.71,
+        0.9
+      ],
+      "slot": "ship.terminal",
+      "source": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_Monitor_03.tscn",
+      "summary": "natural x1.000 -> 1.1x1.7x0.9 m (proxy 0.9x1.6x0.6)",
+      "uses_atlas": false,
+      "warnings": []
+    },
+    {
+      "atlas_materials": 1,
+      "fit": "natural",
+      "notes": [
+        "no atlas texture staged for res:"
+      ],
+      "ok": true,
+      "proxy_m": [
+        2.8,
+        1.95,
+        2.8
+      ],
+      "reimport": false,
+      "rig": "",
+      "scale": 1.0,
+      "scene": "res://art/prefabs/ship.starmap_table.tscn",
+      "size_m": [
+        3.03,
+        1.18,
+        3.03
+      ],
+      "slot": "ship.starmap_table",
+      "source": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_Projection_Table_01.tscn",
+      "summary": "natural x1.000 -> 3.0x1.2x3.0 m (proxy 2.8x1.9x2.8)",
+      "uses_atlas": false,
+      "warnings": []
+    }
+  ]
+}

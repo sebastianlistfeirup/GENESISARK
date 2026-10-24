@@ -55,10 +55,19 @@ static func audit(slot_id: String) -> Dictionary:
 	var player := CharacterAnimator._find_player(vs)
 	var map: Variant = DictUtil.load_json("res://data/art/animation_map.json")
 	var cfg: Dictionary = DictUtil.get_dict(map if map is Dictionary else {}, slot_id)
+	var built := AnimationLibraryBuilder.load_mappings()
+	var lib_path := str(built.get(slot_id, ""))
+	var lib: AnimationLibrary = load(lib_path) if not lib_path.is_empty() and ResourceLoader.exists(lib_path) else null
+	if lib != null and vs.using_asset:
+		# Built library (tools/synty): clips are named after the states; idle/walk/run are required.
+		player = CharacterAnimator.attach(vs, lib)
 	var clips: Array = Array(player.get_animation_list()) if player else []
 	var missing: Array = []
 	for st: String in STATES:
-		if cfg.has(st):
+		if lib != null:
+			if st in ["idle", "walk", "run"] and not lib.has_animation(st):
+				missing.append(st)
+		elif cfg.has(st):
 			var clip := str(DictUtil.get_dict(cfg, st).get("clip", ""))
 			if player and not player.has_animation(clip):
 				missing.append("%s→%s" % [st, clip])
@@ -69,7 +78,7 @@ static func audit(slot_id: String) -> Dictionary:
 		issues.append("højde %.2f m uden for %.2f–%.2f (skala/enheder? sæt 'scale' i asset_slots.json)" % [h, lim[0], lim[1]])
 	if absf(box.position.y) > 0.05 and slot_id != "char.robot_drone":
 		issues.append("fødder står %.2f m fra y=0 (sæt 'offset' i asset_slots.json)" % box.position.y)
-	if vs.using_asset and player == null:
+	if vs.using_asset and player == null and not slot_id.begins_with("char.robot"):  # robots/drones are rigid props
 		issues.append("importeret model uden AnimationPlayer")
 	if not missing.is_empty():
 		issues.append("mangler clips: " + ", ".join(missing))

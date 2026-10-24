@@ -22,3 +22,8 @@ Thumbs.db
 *.tmp
 __pycache__/
 /.claude/worktrees/
+
+# Synty Godot-format packs extracted locally (public repo: never committed). Rebuild: tools/synty/unpack_godot.sh
+/assets/Synty/
+# Animation libraries are keyframes from purchased Synty clips: local only, rebuilt by tools/synty/build_godot_packs.sh
+/art/animations/*.res

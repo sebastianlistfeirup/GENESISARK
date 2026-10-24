@@ -1,0 +1,17 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://assets/Synty/PolygonSciFiWorlds/Prefabs/Buildings/SM_Bld_Pod_Research_04.tscn" id="1_3826b"]
+[ext_resource type="ArrayMesh" path="res://assets/Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Pod_Research_04.res" id="2_0i2xq"]
+[ext_resource type="Material" path="res://assets/Synty/PolygonSciFiWorlds/Materials/Alts/PolygonScifiWorlds_02_A_mat.tres" id="3_8wvdl"]
+
+[node name="building_care_center" type="Node3D" unique_id=517866630]
+metadata/synty_source = "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Buildings/SM_Bld_Pod_Research_04.tscn"
+metadata/synty_fit = "footprint"
+
+[node name="Model" type="Node3D" parent="." unique_id=1958970406]
+transform = Transform3D(0.92915267, 0, 0, 0, 0.92915267, 0, 0, 0, 0.92915267, 0, 1.2078984, -0.049999714)
+
+[node name="SM_Bld_Pod_Research_04" type="MeshInstance3D" parent="Model" unique_id=435920301 instance=ExtResource("1_3826b")]
+gi_mode = 2
+mesh = ExtResource("2_0i2xq")
+surface_material_override/0 = ExtResource("3_8wvdl")

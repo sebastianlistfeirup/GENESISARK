@@ -66,7 +66,7 @@ func _run() -> void:
 		for i: int in (4 if act == "alarm" else 40):
 			await get_tree().process_frame
 	var img := get_viewport().get_texture().get_image()
-	var abs_path := ProjectSettings.globalize_path("res://" + out_path) if not out_path.begins_with("/") else out_path
+	var abs_path := out_path if out_path.is_absolute_path() else ProjectSettings.globalize_path("res://" + out_path)
 	DirAccess.make_dir_recursive_absolute(abs_path.get_base_dir())
 	img.save_png(abs_path)
 	print("CAPTURED ", abs_path)

@@ -1,0 +1,7 @@
+{
+ "_note": "Written by the Synty builder: character slot -> AnimationLibrary (states as clip names).",
+ "libraries": {
+  "char.captain": "res://art/animations/char.captain.res",
+  "char.citizen_adult": "res://art/animations/char.citizen_adult.res"
+ }
+}

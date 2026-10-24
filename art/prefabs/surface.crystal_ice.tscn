@@ -1,0 +1,17 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Floating_Crystal_01.tscn" id="1_c7byo"]
+[ext_resource type="ArrayMesh" path="res://assets/Synty/PolygonSciFiWorlds/Models/extracted/SM_Env_Floating_Crystal_01.res" id="2_jksic"]
+[ext_resource type="Material" path="res://assets/Synty/PolygonSciFiWorlds/Materials/Alts/PolygonScifiWorlds_04_A_mat.tres" id="3_56jod"]
+
+[node name="surface_crystal_ice" type="Node3D" unique_id=281913014]
+metadata/synty_source = "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Floating_Crystal_01.tscn"
+metadata/synty_fit = "natural"
+
+[node name="Model" type="Node3D" parent="." unique_id=1586843933]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, -0.03336966, -0.11412123, 0.027260542)
+
+[node name="SM_Env_Floating_Crystal_01" type="MeshInstance3D" parent="Model" unique_id=603071327 instance=ExtResource("1_c7byo")]
+gi_mode = 2
+mesh = ExtResource("2_jksic")
+surface_material_override/0 = ExtResource("3_56jod")

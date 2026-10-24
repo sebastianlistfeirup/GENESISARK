@@ -1,0 +1,17 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Plant_Spikey_01.tscn" id="1_mik51"]
+[ext_resource type="ArrayMesh" path="res://assets/Synty/PolygonSciFiWorlds/Models/extracted/SM_Env_Plant_Spikey_01.res" id="2_qwqbl"]
+[ext_resource type="Material" path="res://assets/Synty/PolygonSciFiWorlds/Materials/Alts/PolygonScifiWorlds_01_A_mat.tres" id="3_ph04u"]
+
+[node name="surface_plant_green" type="Node3D" unique_id=1807812758]
+metadata/synty_source = "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Plant_Spikey_01.tscn"
+metadata/synty_fit = "natural"
+
+[node name="Model" type="Node3D" parent="." unique_id=1482148979]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.4840908, -0.20000002, -0.22116756)
+
+[node name="SM_Env_Plant_Spikey_01" type="MeshInstance3D" parent="Model" unique_id=1413152215 instance=ExtResource("1_mik51")]
+gi_mode = 2
+mesh = ExtResource("2_qwqbl")
+surface_material_override/0 = ExtResource("3_ph04u")

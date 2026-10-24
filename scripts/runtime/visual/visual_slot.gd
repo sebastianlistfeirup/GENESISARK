@@ -51,6 +51,12 @@ func rebuild() -> void:
 		if off.size() == 3:
 			inst.position = Vector3(float(off[0]), float(off[1]), float(off[2]))
 		inst.rotation_degrees.y = DictUtil.get_float(s, "rotation_y")
+		if inst.has_meta("only_mesh"):
+			# Multi-character source (one Synty FBX holds every body): show the chosen one.
+			var only := str(inst.get_meta("only_mesh"))
+			for mi: Node in inst.find_children("SM_Chr_*", "MeshInstance3D", true, false):
+				if not mi.name.begins_with("SM_Chr_Attach"):
+					(mi as MeshInstance3D).visible = String(mi.name) == only
 		add_child(inst)
 		using_asset = true
 	else:

@@ -71,10 +71,24 @@ func build_one(slot: String, c: Dictionary, prefab_dir: String, suffix: String =
 		return {"slot": slot, "ok": false, "error": "could not load " + model_path}
 	var root := Node3D.new()
 	root.name = slot.replace(".", "_")
-	var model: Node3D = ps.instantiate()
+	var model: Node3D
+	if model_path.ends_with(".tscn") or model_path.ends_with(".scn"):
+		# A ready-made Godot prefab (Synty's Godot packs): copy only what is drawn,
+		# never its physics bodies; collision belongs to the game's own nodes (bible p.23).
+		model = flatten_prefab(ps)
+	else:
+		model = ps.instantiate()
 	model.name = "Model"
 	root.add_child(model)
 	model.owner = root
+	_own_all(model, root)
+	var only := str(c.get("only_mesh", ""))
+	if not only.is_empty():
+		# Multi-character FBX: VisualSlot shows this body and hides the others when it
+		# instances the wrapper. (Overriding visibility here would make the wrapper
+		# embed a stale copy of the imported Skin and break skinning after re-import.)
+		root.set_meta("only_mesh", only)
+		apply_only_mesh(model, only)
 	model.rotation_degrees.y = float(c.get("rotation_y", 0.0))
 	var raw := AssetSlots.aabb_of(model, model.transform)
 	var proxy_node := AssetSlots.build_proxy(slot)
@@ -123,7 +137,7 @@ func build_one(slot: String, c: Dictionary, prefab_dir: String, suffix: String =
 	var mat_count := need.size()
 	var reimport := false
 	if not need.is_empty():
-		var atlas := _atlas_material(pack)
+		var atlas: Material = load(str(c["material"])) if c.has("material") else _atlas_material(pack)
 		if atlas:
 			reimport = _use_external(model_path, need.keys(), atlas.resource_path)
 		else:
@@ -152,6 +166,70 @@ func build_one(slot: String, c: Dictionary, prefab_dir: String, suffix: String =
 		"rig": rig.get("skeleton", ""), "notes": notes, "warnings": warn,
 		"summary": "%s x%.3f -> %.1fx%.1fx%.1f m (proxy %.1fx%.1fx%.1f)%s" % [mode, s, final.size.x, final.size.y, final.size.z,
 			proxy.size.x, proxy.size.y, proxy.size.z, ("  ▲ " + "; ".join(warn)) if not warn.is_empty() else ""]}
+
+
+## Shows one body of a multi-character model; attachments stay as they are.
+static func apply_only_mesh(n: Node, only: String) -> void:
+	for mi: Node in n.find_children("SM_Chr_*", "MeshInstance3D", true, false):
+		if not mi.name.begins_with("SM_Chr_Attach"):
+			(mi as MeshInstance3D).visible = String(mi.name) == only
+
+
+## Copies a prefab's visible geometry into a fresh tree: meshes (with their
+## material overrides), skeletons and bone attachments keep their transforms;
+## physics bodies, collision shapes, players and hidden meshes are dropped.
+static func flatten_prefab(ps: PackedScene) -> Node3D:
+	var src: Node = ps.instantiate()
+	var out := Node3D.new()
+	if src is MeshInstance3D:
+		# Many Synty prefabs are a MeshInstance3D at the root.
+		var self_copy: MeshInstance3D = src.duplicate(0)
+		for gc: Node in self_copy.get_children():
+			self_copy.remove_child(gc)
+			gc.free()
+		self_copy.transform = Transform3D.IDENTITY
+		self_copy.name = src.name
+		out.add_child(self_copy)
+		_copy_visual(src, self_copy)
+	else:
+		_copy_visual(src, out)
+	src.free()
+	return out
+
+
+static func _copy_visual(src: Node, dst: Node) -> void:
+	for ch: Node in src.get_children():
+		if ch is CollisionObject3D or ch is CollisionShape3D or ch is AnimationPlayer or ch is AnimationTree:
+			continue
+		if ch is MeshInstance3D and not (ch as MeshInstance3D).visible:
+			continue
+		var copy: Node
+		if ch is MeshInstance3D or ch is Skeleton3D or ch is BoneAttachment3D or ch is Decal or ch is GPUParticles3D or ch is Light3D:
+			copy = ch.duplicate(0)
+			for gc: Node in copy.get_children():
+				copy.remove_child(gc)
+				gc.free()
+		elif ch is Node3D:
+			copy = Node3D.new()
+			(copy as Node3D).transform = (ch as Node3D).transform
+		else:
+			continue
+		copy.name = ch.name
+		dst.add_child(copy)
+		_copy_visual(ch, copy)
+	# Drop empty helper nodes left after stripping bodies.
+	for ch: Node in dst.get_children():
+		if ch.get_class() == "Node3D" and ch.get_child_count() == 0:
+			dst.remove_child(ch)
+			ch.free()
+
+
+static func _own_all(n: Node, owner_node: Node) -> void:
+	for ch: Node in n.get_children():
+		if ch.owner == null or ch.owner == n and n.scene_file_path.is_empty():
+			ch.owner = owner_node
+		if ch.scene_file_path.is_empty():
+			_own_all(ch, owner_node)
 
 
 ## Shared atlas material for the pack, created once from its staged atlas texture.

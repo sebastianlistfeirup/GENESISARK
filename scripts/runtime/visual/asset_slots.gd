@@ -72,8 +72,21 @@ static func scene_for(id: String, variant: int = 0) -> PackedScene:
 	if p.is_empty():
 		return null
 	if not _scenes.has(p):
-		_scenes[p] = load(p) if ResourceLoader.exists(p) else null
+		_scenes[p] = load(p) if ResourceLoader.exists(p) and _sources_present(p) else null
 	return _scenes[p]
+
+
+## A wrapper points at purchased files that live only on the owner's machine
+## (assets/Synty, assets/imported; never in the public repository). On a fresh
+## clone they are missing: fall back to the proxy instead of loading a broken scene.
+static func _sources_present(wrapper: String) -> bool:
+	for dep: String in ResourceLoader.get_dependencies(wrapper):
+		var path := dep.get_slice("::", 2) if dep.contains("::") else dep
+		if path.is_empty():
+			path = dep.get_slice("::", 0)
+		if (path.begins_with("res://assets/Synty/") or path.begins_with("res://assets/imported/")) and not FileAccess.file_exists(path) and not ResourceLoader.exists(path):
+			return false
+	return true
 
 
 static func material(hex: String, emissive: float = 0.0, alpha: float = 1.0) -> StandardMaterial3D:
@@ -102,6 +115,8 @@ static func material(hex: String, emissive: float = 0.0, alpha: float = 1.0) -> 
 static func aabb_of(n: Node, xf: Transform3D) -> AABB:
 	var out := AABB()
 	var first := true
+	if n is Node3D and not (n as Node3D).visible:
+		return out  # hidden geometry (e.g. the unused bodies of a multi-character model) has no size
 	if n is VisualInstance3D:
 		out = xf * (n as VisualInstance3D).get_aabb()
 		first = false

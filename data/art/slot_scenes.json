@@ -1,0 +1,87 @@
+{
+ "_note": "Written by the Synty wrapper builder: slot -> wrapper scene. A non-empty \"scene\" in asset_slots.json wins over this file.",
+ "scenes": {
+  "building.ark_core": "res://art/prefabs/building.ark_core.tscn",
+  "building.battery": "res://art/prefabs/building.battery.tscn",
+  "building.care_center": "res://art/prefabs/building.care_center.tscn",
+  "building.clinic": "res://art/prefabs/building.clinic.tscn",
+  "building.drone_hub": "res://art/prefabs/building.drone_hub.tscn",
+  "building.geothermal_generator": "res://art/prefabs/building.geothermal_generator.tscn",
+  "building.greenhouse": "res://art/prefabs/building.greenhouse.tscn",
+  "building.habitat": "res://art/prefabs/building.habitat.tscn",
+  "building.mine": "res://art/prefabs/building.mine.tscn",
+  "building.module_filter": "res://art/prefabs/building.module_filter.tscn",
+  "building.module_heater": "res://art/prefabs/building.module_heater.tscn",
+  "building.school_hall": "res://art/prefabs/building.school_hall.tscn",
+  "building.solar_array": "res://art/prefabs/building.solar_array.tscn",
+  "building.water_plant": "res://art/prefabs/building.water_plant.tscn",
+  "building.workshop": "res://art/prefabs/building.workshop.tscn",
+  "char.captain": "res://art/prefabs/char.captain.tscn",
+  "char.citizen_adult": [
+   "res://art/prefabs/char.citizen_adult.tscn",
+   "res://art/prefabs/char.citizen_adult__2.tscn",
+   "res://art/prefabs/char.citizen_adult__3.tscn",
+   "res://art/prefabs/char.citizen_adult__4.tscn"
+  ],
+  "char.robot_drone": "res://art/prefabs/char.robot_drone.tscn",
+  "ship.crate": [
+   "res://art/prefabs/ship.crate.tscn",
+   "res://art/prefabs/ship.crate__2.tscn",
+   "res://art/prefabs/ship.crate__3.tscn",
+   "res://art/prefabs/ship.crate__4.tscn"
+  ],
+  "ship.starmap_table": "res://art/prefabs/ship.starmap_table.tscn",
+  "ship.terminal": "res://art/prefabs/ship.terminal.tscn",
+  "space.asteroid": [
+   "res://art/prefabs/space.asteroid.tscn",
+   "res://art/prefabs/space.asteroid__2.tscn"
+  ],
+  "surface.crystal_ice": [
+   "res://art/prefabs/surface.crystal_ice.tscn",
+   "res://art/prefabs/surface.crystal_ice__2.tscn"
+  ],
+  "surface.desert_rock": [
+   "res://art/prefabs/surface.desert_rock.tscn",
+   "res://art/prefabs/surface.desert_rock__2.tscn",
+   "res://art/prefabs/surface.desert_rock__3.tscn",
+   "res://art/prefabs/surface.desert_rock__4.tscn"
+  ],
+  "surface.ice_spire": [
+   "res://art/prefabs/surface.ice_spire.tscn",
+   "res://art/prefabs/surface.ice_spire__2.tscn"
+  ],
+  "surface.lander": "res://art/prefabs/surface.lander.tscn",
+  "surface.plant_green": [
+   "res://art/prefabs/surface.plant_green.tscn",
+   "res://art/prefabs/surface.plant_green__2.tscn",
+   "res://art/prefabs/surface.plant_green__3.tscn",
+   "res://art/prefabs/surface.plant_green__4.tscn",
+   "res://art/prefabs/surface.plant_green__5.tscn",
+   "res://art/prefabs/surface.plant_green__6.tscn"
+  ],
+  "surface.relay_beacon": "res://art/prefabs/surface.relay_beacon.tscn",
+  "surface.rock_large": [
+   "res://art/prefabs/surface.rock_large.tscn",
+   "res://art/prefabs/surface.rock_large__2.tscn",
+   "res://art/prefabs/surface.rock_large__3.tscn",
+   "res://art/prefabs/surface.rock_large__4.tscn"
+  ],
+  "surface.rock_small": [
+   "res://art/prefabs/surface.rock_small.tscn",
+   "res://art/prefabs/surface.rock_small__2.tscn",
+   "res://art/prefabs/surface.rock_small__3.tscn",
+   "res://art/prefabs/surface.rock_small__4.tscn",
+   "res://art/prefabs/surface.rock_small__5.tscn",
+   "res://art/prefabs/surface.rock_small__6.tscn"
+  ],
+  "surface.sample_marker": "res://art/prefabs/surface.sample_marker.tscn",
+  "surface.tree_green": [
+   "res://art/prefabs/surface.tree_green.tscn",
+   "res://art/prefabs/surface.tree_green__2.tscn",
+   "res://art/prefabs/surface.tree_green__3.tscn",
+   "res://art/prefabs/surface.tree_green__4.tscn",
+   "res://art/prefabs/surface.tree_green__5.tscn",
+   "res://art/prefabs/surface.tree_green__6.tscn"
+  ]
+ }
+}

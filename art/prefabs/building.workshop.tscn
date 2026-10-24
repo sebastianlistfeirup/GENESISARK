@@ -1,0 +1,17 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://assets/Synty/PolygonSciFiWorlds/Prefabs/Buildings/SM_Bld_Scav_Garage_01.tscn" id="1_oi31o"]
+[ext_resource type="ArrayMesh" path="res://assets/Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Scav_Garage_01.res" id="2_s4sst"]
+[ext_resource type="Material" path="res://assets/Synty/PolygonSciFiWorlds/Materials/Alts/PolygonScifiWorlds_01_A_mat.tres" id="3_015uk"]
+
+[node name="building_workshop" type="Node3D" unique_id=116119523]
+metadata/synty_source = "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Buildings/SM_Bld_Scav_Garage_01.tscn"
+metadata/synty_fit = "footprint"
+
+[node name="Model" type="Node3D" parent="." unique_id=151201855]
+transform = Transform3D(0.33866486, 0, 0, 0, 0.33866486, 0, 0, 0, 0.33866486, 0, 0, -0.07499981)
+
+[node name="SM_Bld_Scav_Garage_01" type="MeshInstance3D" parent="Model" unique_id=2094332440 instance=ExtResource("1_oi31o")]
+gi_mode = 2
+mesh = ExtResource("2_s4sst")
+surface_material_override/0 = ExtResource("3_015uk")

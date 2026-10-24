@@ -142,7 +142,7 @@ static func apply_retarget(model_path: String, rig_dir: String = "res://art/rigs
 	var path := str(root.get_path_to(skel))
 	if skel.name == "GeneralSkeleton" and skel.find_bone("Hips") >= 0:
 		root.free()  # already imported with a humanoid bone map
-		return {"ok": true, "changed": false, "skeleton": path, "missing_core": [], "bone_map": ""}
+		return {"ok": true, "changed": _ensure_silhouette(model_path), "skeleton": path, "missing_core": [], "bone_map": ""}
 	var r := build(skel)
 	root.free()
 	DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path(rig_dir))
@@ -157,8 +157,33 @@ static func apply_retarget(model_path: String, rig_dir: String = "res://art/rigs
 	var key := "PATH:" + path
 	var cur: Dictionary = nodes.get(key, {})
 	cur["retarget/bone_map"] = load(bm_path)
+	# Bring every rest pose to the profile's reference silhouette: Synty clips are
+	# authored on an A-pose rest, the characters on a T-pose rest. Without this the
+	# rotations transfer but the arm angle does not (arms stay out in a T).
+	cur["retarget/rest_fixer/fix_silhouette/enable"] = true
 	nodes[key] = cur
 	sub["nodes"] = nodes
 	cfg.set_value("params", "_subresources", sub)
 	cfg.save(model_path + ".import")
 	return {"ok": true, "changed": true, "skeleton": path, "missing_core": r["missing_core"], "bone_map": bm_path}
+
+
+## Turns on the silhouette fix for an already retargeted model. True if changed.
+static func _ensure_silhouette(model_path: String) -> bool:
+	var cfg := ConfigFile.new()
+	if cfg.load(model_path + ".import") != OK:
+		return false
+	var sub: Dictionary = cfg.get_value("params", "_subresources", {})
+	var nodes: Dictionary = sub.get("nodes", {})
+	var changed := false
+	for key: String in nodes.keys():
+		var cur: Dictionary = nodes[key]
+		if cur.has("retarget/bone_map") and not cur.get("retarget/rest_fixer/fix_silhouette/enable", false):
+			cur["retarget/rest_fixer/fix_silhouette/enable"] = true
+			nodes[key] = cur
+			changed = true
+	if changed:
+		sub["nodes"] = nodes
+		cfg.set_value("params", "_subresources", sub)
+		cfg.save(model_path + ".import")
+	return changed
