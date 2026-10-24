@@ -555,10 +555,10 @@
      "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Floating_Rocks_03.tscn",
      "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Asteroid_02.tscn"
     ],
-    "count": 70,
+    "count": 55,
     "scale": [
-     0.05,
-     0.2
+     0.25,
+     0.7
     ]
    },
    "bodies": [

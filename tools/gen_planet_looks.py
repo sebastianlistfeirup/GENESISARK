@@ -67,7 +67,7 @@ PLANETS = {
     },
     "ferrum": {
         "colony_style": "scav",  # rust desert: mesas, spikes, ore crystals, bones, sulphur
-        "sky": {"sun_size": 9, "sun_color": "#ffe2a0", "debris": {"meshes": [Wp("SM_Env_Floating_Rocks_01"), Wp("SM_Env_Floating_Rocks_02"), Wp("SM_Env_Floating_Rocks_03"), Wp("SM_Env_Asteroid_02")], "count": 70, "scale": [0.05, 0.2]}, "bodies": [{"biome": "desert", "tint": "#b0583a", "azimuth": 20, "elevation": 26, "size": 26, "ring": "#e8c49a"}, {"biome": "ice", "tint": "#bfc9d6", "azimuth": -55, "elevation": 40, "size": 6}], "motes": "fx.dust", "motes_scale": 2.0},
+        "sky": {"sun_size": 9, "sun_color": "#ffe2a0", "debris": {"meshes": [Wp("SM_Env_Floating_Rocks_01"), Wp("SM_Env_Floating_Rocks_02"), Wp("SM_Env_Floating_Rocks_03"), Wp("SM_Env_Asteroid_02")], "count": 55, "scale": [0.25, 0.7]}, "bodies": [{"biome": "desert", "tint": "#b0583a", "azimuth": 20, "elevation": 26, "size": 26, "ring": "#e8c49a"}, {"biome": "ice", "tint": "#bfc9d6", "azimuth": -55, "elevation": 40, "size": 6}], "motes": "fx.dust", "motes_scale": 2.0},
         "terrain": {"ground_tex": N + "Arid/Textures/Dirt_Texture_Red_01.png", "cliff_tex": N + "Jungle/Textures/Terrain/RockWall_Texture_01.png", "amp": 1.1, "terraces": 2.6, "ground": "#c8662f", "patch": "#a84f26", "cliff": "#6e3420"},
         "look": {"rock_tint": "#d47c48", "rock_top_tint": "#e09a5c", "sat": 0.8},
         "trees": [t([R("Environment/SM_Env_Rocks_Spikes_Large_01"), R("Environment/SM_Env_Rocks_Spikes_Large_02"),
