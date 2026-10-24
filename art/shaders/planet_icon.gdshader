@@ -17,7 +17,7 @@ float noise(vec3 x) { vec3 i = floor(x); vec3 f = fract(x); f = f * f * (3.0 - 2
 float fbm(vec3 p) { float v = 0.0; float a = 0.5; for (int i = 0; i < 5; i++) { v += a * noise(p); p *= 2.03; a *= 0.5; } return v; }
 
 void fragment() {
-	vec2 q = UV * 2.0 - 1.0;
+	vec2 q = (UV * 2.0 - 1.0) * 1.22;  // leave room for the atmosphere halo inside the rect
 	float r2 = dot(q, q);
 	if (r2 > 1.0) {
 		float halo = smoothstep(1.25, 1.0, sqrt(r2));
