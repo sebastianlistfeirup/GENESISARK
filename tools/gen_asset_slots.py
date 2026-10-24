@@ -96,7 +96,7 @@ S["space.planet_ice"] = [sph(60, (0, 0, 0), "#cfe3ea")]
 S["space.asteroid"] = [sph(2.0, (0, 0, 0), "#5e5850")]
 S["space.approach_ring"] = [{"shape": "torus", "inner": 5.5, "outer": 6.2, "pos": [0, 0, 0], "color": PETROL, "emissive": 1.5, "rot_x": 90}]
 # --- FX (proxy = small emissive hint; real FX via particle scenes)
-for fx, col in {"fx.spores": "#d6c447", "fx.dust": "#b08a5a", "fx.snow": "#ffffff", "fx.storm": "#6b7fd6", "fx.steam_vent": "#e6eef0",
+for fx, col in {"fx.spores": "#d6c447", "fx.dust": "#b08a5a", "fx.snow": "#ffffff", "fx.storm": "#6b7fd6", "fx.steam_vent": "#e6eef0", "fx.smoke_plume": "#4a4642", "fx.smoke_toxic": "#c8e04a",
                 "fx.thruster": "#7fd6ff", "fx.construction_sparks": AMBER, "fx.power_surge": "#7fd6d0", "fx.scan_pulse": PETROL, "fx.landing_dust": "#b08a5a"}.items():
     S[fx] = [{"shape": "particles", "color": col, "amount": 64, "extent": [6, 3, 6]}]
 # --- UI (2D slots: "texture" path when mapped; proxy is a flat color)

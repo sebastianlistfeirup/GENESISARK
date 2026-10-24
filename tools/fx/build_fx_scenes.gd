@@ -23,6 +23,7 @@ func _init() -> void:
 			_only = a.trim_prefix("--only=")
 	var builders := {
 		"spores": _spores, "dust": _dust, "snow": _snow, "storm": _storm, "steam_vent": _steam_vent,
+		"smoke_plume": _smoke_plume, "smoke_toxic": _smoke_toxic,
 		"thruster": _thruster, "construction_sparks": _construction_sparks, "power_surge": _power_surge,
 		"scan_pulse": _scan_pulse, "landing_dust": _landing_dust,
 	}
@@ -356,6 +357,48 @@ func _steam_vent() -> Node3D:
 		[1.0, Color(0.88, 0.9, 0.92, 0)]])
 	r.add_child(_loop(_emitter("Steam", 60, 4.0, pm, _quad(Vector2(3.2, 3.2), _mat(_puff(), false)), AABB(Vector3(-4, -1, -4), Vector3(10, 14, 8)))))
 	return r
+
+
+## Industry chimney: a tall, slowly leaning column of dark smoke (scavenger
+## worlds, key art #7). Lit material so it darkens at dusk instead of glowing.
+func _smoke_plume() -> Node3D:
+	var r := _root("smoke_plume")
+	var m := _mat(_puff(), false)
+	m.shading_mode = BaseMaterial3D.SHADING_MODE_PER_PIXEL
+	m.roughness = 1.0
+	r.add_child(_loop(_emitter("Smoke", 48, 7.0, _chimney_pm([[0.0, Color(0.22, 0.2, 0.19, 0)], [0.07, Color(0.24, 0.22, 0.2, 0.5)],
+		[0.45, Color(0.36, 0.34, 0.32, 0.3)], [1.0, Color(0.5, 0.48, 0.46, 0)]]), _quad(Vector2(5.5, 5.5), m), AABB(Vector3(-8, -1, -8), Vector3(26, 30, 18)))))
+	return r
+
+
+## Refinery stack: the same column in a sickly yellow-green (unshaded, so it
+## reads at night like the toxic plumes in the scavenger key art).
+func _smoke_toxic() -> Node3D:
+	var r := _root("smoke_toxic")
+	r.add_child(_loop(_emitter("Toxic", 48, 7.0, _chimney_pm([[0.0, Color(0.66, 0.76, 0.3, 0)], [0.1, Color(0.62, 0.72, 0.28, 0.3)],
+		[0.45, Color(0.6, 0.66, 0.38, 0.17)], [1.0, Color(0.58, 0.62, 0.45, 0)]]), _quad(Vector2(5.5, 5.5), _mat(_puff(), false)), AABB(Vector3(-8, -1, -8), Vector3(26, 30, 18)))))
+	return r
+
+
+func _chimney_pm(ramp: Array) -> ParticleProcessMaterial:
+	var pm := _pm()
+	_sphere(pm, 0.5, Vector3(0, 0.3, 0))
+	pm.direction = Vector3(0, 1, 0)
+	pm.spread = 12.0
+	pm.initial_velocity_min = 1.6
+	pm.initial_velocity_max = 2.8
+	pm.damping_min = 0.15
+	pm.damping_max = 0.35
+	pm.gravity = Vector3(0.7, 0.05, 0.3)
+	pm.angle_min = 0.0
+	pm.angle_max = 360.0
+	pm.angular_velocity_min = -10.0
+	pm.angular_velocity_max = 10.0
+	pm.scale_min = 0.6
+	pm.scale_max = 1.3
+	pm.scale_curve = _curve([[0.0, 0.2], [0.3, 0.6], [1.0, 1.0]])
+	pm.color_ramp = _ramp(ramp)
+	return pm
 
 
 # ------------------------------------------------------------------ ship & colony

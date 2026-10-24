@@ -2462,6 +2462,50 @@
     }
    ]
   },
+  "fx.smoke_plume": {
+   "scene": "res://art/fx/smoke_plume.tscn",
+   "scale": 1.0,
+   "offset": [
+    0,
+    0,
+    0
+   ],
+   "rotation_y": 0,
+   "proxy": [
+    {
+     "shape": "particles",
+     "color": "#4a4642",
+     "amount": 64,
+     "extent": [
+      6,
+      3,
+      6
+     ]
+    }
+   ]
+  },
+  "fx.smoke_toxic": {
+   "scene": "res://art/fx/smoke_toxic.tscn",
+   "scale": 1.0,
+   "offset": [
+    0,
+    0,
+    0
+   ],
+   "rotation_y": 0,
+   "proxy": [
+    {
+     "shape": "particles",
+     "color": "#c8e04a",
+     "amount": 64,
+     "extent": [
+      6,
+      3,
+      6
+     ]
+    }
+   ]
+  },
   "fx.thruster": {
    "scene": "res://art/fx/thruster.tscn",
    "scale": 1.0,
