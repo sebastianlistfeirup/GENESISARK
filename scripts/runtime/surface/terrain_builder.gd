@@ -19,6 +19,7 @@ var water_level := -100.0
 ## Planet terrain style from data/art/ground_cover.json (D-039): amp, dunes, ridges,
 ## terraces, water, ground/patch/cliff colours. Empty = the biome map as before.
 var style: Dictionary = {}
+var _far_args: Array = []  # far-ring material and colours, reused by build_horizon
 
 
 func setup(p_biome: String, p_site: Dictionary, p_palette: Dictionary, p_size: float = 200.0) -> void:
@@ -307,10 +308,11 @@ static func environment_for(p: Dictionary, biome: String) -> Array:
 ## Distant land out to the horizon (no collision, coarse facets): the playable map
 ## no longer ends in a cut edge against the sky. Same height function and colours,
 ## so the rim hills continue into the haze.
-func _build_far_ring(mat: Material, ground: Color, patch: Color, cliff: Color) -> void:
-	var far := 460.0
-	var fs := 10.0
+func _build_far_ring(mat: Material, ground: Color, patch: Color, cliff: Color, far: float = 460.0, fs: float = 10.0, skip_r: float = -1.0, curve_r: float = 0.0, ring_name: String = "FarTerrain") -> MeshInstance3D:
+	_far_args = [mat, ground, patch, cliff]
 	var inner := size_m * 0.5 - step * 2.0
+	if skip_r < 0.0:
+		skip_r = inner - fs
 	var n := int(far * 2.0 / fs)
 	var ocean := water_level > -50.0 and bool(style.get("ocean", false))
 	var st := SurfaceTool.new()
@@ -319,7 +321,7 @@ func _build_far_ring(mat: Material, ground: Color, patch: Color, cliff: Color) -
 		for ix: int in n:
 			var x0 := -far + ix * fs
 			var z0 := -far + iz * fs
-			if maxf(absf(x0 + fs * 0.5), absf(z0 + fs * 0.5)) < inner - fs:
+			if maxf(absf(x0 + fs * 0.5), absf(z0 + fs * 0.5)) < skip_r:
 				continue
 			var q := [Vector2(x0, z0), Vector2(x0 + fs, z0), Vector2(x0, z0 + fs), Vector2(x0 + fs, z0), Vector2(x0 + fs, z0 + fs), Vector2(x0, z0 + fs)]
 			for t: int in 2:
@@ -328,7 +330,11 @@ func _build_far_ring(mat: Material, ground: Color, patch: Color, cliff: Color) -
 					var v: Vector2 = q[t * 3 + k]
 					var h := height_at(v.x, v.y)
 					var dist := maxf(absf(v.x), absf(v.y))
-					h += smoothstep(size_m * 0.5, far, dist) * height_scale * 2.5 * (0.6 + 0.4 * detail.get_noise_2d(v.x * 0.05, v.y * 0.05))
+					h += smoothstep(size_m * 0.5, 460.0, dist) * height_scale * 2.5 * (0.6 + 0.4 * detail.get_noise_2d(v.x * 0.05, v.y * 0.05))
+					if dist > 460.0:  # descent horizon: broad hills far out, and the globe's curve
+						h += noise.get_noise_2d(v.x * 0.004, v.y * 0.004) * height_scale * 6.0 * smoothstep(460.0, 1400.0, dist)
+					if curve_r > 0.0:  # zero at the far ring's edge, so the seam stays closed
+						h -= maxf(0.0, v.x * v.x + v.y * v.y - 211600.0) / (2.0 * curve_r)
 					if ocean:
 						# Water world: open sea to the horizon, broken by scattered islands.
 						var isle := maxf(0.0, detail.get_noise_2d(v.x * 0.012 + 40.0, v.y * 0.012) - 0.18) * height_scale * 9.0
@@ -339,6 +345,9 @@ func _build_far_ring(mat: Material, ground: Color, patch: Color, cliff: Color) -
 				var fn := (vs[2] - vs[0]).cross(vs[1] - vs[0]).normalized()
 				var slope := 1.0 - fn.y
 				var c := ground.lerp(patch, clampf(detail.get_noise_2d(vs[0].x * 0.08, vs[0].z * 0.08) * 0.5 + 0.5, 0, 1)).lerp(cliff, smoothstep(0.1, 0.35, slope))
+				if maxf(absf(vs[0].x), absf(vs[0].z)) > size_m * 0.5:  # far land: broad regions of darker and lighter ground
+					var reg := noise.get_noise_2d(vs[0].x * 0.0022 + 90.0, vs[0].z * 0.0022)
+					c = c.lerp(c.darkened(0.38), smoothstep(-0.05, 0.4, reg)).lerp(patch.lightened(0.12), smoothstep(-0.2, -0.5, reg))
 				if biome_id == "ice" and vs[0].y > height_scale * 0.6:
 					c = c.lerp(Color.WHITE, 0.6)
 				st.set_color(c)
@@ -346,8 +355,18 @@ func _build_far_ring(mat: Material, ground: Color, patch: Color, cliff: Color) -
 				for v: Vector3 in vs:
 					st.add_vertex(v)
 	var ring := MeshInstance3D.new()
-	ring.name = "FarTerrain"
+	ring.name = ring_name
 	ring.mesh = st.commit()
 	ring.material_override = mat
 	ring.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 	add_child(ring)
+	return ring
+
+
+## Land from the far ring out to the horizon for the descent from orbit (coarse
+## facets, same colours and height field, dropping away with the globe's curve).
+## Removed again after touchdown.
+func build_horizon(outer: float, cell: float, curve_r: float) -> MeshInstance3D:
+	if _far_args.is_empty():
+		return null
+	return _build_far_ring(_far_args[0], _far_args[1], _far_args[2], _far_args[3], outer, cell, 460.0 - cell, curve_r, "HorizonTerrain")

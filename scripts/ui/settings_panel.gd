@@ -82,6 +82,7 @@ func _build() -> void:
 	_toggle("subtitles", Loc.t("Subtitles"))
 	_toggle("reduced_motion", Loc.t("Reduced motion (no fades/shaking)"))
 	_toggle("camera_shake", Loc.t("Camera shake"))
+	_toggle("realtime_descent", Loc.t("Real-time descent from orbit"))
 	_toggle("fullscreen", Loc.t("Fullscreen"))
 	_body.add_child(UiKit.title(Loc.t("Mouse")))
 	_slider("mouse_sensitivity", Loc.t("Sensitivity"), 0.05, 1.0, 0.05)

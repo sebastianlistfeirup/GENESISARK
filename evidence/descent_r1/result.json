@@ -1,0 +1,12 @@
+{
+  "task_id": "descent_r1",
+  "commit": "",
+  "engine_version": "4.7.1-stable",
+  "command": "godot --path . --resolution 1280x720 -- --capture=<png> --setup=expedition:<planet> --scene=surface --wait=40 --action=descent:<start altitude m>",
+  "exit_code": 0,
+  "expected": "Real-time descent from low orbit to the expedition site in one continuous shot (space sky + planet globe, entry heat and streaks, cloud deck whiteout swaps to the planet sky, horizon land with per-world forests/rocks, landing assist onto the pad, captain steps out; suit clock waits).",
+  "observed": "All six worlds captured at 650 m, Viridia at 5200/1500/500 m, Sere from orbit; full run from 400 m reaches touchdown and hands over to gameplay with suit at 99% (clock paused during descent). CHECK_FAST gate green.",
+  "fixture": "expedition:<planet>",
+  "status": "PASS",
+  "artifacts": ["evidence/descent_r1/descent_phases.jpg"]
+}

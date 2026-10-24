@@ -57,7 +57,7 @@ var using_pad := false
 var values := {
 	"master_volume": 0.9, "music_volume": 0.6, "sfx_volume": 0.9, "ambience_volume": 0.7, "ui_volume": 0.8,
 	"ui_scale": 1.0, "subtitle_size": 22, "subtitles": true, "reduced_motion": false, "mouse_sensitivity": 0.25,
-	"invert_y": false, "fullscreen": false, "camera_shake": true, "language": "en", "pad_look_speed": 2.4, "touch_look_sensitivity": 1.0,
+	"invert_y": false, "fullscreen": false, "camera_shake": true, "realtime_descent": true, "language": "en", "pad_look_speed": 2.4, "touch_look_sensitivity": 1.0,
 	"graphics_quality": "auto",
 }
 var remaps: Dictionary = {}  # action -> [key names]

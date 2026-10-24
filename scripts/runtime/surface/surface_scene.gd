@@ -27,6 +27,7 @@ var waypoints: WaypointLayer
 var _nav_said: Dictionary = {}  # what NAV has reported this expedition (UI memory, not saved)
 var _objective_key := ""
 var _nav_t := 0.0
+var _descending := false  # PlanetDescent in progress: no suit drain, no HUD
 var _poi_labels: Dictionary = {}  # key -> Label3D: far-off signage, handed to the waypoint layer up close
 
 
@@ -101,6 +102,7 @@ func _ready() -> void:
 	_maybe_landing_intro(ex)
 	waypoints = WaypointLayer.new()
 	add_child(waypoints)
+	waypoints.visible = not _descending
 	for key: String in _markers.keys():
 		var m: Interactable = _markers[key]
 		waypoints.add_place(m, WaypointLayer.nice(m.title), 3.6 if key != "lander" else 4.2)
@@ -330,7 +332,7 @@ func _physics_process(delta: float) -> void:
 	_update_waypoint(ex)
 	var hm := _hazard_mult()
 	AudioService.set_layer(hm[2], -4.0)
-	if not hud.any_modal_open():
+	if not hud.any_modal_open() and not _descending:
 		GameSession.sim.expedition.tick(gs, delta, hm[0])
 	var reserve := float(GameSession.content.bal("suit.reserve_warning", 30.0))
 	_suit_bar.value = ex.suit_energy
@@ -490,12 +492,22 @@ func debug_action(action: String) -> void:
 func _maybe_landing_intro(ex: ExpeditionState) -> void:
 	if AppFlow.test_mode or ex.elapsed_s > 0.5 or not ex.samples.is_empty():
 		return
-	if DebugCapture.requested() and str(AppFlow.params.get("action", "")) != "intro":
+	var action := str(AppFlow.params.get("action", ""))
+	if DebugCapture.requested() and action != "intro" and not action.begins_with("descent"):
 		return
 	var lander: Node3D = _markers.get("lander")
 	if lander == null or lander.get_child_count() == 0:
 		return
-	var body := lander.get_child(0) as Node3D  # the VisualSlot
+	var body: Node3D = null  # the lander's VisualSlot (child 0 is the interactable's own shape)
+	for c: Node in lander.get_children():
+		if c is VisualSlot:
+			body = c
+			break
+	if body == null:
+		return
+	if PlanetDescent.wanted() and action != "intro":
+		_start_descent(lander, body, float(action.get_slice(":", 1)) if action.contains(":") else PlanetDescent.START_ALT)
+		return
 	var dur := 0.6 if FxEffect.reduced_motion() else 3.4
 	var height := 38.0
 	body.position.y = height
@@ -520,3 +532,26 @@ func _maybe_landing_intro(ex: ExpeditionState) -> void:
 		captain.visible = true
 		captain.input_enabled = true
 		captain.camera_rig.pitch = CaptainCamera.REST_PITCH)
+
+
+## Real-time descent from orbit (PlanetDescent, D-049): the captain waits in the
+## lander, the suit clock and the HUD wait until touchdown.
+func _start_descent(lander: Node3D, body: Node3D, start_alt: float) -> void:
+	_descending = true
+	captain.visible = false
+	captain.input_enabled = false
+	hud.visible = false
+	var d := PlanetDescent.new()
+	d.name = "Descent"
+	add_child(d)
+	d.start(self, terrain, planet, lander.global_position, body, start_alt)
+	d.finished.connect(func() -> void:
+		_descending = false
+		hud.visible = true
+		if waypoints:
+			waypoints.visible = true
+		captain.visible = true
+		captain.input_enabled = true
+		captain.camera_rig.camera.current = true
+		captain.camera_rig.pitch = CaptainCamera.REST_PITCH
+		captain.camera_rig.snap())

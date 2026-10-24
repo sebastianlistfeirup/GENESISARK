@@ -951,6 +951,15 @@ the orbital terminal,kredsløbsterminalen
 the planet comparison,planetsammenligningen
 the star map,stjernekortet
 the workbench,værkstedsbænken
+"ALT %s · SPEED %d m/s · SITE %s · %s","HØJDE %s · FART %d m/s · LANDINGSSTED %s · %s"
+ATMOSPHERIC ENTRY,ATMOSFÆRISK INDTRÆDEN
+AUTOPILOT,AUTOPILOT
+DESCENT,NEDSTIGNING
+LANDING ASSIST,LANDINGSASSISTENT
+LOW ORBIT,LAVT KREDSLØB
+MANUAL,MANUEL
+TOUCHDOWN,NEDSÆTNING
+"[%s] autopilot / manual · [%s][%s] speed · [%s][%s] steer · [%s][%s] climb/dive · [%s] skip descent","[%s] autopilot / manuel · [%s][%s] fart · [%s][%s] styr · [%s][%s] stig/dyk · [%s] spring nedstigningen over"
  Optional risk sample., Valgfri risikoprøve.
 %s %d%%  (−%.2f/s · ~%d s left),%s %d%%  (−%.2f/s · ~%d s tilbage)
 ARK is guiding you back.,ARK fører dig tilbage.
@@ -1190,6 +1199,7 @@ Low,Lav
 Master,Samlet
 Music,Musik
 Press a key...,Tryk en tast...
+Real-time descent from orbit,Nedstigning fra kredsløb i realtid
 Reduced motion (no fades/shaking),Reduceret bevægelse (ingen fades/rystelser)
 Reset keys,Nulstil taster
 Sensitivity,Følsomhed

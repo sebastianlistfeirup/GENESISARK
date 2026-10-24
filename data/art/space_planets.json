@@ -9,8 +9,8 @@
  "planets": {
   "viridia": {
    "ocean": "#2a78d6",
-   "land": "#86cf3e",
-   "land2": "#dfe86a",
+   "land": "#4f9a32",
+   "land2": "#8fc94a",
    "band_a": "#9ad66a",
    "band_b": "#4f9a3a",
    "atmo": "#8fe8ff",

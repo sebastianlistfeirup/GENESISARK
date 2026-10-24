@@ -417,7 +417,12 @@
      86
     ]
    }
-  ]
+  ],
+  "descent": {
+   "canopy": "blob",
+   "color": "#2f5a22",
+   "density": 1.0
+  }
  },
  "pelagos": {
   "blocked_rock": "res://assets/Synty/Nature/Jungle/FBX/SM_Env_Rock_Pile_06.fbx",
@@ -722,7 +727,12 @@
      86
     ]
    }
-  ]
+  ],
+  "descent": {
+   "canopy": "blob",
+   "color": "#2c5232",
+   "density": 0.7
+  }
  },
  "ferrum": {
   "blocked_rock": "res://assets/Synty/Nature/Arid/FBX/Environment/SM_Env_Rock_05.fbx",
@@ -1086,7 +1096,11 @@
      86
     ]
    }
-  ]
+  ],
+  "descent": {
+   "canopy": "none",
+   "rocks": true
+  }
  },
  "sere": {
   "blocked_rock": "res://assets/Synty/Nature/Arid/FBX/Environment/SM_Env_Rock_08.fbx",
@@ -1378,7 +1392,11 @@
      84
     ]
    }
-  ]
+  ],
+  "descent": {
+   "canopy": "none",
+   "rocks": true
+  }
  },
  "nivalis": {
   "blocked_rock": "res://assets/Synty/Nature/Alpine/FBX/Environment/SM_Env_Rock_09.fbx",
@@ -1743,7 +1761,12 @@
      84
     ]
    }
-  ]
+  ],
+  "descent": {
+   "canopy": "cone",
+   "color": "#2c4a46",
+   "density": 0.8
+  }
  },
  "umbra": {
   "blocked_rock": "res://assets/Synty/Nature/Alpine/FBX/Environment/SM_Env_Rock_08.fbx",
@@ -2110,7 +2133,13 @@
      84
     ]
    }
-  ]
+  ],
+  "descent": {
+   "canopy": "cone",
+   "color": "#1c2232",
+   "density": 0.5,
+   "rocks": true
+  }
  },
  "green": {
   "cover": [

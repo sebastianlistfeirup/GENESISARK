@@ -183,6 +183,19 @@ ALIEN = {
                   c(P("Fester_04"), 30, (0.6, 0.9), 3, glow=[2.4, 0.22, 0.7]), c(P("Tall_01"), 60, (0.7, 1.1), 4, glow=[1.6, 0.5, 0.6])],
     },
 }
+# Seen from the air during the descent (PlanetDescent, D-049): what covers the
+# land out to the horizon. canopy = round crowns | cones = conifers/spires | none;
+# rocks = scatter the planet's big landmark rocks too.
+DESCENT = {
+    "viridia": {"canopy": "blob", "color": "#2f5a22", "density": 1.0},
+    "pelagos": {"canopy": "blob", "color": "#2c5232", "density": 0.7},
+    "nivalis": {"canopy": "cone", "color": "#2c4a46", "density": 0.8},
+    "umbra": {"canopy": "cone", "color": "#1c2232", "density": 0.5, "rocks": True},
+    "sere": {"canopy": "none", "rocks": True},
+    "ferrum": {"canopy": "none", "rocks": True},
+}
+for _pid, _d in DESCENT.items():
+    PLANETS[_pid]["descent"] = _d
 for _pid, _extra in ALIEN.items():
     for _k, _v in _extra.items():
         PLANETS[_pid].setdefault(_k, []).extend(_v)
