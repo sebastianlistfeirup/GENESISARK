@@ -1,0 +1,8 @@
+{
+ "_note": "In-memory fixes to Synty meshes (SyntyFixes, D-043); the shared pack is never written. hide_meshes: extracted mesh resources whose surfaces are cleared at boot, so every prefab using them draws nothing for that part.",
+ "_why_vending_signs": "SM_Prop_Vending_Machine_02 carries two ad-sign rings drawn with Glass_01_mat over the atlas: in the pack demo they spin, here they stand still and read as a red dotted FX ring floating over the machine (greenhouse prefab, colony street dressing).",
+ "hide_meshes": [
+  "res://assets/Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Vending_Machine_02_Sign_01.res",
+  "res://assets/Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Vending_Machine_02_Sign_02.res"
+ ]
+}

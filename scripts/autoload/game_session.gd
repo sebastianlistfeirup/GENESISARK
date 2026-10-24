@@ -24,6 +24,7 @@ var _unpowered: Dictionary = {}  # presentation only: building ids without power
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_PAUSABLE
+	SyntyFixes.apply()  # presentation: in-memory mesh fixes before any prefab loads (D-043)
 	content = ContentDB.load_default()
 	if not content.errors.is_empty():
 		for e: String in content.errors:
