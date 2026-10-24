@@ -68,9 +68,10 @@ func start(p_captain: Captain, p_hud: GameHud, spawn: Vector3, yaw: float) -> vo
 func _process(delta: float) -> void:
 	if _done:
 		return
-	if Input.is_action_just_pressed("skip_line") or Input.is_action_just_pressed("pause"):
-		_t = maxf(_t, _dur - 0.6)
+	if Input.is_action_just_pressed("skip_line"):
 		_open_now()
+		_finish()
+		return
 	_t += delta
 	var t := _t
 	if not _cam.current:
@@ -115,19 +116,34 @@ func _open_now() -> void:
 	var fwd := -_rest.basis.z
 	vapour.global_position = _lie.origin + fwd * 0.5 + Vector3(0, 0.1, 0)
 	vapour.emitting = true
-	get_tree().create_timer(6.0).timeout.connect(vapour.queue_free)
+	get_tree().create_timer(6.0).timeout.connect(func() -> void:
+		if is_instance_valid(vapour):
+			vapour.queue_free())
 	opened.emit()
+
+
+func _exit_tree() -> void:
+	_restore()  # scene changed mid-sequence: never leave the player hidden or frozen
+
+
+func _restore() -> void:
+	if _done:
+		return
+	_done = true
+	if is_instance_valid(captain):
+		captain.visible = true
+		captain.input_enabled = true
+		if captain.camera_rig:
+			captain.camera_rig.camera.current = true
+			captain.camera_rig.snap()
+	if is_instance_valid(hud):
+		hud.visible = true
 
 
 func _finish() -> void:
 	if _done:
 		return
-	_done = true
-	captain.visible = true
-	captain.input_enabled = true
-	hud.visible = true
-	captain.camera_rig.camera.current = true
-	captain.camera_rig.snap()
+	_restore()
 	var tw := create_tween()
 	tw.tween_property(_frost, "modulate:a", 0.0, 0.3)
 	tw.tween_callback(queue_free)

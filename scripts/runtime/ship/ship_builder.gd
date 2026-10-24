@@ -248,6 +248,7 @@ static func set_strip_glow(restored: bool) -> void:
 		m.set_shader_parameter("glow_energy", 2.4 if restored else 0.9)
 
 
+var _wave_tween: Tween
 var _flicker: Array = []  # emergency lamps that stutter while the ship is on emergency power
 var _flicker_t := 0.0
 
@@ -291,12 +292,17 @@ func power_wave(origin: Vector3, done: Callable = Callable()) -> void:
 		return
 	_flicker.clear()
 	set_process(false)
+	if _wave_tween and _wave_tween.is_valid():
+		_wave_tween.kill()
 	var tw := create_tween().set_parallel(true)
+	_wave_tween = tw
 	var last := 0.0
 	for i: int in lights.size():
 		var l: Dictionary = lights[i]
 		var ol: OmniLight3D = l["light"]
 		var lamp: Node3D = l["lamp"]
+		if not is_instance_valid(ol) or not is_instance_valid(lamp):
+			continue
 		var e0 := ol.light_energy
 		# Stutter, then everything drops out.
 		tw.tween_property(ol, "light_energy", e0 * 1.6, 0.06).set_delay(0.05 + (i % 3) * 0.04)
