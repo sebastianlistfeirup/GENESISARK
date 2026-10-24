@@ -57,10 +57,17 @@ func _ready() -> void:
 		var r := DictUtil.get_float(districts[dk], "radius") * 2.0
 		terrain.add_flat(Vector2(float(c[0]), float(c[1])), r)
 		avoid.append([Vector2(float(c[0]), float(c[1])), r + 6.0])
+	terrain.apply_planet_style(gs.colony.planet_id)
+	var reach: Array = []
+	for a: Array in avoid:
+		reach.append(a[0])
+		for i: int in 8:
+			reach.append(a[0] + Vector2.from_angle(TAU * i / 8.0) * float(a[1]))
+	terrain.set_water_below(reach)
 	add_child(terrain)
 	terrain.build()
-	terrain.scatter(hash(gs.colony.site_id) + 1, 60, avoid)
-	add_child(GroundCover.build(terrain, gs.colony.biome_id, hash(gs.colony.site_id) + 3, avoid, 220.0))
+	terrain.scatter(hash(gs.colony.site_id) + 1, 60 if GroundCover.spec_for(gs.colony.planet_id, "").is_empty() else 0, avoid)
+	add_child(GroundCover.build(terrain, gs.colony.planet_id, hash(gs.colony.site_id) + 3, avoid, 220.0, gs.colony.biome_id))
 	_draw_districts()
 	SceneDressing.attach(self, str(site.get("id", "")), terrain)
 	_net = MeshInstance3D.new()
