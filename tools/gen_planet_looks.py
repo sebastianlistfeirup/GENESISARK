@@ -56,7 +56,7 @@ PLANETS = {
                   c(J("SM_Env_Flower_Pitcher_01"), 60, (0.8, 1.2), 3), c(J("SM_Env_Ground_Cover_01"), 260, (0.9, 1.4), 6),
                   c(Wp("SM_Env_Plant_Bulb_01"), 50, (0.3, 0.5), 3), c(J("SM_Env_Rock_Pile_02"), 40, (0.6, 1.0), 2)],
         "landmarks": [
-                      lm([Wp("SM_Env_Artifact_AlienRuin_02"), Wp("SM_Env_Artifact_AlienRuin_03"), Wp("SM_Env_Artifact_AlienRuin_09")], 4, (1.1, 1.5), (66, 80)), lm([Wp("SM_Env_Plant_Large_Spiral_01"), Wp("SM_Env_Plant_Large_Spiral_03")], 6, (0.45, 0.7), (40, 72)), lm([J("SM_Env_Rock_Cliff_01"), J("SM_Env_Rock_Cliff_02"), J("SM_Env_Rock_Cliff_03"), J("SM_Env_Rock_Arch_01")], 22, (1.6, 2.6))],
+                      lm([Wp("SM_Env_Artifact_AlienRuin_02"), Wp("SM_Env_Artifact_AlienRuin_03"), Wp("SM_Env_Artifact_AlienRuin_09")], 4, (1.1, 1.5), (66, 80)), lm([Wp("SM_Env_Plant_Large_Spiral_Preset_01"), Wp("SM_Env_Plant_Large_Spiral_Preset_03"), Wp("SM_Env_Plant_Large_Spiral_01")], 7, (0.45, 0.7), (40, 72)), lm([Wp("SM_Env_Detail_Bridge_01")], 1, (0.55, 0.65), (78, 88)), lm([Wp("SM_Env_Skeleton_Preset_05")], 1, (0.16, 0.2), (66, 80)), lm([J("SM_Env_Rock_Cliff_01"), J("SM_Env_Rock_Cliff_02"), J("SM_Env_Rock_Cliff_03"), J("SM_Env_Rock_Arch_01")], 22, (1.6, 2.6))],
     },
     "pelagos": {
         "blocked_rock": J("SM_Env_Rock_Pile_06"),
@@ -89,6 +89,8 @@ PLANETS = {
                   c(R("Environment/SM_Env_Sulphur_Blob_01"), 30, (0.6, 1.0), 3), c(Wp("SM_Env_Floating_Crystal_01"), 30, (0.05, 0.1), 3, emissive="#ffb35a"),
                   c(R("Environment/SM_Env_GroundCover_02"), 200, (0.9, 1.4), 6)],
         "landmarks": [lm([SS("SM_Ship_Bomber_02")], 1, (0.55, 0.65), (58, 72), 14, 0.3), lm([SS("SM_Ship_Fighter_Heavy_01")], 2, (0.75, 0.9), (52, 70), 22, 0.28), 
+                      lm([Bd("SM_Bld_Scav_Dish_01")], 2, (0.3, 0.38), (74, 86), 24, 0.12), lm([Wp("SM_Env_Ground_Junk_01"), Wp("SM_Env_Ground_Junk_02")], 3, (0.35, 0.5), (46, 66)),
+                      lm([Bd("SM_Bld_Scav_Refinery_Smoke_Stack_01"), Bd("SM_Bld_Scav_Refinery_Tower_01")], 2, (0.45, 0.6), (78, 90), 10, 0.1), 
                       lm([Wp("SM_Env_Skeleton_Preset_01"), Wp("SM_Env_Skeleton_Preset_03")], 2, (0.1, 0.13), (72, 86)), lm([Wp("SM_Env_Artifact_Head_01"), Wp("SM_Env_Artifact_AlienRuin_06")], 4, (0.9, 1.2), (76, 88)), lm([R("Environment/SM_Env_Rock_Cliff_05"), R("Environment/SM_Env_Rock_Cliff_06"), R("Environment/SM_Env_Rock_Cliff_10"),
                           R("Environment/SM_Env_Rock_Cliff_14"), R("Environment/SM_Env_Rock_Arch_01")], 26, (1.6, 2.6))],
     },

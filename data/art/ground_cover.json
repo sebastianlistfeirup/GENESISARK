@@ -358,10 +358,11 @@
    },
    {
     "meshes": [
-     "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Plant_Large_Spiral_01.tscn",
-     "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Plant_Large_Spiral_03.tscn"
+     "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Plant_Large_Spiral_Preset_01.tscn",
+     "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Plant_Large_Spiral_Preset_03.tscn",
+     "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Plant_Large_Spiral_01.tscn"
     ],
-    "count": 6,
+    "count": 7,
     "scale": [
      0.45,
      0.7
@@ -369,6 +370,34 @@
     "ring": [
      40,
      72
+    ]
+   },
+   {
+    "meshes": [
+     "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Detail_Bridge_01.tscn"
+    ],
+    "count": 1,
+    "scale": [
+     0.55,
+     0.65
+    ],
+    "ring": [
+     78,
+     88
+    ]
+   },
+   {
+    "meshes": [
+     "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Skeleton_Preset_05.tscn"
+    ],
+    "count": 1,
+    "scale": [
+     0.16,
+     0.2
+    ],
+    "ring": [
+     66,
+     80
     ]
    },
    {
@@ -960,6 +989,54 @@
     ],
     "tilt": 22,
     "sink": 0.28
+   },
+   {
+    "meshes": [
+     "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Buildings/SM_Bld_Scav_Dish_01.tscn"
+    ],
+    "count": 2,
+    "scale": [
+     0.3,
+     0.38
+    ],
+    "ring": [
+     74,
+     86
+    ],
+    "tilt": 24,
+    "sink": 0.12
+   },
+   {
+    "meshes": [
+     "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Ground_Junk_01.tscn",
+     "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Ground_Junk_02.tscn"
+    ],
+    "count": 3,
+    "scale": [
+     0.35,
+     0.5
+    ],
+    "ring": [
+     46,
+     66
+    ]
+   },
+   {
+    "meshes": [
+     "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Buildings/SM_Bld_Scav_Refinery_Smoke_Stack_01.tscn",
+     "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Buildings/SM_Bld_Scav_Refinery_Tower_01.tscn"
+    ],
+    "count": 2,
+    "scale": [
+     0.45,
+     0.6
+    ],
+    "ring": [
+     78,
+     90
+    ],
+    "tilt": 10,
+    "sink": 0.1
    },
    {
     "meshes": [
