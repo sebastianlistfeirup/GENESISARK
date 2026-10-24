@@ -69,7 +69,7 @@ func _ready() -> void:
 	add_child(terrain)
 	terrain.build()
 	terrain.scatter(hash(gs.colony.site_id) + 1, 60 if GroundCover.spec_for(gs.colony.planet_id, "").is_empty() else 0, avoid)
-	add_child(PlanetSky.build(gs.colony.planet_id, gs.colony.biome_id))
+	add_child(PlanetSky.build(gs.colony.planet_id, gs.colony.biome_id, terrain))
 	_draw_districts()
 	SceneDressing.attach(self, str(site.get("id", "")), terrain)
 	_net = MeshInstance3D.new()

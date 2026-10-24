@@ -25,6 +25,20 @@
     "flocks": 3,
     "count": 9,
     "scale": 1.6
+   },
+   "fauna_low": {
+    "mesh": "res://assets/Synty/Nature/Alpine/FBX/FX/FX_Butterfly_Mesh_Alpine_01.fbx",
+    "flocks": 14,
+    "count": 3,
+    "scale": 0.45,
+    "height": [
+     1.0,
+     2.2
+    ],
+    "radius": [
+     1.5,
+     3.5
+    ]
    }
   },
   "terrain": {

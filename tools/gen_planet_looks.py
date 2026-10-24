@@ -33,7 +33,7 @@ def lm(meshes, count, s=(1, 1.4), ring=(70, 86)):
 
 PLANETS = {
     "viridia": {  # jungle: dense canopy, ferns, flowers, alien flora
-        "sky": {"bodies": [{"biome": "ice", "tint": "#cfd8e6", "azimuth": 35, "elevation": 22, "size": 14}, {"biome": "desert", "tint": "#d9a06a", "azimuth": 70, "elevation": 34, "size": 5}], "motes": "fx.spores", "motes_scale": 2.5, "fauna": {"mesh": N + "Jungle/FBX/FX_Bird_Mesh_01.fbx", "flocks": 3, "count": 9, "scale": 1.6}},
+        "sky": {"bodies": [{"biome": "ice", "tint": "#cfd8e6", "azimuth": 35, "elevation": 22, "size": 14}, {"biome": "desert", "tint": "#d9a06a", "azimuth": 70, "elevation": 34, "size": 5}], "motes": "fx.spores", "motes_scale": 2.5, "fauna": {"mesh": N + "Jungle/FBX/FX_Bird_Mesh_01.fbx", "flocks": 3, "count": 9, "scale": 1.6}, "fauna_low": {"mesh": N + "Alpine/FBX/FX/FX_Butterfly_Mesh_Alpine_01.fbx", "flocks": 14, "count": 3, "scale": 0.45, "height": [1.0, 2.2], "radius": [1.5, 3.5]}},
         "terrain": {"ground_tex": N + "Jungle/Textures/Terrain/Grass_Debris_Texture_01.png", "cliff_tex": N + "Jungle/Textures/Terrain/RockWall_Texture_01.png", "amp": 1.25, "ground": "#4c8a2f", "patch": "#3a7426", "cliff": "#3f4a33"},
         "look": {"hue_shift": -0.02, "sat": 1.15, "wind": 0.07, "rock_tint": "#9aa58a", "rock_top_tint": "#6f9a3c"},
         "trees": [t([J("SM_Env_Tree_Palm_01"), J("SM_Env_Tree_Palm_02"), J("SM_Env_Tree_Palm_03"), J("SM_Env_Tree_Banana_01"), J("SM_Env_Tree_Banana_02"),

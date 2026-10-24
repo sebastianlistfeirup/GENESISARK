@@ -74,7 +74,7 @@ func _ready() -> void:
 	terrain.build()
 	terrain.scatter(hash(ex.site_id), 70 if GroundCover.spec_for(str(planet.get("id")), "").is_empty() else 0, avoid)
 	add_child(GroundCover.build(terrain, str(planet.get("id")), hash(ex.site_id) + 7, avoid, 180.0, str(planet.get("biome_id"))))
-	add_child(PlanetSky.build(str(planet.get("id")), str(planet.get("biome_id"))))
+	add_child(PlanetSky.build(str(planet.get("id")), str(planet.get("biome_id")), terrain))
 	_place_lander()
 	SceneDressing.attach(self, str(site.get("id", "")), terrain)
 	_place_points(pts)

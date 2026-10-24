@@ -12,7 +12,7 @@ var _t := 0.0
 var _mesh_scale := 1.0
 
 
-static func build(spec: Dictionary, seed_value: int) -> FaunaFlock:
+static func build(spec: Dictionary, seed_value: int, terrain: Node3D = null) -> FaunaFlock:
 	var src := GroundCover.mesh_of(str(spec.get("mesh", "")), DictUtil.get_dict(spec, "look"))
 	if src.is_empty():
 		return null
@@ -25,11 +25,16 @@ static func build(spec: Dictionary, seed_value: int) -> FaunaFlock:
 	var per := int(spec.get("count", 9))
 	for k: int in flocks:
 		var centre := Vector3(rng.randf_range(-60, 60), 0, rng.randf_range(-60, 60))
-		var h := rng.randf_range(22, 38)
-		var r := rng.randf_range(14, 30)
+		var hr: Array = DictUtil.get_arr(spec, "height")
+		var rr: Array = DictUtil.get_arr(spec, "radius")
+		var h := rng.randf_range(float(hr[0]), float(hr[1])) if hr.size() == 2 else rng.randf_range(22, 38)
+		var r := rng.randf_range(float(rr[0]), float(rr[1])) if rr.size() == 2 else rng.randf_range(14, 30)
+		if terrain:
+			h += float(terrain.call("height_at", centre.x, centre.z))  # heights are above the local ground
 		var sp := rng.randf_range(0.12, 0.22) * (1.0 if rng.randf() > 0.5 else -1.0)
+		var jit := maxf(0.2, (h - (float(terrain.call("height_at", centre.x, centre.z)) if terrain else 0.0)) * 0.07)
 		for i: int in per:
-			f._birds.append([centre + Vector3(rng.randf_range(-4, 4), 0, rng.randf_range(-4, 4)), r + rng.randf_range(-3, 3), sp, rng.randf() * 0.6 + k * 2.0, h + rng.randf_range(-2, 2)])
+			f._birds.append([centre + Vector3(rng.randf_range(-1, 1), 0, rng.randf_range(-1, 1)) * minf(4.0, r * 0.5), r * rng.randf_range(0.85, 1.15), sp, rng.randf() * 0.6 + k * 2.0, h + rng.randf_range(-jit, jit)])
 	f._mm = MultiMesh.new()
 	f._mm.transform_format = MultiMesh.TRANSFORM_3D
 	f._mm.mesh = src[0]
