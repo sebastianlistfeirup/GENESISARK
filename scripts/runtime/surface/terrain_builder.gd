@@ -70,29 +70,41 @@ func build() -> void:
 	var base := Color(str(palette.get("nature", DictUtil.get_str(map_def, "base_color", "#556b4a"))))
 	var rock := Color(DictUtil.get_str(map_def, "rock_color", "#6f6a60"))
 	var ground := base.darkened(0.25) if biome_id == "green" else (base.darkened(0.12) if biome_id == "ice" else base)
+	# Synty-style ground: richer base, a second tone in broad patches, dark rocky slopes.
+	ground = Color.from_hsv(ground.h, clampf(ground.s * 1.25, 0.0, 1.0), ground.v)
+	var patch := Color.from_hsv(fposmod(ground.h + 0.03, 1.0), clampf(ground.s * 1.1, 0.0, 1.0), ground.v * 0.82)
+	var cliff := rock.darkened(0.35).lerp(ground.darkened(0.55), 0.35)
+	var cols := PackedColorArray()
+	cols.resize((n + 1) * (n + 1))
 	for iz: int in n + 1:
 		for ix: int in n + 1:
 			var h := heights[iz * (n + 1) + ix]
 			var hx := heights[iz * (n + 1) + mini(ix + 1, n)] - heights[iz * (n + 1) + maxi(ix - 1, 0)]
 			var hz := heights[mini(iz + 1, n) * (n + 1) + ix] - heights[maxi(iz - 1, 0) * (n + 1) + ix]
-			var normal := Vector3(-hx, 2.0 * step, -hz).normalized()
-			var slope := 1.0 - normal.y
-			var c := ground.lerp(rock, clampf(slope * 4.0, 0, 1))
-			c = c.lerp(c.lightened(0.15), clampf(detail.get_noise_2d(ix * 3.0, iz * 3.0) * 0.5 + 0.5, 0, 1) * 0.5)
+			var slope := 1.0 - Vector3(-hx, 2.0 * step, -hz).normalized().y
+			var c := ground.lerp(patch, smoothstep(0.1, 0.35, detail.get_noise_2d(ix * 0.7, iz * 0.7)))
+			c = c.lerp(cliff, smoothstep(0.08, 0.3, slope))
+			c = c.lerp(c.lightened(0.12), clampf(detail.get_noise_2d(ix * 3.0, iz * 3.0) * 0.5 + 0.5, 0, 1) * 0.35)
 			if biome_id == "ice" and h > height_scale * 0.4:
 				c = c.lerp(Color.WHITE, 0.5)
-			st.set_color(c)
-			st.set_normal(normal)
-			st.add_vertex(Vector3(-half + ix * step, h, -half + iz * step))
+			cols[iz * (n + 1) + ix] = c
+	# Faceted (flat-shaded) triangles: one normal and one colour per face, the low-poly look of the packs.
 	for iz: int in n:
 		for ix: int in n:
 			var i := iz * (n + 1) + ix
-			st.add_index(i)
-			st.add_index(i + 1)
-			st.add_index(i + n + 1)
-			st.add_index(i + 1)
-			st.add_index(i + n + 2)
-			st.add_index(i + n + 1)
+			var quad := [i, i + 1, i + n + 1, i + 1, i + n + 2, i + n + 1]
+			for t: int in 2:
+				var ids := [quad[t * 3], quad[t * 3 + 1], quad[t * 3 + 2]]
+				var vs: Array[Vector3] = []
+				var fc := Color(0, 0, 0, 0)
+				for k: int in ids:
+					vs.append(Vector3(-half + (k % (n + 1)) * step, heights[k], -half + (k / (n + 1)) * step))
+					fc += cols[k] / 3.0
+				var fn := (vs[2] - vs[0]).cross(vs[1] - vs[0]).normalized()
+				st.set_color(Color(fc.r, fc.g, fc.b, 1.0))
+				st.set_normal(fn)
+				for v: Vector3 in vs:
+					st.add_vertex(v)
 	var mesh := st.commit()
 	var mi := MeshInstance3D.new()
 	mi.name = "TerrainMesh"

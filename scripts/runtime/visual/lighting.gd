@@ -40,7 +40,7 @@ static func build(planet: Dictionary) -> Array:
 	e.ambient_light_color = c.call("ambient_color")
 	e.ambient_light_energy = float(p["ambient_energy"])
 	e.ambient_light_sky_contribution = float(p["sky_contribution"])
-	e.tonemap_mode = Environment.TONE_MAPPER_FILMIC
+	e.tonemap_mode = Environment.TONE_MAPPER_LINEAR if str(p.get("tonemap", "filmic")) == "linear" else Environment.TONE_MAPPER_FILMIC
 	e.tonemap_exposure = float(p["exposure"])
 	e.tonemap_white = float(p["white"])
 	e.fog_enabled = true
@@ -52,10 +52,21 @@ static func build(planet: Dictionary) -> Array:
 	# Height fog: ground-level haze for the captain, clear air for the overhead colony camera.
 	e.fog_height = float(p.get("fog_height", 2.0))
 	e.fog_height_density = float(p.get("fog_height_density", 0.06))
+	if str(p.get("fog_mode", "exponential")) == "depth":
+		# Synty demo recipe: clear air near the player, coloured depth haze far away.
+		e.fog_mode = Environment.FOG_MODE_DEPTH
+		e.fog_depth_begin = float(p.get("fog_depth_begin", 23.0))
+		e.fog_depth_end = float(p.get("fog_depth_end", 430.0))
+		e.fog_depth_curve = float(p.get("fog_depth_curve", 1.0))
+		e.fog_light_energy = float(p.get("fog_energy", 1.0))
+		e.fog_height_density = 0.0
 	e.glow_enabled = float(p["glow"]) > 0.0
 	e.glow_intensity = float(p["glow"])
 	e.glow_bloom = float(p["glow_bloom"])
 	e.ssao_enabled = bool(p["ssao"])
+	e.ssao_radius = float(p.get("ssao_radius", 1.0))
+	e.ssao_intensity = float(p.get("ssao_intensity", 2.0))
+	e.ssao_power = float(p.get("ssao_power", 1.5))
 	e.adjustment_enabled = not is_equal_approx(float(p["adjust_saturation"]), 1.0)
 	e.adjustment_saturation = float(p["adjust_saturation"])
 	var env := WorldEnvironment.new()

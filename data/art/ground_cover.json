@@ -1,0 +1,173 @@
+{
+ "_note": "Ground cover per biome (GroundCover): small non-colliding pieces drawn as MultiMesh in clusters, plus a ring of cliffs framing the map. Paths point at local Synty packs; missing files are skipped (fresh clone = bare terrain). count is per 180 m map at quality 1.0; scale is [min, max].",
+ "green": {
+  "cover": [
+   {
+    "mesh": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Grass_01.tscn",
+    "count": 900,
+    "scale": [
+     0.8,
+     1.5
+    ],
+    "cluster": 9
+   },
+   {
+    "mesh": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Grass_03.tscn",
+    "count": 700,
+    "scale": [
+     0.8,
+     1.4
+    ],
+    "cluster": 9
+   },
+   {
+    "mesh": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Plant_Grass_Flower_01.tscn",
+    "count": 260,
+    "scale": [
+     0.5,
+     0.8
+    ],
+    "cluster": 6
+   },
+   {
+    "mesh": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Plant_Small_01.tscn",
+    "count": 200,
+    "scale": [
+     0.7,
+     1.3
+    ],
+    "cluster": 5
+   },
+   {
+    "mesh": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Plant_Bulb_01.tscn",
+    "count": 90,
+    "scale": [
+     0.3,
+     0.55
+    ],
+    "cluster": 4
+   },
+   {
+    "mesh": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Rock_03.tscn",
+    "count": 120,
+    "scale": [
+     0.05,
+     0.12
+    ],
+    "cluster": 3
+   }
+  ],
+  "cliffs": [
+   "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Cliff_Rough_01.tscn",
+   "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Cliff_Flat_02.tscn",
+   "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Cliff_Curved_01.tscn"
+  ]
+ },
+ "desert": {
+  "cover": [
+   {
+    "mesh": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Ground_Greeble_01.tscn",
+    "count": 120,
+    "scale": [
+     0.8,
+     1.4
+    ],
+    "cluster": 4
+   },
+   {
+    "mesh": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Plant_Hallowed_01.tscn",
+    "count": 140,
+    "scale": [
+     0.1,
+     0.2
+    ],
+    "cluster": 5
+   },
+   {
+    "mesh": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Plant_Cactus_02.tscn",
+    "count": 40,
+    "scale": [
+     0.6,
+     1.1
+    ],
+    "cluster": 3
+   },
+   {
+    "mesh": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Detail_Spikey_01.tscn",
+    "count": 70,
+    "scale": [
+     0.25,
+     0.45
+    ],
+    "cluster": 3
+   },
+   {
+    "mesh": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Rock_05.tscn",
+    "count": 260,
+    "scale": [
+     0.04,
+     0.12
+    ],
+    "cluster": 6
+   }
+  ],
+  "cliffs": [
+   "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Cliff_Flat_01.tscn",
+   "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Cliff_Rough_02.tscn",
+   "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Cliff_Curved_02.tscn"
+  ]
+ },
+ "ice": {
+  "cover": [
+   {
+    "mesh": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Snow_Pile_01.tscn",
+    "count": 160,
+    "scale": [
+     0.5,
+     1.2
+    ],
+    "cluster": 5
+   },
+   {
+    "mesh": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Snow_Pile_03.tscn",
+    "count": 120,
+    "scale": [
+     0.5,
+     1.1
+    ],
+    "cluster": 5
+   },
+   {
+    "mesh": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Plant_Fester_01.tscn",
+    "count": 60,
+    "scale": [
+     0.18,
+     0.35
+    ],
+    "cluster": 4
+   },
+   {
+    "mesh": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Rock_07.tscn",
+    "count": 220,
+    "scale": [
+     0.04,
+     0.12
+    ],
+    "cluster": 6
+   },
+   {
+    "mesh": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Floating_Crystal_02.tscn",
+    "count": 25,
+    "scale": [
+     0.06,
+     0.12
+    ],
+    "cluster": 3
+   }
+  ],
+  "cliffs": [
+   "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Cliff_Rough_01.tscn",
+   "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Cliff_Flat_03.tscn"
+  ]
+ }
+}

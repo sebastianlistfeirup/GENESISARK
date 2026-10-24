@@ -1,8 +1,8 @@
 {
-  "_note": "Light and atmosphere per world (surface + colony). defaults <- biomes[biome] <- planets[id]. Colours are hex; sun angles in degrees (pitch below horizon is negative). Tune here, no code changes. Preview: DebugCapture --setup=expedition:<planet> --scene=surface.",
+  "_note": "Light and atmosphere per world (surface + colony). defaults <- biomes[biome] <- planets[id]. Colours are hex; sun angles in degrees (pitch below horizon is negative). Tune here, no code changes. Preview: DebugCapture --setup=expedition:<planet> --scene=surface. Synty demo recipe (D-036): linear tonemap, warm ambient without sky contribution, depth fog in a contrast colour from ~25 m, strong wide SSAO.",
   "defaults": {
-    "sky_top": "#5d8fb0",
-    "sky_horizon": "#b9d3d6",
+    "sky_top": "#74addf",
+    "sky_horizon": "#e4f3ff",
     "ground_horizon": "#8a9a90",
     "ground_bottom": "#3a4038",
     "sun_color": "#fff1d6",
@@ -10,21 +10,30 @@
     "sun_pitch": -48,
     "sun_yaw": 30,
     "shadow_distance": 140,
-    "ambient_color": "#c8dcdc",
-    "ambient_energy": 0.45,
-    "sky_contribution": 0.4,
-    "fog_color": "#b9d3d6",
-    "fog_density": 0.0022,
+    "ambient_color": "#dcae8a",
+    "ambient_energy": 0.55,
+    "sky_contribution": 0.0,
+    "fog_color": "#4db377",
+    "fog_density": 0.75,
     "fog_sun_scatter": 0.15,
     "fog_aerial": 0.25,
     "exposure": 1.0,
     "white": 1.4,
-    "glow": 0.55,
-    "glow_bloom": 0.03,
+    "glow": 0.5,
+    "glow_bloom": 0.04,
     "ssao": true,
-    "adjust_saturation": 1.0,
+    "adjust_saturation": 1.12,
     "fog_height": 2.0,
-    "fog_height_density": 0.06
+    "fog_height_density": 0.025,
+    "tonemap": "linear",
+    "fog_mode": "depth",
+    "fog_depth_begin": 25,
+    "fog_depth_end": 420,
+    "fog_depth_curve": 1.4,
+    "fog_energy": 1.0,
+    "ssao_radius": 3.8,
+    "ssao_intensity": 1.5,
+    "ssao_power": 1.65
   },
   "biomes": {
     "green": {
@@ -37,14 +46,22 @@
       "fog_density": 0.0018,
       "ground_horizon": "#b49068",
       "ground_bottom": "#5b4532",
-      "adjust_saturation": 1.05
+      "adjust_saturation": 1.05,
+      "fog_color": "#c6b05f",
+      "sky_top": "#9cc0de",
+      "sky_horizon": "#f5dfae",
+      "ambient_color": "#e8bf92"
     },
     "ice": {
       "sun_color": "#e6f2ff",
       "ambient_energy": 0.6,
       "ground_horizon": "#c8d6de",
       "ground_bottom": "#7d8c96",
-      "exposure": 0.88
+      "exposure": 0.88,
+      "fog_color": "#88a4d2",
+      "sky_top": "#6c95c8",
+      "sky_horizon": "#dbe9fa",
+      "ambient_color": "#b8c4dc"
     }
   },
   "planets": {
@@ -53,10 +70,7 @@
       "sky_horizon": "#c4dcc0",
       "sun_color": "#ffe9c4",
       "sun_energy": 1.2,
-      "fog_color": "#b6d0b0",
-      "fog_density": 0.0032,
       "fog_sun_scatter": 0.3,
-      "ambient_color": "#cfe0c4",
       "glow": 0.7
     },
     "pelagos": {
@@ -65,12 +79,8 @@
       "sun_color": "#e8eef2",
       "sun_energy": 0.75,
       "sun_pitch": -55,
-      "ambient_energy": 0.65,
-      "ambient_color": "#b8c6cc",
-      "fog_color": "#9fb0b8",
-      "fog_density": 0.0042,
       "glow": 0.4,
-      "adjust_saturation": 0.85
+      "fog_color": "#5f8fa8"
     },
     "ferrum": {
       "sky_top": "#8fb6d6",
@@ -78,9 +88,6 @@
       "sun_color": "#fffaf0",
       "sun_energy": 1.6,
       "sun_pitch": -66,
-      "fog_color": "#e8cfa8",
-      "fog_density": 0.0015,
-      "ambient_color": "#f0dcc0",
       "exposure": 0.92,
       "glow": 0.45
     },
@@ -90,11 +97,8 @@
       "sun_color": "#ffd9a8",
       "sun_energy": 1.1,
       "sun_pitch": -40,
-      "fog_color": "#d8c09a",
-      "fog_density": 0.0048,
       "fog_sun_scatter": 0.35,
-      "ambient_color": "#e0cfb0",
-      "adjust_saturation": 0.9
+      "fog_color": "#b89a6a"
     },
     "nivalis": {
       "sky_top": "#6f9cc4",
@@ -103,13 +107,9 @@
       "sun_energy": 1.0,
       "sun_pitch": -16,
       "sun_yaw": 70,
-      "fog_color": "#dfe9ef",
-      "fog_density": 0.003,
       "fog_sun_scatter": 0.4,
-      "ambient_color": "#d6e4ee",
       "glow": 0.75,
       "exposure": 0.82,
-      "ambient_energy": 0.45,
       "white": 1.8
     },
     "umbra": {
@@ -121,14 +121,12 @@
       "sun_energy": 0.32,
       "sun_pitch": -9,
       "sun_yaw": 60,
-      "ambient_color": "#41506a",
-      "ambient_energy": 0.28,
-      "fog_color": "#1c2433",
-      "fog_density": 0.004,
       "fog_sun_scatter": 0.0,
       "exposure": 1.15,
       "glow": 1.1,
-      "glow_bloom": 0.08
+      "glow_bloom": 0.08,
+      "fog_color": "#2c3a5c",
+      "ambient_color": "#7d8fb0"
     }
   }
 }
