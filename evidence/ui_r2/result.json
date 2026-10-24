@@ -1,0 +1,21 @@
+{
+  "task_id": "D-055 ui_r2",
+  "commit": "c55dfa2",
+  "engine_version": "4.7.2-stable",
+  "command": "godot --path . --resolution 1600x900 -- --capture=<abs>.png --setup=<power|orbit:sere> --scene=ship --wait=150 --action=<starmap|starmap_umbra|compare|orbit|landing|embryo|workshop> --post=240 --park=1 (also --resolution 1280x720 --ui_scale=1.5, --reduced_motion=1, GA_NO_SYNTY_UI=1, --post=10 for the boot frame); godot --path . -- --perf --case=ship_starmap|ship_orbit_view --out=builds/<f>.json (new and old back to back); CHECK_FAST=1 tools/check.sh",
+  "exit_code": 0,
+  "expected": "Every ship terminal panel (star map Voyage + Comparison, orbit, landing, embryo bank, workshop) in the holo-console look with icons and live/animated elements, functionality unchanged; fits 1280x720 @1.5; static with reduced motion; graceful without the Synty packs; perf p95 < ~10 ms; checks green.",
+  "observed": "All seven screens captured before/after. Perf back to back: ship_starmap p95 9.01 -> 8.97 ms (p99 11.48 -> 9.16), ship_orbit_view p95 8.99 -> 8.93 ms; draw calls 211 -> 490 / 193 -> 596; over_budget []. check.sh: compile 159 scripts 0 failed, 81 tests 0 failures, smoke 58 checks 0 failures, touch 6/0, loc_exit=0 tests_exit=0 smoke_exit=0 touch_exit=0 campaign_exit=0.",
+  "fixture": "power, orbit:sere",
+  "status": "PASS",
+  "artifacts": [
+    "before_starmap.jpg", "after_starmap.jpg", "before_starmap_umbra.jpg", "after_starmap_umbra.jpg",
+    "before_compare.jpg", "after_compare.jpg", "before_orbit.jpg", "after_orbit.jpg",
+    "before_landing.jpg", "after_landing.jpg", "before_embryo.jpg", "after_embryo.jpg",
+    "before_workshop.jpg", "after_workshop.jpg",
+    "after_starmap_1280x720_ui1.5.jpg", "after_orbit_1280x720_ui1.5.jpg", "after_embryo_1280x720_ui1.5.jpg",
+    "after_starmap_reduced_motion.jpg", "after_workshop_reduced_motion.jpg",
+    "after_starmap_no_synty_fallback.jpg", "after_orbit_no_synty_fallback.jpg", "after_embryo_no_synty_fallback.jpg",
+    "after_starmap_boot_in.jpg", "after_colony_overview_shared_frame.jpg"
+  ]
+}
