@@ -923,6 +923,33 @@
      1.2
     ],
     "cluster": 1
+   },
+   {
+    "mesh": "res://assets/Synty/SciFiSpace/FBX/SM_Env_Debris_Shell_04.fbx",
+    "count": 14,
+    "scale": [
+     0.8,
+     1.2
+    ],
+    "cluster": 3
+   },
+   {
+    "mesh": "res://assets/Synty/SciFiSpace/FBX/SM_Env_Debris_Shell_07.fbx",
+    "count": 6,
+    "scale": [
+     0.6,
+     0.9
+    ],
+    "cluster": 2
+   },
+   {
+    "mesh": "res://assets/Synty/SciFiSpace/FBX/SM_Env_Debris_Pipe_01.fbx",
+    "count": 8,
+    "scale": [
+     0.7,
+     1.0
+    ],
+    "cluster": 2
    }
   ],
   "landmarks": [
@@ -944,19 +971,19 @@
    },
    {
     "meshes": [
-     "res://assets/Synty/SciFiSpace/FBX/SM_Ship_Transport_01.fbx"
+     "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Buildings/SM_Bld_Scav_Wreckage_01.tscn"
     ],
     "count": 1,
     "scale": [
-     0.2,
-     0.24
+     0.21,
+     0.23
     ],
     "ring": [
-     76,
-     86
+     84,
+     90
     ],
-    "tilt": 9,
-    "sink": 0.35
+    "tilt": 6,
+    "sink": 0.3
    },
    {
     "meshes": [
@@ -1223,6 +1250,21 @@
    }
   ],
   "landmarks": [
+   {
+    "meshes": [
+     "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Skeleton_Preset_02.tscn",
+     "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Skeleton_Preset_04.tscn"
+    ],
+    "count": 1,
+    "scale": [
+     0.2,
+     0.24
+    ],
+    "ring": [
+     64,
+     76
+    ]
+   },
    {
     "meshes": [
      "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Artifact_AlienRuin_07.tscn",

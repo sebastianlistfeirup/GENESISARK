@@ -16,6 +16,7 @@ A = lambda n: N + "Alpine/FBX/Environment/" + n + ".fbx"
 R = lambda n: N + "Arid/FBX/" + n + ".fbx"
 Wp = lambda n: W + n + ".tscn"
 SS = lambda n: "res://assets/Synty/SciFiSpace/FBX/" + n + ".fbx"
+Bd = lambda n: "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Buildings/" + n + ".tscn"
 
 
 def c(mesh, count, s=(0.8, 1.3), cluster=5, **kw):
@@ -100,8 +101,9 @@ PLANETS = {
         "cover": [c(R("Environment/SM_Env_Succulent_01"), 140, (0.8, 1.3), 5), c(R("Environment/SM_Env_Succulent_03"), 120, (0.8, 1.3), 5),
                   c(R("Environment/SM_Env_Succulent_05"), 100, (0.8, 1.3), 4), c(R("Environment/SM_Env_GroundCover_01"), 220, (0.9, 1.4), 6),
                   c(R("Environment/SM_Env_Rock_Pebbles_04"), 200, (0.8, 1.3), 6), c(R("Environment/SM_Env_Bush_Bramble_02"), 60, (0.7, 1.1), 3),
-                  c(R("Props/SM_Prop_Bones_01"), 12, (0.9, 1.2), 1)],
-        "landmarks": [lm([SS("SM_Ship_Cruiser_01")], 1, (0.55, 0.65), (58, 70), 12, 0.32), lm([SS("SM_Ship_Transport_01")], 1, (0.2, 0.24), (76, 86), 9, 0.35), 
+                  c(R("Props/SM_Prop_Bones_01"), 12, (0.9, 1.2), 1),
+                  c(SS("SM_Env_Debris_Shell_04"), 14, (0.8, 1.2), 3), c(SS("SM_Env_Debris_Shell_07"), 6, (0.6, 0.9), 2), c(SS("SM_Env_Debris_Pipe_01"), 8, (0.7, 1.0), 2)],
+        "landmarks": [lm([SS("SM_Ship_Cruiser_01")], 1, (0.55, 0.65), (58, 70), 12, 0.32), lm([Bd("SM_Bld_Scav_Wreckage_01")], 1, (0.21, 0.23), (84, 90), 6, 0.3), 
                       lm([Wp("SM_Env_Skeleton_Preset_02"), Wp("SM_Env_Skeleton_Preset_04")], 2, (0.18, 0.24), (70, 84)), lm([Wp("SM_Env_Artifact_AlienRuin_05"), Wp("SM_Env_Artifact_Arm_01")], 3, (0.9, 1.3), (74, 88)), lm([R("Environment/SM_Env_Backrgound_Hill_01"), R("Environment/SM_Env_Backrgound_Hill_02"), R("Environment/SM_Env_Backrgound_Hill_03")], 10, (0.8, 1.2), (84, 96)),
                       lm([R("Environment/SM_Env_Rock_Arch_Half_01"), R("Environment/SM_Env_Rock_Arch_01"), R("Environment/SM_Env_Rock_Cliff_08")], 10, (0.7, 1.1), (62, 84))],
     },
@@ -116,7 +118,7 @@ PLANETS = {
                   c(A("SM_Env_Ice_Sheet_01"), 60, (0.8, 1.3), 3), c(A("SM_Env_Ice_Sheet_04"), 50, (0.8, 1.3), 3),
                   c(A("SM_Env_Rock_Pebbles_02"), 180, (0.8, 1.3), 5), c(A("SM_Env_Moss_Lumps_02"), 50, (0.7, 1.1), 3),
                   c(Wp("SM_Env_Floating_Crystal_02"), 30, (0.05, 0.1), 3, emissive="#9fe8ff")],
-        "landmarks": [
+        "landmarks": [lm([Wp("SM_Env_Skeleton_Preset_02"), Wp("SM_Env_Skeleton_Preset_04")], 1, (0.2, 0.24), (64, 76)),
                       lm([Wp("SM_Env_Artifact_AlienRuin_07"), Wp("SM_Env_Artifact_AlienRuin_08"), Wp("SM_Env_Detail_Spire_Group_01")], 4, (1.8, 2.6), (62, 82)), lm([A("SM_Env_MountainRange_01"), A("SM_Env_MountainRange_02"), A("SM_Env_MountainRange_03"), A("SM_Env_MountainRange_04")], 8, (0.5, 0.7), (92, 104)),
                       lm([A("SM_Env_Rock_08"), A("SM_Env_Rock_09"), A("SM_Env_Rock_010"), A("SM_Env_Rock_Cliff_Arch_01"), Wp("SM_Env_Detail_Spire_Group_01")], 16, (2.4, 3.6), (60, 84))],
     },

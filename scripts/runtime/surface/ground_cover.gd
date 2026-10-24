@@ -144,14 +144,24 @@ static func build(terrain: Node3D, key: String, seed_value: int, avoid: Array, s
 		var sc: Array = DictUtil.get_arr(it, "scale")
 		var n := int(it.get("count", 10))
 		for i: int in n:
-			var a := TAU * (i + rng.randf_range(0.0, 0.7)) / n
-			var r := rng.randf_range(float(ring[0]), float(ring[1])) if ring.size() == 2 else 80.0
-			r *= size_m / 180.0  # rings are authored for the 180 m expedition map
-			var p := Vector2(cos(a), sin(a)) * r
 			var src: Array = srcs[rng.randi() % srcs.size()]
 			var s := rng.randf_range(float(sc[0]), float(sc[1])) if sc.size() == 2 else 1.0
 			var reach := maxf((src[2] as AABB).size.x, (src[2] as AABB).size.z) * s * 0.5
-			if _blocked(p, avoid, reach + 6.0) or _blocked(p, taken, reach * 0.7):
+			# Long hulls lie thin on the ground: their clearance is the narrow side, not the length.
+			var clear := reach * (0.5 if it.has("tilt") else 1.0) + 6.0
+			var p := Vector2.ZERO
+			var ang := 0.0
+			var ok := false
+			for attempt: int in (12 if n <= 3 else 1):  # rare set pieces search the ring for room
+				var a := TAU * (i + rng.randf_range(0.0, 0.7)) / n + attempt * 0.53
+				var r := rng.randf_range(float(ring[0]), float(ring[1])) if ring.size() == 2 else 80.0
+				r *= size_m / 180.0  # rings are authored for the 180 m expedition map
+				p = Vector2(cos(a), sin(a)) * r
+				ang = a
+				if not (_blocked(p, avoid, clear) or _blocked(p, taken, reach * 0.7)):
+					ok = true
+					break
+			if not ok:
 				continue  # never over a site, route or colony district, nor inside another landmark
 			taken.append([p, reach * 0.7])
 			var mi := MeshInstance3D.new()
@@ -161,13 +171,19 @@ static func build(terrain: Node3D, key: String, seed_value: int, avoid: Array, s
 			var box: AABB = src[2]
 			var half_w := maxf(box.size.x, box.size.z) * s * 0.4
 			var lo := INF
+			var mean := 0.0
 			for k: int in 9:
 				var qq := p + (Vector2.from_angle(TAU * k / 8.0) * half_w if k < 8 else Vector2.ZERO)
-				lo = minf(lo, float(terrain.call("height_at", clampf(qq.x, -size_m * 0.49, size_m * 0.49), clampf(qq.y, -size_m * 0.49, size_m * 0.49))))
+				var hq := float(terrain.call("height_at", clampf(qq.x, -size_m * 0.49, size_m * 0.49), clampf(qq.y, -size_m * 0.49, size_m * 0.49)))
+				lo = minf(lo, hq)
+				mean += hq / 9.0
+			if it.has("tilt"):
+				lo = lerpf(lo, mean, 0.75)  # a hull spans dunes: rest it on the average ground, the sink buries the rest
 			var y := lo - box.position.y * s - box.size.y * s * DictUtil.get_float(it, "sink", 0.06)
 			var basis := Basis(Vector3.UP, rng.randf() * TAU)
 			var tilt := deg_to_rad(DictUtil.get_float(it, "tilt", 0.0))
-			if tilt > 0.0:  # a crashed wreck: nose ploughed in, rolled onto one side
+			if tilt > 0.0:  # a crashed wreck lying broadside to the player: nose ploughed in, rolled over
+				basis = Basis(Vector3.UP, -ang + rng.randf_range(-0.35, 0.35) + (PI if rng.randf() < 0.5 else 0.0))
 				basis = basis * Basis.from_euler(Vector3(rng.randf_range(0.4, 1.0) * tilt, 0.0, rng.randf_range(-1.0, 1.0) * tilt))
 				var live := (src[0] as Mesh).surface_get_material(0)
 				if live is ShaderMaterial:  # dead hull: power strips long gone, sand-scoured paint
@@ -176,7 +192,9 @@ static func build(terrain: Node3D, key: String, seed_value: int, avoid: Array, s
 					dead.set_shader_parameter("roughness", 0.9)
 					dead.set_shader_parameter("metallic", 0.05)
 					mi.material_override = dead
-			mi.transform = Transform3D(basis.scaled(Vector3.ONE * s), Vector3(p.x, y, p.y)) * (src[1] as Transform3D)
+			# Centre the footprint on p (pivots sit anywhere: hull wrecks pivot at the stern).
+			var off := basis.scaled(Vector3.ONE * s) * Vector3(box.get_center().x, 0.0, box.get_center().z)
+			mi.transform = Transform3D(basis.scaled(Vector3.ONE * s), Vector3(p.x, y, p.y) - off) * (src[1] as Transform3D)
 			mi.visibility_range_end = 600.0
 			root.add_child(mi)
 	_cliffs(root, terrain, DictUtil.get_arr(spec, "cliffs"), rng, size_m)
