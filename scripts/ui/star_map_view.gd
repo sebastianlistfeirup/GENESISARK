@@ -7,6 +7,7 @@ signal planet_selected(location_id: String)
 
 var selected := ""
 var _hover := ""
+var _icons: Dictionary = {}  # location -> TextureRect with the planet_icon shader
 
 
 func _ready() -> void:
@@ -59,9 +60,11 @@ func _draw() -> void:
 		elif loc == _hover:
 			draw_arc(p, rad + 6, 0, TAU, 32, Color(UiKit.TEXT, 0.5), 1.0)
 		draw_circle(p, rad, col)
+		if not pid.is_empty():
+			_place_icon(loc, pid, p, rad)
 		if loc in gs.campaign.visited and not pid.is_empty():
 			draw_arc(p, rad + 2, 0, TAU, 24, UiKit.TEXT, 1.0)
-		draw_string(font, p + Vector2(-60, rad + 18), str(content.locations[loc].get("name", loc)), HORIZONTAL_ALIGNMENT_CENTER, 120, 14, UiKit.TEXT)
+		draw_string(font, p + Vector2(-60, rad + 24), str(content.locations[loc].get("name", loc)), HORIZONTAL_ALIGNMENT_CENTER, 120, 14, UiKit.TEXT)
 	var ark := _pos(here)
 	draw_colored_polygon(PackedVector2Array([ark + Vector2(0, -12), ark + Vector2(8, 8), ark + Vector2(0, 4), ark + Vector2(-8, 8)]), UiKit.AMBER)
 	draw_string(font, ark + Vector2(12, 4), "ARK", HORIZONTAL_ALIGNMENT_LEFT, -1, 12, UiKit.AMBER)
@@ -89,3 +92,34 @@ func _hit(p: Vector2) -> String:
 		if _pos(loc).distance_to(p) < 22:
 			return loc
 	return ""
+
+
+## Each world as a small rendered planet (same colours as in space) over its dot.
+func _place_icon(loc: String, pid: String, p: Vector2, rad: float) -> void:
+	var icon: TextureRect = _icons.get(loc)
+	if icon == null:
+		var planet := GameSession.content.planet(pid)
+		var biome := str(planet.get("biome_id", "green"))
+		var b: Dictionary = PlanetLook.BIOMES.get(biome, PlanetLook.BIOMES["green"])
+		var m := ShaderMaterial.new()
+		m.shader = preload("res://art/shaders/planet_icon.gdshader")
+		m.set_shader_parameter("base_color", Color(str(DictUtil.get_dict(planet, "palette").get("nature", "#4f8a5a"))))
+		m.set_shader_parameter("ocean_color", Color(str(b["ocean"])))
+		m.set_shader_parameter("high_color", Color(str(b["high"])))
+		m.set_shader_parameter("atmo_color", Color(str(b["atmo"])))
+		m.set_shader_parameter("sea_level", float(b["sea"]))
+		m.set_shader_parameter("banding", float(b["banding"]))
+		m.set_shader_parameter("seed", float(posmod(hash(pid), 997)))
+		m.set_shader_parameter("spin", 0.0 if FxEffect.reduced_motion() else 0.05)
+		icon = TextureRect.new()
+		var tex := PlaceholderTexture2D.new()
+		tex.size = Vector2(64, 64)
+		icon.texture = tex
+		icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		icon.material = m
+		icon.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		add_child(icon)
+		_icons[loc] = icon
+	var d := (rad + 3.0) * 2.0
+	icon.size = Vector2(d, d)
+	icon.position = p - icon.size * 0.5
