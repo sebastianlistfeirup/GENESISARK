@@ -4,14 +4,14 @@
 [ext_resource type="ArrayMesh" path="res://assets/Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Corp_LandingPad_02.res" id="2_1076u"]
 [ext_resource type="Material" path="res://assets/Synty/PolygonSciFiWorlds/Materials/Alts/PolygonScifiWorlds_01_A_mat.tres" id="3_40ci6"]
 
-[node name="building_drone_hub" type="Node3D" unique_id=126393615]
+[node name="building_drone_hub" type="Node3D" unique_id=1729830497]
 metadata/synty_source = "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Buildings/SM_Bld_Corp_LandingPad_02.tscn"
 metadata/synty_fit = "footprint"
 
-[node name="Model" type="Node3D" parent="." unique_id=896873794]
+[node name="Model" type="Node3D" parent="." unique_id=279755019]
 transform = Transform3D(0.2360184, 0, 0, 0, 0.2360184, 0, 0, 0, 0.2360184, 0, 0.073318176, -0.8817303)
 
-[node name="SM_Bld_Corp_LandingPad_02" type="MeshInstance3D" parent="Model" unique_id=964102753 instance=ExtResource("1_vs0r2")]
+[node name="SM_Bld_Corp_LandingPad_02" type="MeshInstance3D" parent="Model" unique_id=493818049 instance=ExtResource("1_vs0r2")]
 gi_mode = 2
 mesh = ExtResource("2_1076u")
 surface_material_override/0 = ExtResource("3_40ci6")

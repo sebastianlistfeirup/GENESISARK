@@ -4,14 +4,14 @@
 [ext_resource type="ArrayMesh" path="res://assets/Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Scav_Refinery_01.res" id="2_godcp"]
 [ext_resource type="Material" path="res://assets/Synty/PolygonSciFiWorlds/Materials/Alts/PolygonScifiWorlds_01_A_mat.tres" id="3_hf4f3"]
 
-[node name="building_mine" type="Node3D" unique_id=1358925894]
+[node name="building_mine" type="Node3D" unique_id=1740756924]
 metadata/synty_source = "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Buildings/SM_Bld_Scav_Refinery_01.tscn"
 metadata/synty_fit = "footprint"
 
-[node name="Model" type="Node3D" parent="." unique_id=917978631]
+[node name="Model" type="Node3D" parent="." unique_id=560352252]
 transform = Transform3D(0.3138819, 0, 0, 0, 0.3138819, 0, 0, 0, 0.3138819, 0, 0, 0)
 
-[node name="SM_Bld_Scav_Refinery_01" type="MeshInstance3D" parent="Model" unique_id=1635437446 instance=ExtResource("1_yl5f1")]
+[node name="SM_Bld_Scav_Refinery_01" type="MeshInstance3D" parent="Model" unique_id=1502650702 instance=ExtResource("1_yl5f1")]
 gi_mode = 2
 mesh = ExtResource("2_godcp")
 surface_material_override/0 = ExtResource("3_hf4f3")

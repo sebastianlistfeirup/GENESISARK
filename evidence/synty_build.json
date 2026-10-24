@@ -692,11 +692,9 @@
       "warnings": []
     },
     {
-      "atlas_materials": 2,
+      "atlas_materials": 0,
       "fit": "footprint",
-      "notes": [
-        "no atlas texture staged for res:"
-      ],
+      "notes": [],
       "ok": true,
       "proxy_m": [
         14.2,
@@ -705,16 +703,16 @@
       ],
       "reimport": false,
       "rig": "",
-      "scale": 0.6188,
+      "scale": 7.4771,
       "scene": "res://art/prefabs/building.ark_core.tscn",
       "size_m": [
-        12.35,
-        7.83,
-        10.2
+        14.2,
+        5.36,
+        5.36
       ],
       "slot": "building.ark_core",
-      "source": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Buildings/SM_Bld_Corp_Comms_01.tscn",
-      "summary": "footprint x0.619 -> 12.3x7.8x10.2 m (proxy 14.2x10.0x10.2)",
+      "source": "res://assets/imported/meshy/ark_landed.glb",
+      "summary": "footprint x7.477 -> 14.2x5.4x5.4 m (proxy 14.2x10.0x10.2)",
       "uses_atlas": false,
       "warnings": []
     },

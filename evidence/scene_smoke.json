@@ -96,7 +96,7 @@
       "ok": true
     },
     {
-      "detail": "dyaw=-0.61",
+      "detail": "dyaw=-0.60",
       "name": "pad_look_turns_camera",
       "ok": true
     },
@@ -284,5 +284,5 @@
   "engine_version": "4.7.1-stable (official)",
   "failures": [],
   "status": "PASS",
-  "timestamp": "2026-10-24T11:44:47"
+  "timestamp": "2026-10-24T11:56:50"
 }

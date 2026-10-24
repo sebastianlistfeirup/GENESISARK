@@ -26,7 +26,7 @@
     }
   },
   "content_version": "0.1.0",
-  "elapsed_ms": 154501,
+  "elapsed_ms": 187884,
   "engine_version": "4.7.1-stable (official)",
   "runs": [
     {
@@ -45,7 +45,7 @@
         "lost": 0,
         "viable": 49340
       },
-      "ms": 7324,
+      "ms": 7490,
       "opening_days": 116,
       "own_kw": 312.0,
       "planet": "viridia",
@@ -79,7 +79,7 @@
         "lost": 0,
         "viable": 49400
       },
-      "ms": 7151,
+      "ms": 7368,
       "opening_days": 126,
       "own_kw": 292.0,
       "planet": "viridia",
@@ -113,7 +113,7 @@
         "lost": 0,
         "viable": 49260
       },
-      "ms": 7395,
+      "ms": 10628,
       "opening_days": 55,
       "own_kw": 312.0,
       "planet": "viridia",
@@ -147,7 +147,7 @@
         "lost": 0,
         "viable": 49340
       },
-      "ms": 6778,
+      "ms": 9901,
       "opening_days": 144,
       "own_kw": 278.4,
       "planet": "pelagos",
@@ -180,7 +180,7 @@
         "lost": 0,
         "viable": 49400
       },
-      "ms": 6713,
+      "ms": 9559,
       "opening_days": 132,
       "own_kw": 261.2,
       "planet": "pelagos",
@@ -213,7 +213,7 @@
         "lost": 0,
         "viable": 49260
       },
-      "ms": 7215,
+      "ms": 8939,
       "opening_days": 57,
       "own_kw": 288.0,
       "planet": "pelagos",
@@ -248,7 +248,7 @@
         "lost": 0,
         "viable": 49440
       },
-      "ms": 12054,
+      "ms": 14799,
       "opening_days": 77,
       "own_kw": 577.2,
       "planet": "ferrum",
@@ -284,7 +284,7 @@
         "lost": 0,
         "viable": 49440
       },
-      "ms": 11450,
+      "ms": 14307,
       "opening_days": 114,
       "own_kw": 567.6,
       "planet": "ferrum",
@@ -320,7 +320,7 @@
         "lost": 0,
         "viable": 49360
       },
-      "ms": 13160,
+      "ms": 16620,
       "opening_days": 40,
       "own_kw": 655.2,
       "planet": "ferrum",
@@ -354,7 +354,7 @@
         "lost": 0,
         "viable": 49340
       },
-      "ms": 9110,
+      "ms": 13285,
       "opening_days": 76,
       "own_kw": 360.0,
       "planet": "sere",
@@ -388,7 +388,7 @@
         "lost": 0,
         "viable": 49400
       },
-      "ms": 8709,
+      "ms": 12453,
       "opening_days": 92,
       "own_kw": 337.0,
       "planet": "sere",
@@ -422,7 +422,7 @@
         "lost": 0,
         "viable": 49260
       },
-      "ms": 9607,
+      "ms": 11885,
       "opening_days": 36,
       "own_kw": 378.0,
       "planet": "sere",
@@ -456,7 +456,7 @@
         "lost": 0,
         "viable": 49340
       },
-      "ms": 7930,
+      "ms": 9591,
       "opening_days": 171,
       "own_kw": 398.4,
       "planet": "nivalis",
@@ -490,7 +490,7 @@
         "lost": 0,
         "viable": 49400
       },
-      "ms": 7494,
+      "ms": 8220,
       "opening_days": 157,
       "own_kw": 367.2,
       "planet": "nivalis",
@@ -524,7 +524,7 @@
         "lost": 0,
         "viable": 49260
       },
-      "ms": 8314,
+      "ms": 8309,
       "opening_days": 83,
       "own_kw": 439.2,
       "planet": "nivalis",
@@ -558,7 +558,7 @@
         "lost": 0,
         "viable": 49340
       },
-      "ms": 8286,
+      "ms": 8196,
       "opening_days": 140,
       "own_kw": 378.0,
       "planet": "umbra",
@@ -592,7 +592,7 @@
         "lost": 0,
         "viable": 49400
       },
-      "ms": 7526,
+      "ms": 7524,
       "opening_days": 121,
       "own_kw": 342.0,
       "planet": "umbra",
@@ -626,7 +626,7 @@
         "lost": 0,
         "viable": 49260
       },
-      "ms": 8285,
+      "ms": 8810,
       "opening_days": 55,
       "own_kw": 396.0,
       "planet": "umbra",
@@ -645,5 +645,5 @@
       "year": 40.0
     }
   ],
-  "timestamp": "2026-10-24T09:11:50"
+  "timestamp": "2026-10-24T11:49:14"
 }

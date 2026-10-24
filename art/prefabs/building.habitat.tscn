@@ -4,14 +4,14 @@
 [ext_resource type="ArrayMesh" path="res://assets/Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Pod_Hab_Small_01.res" id="2_i8e6n"]
 [ext_resource type="Material" path="res://assets/Synty/PolygonSciFiWorlds/Materials/Alts/PolygonScifiWorlds_02_A_mat.tres" id="3_c4obl"]
 
-[node name="building_habitat" type="Node3D" unique_id=1871487709]
+[node name="building_habitat" type="Node3D" unique_id=860809299]
 metadata/synty_source = "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Buildings/SM_Bld_Pod_Hab_Small_01.tscn"
 metadata/synty_fit = "footprint"
 
-[node name="Model" type="Node3D" parent="." unique_id=363221884]
+[node name="Model" type="Node3D" parent="." unique_id=1027406613]
 transform = Transform3D(0.7042138, 0, 0, 0, 0.7042138, 0, 0, 0, 0.7042138, 0, 0.91547793, -0.049999952)
 
-[node name="SM_Bld_Pod_Hab_Small_01" type="MeshInstance3D" parent="Model" unique_id=1814340264 instance=ExtResource("1_c1x0m")]
+[node name="SM_Bld_Pod_Hab_Small_01" type="MeshInstance3D" parent="Model" unique_id=1223962729 instance=ExtResource("1_c1x0m")]
 gi_mode = 2
 mesh = ExtResource("2_i8e6n")
 surface_material_override/0 = ExtResource("3_c4obl")

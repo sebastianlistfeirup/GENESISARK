@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" path="res://assets/Synty/SciFiSpace/FBX/SM_Ship_Bomber_01.fbx" id="1_tebim"]
 
-[node name="surface_lander" type="Node3D" unique_id=1368647284]
+[node name="surface_lander" type="Node3D" unique_id=1153196781]
 metadata/synty_source = "res://assets/Synty/SciFiSpace/FBX/SM_Ship_Bomber_01.fbx"
 metadata/synty_fit = "size"
 
