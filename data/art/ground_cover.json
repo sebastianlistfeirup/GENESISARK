@@ -19,9 +19,31 @@
     }
    ],
    "motes": "fx.spores",
-   "motes_scale": 2.5
+   "motes_scale": 2.5,
+   "fauna": {
+    "mesh": "res://assets/Synty/Nature/Jungle/FBX/FX_Bird_Mesh_01.fbx",
+    "flocks": 3,
+    "count": 9,
+    "scale": 1.6
+   },
+   "fauna_low": {
+    "mesh": "res://assets/Synty/Nature/Alpine/FBX/FX/FX_Butterfly_Mesh_Alpine_01.fbx",
+    "flocks": 14,
+    "count": 3,
+    "scale": 0.45,
+    "height": [
+     1.0,
+     2.2
+    ],
+    "radius": [
+     1.5,
+     3.5
+    ]
+   }
   },
   "terrain": {
+   "ground_tex": "res://assets/Synty/Nature/Jungle/Textures/Terrain/Grass_Debris_Texture_01.png",
+   "cliff_tex": "res://assets/Synty/Nature/Jungle/Textures/Terrain/RockWall_Texture_01.png",
    "amp": 1.25,
    "ground": "#4c8a2f",
    "patch": "#3a7426",
@@ -199,9 +221,17 @@
      "size": 22,
      "ring": "#cfe4ee"
     }
-   ]
+   ],
+   "fauna": {
+    "mesh": "res://assets/Synty/Nature/Jungle/FBX/FX_Bird_Mesh_01.fbx",
+    "flocks": 4,
+    "count": 11,
+    "scale": 1.9
+   }
   },
   "terrain": {
+   "ground_tex": "res://assets/Synty/Nature/Swamp/Textures/Terrain/Moss_Swamp_Texture_01.png",
+   "cliff_tex": "res://assets/Synty/Nature/Jungle/Textures/Terrain/RockWall_Texture_01.png",
    "amp": 1.55,
    "water": true,
    "ground": "#4f8f5c",
@@ -384,6 +414,8 @@
    "motes_scale": 2.0
   },
   "terrain": {
+   "ground_tex": "res://assets/Synty/Nature/Arid/Textures/Dirt_Texture_Red_01.png",
+   "cliff_tex": "res://assets/Synty/Nature/Jungle/Textures/Terrain/RockWall_Texture_01.png",
    "amp": 1.1,
    "terraces": 2.6,
    "ground": "#c8662f",
@@ -539,6 +571,8 @@
    "motes_scale": 2.5
   },
   "terrain": {
+   "ground_tex": "res://assets/Synty/Nature/Jungle/Textures/Terrain/Sand_Wavy_Texture_01.png",
+   "cliff_tex": "res://assets/Synty/Nature/Jungle/Textures/Terrain/RockWall_Texture_01.png",
    "amp": 0.85,
    "dunes": 1.1,
    "ground": "#dcb57a",
@@ -686,6 +720,8 @@
    "motes_scale": 2.5
   },
   "terrain": {
+   "ground_tex": "res://assets/Synty/Nature/Alpine/Textures/Snow_01.png",
+   "cliff_tex": "res://assets/Synty/Nature/Alpine/Textures/Snowcliff_Texture.png",
    "amp": 1.3,
    "ridges": 0.9,
    "ground": "#e2edf2",
@@ -846,6 +882,8 @@
    "aurora_high": "#c05cff"
   },
   "terrain": {
+   "ground_tex": "res://assets/Synty/Nature/Alpine/Textures/Snow_01.png",
+   "cliff_tex": "res://assets/Synty/Nature/Jungle/Textures/Terrain/RockWall_Texture_01.png",
    "amp": 1.2,
    "ridges": 1.2,
    "ground": "#4c5a74",

@@ -11,7 +11,7 @@
       "ok": true
     },
     {
-      "detail": "1.50 m/s (gang 4.2)",
+      "detail": "1.51 m/s (gang 4.2)",
       "name": "half_throw_walks_slowly",
       "ok": true
     },
@@ -21,12 +21,12 @@
       "ok": true
     },
     {
-      "detail": "max 0.233 m/s pr. frame (grænse 0.327)",
+      "detail": "max 0.233 m/s pr. frame (grænse 0.277)",
       "name": "speed_never_jumps",
       "ok": true
     },
     {
-      "detail": "0.42 s, max 0.317 m/s pr. frame",
+      "detail": "0.45 s, max 0.267 m/s pr. frame",
       "name": "release_eases_to_stop",
       "ok": true
     }

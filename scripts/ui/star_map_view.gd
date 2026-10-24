@@ -98,28 +98,34 @@ func _hit(p: Vector2) -> String:
 func _place_icon(loc: String, pid: String, p: Vector2, rad: float) -> void:
 	var icon: TextureRect = _icons.get(loc)
 	if icon == null:
-		var planet := GameSession.content.planet(pid)
-		var biome := str(planet.get("biome_id", "green"))
-		var b: Dictionary = PlanetLook.BIOMES.get(biome, PlanetLook.BIOMES["green"])
-		var m := ShaderMaterial.new()
-		m.shader = preload("res://art/shaders/planet_icon.gdshader")
-		m.set_shader_parameter("base_color", Color(str(DictUtil.get_dict(planet, "palette").get("nature", "#4f8a5a"))))
-		m.set_shader_parameter("ocean_color", Color(str(b["ocean"])))
-		m.set_shader_parameter("high_color", Color(str(b["high"])))
-		m.set_shader_parameter("atmo_color", Color(str(b["atmo"])))
-		m.set_shader_parameter("sea_level", float(b["sea"]))
-		m.set_shader_parameter("banding", float(b["banding"]))
-		m.set_shader_parameter("seed", float(posmod(hash(pid), 997)))
-		m.set_shader_parameter("spin", 0.0 if FxEffect.reduced_motion() else 0.05)
-		icon = TextureRect.new()
-		var tex := PlaceholderTexture2D.new()
-		tex.size = Vector2(64, 64)
-		icon.texture = tex
-		icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-		icon.material = m
-		icon.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		icon = planet_icon(pid)
 		add_child(icon)
 		_icons[loc] = icon
 	var d := (rad + 3.0) * 2.0
 	icon.size = Vector2(d, d)
 	icon.position = p - icon.size * 0.5
+
+
+## A lit, slowly turning planet for any 2D panel (canvas planet shader).
+static func planet_icon(pid: String) -> TextureRect:
+	var planet := GameSession.content.planet(pid)
+	var biome := str(planet.get("biome_id", "green"))
+	var b: Dictionary = PlanetLook.BIOMES.get(biome, PlanetLook.BIOMES["green"])
+	var m := ShaderMaterial.new()
+	m.shader = preload("res://art/shaders/planet_icon.gdshader")
+	m.set_shader_parameter("base_color", Color(str(DictUtil.get_dict(planet, "palette").get("nature", "#4f8a5a"))))
+	m.set_shader_parameter("ocean_color", Color(str(b["ocean"])))
+	m.set_shader_parameter("high_color", Color(str(b["high"])))
+	m.set_shader_parameter("atmo_color", Color(str(b["atmo"])))
+	m.set_shader_parameter("sea_level", float(b["sea"]))
+	m.set_shader_parameter("banding", float(b["banding"]))
+	m.set_shader_parameter("seed", float(posmod(hash(pid), 997)))
+	m.set_shader_parameter("spin", 0.0 if FxEffect.reduced_motion() else 0.05)
+	var icon := TextureRect.new()
+	var tex := PlaceholderTexture2D.new()
+	tex.size = Vector2(64, 64)
+	icon.texture = tex
+	icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	icon.material = m
+	icon.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	return icon

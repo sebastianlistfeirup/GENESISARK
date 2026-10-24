@@ -65,7 +65,8 @@ func _init() -> void:
 	# Animations: retarget each clip file (first pass), then build one library per humanoid slot.
 	var libs := AnimationLibraryBuilder.load_mappings(libs_path)
 	var anim_reports: Array = []
-	var anims: Dictionary = DictUtil.get_dict(doc, "animations")
+	# data/art/animation_overrides.json (D-040) is merged over the choices' animations.
+	var anims: Dictionary = AnimationLibraryBuilder.merged_animations(DictUtil.get_dict(doc, "animations"))
 	for slot: String in anims.keys():
 		var an: Dictionary = anims[slot]
 		if not str(an.get("status", "")) in SyntyWrapperBuilder.BUILD_STATUS:
@@ -73,14 +74,26 @@ func _init() -> void:
 		var states: Dictionary = {}
 		var pending := false
 		for state: String in DictUtil.get_dict(an, "states").keys():
-			var src := str(an["states"][state])
-			var mp := src if src.begins_with("res://") else "res://assets/imported/" + src
-			var rt := HumanoidBoneMapper.apply_retarget(mp)
-			if not rt.get("ok", false):
-				anim_reports.append({"slot": slot, "state": state, "ok": false, "error": rt.get("error", "")})
+			var spec: Variant = an["states"][state]
+			var ok := true
+			for src: String in AnimationLibraryBuilder.spec_sources(spec):
+				var rt := HumanoidBoneMapper.apply_retarget(_res(src))
+				if not rt.get("ok", false):
+					anim_reports.append({"slot": slot, "state": state, "ok": false, "error": rt.get("error", "")})
+					ok = false
+					break
+				pending = pending or bool(rt.get("changed", false))
+			if not ok:
 				continue
-			pending = pending or bool(rt.get("changed", false))
-			states[state] = mp
+			if spec is Dictionary:
+				var d: Dictionary = (spec as Dictionary).duplicate()
+				d["source"] = _res(str(d.get("source", "")))
+				for k: String in ["upper", "blend_with"]:
+					if d.has(k):
+						d[k] = _res(str(d[k]))
+				states[state] = d
+			else:
+				states[state] = _res(str(spec))
 		if pending:
 			report.append({"slot": slot + " (animations)", "ok": true, "reimport": true, "summary": "retarget set on clips"})
 			print("%-28s anim retarget set on %d clips (re-import, then build again)" % [slot, states.size()])
@@ -99,3 +112,7 @@ func _init() -> void:
 	if report.any(func(r: Dictionary) -> bool: return r.get("reimport", false)):
 		print("import settings updated (atlas material): run  godot --headless --path . --import  once more")
 	quit(1 if failed > 0 else 0)
+
+
+static func _res(src: String) -> String:
+	return src if src.begins_with("res://") else "res://assets/imported/" + src

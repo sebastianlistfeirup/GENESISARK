@@ -74,7 +74,7 @@ func _ready() -> void:
 	terrain.build()
 	terrain.scatter(hash(ex.site_id), 70 if GroundCover.spec_for(str(planet.get("id")), "").is_empty() else 0, avoid)
 	add_child(GroundCover.build(terrain, str(planet.get("id")), hash(ex.site_id) + 7, avoid, 180.0, str(planet.get("biome_id"))))
-	add_child(PlanetSky.build(str(planet.get("id")), str(planet.get("biome_id"))))
+	add_child(PlanetSky.build(str(planet.get("id")), str(planet.get("biome_id")), terrain))
 	_place_lander()
 	SceneDressing.attach(self, str(site.get("id", "")), terrain)
 	_place_points(pts)
@@ -97,6 +97,7 @@ func _ready() -> void:
 		captain.visual_pivot.add_child(lamp)
 	hud = GameHud.new()
 	add_child(hud)
+	_maybe_landing_intro(ex)
 	waypoints = WaypointLayer.new()
 	add_child(waypoints)
 	for key: String in _markers.keys():
@@ -406,3 +407,42 @@ func debug_action(action: String) -> void:
 			captain.teleport(Vector3(0, terrain.height_at(0, 12) + 0.5, 12), 0.0)
 			captain.camera_rig.pitch = -0.6
 			captain.camera_rig.distance = 14.0
+
+
+## The lander comes down on a fresh expedition: it drops from the sky on its
+## thrusters, kicks up dust, and the captain steps out. Visual only (the domain
+## already holds the landed state); skipped in tests, evidence captures (unless
+## --action=intro), saved mid-expedition, and shortened with reduced motion.
+func _maybe_landing_intro(ex: ExpeditionState) -> void:
+	if AppFlow.test_mode or ex.elapsed_s > 0.5 or not ex.samples.is_empty():
+		return
+	if DebugCapture.requested() and str(AppFlow.params.get("action", "")) != "intro":
+		return
+	var lander: Node3D = _markers.get("lander")
+	if lander == null or lander.get_child_count() == 0:
+		return
+	var body := lander.get_child(0) as Node3D  # the VisualSlot
+	var dur := 0.6 if FxEffect.reduced_motion() else 3.4
+	var height := 38.0
+	body.position.y = height
+	var thr := VisualSlot.make("fx.thruster")
+	thr.rotation_degrees.x = -90.0  # plume points down at the ground
+	body.add_child(thr)
+	captain.visible = false
+	captain.input_enabled = false
+	captain.camera_rig.pitch = 0.12
+	captain.camera_rig.yaw = captain.camera_rig.yaw + 0.5
+	captain.camera_rig.snap()
+	var t := create_tween()
+	t.tween_property(body, "position:y", 0.0, dur).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+	t.tween_callback(func() -> void:
+		thr.queue_free()
+		var dust := VisualSlot.make("fx.landing_dust")
+		lander.add_child(dust)
+		get_tree().create_timer(4.0).timeout.connect(dust.queue_free)
+		AudioService.play("sfx_landing", "SFX", -6.0))
+	t.tween_interval(0.0 if FxEffect.reduced_motion() else 0.6)
+	t.tween_callback(func() -> void:
+		captain.visible = true
+		captain.input_enabled = true
+		captain.camera_rig.pitch = CaptainCamera.REST_PITCH)

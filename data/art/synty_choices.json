@@ -50,8 +50,10 @@
    "status": "approved"
   },
   "building.ark_core": {
-   "source": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Buildings/SM_Bld_Corp_Comms_01.tscn",
-   "status": "approved"
+   "source": "res://assets/imported/meshy/ark_landed.glb",
+   "status": "approved",
+   "rotation_y": 0,
+   "note": "Meshy text-to-3D (owner's account, 24.10.2026), local only; receipt in meshy_work/receipts/ark_a.json"
   },
   "building.module_filter": {
    "source": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_PowerCellCharger_01.tscn",

@@ -15,6 +15,8 @@ uniform float alpha_cut = 0.45;
 uniform float wind = 0.06;
 uniform float glow = 0.0;
 uniform vec3 glow_color : source_color = vec3(0.3, 1.0, 0.8);
+uniform float near_fade_start = 1.2;  // metres from the camera: foliage dithers away
+uniform float near_fade_end = 3.2;    // so it never fills the screen in front of the captain
 
 varying float leaf_mask;
 
@@ -43,6 +45,12 @@ void fragment() {
 	vec3 leaf = hsv_shift(lc.rgb) * leaf_tint;
 	ALBEDO = mix(tc * trunk_tint, leaf, leaf_mask);
 	if (leaf_mask > 0.5 && lc.a < alpha_cut) {
+		discard;
+	}
+	float cam_d = length(VERTEX);
+	float keep = smoothstep(near_fade_start, near_fade_end, cam_d);
+	float bayer = fract(dot(floor(FRAGCOORD.xy), vec2(0.5, 0.25)) + fract(FRAGCOORD.y * 0.5) * 0.5);
+	if (keep < 0.999 && bayer > keep) {
 		discard;
 	}
 	ROUGHNESS = 0.85;

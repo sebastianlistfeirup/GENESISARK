@@ -1,14 +1,43 @@
 {
-  "_note": "Maps game animation states to clip names inside an imported character's AnimationPlayer (bible p.24-25: in-place locomotion; playback speed follows real movement speed). Rename the clips here to match your imported Sidekick/Synty/Mixamo clips. speed_ref = the ground speed (m/s) the clip was authored for.",
-  "char.captain": {
-    "idle": { "clip": "Idle", "loop": true },
-    "walk": { "clip": "Walk", "loop": true, "speed_ref": 1.5 },
-    "run": { "clip": "Run", "loop": true, "speed_ref": 4.5 },
-    "interact": { "clip": "Interact", "loop": false },
-    "sample": { "clip": "Kneel", "loop": true },
-    "blend_s": 0.18
-  },
-  "char.citizen_adult": { "idle": { "clip": "Idle", "loop": true }, "walk": { "clip": "Walk", "loop": true, "speed_ref": 1.4 }, "blend_s": 0.25 },
-  "char.citizen_child": { "idle": { "clip": "Idle", "loop": true }, "walk": { "clip": "Walk", "loop": true, "speed_ref": 1.2 }, "blend_s": 0.25 },
-  "char.robot_worker": { "idle": { "clip": "Idle", "loop": true }, "walk": { "clip": "Walk", "loop": true, "speed_ref": 1.2 }, "build": { "clip": "Work", "loop": true }, "blend_s": 0.2 }
+ "_note": "Per character slot: how CharacterAnimator plays the built AnimationLibrary (bible p.24-25: in-place locomotion; playback follows real speed; blend times are data). speed_ref = ground speed (m/s) the clip covers at 1x, MEASURED by tools/anim_probe.gd on the retargeted model (planted-foot speed, cross-checked with Synty root-motion twins; evidence/animation_pass/measurements.json). left_contact_phase = normalised time the left foot lands (picks the stop foot). travel_curve = metres the stop covers since its start every curve_step_s (root-motion twin, scaled to the rig) for distance-matched stops. blend = crossfade seconds by state family (move = gaits, stop, turn, idle_alt; 'from>to', '*>to', 'from>*', 'default'). Models with their own AnimationPlayer may still map states to clip names with 'clip'.",
+ "char.captain": {
+  "walk_slow": { "speed_ref": 1.49, "left_contact_phase": 0.58 },
+  "walk_mid": { "speed_ref": 2.45, "left_contact_phase": 0.88 },
+  "walk": { "speed_ref": 4.3, "left_contact_phase": 0.86 },
+  "run": { "speed_ref": 7.03, "left_contact_phase": 0.86 },
+  "stop_walk_slow_l": { "curve_step_s": 0.1, "travel_curve": [0.0, 0.15, 0.28, 0.38, 0.48, 0.58, 0.66, 0.73, 0.79, 0.83, 0.84] },
+  "stop_walk_slow_r": { "curve_step_s": 0.1, "travel_curve": [0.0, 0.15, 0.28, 0.38, 0.48, 0.58, 0.66, 0.73, 0.79, 0.83, 0.84] },
+  "stop_walk_l": { "curve_step_s": 0.1, "travel_curve": [0.0, 0.49, 0.93, 1.3, 1.6, 1.84, 2.03, 2.18, 2.28, 2.34] },
+  "stop_walk_r": { "curve_step_s": 0.1, "travel_curve": [0.0, 0.49, 0.93, 1.3, 1.6, 1.84, 2.03, 2.18, 2.28, 2.34] },
+  "stop_run_l": { "curve_step_s": 0.1, "travel_curve": [0.0, 0.49, 0.93, 1.3, 1.6, 1.84, 2.03, 2.18, 2.28, 2.34] },
+  "stop_run_r": { "curve_step_s": 0.1, "travel_curve": [0.0, 0.49, 0.93, 1.3, 1.6, 1.84, 2.03, 2.18, 2.28, 2.34] },
+  "turn_l": { "yaw_rate": 1.62 },
+  "turn_r": { "yaw_rate": 1.62 },
+  "idle_alt_every_s": [8.0, 18.0],
+  "turn_playback_max": 2.2,
+  "blend": { "default": 0.2, "idle>move": 0.16, "move>move": 0.22, "move>idle": 0.28, "move>stop": 0.1, "stop>idle": 0.3, "stop>move": 0.15,
+   "idle>idle_alt": 0.4, "idle_alt>idle": 0.45, "idle_alt>move": 0.15, "*>turn": 0.12, "turn>idle": 0.25, "turn>move": 0.15,
+   "*>sample": 0.4, "sample>*": 0.35, "*>interact": 0.25, "interact>*": 0.3, "*>build": 0.35 },
+  "blend_s": 0.2
+ },
+ "char.citizen_adult": {
+  "walk": { "speed_ref": 1.49, "left_contact_phase": 0.58 },
+  "run": { "speed_ref": 2.45, "left_contact_phase": 0.88 },
+  "stop_walk_l": { "curve_step_s": 0.1, "travel_curve": [0.0, 0.15, 0.28, 0.38, 0.48, 0.58, 0.66, 0.73, 0.79, 0.83, 0.84] },
+  "stop_walk_r": { "curve_step_s": 0.1, "travel_curve": [0.0, 0.15, 0.28, 0.38, 0.48, 0.58, 0.66, 0.73, 0.79, 0.83, 0.84] },
+  "idle_alt_every_s": [6.0, 15.0],
+  "blend": { "default": 0.25, "idle>move": 0.22, "move>idle": 0.32, "move>stop": 0.1, "stop>idle": 0.3, "idle>idle_alt": 0.45, "idle_alt>idle": 0.5,
+   "idle_alt>move": 0.2, "*>sample": 0.4, "sample>*": 0.35, "*>build": 0.35 },
+  "blend_s": 0.25
+ },
+ "char.citizen_child": {
+  "walk": { "speed_ref": 0.97, "left_contact_phase": 0.56 },
+  "run": { "speed_ref": 1.62, "left_contact_phase": 0.87 },
+  "stop_walk_l": { "curve_step_s": 0.1, "travel_curve": [0.0, 0.1, 0.18, 0.25, 0.31, 0.38, 0.43, 0.48, 0.52, 0.54, 0.55] },
+  "stop_walk_r": { "curve_step_s": 0.1, "travel_curve": [0.0, 0.1, 0.18, 0.25, 0.31, 0.38, 0.43, 0.48, 0.52, 0.54, 0.55] },
+  "idle_alt_every_s": [5.0, 13.0],
+  "blend": { "default": 0.25, "idle>move": 0.2, "move>idle": 0.3, "move>stop": 0.1, "stop>idle": 0.3, "idle>idle_alt": 0.4, "idle_alt>idle": 0.45, "idle_alt>move": 0.2 },
+  "blend_s": 0.25
+ },
+ "char.robot_worker": { "idle": { "clip": "Idle", "loop": true }, "walk": { "clip": "Walk", "loop": true, "speed_ref": 1.2 }, "build": { "clip": "Work", "loop": true }, "blend_s": 0.2 }
 }

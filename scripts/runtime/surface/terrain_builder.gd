@@ -210,6 +210,15 @@ func build() -> void:
 	mat.vertex_color_use_as_albedo = true
 	mat.roughness = 0.95
 	mi.material_override = mat
+	var gt := str(style.get("ground_tex", ""))
+	if not gt.is_empty() and ResourceLoader.exists(gt):
+		# Planet ground detail (luminance only, the planet keeps its colour).
+		var dm := ShaderMaterial.new()
+		dm.shader = preload("res://art/shaders/terrain_detail.gdshader")
+		dm.set_shader_parameter("ground_tex", load(gt))
+		var ct := str(style.get("cliff_tex", gt))
+		dm.set_shader_parameter("cliff_tex", load(ct if ResourceLoader.exists(ct) else gt))
+		mi.material_override = dm
 	add_child(mi)
 	var body := StaticBody3D.new()
 	body.name = "TerrainBody"

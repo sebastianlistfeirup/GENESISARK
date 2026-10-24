@@ -4,14 +4,14 @@
 [ext_resource type="ArrayMesh" path="res://assets/Synty/PolygonSciFiCity/Models/extracted/SM_Prop_Barrier_Pole_01.res" id="2_lkxi7"]
 [ext_resource type="Material" path="res://assets/Synty/PolygonSciFiCity/Materials/Alts/PolygonScifi_01_A_mat.tres" id="3_77not"]
 
-[node name="surface_hazard_marker" type="Node3D" unique_id=1786139717]
+[node name="surface_hazard_marker" type="Node3D" unique_id=1698017247]
 metadata/synty_source = "res://assets/Synty/PolygonSciFiCity/Prefabs/Props/SM_Prop_Barrier_Pole_01.tscn"
 metadata/synty_fit = "natural"
 
-[node name="Model" type="Node3D" parent="." unique_id=1273756137]
+[node name="Model" type="Node3D" parent="." unique_id=1828257274]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.536743e-07, 0, 1.8626451e-06)
 
-[node name="SM_Prop_Barrier_Pole_01" type="MeshInstance3D" parent="Model" unique_id=1118497420 instance=ExtResource("1_4ahf2")]
+[node name="SM_Prop_Barrier_Pole_01" type="MeshInstance3D" parent="Model" unique_id=852847332 instance=ExtResource("1_4ahf2")]
 gi_mode = 2
 mesh = ExtResource("2_lkxi7")
 surface_material_override/0 = ExtResource("3_77not")

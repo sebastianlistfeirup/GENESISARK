@@ -215,10 +215,44 @@ func _run() -> void:
 	ca.prefix = CharacterAnimator.LIB_NAME + "/"
 	ca.cfg = {"idle": {}, "walk": {"speed_ref": 1.5}, "blend_s": 0.1}
 	ca.update("walk", 3.0)
-	var walk_ok := ca.current == "ga/walk" and is_equal_approx(ca.player.speed_scale, 1.8)
+	var walk_ok := ca.current == "ga/walk" and is_equal_approx(ca.player.speed_scale, CharacterAnimator.PLAYBACK_MAX)
 	ca.update("sample", 0.0)
 	check("anim_library_states", walk_ok and ca.current == "ga/idle", "%s %.2f" % [ca.current, ca.player.speed_scale])
 	ca.player.queue_free()
+
+	# D-040 polish: gait by measured speed_ref, distance-matched stop, seeded idle phase per character.
+	var lib2 := AnimationLibrary.new()
+	for st: String in ["idle", "walk_slow", "walk", "stop_walk_l", "stop_walk_r", "idle_alt_a"]:
+		var an := Animation.new()
+		an.length = 1.0
+		an.loop_mode = Animation.LOOP_LINEAR if st in ["idle", "walk_slow", "walk"] else Animation.LOOP_NONE
+		lib2.add_animation(st, an)
+	var curve := [0.0, 0.5, 0.9, 1.2, 1.4, 1.5]
+	var cfg2 := {"walk_slow": {"speed_ref": 1.5}, "walk": {"speed_ref": 4.3}, "blend_s": 0.0,
+		"stop_walk_l": {"travel_curve": curve, "curve_step_s": 0.2}, "stop_walk_r": {"travel_curve": curve, "curve_step_s": 0.2}}
+	var phases: Array = []
+	var gaits: Array = []
+	var stop_ok := false
+	for s: int in 2:
+		var cb := CharacterAnimator.new()
+		cb.player = AnimationPlayer.new()
+		add_child(cb.player)
+		cb.player.add_animation_library(CharacterAnimator.LIB_NAME, lib2)
+		cb.prefix = CharacterAnimator.LIB_NAME + "/"
+		cb.cfg = cfg2
+		cb.anim_seed = 11 + s * 7919
+		cb.update("idle", 0.0)
+		phases.append(cb.player.current_animation_position)
+		cb.update("walk", 1.4, 1.4)
+		gaits.append(cb.current)
+		cb.update("walk", 4.2, 4.2)
+		gaits.append(cb.current)
+		cb.update("idle", 4.0, -1.0, 0.3)  # 0.3 m left to brake: held where 0.3 m of the stop remains (t = 0.6 s)
+		stop_ok = cb.current.begins_with("ga/stop_walk_") and is_zero_approx(cb.player.speed_scale) \
+			and absf(cb.player.current_animation_position - 0.6) < 0.02
+		cb.player.queue_free()
+	check("anim_gait_stop_phase", gaits == ["ga/walk_slow", "ga/walk", "ga/walk_slow", "ga/walk"] and not is_equal_approx(phases[0], phases[1]) and stop_ok,
+		"%s phases=%s stop=%s" % [gaits, phases, stop_ok])
 
 	# Language switch mid-campaign: content reloads translated, the domain state is untouched.
 	DebugFixtures.prepare("fresh")

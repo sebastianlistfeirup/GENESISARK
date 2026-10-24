@@ -53,6 +53,24 @@ Afprøv selve værktøjskæden uden købte filer: `tools/synty/selftest.sh` (fal
 
 ---
 
+## Session 7: sådan er Synty faktisk sat ind (24.10.2026)
+
+Den automatiske kæde ovenfor (karantæne → stage → `assets/imported/`) er erstattet af en enklere vej, fordi Synty nu leverer Godot-pakker:
+
+| Kilde | Hvor lokalt | Hvordan spillet bruger den |
+|---|---|---|
+| Sci-Fi Worlds, Sci-Fi City (Godot 4.6.2-pakker) | `assets/Synty/PolygonSciFiWorlds`, `PolygonSciFiCity`, `PolygonGeneric` | Prefabs flades til wrappers uden vendor-fysik (`SyntyWrapperBuilder.flatten_prefab`) |
+| Sci-Fi Space (kilde-FBX) | `assets/Synty/SciFiSpace/FBX` | Fælles atlas-materiale `art/materials/scifi_space_atlas.tres` (lysstriber gløder) |
+| Nature Biomes ×4 (kilde-FBX) | `assets/Synty/Nature/{Jungle,Swamp,Alpine,Arid}` | `NatureKit` genopbygger materialer fra `MaterialList_*.txt`; planetfarver i `data/art/ground_cover.json` |
+| Figurer (Sci-Fi Worlds `Characters.fbx`, Sci-Fi City `SK_Character_*`) | `assets/Synty/CharactersSrc` | Retarget med humanoid bone map + `fix_silhouette` |
+| ANIMATION Base Locomotion + Idles | `assets/Synty/Animations`, `assets/imported/anim_pass` | Biblioteker pr. figur (`art/animations/*.res`, lokale) via `tools/synty/build_godot_packs.sh` |
+
+Valgene står i `data/art/synty_choices.json` (filstier, ingen købt data). Byg: `tools/synty/build_godot_packs.sh`. Kontaktark til at vælge modeller med øjnene: `tools/synty/gallery.gd` og `tools/synty/nature_gallery.gd`.
+
+**Fælder på Windows** (se også D-033): zip-filer pakkes ud skrivebeskyttede (fjern attributten, ellers bliver teksturer hvide); Godot vælger nogle gange `fbx/importer=1` (FBX2glTF) som ikke findes, sæt `fbx/importer=0`; "safe save" fejler med antivirus (slået fra i editorindstillingerne).
+
+---
+
 ## 1. Download — hvilken version?
 
 Synty sælger hver pakke med flere downloads (fx Unity-pakke, Unreal, "Source Files"/FBX). **(skal verificeres ved import — se Synty FAQ, biblen R7)**

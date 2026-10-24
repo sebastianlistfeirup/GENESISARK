@@ -260,9 +260,11 @@
       "steps": "Byg native desktopversion, kør demo fra rent startstate og genkør domæne-/savetests. Registrér proxyassets og visuelle blokeringer. Pak test-save, logs og næste opgaver. Lav fase 1-tag.",
       "acceptance": "Gate 1 opfyldt med build-ID og faktiske beviser. Hvis eksport eller visuel test mangler, er porten ikke DONE, og årsagen er eksplicit.",
       "fallback": "Fortsæt mulige datatests ved miljøstop; markér ikke en scriptsamling som spilbar demo. Aflevering: commit + faktiske testresultater + relevant billede/video + opdateret STATUS. Porten til næste fase skal være bestået.",
-      "evidence": "evidence/GA-12/result.json",
-      "last_commit": "f614ade",
-      "notes": "Linux- og Windows-eksport lykkedes; Linux-build kørt under Xvfb (screenshot). Mangler: Windows-build kørt på referencemaskinen, visuel kontrol og GA-11 DONE før fase 1-tag."
+      "evidence": [
+        "evidence/GA-12/windows_run.json"
+      ],
+      "last_commit": "399818a",
+      "notes": "Windows-build eksporteret og kørt på målmaskinen (Windows 11, RTX 5090) 24.10.2026: menu, Viridia, Umbra renderer som i editoren (evidence/GA-12/windows_run.json). Mangler kun GA-11 DONE før fase 1-tag."
     },
     {
       "id": "GA-13",
@@ -271,7 +273,7 @@
       "depends_on": [
         "GA-12"
       ],
-      "status": "TODO",
+      "status": "VERIFYING",
       "owner": "claude-code (ferie-session)",
       "paths": [
         "assets/",
@@ -281,9 +283,13 @@
       "steps": "Kontrollér fuld værktøjskæde og actual assetpaths. Importér ét skibsmodul, én humanoid og én terrænprøve. Lav wrappers, skala/collision og materialepalette. Sammenlign med feriedemo før bred udskiftning.",
       "acceptance": "Synty-scener kører på låst engine, navigation og save-ID’er er uændrede. Sourcehash og screenshot ved gameplaykamera er gemt.",
       "fallback": "Ret import i isoleret RigLab; behold proxyversion som rollback.",
-      "evidence": "evidence/GA-13/result.json",
-      "last_commit": "",
-      "notes": "Klar: VisualSlot-registret (81 slots), automatisk Synty-import (tools/synty: pak ud, match, stage, wrappers med tilpasning og atlas, varianter), editor-panelet Asset-slots, samleguide. Selftest 10/10 med falsk pakke. Kræver de købte Synty-filer. Forberedt: bygningskollision følger importerede modeller automatisk (ShapeCollider, D-028)."
+      "evidence": [
+        "evidence/synty_build.json",
+        "evidence/colony_art/",
+        "evidence/flight_surface_art/"
+      ],
+      "last_commit": "399818a",
+      "notes": "Synty integreret 24.10.2026 (D-033/D-036/D-039): 55 slots mappet fra Sci-Fi Worlds, Sci-Fi City, Sci-Fi Space og Nature Biomes; skib, planeter, koloni, figurer. Mangler ejerens visuelle godkendelse."
     },
     {
       "id": "GA-14",
@@ -292,7 +298,7 @@
       "depends_on": [
         "GA-13"
       ],
-      "status": "TODO",
+      "status": "VERIFYING",
       "owner": "claude-code (ferie-session)",
       "paths": [
         "scenes/tests/RigLab.tscn",
@@ -302,9 +308,11 @@
       "steps": "Normalisér rig, in-place locomotion, turn, interact, sample og suit-reaction. Opsæt AnimationTree med afbrydelser og manifest. Test kontaktpunkt ved terminal og prøvetagning.",
       "acceptance": "Gang/løb/stop og interaktion har korrekt fodfæste, greb og eventtid i galleri samt ekspedition. Pause/restore giver ingen posesnap eller dobbeltsample.",
       "fallback": "Skær kompleks hånd-IK; ret clip, rig og socket før mere avanceret runtimekorrektion. Aflevering: commit + faktiske testresultater + relevant billede/video + opdateret STATUS. Porten til næste fase skal være bestået.",
-      "evidence": "evidence/GA-14/result.json",
-      "last_commit": "",
-      "notes": "Klar: CharacterAnimator med bibliotek pr. figur, automatisk humanoid retarget (Synty- og Mixamo-navne) og in-place-klip (D-023), RigLab med audit (evidence/GA-14/groundwork.json). Kræver rig og klip."
+      "evidence": [
+        "evidence/animation_pass/"
+      ],
+      "last_commit": "399818a",
+      "notes": "Kaptajn + 10 kolonistkroppe + børn retargetet (fix_silhouette); RigLab-audit grøn; målte gangarter uden fodglid, stop, drej, handlinger (D-040). Mangler ejerens visuelle godkendelse af animation (bibel s. 25)."
     },
     {
       "id": "GA-15",

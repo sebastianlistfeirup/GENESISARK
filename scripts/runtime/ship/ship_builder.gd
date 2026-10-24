@@ -203,7 +203,22 @@ func _prop_collider(parent: Node3D, pos: Vector3, size: Vector3, yaw: float) -> 
 
 
 ## Emergency (dim red, flicker-free) vs restored (zone colours).
+const ATLAS := "res://art/materials/scifi_space_atlas.tres"
+
+
+## The atlas' painted light strips follow the power: dim amber on emergency power.
+static func set_strip_glow(restored: bool) -> void:
+	if not ResourceLoader.exists(ATLAS):
+		return
+	var m := load(ATLAS) as ShaderMaterial
+	if m:
+		m.set_shader_parameter("glow_tint", Color(1, 1, 1) if restored else Color(1.0, 0.5, 0.1))  # amber: "follow the yellow service lights"
+		m.set_shader_parameter("tint_amount", 0.0 if restored else 1.0)
+		m.set_shader_parameter("glow_energy", 2.4 if restored else 0.9)
+
+
 func set_power(restored: bool) -> void:
+	set_strip_glow(restored)
 	for l: Dictionary in lights:
 		var ol: OmniLight3D = l["light"]
 		if restored:

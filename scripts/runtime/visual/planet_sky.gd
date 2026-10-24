@@ -8,7 +8,7 @@ extends RefCounted
 const DISTANCE := 1500.0
 
 
-static func build(planet_id: String, fallback: String) -> Node3D:
+static func build(planet_id: String, fallback: String, terrain: Node3D = null) -> Node3D:
 	var root := Node3D.new()
 	root.name = "PlanetSky"
 	var sky: Dictionary = DictUtil.get_dict(GroundCover.spec_for(planet_id, fallback), "sky")
@@ -28,6 +28,11 @@ static func build(planet_id: String, fallback: String) -> Node3D:
 		if body.has("ring"):
 			root.add_child(_ring(slot.position, radius, Color(str(body["ring"])), az))
 		i += 1
+	for key: String in ["fauna", "fauna_low"]:
+		if sky.has(key):
+			var flock := FaunaFlock.build(DictUtil.get_dict(sky, key), hash(planet_id + key), terrain)
+			if flock:
+				root.add_child(flock)
 	if sky.has("aurora"):
 		root.add_child(_aurora(Color(str(sky["aurora"])), Color(str(sky.get("aurora_high", "#9a5cff")))))
 	return root

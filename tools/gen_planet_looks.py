@@ -33,8 +33,8 @@ def lm(meshes, count, s=(1, 1.4), ring=(70, 86)):
 
 PLANETS = {
     "viridia": {  # jungle: dense canopy, ferns, flowers, alien flora
-        "sky": {"bodies": [{"biome": "ice", "tint": "#cfd8e6", "azimuth": 35, "elevation": 22, "size": 14}, {"biome": "desert", "tint": "#d9a06a", "azimuth": 70, "elevation": 34, "size": 5}], "motes": "fx.spores", "motes_scale": 2.5},
-        "terrain": {"amp": 1.25, "ground": "#4c8a2f", "patch": "#3a7426", "cliff": "#3f4a33"},
+        "sky": {"bodies": [{"biome": "ice", "tint": "#cfd8e6", "azimuth": 35, "elevation": 22, "size": 14}, {"biome": "desert", "tint": "#d9a06a", "azimuth": 70, "elevation": 34, "size": 5}], "motes": "fx.spores", "motes_scale": 2.5, "fauna": {"mesh": N + "Jungle/FBX/FX_Bird_Mesh_01.fbx", "flocks": 3, "count": 9, "scale": 1.6}, "fauna_low": {"mesh": N + "Alpine/FBX/FX/FX_Butterfly_Mesh_Alpine_01.fbx", "flocks": 14, "count": 3, "scale": 0.45, "height": [1.0, 2.2], "radius": [1.5, 3.5]}},
+        "terrain": {"ground_tex": N + "Jungle/Textures/Terrain/Grass_Debris_Texture_01.png", "cliff_tex": N + "Jungle/Textures/Terrain/RockWall_Texture_01.png", "amp": 1.25, "ground": "#4c8a2f", "patch": "#3a7426", "cliff": "#3f4a33"},
         "look": {"hue_shift": -0.02, "sat": 1.15, "wind": 0.07, "rock_tint": "#9aa58a", "rock_top_tint": "#6f9a3c"},
         "trees": [t([J("SM_Env_Tree_Palm_01"), J("SM_Env_Tree_Palm_02"), J("SM_Env_Tree_Palm_03"), J("SM_Env_Tree_Banana_01"), J("SM_Env_Tree_Banana_02"),
                      J("SM_Env_Tree_Pohutukawa_01"), J("SM_Env_Tree_Pohutukawa_02"), J("SM_Env_Tree_Forest_01"), J("SM_Env_Tree_Forest_02"),
@@ -48,8 +48,8 @@ PLANETS = {
         "landmarks": [lm([J("SM_Env_Rock_Cliff_01"), J("SM_Env_Rock_Cliff_02"), J("SM_Env_Rock_Cliff_03"), J("SM_Env_Rock_Arch_01")], 22, (1.6, 2.6))],
     },
     "pelagos": {  # water world: open sea, islands, mangroves, reeds, lily pads, coral shallows
-        "sky": {"bodies": [{"biome": "green", "tint": "#7fb0c8", "azimuth": -40, "elevation": 18, "size": 22, "ring": "#cfe4ee"}]},
-        "terrain": {"amp": 1.55, "water": True, "ground": "#4f8f5c", "patch": "#c9b98a", "cliff": "#46564c"},
+        "sky": {"bodies": [{"biome": "green", "tint": "#7fb0c8", "azimuth": -40, "elevation": 18, "size": 22, "ring": "#cfe4ee"}], "fauna": {"mesh": N + "Jungle/FBX/FX_Bird_Mesh_01.fbx", "flocks": 4, "count": 11, "scale": 1.9}},
+        "terrain": {"ground_tex": N + "Swamp/Textures/Terrain/Moss_Swamp_Texture_01.png", "cliff_tex": N + "Jungle/Textures/Terrain/RockWall_Texture_01.png", "amp": 1.55, "water": True, "ground": "#4f8f5c", "patch": "#c9b98a", "cliff": "#46564c"},
         "look": {"hue_shift": 0.07, "sat": 1.05, "wind": 0.12, "rock_tint": "#8c9a98", "rock_top_tint": "#6b8f5a"},
         "trees": [t([S("SM_Env_Tree_Mangrove_01"), S("SM_Env_Tree_Mangrove_02"), S("SM_Env_Tree_Mangrove_03"), S("SM_Env_Tree_Swamp_01"),
                      S("SM_Env_Tree_Swamp_03"), J("SM_Env_Tree_Palm_04")], 90, (0.9, 1.4), 0.6, 3)],
@@ -63,7 +63,7 @@ PLANETS = {
     },
     "ferrum": {  # rust desert: mesas, spikes, ore crystals, bones, sulphur
         "sky": {"bodies": [{"biome": "desert", "tint": "#b0583a", "azimuth": 20, "elevation": 26, "size": 26, "ring": "#e8c49a"}, {"biome": "ice", "tint": "#bfc9d6", "azimuth": -55, "elevation": 40, "size": 6}], "motes": "fx.dust", "motes_scale": 2.0},
-        "terrain": {"amp": 1.1, "terraces": 2.6, "ground": "#c8662f", "patch": "#a84f26", "cliff": "#6e3420"},
+        "terrain": {"ground_tex": N + "Arid/Textures/Dirt_Texture_Red_01.png", "cliff_tex": N + "Jungle/Textures/Terrain/RockWall_Texture_01.png", "amp": 1.1, "terraces": 2.6, "ground": "#c8662f", "patch": "#a84f26", "cliff": "#6e3420"},
         "look": {"rock_tint": "#d47c48", "rock_top_tint": "#e09a5c", "sat": 0.8},
         "trees": [t([R("Environment/SM_Env_Rocks_Spikes_Large_01"), R("Environment/SM_Env_Rocks_Spikes_Large_02"),
                      R("Environment/SM_Env_Rocks_Spikes_Large_03"), R("Environment/SM_Env_Tree_Dead_01")], 40, (0.7, 1.2), 1.2, 2)],
@@ -77,7 +77,7 @@ PLANETS = {
     },
     "sere": {  # pale dune desert: ripples, succulents, arches, distant hills
         "sky": {"bodies": [{"biome": "ice", "tint": "#e8e0d0", "azimuth": -25, "elevation": 30, "size": 9}, {"biome": "ice", "tint": "#d0c8b8", "azimuth": 15, "elevation": 44, "size": 5}], "motes": "fx.dust", "motes_scale": 2.5},
-        "terrain": {"amp": 0.85, "dunes": 1.1, "ground": "#dcb57a", "patch": "#cfa565", "cliff": "#9a7650"},
+        "terrain": {"ground_tex": N + "Jungle/Textures/Terrain/Sand_Wavy_Texture_01.png", "cliff_tex": N + "Jungle/Textures/Terrain/RockWall_Texture_01.png", "amp": 0.85, "dunes": 1.1, "ground": "#dcb57a", "patch": "#cfa565", "cliff": "#9a7650"},
         "look": {"rock_tint": "#e7cfa3", "rock_top_tint": "#f0dcb0", "hue_shift": 0.03, "sat": 0.9},
         "trees": [t([R("Environment/SM_Env_Cactus_01"), R("Environment/SM_Env_Cactus_02"), R("Environment/SM_Env_Cactus_03"),
                      R("Environment/SM_Env_Tree_Dead_02")], 45, (0.9, 1.4), 0.5, 2)],
@@ -90,7 +90,7 @@ PLANETS = {
     },
     "nivalis": {  # ice world: frosted pines, ice sheets, snow mounds, mountain ranges
         "sky": {"bodies": [{"biome": "green", "tint": "#6a8ec8", "azimuth": 30, "elevation": 24, "size": 18, "ring": "#dfe8f4"}], "aurora": "#3dffa8", "aurora_high": "#8a5cff", "motes": "fx.snow", "motes_scale": 2.5},
-        "terrain": {"amp": 1.3, "ridges": 0.9, "ground": "#e2edf2", "patch": "#c7d9e4", "cliff": "#6a7c8c"},
+        "terrain": {"ground_tex": N + "Alpine/Textures/Snow_01.png", "cliff_tex": N + "Alpine/Textures/Snowcliff_Texture.png", "amp": 1.3, "ridges": 0.9, "ground": "#e2edf2", "patch": "#c7d9e4", "cliff": "#6a7c8c"},
         "look": {"sat": 0.45, "leaf_tint": "#d6e6ee", "trunk_tint": "#8a8f96", "rock_tint": "#b4c8e0", "rock_top_tint": "#ffffff", "rock_top_amount": 0.2, "wind": 0.04},
         "trees": [t([A("SM_Env_Pine_01"), A("SM_Env_Pine_02"), A("SM_Env_Pine_03"), A("SM_Env_Pine_04"), A("SM_Env_Pine_05"), A("SM_Env_Pine_NoLeaves_01")], 110, (0.8, 1.4), 0.4, 4)],
         "cover": [c(A("SM_Env_Snow_Mound_01"), 120, (0.8, 1.4), 4), c(A("SM_Env_Snow_Mound_03"), 100, (0.8, 1.3), 4),
@@ -102,7 +102,7 @@ PLANETS = {
     },
     "umbra": {  # long night: jagged ridges, glowing crystals, bioluminescent ground life
         "sky": {"bodies": [{"biome": "desert", "tint": "#e0904a", "azimuth": 10, "elevation": 20, "size": 30, "ring": "#ffcf8a"}, {"biome": "ice", "tint": "#9fb8ff", "azimuth": -60, "elevation": 46, "size": 7}], "aurora": "#41ffd9", "aurora_high": "#c05cff"},
-        "terrain": {"amp": 1.2, "ridges": 1.2, "ground": "#4c5a74", "patch": "#3e4b66", "cliff": "#242b3a"},
+        "terrain": {"ground_tex": N + "Alpine/Textures/Snow_01.png", "cliff_tex": N + "Jungle/Textures/Terrain/RockWall_Texture_01.png", "amp": 1.2, "ridges": 1.2, "ground": "#4c5a74", "patch": "#3e4b66", "cliff": "#242b3a"},
         "look": {"glow": 1.6, "glow_color": "#54ffe0", "hue_shift": 0.38, "sat": 1.2, "rock_tint": "#6a7896", "rock_top_tint": "#c8d4ec", "rock_top_amount": 0.3, "trunk_tint": "#4a4f5c", "wind": 0.03},
         "trees": [t([A("SM_Env_Pine_NoLeaves_01"), S("SM_Env_Tree_Dead_01"), S("SM_Env_Tree_Dead_02"), Wp("SM_Env_Rock_Spike_01"), Wp("SM_Env_Rock_Spike_03")], 60, (0.8, 1.3), 0.6, 3)],
         "cover": [c(J("SM_Env_Ground_Cover_02"), 260, (0.9, 1.4), 7), c(J("SM_Env_Fern_Part_02"), 160, (0.7, 1.1), 6),

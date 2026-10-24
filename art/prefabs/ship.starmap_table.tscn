@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" path="res://assets/Synty/SciFiSpace/FBX/SM_Prop_MapTable_01.fbx" id="1_410sx"]
 
-[node name="ship_starmap_table" type="Node3D" unique_id=818122548]
+[node name="ship_starmap_table" type="Node3D" unique_id=660295511]
 metadata/synty_source = "res://assets/Synty/SciFiSpace/FBX/SM_Prop_MapTable_01.fbx"
 metadata/synty_fit = "natural"
 

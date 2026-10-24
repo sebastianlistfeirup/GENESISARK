@@ -39,6 +39,12 @@ func refresh() -> void:
 		refresh())
 	scan.disabled = k.level_reached.get("orbital_scan_done", false)
 	left.add_child(scan)
+	var globe := StarMapView.planet_icon(pid)
+	globe.custom_minimum_size = Vector2(230, 230)
+	globe.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+	globe.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	globe.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	left.add_child(globe)
 	top.add_child(left)
 	var right := UiKit.vbox(10)
 	right.size_flags_horizontal = Control.SIZE_EXPAND_FILL

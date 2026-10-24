@@ -4,12 +4,12 @@
 |---|---|
 | project | GENESIS ARK |
 | spec_version | Udviklingsbibel v1.0 (16.10.2026) |
-| engine_version | Godot 4.5.1-stable (official, f62fdbde1) |
-| profile | HOLIDAY (cloud-container, headless + Xvfb; ingen Synty-filer, ingen Windows-maskine) |
+| engine_version | Godot 4.7.1-stable (official, a13da4feb) — se D-033 |
+| profile | HOME (Windows 11, RTX 5090, Vulkan Forward+; Synty-pakker lokalt i `assets/Synty/`) |
 | current_phase | 1 · Fundament (port ikke bestået endnu) |
 | last_passed_gate | — (fase 1-porten kræver GA-11 og GA-12 DONE) |
-| active_task | GA-11 / GA-12 (VERIFYING) · grundlag lagt for GA-14, 19, 29, 33 |
-| last_commit | se `git log -1` (session 5: engelsk kildesprog, lys, FX, NAV på planeten, bygningskollision) |
+| active_task | GA-11 (menneskelig gennemspilning) · GA-12 Windows-kørsel bestået · GA-13/14 Synty + figurer integreret (afventer din visuelle godkendelse) |
+| last_commit | se `git log -1` (session 7, 24.10.2026: Synty overalt, unikke planeter, animation, R9) |
 | next_command | `tools/check.sh` og derefter `godot --path .` |
 
 ## Tests kørt (faktiske resultater på dette commit)
@@ -17,14 +17,14 @@
 | Lag | Kommando | Resultat |
 |---|---|---|
 | 1 · Domæne | `godot --headless --path . --script res://tests/run_tests.gd` | **81 tests, 0 fejl** → `evidence/test_report.json` |
-| 2 · Scener (rigtigt input) | `godot --headless --path . res://scenes/tests/scene_smoke.tscn` | **54 checks, 0 fejl** + touch-føling 6/6 → `evidence/scene_smoke.json` |
-| Parse-tjek | `godot --headless --path . res://scenes/tests/compile_all.tscn` | 110 scripts, 0 fejl |
+| 2 · Scener (rigtigt input) | `godot --headless --path . res://scenes/tests/scene_smoke.tscn` | **56 checks, 0 fejl** + touch-føling 6/6 → `evidence/scene_smoke.json` |
+| Parse-tjek | `godot --headless --path . res://scenes/tests/compile_all.tscn` | 131 scripts, 0 fejl |
 | Balance | `godot --headless --path . --script res://tools/balance/run_balance.gd` | 18 kørsler til år 40 → `evidence/balance/` |
 | Hel kampagne (bot) | `godot --headless --path . --script res://tools/campaign/campaign_bot.gd` | 6 planeter × 4 spillestile → `evidence/campaign_bot.json` (se session 6) |
-| Ydelse | `godot --path . -- --perf [--profile=web]` | web-profil i containeren: 7/7 scener inden for budget (kun antal; frametider kræver rigtig hardware) → `evidence/perf/` |
+| Ydelse | `godot --path . -- --perf [--profile=web]` | RTX 5090, 1080p Forward+: p95 8,8–9,9 ms i alle 7 scener; 2 over trekantbudget (surface_hazard 3,3 mio., colony_era20 4,1 mio. > 3 mio.) → `evidence/perf/` |
 | 3 · Optaget gameplay | — | NOT_RUN (kræver menneske) |
-| 4 · Eksport | Windows + Linux eksporteret; Linux-build kørt under Xvfb | Windows-build NOT_RUN |
-| Oversættelse | `python3 tools/loc_extract.py --check` | 1161 nøgler, 0 mangler (en → da) |
+| 4 · Eksport | Windows eksporteret og **kørt på målmaskinen** (menu, Viridia, Umbra) | PASS → `evidence/GA-12/windows_run.json` |
+| Oversættelse | `python3 tools/loc_extract.py --check` | 1191 nøgler, 0 mangler (en → da) |
 | Plan | `python3 tools/validate_plan.py` | OK · 10 DONE · 2 VERIFYING · 12 IN_PROGRESS · 12 TODO |
 
 ## Opgaver
@@ -94,25 +94,39 @@
 | R9-forslag | Tre lag til valg med konsekvens, med målepunkter til kampagnebotten. | `docs/proposals/R9_valg_med_konsekvens.md` |
 | R9 implementeret | Lag 1 (varig kurs ved år 20/40), lag 2 (tillid < 35 / > 65 med HUD-symbol og forklaring i Fremtid-fanen), lag 3 (ét efterspil pr. hændelse), skærpet *skærmet*. Bot: befolkning år 40 spreder 21-24 % mellem spillestile, to slutprofiler blandt normale spillestile, 0 fejl; balance 18/18. 81 domænetests. | D-034, `evidence/R9/result.json` |
 
+## Nyt i session 7 (24.10.2026): Synty overalt og unikke planeter
+
+| Område | Hvad | Hvor |
+|---|---|---|
+| Motor | Godot 4.7.1; motoruafhængig save-checksum, gamle saves accepteres | D-033 |
+| Synty-integration | Godot-pakker (Sci-Fi Worlds, Sci-Fi City) og kilde-FBX (Sci-Fi Space, Nature Biomes ×4, figurer, animationer) bruges direkte; 55 slots mappet; ingen købte filer i git | `tools/synty/`, `data/art/synty_choices.json`, D-021/D-033 |
+| Skib | Modulært Sci-Fi Space-interiør, broens konsolrækker, hologrammer, ARK som holografisk kerne, kryokapsler med sovende kolonister, rigtige vinduer med tågehimmel og planeten man kredser om, nødstrøm i rav → cyan | `ship_dresser.gd`, `data/art/ship_dressing.json`, `hologram.gd` |
+| Planeter | Seks unikke verdener: jungle, vandverden, rustmesaer, klitter, isskov, bioluminescent nat; måner, ringplaneter, nordlys | D-039, `data/art/ground_cover.json`, `nature_kit.gd` |
+| Lys | Synty-demoernes opskrift (lineær tonemap, dybde-tåge, SSAO), malet tågehimmel, planetshader | D-036 |
+| Kolonien | Pods forbundet med korridorer, påklædning, platforme, veje, lamper, droner, køretøjer, gående kolonister (10 kroppe) | D-037 |
+| Indflyvning + overflade | Synty-asteroider, stationer, skibe, gaskæmpe; landingslejr og stedspecifik påklædning | D-038 |
+| Animation | Målte gangarter (fodglid 36–46 % → 0), stop, drej, læn, konsoltryk, knælende prøvetagning, idle-variationer | D-040 |
+| UI | Filmisk hovedmenu, fælles tema med Synty INTERFACE-skin, Exo 2-font, epilog over den koloniserede verden, planeter på stjernekort og i kredsløbspanel | D-035 |
+| Gameplay | R9: valg ændrer udfaldet (varige prioriteter, tillidstærskler, skærmet slutning, efterspil) | D-034 |
+
 ## Balance (fase 3-forløber, `evidence/balance/balance_table.txt`)
 
 Alle 18 kørsler (6 verdener × 3 strategier) når år 40 med *selvstændig* profil (før 15 af 18). De tre kollaps skyldtes en regelfejl i tidsspringets institutioner: miner og værksted bemandede alle arkens droner, så intet kunne bygges, og maden løb tør (D-030). Gode strategier lander på 650 indbyggere ved år 40 (330 ved år 20); Ferrum er sværest (560, vand). Slutbefolkningen er ens på tværs af strategier, fordi fødselsplanen (16/år) er loftet; strategierne adskiller sig i åbningens længde (36-171 dage) og underskudsdage (Pelagos ~1450 pga. storme). Lagre har loft (1 års forbrug). Ingen planet dominerer alle felter (test). Tuningen er foreløbig.
 
 ## Kendte problemer / blokeringer
 
-1. **Synty-pakkerne findes ikke i containeren** → al grafik er registrerede proxies (`data/art/asset_slots.json`). Ikke en spilblokering; GA-13 starter ved hjemkomst.
-2. **Windows-build ikke kørt** (ingen Windows-maskine). Linux-build fra samme commit kører.
-3. **Generationsprognose** regnes dag for dag (~0,7-1 ms/dag): kører i baggrundstråd; godkendelse genbruger prognosen. Et 20-års spring tager få sekunder.
-4. **Ingen eksterne testere** i ferien; agentens gennemgang er ikke spillerbevis (bibel s. 15).
-5. ~~P1: kolonien kan bygge sig inde~~ (R10) løst i D-032; regressionsseedet kører i `check.sh`.
-6. **Valg ændrer ikke udfaldet** (R9): designbeslutning til dig.
+1. **Visuel godkendelse er din**: alt nyt er vurderet på skærmbilleder af agenten, ikke af dig (bibel s. 25).
+2. **Synty-pakkerne ligger kun lokalt** (`assets/Synty/`, gitignored, repoet er offentligt). På en ny maskine: pak zip'erne ud igen (se `tools/synty/build_godot_packs.sh` og `tools/synty/extract_anim_clips.py`); uden dem viser spillet proxies.
+3. **Windows-pakken er 1,64 GB** (komprimerede Synty-teksturer); kan trimmes yderligere.
+4. **Trekantbudget**: to scener over 3 mio. trekanter (frametid stadig ~9 ms på RTX 5090); mellemklasse-GPU ikke målt.
+5. **Ingen eksterne testere** endnu; lyd er stadig proxy-lyde.
+6. Stop fra 4,2 m/s-gang og kolonisternes stop kan forbedres (D-040).
 
 ## Næste tre opgaver
 
-1. **GA-11**: spil hele demoen (~20 min) på din maskine, optag den, ret de tre største friktioner.
-2. **GA-12**: kør `builds/windows/GenesisArk.exe` (eller eksportér selv), bekræft visuelt, tag `phase-1`.
-3. **GA-13**: importér ét skibsmodul, kaptajnen og én terrænprøve via `docs/SCENE_ASSEMBLY.md` → sammenlign med greybox.
-4. **GA-14** (når kaptajnen er importeret): åbn `scenes/tests/RigLab.tscn` (F6), ret `scale`/`offset` i `asset_slots.json` til auditten er grøn, og omdøb clips i `animation_map.json`.
+1. **GA-11**: spil hele kampagnen (~20 min første del) og skriv de tre største irritationsmomenter ned.
+2. **Visuel godkendelse** af skib, de seks planeter, kolonien og animation (se `evidence/` og handover-artefaktet).
+3. **GA-19/20**: rigtige lyde og stemmer (`docs/AUDIO_LEDGER.csv`, `docs/VO_SCRIPT.csv`) og første eksterne testere.
 
 ## Reproduktion
 
