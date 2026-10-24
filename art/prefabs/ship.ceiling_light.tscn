@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" path="res://assets/Synty/SciFiSpace/FBX/SM_Prop_Light_Panel_01.fbx" id="1_wjdmh"]
 
-[node name="ship_ceiling_light" type="Node3D" unique_id=7845252]
+[node name="ship_ceiling_light" type="Node3D" unique_id=1346934960]
 metadata/synty_source = "res://assets/Synty/SciFiSpace/FBX/SM_Prop_Light_Panel_01.fbx"
 metadata/synty_fit = "module"
 

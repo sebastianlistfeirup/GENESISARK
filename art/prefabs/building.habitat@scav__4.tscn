@@ -1,0 +1,76 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://assets/Synty/PolygonSciFiWorlds/Prefabs/Buildings/SM_Bld_Crate_Building_01.tscn" id="1_8gdvj"]
+[ext_resource type="ArrayMesh" path="res://assets/Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Crate_Building_01.res" id="2_cxldu"]
+[ext_resource type="Material" path="res://assets/Synty/PolygonSciFiWorlds/Materials/Alts/PolygonScifiWorlds_01_A_mat.tres" id="3_n5mh7"]
+[ext_resource type="PackedScene" path="res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_Bed_Single_01.tscn" id="4_1tu2d"]
+[ext_resource type="ArrayMesh" path="res://assets/Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Bed_Single_01.res" id="5_52fek"]
+[ext_resource type="PackedScene" path="res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/Junkies/SM_Prop_Junky_Male_04.tscn" id="6_uvclh"]
+[ext_resource type="ArrayMesh" path="res://assets/Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Junky_Male_04.res" id="7_bl6lf"]
+[ext_resource type="PackedScene" path="res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_Crate_01.tscn" id="8_du1n7"]
+[ext_resource type="ArrayMesh" path="res://assets/Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Crate_01.res" id="9_el725"]
+[ext_resource type="PackedScene" path="res://assets/Synty/PolygonSciFiWorlds/Prefabs/Buildings/SM_Bld_Door_Single_05.tscn" id="10_d1x0g"]
+[ext_resource type="ArrayMesh" path="res://assets/Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Door_Single_05.res" id="11_i7jpg"]
+
+[node name="building_habitat_scav" type="Node3D" unique_id=234092988]
+metadata/synty_source = "res://art/kits/BlackMarket_01_15_Crate_Building_01.tscn"
+metadata/synty_fit = "footprint"
+
+[node name="Model" type="Node3D" parent="." unique_id=1261271755]
+transform = Transform3D(-4.066678e-08, 0, 0.9303475, 0, 0.9303475, 0, -0.9303475, 0, -4.066678e-08, 0.054955482, 0.072567, -0.050000668)
+
+[node name="SM_Bld_Crate_Building_01" type="MeshInstance3D" parent="Model" unique_id=2064608477 instance=ExtResource("1_8gdvj")]
+transform = Transform3D(1.0000001, 0, 2.9802322e-08, 0, 1, 0, -2.9802322e-08, 0, 1.0000001, -9.536743e-07, 0, -0.37156677)
+gi_mode = 2
+mesh = ExtResource("2_cxldu")
+surface_material_override/0 = ExtResource("3_n5mh7")
+
+[node name="SM_Prop_Bed_Single_01" type="MeshInstance3D" parent="Model" unique_id=1949779548 instance=ExtResource("4_1tu2d")]
+transform = Transform3D(-0.9999987, 0, 0.0017023683, 0, 1, 0, -0.0017023683, 0, -0.9999987, 0.8472824, 0.14499998, 0.3510437)
+cast_shadow = 0
+gi_mode = 2
+visibility_range_end = 70.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("5_52fek")
+surface_material_override/0 = ExtResource("3_n5mh7")
+
+[node name="SM_Prop_Junky_Male_04" type="MeshInstance3D" parent="Model" unique_id=860406743 instance=ExtResource("6_uvclh")]
+transform = Transform3D(-0.0017015338, 0, -0.9999987, 0, 1, 0, 0.9999987, 0, -0.0017015338, 0.84727955, 0.71500015, 0.44547272)
+cast_shadow = 0
+gi_mode = 2
+visibility_range_end = 70.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("7_bl6lf")
+surface_material_override/0 = ExtResource("3_n5mh7")
+
+[node name="SM_Prop_Crate_01" type="MeshInstance3D" parent="Model" unique_id=2046341348 instance=ExtResource("8_du1n7")]
+transform = Transform3D(-0.93990153, 0, 0.34144554, 0, 1, 0, -0.34144554, 0, -0.93990153, 0.64734125, 0.10400009, 3.5084248)
+cast_shadow = 0
+gi_mode = 2
+visibility_range_end = 70.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("9_el725")
+surface_material_override/0 = ExtResource("3_n5mh7")
+
+[node name="_MeshInstance3D_885" type="MeshInstance3D" parent="Model" unique_id=1127875335 instance=ExtResource("8_du1n7")]
+transform = Transform3D(-0.016895294, 0, 0.99985737, 0, 1, 0, -0.99985737, 0, -0.016895294, -0.72567844, 0.10400009, 3.5315018)
+cast_shadow = 0
+gi_mode = 2
+visibility_range_end = 70.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("9_el725")
+surface_material_override/0 = ExtResource("3_n5mh7")
+
+[node name="SM_Bld_Door_Single_05" type="MeshInstance3D" parent="Model" unique_id=1982157183 instance=ExtResource("10_d1x0g")]
+transform = Transform3D(1.0000004, 0, 0, 0, 1, 0, 0, 0, 1.0000004, 8.678436e-05, 0.22200012, -4.973181)
+cast_shadow = 0
+gi_mode = 2
+visibility_range_end = 70.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("11_i7jpg")
+surface_material_override/0 = ExtResource("3_n5mh7")

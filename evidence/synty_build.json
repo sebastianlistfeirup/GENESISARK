@@ -364,7 +364,7 @@
       "slot": "char.citizen_child"
     }
   ],
-  "built": 52,
+  "built": 72,
   "failed": 0,
   "slots": [
     {
@@ -1815,6 +1815,558 @@
       "source": "res://assets/Synty/SciFiSpace/FBX/SM_Bld_Ceiling_02.fbx",
       "summary": "module x0.800 -> 4.0x0.8x4.0 m (proxy 4.0x0.1x4.0)  (+1 varianter)",
       "uses_atlas": true,
+      "warnings": []
+    },
+    {
+      "atlas_materials": 3,
+      "fit": "footprint",
+      "notes": [
+        "no atlas texture staged for res:"
+      ],
+      "ok": true,
+      "proxy_m": [
+        9.7,
+        3.45,
+        7.7
+      ],
+      "reimport": false,
+      "rig": "",
+      "scale": 0.8198,
+      "scene": "res://art/prefabs/building.habitat@corp.tscn",
+      "scenes": [
+        "res://art/prefabs/building.habitat@corp.tscn",
+        "res://art/prefabs/building.habitat@corp__2.tscn",
+        "res://art/prefabs/building.habitat@corp__3.tscn",
+        "res://art/prefabs/building.habitat@corp__4.tscn"
+      ],
+      "size_m": [
+        9.7,
+        6.67,
+        6.49
+      ],
+      "slot": "building.habitat@corp",
+      "source": "res://art/kits/Corporation_01_00_Corp_Barracks_01.tscn",
+      "summary": "footprint x0.820 -> 9.7x6.7x6.5 m (proxy 9.7x3.5x7.7)  (+3 varianter)",
+      "uses_atlas": false,
+      "warnings": []
+    },
+    {
+      "atlas_materials": 6,
+      "fit": "footprint",
+      "notes": [
+        "no atlas texture staged for res:"
+      ],
+      "ok": true,
+      "proxy_m": [
+        9.7,
+        5.2,
+        9.7
+      ],
+      "reimport": false,
+      "rig": "",
+      "scale": 0.4862,
+      "scene": "res://art/prefabs/building.care_center@corp.tscn",
+      "size_m": [
+        9.7,
+        6.24,
+        8.27
+      ],
+      "slot": "building.care_center@corp",
+      "source": "res://art/kits/Corporation_01_07_Corp_Comms_01.tscn",
+      "summary": "footprint x0.486 -> 9.7x6.2x8.3 m (proxy 9.7x5.2x9.7)",
+      "uses_atlas": false,
+      "warnings": []
+    },
+    {
+      "atlas_materials": 4,
+      "fit": "footprint",
+      "notes": [
+        "no atlas texture staged for res:"
+      ],
+      "ok": true,
+      "proxy_m": [
+        7.6,
+        3.1,
+        5.71
+      ],
+      "reimport": false,
+      "rig": "",
+      "scale": 0.6935,
+      "scene": "res://art/prefabs/building.clinic@corp.tscn",
+      "size_m": [
+        6.07,
+        5.36,
+        7.6
+      ],
+      "slot": "building.clinic@corp",
+      "source": "res://art/kits/Corporation_01_08_Corp_Containment_02.tscn",
+      "summary": "footprint x0.694 -> 6.1x5.4x7.6 m (proxy 7.6x3.1x5.7)",
+      "uses_atlas": false,
+      "warnings": []
+    },
+    {
+      "atlas_materials": 6,
+      "fit": "footprint",
+      "notes": [
+        "no atlas texture staged for res:"
+      ],
+      "ok": true,
+      "proxy_m": [
+        10.0,
+        7.0,
+        8.0
+      ],
+      "reimport": false,
+      "rig": "",
+      "scale": 0.2856,
+      "scene": "res://art/prefabs/building.school_hall@corp.tscn",
+      "size_m": [
+        4.86,
+        6.31,
+        8.0
+      ],
+      "slot": "building.school_hall@corp",
+      "source": "res://art/kits/Corporation_01_04_Corp_Control_Tower_01.tscn",
+      "summary": "footprint x0.286 -> 4.9x6.3x8.0 m (proxy 10.0x7.0x8.0)",
+      "uses_atlas": false,
+      "warnings": []
+    },
+    {
+      "atlas_materials": 2,
+      "fit": "footprint",
+      "notes": [
+        "no atlas texture staged for res:"
+      ],
+      "ok": true,
+      "proxy_m": [
+        7.6,
+        3.0,
+        5.6
+      ],
+      "reimport": false,
+      "rig": "",
+      "scale": 0.56,
+      "scene": "res://art/prefabs/building.greenhouse@corp.tscn",
+      "size_m": [
+        5.85,
+        5.42,
+        5.6
+      ],
+      "slot": "building.greenhouse@corp",
+      "source": "res://art/kits/Corporation_01_09_Pod_Research_04.tscn",
+      "summary": "footprint x0.560 -> 5.8x5.4x5.6 m (proxy 7.6x3.0x5.6)",
+      "uses_atlas": false,
+      "warnings": []
+    },
+    {
+      "atlas_materials": 4,
+      "fit": "footprint",
+      "notes": [
+        "no atlas texture staged for res:"
+      ],
+      "ok": true,
+      "proxy_m": [
+        5.85,
+        4.0,
+        7.2
+      ],
+      "reimport": false,
+      "rig": "",
+      "scale": 0.7802,
+      "scene": "res://art/prefabs/building.water_plant@corp.tscn",
+      "size_m": [
+        6.83,
+        6.04,
+        6.94
+      ],
+      "slot": "building.water_plant@corp",
+      "source": "res://art/kits/Corporation_01_13_Corp_Containment_02.tscn",
+      "summary": "footprint x0.780 -> 6.8x6.0x6.9 m (proxy 5.9x4.0x7.2)",
+      "uses_atlas": false,
+      "warnings": []
+    },
+    {
+      "atlas_materials": 4,
+      "fit": "footprint",
+      "notes": [
+        "no atlas texture staged for res:"
+      ],
+      "ok": true,
+      "proxy_m": [
+        7.6,
+        3.8,
+        5.75
+      ],
+      "reimport": false,
+      "rig": "",
+      "scale": 0.3387,
+      "scene": "res://art/prefabs/building.workshop@corp.tscn",
+      "size_m": [
+        7.87,
+        5.02,
+        6.9
+      ],
+      "slot": "building.workshop@corp",
+      "source": "res://art/kits/Corporation_01_38_Scav_Garage_01.tscn",
+      "summary": "footprint x0.339 -> 7.9x5.0x6.9 m (proxy 7.6x3.8x5.8)",
+      "uses_atlas": false,
+      "warnings": []
+    },
+    {
+      "atlas_materials": 2,
+      "fit": "footprint",
+      "notes": [
+        "no atlas texture staged for res:"
+      ],
+      "ok": true,
+      "proxy_m": [
+        5.6,
+        3.7,
+        5.6
+      ],
+      "reimport": false,
+      "rig": "",
+      "scale": 0.236,
+      "scene": "res://art/prefabs/building.drone_hub@corp.tscn",
+      "size_m": [
+        4.72,
+        2.03,
+        5.75
+      ],
+      "slot": "building.drone_hub@corp",
+      "source": "res://art/kits/Corporation_01_01_Corp_LandingPad_02.tscn",
+      "summary": "footprint x0.236 -> 4.7x2.0x5.8 m (proxy 5.6x3.7x5.6)",
+      "uses_atlas": false,
+      "warnings": []
+    },
+    {
+      "atlas_materials": 1,
+      "fit": "footprint",
+      "notes": [
+        "no atlas texture staged for res:"
+      ],
+      "ok": true,
+      "proxy_m": [
+        5.2,
+        6.5,
+        5.2
+      ],
+      "reimport": false,
+      "rig": "",
+      "scale": 0.3808,
+      "scene": "res://art/prefabs/building.geothermal_generator@corp.tscn",
+      "size_m": [
+        5.2,
+        5.12,
+        2.36
+      ],
+      "slot": "building.geothermal_generator@corp",
+      "source": "res://art/kits/Corporation_01_25_Corp_Generator_01.tscn",
+      "summary": "footprint x0.381 -> 5.2x5.1x2.4 m (proxy 5.2x6.5x5.2)",
+      "uses_atlas": false,
+      "warnings": []
+    },
+    {
+      "atlas_materials": 11,
+      "fit": "footprint",
+      "notes": [
+        "no atlas texture staged for res:"
+      ],
+      "ok": true,
+      "proxy_m": [
+        7.6,
+        6.0,
+        7.6
+      ],
+      "reimport": false,
+      "rig": "",
+      "scale": 0.2608,
+      "scene": "res://art/prefabs/building.mine@corp.tscn",
+      "size_m": [
+        8.37,
+        7.43,
+        7.19
+      ],
+      "slot": "building.mine@corp",
+      "source": "res://art/kits/Scavenger_01_00_Scav_Refinery_03.tscn",
+      "summary": "footprint x0.261 -> 8.4x7.4x7.2 m (proxy 7.6x6.0x7.6)",
+      "uses_atlas": false,
+      "warnings": []
+    },
+    {
+      "atlas_materials": 3,
+      "fit": "footprint",
+      "notes": [
+        "no atlas texture staged for res:"
+      ],
+      "ok": true,
+      "proxy_m": [
+        9.7,
+        3.45,
+        7.7
+      ],
+      "reimport": false,
+      "rig": "",
+      "scale": 0.9988,
+      "scene": "res://art/prefabs/building.habitat@scav.tscn",
+      "scenes": [
+        "res://art/prefabs/building.habitat@scav.tscn",
+        "res://art/prefabs/building.habitat@scav__2.tscn",
+        "res://art/prefabs/building.habitat@scav__3.tscn",
+        "res://art/prefabs/building.habitat@scav__4.tscn"
+      ],
+      "size_m": [
+        9.78,
+        3.98,
+        4.32
+      ],
+      "slot": "building.habitat@scav",
+      "source": "res://art/kits/BlackMarket_01_00_Crate_Building_03.tscn",
+      "summary": "footprint x0.999 -> 9.8x4.0x4.3 m (proxy 9.7x3.5x7.7)  (+3 varianter)",
+      "uses_atlas": false,
+      "warnings": []
+    },
+    {
+      "atlas_materials": 16,
+      "fit": "footprint",
+      "notes": [
+        "no atlas texture staged for res:"
+      ],
+      "ok": true,
+      "proxy_m": [
+        9.7,
+        5.2,
+        9.7
+      ],
+      "reimport": false,
+      "rig": "",
+      "scale": 0.7858,
+      "scene": "res://art/prefabs/building.care_center@scav.tscn",
+      "size_m": [
+        11.75,
+        9.21,
+        12.41
+      ],
+      "slot": "building.care_center@scav",
+      "source": "res://art/kits/BlackMarket_01_55_Pod_Hab_Small_04.tscn",
+      "summary": "footprint x0.786 -> 11.8x9.2x12.4 m (proxy 9.7x5.2x9.7)",
+      "uses_atlas": false,
+      "warnings": []
+    },
+    {
+      "atlas_materials": 3,
+      "fit": "footprint",
+      "notes": [
+        "no atlas texture staged for res:"
+      ],
+      "ok": true,
+      "proxy_m": [
+        7.6,
+        3.1,
+        5.71
+      ],
+      "reimport": false,
+      "rig": "",
+      "scale": 0.5477,
+      "scene": "res://art/prefabs/building.clinic@scav.tscn",
+      "size_m": [
+        3.02,
+        3.01,
+        5.71
+      ],
+      "slot": "building.clinic@scav",
+      "source": "res://art/kits/BlackMarket_01_47_Crate_Building_01.tscn",
+      "summary": "footprint x0.548 -> 3.0x3.0x5.7 m (proxy 7.6x3.1x5.7)",
+      "uses_atlas": false,
+      "warnings": []
+    },
+    {
+      "atlas_materials": 8,
+      "fit": "footprint",
+      "notes": [
+        "no atlas texture staged for res:"
+      ],
+      "ok": true,
+      "proxy_m": [
+        10.0,
+        7.0,
+        8.0
+      ],
+      "reimport": false,
+      "rig": "",
+      "scale": 0.4746,
+      "scene": "res://art/prefabs/building.school_hall@scav.tscn",
+      "size_m": [
+        8.03,
+        5.74,
+        9.03
+      ],
+      "slot": "building.school_hall@scav",
+      "source": "res://art/kits/BlackMarket_01_43_Scav_Garage_02.tscn",
+      "summary": "footprint x0.475 -> 8.0x5.7x9.0 m (proxy 10.0x7.0x8.0)",
+      "uses_atlas": false,
+      "warnings": []
+    },
+    {
+      "atlas_materials": 14,
+      "fit": "footprint",
+      "notes": [
+        "no atlas texture staged for res:"
+      ],
+      "ok": true,
+      "proxy_m": [
+        7.6,
+        3.0,
+        5.6
+      ],
+      "reimport": false,
+      "rig": "",
+      "scale": 0.1449,
+      "scene": "res://art/prefabs/building.greenhouse@scav.tscn",
+      "size_m": [
+        5.94,
+        3.59,
+        6.12
+      ],
+      "slot": "building.greenhouse@scav",
+      "source": "res://art/kits/Explorer_01_31_Pod_Research_05.tscn",
+      "summary": "footprint x0.145 -> 5.9x3.6x6.1 m (proxy 7.6x3.0x5.6)",
+      "uses_atlas": false,
+      "warnings": []
+    },
+    {
+      "atlas_materials": 1,
+      "fit": "footprint",
+      "notes": [
+        "no atlas texture staged for res:"
+      ],
+      "ok": true,
+      "proxy_m": [
+        5.85,
+        4.0,
+        7.2
+      ],
+      "reimport": false,
+      "rig": "",
+      "scale": 1.2902,
+      "scene": "res://art/prefabs/building.water_plant@scav.tscn",
+      "size_m": [
+        3.8,
+        7.19,
+        3.62
+      ],
+      "slot": "building.water_plant@scav",
+      "source": "res://art/kits/BlackMarket_01_38_Watertank_01.tscn",
+      "summary": "footprint x1.290 -> 3.8x7.2x3.6 m (proxy 5.9x4.0x7.2)",
+      "uses_atlas": false,
+      "warnings": []
+    },
+    {
+      "atlas_materials": 5,
+      "fit": "footprint",
+      "notes": [
+        "no atlas texture staged for res:"
+      ],
+      "ok": true,
+      "proxy_m": [
+        7.6,
+        3.8,
+        5.75
+      ],
+      "reimport": false,
+      "rig": "",
+      "scale": 0.3387,
+      "scene": "res://art/prefabs/building.workshop@scav.tscn",
+      "size_m": [
+        8.38,
+        3.46,
+        5.75
+      ],
+      "slot": "building.workshop@scav",
+      "source": "res://art/kits/Scavenger_01_12_Scav_Garage_01.tscn",
+      "summary": "footprint x0.339 -> 8.4x3.5x5.8 m (proxy 7.6x3.8x5.8)",
+      "uses_atlas": false,
+      "warnings": []
+    },
+    {
+      "atlas_materials": 6,
+      "fit": "footprint",
+      "notes": [
+        "no atlas texture staged for res:"
+      ],
+      "ok": true,
+      "proxy_m": [
+        5.6,
+        3.7,
+        5.6
+      ],
+      "reimport": false,
+      "rig": "",
+      "scale": 0.236,
+      "scene": "res://art/prefabs/building.drone_hub@scav.tscn",
+      "size_m": [
+        5.67,
+        3.27,
+        6.1
+      ],
+      "slot": "building.drone_hub@scav",
+      "source": "res://art/kits/BlackMarket_01_28_Corp_LandingPad_02.tscn",
+      "summary": "footprint x0.236 -> 5.7x3.3x6.1 m (proxy 5.6x3.7x5.6)",
+      "uses_atlas": false,
+      "warnings": []
+    },
+    {
+      "atlas_materials": 1,
+      "fit": "footprint",
+      "notes": [
+        "no atlas texture staged for res:"
+      ],
+      "ok": true,
+      "proxy_m": [
+        5.2,
+        6.5,
+        5.2
+      ],
+      "reimport": false,
+      "rig": "",
+      "scale": 0.2148,
+      "scene": "res://art/prefabs/building.geothermal_generator@scav.tscn",
+      "size_m": [
+        5.1,
+        3.52,
+        5.2
+      ],
+      "slot": "building.geothermal_generator@scav",
+      "source": "res://art/kits/Scavenger_01_02_Scav_Refinery_01.tscn",
+      "summary": "footprint x0.215 -> 5.1x3.5x5.2 m (proxy 5.2x6.5x5.2)",
+      "uses_atlas": false,
+      "warnings": []
+    },
+    {
+      "atlas_materials": 7,
+      "fit": "footprint",
+      "notes": [
+        "no atlas texture staged for res:"
+      ],
+      "ok": true,
+      "proxy_m": [
+        7.6,
+        6.0,
+        7.6
+      ],
+      "reimport": false,
+      "rig": "",
+      "scale": 0.2749,
+      "scene": "res://art/prefabs/building.mine@scav.tscn",
+      "size_m": [
+        7.6,
+        8.23,
+        7.3
+      ],
+      "slot": "building.mine@scav",
+      "source": "res://art/kits/Scavenger_01_06_Scav_Refinery_02.tscn",
+      "summary": "footprint x0.275 -> 7.6x8.2x7.3 m (proxy 7.6x6.0x7.6)",
+      "uses_atlas": false,
       "warnings": []
     }
   ]

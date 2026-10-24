@@ -1,0 +1,52 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://assets/Synty/PolygonSciFiWorlds/Prefabs/Buildings/SM_Bld_Crate_Building_02.tscn" id="1_0k2he"]
+[ext_resource type="ArrayMesh" path="res://assets/Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Crate_Building_02.res" id="2_28qla"]
+[ext_resource type="Material" path="res://assets/Synty/PolygonSciFiWorlds/Materials/Alts/PolygonScifiWorlds_01_A_mat.tres" id="3_wv6di"]
+[ext_resource type="PackedScene" path="res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_Tether_Wire_05.tscn" id="4_xw1cb"]
+[ext_resource type="ArrayMesh" path="res://assets/Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Tether_Wire_05.res" id="5_j880q"]
+[ext_resource type="PackedScene" path="res://assets/Synty/PolygonSciFiWorlds/Prefabs/Buildings/SM_Bld_Crate_Building_Balcony_01.tscn" id="6_h8ni6"]
+[ext_resource type="ArrayMesh" path="res://assets/Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Crate_Building_Balcony_01.res" id="7_1xokf"]
+[ext_resource type="PackedScene" path="res://assets/Synty/PolygonSciFiWorlds/Prefabs/Buildings/SM_Bld_Door_Single_01.tscn" id="8_61cwb"]
+[ext_resource type="ArrayMesh" path="res://assets/Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Door_Single_01.res" id="9_2r6wq"]
+
+[node name="building_habitat_scav" type="Node3D" unique_id=981043906]
+metadata/synty_source = "res://art/kits/BlackMarket_01_06_Crate_Building_02.tscn"
+metadata/synty_fit = "footprint"
+
+[node name="Model" type="Node3D" parent="." unique_id=697460040]
+transform = Transform3D(-4.271161e-08, 0, 0.9771277, 0, 0.9771277, 0, -0.9771277, 0, -4.271161e-08, 2.6094084, -3.874302e-07, -2.102525)
+
+[node name="SM_Bld_Crate_Building_02" type="MeshInstance3D" parent="Model" unique_id=1427256446 instance=ExtResource("1_0k2he")]
+transform = Transform3D(1.0000002, 4.656613e-09, 0, -4.6566138e-09, 0.9998065, 0.019671394, 0, -0.019671395, 0.99980646, 0.012665749, 0.094685555, -0.07575989)
+gi_mode = 2
+mesh = ExtResource("2_28qla")
+surface_material_override/0 = ExtResource("3_wv6di")
+
+[node name="SM_Prop_Tether_Wire_05" type="MeshInstance3D" parent="Model" unique_id=209029857 instance=ExtResource("4_xw1cb")]
+transform = Transform3D(-1.5759351, -0.14540821, -0.5963128, -0.36161563, 0.9834549, 2.2019725e-05, 1.1706508, 0.10804139, -0.802752, -9.833004, 1.5416851, 0.20116425)
+gi_mode = 2
+visibility_range_end = 160.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("5_j880q")
+surface_material_override/0 = ExtResource("3_wv6di")
+
+[node name="SM_Bld_Crate_Building_Balcony_01" type="MeshInstance3D" parent="Model" unique_id=1406759948 instance=ExtResource("6_h8ni6")]
+transform = Transform3D(1.0000002, 4.656613e-09, 0, -4.6566138e-09, 0.9998065, 0.019671394, 0, -0.019671395, 0.99980646, 0.012665749, 0.094685555, -0.07575989)
+gi_mode = 2
+visibility_range_end = 160.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("7_1xokf")
+surface_material_override/0 = ExtResource("3_wv6di")
+
+[node name="SM_Bld_Door_Single_01" type="MeshInstance3D" parent="Model" unique_id=211223358 instance=ExtResource("8_61cwb")]
+transform = Transform3D(1, 5.5879354e-09, -2.9802322e-08, -4.656613e-09, 0.9998065, 0.019671395, -2.9802322e-08, -0.019671395, 0.9998065, 0.012999535, 0.3586855, 4.5940247)
+cast_shadow = 0
+gi_mode = 2
+visibility_range_end = 70.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("9_2r6wq")
+surface_material_override/0 = ExtResource("3_wv6di")

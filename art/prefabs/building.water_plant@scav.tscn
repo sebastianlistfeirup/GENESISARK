@@ -1,0 +1,18 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://assets/Synty/PolygonSciFiWorlds/Prefabs/Buildings/SM_Bld_Watertank_01.tscn" id="1_akbdx"]
+[ext_resource type="ArrayMesh" path="res://assets/Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Watertank_01.res" id="2_pn11g"]
+[ext_resource type="Material" path="res://assets/Synty/PolygonSciFiWorlds/Materials/Alts/PolygonScifiWorlds_01_A_mat.tres" id="3_ef6mm"]
+
+[node name="building_water_plant_scav" type="Node3D" unique_id=1572650950]
+metadata/synty_source = "res://art/kits/BlackMarket_01_38_Watertank_01.tscn"
+metadata/synty_fit = "footprint"
+
+[node name="Model" type="Node3D" parent="." unique_id=1987481763]
+transform = Transform3D(1.2901672, 0, 0, 0, 1.2901672, 0, 0, 0, 1.2901672, 0.075000286, 1.1920929e-07, -0.2000004)
+
+[node name="SM_Bld_Watertank_01" type="MeshInstance3D" parent="Model" unique_id=1005143147 instance=ExtResource("1_akbdx")]
+transform = Transform3D(1.0000002, 0, 0, 0, 1, 0, 0, 0, 1.0000002, 0, 0.13254642, 0)
+gi_mode = 2
+mesh = ExtResource("2_pn11g")
+surface_material_override/0 = ExtResource("3_ef6mm")

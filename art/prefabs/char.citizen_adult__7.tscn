@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" path="res://assets/Synty/CharactersSrc/City/SK_Character_Junky_Male_01.fbx" id="1_5mbkc"]
 
-[node name="char_citizen_adult" type="Node3D" unique_id=1950836666]
+[node name="char_citizen_adult" type="Node3D" unique_id=1669898721]
 metadata/synty_source = "res://assets/Synty/CharactersSrc/City/SK_Character_Junky_Male_01.fbx"
 metadata/synty_fit = "natural"
 

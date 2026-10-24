@@ -1,0 +1,30 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://assets/Synty/PolygonSciFiWorlds/Prefabs/Buildings/SM_Bld_Crate_Building_03.tscn" id="1_rmbnw"]
+[ext_resource type="ArrayMesh" path="res://assets/Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Crate_Building_03.res" id="2_e6xvx"]
+[ext_resource type="Material" path="res://assets/Synty/PolygonSciFiWorlds/Materials/Alts/PolygonScifiWorlds_01_A_mat.tres" id="3_xrviy"]
+[ext_resource type="PackedScene" path="res://assets/Synty/PolygonSciFiWorlds/Prefabs/Buildings/SM_Bld_Door_Single_05.tscn" id="4_pyydg"]
+[ext_resource type="ArrayMesh" path="res://assets/Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Door_Single_05.res" id="5_isdln"]
+
+[node name="building_habitat_scav" type="Node3D" unique_id=572869605]
+metadata/synty_source = "res://art/kits/BlackMarket_01_00_Crate_Building_03.tscn"
+metadata/synty_fit = "footprint"
+
+[node name="Model" type="Node3D" parent="." unique_id=1384888565]
+transform = Transform3D(-4.365856e-08, 0, 0.99879146, 0, 0.99879146, 0, -0.99879146, 0, -4.365856e-08, -0.038123608, 0.15780905, -0.049999952)
+
+[node name="SM_Bld_Crate_Building_03" type="MeshInstance3D" parent="Model" unique_id=1732890049 instance=ExtResource("1_rmbnw")]
+transform = Transform3D(1, 0, -1.4901161e-08, 0, 1, 0, 1.4901161e-08, 0, 1, 0, 3.8928135e-17, 0.0191288)
+gi_mode = 2
+mesh = ExtResource("2_e6xvx")
+surface_material_override/0 = ExtResource("3_xrviy")
+
+[node name="SM_Bld_Door_Single_05" type="MeshInstance3D" parent="Model" unique_id=262447695 instance=ExtResource("4_pyydg")]
+transform = Transform3D(1.0000002, 0, -4.1127205e-06, 0, 1, 0, 5.468726e-06, 0, 0.74855304, 0.010421753, 0.142, 4.6893005)
+cast_shadow = 0
+gi_mode = 2
+visibility_range_end = 70.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("5_isdln")
+surface_material_override/0 = ExtResource("3_xrviy")

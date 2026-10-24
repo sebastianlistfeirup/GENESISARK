@@ -1,0 +1,42 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://assets/Synty/PolygonSciFiWorlds/Prefabs/Buildings/SM_Bld_Crate_Building_01.tscn" id="1_172kp"]
+[ext_resource type="ArrayMesh" path="res://assets/Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Crate_Building_01.res" id="2_hp2fw"]
+[ext_resource type="Material" path="res://assets/Synty/PolygonSciFiWorlds/Materials/Alts/PolygonScifiWorlds_01_A_mat.tres" id="3_u3ghs"]
+[ext_resource type="PackedScene" path="res://assets/Synty/PolygonSciFiWorlds/Prefabs/Buildings/SM_Bld_Railing_01.tscn" id="4_p8g1m"]
+[ext_resource type="ArrayMesh" path="res://assets/Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Railing_01.res" id="5_kbckt"]
+[ext_resource type="PackedScene" path="res://assets/Synty/PolygonSciFiWorlds/Prefabs/Buildings/SM_Bld_Door_Single_01.tscn" id="6_ehtgh"]
+[ext_resource type="ArrayMesh" path="res://assets/Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Door_Single_01.res" id="7_fdigx"]
+
+[node name="building_habitat_scav" type="Node3D" unique_id=1889280853]
+metadata/synty_source = "res://art/kits/BlackMarket_01_04_Crate_Building_01.tscn"
+metadata/synty_fit = "footprint"
+
+[node name="Model" type="Node3D" parent="." unique_id=888034811]
+transform = Transform3D(-4.066677e-08, 0, 0.93034726, 0, 0.93034726, 0, -0.93034726, 0, -4.066677e-08, 0.38655615, 0.14327359, 0.38344097)
+
+[node name="SM_Bld_Crate_Building_01" type="MeshInstance3D" parent="Model" unique_id=366749033 instance=ExtResource("1_172kp")]
+transform = Transform3D(1.0000004, 0, 0, 0, 1, 0, 0, 0, 1.0000004, 0, 0, -0.7319393)
+gi_mode = 2
+mesh = ExtResource("2_hp2fw")
+surface_material_override/0 = ExtResource("3_u3ghs")
+
+[node name="SM_Bld_Railing_01" type="MeshInstance3D" parent="Model" unique_id=663661243 instance=ExtResource("4_p8g1m")]
+transform = Transform3D(-0.37918094, 0, 0.9253226, 0, 1, 0, -0.9253226, 0, -0.37918094, 2.5069065, 0.042999983, 3.5103283)
+cast_shadow = 0
+gi_mode = 2
+visibility_range_end = 70.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("5_kbckt")
+surface_material_override/0 = ExtResource("3_u3ghs")
+
+[node name="SM_Bld_Door_Single_01" type="MeshInstance3D" parent="Model" unique_id=1245722921 instance=ExtResource("6_ehtgh")]
+transform = Transform3D(1.0000004, 0, 0, 0, 1, 0, 0, 0, 1.0000004, 0.002986908, 0.14599991, -5.3467503)
+cast_shadow = 0
+gi_mode = 2
+visibility_range_end = 70.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("7_fdigx")
+surface_material_override/0 = ExtResource("3_u3ghs")

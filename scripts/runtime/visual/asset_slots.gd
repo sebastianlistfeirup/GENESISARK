@@ -13,6 +13,9 @@ static var _loaded := false
 static var _materials: Dictionary = {}
 static var _scenes: Dictionary = {}
 static var _built: Dictionary = {}
+## Architecture style of the current world ("corp", "scav", "" = default). A slot
+## "building.habitat@corp" in the built map wins over "building.habitat" while set.
+static var style := ""
 
 
 static func slots() -> Dictionary:
@@ -29,6 +32,8 @@ static func slots() -> Dictionary:
 ## All wrapper scenes for a slot: the hand-set "scene" in asset_slots.json, else
 ## the builder's entry in slot_scenes.json (a path or a list of variants).
 static func scene_paths(id: String) -> Array:
+	if not style.is_empty() and not id.contains("@") and _built.has(id + "@" + style):
+		return scene_paths(id + "@" + style)
 	var p := str(slot(id).get("scene", ""))
 	if not p.is_empty():
 		return [p]
@@ -133,7 +138,7 @@ static func aabb_of(n: Node, xf: Transform3D) -> AABB:
 static func build_proxy(id: String, tint: String = "") -> Node3D:
 	var root := Node3D.new()
 	root.name = "Proxy"
-	for part: Dictionary in DictUtil.get_arr(slot(id), "proxy"):
+	for part: Dictionary in DictUtil.get_arr(slot(id.get_slice("@", 0)), "proxy"):
 		var n := _part(part, tint)
 		if n:
 			root.add_child(n)

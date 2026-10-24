@@ -1,0 +1,1283 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://assets/Synty/PolygonSciFiWorlds/Prefabs/Buildings/SM_Bld_Scav_Refinery_02.tscn" id="1_f2jl4"]
+[ext_resource type="ArrayMesh" path="res://assets/Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Scav_Refinery_02.res" id="2_cu5tb"]
+[ext_resource type="Material" path="res://assets/Synty/PolygonSciFiWorlds/Materials/Alts/PolygonScifiWorlds_01_A_mat.tres" id="3_hqtlf"]
+[ext_resource type="PackedScene" path="res://assets/Synty/PolygonSciFiWorlds/Prefabs/Buildings/SM_Bld_Light_01.tscn" id="4_aeqjm"]
+[ext_resource type="ArrayMesh" path="res://assets/Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Light_01.res" id="5_xygvt"]
+[ext_resource type="PackedScene" path="res://assets/Synty/PolygonSciFiWorlds/Prefabs/Buildings/SM_Bld_Elevator_Hover_Single_01.tscn" id="6_ebydm"]
+[ext_resource type="ArrayMesh" path="res://assets/Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Elevator_Hover_Single_01.res" id="7_cig8r"]
+[ext_resource type="PackedScene" path="res://assets/Synty/PolygonSciFiWorlds/Prefabs/Buildings/SM_Bld_Railing_Pillar_01.tscn" id="8_xl1cc"]
+[ext_resource type="ArrayMesh" path="res://assets/Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Railing_Pillar_01.res" id="9_lah2q"]
+[ext_resource type="PackedScene" path="res://assets/Synty/PolygonSciFiWorlds/Prefabs/Buildings/SM_Bld_Greeble_22.tscn" id="10_pusou"]
+[ext_resource type="ArrayMesh" path="res://assets/Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Greeble_22.res" id="11_mmqx6"]
+[ext_resource type="Material" path="res://assets/Synty/PolygonSciFiWorlds/Materials/Alts/PolygonScifiWorlds_03_C_mat.tres" id="12_jpkc6"]
+[ext_resource type="PackedScene" path="res://assets/Synty/PolygonSciFiWorlds/Prefabs/Buildings/SM_Bld_Light_07.tscn" id="13_m3s7g"]
+[ext_resource type="ArrayMesh" path="res://assets/Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Light_07.res" id="14_gwb85"]
+[ext_resource type="PackedScene" path="res://assets/Synty/PolygonSciFiWorlds/Prefabs/Buildings/SM_Bld_Scav_Refinery_Silo_06.tscn" id="15_d28ly"]
+[ext_resource type="ArrayMesh" path="res://assets/Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Scav_Refinery_Silo_06.res" id="16_igtgl"]
+[ext_resource type="PackedScene" path="res://assets/Synty/PolygonSciFiWorlds/Prefabs/Buildings/SM_Bld_Tower_Monitors_01.tscn" id="17_8txgb"]
+[ext_resource type="ArrayMesh" path="res://assets/Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Tower_Monitors_01.res" id="18_6m47p"]
+[ext_resource type="PackedScene" path="res://assets/Synty/PolygonSciFiWorlds/Prefabs/Buildings/SM_Bld_Scav_Refinery_Pipe_02_Connector_01.tscn" id="19_kjyn0"]
+[ext_resource type="ArrayMesh" path="res://assets/Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Scav_Refinery_Pipe_02_Connector_01.res" id="20_rxswj"]
+[ext_resource type="PackedScene" path="res://assets/Synty/PolygonSciFiWorlds/Prefabs/Buildings/SM_Bld_Railing_01.tscn" id="21_buant"]
+[ext_resource type="ArrayMesh" path="res://assets/Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Railing_01.res" id="22_y85e8"]
+[ext_resource type="PackedScene" path="res://assets/Synty/PolygonSciFiWorlds/Prefabs/Buildings/SM_Bld_Door_Single_02.tscn" id="23_eb7oc"]
+[ext_resource type="ArrayMesh" path="res://assets/Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Door_Single_02.res" id="24_8gxlq"]
+[ext_resource type="PackedScene" path="res://assets/Synty/PolygonSciFiWorlds/Prefabs/Buildings/SM_Bld_Scav_Refinery_Silo_05.tscn" id="25_gqekf"]
+[ext_resource type="ArrayMesh" path="res://assets/Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Scav_Refinery_Silo_05.res" id="26_vlbq2"]
+[ext_resource type="PackedScene" path="res://assets/Synty/PolygonSciFiWorlds/Prefabs/Buildings/SM_Bld_Scav_Refinery_Pipe_02_Half_01.tscn" id="27_r7ikl"]
+[ext_resource type="ArrayMesh" path="res://assets/Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Scav_Refinery_Pipe_02_Half_01.res" id="28_u01rl"]
+[ext_resource type="PackedScene" path="res://assets/Synty/PolygonSciFiWorlds/Prefabs/Buildings/SM_Bld_Scav_Refinery_Pipe_01_Bend_02.tscn" id="29_ow28v"]
+[ext_resource type="ArrayMesh" path="res://assets/Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Scav_Refinery_Pipe_01_Bend_02.res" id="30_hu6ee"]
+[ext_resource type="PackedScene" path="res://assets/Synty/PolygonSciFiWorlds/Prefabs/Buildings/SM_Bld_Greeble_09.tscn" id="31_a3xgj"]
+[ext_resource type="ArrayMesh" path="res://assets/Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Greeble_09.res" id="32_cjkxv"]
+[ext_resource type="PackedScene" path="res://assets/Synty/PolygonSciFiWorlds/Prefabs/Buildings/SM_Bld_Light_03.tscn" id="33_jfj1w"]
+[ext_resource type="ArrayMesh" path="res://assets/Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Light_03.res" id="34_1gqiv"]
+[ext_resource type="PackedScene" path="res://assets/Synty/PolygonSciFiWorlds/Prefabs/Buildings/SM_Bld_Greeble_17.tscn" id="35_42qa0"]
+[ext_resource type="ArrayMesh" path="res://assets/Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Greeble_17.res" id="36_8qg18"]
+[ext_resource type="PackedScene" path="res://assets/Synty/PolygonSciFiWorlds/Prefabs/Buildings/SM_Bld_Scav_Refinery_Pipe_02_Bend_01.tscn" id="37_x7eg2"]
+[ext_resource type="ArrayMesh" path="res://assets/Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Scav_Refinery_Pipe_02_Bend_01.res" id="38_6j1di"]
+[ext_resource type="PackedScene" path="res://assets/Synty/PolygonSciFiWorlds/Prefabs/Buildings/SM_Bld_Door_Single_01.tscn" id="39_ier6l"]
+[ext_resource type="ArrayMesh" path="res://assets/Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Door_Single_01.res" id="40_4lig0"]
+[ext_resource type="PackedScene" path="res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_Monitor_12.tscn" id="41_f5kyg"]
+[ext_resource type="ArrayMesh" path="res://assets/Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Monitor_12.res" id="42_gsmhk"]
+[ext_resource type="PackedScene" path="res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_Crate_03.tscn" id="43_i88gk"]
+[ext_resource type="ArrayMesh" path="res://assets/Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Crate_03.res" id="44_0y2ha"]
+[ext_resource type="PackedScene" path="res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_Monitor_14.tscn" id="45_nllb3"]
+[ext_resource type="ArrayMesh" path="res://assets/Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Monitor_14.res" id="46_yi0g2"]
+[ext_resource type="PackedScene" path="res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_Crate_02.tscn" id="47_3gs4u"]
+[ext_resource type="ArrayMesh" path="res://assets/Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Crate_02.res" id="48_jf73d"]
+[ext_resource type="PackedScene" path="res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_Cardboard_Box_01.tscn" id="49_jray8"]
+[ext_resource type="ArrayMesh" path="res://assets/Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Cardboard_Box_01.res" id="50_ghuqr"]
+[ext_resource type="PackedScene" path="res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_Cardboard_Box_02.tscn" id="51_ep1rb"]
+[ext_resource type="ArrayMesh" path="res://assets/Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Cardboard_Box_02.res" id="52_hnhsi"]
+[ext_resource type="PackedScene" path="res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_Table_Medium_01.tscn" id="53_xbbfg"]
+[ext_resource type="ArrayMesh" path="res://assets/Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Table_Medium_01.res" id="54_a7og0"]
+[ext_resource type="PackedScene" path="res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_Antenna_08.tscn" id="55_7ekt8"]
+[ext_resource type="ArrayMesh" path="res://assets/Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Antenna_08.res" id="56_f5hxw"]
+[ext_resource type="PackedScene" path="res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_Crate_11.tscn" id="57_cqxf1"]
+[ext_resource type="ArrayMesh" path="res://assets/Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Crate_11.res" id="58_s2cqc"]
+[ext_resource type="PackedScene" path="res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_Monitor_02.tscn" id="59_7j3r2"]
+[ext_resource type="ArrayMesh" path="res://assets/Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Monitor_02.res" id="60_oa6g5"]
+[ext_resource type="PackedScene" path="res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_Chair_02.tscn" id="61_elj5h"]
+[ext_resource type="ArrayMesh" path="res://assets/Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Chair_02.res" id="62_64tue"]
+[ext_resource type="PackedScene" path="res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_Crate_14.tscn" id="63_k22gd"]
+[ext_resource type="ArrayMesh" path="res://assets/Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Crate_14.res" id="64_iu7dq"]
+[ext_resource type="PackedScene" path="res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_Cardboard_Box_05.tscn" id="65_e0nl1"]
+[ext_resource type="ArrayMesh" path="res://assets/Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Cardboard_Box_05.res" id="66_yareb"]
+[ext_resource type="PackedScene" path="res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_Crate_12.tscn" id="67_b78yt"]
+[ext_resource type="ArrayMesh" path="res://assets/Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Crate_12.res" id="68_ix8ex"]
+[ext_resource type="PackedScene" path="res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_Projection_Table_01.tscn" id="69_gww25"]
+[ext_resource type="ArrayMesh" path="res://assets/Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Projection_Table_01.res" id="70_ylon5"]
+[ext_resource type="PackedScene" path="res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_Cable_04.tscn" id="71_l0ufk"]
+[ext_resource type="ArrayMesh" path="res://assets/Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Cable_04.res" id="72_eshjw"]
+[ext_resource type="PackedScene" path="res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_TrashBin_01.tscn" id="73_b35ly"]
+[ext_resource type="ArrayMesh" path="res://assets/Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_TrashBin_01.res" id="74_imdl3"]
+[ext_resource type="Material" path="res://assets/Synty/PolygonSciFiWorlds/Materials/Environment/PolygonScifiWorlds_Mat_01_A_Triplanar_01_mat.tres" id="75_vd64i"]
+[ext_resource type="PackedScene" path="res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_Monitor_06.tscn" id="76_iavdd"]
+[ext_resource type="ArrayMesh" path="res://assets/Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Monitor_06.res" id="77_yhkha"]
+[ext_resource type="PackedScene" path="res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/Signs/SM_Prop_Sign_01.tscn" id="78_7jv8m"]
+[ext_resource type="ArrayMesh" path="res://assets/Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Sign_01.res" id="79_gmryg"]
+[ext_resource type="Material" path="res://assets/Synty/PolygonSciFiWorlds/Materials/Alts/PolygonScifiWorlds_01_B_mat.tres" id="80_5cwen"]
+[ext_resource type="PackedScene" path="res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_Cash_Register_01.tscn" id="81_iay80"]
+[ext_resource type="ArrayMesh" path="res://assets/Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Cash_Register_01.res" id="82_1d36o"]
+
+[node name="building_mine_scav" type="Node3D" unique_id=913706465]
+metadata/synty_source = "res://art/kits/Scavenger_01_06_Scav_Refinery_02.tscn"
+metadata/synty_fit = "footprint"
+
+[node name="Model" type="Node3D" parent="." unique_id=1853632580]
+transform = Transform3D(0.27493092, 0, 0, 0, 0.27493092, 0, 0, 0, 0.27493092, 0, 0.11587936, 0.3596964)
+
+[node name="SM_Bld_Scav_Refinery_02" type="MeshInstance3D" parent="Model" unique_id=986344692 instance=ExtResource("1_f2jl4")]
+transform = Transform3D(1, 0, 2.781735e-08, 0, 1, 0, -2.781735e-08, 0, 1, 2.2734222, 1.5258789e-07, 1.1657944)
+gi_mode = 2
+mesh = ExtResource("2_cu5tb")
+surface_material_override/0 = ExtResource("3_hqtlf")
+
+[node name="SM_Bld_Light_01" type="MeshInstance3D" parent="Model" unique_id=1412043898 instance=ExtResource("4_aeqjm")]
+transform = Transform3D(-5.9604695e-08, 1, -5.9486665e-06, -1, -1.1920929e-07, 8.668604e-09, 8.668247e-09, 5.9486665e-06, 1, 8.043472, 9.747, -7.444172)
+cast_shadow = 0
+gi_mode = 2
+visibility_range_end = 70.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("5_xygvt")
+surface_material_override/0 = ExtResource("3_hqtlf")
+
+[node name="SM_Bld_Elevator_Hover_Single_01" type="MeshInstance3D" parent="Model" unique_id=988640897 instance=ExtResource("6_ebydm")]
+transform = Transform3D(-1, 0, 5.8730416e-06, 0, 1, 0, -5.8730416e-06, 0, -1, 6.4493866, 1.6913002, 7.040821)
+cast_shadow = 0
+gi_mode = 2
+visibility_range_end = 70.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("7_cig8r")
+surface_material_override/0 = ExtResource("3_hqtlf")
+
+[node name="SM_Bld_Railing_Pillar_01" type="MeshInstance3D" parent="Model" unique_id=694455486 instance=ExtResource("8_xl1cc")]
+transform = Transform3D(-0.707112, 0, -0.7071015, 0, 1, 0, 0.7071015, 0, -0.707112, -2.2415428, 15.607, -5.1672325)
+cast_shadow = 0
+gi_mode = 2
+visibility_range_end = 70.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("9_lah2q")
+surface_material_override/0 = ExtResource("3_hqtlf")
+
+[node name="_MeshInstance3D_692" type="MeshInstance3D" parent="Model" unique_id=1311822468 instance=ExtResource("4_aeqjm")]
+transform = Transform3D(-5.9604695e-08, 1, -5.9486665e-06, -1, -1.1920929e-07, 8.668604e-09, 8.668247e-09, 5.9486665e-06, 1, 8.043472, 19.35, -7.7071724)
+cast_shadow = 0
+gi_mode = 2
+visibility_range_end = 70.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("5_xygvt")
+surface_material_override/0 = ExtResource("3_hqtlf")
+
+[node name="_MeshInstance3D_693" type="MeshInstance3D" parent="Model" unique_id=880783840 instance=ExtResource("8_xl1cc")]
+transform = Transform3D(-8.79367e-06, 0, -1, 0, 1, 0, 1, 0, -8.79367e-06, -2.2665596, 10.125, -2.4062347)
+cast_shadow = 0
+gi_mode = 2
+visibility_range_end = 70.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("9_lah2q")
+surface_material_override/0 = ExtResource("3_hqtlf")
+
+[node name="_MeshInstance3D_694" type="MeshInstance3D" parent="Model" unique_id=623216507 instance=ExtResource("8_xl1cc")]
+transform = Transform3D(-1, 0, 1.1803702e-05, 0, 1, 0, -1.1803702e-05, 0, -1, 0.52845764, 15.607, -5.199215)
+cast_shadow = 0
+gi_mode = 2
+visibility_range_end = 70.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("9_lah2q")
+surface_material_override/0 = ExtResource("3_hqtlf")
+
+[node name="_MeshInstance3D_695" type="MeshInstance3D" parent="Model" unique_id=507027441 instance=ExtResource("8_xl1cc")]
+transform = Transform3D(1, 0, -1.17739e-05, 0, 1, 0, 1.17739e-05, 0, 1, 0.5504074, 15.607, 3.300785)
+cast_shadow = 0
+gi_mode = 2
+visibility_range_end = 70.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("9_lah2q")
+surface_material_override/0 = ExtResource("3_hqtlf")
+
+[node name="SM_Bld_Greeble_22" type="MeshInstance3D" parent="Model" unique_id=1184202251 instance=ExtResource("10_pusou")]
+transform = Transform3D(-0.014762748, 0, 0.9998912, 0, 1, 0, -0.9998912, 0, -0.014762748, -5.7165756, 13.53, 0.22574615)
+cast_shadow = 0
+gi_mode = 2
+visibility_range_end = 70.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("11_mmqx6")
+surface_material_override/0 = ExtResource("12_jpkc6")
+
+[node name="SM_Bld_Light_07" type="MeshInstance3D" parent="Model" unique_id=2075292086 instance=ExtResource("13_m3s7g")]
+transform = Transform3D(-1.9737222, 0, 1.1591754e-05, 0, 1.9737225, 0, -1.1591753e-05, 0, -1.9737225, 1.9633636, 1.4020001, 10.485794)
+cast_shadow = 0
+gi_mode = 2
+visibility_range_end = 70.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("14_gwb85")
+surface_material_override/0 = ExtResource("3_hqtlf")
+
+[node name="SM_Bld_Scav_Refinery_Silo_06" type="MeshInstance3D" parent="Model" unique_id=744988631 instance=ExtResource("15_d28ly")]
+transform = Transform3D(-0.2542099, 0, 1.492986e-06, 0, 0.25421003, 0, -1.4929853e-06, 0, -0.25421003, -0.8096237, 15.471, 8.815777)
+gi_mode = 2
+visibility_range_end = 160.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("16_igtgl")
+surface_material_override/0 = ExtResource("3_hqtlf")
+
+[node name="_MeshInstance3D_696" type="MeshInstance3D" parent="Model" unique_id=1310900263 instance=ExtResource("8_xl1cc")]
+transform = Transform3D(-1, 0, 1.1803702e-05, 0, 1, 0, -1.1803702e-05, 0, -1, 3.4034576, 15.607, -5.1991997)
+cast_shadow = 0
+gi_mode = 2
+visibility_range_end = 70.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("9_lah2q")
+surface_material_override/0 = ExtResource("3_hqtlf")
+
+[node name="SM_Bld_Tower_Monitors_01" type="MeshInstance3D" parent="Model" unique_id=431006118 instance=ExtResource("17_8txgb")]
+transform = Transform3D(0.5633536, -6.2231976e-07, 3.3085985e-06, -6.223199e-07, -0.5633535, 0, 3.3085992e-06, -3.6549097e-12, -0.5633535, 2.9334373, 19.6, -1.4142036)
+gi_mode = 2
+visibility_range_end = 160.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("18_6m47p")
+surface_material_override/0 = ExtResource("3_hqtlf")
+
+[node name="_MeshInstance3D_697" type="MeshInstance3D" parent="Model" unique_id=1152933205 instance=ExtResource("4_aeqjm")]
+transform = Transform3D(1.19208934e-07, -1, 6.1226265e-06, -1, -1.1920929e-07, -5.992394e-08, 5.992465e-08, -6.1226265e-06, -1, -3.7766304, 15.2, 9.780758)
+cast_shadow = 0
+gi_mode = 2
+visibility_range_end = 70.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("5_xygvt")
+surface_material_override/0 = ExtResource("3_hqtlf")
+
+[node name="_MeshInstance3D_698" type="MeshInstance3D" parent="Model" unique_id=1374087382 instance=ExtResource("8_xl1cc")]
+transform = Transform3D(-1, 0, 1.1803702e-05, 0, 1, 0, -1.1803702e-05, 0, -1, 9.153458, 15.607, -5.1991653)
+cast_shadow = 0
+gi_mode = 2
+visibility_range_end = 70.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("9_lah2q")
+surface_material_override/0 = ExtResource("3_hqtlf")
+
+[node name="_MeshInstance3D_699" type="MeshInstance3D" parent="Model" unique_id=1582308886 instance=ExtResource("13_m3s7g")]
+transform = Transform3D(1.9737222, 0, -1.0823158e-05, 0, 1.9737225, 0, 1.0823157e-05, 0, 1.9737225, 1.9634743, 1.4020001, -8.1502075)
+cast_shadow = 0
+gi_mode = 2
+visibility_range_end = 70.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("14_gwb85")
+surface_material_override/0 = ExtResource("3_hqtlf")
+
+[node name="SM_Bld_Scav_Refinery_Pipe_02_Connector_01" type="MeshInstance3D" parent="Model" unique_id=798259790 instance=ExtResource("19_kjyn0")]
+transform = Transform3D(-0.6834972, 4.014206e-06, -1.7546651e-13, 0, -2.98766e-08, -0.68349695, -4.014207e-06, -0.68349695, 2.98766e-08, 9.077461, 3.2924004, -5.7841644)
+cast_shadow = 0
+gi_mode = 2
+visibility_range_end = 70.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("20_rxswj")
+surface_material_override/0 = ExtResource("3_hqtlf")
+
+[node name="_MeshInstance3D_700" type="MeshInstance3D" parent="Model" unique_id=1281490474 instance=ExtResource("8_xl1cc")]
+transform = Transform3D(1, 0, -1.17739e-05, 0, 1, 0, 1.17739e-05, 0, 1, 6.301407, 10.125, 3.3008194)
+cast_shadow = 0
+gi_mode = 2
+visibility_range_end = 70.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("9_lah2q")
+surface_material_override/0 = ExtResource("3_hqtlf")
+
+[node name="_MeshInstance3D_701" type="MeshInstance3D" parent="Model" unique_id=306208136 instance=ExtResource("4_aeqjm")]
+transform = Transform3D(1.19208934e-07, -1, 6.1226265e-06, -1, -1.1920929e-07, -5.992394e-08, 5.992465e-08, -6.1226265e-06, -1, 2.0533676, 15.2, 9.780792)
+cast_shadow = 0
+gi_mode = 2
+visibility_range_end = 70.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("5_xygvt")
+surface_material_override/0 = ExtResource("3_hqtlf")
+
+[node name="SM_Bld_Railing_01" type="MeshInstance3D" parent="Model" unique_id=1187016017 instance=ExtResource("21_buant")]
+transform = Transform3D(-8.79367e-06, 0, -1, 0, 1, 0, 1, 0, -8.79367e-06, -2.2665672, 15.607, -0.949234)
+cast_shadow = 0
+gi_mode = 2
+visibility_range_end = 70.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("22_y85e8")
+surface_material_override/0 = ExtResource("3_hqtlf")
+
+[node name="_MeshInstance3D_702" type="MeshInstance3D" parent="Model" unique_id=470843130 instance=ExtResource("8_xl1cc")]
+transform = Transform3D(-8.79367e-06, 0, -1, 0, 1, 0, 1, 0, -8.79367e-06, -2.2665749, 15.607, 0.46876526)
+cast_shadow = 0
+gi_mode = 2
+visibility_range_end = 70.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("9_lah2q")
+surface_material_override/0 = ExtResource("3_hqtlf")
+
+[node name="_MeshInstance3D_703" type="MeshInstance3D" parent="Model" unique_id=179759952 instance=ExtResource("21_buant")]
+transform = Transform3D(1, 0, -1.17739e-05, 0, 1, 0, 1.17739e-05, 0, 1, -0.89159393, 10.125, 3.3007774)
+cast_shadow = 0
+gi_mode = 2
+visibility_range_end = 70.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("22_y85e8")
+surface_material_override/0 = ExtResource("3_hqtlf")
+
+[node name="_MeshInstance3D_704" type="MeshInstance3D" parent="Model" unique_id=1521349678 instance=ExtResource("19_kjyn0")]
+transform = Transform3D(-0.6834972, 4.014206e-06, -1.7546651e-13, 0, -2.98766e-08, -0.68349695, -4.014207e-06, -0.68349695, 2.98766e-08, 9.077461, 1.1900002, -5.7841644)
+cast_shadow = 0
+gi_mode = 2
+visibility_range_end = 70.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("20_rxswj")
+surface_material_override/0 = ExtResource("3_hqtlf")
+
+[node name="SM_Bld_Door_Single_02" type="MeshInstance3D" parent="Model" unique_id=245459831 instance=ExtResource("23_eb7oc")]
+transform = Transform3D(-1.04, 0, 6.107963e-06, 0, 1.04, 0, -6.107963e-06, 0, -1.04, 5.9614754, 1.5310001, -8.326183)
+cast_shadow = 0
+gi_mode = 2
+visibility_range_end = 70.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("24_8gxlq")
+surface_material_override/0 = ExtResource("3_hqtlf")
+
+[node name="_MeshInstance3D_705" type="MeshInstance3D" parent="Model" unique_id=140020960 instance=ExtResource("21_buant")]
+transform = Transform3D(1, 0, -1.17739e-05, 0, 1, 0, 1.17739e-05, 0, 1, -0.89159393, 15.607, 3.3007774)
+cast_shadow = 0
+gi_mode = 2
+visibility_range_end = 70.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("22_y85e8")
+surface_material_override/0 = ExtResource("3_hqtlf")
+
+[node name="_MeshInstance3D_706" type="MeshInstance3D" parent="Model" unique_id=1130746185 instance=ExtResource("21_buant")]
+transform = Transform3D(1, 0, -1.17739e-05, 0, 1, 0, 1.17739e-05, 0, 1, -0.8915405, 10.125, -5.1992226)
+cast_shadow = 0
+gi_mode = 2
+visibility_range_end = 70.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("22_y85e8")
+surface_material_override/0 = ExtResource("3_hqtlf")
+
+[node name="_MeshInstance3D_707" type="MeshInstance3D" parent="Model" unique_id=1496069769 instance=ExtResource("4_aeqjm")]
+transform = Transform3D(-5.9604695e-08, 1, -5.9486665e-06, -1, -1.1920929e-07, 8.668604e-09, 8.668247e-09, 5.9486665e-06, 1, -3.7765274, 15.2, -7.4442406)
+cast_shadow = 0
+gi_mode = 2
+visibility_range_end = 70.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("5_xygvt")
+surface_material_override/0 = ExtResource("3_hqtlf")
+
+[node name="_MeshInstance3D_708" type="MeshInstance3D" parent="Model" unique_id=1285675568 instance=ExtResource("8_xl1cc")]
+transform = Transform3D(1, 0, -1.17739e-05, 0, 1, 0, 1.17739e-05, 0, 1, 0.5504074, 10.125, 3.300785)
+cast_shadow = 0
+gi_mode = 2
+visibility_range_end = 70.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("9_lah2q")
+surface_material_override/0 = ExtResource("3_hqtlf")
+
+[node name="SM_Bld_Scav_Refinery_Silo_05" type="MeshInstance3D" parent="Model" unique_id=240507881 instance=ExtResource("25_gqekf")]
+transform = Transform3D(5.881489e-07, 0, 0.10144794, 0, 0.10144794, 0, -0.10144794, 0, 5.881489e-07, 1.260376, 16.257, 9.11079)
+gi_mode = 2
+visibility_range_end = 160.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("26_vlbq2")
+surface_material_override/0 = ExtResource("3_hqtlf")
+
+[node name="_MeshInstance3D_709" type="MeshInstance3D" parent="Model" unique_id=1496640449 instance=ExtResource("8_xl1cc")]
+transform = Transform3D(-1, 0, 1.1803702e-05, 0, 1, 0, -1.1803702e-05, 0, -1, 3.4034576, 10.125, -5.1991997)
+cast_shadow = 0
+gi_mode = 2
+visibility_range_end = 70.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("9_lah2q")
+surface_material_override/0 = ExtResource("3_hqtlf")
+
+[node name="_MeshInstance3D_710" type="MeshInstance3D" parent="Model" unique_id=620160195 instance=ExtResource("21_buant")]
+transform = Transform3D(1, 0, -1.17739e-05, 0, 1, 0, 1.17739e-05, 0, 1, 1.9834061, 10.125, 3.3007927)
+cast_shadow = 0
+gi_mode = 2
+visibility_range_end = 70.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("22_y85e8")
+surface_material_override/0 = ExtResource("3_hqtlf")
+
+[node name="SM_Bld_Scav_Refinery_Pipe_02_Half_01" type="MeshInstance3D" parent="Model" unique_id=1861975954 instance=ExtResource("27_r7ikl")]
+transform = Transform3D(-1.2138282e-06, 0, -0.20405483, 0, 0.20405483, 0, 0.20405483, 0, -1.2138282e-06, -2.3146248, 16.584, 8.775764)
+gi_mode = 2
+visibility_range_end = 160.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("28_u01rl")
+surface_material_override/0 = ExtResource("3_hqtlf")
+
+[node name="_MeshInstance3D_711" type="MeshInstance3D" parent="Model" unique_id=136868689 instance=ExtResource("8_xl1cc")]
+transform = Transform3D(-1, 0, 1.1803702e-05, 0, 1, 0, -1.1803702e-05, 0, -1, 6.2784576, 10.125, -5.1991806)
+cast_shadow = 0
+gi_mode = 2
+visibility_range_end = 70.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("9_lah2q")
+surface_material_override/0 = ExtResource("3_hqtlf")
+
+[node name="_MeshInstance3D_712" type="MeshInstance3D" parent="Model" unique_id=1925942147 instance=ExtResource("8_xl1cc")]
+transform = Transform3D(0.70709944, 0, -0.7071141, 0, 1, 0, 0.7071141, 0, 0.70709944, -2.2205887, 15.607, 3.2577705)
+cast_shadow = 0
+gi_mode = 2
+visibility_range_end = 70.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("9_lah2q")
+surface_material_override/0 = ExtResource("3_hqtlf")
+
+[node name="_MeshInstance3D_713" type="MeshInstance3D" parent="Model" unique_id=628218828 instance=ExtResource("10_pusou")]
+transform = Transform3D(-0.014762748, 0, 0.9998912, 0, 1, 0, -0.9998912, 0, -0.014762748, -5.7565613, 13.53, -2.2942543)
+cast_shadow = 0
+gi_mode = 2
+visibility_range_end = 70.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("11_mmqx6")
+surface_material_override/0 = ExtResource("12_jpkc6")
+
+[node name="SM_Bld_Scav_Refinery_Pipe_01_Bend_02" type="MeshInstance3D" parent="Model" unique_id=1465913785 instance=ExtResource("29_ow28v")]
+transform = Transform3D(-0.2630457, 1.5448785e-06, -6.752879e-14, 0, -1.1498094e-08, -0.26304573, -1.5448783e-06, -0.26304573, 1.1498094e-08, -4.6436195, 18.796, 8.302753)
+gi_mode = 2
+visibility_range_end = 160.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("30_hu6ee")
+surface_material_override/0 = ExtResource("3_hqtlf")
+
+[node name="SM_Bld_Greeble_09" type="MeshInstance3D" parent="Model" unique_id=921726772 instance=ExtResource("31_a3xgj")]
+transform = Transform3D(-9.481491e-06, 0, -1.593919, 0, 1.593919, 0, 1.5939192, 0, -9.48149e-06, 9.817463, 13.168, -6.2441597)
+cast_shadow = 0
+gi_mode = 2
+visibility_range_end = 70.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("32_cjkxv")
+surface_material_override/0 = ExtResource("3_hqtlf")
+
+[node name="SM_Bld_Light_03" type="MeshInstance3D" parent="Model" unique_id=1343975853 instance=ExtResource("33_jfj1w")]
+transform = Transform3D(-1, 5.8730416e-06, 3.5006056e-13, 0, 5.9604645e-08, -1, -5.8730416e-06, -1, -5.9604645e-08, 2.7243843, 19.367, 7.4347954)
+cast_shadow = 0
+gi_mode = 2
+visibility_range_end = 70.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("34_1gqiv")
+surface_material_override/0 = ExtResource("3_hqtlf")
+
+[node name="_MeshInstance3D_714" type="MeshInstance3D" parent="Model" unique_id=1833864395 instance=ExtResource("4_aeqjm")]
+transform = Transform3D(-5.9604695e-08, 1, -5.9486665e-06, -1, -1.1920929e-07, 8.668604e-09, 8.668247e-09, 5.9486665e-06, 1, 8.043472, 15.2, -7.444172)
+cast_shadow = 0
+gi_mode = 2
+visibility_range_end = 70.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("5_xygvt")
+surface_material_override/0 = ExtResource("3_hqtlf")
+
+[node name="_MeshInstance3D_715" type="MeshInstance3D" parent="Model" unique_id=968330335 instance=ExtResource("21_buant")]
+transform = Transform3D(1, 0, -1.17739e-05, 0, 1, 0, 1.17739e-05, 0, 1, 4.858406, 15.607, 3.300808)
+cast_shadow = 0
+gi_mode = 2
+visibility_range_end = 70.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("22_y85e8")
+surface_material_override/0 = ExtResource("3_hqtlf")
+
+[node name="_MeshInstance3D_716" type="MeshInstance3D" parent="Model" unique_id=113681400 instance=ExtResource("15_d28ly")]
+transform = Transform3D(-0.2542099, 0, 1.492986e-06, 0, 0.25421003, 0, -1.4929853e-06, 0, -0.25421003, -2.720623, 15.471, 8.815765)
+gi_mode = 2
+visibility_range_end = 160.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("16_igtgl")
+surface_material_override/0 = ExtResource("3_hqtlf")
+
+[node name="_MeshInstance3D_717" type="MeshInstance3D" parent="Model" unique_id=1488588471 instance=ExtResource("8_xl1cc")]
+transform = Transform3D(1, 0, -1.17739e-05, 0, 1, 0, 1.17739e-05, 0, 1, 3.3964043, 15.607, 3.3008003)
+cast_shadow = 0
+gi_mode = 2
+visibility_range_end = 70.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("9_lah2q")
+surface_material_override/0 = ExtResource("3_hqtlf")
+
+[node name="_MeshInstance3D_718" type="MeshInstance3D" parent="Model" unique_id=1264712953 instance=ExtResource("8_xl1cc")]
+transform = Transform3D(0.70709944, 0, -0.7071141, 0, 1, 0, 0.7071141, 0, 0.70709944, -2.2205887, 10.125, 3.2577705)
+cast_shadow = 0
+gi_mode = 2
+visibility_range_end = 70.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("9_lah2q")
+surface_material_override/0 = ExtResource("3_hqtlf")
+
+[node name="_MeshInstance3D_719" type="MeshInstance3D" parent="Model" unique_id=992894347 instance=ExtResource("21_buant")]
+transform = Transform3D(1, 0, -1.17739e-05, 0, 1, 0, 1.17739e-05, 0, 1, -0.8915405, 15.607, -5.1992226)
+cast_shadow = 0
+gi_mode = 2
+visibility_range_end = 70.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("22_y85e8")
+surface_material_override/0 = ExtResource("3_hqtlf")
+
+[node name="_MeshInstance3D_720" type="MeshInstance3D" parent="Model" unique_id=649164103 instance=ExtResource("4_aeqjm")]
+transform = Transform3D(1.19208934e-07, -1, 6.1226265e-06, -1, -1.1920929e-07, -5.992394e-08, 5.992465e-08, -6.1226265e-06, -1, 2.0533676, 9.752, 9.780792)
+cast_shadow = 0
+gi_mode = 2
+visibility_range_end = 70.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("5_xygvt")
+surface_material_override/0 = ExtResource("3_hqtlf")
+
+[node name="_MeshInstance3D_721" type="MeshInstance3D" parent="Model" unique_id=1686606780 instance=ExtResource("4_aeqjm")]
+transform = Transform3D(-5.9604695e-08, 1, -5.9486665e-06, -1, -1.1920929e-07, 8.668604e-09, 8.668247e-09, 5.9486665e-06, 1, 2.0534706, 15.2, -7.444206)
+cast_shadow = 0
+gi_mode = 2
+visibility_range_end = 70.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("5_xygvt")
+surface_material_override/0 = ExtResource("3_hqtlf")
+
+[node name="_MeshInstance3D_722" type="MeshInstance3D" parent="Model" unique_id=147671976 instance=ExtResource("27_r7ikl")]
+transform = Transform3D(-0.6834972, -4.014207e-06, -1.7546657e-13, 0, -2.987661e-08, 0.6834972, -4.014207e-06, 0.6834972, 2.987661e-08, 9.077461, 6.4228, -5.7841644)
+gi_mode = 2
+visibility_range_end = 160.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("28_u01rl")
+surface_material_override/0 = ExtResource("3_hqtlf")
+
+[node name="_MeshInstance3D_723" type="MeshInstance3D" parent="Model" unique_id=188036134 instance=ExtResource("21_buant")]
+transform = Transform3D(1, 0, -1.17739e-05, 0, 1, 0, 1.17739e-05, 0, 1, 7.733406, 10.125, 3.300827)
+cast_shadow = 0
+gi_mode = 2
+visibility_range_end = 70.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("22_y85e8")
+surface_material_override/0 = ExtResource("3_hqtlf")
+
+[node name="_MeshInstance3D_724" type="MeshInstance3D" parent="Model" unique_id=535104851 instance=ExtResource("21_buant")]
+transform = Transform3D(-8.79367e-06, 0, -1, 0, 1, 0, 1, 0, -8.79367e-06, -2.2665672, 10.125, -0.949234)
+cast_shadow = 0
+gi_mode = 2
+visibility_range_end = 70.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("22_y85e8")
+surface_material_override/0 = ExtResource("3_hqtlf")
+
+[node name="_MeshInstance3D_725" type="MeshInstance3D" parent="Model" unique_id=721982644 instance=ExtResource("4_aeqjm")]
+transform = Transform3D(-5.9604695e-08, 1, -5.9486665e-06, -1, -1.1920929e-07, 8.668604e-09, 8.668247e-09, 5.9486665e-06, 1, -3.7765274, 19.35, -7.707241)
+cast_shadow = 0
+gi_mode = 2
+visibility_range_end = 70.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("5_xygvt")
+surface_material_override/0 = ExtResource("3_hqtlf")
+
+[node name="_MeshInstance3D_726" type="MeshInstance3D" parent="Model" unique_id=1017038825 instance=ExtResource("8_xl1cc")]
+transform = Transform3D(1, 0, -1.17739e-05, 0, 1, 0, 1.17739e-05, 0, 1, 9.233406, 15.607, 3.3008347)
+cast_shadow = 0
+gi_mode = 2
+visibility_range_end = 70.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("9_lah2q")
+surface_material_override/0 = ExtResource("3_hqtlf")
+
+[node name="_MeshInstance3D_727" type="MeshInstance3D" parent="Model" unique_id=583066488 instance=ExtResource("8_xl1cc")]
+transform = Transform3D(-0.707112, 0, -0.7071015, 0, 1, 0, 0.7071015, 0, -0.707112, -2.2415428, 10.125, -5.1672325)
+cast_shadow = 0
+gi_mode = 2
+visibility_range_end = 70.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("9_lah2q")
+surface_material_override/0 = ExtResource("3_hqtlf")
+
+[node name="_MeshInstance3D_728" type="MeshInstance3D" parent="Model" unique_id=1848353838 instance=ExtResource("8_xl1cc")]
+transform = Transform3D(-1, 0, 1.1803702e-05, 0, 1, 0, -1.1803702e-05, 0, -1, 9.153458, 10.125, -5.1991653)
+cast_shadow = 0
+gi_mode = 2
+visibility_range_end = 70.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("9_lah2q")
+surface_material_override/0 = ExtResource("3_hqtlf")
+
+[node name="_MeshInstance3D_729" type="MeshInstance3D" parent="Model" unique_id=657612098 instance=ExtResource("21_buant")]
+transform = Transform3D(-8.79367e-06, 0, -1, 0, 1, 0, 1, 0, -8.79367e-06, -2.2665825, 15.607, 1.925766)
+cast_shadow = 0
+gi_mode = 2
+visibility_range_end = 70.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("22_y85e8")
+surface_material_override/0 = ExtResource("3_hqtlf")
+
+[node name="SM_Bld_Greeble_17" type="MeshInstance3D" parent="Model" unique_id=272675573 instance=ExtResource("35_42qa0")]
+transform = Transform3D(-5.932646e-06, 0, -1, 0, 1, 0, 1, 0, -5.932646e-06, 9.258465, 10.166, -6.302166)
+cast_shadow = 0
+gi_mode = 2
+visibility_range_end = 70.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("36_8qg18")
+surface_material_override/0 = ExtResource("3_hqtlf")
+
+[node name="_MeshInstance3D_730" type="MeshInstance3D" parent="Model" unique_id=1903782931 instance=ExtResource("4_aeqjm")]
+transform = Transform3D(-5.9604695e-08, 1, -5.9486665e-06, -1, -1.1920929e-07, 8.668604e-09, 8.668247e-09, 5.9486665e-06, 1, -3.7765274, 9.747, -7.4442406)
+cast_shadow = 0
+gi_mode = 2
+visibility_range_end = 70.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("5_xygvt")
+surface_material_override/0 = ExtResource("3_hqtlf")
+
+[node name="_MeshInstance3D_731" type="MeshInstance3D" parent="Model" unique_id=1134885439 instance=ExtResource("21_buant")]
+transform = Transform3D(-8.79367e-06, 0, -1, 0, 1, 0, 1, 0, -8.79367e-06, -2.266552, 10.125, -3.824234)
+cast_shadow = 0
+gi_mode = 2
+visibility_range_end = 70.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("22_y85e8")
+surface_material_override/0 = ExtResource("3_hqtlf")
+
+[node name="_MeshInstance3D_732" type="MeshInstance3D" parent="Model" unique_id=417235271 instance=ExtResource("21_buant")]
+transform = Transform3D(-8.79367e-06, 0, -1, 0, 1, 0, 1, 0, -8.79367e-06, -2.266552, 15.607, -3.824234)
+cast_shadow = 0
+gi_mode = 2
+visibility_range_end = 70.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("22_y85e8")
+surface_material_override/0 = ExtResource("3_hqtlf")
+
+[node name="_MeshInstance3D_733" type="MeshInstance3D" parent="Model" unique_id=1865567437 instance=ExtResource("8_xl1cc")]
+transform = Transform3D(-1, 0, 1.1803702e-05, 0, 1, 0, -1.1803702e-05, 0, -1, 6.2784576, 15.607, -5.1991806)
+cast_shadow = 0
+gi_mode = 2
+visibility_range_end = 70.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("9_lah2q")
+surface_material_override/0 = ExtResource("3_hqtlf")
+
+[node name="_MeshInstance3D_734" type="MeshInstance3D" parent="Model" unique_id=382557212 instance=ExtResource("21_buant")]
+transform = Transform3D(1, 0, -1.17739e-05, 0, 1, 0, 1.17739e-05, 0, 1, 1.9834595, 15.607, -5.1992073)
+cast_shadow = 0
+gi_mode = 2
+visibility_range_end = 70.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("22_y85e8")
+surface_material_override/0 = ExtResource("3_hqtlf")
+
+[node name="_MeshInstance3D_735" type="MeshInstance3D" parent="Model" unique_id=1820337346 instance=ExtResource("21_buant")]
+transform = Transform3D(1, 0, -1.17739e-05, 0, 1, 0, 1.17739e-05, 0, 1, 1.9834061, 15.607, 3.3007927)
+cast_shadow = 0
+gi_mode = 2
+visibility_range_end = 70.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("22_y85e8")
+surface_material_override/0 = ExtResource("3_hqtlf")
+
+[node name="_MeshInstance3D_736" type="MeshInstance3D" parent="Model" unique_id=212400988 instance=ExtResource("15_d28ly")]
+transform = Transform3D(-0.2542099, 0, 1.492986e-06, 0, 0.25421003, 0, -1.4929853e-06, 0, -0.25421003, -4.6366234, 15.471, 8.815754)
+gi_mode = 2
+visibility_range_end = 160.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("16_igtgl")
+surface_material_override/0 = ExtResource("3_hqtlf")
+
+[node name="_MeshInstance3D_737" type="MeshInstance3D" parent="Model" unique_id=1591322905 instance=ExtResource("21_buant")]
+transform = Transform3D(1, 0, -1.17739e-05, 0, 1, 0, 1.17739e-05, 0, 1, 1.9834595, 10.125, -5.1992073)
+cast_shadow = 0
+gi_mode = 2
+visibility_range_end = 70.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("22_y85e8")
+surface_material_override/0 = ExtResource("3_hqtlf")
+
+[node name="_MeshInstance3D_738" type="MeshInstance3D" parent="Model" unique_id=247432655 instance=ExtResource("4_aeqjm")]
+transform = Transform3D(1.19208934e-07, -1, 6.1226265e-06, -1, -1.1920929e-07, -5.992394e-08, 5.992465e-08, -6.1226265e-06, -1, -3.7766304, 9.752, 9.780758)
+cast_shadow = 0
+gi_mode = 2
+visibility_range_end = 70.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("5_xygvt")
+surface_material_override/0 = ExtResource("3_hqtlf")
+
+[node name="_MeshInstance3D_739" type="MeshInstance3D" parent="Model" unique_id=1131779732 instance=ExtResource("8_xl1cc")]
+transform = Transform3D(-8.79367e-06, 0, -1, 0, 1, 0, 1, 0, -8.79367e-06, -2.2665596, 15.607, -2.4062347)
+cast_shadow = 0
+gi_mode = 2
+visibility_range_end = 70.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("9_lah2q")
+surface_material_override/0 = ExtResource("3_hqtlf")
+
+[node name="_MeshInstance3D_740" type="MeshInstance3D" parent="Model" unique_id=1727872571 instance=ExtResource("19_kjyn0")]
+transform = Transform3D(-0.6834972, 4.014206e-06, -1.7546651e-13, 0, -2.98766e-08, -0.68349695, -4.014207e-06, -0.68349695, 2.98766e-08, 9.077461, 6.416, -5.7841644)
+cast_shadow = 0
+gi_mode = 2
+visibility_range_end = 70.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("20_rxswj")
+surface_material_override/0 = ExtResource("3_hqtlf")
+
+[node name="_MeshInstance3D_741" type="MeshInstance3D" parent="Model" unique_id=1493738654 instance=ExtResource("21_buant")]
+transform = Transform3D(1, 0, -1.17739e-05, 0, 1, 0, 1.17739e-05, 0, 1, 4.8584595, 10.125, -5.199192)
+cast_shadow = 0
+gi_mode = 2
+visibility_range_end = 70.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("22_y85e8")
+surface_material_override/0 = ExtResource("3_hqtlf")
+
+[node name="_MeshInstance3D_742" type="MeshInstance3D" parent="Model" unique_id=1569994253 instance=ExtResource("21_buant")]
+transform = Transform3D(-8.79367e-06, 0, -1, 0, 1, 0, 1, 0, -8.79367e-06, -2.2665825, 10.125, 1.925766)
+cast_shadow = 0
+gi_mode = 2
+visibility_range_end = 70.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("22_y85e8")
+surface_material_override/0 = ExtResource("3_hqtlf")
+
+[node name="_MeshInstance3D_743" type="MeshInstance3D" parent="Model" unique_id=324370562 instance=ExtResource("21_buant")]
+transform = Transform3D(1, 0, -1.17739e-05, 0, 1, 0, 1.17739e-05, 0, 1, 4.858406, 10.125, 3.300808)
+cast_shadow = 0
+gi_mode = 2
+visibility_range_end = 70.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("22_y85e8")
+surface_material_override/0 = ExtResource("3_hqtlf")
+
+[node name="_MeshInstance3D_744" type="MeshInstance3D" parent="Model" unique_id=2045028585 instance=ExtResource("21_buant")]
+transform = Transform3D(1, 0, -1.17739e-05, 0, 1, 0, 1.17739e-05, 0, 1, 7.7334595, 10.125, -5.199173)
+cast_shadow = 0
+gi_mode = 2
+visibility_range_end = 70.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("22_y85e8")
+surface_material_override/0 = ExtResource("3_hqtlf")
+
+[node name="_MeshInstance3D_745" type="MeshInstance3D" parent="Model" unique_id=479346540 instance=ExtResource("29_ow28v")]
+transform = Transform3D(1.3055164e-06, 0.26304573, -1.1498094e-08, 0, -1.1498094e-08, -0.26304573, -0.2630457, 1.3055167e-06, -5.706595e-14, -0.27162552, 18.796, 8.8317795)
+gi_mode = 2
+visibility_range_end = 160.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("30_hu6ee")
+surface_material_override/0 = ExtResource("3_hqtlf")
+
+[node name="_MeshInstance3D_746" type="MeshInstance3D" parent="Model" unique_id=1008261652 instance=ExtResource("21_buant")]
+transform = Transform3D(1, 0, -1.17739e-05, 0, 1, 0, 1.17739e-05, 0, 1, 7.733406, 15.607, 3.300827)
+cast_shadow = 0
+gi_mode = 2
+visibility_range_end = 70.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("22_y85e8")
+surface_material_override/0 = ExtResource("3_hqtlf")
+
+[node name="_MeshInstance3D_747" type="MeshInstance3D" parent="Model" unique_id=1421161662 instance=ExtResource("27_r7ikl")]
+transform = Transform3D(-0.6834972, -4.014207e-06, -1.7546657e-13, 0, -2.987661e-08, 0.6834972, -4.014207e-06, 0.6834972, 2.987661e-08, 9.077461, 2.9960003, -5.7841644)
+gi_mode = 2
+visibility_range_end = 160.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("28_u01rl")
+surface_material_override/0 = ExtResource("3_hqtlf")
+
+[node name="SM_Bld_Scav_Refinery_Pipe_02_Bend_01" type="MeshInstance3D" parent="Model" unique_id=1339756118 instance=ExtResource("37_x7eg2")]
+transform = Transform3D(-0.6834972, 4.014206e-06, -1.7546651e-13, 0, -2.98766e-08, -0.68349695, -4.014207e-06, -0.68349695, 2.98766e-08, 9.077461, 6.416, -5.7841644)
+gi_mode = 2
+visibility_range_end = 160.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("38_6j1di")
+surface_material_override/0 = ExtResource("3_hqtlf")
+
+[node name="_MeshInstance3D_748" type="MeshInstance3D" parent="Model" unique_id=235176723 instance=ExtResource("8_xl1cc")]
+transform = Transform3D(1, 0, -1.17739e-05, 0, 1, 0, 1.17739e-05, 0, 1, 6.301407, 15.607, 3.3008194)
+cast_shadow = 0
+gi_mode = 2
+visibility_range_end = 70.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("9_lah2q")
+surface_material_override/0 = ExtResource("3_hqtlf")
+
+[node name="_MeshInstance3D_749" type="MeshInstance3D" parent="Model" unique_id=1176301007 instance=ExtResource("4_aeqjm")]
+transform = Transform3D(-5.9604695e-08, 1, -5.9486665e-06, -1, -1.1920929e-07, 8.668604e-09, 8.668247e-09, 5.9486665e-06, 1, 2.0534706, 9.747, -7.444206)
+cast_shadow = 0
+gi_mode = 2
+visibility_range_end = 70.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("5_xygvt")
+surface_material_override/0 = ExtResource("3_hqtlf")
+
+[node name="_MeshInstance3D_750" type="MeshInstance3D" parent="Model" unique_id=215540928 instance=ExtResource("27_r7ikl")]
+transform = Transform3D(-1.2138282e-06, 0, -0.20405483, 0, 0.20405483, 0, 0.20405483, 0, -1.2138282e-06, -4.239624, 16.584, 8.775753)
+gi_mode = 2
+visibility_range_end = 160.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("28_u01rl")
+surface_material_override/0 = ExtResource("3_hqtlf")
+
+[node name="_MeshInstance3D_751" type="MeshInstance3D" parent="Model" unique_id=1253478938 instance=ExtResource("21_buant")]
+transform = Transform3D(1, 0, -1.17739e-05, 0, 1, 0, 1.17739e-05, 0, 1, 4.8584595, 15.607, -5.199192)
+cast_shadow = 0
+gi_mode = 2
+visibility_range_end = 70.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("22_y85e8")
+surface_material_override/0 = ExtResource("3_hqtlf")
+
+[node name="_MeshInstance3D_752" type="MeshInstance3D" parent="Model" unique_id=485640170 instance=ExtResource("8_xl1cc")]
+transform = Transform3D(-8.79367e-06, 0, -1, 0, 1, 0, 1, 0, -8.79367e-06, -2.2665749, 10.125, 0.46876526)
+cast_shadow = 0
+gi_mode = 2
+visibility_range_end = 70.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("9_lah2q")
+surface_material_override/0 = ExtResource("3_hqtlf")
+
+[node name="_MeshInstance3D_753" type="MeshInstance3D" parent="Model" unique_id=1679975744 instance=ExtResource("4_aeqjm")]
+transform = Transform3D(-5.9604695e-08, 1, -5.9486665e-06, -1, -1.1920929e-07, 8.668604e-09, 8.668247e-09, 5.9486665e-06, 1, 2.0534706, 19.35, -7.7072067)
+cast_shadow = 0
+gi_mode = 2
+visibility_range_end = 70.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("5_xygvt")
+surface_material_override/0 = ExtResource("3_hqtlf")
+
+[node name="_MeshInstance3D_754" type="MeshInstance3D" parent="Model" unique_id=834288827 instance=ExtResource("8_xl1cc")]
+transform = Transform3D(1, 0, -1.17739e-05, 0, 1, 0, 1.17739e-05, 0, 1, 9.233406, 10.125, 3.3008347)
+cast_shadow = 0
+gi_mode = 2
+visibility_range_end = 70.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("9_lah2q")
+surface_material_override/0 = ExtResource("3_hqtlf")
+
+[node name="_MeshInstance3D_755" type="MeshInstance3D" parent="Model" unique_id=483138178 instance=ExtResource("8_xl1cc")]
+transform = Transform3D(-1, 0, 1.1803702e-05, 0, 1, 0, -1.1803702e-05, 0, -1, 0.52845764, 10.125, -5.199215)
+cast_shadow = 0
+gi_mode = 2
+visibility_range_end = 70.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("9_lah2q")
+surface_material_override/0 = ExtResource("3_hqtlf")
+
+[node name="_MeshInstance3D_756" type="MeshInstance3D" parent="Model" unique_id=523047222 instance=ExtResource("8_xl1cc")]
+transform = Transform3D(1, 0, -1.17739e-05, 0, 1, 0, 1.17739e-05, 0, 1, 3.3964043, 10.125, 3.3008003)
+cast_shadow = 0
+gi_mode = 2
+visibility_range_end = 70.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("9_lah2q")
+surface_material_override/0 = ExtResource("3_hqtlf")
+
+[node name="SM_Bld_Door_Single_01" type="MeshInstance3D" parent="Model" unique_id=1919856984 instance=ExtResource("39_ier6l")]
+transform = Transform3D(-1, 0, 5.8730416e-06, 0, 1, 0, -5.8730416e-06, 0, -1, 6.423397, 20.027, 4.6978188)
+cast_shadow = 0
+gi_mode = 2
+visibility_range_end = 70.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("40_4lig0")
+surface_material_override/0 = ExtResource("3_hqtlf")
+
+[node name="_MeshInstance3D_757" type="MeshInstance3D" parent="Model" unique_id=992678074 instance=ExtResource("21_buant")]
+transform = Transform3D(1, 0, -1.17739e-05, 0, 1, 0, 1.17739e-05, 0, 1, 7.7334595, 15.607, -5.199173)
+cast_shadow = 0
+gi_mode = 2
+visibility_range_end = 70.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("22_y85e8")
+surface_material_override/0 = ExtResource("3_hqtlf")
+
+[node name="SM_Prop_Monitor_12" type="MeshInstance3D" parent="Model" unique_id=341613546 instance=ExtResource("41_f5kyg")]
+transform = Transform3D(-0.85000014, 0, 4.181462e-06, 0, 0.84999996, 0, -4.1814633e-06, 0, -0.84999996, -4.63562, 16.902, 8.098755)
+cast_shadow = 0
+gi_mode = 2
+visibility_range_end = 70.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("42_gsmhk")
+surface_material_override/0 = ExtResource("3_hqtlf")
+
+[node name="SM_Prop_Crate_03" type="MeshInstance3D" parent="Model" unique_id=1844705730 instance=ExtResource("43_i88gk")]
+transform = Transform3D(0.9970336, 0, -0.07697696, 0, 1, 0, 0.07697696, 0, 0.9970336, -5.104347, 15.597, -6.881935)
+cast_shadow = 0
+gi_mode = 2
+visibility_range_end = 70.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("44_0y2ha")
+surface_material_override/0 = ExtResource("3_hqtlf")
+
+[node name="SM_Prop_Monitor_14" type="MeshInstance3D" parent="Model" unique_id=1997988414 instance=ExtResource("45_nllb3")]
+transform = Transform3D(-0.0051457533, 0, -0.9999866, 0, 1, 0, 0.9999866, 0, -0.0051457533, 3.8893852, 16.38, 6.7518044)
+cast_shadow = 0
+gi_mode = 2
+visibility_range_end = 70.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("46_yi0g2")
+surface_material_override/0 = ExtResource("3_hqtlf")
+
+[node name="SM_Prop_Crate_02" type="MeshInstance3D" parent="Model" unique_id=12583630 instance=ExtResource("47_3gs4u")]
+transform = Transform3D(0.9702566, 0, 0.2420783, 0, 1, 0, -0.2420783, 0, 0.9702566, -4.385483, 10.10066, 6.86747)
+cast_shadow = 0
+gi_mode = 2
+visibility_range_end = 70.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("48_jf73d")
+surface_material_override/0 = ExtResource("3_hqtlf")
+
+[node name="SM_Prop_Cardboard_Box_01" type="MeshInstance3D" parent="Model" unique_id=1446779688 instance=ExtResource("49_jray8")]
+transform = Transform3D(-1, 0, 5.8730416e-06, 0, 1, 0, -5.8730416e-06, 0, -1, 3.5243912, 15.622, 6.0098)
+cast_shadow = 0
+gi_mode = 2
+visibility_range_end = 70.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("50_ghuqr")
+surface_material_override/0 = ExtResource("3_hqtlf")
+
+[node name="SM_Prop_Cardboard_Box_02" type="MeshInstance3D" parent="Model" unique_id=144903868 instance=ExtResource("51_ep1rb")]
+transform = Transform3D(-0.94412094, 0, 0.32959932, 0, 1, 0, -0.32959932, 0, -0.94412094, 3.7543983, 15.622, 5.021805)
+cast_shadow = 0
+gi_mode = 2
+visibility_range_end = 70.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("52_hnhsi")
+surface_material_override/0 = ExtResource("3_hqtlf")
+
+[node name="_MeshInstance3D_758" type="MeshInstance3D" parent="Model" unique_id=1590580248 instance=ExtResource("43_i88gk")]
+transform = Transform3D(0.9955004, 0, 0.0947623, 0, 1, 0, -0.0947623, 0, 0.9955004, -4.030533, 15.597, -6.8642426)
+cast_shadow = 0
+gi_mode = 2
+visibility_range_end = 70.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("44_0y2ha")
+surface_material_override/0 = ExtResource("3_hqtlf")
+
+[node name="SM_Prop_Table_Medium_01" type="MeshInstance3D" parent="Model" unique_id=240663032 instance=ExtResource("53_xbbfg")]
+transform = Transform3D(-1, 0, 5.8730416e-06, 0, 1, 0, -5.8730416e-06, 0, -1, 1.2913742, 15.607, 9.080788)
+cast_shadow = 0
+gi_mode = 2
+visibility_range_end = 70.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("54_a7og0")
+surface_material_override/0 = ExtResource("3_hqtlf")
+
+[node name="_MeshInstance3D_759" type="MeshInstance3D" parent="Model" unique_id=1955162725 instance=ExtResource("43_i88gk")]
+transform = Transform3D(-1, 0, 5.8730416e-06, 0, 1, 0, -5.8730416e-06, 0, -1, 9.181446, 1.4300001, -2.7591667)
+cast_shadow = 0
+gi_mode = 2
+visibility_range_end = 70.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("44_0y2ha")
+surface_material_override/0 = ExtResource("3_hqtlf")
+
+[node name="_MeshInstance3D_760" type="MeshInstance3D" parent="Model" unique_id=1098984886 instance=ExtResource("51_ep1rb")]
+transform = Transform3D(-0.92387146, 0, -0.59704405, 0, 1.1, 0, 0.59704405, 0, -0.92387146, -6.529602, 16.213, 5.021744)
+cast_shadow = 0
+gi_mode = 2
+visibility_range_end = 70.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("52_hnhsi")
+surface_material_override/0 = ExtResource("3_hqtlf")
+
+[node name="SM_Prop_Antenna_08" type="MeshInstance3D" parent="Model" unique_id=497119180 instance=ExtResource("55_7ekt8")]
+transform = Transform3D(-9.5364595e-07, 0, -0.16031599, 0, 0.16031599, 0, 0.16031599, 0, -9.5364595e-07, 4.198387, 16.375, 6.798805)
+gi_mode = 2
+visibility_range_end = 160.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("56_f5hxw")
+surface_material_override/0 = ExtResource("3_hqtlf")
+
+[node name="_MeshInstance3D_761" type="MeshInstance3D" parent="Model" unique_id=495300495 instance=ExtResource("53_xbbfg")]
+transform = Transform3D(-0.6205509, 0, -0.7841662, 0, 1, 0, 0.7841662, 0, -0.6205509, 3.1383781, 15.607, 8.226799)
+cast_shadow = 0
+gi_mode = 2
+visibility_range_end = 70.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("54_a7og0")
+surface_material_override/0 = ExtResource("3_hqtlf")
+
+[node name="_MeshInstance3D_762" type="MeshInstance3D" parent="Model" unique_id=548312643 instance=ExtResource("43_i88gk")]
+transform = Transform3D(0.96688133, 0, -0.25522828, 0, 1, 0, 0.25522828, 0, 0.96688133, -4.9808083, 15.597, -5.8062515)
+cast_shadow = 0
+gi_mode = 2
+visibility_range_end = 70.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("44_0y2ha")
+surface_material_override/0 = ExtResource("3_hqtlf")
+
+[node name="SM_Prop_Crate_11" type="MeshInstance3D" parent="Model" unique_id=2143763875 instance=ExtResource("57_cqxf1")]
+transform = Transform3D(0.99683905, 0, -0.07945079, 0, 1, 0, 0.07945079, 0, 0.99683905, -4.9385605, 10.1, 8.60799)
+cast_shadow = 0
+gi_mode = 2
+visibility_range_end = 70.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("58_s2cqc")
+surface_material_override/0 = ExtResource("3_hqtlf")
+
+[node name="SM_Prop_Monitor_02" type="MeshInstance3D" parent="Model" unique_id=584648098 instance=ExtResource("59_7j3r2")]
+transform = Transform3D(-0.5938552, 0, -0.80457187, 0, 1, 0, 0.80457187, 0, -0.5938552, 3.3247108, 16.337, 8.383183)
+cast_shadow = 0
+gi_mode = 2
+visibility_range_end = 70.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("60_oa6g5")
+surface_material_override/0 = ExtResource("3_hqtlf")
+
+[node name="SM_Prop_Chair_02" type="MeshInstance3D" parent="Model" unique_id=1587171140 instance=ExtResource("61_elj5h")]
+transform = Transform3D(0.36537266, 0, 0.9308612, 0, 1, 0, -0.9308612, 0, 0.36537266, 2.1933823, 15.607, 7.600792)
+cast_shadow = 0
+gi_mode = 2
+visibility_range_end = 70.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("62_64tue")
+surface_material_override/0 = ExtResource("3_hqtlf")
+
+[node name="_MeshInstance3D_763" type="MeshInstance3D" parent="Model" unique_id=757577176 instance=ExtResource("43_i88gk")]
+transform = Transform3D(-0.9836574, 0, 0.18005013, 0, 1, 0, -0.18005013, 0, -0.9836574, 8.975449, 1.4300001, -3.8221664)
+cast_shadow = 0
+gi_mode = 2
+visibility_range_end = 70.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("44_0y2ha")
+surface_material_override/0 = ExtResource("3_hqtlf")
+
+[node name="SM_Prop_Crate_14" type="MeshInstance3D" parent="Model" unique_id=498678388 instance=ExtResource("63_k22gd")]
+transform = Transform3D(-0.6900594, 0, 4.0527475e-06, 0, 0.6900594, 0, -4.0527475e-06, 0, -0.6900594, 9.047443, 2.4690003, -3.184166)
+cast_shadow = 0
+gi_mode = 2
+visibility_range_end = 70.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("64_iu7dq")
+surface_material_override/0 = ExtResource("3_hqtlf")
+
+[node name="SM_Prop_Cardboard_Box_05" type="MeshInstance3D" parent="Model" unique_id=1215903933 instance=ExtResource("65_e0nl1")]
+transform = Transform3D(-0.9417486, 0, -0.33631763, 0, 1, 0, 0.33631763, 0, -0.9417486, 2.5333748, 16.371, 8.496796)
+cast_shadow = 0
+gi_mode = 2
+visibility_range_end = 70.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("66_yareb")
+surface_material_override/0 = ExtResource("3_hqtlf")
+
+[node name="_MeshInstance3D_764" type="MeshInstance3D" parent="Model" unique_id=1341256009 instance=ExtResource("47_3gs4u")]
+transform = Transform3D(0.915923, 0, 0.40135473, 0, 1, 0, -0.40135473, 0, 0.915923, -5.122093, 10.10066, 6.11557)
+cast_shadow = 0
+gi_mode = 2
+visibility_range_end = 70.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("48_jf73d")
+surface_material_override/0 = ExtResource("3_hqtlf")
+
+[node name="_MeshInstance3D_765" type="MeshInstance3D" parent="Model" unique_id=804365738 instance=ExtResource("47_3gs4u")]
+transform = Transform3D(0.99683905, 0, -0.07945079, 0, 1, 0, 0.07945079, 0, 0.99683905, -5.219597, 10.10066, 7.086815)
+cast_shadow = 0
+gi_mode = 2
+visibility_range_end = 70.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("48_jf73d")
+surface_material_override/0 = ExtResource("3_hqtlf")
+
+[node name="SM_Prop_Crate_12" type="MeshInstance3D" parent="Model" unique_id=1616432138 instance=ExtResource("67_b78yt")]
+transform = Transform3D(0.9938014, 0, -0.11117015, 0, 1, 0, 0.11117015, 0, 0.9938014, -2.4142456, 10.099745, 9.082069)
+cast_shadow = 0
+gi_mode = 2
+visibility_range_end = 70.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("68_ix8ex")
+surface_material_override/0 = ExtResource("3_hqtlf")
+
+[node name="SM_Prop_Projection_Table_01" type="MeshInstance3D" parent="Model" unique_id=1032025430 instance=ExtResource("69_gww25")]
+transform = Transform3D(-1, 0, 5.8730416e-06, 0, 1, 0, -5.8730416e-06, 0, -1, 7.7024307, 1.4300001, -0.017173767)
+gi_mode = 2
+visibility_range_end = 160.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("70_ylon5")
+surface_material_override/0 = ExtResource("3_hqtlf")
+
+[node name="_MeshInstance3D_766" type="MeshInstance3D" parent="Model" unique_id=1963144519 instance=ExtResource("41_f5kyg")]
+transform = Transform3D(-0.85000014, 0, 4.181462e-06, 0, 0.84999996, 0, -4.1814633e-06, 0, -0.84999996, -2.7216225, 16.902, 8.098766)
+cast_shadow = 0
+gi_mode = 2
+visibility_range_end = 70.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("42_gsmhk")
+surface_material_override/0 = ExtResource("3_hqtlf")
+
+[node name="_MeshInstance3D_767" type="MeshInstance3D" parent="Model" unique_id=39511112 instance=ExtResource("63_k22gd")]
+transform = Transform3D(0.6880124, 0, -0.05311868, 0, 0.6900594, 0, 0.05311868, 0, 0.6880124, -5.0034714, 16.636, -6.447899)
+cast_shadow = 0
+gi_mode = 2
+visibility_range_end = 70.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("64_iu7dq")
+surface_material_override/0 = ExtResource("3_hqtlf")
+
+[node name="_MeshInstance3D_768" type="MeshInstance3D" parent="Model" unique_id=444051435 instance=ExtResource("41_f5kyg")]
+transform = Transform3D(-0.85000014, 0, 4.992085e-06, 0, 0.84999996, 0, -4.9920864e-06, 0, -0.84999996, 1.2683716, 16.902, 8.762791)
+cast_shadow = 0
+gi_mode = 2
+visibility_range_end = 70.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("42_gsmhk")
+surface_material_override/0 = ExtResource("3_hqtlf")
+
+[node name="_MeshInstance3D_769" type="MeshInstance3D" parent="Model" unique_id=211815110 instance=ExtResource("41_f5kyg")]
+transform = Transform3D(-0.85000014, 0, 4.181462e-06, 0, 0.84999996, 0, -4.1814633e-06, 0, -0.84999996, -0.7996216, 16.902, 8.098778)
+cast_shadow = 0
+gi_mode = 2
+visibility_range_end = 70.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("42_gsmhk")
+surface_material_override/0 = ExtResource("3_hqtlf")
+
+[node name="_MeshInstance3D_770" type="MeshInstance3D" parent="Model" unique_id=641782093 instance=ExtResource("53_xbbfg")]
+transform = Transform3D(-5.932646e-06, 0, -1, 0, 1, 0, 1, 0, -5.932646e-06, 3.81839, 15.607, 6.3048058)
+cast_shadow = 0
+gi_mode = 2
+visibility_range_end = 70.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("54_a7og0")
+surface_material_override/0 = ExtResource("3_hqtlf")
+
+[node name="_MeshInstance3D_771" type="MeshInstance3D" parent="Model" unique_id=80973151 instance=ExtResource("43_i88gk")]
+transform = Transform3D(-0.98525256, 0, -0.1711065, 0, 1, 0, 0.1711065, 0, -0.98525256, 8.109444, 1.4300001, -2.6941757)
+cast_shadow = 0
+gi_mode = 2
+visibility_range_end = 70.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("44_0y2ha")
+surface_material_override/0 = ExtResource("3_hqtlf")
+
+[node name="_MeshInstance3D_772" type="MeshInstance3D" parent="Model" unique_id=2079296314 instance=ExtResource("49_jray8")]
+transform = Transform3D(-1.3299999, 0, 7.811145e-06, 0, 1.3299999, 0, -7.811145e-06, 0, -1.3299999, -6.6136093, 16.213, 5.9997444)
+cast_shadow = 0
+gi_mode = 2
+visibility_range_end = 70.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("50_ghuqr")
+surface_material_override/0 = ExtResource("3_hqtlf")
+
+[node name="_MeshInstance3D_773" type="MeshInstance3D" parent="Model" unique_id=472316952 instance=ExtResource("67_b78yt")]
+transform = Transform3D(0.819416, 0, -0.5732, 0, 1, 0, 0.5732, 0, 0.819416, -3.539524, 10.099745, 8.789398)
+cast_shadow = 0
+gi_mode = 2
+visibility_range_end = 70.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("68_ix8ex")
+surface_material_override/0 = ExtResource("3_hqtlf")
+
+[node name="SM_Prop_Cable_04" type="MeshInstance3D" parent="Model" unique_id=2064229701 instance=ExtResource("71_l0ufk")]
+transform = Transform3D(-5.098969e-06, 0, -0.85718024, 0, 0.85718024, 0, 0.85718, 0, -5.09897e-06, -5.244625, 16.85, 8.806751)
+cast_shadow = 0
+gi_mode = 2
+visibility_range_end = 70.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("72_eshjw")
+surface_material_override/0 = ExtResource("3_hqtlf")
+
+[node name="SM_Prop_TrashBin_01" type="MeshInstance3D" parent="Model" unique_id=357522741 instance=ExtResource("73_b35ly")]
+transform = Transform3D(-1, 0, 5.8730416e-06, 0, 1, 0, -5.8730416e-06, 0, -1, 0.21636963, 1.4240001, 9.776783)
+cast_shadow = 0
+gi_mode = 2
+visibility_range_end = 70.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("74_imdl3")
+surface_material_override/0 = ExtResource("75_vd64i")
+
+[node name="SM_Prop_Monitor_06" type="MeshInstance3D" parent="Model" unique_id=1553425251 instance=ExtResource("76_iavdd")]
+transform = Transform3D(-0.014762748, 0, 0.9998912, 0, 1, 0, -0.9998912, 0, -0.014762748, -5.3095703, 10.135, -1.0142479)
+cast_shadow = 0
+gi_mode = 2
+visibility_range_end = 70.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("77_yhkha")
+surface_material_override/0 = ExtResource("3_hqtlf")
+
+[node name="SM_Prop_Sign_01" type="MeshInstance3D" parent="Model" unique_id=253207187 instance=ExtResource("78_7jv8m")]
+transform = Transform3D(-1, 0, 5.8730416e-06, 0, 1, 0, -5.8730416e-06, 0, -1, -2.5479965, 4.91, -11.827234)
+cast_shadow = 0
+gi_mode = 2
+visibility_range_end = 70.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("79_gmryg")
+surface_material_override/0 = ExtResource("80_5cwen")
+
+[node name="SM_Prop_Cash_Register_01" type="MeshInstance3D" parent="Model" unique_id=489013634 instance=ExtResource("81_iay80")]
+transform = Transform3D(0.39830643, 0, -0.91725266, 0, 1, 0, 0.91725266, 0, 0.39830643, 3.8433914, 16.372, 5.9528046)
+cast_shadow = 0
+gi_mode = 2
+visibility_range_end = 70.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("82_1d36o")
+surface_material_override/0 = ExtResource("3_hqtlf")

@@ -13,20 +13,20 @@
 [ext_resource type="PackedScene" path="res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_Monitor_12.tscn" id="11_unl0x"]
 [ext_resource type="ArrayMesh" path="res://assets/Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Monitor_12.res" id="12_b4a0r"]
 
-[node name="building_water_plant" type="Node3D" unique_id=318454155]
+[node name="building_water_plant" type="Node3D" unique_id=1671218651]
 metadata/synty_source = "res://art/kits/Explorer_01_15_Pod_Silo_05.tscn"
 metadata/synty_fit = "footprint"
 
-[node name="Model" type="Node3D" parent="." unique_id=2023567053]
+[node name="Model" type="Node3D" parent="." unique_id=406953770]
 transform = Transform3D(0.5218065, 0, 0, 0, 0.5218065, 0, 0, 0, 0.5218065, -0.5236566, 0, -0.8526797)
 
-[node name="SM_Bld_Pod_Silo_05" type="MeshInstance3D" parent="Model" unique_id=1646075415 instance=ExtResource("1_p78ha")]
+[node name="SM_Bld_Pod_Silo_05" type="MeshInstance3D" parent="Model" unique_id=839780517 instance=ExtResource("1_p78ha")]
 transform = Transform3D(0.68389666, 0, 0, 0, 0.68389666, 0, 0, 0, 0.68389666, 1.9073486e-06, 0.8890656, 1.0233688)
 gi_mode = 2
 mesh = ExtResource("2_2aub7")
 surface_material_override/0 = ExtResource("3_thqoe")
 
-[node name="SM_Prop_Crate_08" type="MeshInstance3D" parent="Model" unique_id=2135047705 instance=ExtResource("4_ugp66")]
+[node name="SM_Prop_Crate_08" type="MeshInstance3D" parent="Model" unique_id=1052760898 instance=ExtResource("4_ugp66")]
 transform = Transform3D(0.8741516, 0, -0.4856532, 0, 1, 0, 0.4856532, 0, 0.8741516, 2.0621243, 1.1680657, -3.8608093)
 cast_shadow = 0
 gi_mode = 2
@@ -36,7 +36,7 @@ visibility_range_fade_mode = 1
 mesh = ExtResource("5_aojke")
 surface_material_override/0 = ExtResource("6_tedwy")
 
-[node name="SM_Prop_Crate_04" type="MeshInstance3D" parent="Model" unique_id=30790443 instance=ExtResource("7_53l4s")]
+[node name="SM_Prop_Crate_04" type="MeshInstance3D" parent="Model" unique_id=237737758 instance=ExtResource("7_53l4s")]
 transform = Transform3D(0.7587133, 0, -0.65142447, 0, 1, 0, 0.65142447, 0, 0.7587133, 6.215229, 1.0840657, 6.890709)
 cast_shadow = 0
 gi_mode = 2
@@ -46,7 +46,7 @@ visibility_range_fade_mode = 1
 mesh = ExtResource("8_q2346")
 surface_material_override/0 = ExtResource("6_tedwy")
 
-[node name="_MeshInstance3D_123" type="MeshInstance3D" parent="Model" unique_id=12834773 instance=ExtResource("7_53l4s")]
+[node name="_MeshInstance3D_123" type="MeshInstance3D" parent="Model" unique_id=501518705 instance=ExtResource("7_53l4s")]
 transform = Transform3D(0.86611193, 0, -0.49984986, 0, 1, 0, 0.49984986, 0, 0.86611193, 6.8077354, 1.0840657, 5.7971725)
 cast_shadow = 0
 gi_mode = 2
@@ -56,7 +56,7 @@ visibility_range_fade_mode = 1
 mesh = ExtResource("8_q2346")
 surface_material_override/0 = ExtResource("6_tedwy")
 
-[node name="_MeshInstance3D_124" type="MeshInstance3D" parent="Model" unique_id=1606468615 instance=ExtResource("4_ugp66")]
+[node name="_MeshInstance3D_124" type="MeshInstance3D" parent="Model" unique_id=1634784685 instance=ExtResource("4_ugp66")]
 transform = Transform3D(-0.9717546, 0, 0.23599334, 0, 1, 0, -0.23599334, 0, -0.9717546, 2.9328995, 1.1670656, -3.0704575)
 cast_shadow = 0
 gi_mode = 2
@@ -66,7 +66,7 @@ visibility_range_fade_mode = 1
 mesh = ExtResource("5_aojke")
 surface_material_override/0 = ExtResource("6_tedwy")
 
-[node name="_MeshInstance3D_125" type="MeshInstance3D" parent="Model" unique_id=964323031 instance=ExtResource("7_53l4s")]
+[node name="_MeshInstance3D_125" type="MeshInstance3D" parent="Model" unique_id=287558344 instance=ExtResource("7_53l4s")]
 transform = Transform3D(0.5046975, 0, 0.8632963, 0, 1, 0, -0.8632963, 0, 0.5046975, 6.44627, 2.0740657, 6.2039948)
 cast_shadow = 0
 gi_mode = 2
@@ -76,7 +76,7 @@ visibility_range_fade_mode = 1
 mesh = ExtResource("8_q2346")
 surface_material_override/0 = ExtResource("6_tedwy")
 
-[node name="SM_Prop_Satellite_06" type="MeshInstance3D" parent="Model" unique_id=2082483138 instance=ExtResource("9_575st")]
+[node name="SM_Prop_Satellite_06" type="MeshInstance3D" parent="Model" unique_id=2051444825 instance=ExtResource("9_575st")]
 transform = Transform3D(0.9923873, 0, 0.12315631, 0, 1, 0, -0.12315631, 0, 0.9923873, 4.1161213, 1.2150656, 6.2715645)
 gi_mode = 2
 visibility_range_end = 160.0
@@ -85,7 +85,7 @@ visibility_range_fade_mode = 1
 mesh = ExtResource("10_e6mpp")
 surface_material_override/0 = ExtResource("6_tedwy")
 
-[node name="_MeshInstance3D_126" type="MeshInstance3D" parent="Model" unique_id=1488313688 instance=ExtResource("11_unl0x")]
+[node name="_MeshInstance3D_126" type="MeshInstance3D" parent="Model" unique_id=1862224954 instance=ExtResource("11_unl0x")]
 transform = Transform3D(0.9937446, 0.10689229, 0.032338396, 0.011815041, -0.38857627, 0.92134106, 0.11105016, -0.9151954, -0.3874086, 6.2517166, 2.4400656, 6.5809555)
 cast_shadow = 0
 gi_mode = 2

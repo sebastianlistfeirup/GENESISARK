@@ -1,0 +1,18 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://assets/Synty/PolygonSciFiWorlds/Prefabs/Buildings/SM_Bld_Corp_Generator_01.tscn" id="1_w8xp7"]
+[ext_resource type="ArrayMesh" path="res://assets/Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Corp_Generator_01.res" id="2_dvgvm"]
+[ext_resource type="Material" path="res://assets/Synty/PolygonSciFiWorlds/Materials/Alts/PolygonScifiWorlds_01_A_mat.tres" id="3_3r7hk"]
+
+[node name="building_geothermal_generator_corp" type="Node3D" unique_id=828019775]
+metadata/synty_source = "res://art/kits/Corporation_01_25_Corp_Generator_01.tscn"
+metadata/synty_fit = "footprint"
+
+[node name="Model" type="Node3D" parent="." unique_id=1604737346]
+transform = Transform3D(0.38083318, 0, 0, 0, 0.38083318, 0, 0, 0, 0.38083318, 0, 0, 0)
+
+[node name="SM_Bld_Corp_Generator_01" type="MeshInstance3D" parent="Model" unique_id=615298629 instance=ExtResource("1_w8xp7")]
+transform = Transform3D(1.2015299, 0, 0, 0, 1.20153, 0, -5.9604645e-08, 0, 1.20153, 0, 0, 0)
+gi_mode = 2
+mesh = ExtResource("2_dvgvm")
+surface_material_override/0 = ExtResource("3_3r7hk")

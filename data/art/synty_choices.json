@@ -375,6 +375,127 @@
    "status": "approved",
    "material": "res://art/materials/scifi_space_atlas.tres",
    "rotation_y": 0
+  },
+  "building.habitat@corp": {
+   "source": "res://art/kits/Corporation_01_00_Corp_Barracks_01.tscn",
+   "status": "approved",
+   "note": "Synty demo-scene assembly, world style",
+   "variants": [
+    "res://art/kits/Corporation_01_00_Corp_Barracks_01.tscn",
+    "res://art/kits/Corporation_01_21_Corp_Barracks_01.tscn",
+    "res://art/kits/Corporation_01_39_Corp_Barracks_01.tscn",
+    "res://art/kits/Corporation_01_40_Corp_Barracks_01.tscn"
+   ],
+   "kit_margin": 0.8,
+   "rotation_y": 90
+  },
+  "building.care_center@corp": {
+   "source": "res://art/kits/Corporation_01_07_Corp_Comms_01.tscn",
+   "status": "approved",
+   "note": "Synty demo-scene assembly, world style"
+  },
+  "building.clinic@corp": {
+   "source": "res://art/kits/Corporation_01_08_Corp_Containment_02.tscn",
+   "status": "approved",
+   "note": "Synty demo-scene assembly, world style",
+   "extra_scale": 0.6
+  },
+  "building.school_hall@corp": {
+   "source": "res://art/kits/Corporation_01_04_Corp_Control_Tower_01.tscn",
+   "status": "approved",
+   "note": "Synty demo-scene assembly, world style"
+  },
+  "building.greenhouse@corp": {
+   "source": "res://art/kits/Corporation_01_09_Pod_Research_04.tscn",
+   "status": "approved",
+   "note": "Synty demo-scene assembly, world style"
+  },
+  "building.water_plant@corp": {
+   "source": "res://art/kits/Corporation_01_13_Corp_Containment_02.tscn",
+   "status": "approved",
+   "note": "Synty demo-scene assembly, world style",
+   "extra_scale": 0.6
+  },
+  "building.workshop@corp": {
+   "source": "res://art/kits/Corporation_01_38_Scav_Garage_01.tscn",
+   "status": "approved",
+   "note": "Synty demo-scene assembly, world style"
+  },
+  "building.drone_hub@corp": {
+   "source": "res://art/kits/Corporation_01_01_Corp_LandingPad_02.tscn",
+   "status": "approved",
+   "note": "Synty demo-scene assembly, world style"
+  },
+  "building.geothermal_generator@corp": {
+   "source": "res://art/kits/Corporation_01_25_Corp_Generator_01.tscn",
+   "status": "approved",
+   "note": "Synty demo-scene assembly, world style",
+   "kit_margin": 0.5
+  },
+  "building.mine@corp": {
+   "source": "res://art/kits/Scavenger_01_00_Scav_Refinery_03.tscn",
+   "status": "approved",
+   "note": "Synty demo-scene assembly, world style"
+  },
+  "building.habitat@scav": {
+   "source": "res://art/kits/BlackMarket_01_00_Crate_Building_03.tscn",
+   "status": "approved",
+   "note": "Synty demo-scene assembly, world style",
+   "variants": [
+    "res://art/kits/BlackMarket_01_00_Crate_Building_03.tscn",
+    "res://art/kits/BlackMarket_01_04_Crate_Building_01.tscn",
+    "res://art/kits/BlackMarket_01_06_Crate_Building_02.tscn",
+    "res://art/kits/BlackMarket_01_15_Crate_Building_01.tscn"
+   ],
+   "kit_margin": 0.6,
+   "rotation_y": 90
+  },
+  "building.care_center@scav": {
+   "source": "res://art/kits/BlackMarket_01_55_Pod_Hab_Small_04.tscn",
+   "status": "approved",
+   "note": "Synty demo-scene assembly, world style"
+  },
+  "building.clinic@scav": {
+   "source": "res://art/kits/BlackMarket_01_47_Crate_Building_01.tscn",
+   "status": "approved",
+   "note": "Synty demo-scene assembly, world style",
+   "kit_margin": 0.6
+  },
+  "building.school_hall@scav": {
+   "source": "res://art/kits/BlackMarket_01_43_Scav_Garage_02.tscn",
+   "status": "approved",
+   "note": "Synty demo-scene assembly, world style"
+  },
+  "building.greenhouse@scav": {
+   "source": "res://art/kits/Explorer_01_31_Pod_Research_05.tscn",
+   "status": "approved",
+   "note": "Synty demo-scene assembly, world style"
+  },
+  "building.water_plant@scav": {
+   "source": "res://art/kits/BlackMarket_01_38_Watertank_01.tscn",
+   "status": "approved",
+   "note": "Synty demo-scene assembly, world style",
+   "extra_scale": 0.65
+  },
+  "building.workshop@scav": {
+   "source": "res://art/kits/Scavenger_01_12_Scav_Garage_01.tscn",
+   "status": "approved",
+   "note": "Synty demo-scene assembly, world style"
+  },
+  "building.drone_hub@scav": {
+   "source": "res://art/kits/BlackMarket_01_28_Corp_LandingPad_02.tscn",
+   "status": "approved",
+   "note": "Synty demo-scene assembly, world style"
+  },
+  "building.geothermal_generator@scav": {
+   "source": "res://art/kits/Scavenger_01_02_Scav_Refinery_01.tscn",
+   "status": "approved",
+   "note": "Synty demo-scene assembly, world style"
+  },
+  "building.mine@scav": {
+   "source": "res://art/kits/Scavenger_01_06_Scav_Refinery_02.tscn",
+   "status": "approved",
+   "note": "Synty demo-scene assembly, world style"
   }
  },
  "animations": {

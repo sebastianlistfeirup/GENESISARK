@@ -1,0 +1,18 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://assets/Synty/PolygonSciFiWorlds/Prefabs/Buildings/SM_Bld_Pod_Research_04.tscn" id="1_qr44h"]
+[ext_resource type="ArrayMesh" path="res://assets/Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Pod_Research_04.res" id="2_87ytd"]
+[ext_resource type="Material" path="res://assets/Synty/PolygonSciFiWorlds/Materials/Alts/PolygonScifiWorlds_02_A_mat.tres" id="3_8gyuq"]
+
+[node name="building_greenhouse_corp" type="Node3D" unique_id=1574207577]
+metadata/synty_source = "res://art/kits/Corporation_01_09_Pod_Research_04.tscn"
+metadata/synty_fit = "footprint"
+
+[node name="Model" type="Node3D" parent="." unique_id=731211494]
+transform = Transform3D(0.55999994, 0, 0, 0, 0.55999994, 0, 0, 0, 0.55999994, 0, -1.7285347e-06, 0.15521002)
+
+[node name="SM_Bld_Pod_Research_04" type="MeshInstance3D" parent="Model" unique_id=1272957441 instance=ExtResource("1_qr44h")]
+transform = Transform3D(1, 0, -5.9604645e-08, 0, 1, 0, 5.9604645e-08, 0, 1, 0, 1.300003, -0.27716064)
+gi_mode = 2
+mesh = ExtResource("2_87ytd")
+surface_material_override/0 = ExtResource("3_8gyuq")

@@ -1,0 +1,30 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://assets/Synty/PolygonSciFiWorlds/Prefabs/Buildings/SM_Bld_Corp_Barracks_01.tscn" id="1_xs3jg"]
+[ext_resource type="ArrayMesh" path="res://assets/Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Corp_Barracks_01.res" id="2_tcpoc"]
+[ext_resource type="Material" path="res://assets/Synty/PolygonSciFiWorlds/Materials/Alts/PolygonScifiWorlds_01_A_mat.tres" id="3_074ry"]
+[ext_resource type="PackedScene" path="res://assets/Synty/PolygonSciFiWorlds/Prefabs/Buildings/SM_Bld_Door_Single_03.tscn" id="4_poug4"]
+[ext_resource type="ArrayMesh" path="res://assets/Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Door_Single_03.res" id="5_wc7a4"]
+
+[node name="building_habitat_corp" type="Node3D" unique_id=1298656437]
+metadata/synty_source = "res://art/kits/Corporation_01_00_Corp_Barracks_01.tscn"
+metadata/synty_fit = "footprint"
+
+[node name="Model" type="Node3D" parent="." unique_id=871693858]
+transform = Transform3D(-3.5834567e-08, 0, 0.81979936, 0, 0.81979936, 0, -0.81979936, 0, -3.5834567e-08, 0, 0.1362435, -0.049999952)
+
+[node name="SM_Bld_Corp_Barracks_01" type="MeshInstance3D" parent="Model" unique_id=1604759812 instance=ExtResource("1_xs3jg")]
+transform = Transform3D(1, 0, -1.5893256e-08, 0, 1, 0, 1.5893256e-08, 0, 1, 0, 0.42580873, 0)
+gi_mode = 2
+mesh = ExtResource("2_tcpoc")
+surface_material_override/0 = ExtResource("3_074ry")
+
+[node name="SM_Bld_Door_Single_03" type="MeshInstance3D" parent="Model" unique_id=1404656370 instance=ExtResource("4_poug4")]
+transform = Transform3D(0.99999976, 0, 4.7683704e-07, 0, 1, 0, -4.7683704e-07, 0, 0.99999976, 0.018001556, 0.13380873, 4.8199997)
+cast_shadow = 0
+gi_mode = 2
+visibility_range_end = 70.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("5_wc7a4")
+surface_material_override/0 = ExtResource("3_074ry")

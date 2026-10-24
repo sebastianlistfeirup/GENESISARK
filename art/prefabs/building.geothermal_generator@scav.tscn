@@ -1,0 +1,17 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://assets/Synty/PolygonSciFiWorlds/Prefabs/Buildings/SM_Bld_Scav_Refinery_01.tscn" id="1_uv0ih"]
+[ext_resource type="ArrayMesh" path="res://assets/Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Scav_Refinery_01.res" id="2_hw0mj"]
+[ext_resource type="Material" path="res://assets/Synty/PolygonSciFiWorlds/Materials/Alts/PolygonScifiWorlds_01_A_mat.tres" id="3_ue0vj"]
+
+[node name="building_geothermal_generator_scav" type="Node3D" unique_id=788810550]
+metadata/synty_source = "res://art/kits/Scavenger_01_02_Scav_Refinery_01.tscn"
+metadata/synty_fit = "footprint"
+
+[node name="Model" type="Node3D" parent="." unique_id=613796286]
+transform = Transform3D(0.2147613, 0, 0, 0, 0.2147613, 0, 0, 0, 0.2147613, 0, 0, 0)
+
+[node name="SM_Bld_Scav_Refinery_01" type="MeshInstance3D" parent="Model" unique_id=820437573 instance=ExtResource("1_uv0ih")]
+gi_mode = 2
+mesh = ExtResource("2_hw0mj")
+surface_material_override/0 = ExtResource("3_ue0vj")

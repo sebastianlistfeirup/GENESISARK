@@ -50,6 +50,10 @@ func _ready() -> void:
 		return
 	planet = GameSession.content.planet(gs.colony.planet_id)
 	site = GameSession.content.site(gs.colony.site_id)
+	# The world's architecture (Synty demo-scene families): explorer pods, corporation, scavenger.
+	AssetSlots.style = str(GroundCover.spec_for(gs.colony.planet_id, "").get("colony_style", ""))
+	if AssetSlots.style == "explorer":
+		AssetSlots.style = ""
 	for n: Node in TerrainBuilder.environment_for(planet, gs.colony.biome_id):
 		add_child(n)
 	terrain = TerrainBuilder.new()
@@ -875,3 +879,7 @@ func debug_action(action: String) -> void:
 					break
 		"decision":
 			decision.ask("year_20")
+
+
+func _exit_tree() -> void:
+	AssetSlots.style = ""

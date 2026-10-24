@@ -9,8 +9,9 @@ extends SceneTree
 
 const DEMOS := ["res://assets/Synty/PolygonSciFiWorlds/Scenes/Demo_Explorer_01.tscn",
 	"res://assets/Synty/PolygonSciFiWorlds/Scenes/Demo_Corporation_01.tscn",
-	"res://assets/Synty/PolygonSciFiWorlds/Scenes/Demo_Scavenger_01.tscn"]
-const MAIN := ["Pod_Hab", "Pod_Research", "Pod_Hub", "Pod_Silo", "Corp_Generator", "Corp_Barracks", "Corp_Comms", "Corp_Containment",
+	"res://assets/Synty/PolygonSciFiWorlds/Scenes/Demo_Scavenger_01.tscn",
+	"res://assets/Synty/PolygonSciFiWorlds/Scenes/Demo_BlackMarket_01.tscn"]
+const MAIN := ["Vendor_0", "Crate_Building_0", "Scav_Dish_0", "Pod_Hab", "Pod_Research", "Pod_Hub", "Pod_Silo", "Corp_Generator", "Corp_Barracks", "Corp_Comms", "Corp_Containment",
 	"Corp_LandingPad", "Corp_Radar", "Corp_Control_Tower", "Scav_Refinery_0", "Scav_Garage", "Corp_MobileSite", "Corp_Loading_Bay", "WindMill", "Watertank"]
 const SKIP := ["Env_", "Corridor", "Bridge", "Platform_Large", "Platform_Small", "Wall", "Chr_", "Veh_", "FX_", "Decal"]
 

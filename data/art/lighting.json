@@ -19,10 +19,10 @@
     "fog_aerial": 0.25,
     "exposure": 1.0,
     "white": 1.4,
-    "glow": 0.5,
-    "glow_bloom": 0.04,
+    "glow": 0.8,
+    "glow_bloom": 0.09,
     "ssao": true,
-    "adjust_saturation": 1.12,
+    "adjust_saturation": 1.25,
     "fog_height": 2.0,
     "fog_height_density": 0.025,
     "tonemap": "linear",
@@ -86,11 +86,12 @@
     "ferrum": {
       "sky_top": "#8fb6d6",
       "sky_horizon": "#f0d9b0",
-      "sun_color": "#fffaf0",
+      "sun_color": "#ffd9a0",
       "sun_energy": 1.5,
       "sun_pitch": -42,
       "exposure": 0.92,
-      "glow": 0.45
+      "glow": 0.45,
+      "fog_color": "#e8a35a"
     },
     "sere": {
       "sky_top": "#9fa8a0",

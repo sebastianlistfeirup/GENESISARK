@@ -37,6 +37,10 @@ static func build(planet_id: String, fallback: String, terrain: Node3D = null) -
 		var cr := SkyCreatures.build(DictUtil.get_arr(sky, "creatures"), hash(planet_id + "creatures"), terrain)
 		if cr:
 			root.add_child(cr)
+	if sky.has("sun_size"):
+		root.add_child(_sun(planet_id, fallback, DictUtil.get_float(sky, "sun_size"), Color(str(sky.get("sun_color", "#fff2c8")))))
+	if sky.has("debris"):
+		root.add_child(_debris(DictUtil.get_dict(sky, "debris"), hash(planet_id + "debris")))
 	if sky.has("aurora"):
 		root.add_child(_aurora(Color(str(sky["aurora"])), Color(str(sky.get("aurora_high", "#9a5cff")))))
 	return root
@@ -94,3 +98,83 @@ static func motes(planet_id: String, fallback: String) -> Node3D:
 	v.position = Vector3(0, 1.5, 0)
 	v.scale = Vector3.ONE * DictUtil.get_float(sky, "motes_scale", 2.5)
 	return v
+
+
+## The system's star as a big glowing disc with a soft halo, placed where the
+## world's key light comes from (Lighting preset), unfogged, so it blooms.
+static func _sun(planet_id: String, biome: String, size_deg: float, color: Color) -> Node3D:
+	var p := Lighting.preset({"id": planet_id, "biome_id": biome})
+	var basis := Basis.from_euler(Vector3(deg_to_rad(float(p.get("sun_pitch", -45))), deg_to_rad(float(p.get("sun_yaw", 30))), 0))
+	var dir := basis.z.normalized()  # a DirectionalLight shines along -Z; the sun sits toward +Z
+	var holder := Node3D.new()
+	holder.name = "Sun"
+	var r := DISTANCE * tan(deg_to_rad(size_deg) * 0.5)
+	for layer: Array in [[1.0, 6.0, 1.0], [2.6, 1.6, 0.35], [6.0, 0.6, 0.12]]:
+		var mi := MeshInstance3D.new()
+		var q := QuadMesh.new()
+		q.size = Vector2.ONE * r * 2.0 * float(layer[0])
+		mi.mesh = q
+		var m := StandardMaterial3D.new()
+		m.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+		m.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+		m.blend_mode = BaseMaterial3D.BLEND_MODE_ADD
+		m.billboard_mode = BaseMaterial3D.BILLBOARD_ENABLED
+		m.disable_fog = true
+		m.albedo_color = Color(color.r, color.g, color.b, float(layer[2]))
+		m.emission_enabled = true
+		m.emission = color
+		m.emission_energy_multiplier = float(layer[1])
+		var g := GradientTexture2D.new()
+		g.fill = GradientTexture2D.FILL_RADIAL
+		g.fill_from = Vector2(0.5, 0.5)
+		g.fill_to = Vector2(0.5, 0.0)
+		var gr := Gradient.new()
+		gr.set_color(0, Color.WHITE)
+		gr.set_color(1, Color(1, 1, 1, 0))
+		if float(layer[0]) == 1.0:
+			gr.add_point(0.85, Color.WHITE)
+		g.gradient = gr
+		m.albedo_texture = g
+		mi.material_override = m
+		mi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+		mi.position = dir * DISTANCE * 1.1
+		holder.add_child(mi)
+	return holder
+
+
+## Rock fragments and scrap hanging and drifting in the sky (ref: Sci-Fi Worlds key art).
+static func _debris(spec: Dictionary, seed_value: int) -> Node3D:
+	var root := Node3D.new()
+	root.name = "SkyDebris"
+	var rng := RandomNumberGenerator.new()
+	rng.seed = seed_value
+	var meshes: Array = []
+	for m: Variant in DictUtil.get_arr(spec, "meshes"):
+		var src := GroundCover.mesh_of(str(m))
+		if not src.is_empty():
+			meshes.append(src)
+	if meshes.is_empty():
+		return root
+	var by: Dictionary = {}
+	for i: int in int(spec.get("count", 60)):
+		var k := rng.randi() % meshes.size()
+		var a := rng.randf() * TAU
+		var dist := rng.randf_range(60.0, 260.0)
+		var pos := Vector3(cos(a) * dist, rng.randf_range(35.0, 120.0), sin(a) * dist)
+		var s := rng.randf_range(float(DictUtil.get_arr(spec, "scale")[0]), float(DictUtil.get_arr(spec, "scale")[1])) if DictUtil.get_arr(spec, "scale").size() == 2 else 0.1
+		var xf := Transform3D(Basis.from_euler(Vector3(rng.randf() * TAU, rng.randf() * TAU, rng.randf() * TAU)).scaled(Vector3.ONE * s), pos) * (meshes[k][1] as Transform3D)
+		if not by.has(k):
+			by[k] = []
+		(by[k] as Array).append(xf)
+	for k: int in by.keys():
+		var mm := MultiMesh.new()
+		mm.transform_format = MultiMesh.TRANSFORM_3D
+		mm.mesh = meshes[k][0]
+		mm.instance_count = (by[k] as Array).size()
+		for i: int in mm.instance_count:
+			mm.set_instance_transform(i, by[k][i])
+		var mmi := MultiMeshInstance3D.new()
+		mmi.multimesh = mm
+		mmi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+		root.add_child(mmi)
+	return root

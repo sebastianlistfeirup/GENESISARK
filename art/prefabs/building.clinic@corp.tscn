@@ -1,0 +1,62 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://assets/Synty/PolygonSciFiWorlds/Prefabs/Buildings/SM_Bld_Corp_Containment_02.tscn" id="1_0b6m6"]
+[ext_resource type="ArrayMesh" path="res://assets/Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Corp_Containment_02.res" id="2_q5gkd"]
+[ext_resource type="Material" path="res://assets/Synty/PolygonSciFiWorlds/Materials/Alts/PolygonScifiWorlds_01_A_mat.tres" id="3_3jfbq"]
+[ext_resource type="PackedScene" path="res://assets/Synty/PolygonSciFiWorlds/Prefabs/Buildings/SM_Bld_Platform_Base_Large_01.tscn" id="4_uto8i"]
+[ext_resource type="ArrayMesh" path="res://assets/Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Platform_Base_Large_01.res" id="5_pryyr"]
+[ext_resource type="PackedScene" path="res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_Cable_05.tscn" id="6_0b2ue"]
+[ext_resource type="ArrayMesh" path="res://assets/Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Cable_05.res" id="7_no6ee"]
+[ext_resource type="PackedScene" path="res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_Cable_06.tscn" id="8_uqeg6"]
+[ext_resource type="ArrayMesh" path="res://assets/Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Cable_06.res" id="9_335jd"]
+
+[node name="building_clinic_corp" type="Node3D" unique_id=1599068212]
+metadata/synty_source = "res://art/kits/Corporation_01_08_Corp_Containment_02.tscn"
+metadata/synty_fit = "footprint"
+
+[node name="Model" type="Node3D" parent="." unique_id=97799396]
+transform = Transform3D(0.69354606, 0, 0, 0, 0.69354606, 0, 0, 0, 0.69354606, 1.0594201, 0.80398977, 0.02085495)
+
+[node name="SM_Bld_Corp_Containment_02" type="MeshInstance3D" parent="Model" unique_id=83885657 instance=ExtResource("1_0b6m6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0024870634, -0.22059822)
+gi_mode = 2
+mesh = ExtResource("2_q5gkd")
+surface_material_override/0 = ExtResource("3_3jfbq")
+
+[node name="SM_Bld_Platform_Base_Large_01" type="MeshInstance3D" parent="Model" unique_id=5179616 instance=ExtResource("4_uto8i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.1499996, 0.14248706, -5.585598)
+gi_mode = 2
+visibility_range_end = 160.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("5_pryyr")
+surface_material_override/0 = ExtResource("3_3jfbq")
+
+[node name="_MeshInstance3D_339" type="MeshInstance3D" parent="Model" unique_id=1116885942 instance=ExtResource("4_uto8i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.1499996, 0.14248706, -0.585598)
+gi_mode = 2
+visibility_range_end = 160.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("5_pryyr")
+surface_material_override/0 = ExtResource("3_3jfbq")
+
+[node name="SM_Prop_Cable_05" type="MeshInstance3D" parent="Model" unique_id=1889321774 instance=ExtResource("6_0b2ue")]
+transform = Transform3D(-0.11880142, 0.010415272, 1.7015162, -0.19100873, 1.601817, -0.025881149, -1.5975932, -0.19228823, -0.123435065, -5.8899994, 0.22248706, 2.8844013)
+cast_shadow = 0
+gi_mode = 2
+visibility_range_end = 70.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("7_no6ee")
+surface_material_override/0 = ExtResource("3_3jfbq")
+
+[node name="SM_Prop_Cable_06" type="MeshInstance3D" parent="Model" unique_id=1498924441 instance=ExtResource("8_uqeg6")]
+transform = Transform3D(1.484606, 0, 0, 0, 1.484606, 0, 0, 0, 1.484606, -0.72999954, 0.25248706, 0.5144024)
+cast_shadow = 0
+gi_mode = 2
+visibility_range_end = 70.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("9_335jd")
+surface_material_override/0 = ExtResource("3_3jfbq")

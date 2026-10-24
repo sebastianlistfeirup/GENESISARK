@@ -4,14 +4,14 @@
 [ext_resource type="ArrayMesh" path="res://assets/Synty/PolygonSciFiWorlds/Models/extracted/SM_Env_Plant_Fern_01.res" id="2_ueo4s"]
 [ext_resource type="Material" path="res://assets/Synty/PolygonSciFiWorlds/Materials/Alts/PolygonScifiWorlds_01_A_mat.tres" id="3_errqj"]
 
-[node name="surface_plant_green" type="Node3D" unique_id=828805321]
+[node name="surface_plant_green" type="Node3D" unique_id=1159725031]
 metadata/synty_source = "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Plant_Fern_01.tscn"
 metadata/synty_fit = "natural"
 
-[node name="Model" type="Node3D" parent="." unique_id=1361955916]
+[node name="Model" type="Node3D" parent="." unique_id=1939432529]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.09985781, 0.09975654, 0.07552004)
 
-[node name="SM_Env_Plant_Fern_01" type="MeshInstance3D" parent="Model" unique_id=233161680 instance=ExtResource("1_8ukq8")]
+[node name="SM_Env_Plant_Fern_01" type="MeshInstance3D" parent="Model" unique_id=1949240785 instance=ExtResource("1_8ukq8")]
 gi_mode = 2
 mesh = ExtResource("2_ueo4s")
 surface_material_override/0 = ExtResource("3_errqj")

@@ -32,8 +32,9 @@ def lm(meshes, count, s=(1, 1.4), ring=(70, 86)):
 
 
 PLANETS = {
-    "viridia": {  # jungle: dense canopy, ferns, flowers, alien flora
-        "sky": {"creatures": [{"model": "res://assets/imported/meshy/creature_jelly.glb", "motion": "pulse", "size": 3, "count": 7, "height": [8, 18], "radius": [15, 45], "speed": 0.03, "beat": 1.4, "amount": 0.3, "glow": 1.2, "glow_color": "#7affd9"}], "bodies": [{"biome": "ice", "tint": "#cfd8e6", "azimuth": 35, "elevation": 22, "size": 14}, {"biome": "desert", "tint": "#d9a06a", "azimuth": 70, "elevation": 34, "size": 5}], "motes": "fx.spores", "motes_scale": 2.5, "fauna": {"mesh": N + "Jungle/FBX/FX_Bird_Mesh_01.fbx", "flocks": 3, "count": 9, "scale": 1.6}, "fauna_low": {"mesh": N + "Alpine/FBX/FX/FX_Butterfly_Mesh_Alpine_01.fbx", "flocks": 14, "count": 3, "scale": 0.45, "height": [1.0, 2.2], "radius": [1.5, 3.5]}},
+    "viridia": {
+        "colony_style": "explorer",  # jungle: dense canopy, ferns, flowers, alien flora
+        "sky": {"sun_size": 5, "sun_color": "#fff6d8", "creatures": [{"model": "res://assets/imported/meshy/creature_jelly.glb", "motion": "pulse", "size": 3, "count": 7, "height": [8, 18], "radius": [15, 45], "speed": 0.03, "beat": 1.4, "amount": 0.3, "glow": 1.2, "glow_color": "#7affd9"}], "bodies": [{"biome": "ice", "tint": "#cfd8e6", "azimuth": 35, "elevation": 22, "size": 14}, {"biome": "desert", "tint": "#d9a06a", "azimuth": 70, "elevation": 34, "size": 5}], "motes": "fx.spores", "motes_scale": 2.5, "fauna": {"mesh": N + "Jungle/FBX/FX_Bird_Mesh_01.fbx", "flocks": 3, "count": 9, "scale": 1.6}, "fauna_low": {"mesh": N + "Alpine/FBX/FX/FX_Butterfly_Mesh_Alpine_01.fbx", "flocks": 14, "count": 3, "scale": 0.45, "height": [1.0, 2.2], "radius": [1.5, 3.5]}},
         "terrain": {"ground_tex": N + "Jungle/Textures/Terrain/Grass_Debris_Texture_01.png", "cliff_tex": N + "Jungle/Textures/Terrain/RockWall_Texture_01.png", "amp": 1.25, "ground": "#4c8a2f", "patch": "#3a7426", "cliff": "#3f4a33"},
         "look": {"rock_top_tex": N + "Jungle/Textures/Terrain/Grass_Debris_Texture_01.png", "hue_shift": -0.02, "sat": 1.15, "wind": 0.07, "rock_tint": "#9aa58a", "rock_top_tint": "#6f9a3c"},
         "trees": [t([J("SM_Env_Tree_Palm_01"), J("SM_Env_Tree_Palm_02"), J("SM_Env_Tree_Palm_03"), J("SM_Env_Tree_Banana_01"), J("SM_Env_Tree_Banana_02"),
@@ -48,8 +49,9 @@ PLANETS = {
         "landmarks": [
                       lm([Wp("SM_Env_Artifact_AlienRuin_02"), Wp("SM_Env_Artifact_AlienRuin_03"), Wp("SM_Env_Artifact_AlienRuin_09")], 4, (1.1, 1.5), (66, 80)), lm([Wp("SM_Env_Plant_Large_Spiral_01"), Wp("SM_Env_Plant_Large_Spiral_03")], 6, (0.45, 0.7), (40, 72)), lm([J("SM_Env_Rock_Cliff_01"), J("SM_Env_Rock_Cliff_02"), J("SM_Env_Rock_Cliff_03"), J("SM_Env_Rock_Arch_01")], 22, (1.6, 2.6))],
     },
-    "pelagos": {  # water world: open sea, islands, mangroves, reeds, lily pads, coral shallows
-        "sky": {"creatures": [{"model": "res://assets/imported/meshy/creature_manta.glb", "motion": "wing", "size": 9, "count": 5, "height": [12, 24], "radius": [25, 55], "speed": 0.06, "beat": 1.1, "amount": 0.3, "glow": 0.4}], "bodies": [{"biome": "green", "tint": "#7fb0c8", "azimuth": -40, "elevation": 18, "size": 22, "ring": "#cfe4ee"}], "fauna": {"mesh": N + "Jungle/FBX/FX_Bird_Mesh_01.fbx", "flocks": 4, "count": 11, "scale": 1.9}},
+    "pelagos": {
+        "colony_style": "explorer",  # water world: open sea, islands, mangroves, reeds, lily pads, coral shallows
+        "sky": {"sun_size": 4, "sun_color": "#f2f8ff", "creatures": [{"model": "res://assets/imported/meshy/creature_manta.glb", "motion": "wing", "size": 9, "count": 5, "height": [12, 24], "radius": [25, 55], "speed": 0.06, "beat": 1.1, "amount": 0.3, "glow": 0.4}], "bodies": [{"biome": "green", "tint": "#7fb0c8", "azimuth": -40, "elevation": 18, "size": 22, "ring": "#cfe4ee"}], "fauna": {"mesh": N + "Jungle/FBX/FX_Bird_Mesh_01.fbx", "flocks": 4, "count": 11, "scale": 1.9}},
         "terrain": {"ground_tex": N + "Swamp/Textures/Terrain/Moss_Swamp_Texture_01.png", "cliff_tex": N + "Jungle/Textures/Terrain/RockWall_Texture_01.png", "amp": 1.55, "water": True, "ground": "#4f8f5c", "patch": "#c9b98a", "cliff": "#46564c"},
         "look": {"rock_top_tex": N + "Jungle/Textures/Terrain/Grass_Debris_Texture_01.png", "hue_shift": 0.07, "sat": 1.05, "wind": 0.12, "rock_tint": "#8c9a98", "rock_top_tint": "#6b8f5a"},
         "trees": [t([S("SM_Env_Tree_Mangrove_01"), S("SM_Env_Tree_Mangrove_02"), S("SM_Env_Tree_Mangrove_03"), S("SM_Env_Tree_Swamp_01"),
@@ -63,8 +65,9 @@ PLANETS = {
         "landmarks": [
                       lm([Wp("SM_Env_Floating_Rocks_Spiral_01"), Wp("SM_Env_Floating_Rocks_Spiral_02"), Wp("SM_Env_Artifact_AlienRuin_04")], 4, (1.6, 2.4), (60, 82)), lm([J("SM_Env_Rock_Cliff_01"), J("SM_Env_Rock_Spike_01"), J("SM_Env_Rock_Spikes_02")], 18, (1.8, 2.8), (62, 86))],
     },
-    "ferrum": {  # rust desert: mesas, spikes, ore crystals, bones, sulphur
-        "sky": {"bodies": [{"biome": "desert", "tint": "#b0583a", "azimuth": 20, "elevation": 26, "size": 26, "ring": "#e8c49a"}, {"biome": "ice", "tint": "#bfc9d6", "azimuth": -55, "elevation": 40, "size": 6}], "motes": "fx.dust", "motes_scale": 2.0},
+    "ferrum": {
+        "colony_style": "scav",  # rust desert: mesas, spikes, ore crystals, bones, sulphur
+        "sky": {"sun_size": 9, "sun_color": "#ffe2a0", "debris": {"meshes": [Wp("SM_Env_Floating_Rocks_01"), Wp("SM_Env_Floating_Rocks_02"), Wp("SM_Env_Floating_Rocks_03"), Wp("SM_Env_Asteroid_02")], "count": 70, "scale": [0.05, 0.2]}, "bodies": [{"biome": "desert", "tint": "#b0583a", "azimuth": 20, "elevation": 26, "size": 26, "ring": "#e8c49a"}, {"biome": "ice", "tint": "#bfc9d6", "azimuth": -55, "elevation": 40, "size": 6}], "motes": "fx.dust", "motes_scale": 2.0},
         "terrain": {"ground_tex": N + "Arid/Textures/Dirt_Texture_Red_01.png", "cliff_tex": N + "Jungle/Textures/Terrain/RockWall_Texture_01.png", "amp": 1.1, "terraces": 2.6, "ground": "#c8662f", "patch": "#a84f26", "cliff": "#6e3420"},
         "look": {"rock_tint": "#d47c48", "rock_top_tint": "#e09a5c", "sat": 0.8},
         "trees": [t([R("Environment/SM_Env_Rocks_Spikes_Large_01"), R("Environment/SM_Env_Rocks_Spikes_Large_02"),
@@ -78,8 +81,9 @@ PLANETS = {
                       lm([Wp("SM_Env_Skeleton_Preset_01"), Wp("SM_Env_Skeleton_Preset_03")], 2, (0.1, 0.13), (72, 86)), lm([Wp("SM_Env_Artifact_Head_01"), Wp("SM_Env_Artifact_AlienRuin_06")], 4, (0.9, 1.2), (76, 88)), lm([R("Environment/SM_Env_Rock_Cliff_05"), R("Environment/SM_Env_Rock_Cliff_06"), R("Environment/SM_Env_Rock_Cliff_10"),
                           R("Environment/SM_Env_Rock_Cliff_14"), R("Environment/SM_Env_Rock_Arch_01")], 26, (1.6, 2.6))],
     },
-    "sere": {  # pale dune desert: ripples, succulents, arches, distant hills
-        "sky": {"bodies": [{"biome": "ice", "tint": "#e8e0d0", "azimuth": -25, "elevation": 30, "size": 9}, {"biome": "ice", "tint": "#d0c8b8", "azimuth": 15, "elevation": 44, "size": 5}], "motes": "fx.dust", "motes_scale": 2.5},
+    "sere": {
+        "colony_style": "scav",  # pale dune desert: ripples, succulents, arches, distant hills
+        "sky": {"sun_size": 7, "sun_color": "#fff0c8", "bodies": [{"biome": "ice", "tint": "#e8e0d0", "azimuth": -25, "elevation": 30, "size": 9}, {"biome": "ice", "tint": "#d0c8b8", "azimuth": 15, "elevation": 44, "size": 5}], "motes": "fx.dust", "motes_scale": 2.5},
         "terrain": {"ground_tex": N + "Jungle/Textures/Terrain/Sand_Wavy_Texture_01.png", "cliff_tex": N + "Jungle/Textures/Terrain/RockWall_Texture_01.png", "amp": 0.85, "dunes": 1.1, "ground": "#dcb57a", "patch": "#cfa565", "cliff": "#9a7650"},
         "look": {"rock_top_tex": N + "Jungle/Textures/Terrain/Sand_Wavy_Texture_01.png", "rock_tint": "#e7cfa3", "rock_top_tint": "#f0dcb0", "hue_shift": 0.03, "sat": 0.9},
         "trees": [t([R("Environment/SM_Env_Cactus_01"), R("Environment/SM_Env_Cactus_02"), R("Environment/SM_Env_Cactus_03"),
@@ -92,8 +96,9 @@ PLANETS = {
                       lm([Wp("SM_Env_Skeleton_Preset_02"), Wp("SM_Env_Skeleton_Preset_04")], 2, (0.18, 0.24), (70, 84)), lm([Wp("SM_Env_Artifact_AlienRuin_05"), Wp("SM_Env_Artifact_Arm_01")], 3, (0.9, 1.3), (74, 88)), lm([R("Environment/SM_Env_Backrgound_Hill_01"), R("Environment/SM_Env_Backrgound_Hill_02"), R("Environment/SM_Env_Backrgound_Hill_03")], 10, (0.8, 1.2), (84, 96)),
                       lm([R("Environment/SM_Env_Rock_Arch_Half_01"), R("Environment/SM_Env_Rock_Arch_01"), R("Environment/SM_Env_Rock_Cliff_08")], 10, (0.7, 1.1), (62, 84))],
     },
-    "nivalis": {  # ice world: frosted pines, ice sheets, snow mounds, mountain ranges
-        "sky": {"creatures": [{"model": "res://assets/imported/meshy/creature_whale.glb", "motion": "wing", "size": 40, "count": 2, "height": [70, 95], "radius": [130, 170], "speed": 0.012, "beat": 0.35, "amount": 0.12, "glow": 0.3}], "bodies": [{"biome": "green", "tint": "#6a8ec8", "azimuth": 30, "elevation": 24, "size": 18, "ring": "#dfe8f4"}], "aurora": "#3dffa8", "aurora_high": "#8a5cff", "motes": "fx.snow", "motes_scale": 2.5},
+    "nivalis": {
+        "colony_style": "corp",  # ice world: frosted pines, ice sheets, snow mounds, mountain ranges
+        "sky": {"sun_size": 6, "sun_color": "#ffc890", "creatures": [{"model": "res://assets/imported/meshy/creature_whale.glb", "motion": "wing", "size": 40, "count": 2, "height": [70, 95], "radius": [130, 170], "speed": 0.012, "beat": 0.35, "amount": 0.12, "glow": 0.3}], "bodies": [{"biome": "green", "tint": "#6a8ec8", "azimuth": 30, "elevation": 24, "size": 18, "ring": "#dfe8f4"}], "aurora": "#3dffa8", "aurora_high": "#8a5cff", "motes": "fx.snow", "motes_scale": 2.5},
         "terrain": {"ground_tex": N + "Alpine/Textures/Snow_01.png", "cliff_tex": N + "Alpine/Textures/Snowcliff_Texture.png", "amp": 1.3, "ridges": 0.9, "ground": "#e2edf2", "patch": "#c7d9e4", "cliff": "#6a7c8c"},
         "look": {"rock_top_tex": N + "Alpine/Textures/Snow_01.png", "sat": 0.45, "leaf_tint": "#d6e6ee", "trunk_tint": "#8a8f96", "rock_tint": "#b4c8e0", "rock_top_tint": "#ffffff", "rock_top_amount": 0.2, "wind": 0.04},
         "trees": [t([A("SM_Env_Pine_01"), A("SM_Env_Pine_02"), A("SM_Env_Pine_03"), A("SM_Env_Pine_04"), A("SM_Env_Pine_05"), A("SM_Env_Pine_NoLeaves_01")], 110, (0.8, 1.4), 0.4, 4)],
@@ -105,7 +110,8 @@ PLANETS = {
                       lm([Wp("SM_Env_Artifact_AlienRuin_07"), Wp("SM_Env_Artifact_AlienRuin_08"), Wp("SM_Env_Detail_Spire_Group_01")], 4, (1.8, 2.6), (62, 82)), lm([A("SM_Env_MountainRange_01"), A("SM_Env_MountainRange_02"), A("SM_Env_MountainRange_03"), A("SM_Env_MountainRange_04")], 8, (0.5, 0.7), (92, 104)),
                       lm([A("SM_Env_Rock_08"), A("SM_Env_Rock_09"), A("SM_Env_Rock_010"), A("SM_Env_Rock_Cliff_Arch_01"), Wp("SM_Env_Detail_Spire_Group_01")], 16, (2.4, 3.6), (60, 84))],
     },
-    "umbra": {  # long night: jagged ridges, glowing crystals, bioluminescent ground life
+    "umbra": {
+        "colony_style": "corp",  # long night: jagged ridges, glowing crystals, bioluminescent ground life
         "sky": {"creatures": [{"model": "res://assets/imported/meshy/creature_jelly.glb", "motion": "pulse", "size": 4, "count": 9, "height": [10, 24], "radius": [15, 55], "speed": 0.025, "beat": 1.2, "amount": 0.3, "glow": 2.5, "glow_color": "#4dffe0"}], "bodies": [{"biome": "desert", "tint": "#e0904a", "azimuth": 10, "elevation": 20, "size": 30, "ring": "#ffcf8a"}, {"biome": "ice", "tint": "#9fb8ff", "azimuth": -60, "elevation": 46, "size": 7}], "aurora": "#41ffd9", "aurora_high": "#c05cff"},
         "terrain": {"ground_tex": N + "Alpine/Textures/Snow_01.png", "cliff_tex": N + "Jungle/Textures/Terrain/RockWall_Texture_01.png", "amp": 1.2, "ridges": 1.2, "ground": "#4c5a74", "patch": "#3e4b66", "cliff": "#242b3a"},
         "look": {"rock_top_tex": N + "Alpine/Textures/Snow_01.png", "glow": 1.6, "glow_color": "#54ffe0", "hue_shift": 0.38, "sat": 1.2, "rock_tint": "#6a7896", "rock_top_tint": "#c8d4ec", "rock_top_amount": 0.25, "trunk_tint": "#4a4f5c", "wind": 0.03},

@@ -25,7 +25,8 @@ static func save_mappings(mapped: Dictionary, path: String = SLOT_SCENES) -> voi
 	out.close()
 
 
-static func fit_mode(slot: String) -> String:
+static func fit_mode(slot_in: String) -> String:
+	var slot := slot_in.get_slice("@", 0)
 	if slot in MODULES:
 		return "module"
 	if slot.begins_with("building.") and not slot in NATURAL_BUILDINGS:

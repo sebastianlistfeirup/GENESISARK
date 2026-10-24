@@ -411,6 +411,20 @@ func _finish(recalled: bool) -> void:
 
 
 func debug_action(action: String) -> void:
+	if action == "sunview":  # evidence: look toward the system's star from the camp
+		var pr := Lighting.preset(planet)
+		var dir := Basis.from_euler(Vector3(deg_to_rad(float(pr.get("sun_pitch", -45))), deg_to_rad(float(pr.get("sun_yaw", 30))), 0)).z.normalized()
+		var cam := Camera3D.new()
+		add_child(cam)
+		var at := Vector3(0, terrain.height_at(0, 0) + 6.0, 0)
+		cam.position = at - Vector3(dir.x, 0, dir.z).normalized() * 12.0
+		cam.look_at(at + dir * 100.0 + Vector3(0, -30, 0))
+		cam.fov = 70.0
+		cam.far = 3000.0
+		cam.current = true
+		if hud:
+			hud.visible = false
+		return
 	if action.begins_with("vista"):  # evidence: a high establishing shot over the site (vista / vista:<azimuth deg>)
 		var az := deg_to_rad(float(action.get_slice(":", 1))) if action.contains(":") else 0.6
 		var cam := Camera3D.new()

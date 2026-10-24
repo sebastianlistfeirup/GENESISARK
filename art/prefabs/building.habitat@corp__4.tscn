@@ -1,0 +1,53 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://assets/Synty/PolygonSciFiWorlds/Prefabs/Buildings/SM_Bld_Corp_Barracks_01.tscn" id="1_btbxv"]
+[ext_resource type="ArrayMesh" path="res://assets/Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Corp_Barracks_01.res" id="2_fvbge"]
+[ext_resource type="Material" path="res://assets/Synty/PolygonSciFiWorlds/Materials/Alts/PolygonScifiWorlds_01_A_mat.tres" id="3_ljady"]
+[ext_resource type="PackedScene" path="res://assets/Synty/PolygonSciFiWorlds/Prefabs/Buildings/SM_Bld_Door_Single_03.tscn" id="4_74x0e"]
+[ext_resource type="ArrayMesh" path="res://assets/Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Door_Single_03.res" id="5_yb578"]
+[ext_resource type="PackedScene" path="res://assets/Synty/PolygonSciFiWorlds/Prefabs/Buildings/SM_Bld_Greeble_17.tscn" id="6_pmh7d"]
+[ext_resource type="ArrayMesh" path="res://assets/Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Greeble_17.res" id="7_2nof1"]
+[ext_resource type="PackedScene" path="res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_Antenna_03.tscn" id="8_6li5w"]
+[ext_resource type="ArrayMesh" path="res://assets/Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Antenna_03.res" id="9_q3lse"]
+
+[node name="building_habitat_corp" type="Node3D" unique_id=1027429844]
+metadata/synty_source = "res://art/kits/Corporation_01_40_Corp_Barracks_01.tscn"
+metadata/synty_fit = "footprint"
+
+[node name="Model" type="Node3D" parent="." unique_id=690016669]
+transform = Transform3D(-3.5834567e-08, 0, 0.81979936, 0, 0.81979936, 0, -0.81979936, 0, -3.5834567e-08, 0.8750849, 0.1362435, -0.049999952)
+
+[node name="SM_Bld_Corp_Barracks_01" type="MeshInstance3D" parent="Model" unique_id=241749723 instance=ExtResource("1_btbxv")]
+transform = Transform3D(1, 0, -1.5893256e-08, 0, 1, 0, 1.5893256e-08, 0, 1, 0, 0.42580873, 0)
+gi_mode = 2
+mesh = ExtResource("2_fvbge")
+surface_material_override/0 = ExtResource("3_ljady")
+
+[node name="SM_Bld_Door_Single_03" type="MeshInstance3D" parent="Model" unique_id=1634295408 instance=ExtResource("4_74x0e")]
+transform = Transform3D(0.99999976, 0, 4.7683704e-07, 0, 1, 0, -4.7683704e-07, 0, 0.99999976, 0.018002033, 0.13380873, 4.8199997)
+cast_shadow = 0
+gi_mode = 2
+visibility_range_end = 70.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("5_yb578")
+surface_material_override/0 = ExtResource("3_ljady")
+
+[node name="SM_Bld_Greeble_17" type="MeshInstance3D" parent="Model" unique_id=2140791652 instance=ExtResource("6_pmh7d")]
+transform = Transform3D(-2.3278675, 0, 7.011578e-06, 0, 2.3278668, 0, -7.0115802e-06, 0, -2.3278668, 0.018002033, 0.38380873, -6.59)
+cast_shadow = 0
+gi_mode = 2
+visibility_range_end = 70.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("7_2nof1")
+surface_material_override/0 = ExtResource("3_ljady")
+
+[node name="SM_Prop_Antenna_03" type="MeshInstance3D" parent="Model" unique_id=43010119 instance=ExtResource("8_6li5w")]
+transform = Transform3D(1.0109244e-07, 0, 1.3390101, 0, 1.0748801, 0, -1.3390099, 0, 1.0109245e-07, -0.03199911, 4.6038084, 3.6399994)
+gi_mode = 2
+visibility_range_end = 160.0
+visibility_range_end_margin = 8.0
+visibility_range_fade_mode = 1
+mesh = ExtResource("9_q3lse")
+surface_material_override/0 = ExtResource("3_ljady")
