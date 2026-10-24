@@ -605,10 +605,14 @@ func _build_hud() -> void:
 	frame.add_theme_stylebox_override("panel", sb)
 	frame.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_hud.add_child(frame)
+	var hf := HoloFrame.attach(frame)  # same holo-console frame as the ship terminals (D-055)
+	if hf:
+		hf.boot()
 	var box := VBoxContainer.new()
 	box.alignment = BoxContainer.ALIGNMENT_CENTER
 	frame.add_child(box)
 	_lbl_phase = UiKit.label("", 26, UiKit.AMBER)
+	_lbl_phase.add_theme_font_override("font", Holo.name_font())
 	_lbl_phase.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_lbl_phase.add_theme_constant_override("outline_size", 8)
 	_lbl_phase.add_theme_color_override("font_outline_color", Color(0.02, 0.05, 0.06, 0.9))
