@@ -21,7 +21,13 @@
    "res://art/prefabs/char.citizen_adult.tscn",
    "res://art/prefabs/char.citizen_adult__2.tscn",
    "res://art/prefabs/char.citizen_adult__3.tscn",
-   "res://art/prefabs/char.citizen_adult__4.tscn"
+   "res://art/prefabs/char.citizen_adult__4.tscn",
+   "res://art/prefabs/char.citizen_adult__5.tscn",
+   "res://art/prefabs/char.citizen_adult__6.tscn",
+   "res://art/prefabs/char.citizen_adult__7.tscn",
+   "res://art/prefabs/char.citizen_adult__8.tscn",
+   "res://art/prefabs/char.citizen_adult__9.tscn",
+   "res://art/prefabs/char.citizen_adult__10.tscn"
   ],
   "char.citizen_child": "res://art/prefabs/char.citizen_child.tscn",
   "char.robot_drone": "res://art/prefabs/char.robot_drone.tscn",

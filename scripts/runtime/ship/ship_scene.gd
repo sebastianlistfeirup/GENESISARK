@@ -156,6 +156,28 @@ func _spawn_display() -> void:
 	_ai = VisualSlot.make("char.ark_ai_hologram")
 	_ai.position = builder.ai_pos
 	add_child(_ai)
+	if not _ai.using_asset and ResourceLoader.exists("res://assets/Synty/SciFiSpace/FBX/SM_Hud_Box_01.fbx"):
+		# ARK as a hologram: a faceted core of light inside turning HUD rings (key-art look).
+		for c: Node in _ai.get_children():
+			c.queue_free()
+		var core := MeshInstance3D.new()
+		var sm := SphereMesh.new()
+		sm.radius = 0.28
+		sm.height = 0.56
+		sm.radial_segments = 6
+		sm.rings = 3
+		core.mesh = sm
+		var cm := StandardMaterial3D.new()
+		cm.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+		cm.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+		cm.blend_mode = BaseMaterial3D.BLEND_MODE_ADD
+		cm.albedo_color = Color(0.45, 1.0, 0.95, 0.9)
+		core.material_override = cm
+		core.position.y = 1.55
+		_ai.add_child(core)
+		var holo := Hologram.make(Color("#4ff6ff"), 1.5, 3)
+		holo.position.y = 1.2
+		_ai.add_child(holo)
 
 
 func _window_view() -> void:
@@ -276,13 +298,18 @@ func _any_panel() -> bool:
 
 ## DEBUG/evidence hook used by DebugCapture (--action=...).
 func debug_action(action: String) -> void:
-	if action.begins_with("room_"):  # evidence: stand in a room (room_B, room_E, room_W, room_C)
+	if action.begins_with("room_"):  # evidence: stand at the south middle of a room, facing north (room_B, room_E, room_W, room_C)
 		var want := action.trim_prefix("room_")
+		var lo := Vector2(INF, INF)
+		var hi := Vector2(-INF, -INF)
 		for r: int in builder.rows.size():
 			for c: int in str(builder.rows[r]).length():
-				if builder._zone(c, r) == want and builder._zone(c, r + 1) == want and builder._zone(c - 1, r) == want:
-					captain.teleport(builder._cell_center(c, r + 1), PI)
-					return
+				if builder._zone(c, r) == want:
+					lo = lo.min(Vector2(c, r))
+					hi = hi.max(Vector2(c, r))
+		if lo.x < INF:
+			captain.teleport(builder.cell_to_world((lo.x + hi.x + 1.0) * 0.5 + 1.2, hi.y + 0.2), 0.0)
+		return
 	match action:
 		"starmap":
 			_open(starmap)

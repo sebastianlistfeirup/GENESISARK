@@ -289,6 +289,15 @@ func _move_vehicles(delta: float) -> void:
 		node.rotation.y = lerp_angle(node.rotation.y, atan2(tan.x, tan.y), clampf(delta * 4.0, 0.0, 1.0))
 
 
+## Evidence: where a colonist is walking right now (or any colonist).
+func walker() -> Node3D:
+	for p: Dictionary in _people:
+		var r: PackedVector2Array = p["route"]
+		if not bool(p["robot"]) and not r.is_empty() and int(p["i"]) < r.size() - 3:
+			return p["node"]
+	return (_people[0]["node"] as Node3D) if not _people.is_empty() else null
+
+
 ## Point and unit tangent at arc length s along a polyline.
 static func _along(pts: PackedVector2Array, s: float) -> Array:
 	var acc := 0.0

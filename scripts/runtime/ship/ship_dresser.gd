@@ -67,6 +67,35 @@ static func dress(b: ShipBuilder) -> Node3D:
 				if not walls.is_empty() and (h / 7) % 2 == 0:
 					var w: Array = walls[(h / 13) % walls.size()]
 					_place(root, str(w[0]), wall_pt - outward * 0.45 - along * slide * 0.6 + Vector3(0, float(w[1]), 0), yaw, mat)
+	# Set pieces at fixed cells (bridge crew stations, cryo wall pods, sleepers in tubes).
+	for sp: Variant in DictUtil.get_arr(doc, "set_pieces"):
+		var d: Dictionary = sp
+		var cell: Array = DictUtil.get_arr(d, "cell")
+		if cell.size() != 2:
+			continue
+		var pos := b.cell_to_world(float(cell[0]), float(cell[1])) + Vector3(0, DictUtil.get_float(d, "y"), 0)
+		var pm: Material = mat
+		if d.has("material"):
+			pm = load(str(d["material"])) if ResourceLoader.exists(str(d["material"])) else mat
+		var inst := _place(root, str(d.get("mesh", "")), pos, deg_to_rad(DictUtil.get_float(d, "yaw")), pm)
+		if inst == null:
+			continue
+		inst.scale = Vector3.ONE * DictUtil.get_float(d, "scale", 1.0)
+		if bool(d.get("center", true)):
+			# Kit pieces carry their assembly offset: stand them centred on the cell, base on the floor.
+			var box := AssetSlots.aabb_of(inst, Transform3D(Basis(Vector3.UP, inst.rotation.y).scaled(inst.scale), Vector3.ZERO))
+			inst.position -= Vector3(box.get_center().x, box.position.y, box.get_center().z)
+		if bool(d.get("collide", false)):
+			_collide(body, inst)
+	# Holograms over the consoles of the bridge and the embryo bank.
+	var holo: Dictionary = DictUtil.get_dict(doc, "holograms")
+	for m: Dictionary in b.interact_markers:
+		var z := b.zone_at(m["pos"])
+		if not holo.has(z):
+			continue
+		var h := Hologram.make(Color(str(holo[z])), 0.9, absi(hash(str(m["id"]))))
+		h.position = (m["pos"] as Vector3) + Vector3(0, 2.15, 0)
+		root.add_child(h)
 	return root
 
 

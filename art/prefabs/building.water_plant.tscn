@@ -4,14 +4,14 @@
 [ext_resource type="ArrayMesh" path="res://assets/Synty/PolygonSciFiWorlds/Models/extracted/SM_Bld_Pod_Silo_02.res" id="2_mqxu1"]
 [ext_resource type="Material" path="res://assets/Synty/PolygonSciFiWorlds/Materials/Alts/PolygonScifiWorlds_02_A_mat.tres" id="3_f2vq3"]
 
-[node name="building_water_plant" type="Node3D" unique_id=651857552]
+[node name="building_water_plant" type="Node3D" unique_id=226611123]
 metadata/synty_source = "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Buildings/SM_Bld_Pod_Silo_02.tscn"
 metadata/synty_fit = "footprint"
 
-[node name="Model" type="Node3D" parent="." unique_id=2018976060]
+[node name="Model" type="Node3D" parent="." unique_id=1228231102]
 transform = Transform3D(0.23015264, 0, 0, 0, 0.23015264, 0, 0, 0, 0.23015264, 0.075000286, 2.9802322e-08, -0.87367976)
 
-[node name="SM_Bld_Pod_Silo_02" type="MeshInstance3D" parent="Model" unique_id=748403013 instance=ExtResource("1_xixvg")]
+[node name="SM_Bld_Pod_Silo_02" type="MeshInstance3D" parent="Model" unique_id=463318201 instance=ExtResource("1_xixvg")]
 gi_mode = 2
 mesh = ExtResource("2_mqxu1")
 surface_material_override/0 = ExtResource("3_f2vq3")

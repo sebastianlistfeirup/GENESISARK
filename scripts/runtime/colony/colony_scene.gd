@@ -60,10 +60,17 @@ func _ready() -> void:
 		var r := DictUtil.get_float(districts[dk], "radius") * 2.0
 		terrain.add_flat(Vector2(float(c[0]), float(c[1])), r)
 		avoid.append([Vector2(float(c[0]), float(c[1])), r + 6.0])
+	terrain.apply_planet_style(gs.colony.planet_id)
+	var reach: Array = []
+	for a: Array in avoid:
+		reach.append(a[0])
+		for i: int in 8:
+			reach.append(a[0] + Vector2.from_angle(TAU * i / 8.0) * float(a[1]))
+	terrain.set_water_below(reach)
 	add_child(terrain)
 	terrain.build()
-	terrain.scatter(hash(gs.colony.site_id) + 1, 60, avoid)
-	_cover_avoid = avoid  # ground cover is laid in _relayout, once the roads are known
+	terrain.scatter(hash(gs.colony.site_id) + 1, 60 if GroundCover.spec_for(gs.colony.planet_id, "").is_empty() else 0, avoid)
+	_cover_avoid = avoid  # ground cover is laid in _relayout, once the roads and buildings are known
 	_draw_districts()
 	SceneDressing.attach(self, str(site.get("id", "")), terrain)
 	_net = MeshInstance3D.new()
@@ -286,13 +293,14 @@ func _relayout() -> void:
 		clear.add_polyline(rd, road_w * 0.5 + 0.3)
 	_draw_roads(road_cfg)
 	_lay_ground_cover(clear)
-	_life.relayout(gs, _paths)
 	if _dressing == null:
 		_dressing = ColonyDressing.new()
 		_dressing.name = "Dressing"
 		add_child(_dressing)
 	var lights: Dictionary = DictUtil.get_dict(BuildingDressing.doc(), "lights")
 	_dressing.rebuild(views, terrain, clear, float(lights.get(str(planet.get("id", "")), lights.get("_default", 0.45))))
+	_paths.block_discs(_dressing.kept)  # walkers step around the crates and lamps
+	_life.relayout(gs, _paths)
 
 
 ## Dirt roads between the districts, a darker tone of the planet's ground.
@@ -302,8 +310,14 @@ func _draw_roads(cfg: Dictionary) -> void:
 	_roads = Node3D.new()
 	_roads.name = "Roads"
 	add_child(_roads)
-	var base := Color(str(DictUtil.get_dict(planet, "palette").get("nature", "#8a7a60")))
-	var col := Color.from_hsv(base.h, clampf(base.s * 1.1, 0.0, 1.0), base.v * DictUtil.get_float(cfg, "darken", 0.72))
+	# The terrain's own ground tone (same rule as TerrainBuilder.build), trodden darker.
+	var base := Color(str(terrain.palette.get("nature", DictUtil.get_str(terrain.map_def, "base_color", "#556b4a"))))
+	var ground := base.darkened(0.25) if terrain.biome_id == "green" else (base.darkened(0.12) if terrain.biome_id == "ice" else base)
+	ground = Color.from_hsv(ground.h, clampf(ground.s * 1.25, 0.0, 1.0), ground.v)
+	var tstyle: Dictionary = terrain.style
+	if tstyle.has("ground"):
+		ground = Color(str(tstyle["ground"]))
+	var col := Color.from_hsv(ground.h, clampf(ground.s * 1.05, 0.0, 1.0), ground.v * DictUtil.get_float(cfg, "darken", 0.62))
 	for rd: PackedVector2Array in _paths.roads:
 		_roads.add_child(ColonyPaths.road_mesh(rd, terrain, col, DictUtil.get_float(cfg, "width", 3.2), DictUtil.get_float(cfg, "shoulder", 1.4)))
 
@@ -320,7 +334,8 @@ func _lay_ground_cover(clear: ColonyClearance) -> void:
 		avoid.append([r.get_center(), r.size.length() * 0.5 + 2.0])
 	if _cover:
 		_cover.queue_free()
-	_cover = GroundCover.build(terrain, GameSession.state.colony.biome_id, hash(GameSession.state.colony.site_id) + 3, avoid, 220.0)
+	var gs: GameState = GameSession.state
+	_cover = GroundCover.build(terrain, gs.colony.planet_id, hash(gs.colony.site_id) + 3, avoid, 220.0, gs.colony.biome_id)
 	add_child(_cover)
 
 
@@ -394,8 +409,13 @@ func _sync_people() -> void:
 	_life.sync_people(GameSession.state)
 
 
+var _follow: Node3D  # evidence only ("people" debug action)
+
+
 func _process(delta: float) -> void:
 	_process_network_visibility()
+	if is_instance_valid(_follow):
+		cam_rig.position = _follow.position
 	_t += delta
 	_layout_hud()
 	var gs: GameState = GameSession.state
@@ -606,6 +626,14 @@ func debug_action(action: String) -> void:
 		get_viewport().warp_mouse(Vector2(get_viewport().get_visible_rect().size.x * 0.5, 160))  # no stray tooltip in the shot
 		return
 	match action:
+		"people":  # evidence: close-up on a walking colonist (the camera follows them)
+			_follow = _life.walker()
+			cam_rig.zoom = 9.0
+			if decision.visible:
+				decision.hide()
+			if event_dialog.visible:
+				event_dialog.hide()
+			get_viewport().warp_mouse(Vector2(get_viewport().get_visible_rect().size.x * 0.5, 160))
 		"ghost":
 			_start_build("habitat")
 			var gs: GameState = GameSession.state

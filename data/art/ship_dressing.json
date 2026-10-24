@@ -117,5 +117,132 @@
     ]
    ]
   }
- }
+ },
+ "holograms": {
+  "B": "#3ff2ff",
+  "E": "#5affc8"
+ },
+ "set_pieces": [
+  {
+   "mesh": "SM_Bld_Bridge_Chair_01",
+   "cell": [
+    2.9,
+    1.7
+   ],
+   "yaw": 200,
+   "collide": true
+  },
+  {
+   "mesh": "SM_Bld_Bridge_Chair_01",
+   "cell": [
+    5.1,
+    1.7
+   ],
+   "yaw": 160,
+   "collide": true
+  },
+  {
+   "mesh": "SM_Bld_Bridge_Chair_01",
+   "cell": [
+    9.9,
+    1.7
+   ],
+   "yaw": 200,
+   "collide": true
+  },
+  {
+   "mesh": "SM_Bld_Bridge_Chair_01",
+   "cell": [
+    12.1,
+    1.7
+   ],
+   "yaw": 160,
+   "collide": true
+  },
+  {
+   "mesh": "SM_Bld_Wall_Pods_01",
+   "cell": [
+    10.6,
+    15.75
+   ],
+   "yaw": 180,
+   "collide": true
+  },
+  {
+   "mesh": "SM_Bld_Wall_Pods_01",
+   "cell": [
+    9.25,
+    14.6
+   ],
+   "yaw": 90,
+   "collide": true
+  },
+  {
+   "mesh": "SM_Prop_Chr_Male_Cryo_01",
+   "cell": [
+    12.6,
+    14.2
+   ],
+   "yaw": 270,
+   "y": 0.25
+  },
+  {
+   "mesh": "SM_Prop_Test_Tube_02",
+   "cell": [
+    12.6,
+    14.2
+   ],
+   "yaw": 0,
+   "scale": 3.4,
+   "material": "res://art/materials/embryo_glass.tres",
+   "collide": true
+  },
+  {
+   "mesh": "SM_Prop_Chr_Female_Cryo_01",
+   "cell": [
+    12.6,
+    14.9
+   ],
+   "yaw": 270,
+   "y": 0.25
+  },
+  {
+   "mesh": "SM_Prop_Test_Tube_02",
+   "cell": [
+    12.6,
+    14.9
+   ],
+   "yaw": 0,
+   "scale": 3.4,
+   "material": "res://art/materials/embryo_glass.tres",
+   "collide": true
+  },
+  {
+   "mesh": "SM_Bld_Bridge_Console_02",
+   "cell": [
+    7.5,
+    1.25
+   ],
+   "yaw": 180,
+   "collide": true
+  },
+  {
+   "mesh": "SM_Bld_Bridge_Console_Corner_01",
+   "cell": [
+    2.75,
+    1.3
+   ],
+   "yaw": 180,
+   "collide": true
+  },
+  {
+   "mesh": "SM_Bld_Bridge_Console_Corner_02",
+   "cell": [
+    12.25,
+    1.3
+   ],
+   "yaw": 180,
+   "collide": true
+  }
+ ]
 }

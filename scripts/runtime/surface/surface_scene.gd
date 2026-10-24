@@ -55,10 +55,25 @@ func _ready() -> void:
 	for r: Dictionary in DictUtil.get_arr(survey, "routes"):
 		for w: Variant in DictUtil.get_arr(r, "waypoints"):
 			avoid.append([Vector2(float(w[0]), float(w[1])), 5.0])
+	terrain.apply_planet_style(str(planet.get("id")))
+	var must_reach: Array = [Vector2.ZERO]
+	for i: int in 12:  # the landing pad and the lander beside it stay on land
+		must_reach.append(Vector2.from_angle(TAU * i / 12.0) * 6.0)
+		must_reach.append(Vector2.from_angle(TAU * i / 12.0) * 11.0)
+	for k: String in pts.keys():
+		must_reach.append(_pt(pts[k]))
+	for r: Dictionary in DictUtil.get_arr(survey, "routes"):
+		var prev := Vector2.ZERO
+		for w: Variant in DictUtil.get_arr(r, "waypoints"):
+			var wp := Vector2(float(w[0]), float(w[1]))
+			for i: int in 9:
+				must_reach.append(prev.lerp(wp, i / 8.0))
+			prev = wp
+	terrain.set_water_below(must_reach)
 	add_child(terrain)
 	terrain.build()
-	terrain.scatter(hash(ex.site_id), 70, avoid)
-	add_child(GroundCover.build(terrain, str(planet.get("biome_id")), hash(ex.site_id) + 7, avoid, 180.0))
+	terrain.scatter(hash(ex.site_id), 70 if GroundCover.spec_for(str(planet.get("id")), "").is_empty() else 0, avoid)
+	add_child(GroundCover.build(terrain, str(planet.get("id")), hash(ex.site_id) + 7, avoid, 180.0, str(planet.get("biome_id"))))
 	_place_lander()
 	SceneDressing.attach(self, str(site.get("id", "")), terrain)
 	_place_points(pts)

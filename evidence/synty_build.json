@@ -897,7 +897,13 @@
         "res://art/prefabs/char.citizen_adult.tscn",
         "res://art/prefabs/char.citizen_adult__2.tscn",
         "res://art/prefabs/char.citizen_adult__3.tscn",
-        "res://art/prefabs/char.citizen_adult__4.tscn"
+        "res://art/prefabs/char.citizen_adult__4.tscn",
+        "res://art/prefabs/char.citizen_adult__5.tscn",
+        "res://art/prefabs/char.citizen_adult__6.tscn",
+        "res://art/prefabs/char.citizen_adult__7.tscn",
+        "res://art/prefabs/char.citizen_adult__8.tscn",
+        "res://art/prefabs/char.citizen_adult__9.tscn",
+        "res://art/prefabs/char.citizen_adult__10.tscn"
       ],
       "size_m": [
         2.05,
@@ -906,7 +912,7 @@
       ],
       "slot": "char.citizen_adult",
       "source": "res://assets/Synty/CharactersSrc/Characters.fbx",
-      "summary": "natural x1.000 -> 2.0x1.8x0.3 m (proxy 0.6x1.7x0.6)  (+3 varianter)",
+      "summary": "natural x1.000 -> 2.0x1.8x0.3 m (proxy 0.6x1.7x0.6)  (+9 varianter)",
       "uses_atlas": false,
       "warnings": []
     },

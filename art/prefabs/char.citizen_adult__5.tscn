@@ -1,0 +1,10 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://assets/Synty/CharactersSrc/City/SK_Character_Medical_Male_01.fbx" id="1_0wsy1"]
+
+[node name="char_citizen_adult" type="Node3D" unique_id=1133467381]
+metadata/synty_source = "res://assets/Synty/CharactersSrc/City/SK_Character_Medical_Male_01.fbx"
+metadata/synty_fit = "natural"
+
+[node name="Model" type="Node3D" parent="." unique_id=1321789950 instance=ExtResource("1_0wsy1")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 2.3841857e-09, -0.010098264)

@@ -6,7 +6,7 @@
       "ok": true
     },
     {
-      "detail": "@Button@57:<Button#130728068990>",
+      "detail": "@Button@57:<Button#131248162687>",
       "name": "pad_focuses_menu",
       "ok": true
     },
@@ -86,7 +86,7 @@
       "ok": true
     },
     {
-      "detail": "hit=0.63 cam_z=29.59",
+      "detail": "hit=0.09 cam_z=27.97",
       "name": "ga02_camera_never_passes_hull",
       "ok": true
     },
@@ -96,7 +96,7 @@
       "ok": true
     },
     {
-      "detail": "I_power_coupling:<Area3D#282092116206>",
+      "detail": "I_power_coupling:<Area3D#291453802948>",
       "name": "prompt_targets_coupling",
       "ok": true
     },
@@ -274,5 +274,5 @@
   "engine_version": "4.7.1-stable (official)",
   "failures": [],
   "status": "PASS",
-  "timestamp": "2026-10-24T09:55:17"
+  "timestamp": "2026-10-24T10:28:04"
 }

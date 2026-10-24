@@ -34,9 +34,24 @@ func build(gs: GameState, site: Dictionary, corridor_segments: Array, map_size: 
 		var r := DictUtil.get_float(bz, "radius") + 1.0
 		_mark_rect(Rect2(Vector2(float(c[0]), float(c[1])) - Vector2(r, r), Vector2(r, r) * 2.0))
 	for sg: Array in corridor_segments:
-		_weight_segment(sg[0], sg[1], 2.0, 12.0)
+		_weight_segment(sg[0], sg[1], 2.0, 4.0)
 	_flood()
 	_build_roads(site)
+
+
+## Props become obstacles for walkers (roads stay open), then reachability is redone.
+func block_discs(discs: Array) -> void:
+	for d: Array in discs:
+		var p: Vector2 = d[0]
+		var r := float(d[1]) + 0.3
+		var a := to_cell(p - Vector2(r, r))
+		var b := to_cell(p + Vector2(r, r))
+		for x: int in range(a.x, b.x + 1):
+			for y: int in range(a.y, b.y + 1):
+				var c := Vector2i(x, y)
+				if to_world(c).distance_to(p) <= r and grid.get_point_weight_scale(c) > 1.0:
+					grid.set_point_solid(c, true)
+	_flood()
 
 
 ## Marks every free cell reachable from the map corner, so routes never start

@@ -10,6 +10,8 @@ extends Node3D
 const MAX_LIGHTS := 48
 
 var _bulb_mesh: SphereMesh
+## Props that survived the clearance test: [Vector2 position, radius] (walkers keep off them).
+var kept: Array = []
 
 
 ## views: building id -> BuildingView. clear: ColonyClearance with footprints,
@@ -21,6 +23,7 @@ func rebuild(views: Dictionary, terrain: TerrainBuilder, clear: ColonyClearance,
 	var batches: Dictionary = {}  # Mesh -> Array[Transform3D]
 	var ranges: Dictionary = {}   # Mesh -> visibility range
 	var lights: Array = []        # [Vector3 pos, Color]
+	kept.clear()
 	for bid: int in views.keys():
 		var v: BuildingView = views[bid]
 		if not is_instance_valid(v) or v.dressing.is_empty():
@@ -35,6 +38,7 @@ func rebuild(views: Dictionary, terrain: TerrainBuilder, clear: ColonyClearance,
 				var p := Vector2(xf.origin.x, xf.origin.z)
 				if clear.blocked(p, float(it["r"]), bid):
 					continue
+				kept.append([p, float(it["r"])])
 				# Stand on the real ground (the ring can leave the flattened district).
 				xf.origin.y = terrain.height_at(p.x, p.y) + (xf.origin.y - vxf.origin.y) - 0.03
 			var pr: Dictionary = BuildingDressing.parts(str(it["mesh"]))
