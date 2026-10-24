@@ -153,8 +153,9 @@
    "blend": "mix"
   },
   "curtain": {
-   "height": 1.6,
-   "alpha": 0.52
+   "height": 2.6,
+   "alpha": 0.5,
+   "color": "#8fd8ff"
   },
   "beacons": {
    "spacing": 7.5
