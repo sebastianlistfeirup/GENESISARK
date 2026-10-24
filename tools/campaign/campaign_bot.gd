@@ -267,7 +267,7 @@ func _play(pid: String, policy: String, seed_value: int, label: String = "") -> 
 	_check(sim, "ended")
 	trips += int(_roundtrip(sim, "save:ended"))
 	return {"planet": pid, "policy": policy, "seed": seed_value, "probe": probe.ok, "year": snappedf(gs.campaign.colony_year(), 0.1),
-		"population": int(m.get("population", 0)), "ending": ending, "events": events, "roundtrips": trips, "stops": stops,
+		"population": int(m.get("population", 0)), "ending": ending, "metrics": m, "events": events, "roundtrips": trips, "stops": stops,
 		"decisions": gs.society.decisions.map(func(d: Dictionary) -> String: return "%s:%s" % [d["id"], d["choice"]]),
 		"council": gs.society.council_formed, "ledger": gs.ark.ledger(),
 		"incubation_blockers_end": sim.population.incubation_blockers(gs, 10), "free_workforce_end": sim.era.free_workforce(gs),

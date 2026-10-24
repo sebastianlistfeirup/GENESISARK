@@ -1,0 +1,1073 @@
+{
+  "task_id": "R9",
+  "commit": "5d20c16",
+  "engine_version": "4.7.1-stable (official)",
+  "command": "godot --headless --path . --script res://tools/campaign/campaign_bot.gd ; godot --headless --path . --script res://tools/balance/run_balance.gd ; godot --headless --path . --script res://tests/run_tests.gd",
+  "exit_code": 0,
+  "expected": "Normal policies (first/middle/last = expansion/safety/self-determination at year 20/40) give >=2 ending profiles across planets; population at year 40 spreads >=15% between policies on each planet; neglect stays fragile; 0 bot failures; balance: 18/18 reach year 40, no planet dominates.",
+  "observed": {
+    "before": {
+      "normal_policy_profiles": [
+        "independent"
+      ],
+      "population_spread_y40": {
+        "viridia": {
+          "min": 650,
+          "max": 650,
+          "spread_of_min": 0.0,
+          "spread_of_max": 0.0
+        },
+        "pelagos": {
+          "min": 650,
+          "max": 650,
+          "spread_of_min": 0.0,
+          "spread_of_max": 0.0
+        },
+        "ferrum": {
+          "min": 560,
+          "max": 560,
+          "spread_of_min": 0.0,
+          "spread_of_max": 0.0
+        },
+        "sere": {
+          "min": 650,
+          "max": 650,
+          "spread_of_min": 0.0,
+          "spread_of_max": 0.0
+        },
+        "nivalis": {
+          "min": 650,
+          "max": 650,
+          "spread_of_min": 0.0,
+          "spread_of_max": 0.0
+        },
+        "umbra": {
+          "min": 650,
+          "max": 650,
+          "spread_of_min": 0.0,
+          "spread_of_max": 0.0
+        }
+      },
+      "neglect_endings": {
+        "viridia": "fragile",
+        "pelagos": "fragile",
+        "ferrum": "fragile",
+        "sere": "fragile",
+        "nivalis": "fragile",
+        "umbra": "fragile"
+      },
+      "endings": {
+        "fragile": 6,
+        "independent": 18
+      },
+      "failures": 0,
+      "runs": 24
+    },
+    "after": {
+      "normal_policy_profiles": [
+        "independent",
+        "shielded"
+      ],
+      "population_spread_y40": {
+        "viridia": {
+          "min": 590,
+          "max": 730,
+          "spread_of_min": 0.237,
+          "spread_of_max": 0.192
+        },
+        "pelagos": {
+          "min": 590,
+          "max": 730,
+          "spread_of_min": 0.237,
+          "spread_of_max": 0.192
+        },
+        "ferrum": {
+          "min": 560,
+          "max": 680,
+          "spread_of_min": 0.214,
+          "spread_of_max": 0.176
+        },
+        "sere": {
+          "min": 590,
+          "max": 730,
+          "spread_of_min": 0.237,
+          "spread_of_max": 0.192
+        },
+        "nivalis": {
+          "min": 590,
+          "max": 730,
+          "spread_of_min": 0.237,
+          "spread_of_max": 0.192
+        },
+        "umbra": {
+          "min": 590,
+          "max": 730,
+          "spread_of_min": 0.237,
+          "spread_of_max": 0.192
+        }
+      },
+      "neglect_endings": {
+        "viridia": "fragile",
+        "pelagos": "fragile",
+        "ferrum": "fragile",
+        "sere": "fragile",
+        "nivalis": "fragile",
+        "umbra": "fragile"
+      },
+      "endings": {
+        "fragile": 6,
+        "independent": 17,
+        "shielded": 1
+      },
+      "failures": 0,
+      "runs": 24
+    },
+    "checks": {
+      "two_profiles_across_normal_policies": true,
+      "population_spread_ge_15pct_every_planet": true,
+      "neglect_still_fragile": true,
+      "zero_bot_failures": true,
+      "balance_all_18_reach_year_40": true,
+      "balance_by_planet": {
+        "ferrum": {
+          "best_pop": 640,
+          "wins": 3
+        },
+        "nivalis": {
+          "best_pop": 730,
+          "wins": 3
+        },
+        "pelagos": {
+          "best_pop": 730,
+          "wins": 3
+        },
+        "sere": {
+          "best_pop": 730,
+          "wins": 3
+        },
+        "umbra": {
+          "best_pop": 730,
+          "wins": 3
+        },
+        "viridia": {
+          "best_pop": 730,
+          "wins": 3
+        }
+      }
+    }
+  },
+  "fixture": "campaign_bot seeds 5000 + planet_index*10 + policy_index; run_balance seeds 1001-1018",
+  "status": "PASS",
+  "artifacts": [
+    "evidence/campaign_bot.json",
+    "evidence/balance/balance_report.json",
+    "evidence/test_report.json"
+  ],
+  "per_run_before": {
+    "viridia": {
+      "first": {
+        "ending": "independent",
+        "population": 650,
+        "year": 40.0,
+        "decisions": [
+          "year_20:expansion",
+          "year_40:expansion"
+        ],
+        "trust": 100.0,
+        "reserve_days": 365.0,
+        "own_kw": 312.0,
+        "demand_kw": 290.0,
+        "ark_fuel": 0.0,
+        "ark_days_share": null,
+        "failures": 0
+      },
+      "middle": {
+        "ending": "independent",
+        "population": 650,
+        "year": 40.0,
+        "decisions": [
+          "year_20:safety",
+          "year_40:safety"
+        ],
+        "trust": 100.0,
+        "reserve_days": 365.0,
+        "own_kw": 312.0,
+        "demand_kw": 290.0,
+        "ark_fuel": 0.0,
+        "ark_days_share": null,
+        "failures": 0
+      },
+      "last": {
+        "ending": "independent",
+        "population": 650,
+        "year": 40.0,
+        "decisions": [
+          "year_20:self_determination",
+          "year_40:self_determination"
+        ],
+        "trust": 100.0,
+        "reserve_days": 365.0,
+        "own_kw": 312.0,
+        "demand_kw": 290.0,
+        "ark_fuel": 0.0,
+        "ark_days_share": null,
+        "failures": 0
+      },
+      "neglect": {
+        "ending": "fragile",
+        "population": 650,
+        "year": 40.0,
+        "decisions": [
+          "year_20:expansion",
+          "year_40:expansion"
+        ],
+        "trust": 100.0,
+        "reserve_days": 365.0,
+        "own_kw": 312.0,
+        "demand_kw": 290.0,
+        "ark_fuel": 0.0,
+        "ark_days_share": null,
+        "failures": 0
+      }
+    },
+    "pelagos": {
+      "first": {
+        "ending": "independent",
+        "population": 650,
+        "year": 40.0,
+        "decisions": [
+          "year_20:expansion",
+          "year_40:expansion"
+        ],
+        "trust": 75.0,
+        "reserve_days": 365.0,
+        "own_kw": 278.4,
+        "demand_kw": 249.0,
+        "ark_fuel": 0.0,
+        "ark_days_share": null,
+        "failures": 0
+      },
+      "middle": {
+        "ending": "independent",
+        "population": 650,
+        "year": 40.0,
+        "decisions": [
+          "year_20:safety",
+          "year_40:safety"
+        ],
+        "trust": 72.0,
+        "reserve_days": 365.0,
+        "own_kw": 278.4,
+        "demand_kw": 249.0,
+        "ark_fuel": 0.0,
+        "ark_days_share": null,
+        "failures": 0
+      },
+      "last": {
+        "ending": "independent",
+        "population": 650,
+        "year": 40.0,
+        "decisions": [
+          "year_20:self_determination",
+          "year_40:self_determination"
+        ],
+        "trust": 75.0,
+        "reserve_days": 365.0,
+        "own_kw": 278.4,
+        "demand_kw": 249.0,
+        "ark_fuel": 0.0,
+        "ark_days_share": null,
+        "failures": 0
+      },
+      "neglect": {
+        "ending": "fragile",
+        "population": 40,
+        "year": 2.5,
+        "decisions": [],
+        "trust": 54.6,
+        "reserve_days": 0.0,
+        "own_kw": 14.4,
+        "demand_kw": 25.0,
+        "ark_fuel": 0.0,
+        "ark_days_share": null,
+        "failures": 0
+      }
+    },
+    "ferrum": {
+      "first": {
+        "ending": "independent",
+        "population": 560,
+        "year": 40.0,
+        "decisions": [
+          "year_20:expansion",
+          "year_40:expansion"
+        ],
+        "trust": 100.0,
+        "reserve_days": 365.0,
+        "own_kw": 577.2,
+        "demand_kw": 557.0,
+        "ark_fuel": 0.0,
+        "ark_days_share": null,
+        "failures": 0
+      },
+      "middle": {
+        "ending": "independent",
+        "population": 560,
+        "year": 40.0,
+        "decisions": [
+          "year_20:safety",
+          "year_40:safety"
+        ],
+        "trust": 100.0,
+        "reserve_days": 365.0,
+        "own_kw": 577.2,
+        "demand_kw": 557.0,
+        "ark_fuel": 0.0,
+        "ark_days_share": null,
+        "failures": 0
+      },
+      "last": {
+        "ending": "independent",
+        "population": 560,
+        "year": 40.0,
+        "decisions": [
+          "year_20:self_determination",
+          "year_40:self_determination"
+        ],
+        "trust": 100.0,
+        "reserve_days": 365.0,
+        "own_kw": 577.2,
+        "demand_kw": 557.0,
+        "ark_fuel": 0.0,
+        "ark_days_share": null,
+        "failures": 0
+      },
+      "neglect": {
+        "ending": "fragile",
+        "population": 40,
+        "year": 2.3,
+        "decisions": [],
+        "trust": 57.9,
+        "reserve_days": 0.0,
+        "own_kw": 23.4,
+        "demand_kw": 49.0,
+        "ark_fuel": 0.0,
+        "ark_days_share": null,
+        "failures": 0
+      }
+    },
+    "sere": {
+      "first": {
+        "ending": "independent",
+        "population": 650,
+        "year": 40.0,
+        "decisions": [
+          "year_20:expansion",
+          "year_40:expansion"
+        ],
+        "trust": 100.0,
+        "reserve_days": 365.0,
+        "own_kw": 360.0,
+        "demand_kw": 340.0,
+        "ark_fuel": 0.0,
+        "ark_days_share": null,
+        "failures": 0
+      },
+      "middle": {
+        "ending": "independent",
+        "population": 650,
+        "year": 40.0,
+        "decisions": [
+          "year_20:safety",
+          "year_40:safety"
+        ],
+        "trust": 100.0,
+        "reserve_days": 365.0,
+        "own_kw": 360.0,
+        "demand_kw": 340.0,
+        "ark_fuel": 0.0,
+        "ark_days_share": null,
+        "failures": 0
+      },
+      "last": {
+        "ending": "independent",
+        "population": 650,
+        "year": 40.0,
+        "decisions": [
+          "year_20:self_determination",
+          "year_40:self_determination"
+        ],
+        "trust": 100.0,
+        "reserve_days": 365.0,
+        "own_kw": 360.0,
+        "demand_kw": 340.0,
+        "ark_fuel": 0.0,
+        "ark_days_share": null,
+        "failures": 0
+      },
+      "neglect": {
+        "ending": "fragile",
+        "population": 650,
+        "year": 40.0,
+        "decisions": [
+          "year_20:expansion",
+          "year_40:expansion"
+        ],
+        "trust": 100.0,
+        "reserve_days": 365.0,
+        "own_kw": 369.0,
+        "demand_kw": 341.0,
+        "ark_fuel": 0.0,
+        "ark_days_share": null,
+        "failures": 0
+      }
+    },
+    "nivalis": {
+      "first": {
+        "ending": "independent",
+        "population": 650,
+        "year": 40.0,
+        "decisions": [
+          "year_20:expansion",
+          "year_40:expansion"
+        ],
+        "trust": 100.0,
+        "reserve_days": 365.0,
+        "own_kw": 398.4,
+        "demand_kw": 377.0,
+        "ark_fuel": 0.0,
+        "ark_days_share": null,
+        "failures": 0
+      },
+      "middle": {
+        "ending": "independent",
+        "population": 650,
+        "year": 40.0,
+        "decisions": [
+          "year_20:safety",
+          "year_40:safety"
+        ],
+        "trust": 100.0,
+        "reserve_days": 365.0,
+        "own_kw": 398.4,
+        "demand_kw": 377.0,
+        "ark_fuel": 0.0,
+        "ark_days_share": null,
+        "failures": 0
+      },
+      "last": {
+        "ending": "independent",
+        "population": 650,
+        "year": 40.0,
+        "decisions": [
+          "year_20:self_determination",
+          "year_40:self_determination"
+        ],
+        "trust": 100.0,
+        "reserve_days": 365.0,
+        "own_kw": 398.4,
+        "demand_kw": 377.0,
+        "ark_fuel": 0.0,
+        "ark_days_share": null,
+        "failures": 0
+      },
+      "neglect": {
+        "ending": "fragile",
+        "population": 650,
+        "year": 40.0,
+        "decisions": [
+          "year_20:expansion",
+          "year_40:expansion"
+        ],
+        "trust": 100.0,
+        "reserve_days": 365.0,
+        "own_kw": 422.4,
+        "demand_kw": 381.0,
+        "ark_fuel": 0.0,
+        "ark_days_share": null,
+        "failures": 0
+      }
+    },
+    "umbra": {
+      "first": {
+        "ending": "independent",
+        "population": 650,
+        "year": 40.0,
+        "decisions": [
+          "year_20:expansion",
+          "year_40:expansion"
+        ],
+        "trust": 100.0,
+        "reserve_days": 365.0,
+        "own_kw": 378.0,
+        "demand_kw": 346.0,
+        "ark_fuel": 0.0,
+        "ark_days_share": null,
+        "failures": 0
+      },
+      "middle": {
+        "ending": "independent",
+        "population": 650,
+        "year": 40.0,
+        "decisions": [
+          "year_20:safety",
+          "year_40:safety"
+        ],
+        "trust": 100.0,
+        "reserve_days": 365.0,
+        "own_kw": 378.0,
+        "demand_kw": 346.0,
+        "ark_fuel": 0.0,
+        "ark_days_share": null,
+        "failures": 0
+      },
+      "last": {
+        "ending": "independent",
+        "population": 650,
+        "year": 40.0,
+        "decisions": [
+          "year_20:self_determination",
+          "year_40:self_determination"
+        ],
+        "trust": 100.0,
+        "reserve_days": 365.0,
+        "own_kw": 378.0,
+        "demand_kw": 346.0,
+        "ark_fuel": 0.0,
+        "ark_days_share": null,
+        "failures": 0
+      },
+      "neglect": {
+        "ending": "fragile",
+        "population": 40,
+        "year": 2.3,
+        "decisions": [],
+        "trust": 58.8,
+        "reserve_days": 0.0,
+        "own_kw": 9.0,
+        "demand_kw": 26.0,
+        "ark_fuel": 0.0,
+        "ark_days_share": null,
+        "failures": 0
+      }
+    }
+  },
+  "per_run_after": {
+    "viridia": {
+      "first": {
+        "ending": "independent",
+        "population": 730,
+        "year": 40.0,
+        "decisions": [
+          "year_20:expansion",
+          "year_40:expansion"
+        ],
+        "trust": 100.0,
+        "reserve_days": 273.75,
+        "own_kw": 324.0,
+        "demand_kw": 316.0,
+        "ark_fuel": 83.3,
+        "ark_days_share": 0.004,
+        "failures": 0
+      },
+      "middle": {
+        "ending": "independent",
+        "population": 590,
+        "year": 40.0,
+        "decisions": [
+          "year_20:safety",
+          "year_40:safety"
+        ],
+        "trust": 100.0,
+        "reserve_days": 547.5,
+        "own_kw": 300.0,
+        "demand_kw": 268.0,
+        "ark_fuel": 86.0,
+        "ark_days_share": 0.0,
+        "failures": 0
+      },
+      "last": {
+        "ending": "independent",
+        "population": 650,
+        "year": 40.0,
+        "decisions": [
+          "year_20:self_determination",
+          "year_40:self_determination"
+        ],
+        "trust": 100.0,
+        "reserve_days": 365.0,
+        "own_kw": 312.0,
+        "demand_kw": 290.0,
+        "ark_fuel": 0.0,
+        "ark_days_share": 0.0,
+        "failures": 0
+      },
+      "neglect": {
+        "ending": "fragile",
+        "population": 730,
+        "year": 40.0,
+        "decisions": [
+          "year_20:expansion",
+          "year_40:expansion"
+        ],
+        "trust": 100.0,
+        "reserve_days": 273.75,
+        "own_kw": 324.0,
+        "demand_kw": 316.0,
+        "ark_fuel": 83.8,
+        "ark_days_share": 0.004,
+        "failures": 0
+      }
+    },
+    "pelagos": {
+      "first": {
+        "ending": "independent",
+        "population": 730,
+        "year": 40.0,
+        "decisions": [
+          "year_20:expansion",
+          "year_40:expansion"
+        ],
+        "trust": 77.0,
+        "reserve_days": 273.75,
+        "own_kw": 288.0,
+        "demand_kw": 276.0,
+        "ark_fuel": 0.0,
+        "ark_days_share": 0.0,
+        "failures": 0
+      },
+      "middle": {
+        "ending": "independent",
+        "population": 590,
+        "year": 40.0,
+        "decisions": [
+          "year_20:safety",
+          "year_40:safety"
+        ],
+        "trust": 68.0,
+        "reserve_days": 547.5,
+        "own_kw": 259.2,
+        "demand_kw": 229.0,
+        "ark_fuel": 0.0,
+        "ark_days_share": 0.0,
+        "failures": 0
+      },
+      "last": {
+        "ending": "independent",
+        "population": 650,
+        "year": 40.0,
+        "decisions": [
+          "year_20:self_determination",
+          "year_40:self_determination"
+        ],
+        "trust": 70.0,
+        "reserve_days": 365.0,
+        "own_kw": 278.4,
+        "demand_kw": 249.0,
+        "ark_fuel": 0.0,
+        "ark_days_share": 0.0,
+        "failures": 0
+      },
+      "neglect": {
+        "ending": "fragile",
+        "population": 40,
+        "year": 2.5,
+        "decisions": [],
+        "trust": 54.6,
+        "reserve_days": 0.0,
+        "own_kw": 14.4,
+        "demand_kw": 25.0,
+        "ark_fuel": 41.3,
+        "ark_days_share": 0.677,
+        "failures": 0
+      }
+    },
+    "ferrum": {
+      "first": {
+        "ending": "shielded",
+        "population": 680,
+        "year": 40.0,
+        "decisions": [
+          "year_20:expansion",
+          "year_40:expansion"
+        ],
+        "trust": 100.0,
+        "reserve_days": 273.75,
+        "own_kw": 655.2,
+        "demand_kw": 658.0,
+        "ark_fuel": 7.8,
+        "ark_days_share": 0.993,
+        "failures": 0
+      },
+      "middle": {
+        "ending": "independent",
+        "population": 560,
+        "year": 40.0,
+        "decisions": [
+          "year_20:safety",
+          "year_40:safety"
+        ],
+        "trust": 100.0,
+        "reserve_days": 547.5,
+        "own_kw": 561.6,
+        "demand_kw": 540.0,
+        "ark_fuel": 80.3,
+        "ark_days_share": 0.0,
+        "failures": 0
+      },
+      "last": {
+        "ending": "independent",
+        "population": 560,
+        "year": 40.0,
+        "decisions": [
+          "year_20:self_determination",
+          "year_40:self_determination"
+        ],
+        "trust": 100.0,
+        "reserve_days": 365.0,
+        "own_kw": 577.2,
+        "demand_kw": 547.0,
+        "ark_fuel": 0.0,
+        "ark_days_share": 0.0,
+        "failures": 0
+      },
+      "neglect": {
+        "ending": "fragile",
+        "population": 40,
+        "year": 2.3,
+        "decisions": [],
+        "trust": 57.9,
+        "reserve_days": 0.0,
+        "own_kw": 23.4,
+        "demand_kw": 49.0,
+        "ark_fuel": 60.6,
+        "ark_days_share": 0.736,
+        "failures": 0
+      }
+    },
+    "sere": {
+      "first": {
+        "ending": "independent",
+        "population": 730,
+        "year": 40.0,
+        "decisions": [
+          "year_20:expansion",
+          "year_40:expansion"
+        ],
+        "trust": 100.0,
+        "reserve_days": 273.75,
+        "own_kw": 378.0,
+        "demand_kw": 374.0,
+        "ark_fuel": 76.5,
+        "ark_days_share": 0.009,
+        "failures": 0
+      },
+      "middle": {
+        "ending": "independent",
+        "population": 590,
+        "year": 40.0,
+        "decisions": [
+          "year_20:safety",
+          "year_40:safety"
+        ],
+        "trust": 100.0,
+        "reserve_days": 547.5,
+        "own_kw": 333.0,
+        "demand_kw": 310.0,
+        "ark_fuel": 80.0,
+        "ark_days_share": 0.0,
+        "failures": 0
+      },
+      "last": {
+        "ending": "independent",
+        "population": 650,
+        "year": 40.0,
+        "decisions": [
+          "year_20:self_determination",
+          "year_40:self_determination"
+        ],
+        "trust": 100.0,
+        "reserve_days": 365.0,
+        "own_kw": 360.0,
+        "demand_kw": 340.0,
+        "ark_fuel": 0.0,
+        "ark_days_share": 0.0,
+        "failures": 0
+      },
+      "neglect": {
+        "ending": "fragile",
+        "population": 730,
+        "year": 40.0,
+        "decisions": [
+          "year_20:expansion",
+          "year_40:expansion"
+        ],
+        "trust": 100.0,
+        "reserve_days": 273.75,
+        "own_kw": 387.0,
+        "demand_kw": 378.0,
+        "ark_fuel": 75.2,
+        "ark_days_share": 0.004,
+        "failures": 0
+      }
+    },
+    "nivalis": {
+      "first": {
+        "ending": "independent",
+        "population": 730,
+        "year": 40.0,
+        "decisions": [
+          "year_20:expansion",
+          "year_40:expansion"
+        ],
+        "trust": 100.0,
+        "reserve_days": 273.75,
+        "own_kw": 422.4,
+        "demand_kw": 418.0,
+        "ark_fuel": 66.8,
+        "ark_days_share": 0.001,
+        "failures": 0
+      },
+      "middle": {
+        "ending": "independent",
+        "population": 590,
+        "year": 40.0,
+        "decisions": [
+          "year_20:safety",
+          "year_40:safety"
+        ],
+        "trust": 100.0,
+        "reserve_days": 547.5,
+        "own_kw": 374.4,
+        "demand_kw": 343.0,
+        "ark_fuel": 68.3,
+        "ark_days_share": 0.0,
+        "failures": 0
+      },
+      "last": {
+        "ending": "independent",
+        "population": 650,
+        "year": 40.0,
+        "decisions": [
+          "year_20:self_determination",
+          "year_40:self_determination"
+        ],
+        "trust": 100.0,
+        "reserve_days": 365.0,
+        "own_kw": 398.4,
+        "demand_kw": 377.0,
+        "ark_fuel": 0.0,
+        "ark_days_share": 0.0,
+        "failures": 0
+      },
+      "neglect": {
+        "ending": "fragile",
+        "population": 730,
+        "year": 40.0,
+        "decisions": [
+          "year_20:expansion",
+          "year_40:expansion"
+        ],
+        "trust": 100.0,
+        "reserve_days": 273.75,
+        "own_kw": 446.4,
+        "demand_kw": 422.0,
+        "ark_fuel": 66.0,
+        "ark_days_share": 0.005,
+        "failures": 0
+      }
+    },
+    "umbra": {
+      "first": {
+        "ending": "independent",
+        "population": 730,
+        "year": 40.0,
+        "decisions": [
+          "year_20:expansion",
+          "year_40:expansion"
+        ],
+        "trust": 100.0,
+        "reserve_days": 273.75,
+        "own_kw": 396.0,
+        "demand_kw": 385.0,
+        "ark_fuel": 57.8,
+        "ark_days_share": 0.0,
+        "failures": 0
+      },
+      "middle": {
+        "ending": "independent",
+        "population": 590,
+        "year": 40.0,
+        "decisions": [
+          "year_20:safety",
+          "year_40:safety"
+        ],
+        "trust": 100.0,
+        "reserve_days": 547.5,
+        "own_kw": 360.0,
+        "demand_kw": 321.0,
+        "ark_fuel": 59.5,
+        "ark_days_share": 0.0,
+        "failures": 0
+      },
+      "last": {
+        "ending": "independent",
+        "population": 650,
+        "year": 40.0,
+        "decisions": [
+          "year_20:self_determination",
+          "year_40:self_determination"
+        ],
+        "trust": 100.0,
+        "reserve_days": 365.0,
+        "own_kw": 378.0,
+        "demand_kw": 346.0,
+        "ark_fuel": 0.0,
+        "ark_days_share": 0.0,
+        "failures": 0
+      },
+      "neglect": {
+        "ending": "fragile",
+        "population": 40,
+        "year": 2.3,
+        "decisions": [],
+        "trust": 58.8,
+        "reserve_days": 0.0,
+        "own_kw": 13.2,
+        "demand_kw": 26.0,
+        "ark_fuel": 25.4,
+        "ark_days_share": 0.746,
+        "failures": 0
+      }
+    }
+  },
+  "balance_after": [
+    {
+      "planet": "viridia",
+      "strategy": "balanced",
+      "year": 40.0,
+      "population": 650,
+      "profile": "independent"
+    },
+    {
+      "planet": "viridia",
+      "strategy": "power_first",
+      "year": 40.0,
+      "population": 590,
+      "profile": "independent"
+    },
+    {
+      "planet": "viridia",
+      "strategy": "lean",
+      "year": 40.0,
+      "population": 730,
+      "profile": "independent"
+    },
+    {
+      "planet": "pelagos",
+      "strategy": "balanced",
+      "year": 40.0,
+      "population": 650,
+      "profile": "independent"
+    },
+    {
+      "planet": "pelagos",
+      "strategy": "power_first",
+      "year": 40.0,
+      "population": 590,
+      "profile": "independent"
+    },
+    {
+      "planet": "pelagos",
+      "strategy": "lean",
+      "year": 40.0,
+      "population": 730,
+      "profile": "independent"
+    },
+    {
+      "planet": "ferrum",
+      "strategy": "balanced",
+      "year": 40.0,
+      "population": 560,
+      "profile": "independent"
+    },
+    {
+      "planet": "ferrum",
+      "strategy": "power_first",
+      "year": 40.0,
+      "population": 560,
+      "profile": "independent"
+    },
+    {
+      "planet": "ferrum",
+      "strategy": "lean",
+      "year": 40.0,
+      "population": 640,
+      "profile": "independent"
+    },
+    {
+      "planet": "sere",
+      "strategy": "balanced",
+      "year": 40.0,
+      "population": 650,
+      "profile": "independent"
+    },
+    {
+      "planet": "sere",
+      "strategy": "power_first",
+      "year": 40.0,
+      "population": 590,
+      "profile": "independent"
+    },
+    {
+      "planet": "sere",
+      "strategy": "lean",
+      "year": 40.0,
+      "population": 730,
+      "profile": "independent"
+    },
+    {
+      "planet": "nivalis",
+      "strategy": "balanced",
+      "year": 40.0,
+      "population": 650,
+      "profile": "independent"
+    },
+    {
+      "planet": "nivalis",
+      "strategy": "power_first",
+      "year": 40.0,
+      "population": 590,
+      "profile": "independent"
+    },
+    {
+      "planet": "nivalis",
+      "strategy": "lean",
+      "year": 40.0,
+      "population": 730,
+      "profile": "independent"
+    },
+    {
+      "planet": "umbra",
+      "strategy": "balanced",
+      "year": 40.0,
+      "population": 650,
+      "profile": "independent"
+    },
+    {
+      "planet": "umbra",
+      "strategy": "power_first",
+      "year": 40.0,
+      "population": 590,
+      "profile": "independent"
+    },
+    {
+      "planet": "umbra",
+      "strategy": "lean",
+      "year": 40.0,
+      "population": 730,
+      "profile": "independent"
+    }
+  ],
+  "note": "'before' = commit 2810029 (bot run on Godot 4.7.1 in this session, with metrics added to the report only). Spread uses (max-min)/min; spread_of_max also given."
+}
