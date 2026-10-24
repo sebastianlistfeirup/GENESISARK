@@ -1,4 +1,5 @@
 shader_type spatial;
+render_mode fog_disabled;
 // Procedural planet: fbm continents/dunes/ice in object space, a slowly drifting
 // cloud layer, terminator softening and an atmosphere rim. Own art (no vendor data).
 uniform vec3 base_color : source_color = vec3(0.31, 0.54, 0.35);
