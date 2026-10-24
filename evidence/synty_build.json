@@ -75,9 +75,35 @@
       "library": "res://art/animations/char.citizen_adult.res",
       "ok": true,
       "slot": "char.citizen_adult"
+    },
+    {
+      "clips": {
+        "idle": {
+          "length_s": 1.77,
+          "removed_travel_m": 0.0,
+          "retargeted": true,
+          "source": "res://assets/Synty/Animations/A_POLY_IDL_Base_Masc.fbx"
+        },
+        "run": {
+          "length_s": 0.7,
+          "removed_travel_m": 0.0,
+          "retargeted": true,
+          "source": "res://assets/Synty/Animations/A_Run_F_Femn.fbx"
+        },
+        "walk": {
+          "length_s": 1.03,
+          "removed_travel_m": 0.0,
+          "retargeted": true,
+          "source": "res://assets/Synty/Animations/A_Walk_F_Femn.fbx"
+        }
+      },
+      "errors": [],
+      "library": "res://art/animations/char.citizen_child.res",
+      "ok": true,
+      "slot": "char.citizen_child"
     }
   ],
-  "built": 48,
+  "built": 51,
   "failed": 0,
   "slots": [
     {
@@ -1410,6 +1436,85 @@
       "source": "res://assets/Synty/SciFiSpace/FBX/SM_Ship_Galactic_Carrier_01.fbx",
       "summary": "size x0.109 -> 11.1x8.2x32.0 m (proxy 14.0x7.0x32.0)",
       "uses_atlas": true,
+      "warnings": []
+    },
+    {
+      "atlas_materials": 0,
+      "fit": "natural",
+      "notes": [],
+      "ok": true,
+      "proxy_m": [
+        0.44,
+        1.15,
+        0.44
+      ],
+      "reimport": false,
+      "rig": "GeneralSkeleton",
+      "scale": 0.66,
+      "scene": "res://art/prefabs/char.citizen_child.tscn",
+      "size_m": [
+        1.35,
+        1.18,
+        0.2
+      ],
+      "slot": "char.citizen_child",
+      "source": "res://assets/Synty/CharactersSrc/Characters.fbx",
+      "summary": "natural x0.660 -> 1.3x1.2x0.2 m (proxy 0.4x1.2x0.4)",
+      "uses_atlas": false,
+      "warnings": []
+    },
+    {
+      "atlas_materials": 1,
+      "fit": "natural",
+      "notes": [
+        "no atlas texture staged for res:"
+      ],
+      "ok": true,
+      "proxy_m": [
+        0.7,
+        1.6,
+        0.5
+      ],
+      "reimport": false,
+      "rig": "",
+      "scale": 1.0,
+      "scene": "res://art/prefabs/char.robot_worker.tscn",
+      "size_m": [
+        1.69,
+        1.07,
+        1.34
+      ],
+      "slot": "char.robot_worker",
+      "source": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_Drone_03.tscn",
+      "summary": "natural x1.000 -> 1.7x1.1x1.3 m (proxy 0.7x1.6x0.5)",
+      "uses_atlas": false,
+      "warnings": []
+    },
+    {
+      "atlas_materials": 1,
+      "fit": "natural",
+      "notes": [
+        "no atlas texture staged for res:"
+      ],
+      "ok": true,
+      "proxy_m": [
+        0.6,
+        1.8,
+        0.2
+      ],
+      "reimport": false,
+      "rig": "",
+      "scale": 1.0,
+      "scene": "res://art/prefabs/surface.hazard_marker.tscn",
+      "size_m": [
+        0.11,
+        1.1,
+        0.11
+      ],
+      "slot": "surface.hazard_marker",
+      "source": "res://assets/Synty/PolygonSciFiCity/Prefabs/Props/SM_Prop_Barrier_Pole_01.tscn",
+      "summary": "natural x1.000 -> 0.1x1.1x0.1 m (proxy 0.6x1.8x0.2)",
+      "uses_atlas": false,
       "warnings": []
     }
   ]

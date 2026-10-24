@@ -544,6 +544,12 @@ func debug_action(action: String) -> void:
 			overview._start_forecast()
 		"zoomout":
 			cam_rig.zoom = 110.0
+		"living":  # evidence: the living district close up (citizens, habitats)
+			var lc: Array = site["districts"]["living"]["center"]
+			cam_rig.position = Vector3(float(lc[0]), terrain.height_at(float(lc[0]), float(lc[1])), float(lc[1]))
+			cam_rig.zoom = 30.0
+			if decision.visible:
+				decision.hide()
 		"event":
 			for id: String in GameSession.content.events.keys():
 				if GameSession.content.events[id].get("critical", false):

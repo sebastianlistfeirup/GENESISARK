@@ -4,14 +4,14 @@
 [ext_resource type="ArrayMesh" path="res://assets/Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Antenna_02.res" id="2_34sw1"]
 [ext_resource type="Material" path="res://assets/Synty/PolygonSciFiWorlds/Materials/Alts/PolygonScifiWorlds_01_A_mat.tres" id="3_drt4d"]
 
-[node name="surface_relay_beacon" type="Node3D" unique_id=72001110]
+[node name="surface_relay_beacon" type="Node3D" unique_id=801251994]
 metadata/synty_source = "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_Antenna_02.tscn"
 metadata/synty_fit = "natural"
 
-[node name="Model" type="Node3D" parent="." unique_id=748238380]
+[node name="Model" type="Node3D" parent="." unique_id=230411813]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.74784636, -0.6557946)
 
-[node name="SM_Prop_Antenna_02" type="MeshInstance3D" parent="Model" unique_id=119215636 instance=ExtResource("1_4sakn")]
+[node name="SM_Prop_Antenna_02" type="MeshInstance3D" parent="Model" unique_id=758921496 instance=ExtResource("1_4sakn")]
 gi_mode = 2
 mesh = ExtResource("2_34sw1")
 surface_material_override/0 = ExtResource("3_drt4d")

@@ -4,14 +4,14 @@
 [ext_resource type="ArrayMesh" path="res://assets/Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_SolarPanel_02.res" id="2_7m7kv"]
 [ext_resource type="Material" path="res://assets/Synty/PolygonSciFiWorlds/Materials/Alts/PolygonScifiWorlds_01_A_mat.tres" id="3_0icqq"]
 
-[node name="building_solar_array" type="Node3D" unique_id=1469615557]
+[node name="building_solar_array" type="Node3D" unique_id=449717963]
 metadata/synty_source = "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_SolarPanel_02.tscn"
 metadata/synty_fit = "footprint"
 
-[node name="Model" type="Node3D" parent="." unique_id=575161463]
+[node name="Model" type="Node3D" parent="." unique_id=1714285145]
 transform = Transform3D(0.66656053, 0, 0, 0, 0.66656053, 0, 0, 0, 0.66656053, -1.66893e-06, 0.0007500026, 0)
 
-[node name="SM_Prop_SolarPanel_02" type="MeshInstance3D" parent="Model" unique_id=1502074543 instance=ExtResource("1_nu4dx")]
+[node name="SM_Prop_SolarPanel_02" type="MeshInstance3D" parent="Model" unique_id=212690600 instance=ExtResource("1_nu4dx")]
 gi_mode = 2
 mesh = ExtResource("2_7m7kv")
 surface_material_override/0 = ExtResource("3_0icqq")

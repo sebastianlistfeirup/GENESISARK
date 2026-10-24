@@ -184,7 +184,13 @@
    "status": "approved",
    "only_mesh": "SM_Chr_ScifiWorlds_Male_01",
    "material": "res://assets/Synty/PolygonSciFiWorlds/Materials/Alts/PolygonScifiWorlds_01_A_mat.tres",
-   "rotation_y": 180
+   "rotation_y": 180,
+   "only_mesh_variants": [
+    "SM_Chr_ScifiWorlds_Male_01",
+    "SM_Chr_ScifiWorlds_Female_01",
+    "SM_Chr_ScifiWorlds_Scavenger_01",
+    "SM_Chr_ScifiWorlds_Scavenger_02"
+   ]
   },
   "char.robot_drone": {
    "source": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_Drone_01.tscn",
@@ -305,6 +311,22 @@
    "source": "res://assets/Synty/SciFiSpace/FBX/SM_Ship_Galactic_Carrier_01.fbx",
    "status": "approved",
    "material": "res://art/materials/scifi_space_atlas.tres"
+  },
+  "char.citizen_child": {
+   "source": "res://assets/Synty/CharactersSrc/Characters.fbx",
+   "status": "approved",
+   "only_mesh": "SM_Chr_ScifiWorlds_Female_01",
+   "material": "res://assets/Synty/PolygonSciFiWorlds/Materials/Alts/PolygonScifiWorlds_01_A_mat.tres",
+   "rotation_y": 180,
+   "extra_scale": 0.66
+  },
+  "char.robot_worker": {
+   "source": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_Drone_03.tscn",
+   "status": "approved"
+  },
+  "surface.hazard_marker": {
+   "source": "res://assets/Synty/PolygonSciFiCity/Prefabs/Props/SM_Prop_Barrier_Pole_01.tscn",
+   "status": "approved"
   }
  },
  "animations": {
@@ -326,6 +348,14 @@
     "walk": "res://assets/Synty/Animations/A_Walk_F_Masc.fbx",
     "run": "res://assets/Synty/Animations/A_Run_F_Masc.fbx",
     "interact": "res://assets/Synty/Animations/A_POLY_IDL_HandsOnHips_Base_Loop_Masc.fbx"
+   }
+  },
+  "char.citizen_child": {
+   "status": "approved",
+   "states": {
+    "idle": "res://assets/Synty/Animations/A_POLY_IDL_Base_Masc.fbx",
+    "walk": "res://assets/Synty/Animations/A_Walk_F_Femn.fbx",
+    "run": "res://assets/Synty/Animations/A_Run_F_Femn.fbx"
    }
   }
  }

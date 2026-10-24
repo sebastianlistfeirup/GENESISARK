@@ -23,7 +23,9 @@
    "res://art/prefabs/char.citizen_adult__3.tscn",
    "res://art/prefabs/char.citizen_adult__4.tscn"
   ],
+  "char.citizen_child": "res://art/prefabs/char.citizen_child.tscn",
   "char.robot_drone": "res://art/prefabs/char.robot_drone.tscn",
+  "char.robot_worker": "res://art/prefabs/char.robot_worker.tscn",
   "ship.captain_chair": "res://art/prefabs/ship.captain_chair.tscn",
   "ship.ceiling_light": "res://art/prefabs/ship.ceiling_light.tscn",
   "ship.crate": [
@@ -70,6 +72,7 @@
    "res://art/prefabs/surface.desert_rock__3.tscn",
    "res://art/prefabs/surface.desert_rock__4.tscn"
   ],
+  "surface.hazard_marker": "res://art/prefabs/surface.hazard_marker.tscn",
   "surface.ice_spire": [
    "res://art/prefabs/surface.ice_spire.tscn",
    "res://art/prefabs/surface.ice_spire__2.tscn"
