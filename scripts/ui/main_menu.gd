@@ -155,7 +155,7 @@ func _build_ui() -> void:
 	_col.alignment = BoxContainer.ALIGNMENT_CENTER
 	_ui.add_child(_col)
 	var title := UiKit.label("GENESIS ARK", 84, UiKit.TEXT)
-	title.add_theme_font_override("font", UiKit.font_variant(0.55, 7))
+	title.add_theme_font_override("font", UiKit.font_variant(0.35, 8))
 	title.add_theme_color_override("font_shadow_color", Color(0, 0.02, 0.05, 0.75))
 	title.add_theme_constant_override("shadow_offset_x", 0)
 	title.add_theme_constant_override("shadow_offset_y", 4)

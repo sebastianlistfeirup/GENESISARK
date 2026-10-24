@@ -3,16 +3,31 @@ extends RefCounted
 ## Builders for the colony HUD: resource bar, speed, build bar, info panel.
 ## Every number shown is read from the domain report; UI only sends commands.
 
-static func res_chip(icon_slot: String, text: String, tip: String, color: Color = UiKit.TEXT) -> PanelContainer:
+static func res_chip(icon_slot: String, text: String, tip: String, color: Color = UiKit.TEXT, glyph: String = "") -> PanelContainer:
 	var p := UiKit.panel()
 	p.tooltip_text = tip
 	p.mouse_filter = Control.MOUSE_FILTER_PASS
 	var h := UiKit.hbox(6)
-	var dot := ColorRect.new()
-	dot.custom_minimum_size = Vector2(10, 10)
-	dot.color = Color(str(AssetSlots.slot(icon_slot).get("proxy", [{}])[0].get("color", "#ffffff")))
-	dot.size_flags_vertical = Control.SIZE_SHRINK_CENTER
-	h.add_child(dot)
+	var tint := Color(str(AssetSlots.slot(icon_slot).get("proxy", [{}])[0].get("color", "#ffffff")))
+	# Synty glyph tinted with the slot colour when the UI packs are installed;
+	# otherwise the original colour square. The text always carries the value.
+	var tex := SyntySkin.icon(glyph if not glyph.is_empty() else icon_slot)
+	if tex:
+		var ic := TextureRect.new()
+		ic.texture = tex
+		ic.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		ic.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+		ic.custom_minimum_size = Vector2(16, 16)
+		ic.modulate = tint.lightened(0.2)
+		ic.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+		ic.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		h.add_child(ic)
+	else:
+		var dot := ColorRect.new()
+		dot.custom_minimum_size = Vector2(10, 10)
+		dot.color = tint
+		dot.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+		h.add_child(dot)
 	h.add_child(UiKit.label(text, 16, color))
 	p.add_child(h)
 	return p
@@ -31,7 +46,7 @@ static func resource_bar(gs: GameState) -> HBoxContainer:
 	h.add_child(res_chip("ui.icon_components", "%d" % int(c.inventory["components"]), Loc.t("Components (spare parts, maintenance, modules)")))
 	h.add_child(res_chip("ui.icon_water", "%d" % int(c.inventory["water"]), Loc.t("Water in person-days (+%.0f/day)") % float(rep.get("produced", {}).get("water", 0.0))))
 	h.add_child(res_chip("ui.icon_food", "%d" % int(c.inventory["food"]), Loc.t("Food in person-days (+%.0f/day)") % float(rep.get("produced", {}).get("food", 0.0))))
-	h.add_child(res_chip("ui.icon_water", (UiKit.status_text("warning", Loc.t("Reserve %s d") % rd_text) if rd < 30 else Loc.t("Reserve %s d") % rd_text), Loc.t("Days that water and food will last for the current population."), UiKit.WARN if rd < 30 else UiKit.TEXT))
+	h.add_child(res_chip("ui.icon_water", (UiKit.status_text("warning", Loc.t("Reserve %s d") % rd_text) if rd < 30 else Loc.t("Reserve %s d") % rd_text), Loc.t("Days that water and food will last for the current population."), UiKit.WARN if rd < 30 else UiKit.TEXT, "ui.icon_reserve"))
 	h.add_child(res_chip("ui.icon_population", "%d" % gs.population.alive_count(), Loc.t("Living population (cohorts)")))
 	h.add_child(res_chip("ui.icon_embryo", UiKit.thousands(gs.ark.embryo_viable), Loc.t("Viable embryos (%d in incubation, %d born)") % [gs.ark.embryo_incubating, gs.ark.embryo_born]))
 	h.add_child(res_chip("ui.icon_fuel", Loc.t("Ark %d") % int(c.ark_fuel), Loc.t("The Ark's fuel for emergency power (%d kW). If it runs out, the colony loses the Ark's power.") % int(pw.get("ark_kw", 0))))

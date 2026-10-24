@@ -27,6 +27,7 @@ static func theme() -> Theme:
 		return _theme
 	var t := Theme.new()
 	t.default_font_size = 18
+	t.default_font = body_font()
 	# Panels: deep navy glass, a hairline petrol border, soft drop shadow. The
 	# content margins are part of the 1280x720 @1.5 fit budget (GA-29): keep them.
 	var panel := _box(PANEL, Color(PETROL, 0.42), 1, 8)
@@ -37,26 +38,48 @@ static func theme() -> Theme:
 	panel.shadow_offset = Vector2(0, 3)
 	t.set_stylebox("panel", "PanelContainer", panel)
 	t.set_stylebox("panel", "Panel", panel)
+	# Large overlays (dialogs, settings, pause, journal) take the Synty frame
+	# when the packs are installed; small HUD chips stay flat for legibility.
+	t.add_type("PanelLarge")
+	t.set_type_variation("PanelLarge", "PanelContainer")
+	var large: StyleBox = SyntySkin.box("SPR_SciFiMenus_Frame_Box_Large_01", Color(PANEL.darkened(0.2), 0.95), Color(0.95, 1.0, 1.0), 0.2,
+		Vector4(340, 340, 340, 340), Vector4(26, 24, 26, 22), Vector4(40, 40, 40, 40))
+	t.set_stylebox("panel", "PanelLarge", large if large else panel)
 	# Buttons: one shape, five states. Focus is drawn ON TOP of the current
 	# state (Godot 4), so it is an outline only: amber, 2 px, outside the
 	# button, never hidden by hover or pressed (bible p.26).
-	var btn := _box(PETROL_D.darkened(0.15), PETROL.darkened(0.2), 1, 6)
+	var btn: StyleBox = _box(PETROL_D.darkened(0.15), PETROL.darkened(0.2), 1, 6)
 	btn.content_margin_left = 14
 	btn.content_margin_right = 14
 	btn.content_margin_top = 7
 	btn.content_margin_bottom = 7
-	btn.border_width_bottom = 2
-	var hov := btn.duplicate() as StyleBoxFlat
-	hov.bg_color = PETROL.darkened(0.12)
-	hov.border_color = PETROL.lightened(0.35)
-	var pr := btn.duplicate() as StyleBoxFlat
-	pr.bg_color = AMBER.darkened(0.45)
-	pr.border_color = AMBER
-	pr.border_width_bottom = 1
-	pr.border_width_top = 2
-	var dis := btn.duplicate() as StyleBoxFlat
-	dis.bg_color = Color("141d22")
-	dis.border_color = Color("26343b")
+	(btn as StyleBoxFlat).border_width_bottom = 2
+	var hov_f := btn.duplicate() as StyleBoxFlat
+	hov_f.bg_color = PETROL.darkened(0.12)
+	hov_f.border_color = PETROL.lightened(0.35)
+	var pr_f := btn.duplicate() as StyleBoxFlat
+	pr_f.bg_color = AMBER.darkened(0.45)
+	pr_f.border_color = AMBER
+	pr_f.border_width_bottom = 1
+	pr_f.border_width_top = 2
+	var dis_f := btn.duplicate() as StyleBoxFlat
+	dis_f.bg_color = Color("141d22")
+	dis_f.border_color = Color("26343b")
+	var hov: StyleBox = hov_f
+	var pr: StyleBox = pr_f
+	var dis: StyleBox = dis_f
+	# Synty skin: one rounded-octagon frame for every state, the background
+	# tinted per state, the steel frame tinted cool/amber/dim. Content margins
+	# equal the flat ones, so no layout changes with or without the packs.
+	var steel := Color(0.78, 0.9, 0.95)
+	var sk_slice := Vector4(90, 112, 90, 112)
+	var sk_content := Vector4(14, 7, 14, 7)
+	var sk_btn: StyleBox = SyntySkin.box("SPR_SciFiMenus_Button_Frame_03", PETROL_D.darkened(0.25), steel, 0.13, sk_slice, sk_content)
+	if sk_btn:
+		btn = sk_btn
+		hov = SyntySkin.box("SPR_SciFiMenus_Button_Frame_03", PETROL.darkened(0.1), Color(0.95, 1.0, 1.0), 0.13, sk_slice, sk_content)
+		pr = SyntySkin.box("SPR_SciFiMenus_Button_Frame_03", AMBER.darkened(0.4), AMBER.lightened(0.25), 0.13, sk_slice, sk_content)
+		dis = SyntySkin.box("SPR_SciFiMenus_Button_Frame_03", Color("141d22"), Color(0.4, 0.45, 0.48), 0.13, sk_slice, sk_content)
 	var foc := StyleBoxFlat.new()
 	foc.draw_center = false
 	foc.border_color = AMBER
@@ -222,17 +245,51 @@ static func label(text: String, size: int = 18, color: Color = TEXT, wrap: bool 
 
 static func title(text: String) -> Label:
 	var l := label(text.to_upper(), 15, PETROL.lightened(0.35))
-	l.add_theme_font_override("font", font_variant(0.25, 1))
+	l.add_theme_font_override("font", font_variant(0.0, 1))
 	return l
 
 
 static func heading(text: String) -> Label:
 	var l := label(text, 26, TEXT)
-	l.add_theme_font_override("font", font_variant(0.45, 0))
+	l.add_theme_font_override("font", font_variant(0.0, 0))
 	return l
 
 
 static var _fonts: Dictionary = {}
+static var _body: Font
+static var _bold: Font
+
+const FONT_REGULAR := "res://art/fonts/exo2/Exo2.0-Regular.otf"
+const FONT_SEMIBOLD := "res://art/fonts/exo2/Exo2.0-SemiBold.otf"
+
+
+## Exo 2 (SIL OFL, shipped in art/fonts) with the engine font as glyph
+## fallback for symbols it lacks (status shapes, arrows, ∞).
+static func body_font() -> Font:
+	if _body == null:
+		# A touch of weight: Exo 2 Regular is thin over bright 3D scenes.
+		var fv := FontVariation.new()
+		fv.base_font = _load_font(FONT_REGULAR)
+		fv.variation_embolden = 0.2
+		_body = fv
+	return _body
+
+
+static func bold_font() -> Font:
+	if _bold == null:
+		_bold = _load_font(FONT_SEMIBOLD)
+	return _bold
+
+
+static func _load_font(path: String) -> Font:
+	if not ResourceLoader.exists(path):
+		return ThemeDB.fallback_font
+	var f := load(path) as FontFile
+	if f == null:
+		return ThemeDB.fallback_font
+	var fb: Array[Font] = [ThemeDB.fallback_font]
+	f.fallbacks = fb
+	return f
 
 
 ## The default font with a little weight/tracking: headings and section titles
@@ -241,7 +298,7 @@ static func font_variant(embolden: float, spacing: int) -> FontVariation:
 	var key := "%s/%d" % [embolden, spacing]
 	if not _fonts.has(key):
 		var fv := FontVariation.new()
-		fv.base_font = ThemeDB.fallback_font
+		fv.base_font = bold_font()
 		fv.variation_embolden = embolden
 		fv.spacing_glyph = spacing
 		_fonts[key] = fv
@@ -287,6 +344,56 @@ static func style_menu_button(b: Button, animate: bool = true) -> void:
 	b.alignment = HORIZONTAL_ALIGNMENT_LEFT
 	b.custom_minimum_size = Vector2(0, 50)
 	b.add_theme_font_size_override("font_size", 21)
+	var set := _menu_styles()
+	var base: StyleBox = (set["base"] as StyleBox).duplicate()
+	var lit: StyleBox = (set["lit"] as StyleBox).duplicate()
+	var pr: StyleBox = (set["pr"] as StyleBox).duplicate()
+	var dis: StyleBox = (set["dis"] as StyleBox).duplicate()
+	var rest := base.content_margin_left
+	var slid := rest + 12.0
+	b.add_theme_stylebox_override("normal", base)
+	b.add_theme_stylebox_override("hover", lit)
+	b.add_theme_stylebox_override("pressed", pr)
+	b.add_theme_stylebox_override("hover_pressed", pr)
+	b.add_theme_stylebox_override("disabled", dis)
+	# Lit when hovered OR focused (pad/keyboard), so both inputs get the same cue.
+	var light := func(on: bool) -> void:
+		var target := slid if on else rest
+		b.add_theme_stylebox_override("normal", lit if on else base)
+		if animate and not calm() and b.is_inside_tree():
+			var tw := b.create_tween().set_parallel(true)
+			tw.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
+			for sb: StyleBox in [lit, pr]:
+				tw.tween_property(sb, "content_margin_left", target, 0.14)
+		else:
+			lit.content_margin_left = target
+			pr.content_margin_left = target
+	b.focus_entered.connect(func() -> void: light.call(true))
+	b.focus_exited.connect(func() -> void: light.call(b.is_hovered()))
+	b.mouse_entered.connect(func() -> void: light.call(true))
+	b.mouse_exited.connect(func() -> void: light.call(b.has_focus()))
+
+
+static var _menu_set: Dictionary = {}
+
+
+## Main-menu entry styles, built once: the Synty amber-capped bar when the
+## packs are installed, otherwise a translucent plate with a left accent bar.
+static func _menu_styles() -> Dictionary:
+	if not _menu_set.is_empty():
+		return _menu_set
+	var frame := "SPR_SciFiMenus_Button_Frame_01"
+	var slice := Vector4(185, 64, 185, 64)
+	var content := Vector4(44, 8, 44, 8)
+	var sk: StyleBox = SyntySkin.box(frame, Color(PANEL, 0.82), Color(0.8, 0.9, 0.95), 0.2, slice, content)
+	if sk:
+		_menu_set = {
+			"base": sk,
+			"lit": SyntySkin.box(frame, Color(PETROL.darkened(0.15), 0.95), Color.WHITE, 0.2, slice, content),
+			"pr": SyntySkin.box(frame, Color(AMBER.darkened(0.45), 0.95), Color(1.0, 0.9, 0.75), 0.2, slice, content),
+			"dis": SyntySkin.box(frame, Color(PANEL, 0.5), Color(0.45, 0.5, 0.52), 0.2, slice, content),
+		}
+		return _menu_set
 	var base := StyleBoxFlat.new()
 	base.bg_color = Color(PANEL, 0.55)
 	base.border_color = Color(PETROL, 0.75)
@@ -305,33 +412,22 @@ static func style_menu_button(b: Button, animate: bool = true) -> void:
 	var dis := base.duplicate() as StyleBoxFlat
 	dis.bg_color = Color(PANEL, 0.35)
 	dis.border_color = Color(MUTED, 0.3)
-	b.add_theme_stylebox_override("normal", base)
-	b.add_theme_stylebox_override("hover", lit)
-	b.add_theme_stylebox_override("pressed", pr)
-	b.add_theme_stylebox_override("hover_pressed", pr)
-	b.add_theme_stylebox_override("disabled", dis)
-	# Lit when hovered OR focused (pad/keyboard), so both inputs get the same cue.
-	var light := func(on: bool) -> void:
-		var target := 34.0 if on else 22.0
-		b.add_theme_stylebox_override("normal", lit if on else base)
-		if animate and not calm() and b.is_inside_tree():
-			var tw := b.create_tween().set_parallel(true)
-			tw.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
-			for sb: StyleBoxFlat in [lit, pr]:
-				tw.tween_property(sb, "content_margin_left", target, 0.14)
-		else:
-			lit.content_margin_left = target
-			pr.content_margin_left = target
-	b.focus_entered.connect(func() -> void: light.call(true))
-	b.focus_exited.connect(func() -> void: light.call(b.is_hovered()))
-	b.mouse_entered.connect(func() -> void: light.call(true))
-	b.mouse_exited.connect(func() -> void: light.call(b.has_focus()))
+	_menu_set = {"base": base, "lit": lit, "pr": pr, "dis": dis}
+	return _menu_set
+
+
+## Drops cached styles so the next theme() call rebuilds (tests, pack toggles).
+static func reset_theme() -> void:
+	_theme = null
+	_menu_set = {}
 
 
 static func panel(min_size: Vector2 = Vector2.ZERO) -> PanelContainer:
 	var p := PanelContainer.new()
 	p.custom_minimum_size = min_size
 	p.theme = theme()
+	if min_size.x >= 500.0:
+		p.theme_type_variation = &"PanelLarge"
 	return p
 
 
