@@ -27,11 +27,17 @@ func _ready() -> void:
 	e.background_mode = Environment.BG_COLOR
 	e.background_color = Color("020407")
 	e.ambient_light_source = Environment.AMBIENT_SOURCE_COLOR
-	e.ambient_light_color = Color("26343c")
-	e.ambient_light_energy = 0.35
+	e.ambient_light_color = Color("3a3450")  # violet shade, warm lamps: the two-tone of the Sci-Fi Space key art
+	e.ambient_light_energy = 0.5
 	e.tonemap_mode = Environment.TONE_MAPPER_FILMIC
+	e.tonemap_white = 2.2
 	e.glow_enabled = true
-	e.glow_intensity = 0.6
+	e.glow_intensity = 0.9
+	e.glow_bloom = 0.08
+	e.glow_hdr_threshold = 0.9
+	e.ssao_enabled = true
+	e.ssao_radius = 1.6
+	e.ssao_intensity = 2.0
 	e.fog_enabled = true
 	e.fog_light_color = Color("0b1219")
 	e.fog_density = 0.01
@@ -270,6 +276,13 @@ func _any_panel() -> bool:
 
 ## DEBUG/evidence hook used by DebugCapture (--action=...).
 func debug_action(action: String) -> void:
+	if action.begins_with("room_"):  # evidence: stand in a room (room_B, room_E, room_W, room_C)
+		var want := action.trim_prefix("room_")
+		for r: int in builder.rows.size():
+			for c: int in str(builder.rows[r]).length():
+				if builder._zone(c, r) == want and builder._zone(c, r + 1) == want and builder._zone(c - 1, r) == want:
+					captain.teleport(builder._cell_center(c, r + 1), PI)
+					return
 	match action:
 		"starmap":
 			_open(starmap)

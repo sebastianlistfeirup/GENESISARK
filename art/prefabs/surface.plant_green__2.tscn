@@ -4,14 +4,14 @@
 [ext_resource type="ArrayMesh" path="res://assets/Synty/PolygonSciFiWorlds/Models/extracted/SM_Env_Plant_Shrub_01.res" id="2_bq816"]
 [ext_resource type="Material" path="res://assets/Synty/PolygonSciFiWorlds/Materials/Alts/PolygonScifiWorlds_01_A_mat.tres" id="3_tv574"]
 
-[node name="surface_plant_green" type="Node3D" unique_id=1541908495]
+[node name="surface_plant_green" type="Node3D" unique_id=700172037]
 metadata/synty_source = "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Plant_Shrub_01.tscn"
 metadata/synty_fit = "natural"
 
-[node name="Model" type="Node3D" parent="." unique_id=1666120731]
+[node name="Model" type="Node3D" parent="." unique_id=462830807]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0022788048, -0.018982887, 0)
 
-[node name="SM_Env_Plant_Shrub_01" type="MeshInstance3D" parent="Model" unique_id=1096124862 instance=ExtResource("1_n685g")]
+[node name="SM_Env_Plant_Shrub_01" type="MeshInstance3D" parent="Model" unique_id=1860486295 instance=ExtResource("1_n685g")]
 gi_mode = 2
 mesh = ExtResource("2_bq816")
 surface_material_override/0 = ExtResource("3_tv574")

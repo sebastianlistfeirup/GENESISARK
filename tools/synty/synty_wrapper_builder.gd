@@ -8,7 +8,7 @@ const SLOT_SCENES := "res://data/art/slot_scenes.json"
 const PREFABS := "res://art/prefabs/"
 const MATERIALS := "res://art/materials/"
 const BUILD_STATUS := ["auto", "approved", "manual"]
-const MODULES := ["ship.floor", "ship.wall", "ship.wall_window", "ship.door", "ship.pillar", "ship.pipe", "ship.window_space", "ship.ceiling_light"]
+const MODULES := ["ship.ceiling", "ship.floor", "ship.wall", "ship.wall_window", "ship.door", "ship.pillar", "ship.pipe", "ship.window_space", "ship.ceiling_light"]
 const NATURAL_BUILDINGS := ["building.module_filter", "building.module_heater", "building.construction_frame"]
 
 

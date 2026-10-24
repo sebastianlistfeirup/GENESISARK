@@ -69,14 +69,9 @@ func build() -> void:
 			geo.add_child(fl)
 			_box_collider(body, center + Vector3(0, -0.1, 0), Vector3(cell, 0.2, cell))
 			_box_collider(body, center + Vector3(0, wall_h + 0.1, 0), Vector3(cell, 0.2, cell))
-			var ceil := MeshInstance3D.new()
-			var pm := PlaneMesh.new()
-			pm.size = Vector2(cell, cell)
-			pm.flip_faces = true
-			ceil.mesh = pm
-			ceil.material_override = AssetSlots.material("#1b252c")
-			ceil.position = center + Vector3(0, wall_h, 0)
-			geo.add_child(ceil)
+			var ceil_slot := VisualSlot.make("ship.ceiling")
+			ceil_slot.position = center + Vector3(0, wall_h, 0)
+			geo.add_child(ceil_slot)
 			for dir: Array in [[0, -1, "north"], [0, 1, "south"], [-1, 0, "west"], [1, 0, "east"]]:
 				var nz := _zone(c + int(dir[0]), r + int(dir[1]))
 				var needs := nz == "#" or (nz != z and z != "D" and nz != "D")
@@ -112,10 +107,12 @@ func build() -> void:
 					ol.position = center + Vector3(0, wall_h - 0.4, 0)
 					ol.omni_range = cell * 2.2
 					ol.light_energy = 0.9
+					ol.omni_attenuation = 1.4
 					ol.shadow_enabled = false
 					add_child(ol)
 					lights.append({"light": ol, "zone": z, "lamp": lamp})
 	_place_markers()
+	add_child(ShipDresser.dress(self))
 	built.emit()
 
 
@@ -209,7 +206,7 @@ func set_power(restored: bool) -> void:
 		var ol: OmniLight3D = l["light"]
 		if restored:
 			ol.light_color = Color.from_string(str(zones.get(l["zone"], {}).get("light", "#d8e2e6")), Color.WHITE)
-			ol.light_energy = 1.1
+			ol.light_energy = 1.7
 		else:
 			ol.light_color = Color("c0392b") if l["zone"] != "." else Color("e8a33d")
 			ol.light_energy = 0.7 if (lights.find(l) % 2 == 0 or l["zone"] == ".") else 0.0

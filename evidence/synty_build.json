@@ -103,7 +103,7 @@
       "slot": "char.citizen_child"
     }
   ],
-  "built": 51,
+  "built": 52,
   "failed": 0,
   "slots": [
     {
@@ -1248,16 +1248,16 @@
       ],
       "reimport": false,
       "rig": "",
-      "scale": 1.7,
+      "scale": 3.3,
       "scene": "res://art/prefabs/ship.embryo_tank.tscn",
       "size_m": [
-        1.36,
-        1.27,
-        2.01
+        1.67,
+        2.15,
+        1.76
       ],
       "slot": "ship.embryo_tank",
-      "source": "res://assets/Synty/SciFiSpace/FBX/SM_Prop_Medical_Isolator_01.fbx",
-      "summary": "natural x1.700 -> 1.4x1.3x2.0 m (proxy 0.9x2.4x0.9)",
+      "source": "res://assets/Synty/SciFiSpace/FBX/SM_Prop_Test_Tube_02.fbx",
+      "summary": "natural x3.300 -> 1.7x2.2x1.8 m (proxy 0.9x2.4x0.9)",
       "uses_atlas": true,
       "warnings": []
     },
@@ -1515,6 +1515,35 @@
       "source": "res://assets/Synty/PolygonSciFiCity/Prefabs/Props/SM_Prop_Barrier_Pole_01.tscn",
       "summary": "natural x1.000 -> 0.1x1.1x0.1 m (proxy 0.6x1.8x0.2)",
       "uses_atlas": false,
+      "warnings": []
+    },
+    {
+      "atlas_materials": 0,
+      "fit": "module",
+      "notes": [],
+      "ok": true,
+      "proxy_m": [
+        4.0,
+        0.1,
+        4.0
+      ],
+      "reimport": false,
+      "rig": "",
+      "scale": 0.8,
+      "scene": "res://art/prefabs/ship.ceiling.tscn",
+      "scenes": [
+        "res://art/prefabs/ship.ceiling.tscn",
+        "res://art/prefabs/ship.ceiling__2.tscn"
+      ],
+      "size_m": [
+        4.0,
+        0.8,
+        4.0
+      ],
+      "slot": "ship.ceiling",
+      "source": "res://assets/Synty/SciFiSpace/FBX/SM_Bld_Ceiling_02.fbx",
+      "summary": "module x0.800 -> 4.0x0.8x4.0 m (proxy 4.0x0.1x4.0)  (+1 varianter)",
+      "uses_atlas": true,
       "warnings": []
     }
   ]

@@ -1,0 +1,121 @@
+{
+ "_note": "Ship dressing (ShipDresser): props against the walls of each zone, never in doorways, never within keep_clear metres of a marker, and only in a strip along the wall so routes stay open. floor = standing pieces with collision; wall = mounted pieces at height y (no collision). Paths are local Synty FBX; missing files are skipped. chance is per wall edge.",
+ "material": "res://art/materials/scifi_space_atlas.tres",
+ "keep_clear": 2.6,
+ "inset": 1.05,
+ "zones": {
+  "B": {
+   "chance": 0.75,
+   "floor": [
+    "SM_Prop_Radar_Panel_01",
+    "SM_Prop_Radar_Panel_02",
+    "SM_Prop_Detail_Machine_01",
+    "SM_Prop_Desk_End_01",
+    "SM_Prop_Detail_Tank_01"
+   ],
+   "wall": [
+    [
+     "SM_Prop_Greeble_Panel_03",
+     1.9
+    ],
+    [
+     "SM_Prop_Wall_Panel_Small_01",
+     1.5
+    ],
+    [
+     "SM_Prop_Greeble_Panel_05",
+     2.2
+    ]
+   ]
+  },
+  "E": {
+   "chance": 0.7,
+   "floor": [
+    "SM_Prop_Medical_Machine_01",
+    "SM_Prop_Test_Tube_01",
+    "SM_Prop_Medical_Cart_01",
+    "SM_Prop_Oxygen_Tank_Large",
+    "SM_Prop_Detail_Tank_02"
+   ],
+   "wall": [
+    [
+     "SM_Prop_Wall_Panel_Small_02",
+     1.5
+    ],
+    [
+     "SM_Prop_Greeble_Panel_01",
+     2.1
+    ]
+   ]
+  },
+  "W": {
+   "chance": 0.85,
+   "floor": [
+    "SM_Prop_Cart_Filled_01",
+    "SM_Prop_Crate_Wide_01",
+    "SM_Prop_Battery_01",
+    "SM_Prop_Barrel_01",
+    "SM_Prop_Oxygen_Tank_Large",
+    "SM_Prop_Detail_Machine_01",
+    "SM_Prop_Cart_01"
+   ],
+   "wall": [
+    [
+     "SM_Prop_Detail_Wirebox_01",
+     1.6
+    ],
+    [
+     "SM_Prop_Detail_Pipes_01",
+     2.4
+    ],
+    [
+     "SM_Prop_Greeble_Panel_06",
+     2.0
+    ]
+   ]
+  },
+  "C": {
+   "chance": 0.6,
+   "floor": [
+    "SM_Prop_Medical_Machine_01",
+    "SM_Prop_Crate_health_01",
+    "SM_Prop_Oxygen_Tank",
+    "SM_Prop_Medical_Cart_02",
+    "SM_Prop_Plant_Vase_01"
+   ],
+   "wall": [
+    [
+     "SM_Prop_Wall_Panel_Small_03",
+     1.5
+    ],
+    [
+     "SM_Prop_Greeble_Panel_02",
+     2.2
+    ]
+   ]
+  },
+  ".": {
+   "chance": 0.35,
+   "floor": [
+    "SM_Prop_Crate_health_02",
+    "SM_Prop_Oxygen_Tank_Small",
+    "SM_Prop_Barrel_01",
+    "SM_Prop_Detail_Box_03"
+   ],
+   "wall": [
+    [
+     "SM_Prop_Detail_Pipes_02",
+     2.5
+    ],
+    [
+     "SM_Prop_Greeble_Panel_04",
+     1.8
+    ],
+    [
+     "SM_Prop_Detail_Box_05",
+     1.4
+    ]
+   ]
+  }
+ }
+}

@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" path="res://assets/Synty/SciFiSpace/FBX/SM_Bld_Wall_Corner_Pillar_01.fbx" id="1_8pea3"]
 
-[node name="ship_pillar" type="Node3D" unique_id=505114057]
+[node name="ship_pillar" type="Node3D" unique_id=1886879387]
 metadata/synty_source = "res://assets/Synty/SciFiSpace/FBX/SM_Bld_Wall_Corner_Pillar_01.fbx"
 metadata/synty_fit = "natural"
 

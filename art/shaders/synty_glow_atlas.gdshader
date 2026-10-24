@@ -1,0 +1,22 @@
+shader_type spatial;
+// Synty atlas with "light strips": saturated bright texels (the cyan/amber
+// light bars painted into the atlas) also emit, so glow/bloom picks them up as
+// in the pack's key art. Everything else shades like a plain atlas material.
+uniform sampler2D albedo_tex : source_color, filter_linear_mipmap;
+uniform float roughness = 0.62;
+uniform float metallic = 0.25;
+uniform float glow_energy = 2.4;
+uniform float sat_min = 0.55;
+uniform float val_min = 0.75;
+
+void fragment() {
+	vec3 c = texture(albedo_tex, UV).rgb;
+	ALBEDO = c;
+	ROUGHNESS = roughness;
+	METALLIC = metallic;
+	float mx = max(c.r, max(c.g, c.b));
+	float mn = min(c.r, min(c.g, c.b));
+	float sat = mx > 0.0 ? (mx - mn) / mx : 0.0;
+	float mask = smoothstep(sat_min, sat_min + 0.15, sat) * smoothstep(val_min, val_min + 0.15, mx);
+	EMISSION = c * mask * glow_energy;
+}

@@ -270,15 +270,15 @@
    "material": "res://art/materials/scifi_space_atlas.tres"
   },
   "ship.embryo_tank": {
-   "source": "res://assets/Synty/SciFiSpace/FBX/SM_Prop_Medical_Isolator_01.fbx",
+   "source": "res://assets/Synty/SciFiSpace/FBX/SM_Prop_Test_Tube_02.fbx",
    "status": "approved",
    "material": "res://art/materials/scifi_space_atlas.tres",
-   "extra_scale": 1.7
+   "extra_scale": 3.3
   },
   "ship.embryo_bank_core": {
    "source": "res://assets/Synty/SciFiSpace/FBX/SM_Prop_CenterTube_01.fbx",
    "status": "approved",
-   "material": "res://art/materials/scifi_space_atlas.tres"
+   "material": "res://art/materials/embryo_glass.tres"
   },
   "ship.cryo_pod": {
    "source": "res://assets/Synty/SciFiSpace/FBX/SM_Prop_CryoBed_01.fbx",
@@ -327,6 +327,16 @@
   "surface.hazard_marker": {
    "source": "res://assets/Synty/PolygonSciFiCity/Prefabs/Props/SM_Prop_Barrier_Pole_01.tscn",
    "status": "approved"
+  },
+  "ship.ceiling": {
+   "source": "res://assets/Synty/SciFiSpace/FBX/SM_Bld_Ceiling_02.fbx",
+   "variants": [
+    "res://assets/Synty/SciFiSpace/FBX/SM_Bld_Ceiling_02.fbx",
+    "res://assets/Synty/SciFiSpace/FBX/SM_Bld_Ceiling_01.fbx"
+   ],
+   "status": "approved",
+   "material": "res://art/materials/scifi_space_atlas.tres",
+   "rotation_y": 0
   }
  },
  "animations": {

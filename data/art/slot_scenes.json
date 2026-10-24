@@ -27,6 +27,10 @@
   "char.robot_drone": "res://art/prefabs/char.robot_drone.tscn",
   "char.robot_worker": "res://art/prefabs/char.robot_worker.tscn",
   "ship.captain_chair": "res://art/prefabs/ship.captain_chair.tscn",
+  "ship.ceiling": [
+   "res://art/prefabs/ship.ceiling.tscn",
+   "res://art/prefabs/ship.ceiling__2.tscn"
+  ],
   "ship.ceiling_light": "res://art/prefabs/ship.ceiling_light.tscn",
   "ship.crate": [
    "res://art/prefabs/ship.crate.tscn",
