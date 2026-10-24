@@ -1,0 +1,32 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://assets/Synty/SciFiSpace/FBX/SM_Prop_CenterTube_02.fbx" id="1_tube"]
+[ext_resource type="Material" path="res://art/materials/scifi_space_atlas.tres" id="2_atlas"]
+[ext_resource type="Material" path="res://art/materials/tank_glass.tres" id="3_glass"]
+[ext_resource type="PackedScene" path="res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_Hydroponic_Planter_02_Insert_01.tscn" id="4_plants"]
+
+[node name="ship_embryo_bank_core" type="Node3D"]
+metadata/synty_source = "res://assets/Synty/SciFiSpace/FBX/SM_Prop_CenterTube_02.fbx"
+metadata/note = "Hand-made wrapper (asset_slots.json scene): the Sci-Fi Space central glass tank with its glass dressed and a column of hydroponic plants inside, like the pack's hydroponics key art."
+
+[node name="Model" parent="." instance=ExtResource("1_tube")]
+transform = Transform3D(0.9, 0, 0, 0, 0.9, 0, 0, 0, 0.9, 0, 0, 0)
+
+[node name="SM_Prop_CenterTube_02" parent="Model" index="0"]
+surface_material_override/0 = ExtResource("2_atlas")
+
+[node name="SM_Prop_CenterTube_Glass_02" parent="Model/SM_Prop_CenterTube_02" index="0"]
+surface_material_override/0 = ExtResource("3_glass")
+cast_shadow = 0
+
+[node name="PlantsA" parent="." instance=ExtResource("4_plants")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.42, -0.2, 0)
+
+[node name="PlantsB" parent="." instance=ExtResource("4_plants")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, -0.42, -0.2, 0)
+
+[node name="PlantsC" parent="." instance=ExtResource("4_plants")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 0.42, 1.25, 0)
+
+[node name="PlantsD" parent="." instance=ExtResource("4_plants")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.42, 1.25, 0)

@@ -1,0 +1,23 @@
+{
+  "task_id": "ship_r3",
+  "commit": "see git log (D-051 commit on this branch)",
+  "engine_version": "4.7.2-stable (official) (Forward+, NVIDIA GeForce RTX 5090)",
+  "command": "godot --path . --resolution 1600x900 -- --capture=<file> --setup=<fresh|power> --scene=ship --wait=150 --action=<room_X|roomcam_X|roomback_X|top_X|window|corridor|coupling|door_bridge>; godot --path . -- --perf --case=ship --out=builds/perf_ship.json; CHECK_FAST=1 tools/check.sh",
+  "exit_code": 0,
+  "expected": "The derelict ark interior reads like the owner's POLYGON Sci-Fi Space references (bridge with console rows and holo screens, cryo/medical bay with stasis tubes holding sleepers, hydroponics with plant tiers and a central glass tank, hangar with an escape pod, airlock hatches) while the fresh state still reads as a dead ship on emergency power; interactables, spawn, doors and routes unchanged; ship p95 < ~10 ms; CHECK_FAST gate all *_exit=0",
+  "observed": "Before/after captures (our own game only) in before/ and after/, side-by-side JPEGs in this folder. Perf back-to-back on RTX 5090: before p95 9.1 ms / 48 draws / 60.6k prims, after p95 8.9 ms / 55 draws / 66.7k prims. Gate: COMPILE 146 scripts, 0 failed; 81 tests, 0 failures; SMOKE 56 checks, 0 failures; TOUCH 6 checks, 0 failures; loc_exit=0 tests_exit=0 smoke_exit=0 touch_exit=0 campaign_exit=0 (CHECK_FAST skips the campaign bot).",
+  "fixture": "fresh, power",
+  "status": "PASS",
+  "artifacts": [
+    "evidence/ship_r3/fresh_spawn_before_after.jpg",
+    "evidence/ship_r3/fresh_roomcam_B_before_after.jpg",
+    "evidence/ship_r3/fresh_roomcam_E_before_after.jpg",
+    "evidence/ship_r3/fresh_roomcam_C_before_after.jpg",
+    "evidence/ship_r3/power_roomcam_B_before_after.jpg",
+    "evidence/ship_r3/power_roomcam_E_before_after.jpg",
+    "evidence/ship_r3/power_room_W_before_after.jpg",
+    "evidence/ship_r3/power_room_C_before_after.jpg",
+    "evidence/ship_r3/power_corridor_before_after.jpg"
+  ],
+  "note_local_only": "Comparisons with the Synty reference sheet stay local (public repo); only our own game captures are committed."
+}

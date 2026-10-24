@@ -54,6 +54,7 @@ func _ready() -> void:
 	e.fog_density = 0.01
 	e.fog_sky_affect = 0.0  # the interior haze must not blank the nebula outside the windows
 	env.environment = e
+	env.name = "WorldEnvironment"
 	add_child(env)
 	# The builder and an empty "Dressing" node live in ship.tscn: tick
 	# ShipBuilder.build_now in the editor to preview the layout, and place
@@ -221,6 +222,11 @@ func _on_state(_kind: String) -> void:
 	var gs: GameState = GameSession.state
 	var powered: bool = gs.ark.systems.get("power") != "offline"
 	builder.set_power(powered)
+	var amb := builder.ambient_for(powered)
+	var we := get_node_or_null("WorldEnvironment") as WorldEnvironment
+	if we and amb.size() == 2:
+		we.environment.ambient_light_color = amb[0]
+		we.environment.ambient_light_energy = amb[1]
 	_display.visible = powered
 	for id: String in ["starmap", "bridge_terminal", "orbit_terminal", "embryo_bank"]:
 		var it: Interactable = interactables.get(id)
@@ -350,8 +356,8 @@ func debug_action(action: String) -> void:
 		captain.camera_rig.pitch = 0.05
 		captain.camera_rig.snap()
 		return
-	if action.begins_with("roomcam_"):  # evidence: a free wide-angle camera from a room's south-west corner (roomcam_E ...)
-		var zone := action.trim_prefix("roomcam_")
+	if action.begins_with("roomcam_") or action.begins_with("roomback_") or action.begins_with("top_"):  # evidence: a free wide-angle camera from a room's south-west corner (roomcam_E ...), from its north-east corner (roomback_E) or straight down on its layout (top_E)
+		var zone := action.trim_prefix("roomcam_").trim_prefix("roomback_").trim_prefix("top_")
 		var a := Vector2(INF, INF)
 		var b := Vector2(-INF, -INF)
 		for r: int in builder.rows.size():
@@ -362,10 +368,24 @@ func debug_action(action: String) -> void:
 		if a.x < INF:
 			var cam := Camera3D.new()
 			add_child(cam)
-			cam.global_position = builder.cell_to_world(a.x + 0.6, b.y + 0.4) + Vector3(0, 3.1, 0)
-			cam.look_at(builder.cell_to_world((a.x + b.x + 1.0) * 0.55, (a.y + b.y + 1.0) * 0.45) + Vector3(0, 0.8, 0))
-			cam.fov = 78.0
 			cam.current = true
+			if action.begins_with("top_"):
+				# Orthographic plan view without the ceiling, for checking routes and clearances.
+				var mid := builder.cell_to_world((a.x + b.x + 1.0) * 0.5, (a.y + b.y + 1.0) * 0.5)
+				cam.projection = Camera3D.PROJECTION_ORTHOGONAL
+				cam.size = (b.x - a.x + 1.6) * builder.cell * 9.0 / 16.0
+				cam.near = 0.05
+				cam.global_position = mid + Vector3(0, builder.wall_h - 0.3, 0)
+				cam.rotation = Vector3(-PI * 0.5, 0, 0)
+				return
+			# Eye height below the ceiling coffers (at 3.1 m their undersides filled the frame flat grey).
+			if action.begins_with("roomback_"):
+				cam.global_position = builder.cell_to_world(b.x + 0.4, a.y + 0.6) + Vector3(0, 2.5, 0)
+				cam.look_at(builder.cell_to_world((a.x + b.x + 1.0) * 0.45, (a.y + b.y + 1.0) * 0.55) + Vector3(0, 0.9, 0))
+			else:
+				cam.global_position = builder.cell_to_world(a.x + 0.6, b.y + 0.4) + Vector3(0, 2.5, 0)
+				cam.look_at(builder.cell_to_world((a.x + b.x + 1.0) * 0.55, (a.y + b.y + 1.0) * 0.45) + Vector3(0, 0.9, 0))
+			cam.fov = 78.0
 		return
 	if action.begins_with("room_"):  # evidence: stand at the south middle of a room, facing north (room_B, room_E, room_W, room_C)
 		var want := action.trim_prefix("room_")

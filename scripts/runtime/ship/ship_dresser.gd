@@ -36,6 +36,14 @@ static func dress(b: ShipBuilder) -> Node3D:
 		var cpos: Array = DictUtil.get_arr(m, "cell")
 		if cpos.size() == 2:
 			clear.append(b.cell_to_world(float(cpos[0]), float(cpos[1])))
+	# Set pieces marked keep_clear claim their floor too: no random wall prop inside a rack row or a tube.
+	for sp: Variant in DictUtil.get_arr(doc, "set_pieces"):
+		var cell: Array = DictUtil.get_arr(sp, "cell")
+		if cell.size() != 2 or not bool((sp as Dictionary).get("keep_clear", false)):
+			continue
+		var step: Array = DictUtil.get_arr(sp, "step")
+		for k: int in maxi(1, int((sp as Dictionary).get("count", 1))):
+			clear.append(b.cell_to_world(float(cell[0]) + (float(step[0]) * k if step.size() == 2 else 0.0), float(cell[1]) + (float(step[1]) * k if step.size() == 2 else 0.0)))
 	var body := StaticBody3D.new()
 	body.name = "DressingCollision"
 	body.collision_layer = 1
@@ -65,10 +73,14 @@ static func dress(b: ShipBuilder) -> Node3D:
 					continue
 				var floors: Array = DictUtil.get_arr(spec, "floor")
 				if not floors.is_empty():
-					var fname := str(floors[h % floors.size()])
-					var inst := _place(root, fname, floor_pt, yaw, prop_mats.get(fname, mat))
-					if inst:
-						_collide(body, inst)
+					# An entry is one piece or a list placed together (a rack and the plants that fill it).
+					var pick: Variant = floors[h % floors.size()]
+					var parts: Array = pick if pick is Array else [pick]
+					for pi: int in parts.size():
+						var fname := str(parts[pi])
+						var inst := _place(root, fname, floor_pt, yaw, prop_mats.get(fname, mat))
+						if inst and pi == 0:
+							_collide(body, inst)
 				var walls: Array = DictUtil.get_arr(spec, "wall")
 				if not walls.is_empty() and (h / 7) % 2 == 0:
 					var w: Array = walls[(h / 13) % walls.size()]
@@ -76,25 +88,51 @@ static func dress(b: ShipBuilder) -> Node3D:
 					if wi and w.size() > 2:
 						wi.scale = Vector3.ONE * float(w[2])
 	# Set pieces at fixed cells (bridge crew stations, cryo wall pods, sleepers in tubes).
+	# "count"/"step" repeat a piece along a row; "glass" dresses a model's *Glass* meshes;
+	# "power": "on"/"off" shows a piece only with power restored / on emergency power.
 	for sp: Variant in DictUtil.get_arr(doc, "set_pieces"):
 		var d: Dictionary = sp
 		var cell: Array = DictUtil.get_arr(d, "cell")
 		if cell.size() != 2:
 			continue
-		var pos := b.cell_to_world(float(cell[0]), float(cell[1])) + Vector3(0, DictUtil.get_float(d, "y"), 0)
 		var pm: Material = prop_mats.get(str(d.get("mesh", "")), mat)
 		if d.has("material"):
 			pm = load(str(d["material"])) if ResourceLoader.exists(str(d["material"])) else mat
-		var inst := _place(root, str(d.get("mesh", "")), pos, deg_to_rad(DictUtil.get_float(d, "yaw")), pm)
-		if inst == null:
+		var glass: Material = null
+		if d.has("glass") and ResourceLoader.exists(str(d["glass"])):
+			glass = load(str(d["glass"]))
+		var step: Array = DictUtil.get_arr(d, "step")
+		for k: int in maxi(1, int(d.get("count", 1))):
+			var cx := float(cell[0]) + (float(step[0]) * k if step.size() == 2 else 0.0)
+			var cz := float(cell[1]) + (float(step[1]) * k if step.size() == 2 else 0.0)
+			var pos := b.cell_to_world(cx, cz) + Vector3(0, DictUtil.get_float(d, "y"), 0)
+			var inst := _place(root, str(d.get("mesh", "")), pos, deg_to_rad(DictUtil.get_float(d, "yaw")), pm, glass)
+			if inst == null:
+				continue
+			var sc: Variant = d.get("scale", 1.0)
+			inst.scale = Vector3(float(sc[0]), float(sc[1]), float(sc[2])) if sc is Array else Vector3.ONE * float(sc)
+			if bool(d.get("center", true)):
+				# Kit pieces carry their assembly offset: stand them centred on the cell, base on the floor.
+				var box := AssetSlots.aabb_of(inst, Transform3D(Basis(Vector3.UP, inst.rotation.y).scaled(inst.scale), Vector3.ZERO))
+				inst.position -= Vector3(box.get_center().x, box.position.y, box.get_center().z)
+			if bool(d.get("collide", false)):
+				_collide(body, inst)
+			if d.has("power"):
+				b.power_nodes.append({"node": inst, "on": str(d["power"]) == "on"})
+	# Floating holographic screens over consoles and in front of the windows.
+	for hs: Variant in DictUtil.get_arr(doc, "holo_screens"):
+		var d: Dictionary = hs
+		var cell: Array = DictUtil.get_arr(d, "cell")
+		var size: Array = DictUtil.get_arr(d, "size")
+		if cell.size() != 2:
 			continue
-		inst.scale = Vector3.ONE * DictUtil.get_float(d, "scale", 1.0)
-		if bool(d.get("center", true)):
-			# Kit pieces carry their assembly offset: stand them centred on the cell, base on the floor.
-			var box := AssetSlots.aabb_of(inst, Transform3D(Basis(Vector3.UP, inst.rotation.y).scaled(inst.scale), Vector3.ZERO))
-			inst.position -= Vector3(box.get_center().x, box.position.y, box.get_center().z)
-		if bool(d.get("collide", false)):
-			_collide(body, inst)
+		var scr := HoloScreen.make(Vector2(float(size[0]), float(size[1])) if size.size() == 2 else Vector2(1.2, 0.7),
+			Color(str(d.get("color", "#3ff2ff"))), absi(hash(str(cell))))
+		scr.position = b.cell_to_world(float(cell[0]), float(cell[1])) + Vector3(0, DictUtil.get_float(d, "y", 1.6), 0)
+		scr.rotation = Vector3(deg_to_rad(DictUtil.get_float(d, "tilt")), deg_to_rad(DictUtil.get_float(d, "yaw")), 0)
+		scr.name = "HoloScreen"
+		root.add_child(scr)
+		b.power_nodes.append({"node": scr, "screen": true})
 	# A ship that drifted for centuries: cables hanging from the ceiling, rubble and
 	# loose hoses on the floor (off the walkway markers and doors), sparks at broken panels.
 	var der: Dictionary = DictUtil.get_dict(doc, "derelict")
@@ -153,6 +191,7 @@ static func dress(b: ShipBuilder) -> Node3D:
 		var h := Hologram.make(Color(str(holo[z])), 0.9, absi(hash(str(m["id"]))))
 		h.position = (m["pos"] as Vector3) + Vector3(0, 2.15, 0)
 		root.add_child(h)
+		b.power_nodes.append({"node": h, "on": true})  # dark on emergency power: the consoles are dead
 	return root
 
 
@@ -163,7 +202,7 @@ static func _near(p: Vector3, pts: Array[Vector3], dist: float) -> bool:
 	return false
 
 
-static func _place(root: Node3D, name: String, pos: Vector3, yaw: float, mat: Material) -> Node3D:
+static func _place(root: Node3D, name: String, pos: Vector3, yaw: float, mat: Material, glass: Material = null) -> Node3D:
 	var path := "res://assets/Synty/SciFiSpace/FBX/%s.fbx" % name
 	if name.begins_with("res://"):  # a prefab from another pack keeps its own materials
 		path = name
@@ -176,15 +215,18 @@ static func _place(root: Node3D, name: String, pos: Vector3, yaw: float, mat: Ma
 	var inst: Node3D = ps.instantiate()
 	inst.position = pos
 	inst.rotation.y = yaw
-	if mat:
-		for mi: Node in inst.find_children("*", "MeshInstance3D", true, false):
+	for mi: Node in inst.find_children("*", "MeshInstance3D", true, false):
+		if glass and String(mi.name).contains("Glass"):
+			(mi as MeshInstance3D).material_override = glass
+			(mi as MeshInstance3D).cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+		elif mat:
 			(mi as MeshInstance3D).material_override = mat
 	root.add_child(inst)
 	return inst
 
 
 static func _collide(body: StaticBody3D, inst: Node3D) -> void:
-	var box := AssetSlots.aabb_of(inst, Transform3D.IDENTITY)
+	var box := AssetSlots.aabb_of(inst, Transform3D(Basis.from_scale(inst.scale), Vector3.ZERO))  # scaled pieces collide at their drawn size
 	if box.size.length() < 0.2:
 		return
 	var cs := CollisionShape3D.new()
