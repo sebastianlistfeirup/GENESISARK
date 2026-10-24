@@ -1,6 +1,6 @@
 {
   "content_version": "0.1.0",
-  "elapsed_ms": 29232,
+  "elapsed_ms": 26168,
   "endings": {
     "independent": 1
   },
@@ -104,7 +104,7 @@
         "trust": 100.0,
         "years": 40.0
       },
-      "ms": 14188,
+      "ms": 12835,
       "planet": "sere",
       "policy": "middle",
       "population": 590,
@@ -118,5 +118,5 @@
       "year": 40.0
     }
   ],
-  "timestamp": "2026-10-24T12:29:55"
+  "timestamp": "2026-10-24T12:33:15"
 }

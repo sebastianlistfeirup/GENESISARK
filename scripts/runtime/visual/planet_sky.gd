@@ -33,6 +33,10 @@ static func build(planet_id: String, fallback: String, terrain: Node3D = null) -
 			var flock := FaunaFlock.build(DictUtil.get_dict(sky, key), hash(planet_id + key), terrain)
 			if flock:
 				root.add_child(flock)
+	if sky.has("creatures"):
+		var cr := SkyCreatures.build(DictUtil.get_arr(sky, "creatures"), hash(planet_id + "creatures"), terrain)
+		if cr:
+			root.add_child(cr)
 	if sky.has("aurora"):
 		root.add_child(_aurora(Color(str(sky["aurora"])), Color(str(sky.get("aurora_high", "#9a5cff")))))
 	return root
