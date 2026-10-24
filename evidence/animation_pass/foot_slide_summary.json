@@ -4,29 +4,81 @@
  "command": "godot --headless --path . --script res://tools/anim_probe.gd  (full data: measurements.json)",
  "method": "Clips played on the slot's retargeted model, sampled at 120 Hz. Ground speed of a clip = median horizontal speed of the ball-of-foot bone (LeftToes/RightToes) while within 3.5 cm of the clip's lowest foot height. Cross-check on Synty root-motion twins (source rig): walk 1.45 vs 1.45 m/s, run 2.49 vs 2.59 m/s, sprint 7.18 vs 7.24 m/s; planted feet in the root-motion twins read 0.04 / 0.15 / 0.42 m/s (residual noise of the method). Foot slide at game speed = |v_game - speed_ref * playback|, playback = clamp(v_game / map speed_ref, CharacterAnimator min..max).",
  "measured_speed_ref_mps": {
-  "char.captain": {"walk_slow (A_Walk_F)": 1.49, "walk_mid (A_Run_F)": 2.45, "walk (A_Run_F x A_Sprint_F phase blend, w=0.53)": 4.30, "run (A_Sprint_F)": 7.03},
-  "char.citizen_adult": {"walk (A_Walk_F)": 1.49, "run (A_Run_F)": 2.45},
-  "char.citizen_child": {"walk (A_Walk_F_Femn, rig x0.66)": 0.97, "run (A_Run_F_Femn)": 1.62}
+  "char.captain": {
+   "walk_slow (A_Walk_F)": 1.49,
+   "walk_mid (A_Run_F)": 2.45,
+   "walk (A_Run_F x A_Sprint_F phase blend, w=0.53)": 4.3,
+   "run (A_Sprint_F)": 7.03
+  },
+  "char.citizen_adult": {
+   "walk (A_Walk_F)": 1.49,
+   "run (A_Run_F)": 2.45
+  },
+  "char.citizen_child": {
+   "walk (A_Walk_F_Femn, rig x0.66)": 0.97,
+   "run (A_Run_F_Femn)": 1.62
+  }
  },
  "before": {
   "_how": "main @59a6e3a: captain walk=A_Walk_F, run=A_Run_F; animation_map speed_ref 1.5 / 4.5 / 1.4 / 1.2; playback clamp 0.5..1.8",
-  "captain_walk_4.2": {"clip_ref": 1.49, "playback": 1.8, "foot_slide_mps": 1.52, "foot_slide_pct": 36.1, "cadence_note": "walk cycle at 1.8x: legs blur, body glides"},
-  "captain_run_7.0": {"clip_ref": 2.45, "playback": 1.556, "foot_slide_mps": 3.19, "foot_slide_pct": 45.6},
-  "adult_walk_1.35": {"clip_ref": 1.49, "playback": 0.964, "foot_slide_mps": 0.09, "foot_slide_pct": 6.4},
-  "child_walk_1.05": {"clip_ref": 0.97, "playback": 0.875, "foot_slide_mps": 0.20, "foot_slide_pct": 19.2}
+  "captain_walk_4.2": {
+   "clip_ref": 1.49,
+   "playback": 1.8,
+   "foot_slide_mps": 1.52,
+   "foot_slide_pct": 36.1,
+   "cadence_note": "walk cycle at 1.8x: legs blur, body glides"
+  },
+  "captain_run_7.0": {
+   "clip_ref": 2.45,
+   "playback": 1.556,
+   "foot_slide_mps": 3.19,
+   "foot_slide_pct": 45.6
+  },
+  "adult_walk_1.35": {
+   "clip_ref": 1.49,
+   "playback": 0.964,
+   "foot_slide_mps": 0.09,
+   "foot_slide_pct": 6.4
+  },
+  "child_walk_1.05": {
+   "clip_ref": 0.97,
+   "playback": 0.875,
+   "foot_slide_mps": 0.2,
+   "foot_slide_pct": 19.2
+  }
  },
  "after": {
   "_how": "this branch: gait clips chosen by measured speed_ref, playback = v / ref within 0.6..1.5",
-  "captain_walk_4.2": {"clip_ref": 4.30, "playback": 0.977, "foot_slide_mps": 0.0},
-  "captain_run_7.0": {"clip_ref": 7.03, "playback": 0.996, "foot_slide_mps": 0.0},
-  "captain_slow_1.0_to_3.0": {"clips": "walk_slow / walk_mid by nearest ref", "playback_range": "0.67..1.22", "foot_slide_mps": 0.0},
-  "adult_walk_1.22_to_1.49": {"clip_ref": 1.49, "playback": "0.82..1.0", "foot_slide_mps": 0.0},
-  "child_walk_0.95_to_1.16": {"clip_ref": 0.97, "playback": "0.97..1.19", "foot_slide_mps": 0.0}
+  "captain_walk_4.2": {
+   "clip_ref": 4.3,
+   "playback": 0.977,
+   "foot_slide_mps": 0.0
+  },
+  "captain_run_7.0": {
+   "clip_ref": 7.03,
+   "playback": 0.996,
+   "foot_slide_mps": 0.0
+  },
+  "captain_slow_1.0_to_3.0": {
+   "clips": "walk_slow / walk_mid by nearest ref",
+   "playback_range": "0.67..1.22",
+   "foot_slide_mps": 0.0
+  },
+  "adult_walk_1.22_to_1.49": {
+   "clip_ref": 1.49,
+   "playback": "0.82..1.0",
+   "foot_slide_mps": 0.0
+  },
+  "child_walk_0.95_to_1.16": {
+   "clip_ref": 0.97,
+   "playback": "0.97..1.19",
+   "foot_slide_mps": 0.0
+  }
  },
  "stops": {
   "Run_ToIdle root-motion travel": "2.40 m over 0.97 s (every 0.1 s: 0, 0.5, 0.95, 1.33, 1.63, 1.88, 2.07, 2.22, 2.33, 2.39)",
   "Walk_ToIdle root-motion travel": "0.82 m over 1.03 s",
-  "captain braking": "16 m/s2 (was 19): 0.55 m from 4.2 m/s, 1.53 m from 7.0 m/s; the stop clip is distance-matched to the remaining braking distance v^2/2a, so the planted foot holds while braking"
+  "captain braking": "16 m/s2 (was 19): 0.55 m from 4.2 m/s, 1.53 m from 7.0 m/s; the stop clip is distance-matched to the remaining braking distance v^2/2a (effect measured below in stop_simulation_60hz: halves the slide from a run, none from the 4.2 m/s gait)"
  },
  "actions": {
   "interact (PointHand_Index_F_Small)": "right hand reaches 0.56 m forward of the hips at 1.04 m height (console top 1.05 m)",
@@ -34,5 +86,83 @@
   "build (UsePhone_TwoHands_Typing)": "hands 1.21-1.23 m, tablet work"
  },
  "status": "PASS",
- "artifacts": ["evidence/animation_pass/measurements.json", "evidence/animation_pass/locomotion.png", "evidence/animation_pass/stops.png", "evidence/animation_pass/actions.png", "evidence/animation_pass/colonists.png"]
+ "artifacts": [
+  "evidence/animation_pass/measurements.json",
+  "evidence/animation_pass/locomotion.png",
+  "evidence/animation_pass/stops.png",
+  "evidence/animation_pass/actions.png",
+  "evidence/animation_pass/colonists.png"
+ ],
+ "ground_fix": {
+  "_what": "AnimationLibraryBuilder.ground_fix lowers the Hips track of gait/stop/turn clips so the lowest ball-of-foot matches idle",
+  "before_toe_min_m": {
+   "captain run (sprint)": 0.09,
+   "captain walk (4.3 blend)": 0.065,
+   "captain walk_mid": 0.05,
+   "captain Run_ToIdle_L": 0.076,
+   "adult run": 0.047,
+   "child run": 0.033
+  },
+  "after_toe_min_m": {
+   "idle": 0.008,
+   "run": 0.015,
+   "stop_run_l": 0.015,
+   "walk": 0.012,
+   "walk_mid": 0.011,
+   "walk_slow": -0.004
+  }
+ },
+ "stop_simulation_60hz": {
+  "captain_4.2_plain_blend": {
+   "v0_mps": 4.2,
+   "decel_mps2": 16.0,
+   "steady_planted_slide_m_per_s": 0.051,
+   "braking_planted_slide_m": 0.456,
+   "brake_time_s": 0.25,
+   "braking_distance_m": 0.55,
+   "clips": [
+    "walk",
+    "idle"
+   ]
+  },
+  "captain_4.2_distance_matched": {
+   "v0_mps": 4.2,
+   "decel_mps2": 16.0,
+   "steady_planted_slide_m_per_s": 0.129,
+   "braking_planted_slide_m": 0.474,
+   "brake_time_s": 0.25,
+   "braking_distance_m": 0.55,
+   "clips": [
+    "walk",
+    "stop_walk_l",
+    "idle"
+   ]
+  },
+  "captain_7.0_plain_blend": {
+   "v0_mps": 7.0,
+   "decel_mps2": 16.0,
+   "steady_planted_slide_m_per_s": 0.03,
+   "braking_planted_slide_m": 0.903,
+   "brake_time_s": 0.43,
+   "braking_distance_m": 1.53,
+   "clips": [
+    "run",
+    "idle"
+   ]
+  },
+  "captain_7.0_distance_matched": {
+   "v0_mps": 7.0,
+   "decel_mps2": 16.0,
+   "steady_planted_slide_m_per_s": 0.0,
+   "braking_planted_slide_m": 0.426,
+   "brake_time_s": 0.43,
+   "braking_distance_m": 1.53,
+   "clips": [
+    "run",
+    "stop_run_r",
+    "idle"
+   ]
+  }
+ },
+ "stop_simulation_note": "Planted-foot travel while braking at 16 m/s2 (contact = ball-of-foot within 3.5 cm of the run's lowest foot). From a 7 m/s run the distance-matched stop halves the slide (0.90 m -> 0.43 m over 0.43 s). From the 4.2 m/s gait it is no better than the plain blend (~0.46 m over 0.25 s): the 0.55 m braking distance only leaves the last third of Run_ToIdle, so the stop mostly adds the settle pose."
 }

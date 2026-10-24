@@ -81,6 +81,10 @@ func _process(_d: float) -> bool:
 		if not variants.is_empty():
 			print("  variants ", variants)
 		model.queue_free()
+	report["stop_simulation"] = {}
+	for v0: float in [4.2, 7.0]:
+		for matched: bool in [false, true]:
+			report["stop_simulation"]["captain_%.1f_%s" % [v0, "distance_matched" if matched else "plain_blend"]] = _stop_sim("char.captain", v0, 16.0, matched, map)
 	for base: String in ROOT_MOTION.keys():
 		var p := "res://assets/imported/anim_pass/%s.fbx" % base
 		if not ResourceLoader.exists(p):
@@ -94,6 +98,66 @@ func _process(_d: float) -> bool:
 	_print(report)
 	quit(0)
 	return true
+
+
+## Real-time braking through CharacterAnimator at 60 Hz: the model moves forward
+## (-Z) at the controller's speed, braking at `decel` like Captain. Planted-foot
+## slide = world travel of a ball-of-foot while it is on the floor. Plain blend =
+## no stop distance passed (old behaviour); matched = distance-matched stop clip.
+func _stop_sim(slot: String, v0: float, decel: float, matched: bool, map: Variant) -> Dictionary:
+	var libs := AnimationLibraryBuilder.load_mappings()
+	var model: Node3D = (load("res://art/prefabs/%s.tscn" % slot) as PackedScene).instantiate()
+	root.add_child(model)
+	var ca := CharacterAnimator.new()
+	ca.player = CharacterAnimator.attach(model, load(str(libs[slot])))
+	ca.player.callback_mode_process = AnimationMixer.ANIMATION_CALLBACK_MODE_PROCESS_MANUAL
+	ca.prefix = CharacterAnimator.LIB_NAME + "/"
+	ca.cfg = DictUtil.get_dict(map, slot)
+	ca.anim_seed = 1
+	var sk: Skeleton3D = model.find_children("GeneralSkeleton", "Skeleton3D", true, false)[0]
+	var dt := 1.0 / 60.0
+	var v := v0
+	var walk_slide := 0.0
+	var stop_slide := 0.0
+	var frames: Array = []
+	var t := 0.0
+	var stop_t := -1.0
+	var clips_seen := {}
+	for i: int in 300:
+		var braking := i >= 90  # 1.5 s steady gait, then let go of the stick
+		if braking:
+			v = maxf(v - decel * dt, 0.0)
+			if stop_t < 0.0 and v <= 0.0:
+				stop_t = t
+			ca.update("idle", v, -1.0, v * v / (2.0 * decel) if matched else -1.0)
+		else:
+			ca.update("run" if v0 > 5.0 else "walk", v, v0)
+		clips_seen[ca.current.trim_prefix(ca.prefix)] = true
+		ca.player.advance(dt)
+		model.position.z -= v * dt
+		t += dt
+		frames.append([braking, i > 30, _pos(sk, "LeftToes"), _pos(sk, "RightToes")])
+	model.queue_free()
+	var floor_y := INF
+	for f: Array in frames:
+		floor_y = minf(floor_y, minf((f[2] as Vector3).y, (f[3] as Vector3).y))
+	var wmin := INF
+	for f: Array in frames:
+		if not f[0] and f[1]:
+			wmin = minf(wmin, minf((f[2] as Vector3).y, (f[3] as Vector3).y))
+	for i: int in range(1, frames.size()):
+		for s: int in [2, 3]:
+			var a: Vector3 = frames[i - 1][s]
+			var b: Vector3 = frames[i][s]
+			if a.y < floor_y + CONTACT_EPS and b.y < floor_y + CONTACT_EPS:
+				var d := Vector2(b.x - a.x, b.z - a.z).length()
+				if frames[i][0]:
+					stop_slide += d
+				elif frames[i][1]:
+					walk_slide += d
+	return {"v0_mps": v0, "decel_mps2": decel, "steady_planted_slide_m_per_s": snappedf(walk_slide / (60.0 * dt), 0.003),
+		"braking_planted_slide_m": snappedf(stop_slide, 0.003), "brake_time_s": snappedf(stop_t - 1.5, 0.01),
+		"braking_distance_m": snappedf(v0 * v0 / (2.0 * decel), 0.01), "clips": clips_seen.keys()}
 
 
 func _pos(sk: Skeleton3D, bone: String) -> Vector3:
@@ -145,6 +209,7 @@ func _measure(ap: AnimationPlayer, sk: Skeleton3D, name: String, anim: Animation
 	var med: float = speeds[speeds.size() / 2] if not speeds.is_empty() else 0.0
 	out["planted_foot_speed_median_mps"] = snappedf(med, 0.001)
 	out["planted_push_m"] = snappedf(push, 0.001)
+	out["toe_min_y_m"] = snappedf(floor_y, 0.001)
 	out["left_contact_start_phase"] = snappedf(left_contact_start, 0.001)
 	if out["loop"] and med > 0.3:
 		out["speed_ref_mps"] = snappedf(med, 0.01)
@@ -240,3 +305,5 @@ func _print(r: Dictionary) -> void:
 			print("  slide ", k, " ", r["slots"][slot]["slide_at_game_speed"][k])
 	for k: String in r["root_motion_sources"].keys():
 		print("  root motion ", k, " ", r["root_motion_sources"][k])
+	for k: String in r.get("stop_simulation", {}).keys():
+		print("  stop sim ", k, " ", r["stop_simulation"][k])

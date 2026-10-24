@@ -11,6 +11,7 @@
      "loop": true,
      "planted_foot_speed_median_mps": 0.012,
      "planted_push_m": 0.021,
+     "toe_min_y_m": 0.007,
      "left_contact_start_phase": -1.0,
      "hips_y_min_m": 0.878,
      "hips_y_max_m": 0.88,
@@ -38,6 +39,7 @@
      "loop": true,
      "planted_foot_speed_median_mps": 0.011,
      "planted_push_m": 0.018,
+     "toe_min_y_m": 0.008,
      "left_contact_start_phase": -1.0,
      "hips_y_min_m": 0.879,
      "hips_y_max_m": 0.881,
@@ -65,6 +67,7 @@
      "loop": false,
      "planted_foot_speed_median_mps": 0.008,
      "planted_push_m": 0.039,
+     "toe_min_y_m": -0.001,
      "left_contact_start_phase": -1.0,
      "hips_y_min_m": 0.88,
      "hips_y_max_m": 0.884,
@@ -92,6 +95,7 @@
      "loop": false,
      "planted_foot_speed_median_mps": 0.011,
      "planted_push_m": 0.036,
+     "toe_min_y_m": 0.007,
      "left_contact_start_phase": -1.0,
      "hips_y_min_m": 0.875,
      "hips_y_max_m": 0.879,
@@ -119,6 +123,7 @@
      "loop": false,
      "planted_foot_speed_median_mps": 0.159,
      "planted_push_m": 0.816,
+     "toe_min_y_m": -0.009,
      "left_contact_start_phase": 0.202,
      "hips_y_min_m": 0.853,
      "hips_y_max_m": 0.884,
@@ -146,6 +151,7 @@
      "loop": false,
      "planted_foot_speed_median_mps": 0.013,
      "planted_push_m": 0.043,
+     "toe_min_y_m": 0.006,
      "left_contact_start_phase": -1.0,
      "hips_y_min_m": 0.872,
      "hips_y_max_m": 0.88,
@@ -173,6 +179,7 @@
      "loop": false,
      "planted_foot_speed_median_mps": 0.024,
      "planted_push_m": 0.048,
+     "toe_min_y_m": 0.003,
      "left_contact_start_phase": -1.0,
      "hips_y_min_m": 0.873,
      "hips_y_max_m": 0.879,
@@ -200,28 +207,29 @@
      "loop": true,
      "planted_foot_speed_median_mps": 7.033,
      "planted_push_m": 2.74,
+     "toe_min_y_m": 0.015,
      "left_contact_start_phase": 0.861,
      "speed_ref_mps": 7.03,
      "stride_m": 4.22,
-     "hips_y_min_m": 0.866,
-     "hips_y_max_m": 0.935,
+     "hips_y_min_m": 0.791,
+     "hips_y_max_m": 0.86,
      "left_hand_max_reach": {
       "reach_m": 0.579,
-      "height_m": 1.253,
+      "height_m": 1.178,
       "t_s": 0.13
      },
      "left_hand_y_range_m": [
-      0.903,
-      1.253
+      0.828,
+      1.178
      ],
      "right_hand_max_reach": {
       "reach_m": 0.56,
-      "height_m": 1.115,
+      "height_m": 1.04,
       "t_s": 0.4
      },
      "right_hand_y_range_m": [
-      0.888,
-      1.24
+      0.813,
+      1.165
      ]
     },
     "sample": {
@@ -229,6 +237,7 @@
      "loop": true,
      "planted_foot_speed_median_mps": 0.007,
      "planted_push_m": 0.01,
+     "toe_min_y_m": 0.044,
      "left_contact_start_phase": -1.0,
      "hips_y_min_m": 0.403,
      "hips_y_max_m": 0.409,
@@ -256,26 +265,27 @@
      "loop": false,
      "planted_foot_speed_median_mps": 1.738,
      "planted_push_m": 1.617,
+     "toe_min_y_m": 0.015,
      "left_contact_start_phase": 0.293,
-     "hips_y_min_m": 0.873,
-     "hips_y_max_m": 0.994,
+     "hips_y_min_m": 0.811,
+     "hips_y_max_m": 0.932,
      "left_hand_max_reach": {
       "reach_m": 0.371,
-      "height_m": 0.9,
+      "height_m": 0.839,
       "t_s": 0.8
      },
      "left_hand_y_range_m": [
-      0.898,
-      1.155
+      0.837,
+      1.093
      ],
      "right_hand_max_reach": {
       "reach_m": 0.376,
-      "height_m": 0.904,
+      "height_m": 0.842,
       "t_s": 0.97
      },
      "right_hand_y_range_m": [
-      0.904,
-      1.258
+      0.842,
+      1.197
      ]
     },
     "stop_run_r": {
@@ -283,26 +293,27 @@
      "loop": false,
      "planted_foot_speed_median_mps": 2.294,
      "planted_push_m": 1.7,
+     "toe_min_y_m": 0.01,
      "left_contact_start_phase": 0.043,
-     "hips_y_min_m": 0.867,
-     "hips_y_max_m": 0.959,
+     "hips_y_min_m": 0.85,
+     "hips_y_max_m": 0.942,
      "left_hand_max_reach": {
       "reach_m": 0.372,
-      "height_m": 0.858,
+      "height_m": 0.841,
       "t_s": 0.7
      },
      "left_hand_y_range_m": [
-      0.84,
-      1.232
+      0.823,
+      1.215
      ],
      "right_hand_max_reach": {
       "reach_m": 0.423,
-      "height_m": 1.06,
+      "height_m": 1.043,
       "t_s": 0.53
      },
      "right_hand_y_range_m": [
-      0.85,
-      1.111
+      0.833,
+      1.094
      ]
     },
     "stop_walk_l": {
@@ -310,26 +321,27 @@
      "loop": false,
      "planted_foot_speed_median_mps": 1.738,
      "planted_push_m": 1.617,
+     "toe_min_y_m": 0.015,
      "left_contact_start_phase": 0.293,
-     "hips_y_min_m": 0.873,
-     "hips_y_max_m": 0.994,
+     "hips_y_min_m": 0.811,
+     "hips_y_max_m": 0.932,
      "left_hand_max_reach": {
       "reach_m": 0.371,
-      "height_m": 0.9,
+      "height_m": 0.839,
       "t_s": 0.8
      },
      "left_hand_y_range_m": [
-      0.898,
-      1.155
+      0.837,
+      1.093
      ],
      "right_hand_max_reach": {
       "reach_m": 0.376,
-      "height_m": 0.904,
+      "height_m": 0.842,
       "t_s": 0.97
      },
      "right_hand_y_range_m": [
-      0.904,
-      1.258
+      0.842,
+      1.197
      ]
     },
     "stop_walk_r": {
@@ -337,26 +349,27 @@
      "loop": false,
      "planted_foot_speed_median_mps": 2.294,
      "planted_push_m": 1.7,
+     "toe_min_y_m": 0.01,
      "left_contact_start_phase": 0.043,
-     "hips_y_min_m": 0.867,
-     "hips_y_max_m": 0.959,
+     "hips_y_min_m": 0.85,
+     "hips_y_max_m": 0.942,
      "left_hand_max_reach": {
       "reach_m": 0.372,
-      "height_m": 0.858,
+      "height_m": 0.841,
       "t_s": 0.7
      },
      "left_hand_y_range_m": [
-      0.84,
-      1.232
+      0.823,
+      1.215
      ],
      "right_hand_max_reach": {
       "reach_m": 0.423,
-      "height_m": 1.06,
+      "height_m": 1.043,
       "t_s": 0.53
      },
      "right_hand_y_range_m": [
-      0.85,
-      1.111
+      0.833,
+      1.094
      ]
     },
     "stop_walk_slow_l": {
@@ -364,6 +377,7 @@
      "loop": false,
      "planted_foot_speed_median_mps": 1.169,
      "planted_push_m": 0.712,
+     "toe_min_y_m": -0.036,
      "left_contact_start_phase": -1.0,
      "hips_y_min_m": 0.831,
      "hips_y_max_m": 0.881,
@@ -391,6 +405,7 @@
      "loop": false,
      "planted_foot_speed_median_mps": 0.506,
      "planted_push_m": 0.999,
+     "toe_min_y_m": 0.004,
      "left_contact_start_phase": -1.0,
      "hips_y_min_m": 0.843,
      "hips_y_max_m": 0.891,
@@ -418,6 +433,7 @@
      "loop": false,
      "planted_foot_speed_median_mps": 0.362,
      "planted_push_m": 0.334,
+     "toe_min_y_m": -0.004,
      "left_contact_start_phase": 0.664,
      "hips_y_min_m": 0.878,
      "hips_y_max_m": 0.884,
@@ -445,6 +461,7 @@
      "loop": false,
      "planted_foot_speed_median_mps": 0.256,
      "planted_push_m": 0.306,
+     "toe_min_y_m": -0.011,
      "left_contact_start_phase": 0.802,
      "hips_y_min_m": 0.876,
      "hips_y_max_m": 0.881,
@@ -472,28 +489,29 @@
      "loop": true,
      "planted_foot_speed_median_mps": 4.295,
      "planted_push_m": 1.832,
+     "toe_min_y_m": 0.012,
      "left_contact_start_phase": 0.857,
      "speed_ref_mps": 4.3,
      "stride_m": 2.78,
-     "hips_y_min_m": 0.87,
-     "hips_y_max_m": 0.945,
+     "hips_y_min_m": 0.817,
+     "hips_y_max_m": 0.892,
      "left_hand_max_reach": {
       "reach_m": 0.466,
-      "height_m": 1.262,
+      "height_m": 1.209,
       "t_s": 0.13
      },
      "left_hand_y_range_m": [
-      0.966,
-      1.278
+      0.914,
+      1.226
      ],
      "right_hand_max_reach": {
       "reach_m": 0.448,
-      "height_m": 1.242,
+      "height_m": 1.189,
       "t_s": 0.55
      },
      "right_hand_y_range_m": [
-      0.956,
-      1.273
+      0.903,
+      1.221
      ]
     },
     "walk_mid": {
@@ -501,28 +519,29 @@
      "loop": true,
      "planted_foot_speed_median_mps": 2.454,
      "planted_push_m": 1.028,
+     "toe_min_y_m": 0.011,
      "left_contact_start_phase": 0.881,
      "speed_ref_mps": 2.45,
      "stride_m": 1.72,
-     "hips_y_min_m": 0.868,
-     "hips_y_max_m": 0.96,
+     "hips_y_min_m": 0.829,
+     "hips_y_max_m": 0.922,
      "left_hand_max_reach": {
       "reach_m": 0.357,
-      "height_m": 1.113,
+      "height_m": 1.074,
       "t_s": 0.53
      },
      "left_hand_y_range_m": [
-      0.999,
-      1.184
+      0.96,
+      1.145
      ],
      "right_hand_max_reach": {
       "reach_m": 0.345,
-      "height_m": 1.03,
+      "height_m": 0.991,
       "t_s": 0.32
      },
      "right_hand_y_range_m": [
-      1.002,
-      1.201
+      0.963,
+      1.162
      ]
     },
     "walk_slow": {
@@ -530,6 +549,7 @@
      "loop": true,
      "planted_foot_speed_median_mps": 1.494,
      "planted_push_m": 1.511,
+     "toe_min_y_m": -0.004,
      "left_contact_start_phase": 0.577,
      "speed_ref_mps": 1.49,
      "stride_m": 1.54,
@@ -599,6 +619,7 @@
      "loop": true,
      "planted_foot_speed_median_mps": 0.012,
      "planted_push_m": 0.021,
+     "toe_min_y_m": 0.004,
      "left_contact_start_phase": -1.0,
      "hips_y_min_m": 0.875,
      "hips_y_max_m": 0.877,
@@ -626,6 +647,7 @@
      "loop": true,
      "planted_foot_speed_median_mps": 0.011,
      "planted_push_m": 0.018,
+     "toe_min_y_m": 0.005,
      "left_contact_start_phase": -1.0,
      "hips_y_min_m": 0.876,
      "hips_y_max_m": 0.878,
@@ -653,6 +675,7 @@
      "loop": false,
      "planted_foot_speed_median_mps": 0.008,
      "planted_push_m": 0.039,
+     "toe_min_y_m": -0.004,
      "left_contact_start_phase": -1.0,
      "hips_y_min_m": 0.877,
      "hips_y_max_m": 0.881,
@@ -680,6 +703,7 @@
      "loop": false,
      "planted_foot_speed_median_mps": 0.011,
      "planted_push_m": 0.036,
+     "toe_min_y_m": 0.004,
      "left_contact_start_phase": -1.0,
      "hips_y_min_m": 0.872,
      "hips_y_max_m": 0.876,
@@ -707,6 +731,7 @@
      "loop": false,
      "planted_foot_speed_median_mps": 0.159,
      "planted_push_m": 0.816,
+     "toe_min_y_m": -0.012,
      "left_contact_start_phase": 0.202,
      "hips_y_min_m": 0.85,
      "hips_y_max_m": 0.881,
@@ -734,6 +759,7 @@
      "loop": false,
      "planted_foot_speed_median_mps": 0.09,
      "planted_push_m": 0.533,
+     "toe_min_y_m": -0.002,
      "left_contact_start_phase": -1.0,
      "hips_y_min_m": 0.863,
      "hips_y_max_m": 0.879,
@@ -761,6 +787,7 @@
      "loop": false,
      "planted_foot_speed_median_mps": 0.022,
      "planted_push_m": 0.103,
+     "toe_min_y_m": 0.001,
      "left_contact_start_phase": -1.0,
      "hips_y_min_m": 0.869,
      "hips_y_max_m": 0.877,
@@ -788,6 +815,7 @@
      "loop": false,
      "planted_foot_speed_median_mps": 0.013,
      "planted_push_m": 0.029,
+     "toe_min_y_m": 0.009,
      "left_contact_start_phase": -1.0,
      "hips_y_min_m": 0.874,
      "hips_y_max_m": 0.876,
@@ -815,6 +843,7 @@
      "loop": false,
      "planted_foot_speed_median_mps": 0.013,
      "planted_push_m": 0.043,
+     "toe_min_y_m": 0.003,
      "left_contact_start_phase": -1.0,
      "hips_y_min_m": 0.869,
      "hips_y_max_m": 0.877,
@@ -842,6 +871,7 @@
      "loop": false,
      "planted_foot_speed_median_mps": 0.017,
      "planted_push_m": 0.067,
+     "toe_min_y_m": -0.006,
      "left_contact_start_phase": -1.0,
      "hips_y_min_m": 0.872,
      "hips_y_max_m": 0.879,
@@ -869,6 +899,7 @@
      "loop": false,
      "planted_foot_speed_median_mps": 0.011,
      "planted_push_m": 0.02,
+     "toe_min_y_m": -0.004,
      "left_contact_start_phase": -1.0,
      "hips_y_min_m": 0.876,
      "hips_y_max_m": 0.877,
@@ -896,28 +927,29 @@
      "loop": true,
      "planted_foot_speed_median_mps": 2.454,
      "planted_push_m": 1.028,
+     "toe_min_y_m": 0.008,
      "left_contact_start_phase": 0.881,
      "speed_ref_mps": 2.45,
      "stride_m": 1.72,
-     "hips_y_min_m": 0.865,
-     "hips_y_max_m": 0.957,
+     "hips_y_min_m": 0.826,
+     "hips_y_max_m": 0.919,
      "left_hand_max_reach": {
       "reach_m": 0.357,
-      "height_m": 1.11,
+      "height_m": 1.071,
       "t_s": 0.53
      },
      "left_hand_y_range_m": [
-      0.996,
-      1.181
+      0.957,
+      1.142
      ],
      "right_hand_max_reach": {
       "reach_m": 0.345,
-      "height_m": 1.027,
+      "height_m": 0.988,
       "t_s": 0.32
      },
      "right_hand_y_range_m": [
-      0.999,
-      1.198
+      0.96,
+      1.159
      ]
     },
     "sample": {
@@ -925,6 +957,7 @@
      "loop": true,
      "planted_foot_speed_median_mps": 0.007,
      "planted_push_m": 0.01,
+     "toe_min_y_m": 0.042,
      "left_contact_start_phase": -1.0,
      "hips_y_min_m": 0.4,
      "hips_y_max_m": 0.406,
@@ -952,6 +985,7 @@
      "loop": false,
      "planted_foot_speed_median_mps": 1.169,
      "planted_push_m": 0.712,
+     "toe_min_y_m": -0.039,
      "left_contact_start_phase": -1.0,
      "hips_y_min_m": 0.828,
      "hips_y_max_m": 0.878,
@@ -979,6 +1013,7 @@
      "loop": false,
      "planted_foot_speed_median_mps": 0.506,
      "planted_push_m": 0.999,
+     "toe_min_y_m": 0.001,
      "left_contact_start_phase": -1.0,
      "hips_y_min_m": 0.84,
      "hips_y_max_m": 0.888,
@@ -1006,6 +1041,7 @@
      "loop": true,
      "planted_foot_speed_median_mps": 1.494,
      "planted_push_m": 1.511,
+     "toe_min_y_m": -0.007,
      "left_contact_start_phase": 0.577,
      "speed_ref_mps": 1.49,
      "stride_m": 1.54,
@@ -1104,6 +1140,7 @@
      "loop": true,
      "planted_foot_speed_median_mps": 0.007,
      "planted_push_m": 0.012,
+     "toe_min_y_m": 0.005,
      "left_contact_start_phase": -1.0,
      "hips_y_min_m": 0.58,
      "hips_y_max_m": 0.581,
@@ -1131,6 +1168,7 @@
      "loop": false,
      "planted_foot_speed_median_mps": 0.005,
      "planted_push_m": 0.026,
+     "toe_min_y_m": -0.001,
      "left_contact_start_phase": -1.0,
      "hips_y_min_m": 0.581,
      "hips_y_max_m": 0.583,
@@ -1158,6 +1196,7 @@
      "loop": false,
      "planted_foot_speed_median_mps": 0.007,
      "planted_push_m": 0.023,
+     "toe_min_y_m": 0.005,
      "left_contact_start_phase": -1.0,
      "hips_y_min_m": 0.577,
      "hips_y_max_m": 0.58,
@@ -1185,6 +1224,7 @@
      "loop": false,
      "planted_foot_speed_median_mps": 0.097,
      "planted_push_m": 0.539,
+     "toe_min_y_m": -0.006,
      "left_contact_start_phase": 0.172,
      "hips_y_min_m": 0.563,
      "hips_y_max_m": 0.584,
@@ -1212,6 +1252,7 @@
      "loop": false,
      "planted_foot_speed_median_mps": 0.059,
      "planted_push_m": 0.352,
+     "toe_min_y_m": 0.0,
      "left_contact_start_phase": -1.0,
      "hips_y_min_m": 0.572,
      "hips_y_max_m": 0.582,
@@ -1239,6 +1280,7 @@
      "loop": false,
      "planted_foot_speed_median_mps": 0.014,
      "planted_push_m": 0.068,
+     "toe_min_y_m": 0.003,
      "left_contact_start_phase": -1.0,
      "hips_y_min_m": 0.575,
      "hips_y_max_m": 0.581,
@@ -1266,28 +1308,29 @@
      "loop": true,
      "planted_foot_speed_median_mps": 1.619,
      "planted_push_m": 0.698,
+     "toe_min_y_m": 0.008,
      "left_contact_start_phase": 0.869,
      "speed_ref_mps": 1.62,
      "stride_m": 1.13,
-     "hips_y_min_m": 0.573,
-     "hips_y_max_m": 0.633,
+     "hips_y_min_m": 0.548,
+     "hips_y_max_m": 0.608,
      "left_hand_max_reach": {
       "reach_m": 0.288,
-      "height_m": 0.746,
+      "height_m": 0.72,
       "t_s": 0.5
      },
      "left_hand_y_range_m": [
-      0.65,
-      0.765
+      0.624,
+      0.74
      ],
      "right_hand_max_reach": {
       "reach_m": 0.276,
-      "height_m": 0.771,
+      "height_m": 0.746,
       "t_s": 0.17
      },
      "right_hand_y_range_m": [
-      0.672,
-      0.787
+      0.647,
+      0.761
      ]
     },
     "stop_walk_l": {
@@ -1295,6 +1338,7 @@
      "loop": false,
      "planted_foot_speed_median_mps": 0.47,
      "planted_push_m": 0.47,
+     "toe_min_y_m": -0.024,
      "left_contact_start_phase": 0.789,
      "hips_y_min_m": 0.549,
      "hips_y_max_m": 0.582,
@@ -1322,6 +1366,7 @@
      "loop": false,
      "planted_foot_speed_median_mps": 0.526,
      "planted_push_m": 0.66,
+     "toe_min_y_m": 0.003,
      "left_contact_start_phase": 0.756,
      "hips_y_min_m": 0.557,
      "hips_y_max_m": 0.588,
@@ -1349,6 +1394,7 @@
      "loop": true,
      "planted_foot_speed_median_mps": 0.971,
      "planted_push_m": 0.965,
+     "toe_min_y_m": -0.002,
      "left_contact_start_phase": 0.561,
      "speed_ref_mps": 0.97,
      "stride_m": 1.0,
@@ -1539,6 +1585,58 @@
     0.04,
     0.04,
     0.0
+   ]
+  }
+ },
+ "stop_simulation": {
+  "captain_4.2_plain_blend": {
+   "v0_mps": 4.2,
+   "decel_mps2": 16.0,
+   "steady_planted_slide_m_per_s": 0.051,
+   "braking_planted_slide_m": 0.456,
+   "brake_time_s": 0.25,
+   "braking_distance_m": 0.55,
+   "clips": [
+    "walk",
+    "idle"
+   ]
+  },
+  "captain_4.2_distance_matched": {
+   "v0_mps": 4.2,
+   "decel_mps2": 16.0,
+   "steady_planted_slide_m_per_s": 0.129,
+   "braking_planted_slide_m": 0.474,
+   "brake_time_s": 0.25,
+   "braking_distance_m": 0.55,
+   "clips": [
+    "walk",
+    "stop_walk_l",
+    "idle"
+   ]
+  },
+  "captain_7.0_plain_blend": {
+   "v0_mps": 7.0,
+   "decel_mps2": 16.0,
+   "steady_planted_slide_m_per_s": 0.03,
+   "braking_planted_slide_m": 0.903,
+   "brake_time_s": 0.43,
+   "braking_distance_m": 1.53,
+   "clips": [
+    "run",
+    "idle"
+   ]
+  },
+  "captain_7.0_distance_matched": {
+   "v0_mps": 7.0,
+   "decel_mps2": 16.0,
+   "steady_planted_slide_m_per_s": 0.0,
+   "braking_planted_slide_m": 0.426,
+   "brake_time_s": 0.43,
+   "braking_distance_m": 1.53,
+   "clips": [
+    "run",
+    "stop_run_r",
+    "idle"
    ]
   }
  }

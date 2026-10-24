@@ -64,11 +64,100 @@ static func build(slot: String, states: Dictionary, out_dir: String = LIB_DIR) -
 	if lib.get_animation_list().is_empty():
 		report["ok"] = false
 		return report
+	report["ground_fix_m"] = ground_fix(slot, lib)
 	DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path(out_dir))
 	var path := out_dir.path_join(slot + ".res")
 	ResourceSaver.save(lib, path)
 	report["library"] = path
 	return report
+
+
+## Feet on the floor: Synty's run/sprint/run-stop clips keep the ball of the foot
+## 5-9 cm above the floor on the retargeted rigs (walk and idle touch it), so the
+## character hovered while running. Plays each locomotion clip (gaits, stops,
+## turns) on the slot's prefab, finds the lowest ball-of-foot height and lowers
+## the Hips track so it matches idle's. Returns {clip: metres lowered}.
+static func ground_fix(slot: String, lib: AnimationLibrary) -> Dictionary:
+	var out := {}
+	var prefab := "res://art/prefabs/%s.tscn" % slot
+	if not ResourceLoader.exists(prefab) or not lib.has_animation("idle"):
+		return out
+	var model: Node3D = (load(prefab) as PackedScene).instantiate()
+	var found := model.find_children("GeneralSkeleton", "Skeleton3D", true, false)
+	if found.is_empty():
+		model.free()
+		return out
+	var sk: Skeleton3D = found[0]
+	# Model-space scale of the skeleton (wrapper fit, e.g. x0.66 for children), no tree needed.
+	var xf := Transform3D.IDENTITY
+	var n: Node = sk
+	while n != null and n is Node3D:
+		xf = (n as Node3D).transform * xf
+		n = n.get_parent()
+	var ref := _toe_min(sk, xf, lib.get_animation("idle"))
+	for name: StringName in lib.get_animation_list():
+		var s := String(name)
+		if not (s in CharacterAnimator.GAITS or s.begins_with("stop_") or s.begins_with("turn_")):
+			continue
+		var anim := lib.get_animation(name)
+		var lift := _toe_min(sk, xf, anim) - ref
+		if lift < 0.015:
+			continue
+		var scale_y := xf.basis.get_scale().y
+		for t: int in anim.get_track_count():
+			if anim.track_get_type(t) == Animation.TYPE_POSITION_3D and _bone(anim.track_get_path(t)) == "Hips":
+				for k: int in anim.track_get_key_count(t):
+					var v: Vector3 = anim.track_get_key_value(t, k)
+					anim.track_set_key_value(t, k, v - Vector3(0, lift / scale_y, 0))
+		out[s] = snappedf(lift, 0.001)
+	model.free()
+	return out
+
+
+## Lowest ball-of-foot height (model space) over the clip, posing the skeleton
+## straight from the tracks (own forward kinematics along the toe chains: works
+## without a scene tree, where Skeleton3D does not refresh its global poses).
+static func _toe_min(sk: Skeleton3D, xf: Transform3D, anim: Animation) -> float:
+	var lo := INF
+	var tracks := {}  # bone -> [pos track, rot track, scale track]
+	for t: int in anim.get_track_count():
+		var b := sk.find_bone(_bone(anim.track_get_path(t)))
+		if b < 0:
+			continue
+		var slots: Array = tracks.get(b, [-1, -1, -1])
+		match anim.track_get_type(t):
+			Animation.TYPE_POSITION_3D: slots[0] = t
+			Animation.TYPE_ROTATION_3D: slots[1] = t
+			Animation.TYPE_SCALE_3D: slots[2] = t
+		tracks[b] = slots
+	var chain := {}
+	for toe: String in ["LeftToes", "RightToes"]:
+		var b := sk.find_bone(toe)
+		while b >= 0:
+			chain[b] = true
+			b = sk.get_bone_parent(b)
+	var order: Array = chain.keys()
+	order.sort()  # Skeleton3D keeps parents before children
+	for i: int in 61:
+		var time := anim.length * i / 60.0
+		var glob := {}
+		for b: int in order:
+			var rest := sk.get_bone_rest(b)
+			var pos := rest.origin
+			var rot := rest.basis.get_rotation_quaternion()
+			var scl := rest.basis.get_scale()
+			var tr: Array = tracks.get(b, [-1, -1, -1])
+			if tr[0] >= 0: pos = anim.position_track_interpolate(tr[0], time)
+			if tr[1] >= 0: rot = anim.rotation_track_interpolate(tr[1], time)
+			if tr[2] >= 0: scl = anim.scale_track_interpolate(tr[2], time)
+			var local := Transform3D(Basis(rot).scaled(scl), pos)
+			var par := sk.get_bone_parent(b)
+			glob[b] = (glob[par] as Transform3D) * local if glob.has(par) else local
+		for toe: String in ["LeftToes", "RightToes"]:
+			var tb := sk.find_bone(toe)
+			if glob.has(tb):
+				lo = minf(lo, (xf * (glob[tb] as Transform3D)).origin.y)
+	return lo
 
 
 ## Every source file a spec needs (for retargeting before the build).
