@@ -52,6 +52,7 @@ func _ready() -> void:
 	planet.scale = Vector3.ONE * 3.0
 	planet.position = Vector3(0, -120, -LENGTH - 300.0)
 	add_child(planet)
+	PlanetLook.apply(planet, str(p.get("biome_id", "green")), str(p.get("palette", {}).get("nature", "")), hash(pid))
 	ship = Node3D.new()
 	ship.add_child(VisualSlot.make("space.ark_exterior"))
 	add_child(ship)

@@ -96,7 +96,7 @@
       "ok": true
     },
     {
-      "detail": "I_power_coupling:<Area3D#245584893113>",
+      "detail": "I_power_coupling:<Area3D#247765931196>",
       "name": "prompt_targets_coupling",
       "ok": true
     },
@@ -274,5 +274,5 @@
   "engine_version": "4.7.1-stable (official)",
   "failures": [],
   "status": "PASS",
-  "timestamp": "2026-10-24T09:17:35"
+  "timestamp": "2026-10-24T09:24:42"
 }
