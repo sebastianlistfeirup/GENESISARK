@@ -686,7 +686,7 @@ func _prepare_drop_pod() -> void:
 		return
 	_pod = DropPod.new()
 	_pod.name = "DropPod"
-	_pod.async_bake = true  # the local scan paint streams in while the pod is hidden
+	_pod.async_bake = not AppFlow.test_mode  # the local scan paint streams in while the pod is hidden
 	add_child(_pod)
 	_pod.target = captain
 	var ground := Color(str(terrain.style.get("ground", terrain.palette.get("nature", "#8a7a60"))))

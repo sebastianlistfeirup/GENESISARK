@@ -886,6 +886,15 @@ func _load_bake() -> void:
 	set_process(true)
 
 
+## Never leave a loader thread behind (scene change or quit mid-load).
+func _exit_tree() -> void:
+	if _bake_pending:
+		_bake_pending = false
+		for f: String in BAKE_FILES:
+			if ResourceLoader.load_threaded_get_status(BAKE_DIR + f) != ResourceLoader.THREAD_LOAD_INVALID_RESOURCE:
+				ResourceLoader.load_threaded_get(BAKE_DIR + f)
+
+
 func _poll_bake() -> void:
 	var done := 0
 	for f: String in BAKE_FILES:
