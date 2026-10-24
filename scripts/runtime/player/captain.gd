@@ -10,9 +10,11 @@ signal hold_progress(fraction: float)
 @export var walk_speed: float = 4.2
 @export var run_speed: float = 7.0
 ## Calm, weighty feel (no twitch): ~0.3 s to full walk, slightly faster stop,
-## body turns over ~0.25 s instead of snapping to the stick.
+## body turns over ~0.25 s instead of snapping to the stick. Braking 16 m/s2
+## (D-040): long enough for the distance-matched stop clip to read (0.55 m from
+## 4.2 m/s, 1.5 m from a 7 m/s run), still under 0.45 s.
 @export var acceleration: float = 14.0
-@export var deceleration: float = 19.0
+@export var deceleration: float = 16.0
 @export var turn_speed: float = 8.0
 @export var gravity_scale: float = 1.0
 
@@ -30,6 +32,15 @@ var _anim: CharacterAnimator
 var _slot: VisualSlot
 ## EVA helmet outdoors; the surface scene sets this before adding the captain.
 var wear_helmet := false
+var _interact_left := 0.0
+
+## Below this speed a start towards a direction far off the facing turns first.
+const START_TURN_SPEED := 1.5
+## Lean into curves: radians of roll per (rad/s yaw x m/s), capped at ~9 degrees.
+const LEAN_PER_RAD_MPS := 0.0125
+const LEAN_MAX := 0.157
+## Seconds the console-press clip shows after an instant interaction.
+const INTERACT_S := 1.1
 
 const HELMET_PREFAB := "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Characters/SM_Chr_ScifiWorlds_SpaceSuit_Male_01.tscn"
 const HELMET_NODE := "SM_Chr_Attach_Helmet_Space_01"
@@ -89,30 +100,62 @@ func _physics_process(delta: float) -> void:
 	var target := dir * speed
 	var cur := Vector3(velocity.x, 0, velocity.z)
 	var rate := acceleration if target.length() > cur.length() else deceleration
+	# Starting off in a direction behind the body: pivot first (turn clip), then go,
+	# instead of skating backwards while the body spins round (D-040).
+	var facing := Vector3(-sin(visual_pivot.rotation.y), 0, -cos(visual_pivot.rotation.y))
+	var off := facing.signed_angle_to(dir, Vector3.UP) if dir.length() > 0.1 else 0.0
+	if target.length() > cur.length() and cur.length() < START_TURN_SPEED:
+		rate *= lerpf(0.3, 1.0, clampf(cos(off), 0.0, 1.0))
 	var hv := cur.move_toward(target, rate * delta)
 	velocity.x = hv.x
 	velocity.z = hv.z
 	move_and_slide()
-	if hv.length() > 0.2:
-		var want := atan2(-hv.x, -hv.z)
+	var yaw_before := visual_pivot.rotation.y
+	if hv.length() > 0.2 or (dir.length() > 0.1 and absf(off) > deg_to_rad(40.0)):
+		var head := hv if hv.length() > 0.2 else dir
+		var want := atan2(-head.x, -head.z)
 		visual_pivot.rotation.y = lerp_angle(visual_pivot.rotation.y, want, 1.0 - exp(-turn_speed * delta))
 		_probe.rotation.y = visual_pivot.rotation.y
 		_step_accum += hv.length() * delta
 		if _step_accum > 1.6 and is_on_floor():
 			_step_accum = 0.0
 			AudioService.play_variant(footstep_slot, "SFX", -14.0)
+	elif current_target and (_interact_left > 0.0 or _hold > 0.0):
+		# Face the console / sample being worked on (the turn clip covers the pivot).
+		var to := current_target.global_position - global_position
+		if Vector2(to.x, to.z).length() > 0.2:
+			visual_pivot.rotation.y = lerp_angle(visual_pivot.rotation.y, atan2(-to.x, -to.z), 1.0 - exp(-turn_speed * 0.6 * delta))
+			_probe.rotation.y = visual_pivot.rotation.y
+	var yaw_rate := angle_difference(yaw_before, visual_pivot.rotation.y) / maxf(delta, 0.0001)
+	_lean(yaw_rate, hv.length(), delta)
 	_update_target()
 	_update_hold(delta)
+	_interact_left = maxf(_interact_left - delta, 0.0)
 	if _anim.active():
 		var spd := Vector2(velocity.x, velocity.z).length()
 		var st := "idle"
+		var stop_d := -1.0
 		if _hold > 0.0:
 			st = "sample"
+		elif spd < 1.2 and dir.length() > 0.1 and absf(yaw_rate) > 2.0:
+			st = "turn_l" if yaw_rate > 0.0 else "turn_r"
+		elif dir.length() < 0.1 and spd > 0.05:
+			stop_d = spd * spd / (2.0 * deceleration)  # braking at a constant rate: distance left
 		elif spd > walk_speed + 0.3:
 			st = "run"
 		elif spd > 0.2:
 			st = "walk"
-		_anim.update(st, spd)
+		elif _interact_left > 0.0:
+			st = "interact"
+		_anim.update(st, absf(yaw_rate) if st.begins_with("turn") else spd, target.length(), stop_d)
+
+
+## Leans the body into curves around the feet, like a runner (roll ~ yaw rate x speed).
+func _lean(yaw_rate: float, spd: float, delta: float) -> void:
+	if _slot == null:
+		return
+	var want := clampf(yaw_rate * spd * LEAN_PER_RAD_MPS, -LEAN_MAX, LEAN_MAX)
+	_slot.rotation.z = lerpf(_slot.rotation.z, want, 1.0 - exp(-10.0 * delta))
 
 
 func _update_target() -> void:
@@ -162,6 +205,7 @@ func _unhandled_input(event: InputEvent) -> void:
 	if not input_enabled:
 		return
 	if event.is_action_pressed("interact") and current_target and current_target.hold_time <= 0.0:
+		_interact_left = INTERACT_S
 		current_target.use()
 		get_viewport().set_input_as_handled()
 
