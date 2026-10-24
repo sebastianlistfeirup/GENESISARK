@@ -32,6 +32,28 @@ func _ready() -> void:
 			var idx := AudioServer.bus_count - 1
 			AudioServer.set_bus_name(idx, b)
 			AudioServer.set_bus_send(idx, "Master")
+	# ARK's voice: its own bus into Voice (so the voice volume still governs it) with a
+	# light ship-AI colour — a thin band cut, a whisper of chorus and a small metal
+	# room. Recordings stay clean (VO_SCRIPT direction).
+	if AudioServer.get_bus_index("VoiceArk") == -1:
+		AudioServer.add_bus()
+		var ai := AudioServer.bus_count - 1
+		AudioServer.set_bus_name(ai, "VoiceArk")
+		AudioServer.set_bus_send(ai, "Voice")
+		var hp := AudioEffectHighPassFilter.new()
+		hp.cutoff_hz = 140.0
+		AudioServer.add_bus_effect(ai, hp)
+		var ch := AudioEffectChorus.new()
+		ch.voice_count = 2
+		ch.wet = 0.18
+		ch.dry = 1.0
+		AudioServer.add_bus_effect(ai, ch)
+		var rv := AudioEffectReverb.new()
+		rv.room_size = 0.32
+		rv.damping = 0.6
+		rv.wet = 0.12
+		rv.dry = 1.0
+		AudioServer.add_bus_effect(ai, rv)
 	var ov: Variant = DictUtil.load_json("res://data/art/audio_slots.json")
 	if ov is Dictionary:
 		_overrides = DictUtil.get_dict(ov, "slots")
@@ -242,6 +264,7 @@ func play_voice(line_id: String) -> float:
 				_voice.bus = "Voice"
 				add_child(_voice)
 			_voice.stream = st
+			_voice.bus = "VoiceArk" if _speaker_of(line_id) == "ARK" else "Voice"
 			_voice.play()
 			return st.get_length()
 	return 0.0
@@ -281,3 +304,17 @@ func set_music(slot: String) -> void:
 		_music.play()
 	else:
 		_music.stop()
+
+
+var _speakers: Dictionary = {}  # line_id -> speaker (from data/story/scenes.json)
+
+
+func _speaker_of(line_id: String) -> String:
+	if _speakers.is_empty():
+		var d: Variant = DictUtil.load_json("res://data/story/scenes.json")
+		var scenes: Array = DictUtil.get_arr(d, "scenes") if d is Dictionary else (d if d is Array else [])
+		for sc: Variant in scenes:
+			var lines: Array = DictUtil.get_arr(sc, "lines")
+			for i: int in lines.size():
+				_speakers["%s_%02d" % [str((sc as Dictionary).get("id", "")), i + 1]] = str((lines[i] as Dictionary).get("speaker", ""))
+	return str(_speakers.get(line_id, ""))
