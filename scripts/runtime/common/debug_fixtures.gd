@@ -59,6 +59,14 @@ static func prepare(setup: String) -> void:
 			if b["def_id"] == "habitat":
 				sim.colony.add_module(gs, int(b["id"]), req)
 	PlacementHelper.run_days(sim, 40)
+	# Dark and frozen worlds (Umbra, Nivalis): solar alone cannot carry the care
+	# center, so incubation never started and the colony never grew. Add steady
+	# geothermal power until every building runs, like a player would (D-045).
+	for i: int in 6:
+		if sim.population.incubation_blockers(gs, 10).is_empty() or float(gs.colony.last_report.get("power", {}).get("surplus_kw", 0.0)) >= 8.0:
+			break
+		PlacementHelper.place_near(sim, "geothermal_generator")
+		PlacementHelper.run_days(sim, 15)
 	sim.population.start_incubation(gs, 10, "dbg:inc")
 	PlacementHelper.run_days(sim, 10)
 	if kind == "grown":
