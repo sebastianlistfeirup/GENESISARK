@@ -54,8 +54,11 @@ void sky() {
 	float w2 = fbm(q * 1.9 + vec3(4.0, seed, 1.0) + w1 * 1.6);
 	float n_teal = fbm(d * 2.4 + vec3(17.0, 3.0, seed) + w2 * 0.9);
 	float detail = fbm(d * 7.0 + w2 * 2.0 + 9.0);
-	float sun_on = LIGHT0_ENABLED ? 1.0 : 0.0;
-	vec3 sd = LIGHT0_DIRECTION;
+	// No directional light (the ship interior): no sun, and no NaN from a
+	// zero direction (a NaN here spreads through the glow pass and blacks out
+	// the whole frame).
+	float sun_on = (LIGHT0_ENABLED && dot(LIGHT0_DIRECTION, LIGHT0_DIRECTION) > 0.5) ? 1.0 : 0.0;
+	vec3 sd = sun_on > 0.5 ? normalize(LIGHT0_DIRECTION) : vec3(0.0, 1.0, 0.0);
 	float sun_dot = max(dot(d, sd), 0.0) * sun_on;
 
 	vec3 col = base_color;
@@ -72,7 +75,7 @@ void sky() {
 	// dark dust lanes through the banks
 	col *= mix(1.0, 0.38, smoothstep(0.56, 0.78, fbm(d * 5.0 + 23.0 + w1)) * (1.0 - fire * 0.7));
 	// sun: white-hot disc, halo and a horizontal anamorphic streak
-	float ang = acos(clamp(dot(d, sd), -1.0, 1.0));
+	float ang = acos(clamp(dot(d, sd), -0.9999, 0.9999));
 	float disc = smoothstep(sun_size, sun_size * 0.7, ang) * sun_on;
 	col += vec3(1.0, 0.95, 0.85) * disc * sun_energy;
 	col += vec3(1.0, 0.8, 0.55) * pow(sun_dot, 400.0) * 3.0;

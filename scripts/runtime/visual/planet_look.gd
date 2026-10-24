@@ -16,8 +16,6 @@ const BIOMES := {
 	"desert": {"ocean": "#6b3d22", "high": "#f0d6a8", "atmo": "#ffb070", "sea": 0.36, "clouds": 0.12, "banding": 0.65},
 	"ice": {"ocean": "#4e6f86", "high": "#ffffff", "atmo": "#bfe4ff", "sea": 0.42, "clouds": 0.35, "banding": 0.2},
 }
-## Biome -> a planet id whose sheet look stands in when a caller has no id.
-const BIOME_DEFAULT := {"green": "viridia", "desert": "sere", "ice": "nivalis"}
 
 static var _doc: Dictionary = {}
 static var _tex: Dictionary = {}
@@ -30,7 +28,9 @@ static func apply(slot: VisualSlot, biome: String, tint: String, seed: int, plan
 		return
 	if slot.using_asset:
 		return
-	var m := synty_material(planet_id if not planet_id.is_empty() else str(BIOME_DEFAULT.get(biome, "")), seed)
+	# Only callers that name a planet get the sheet look (space views); the
+	# surface skies' moons keep the procedural look.
+	var m := synty_material(planet_id, seed) if not planet_id.is_empty() else null
 	var ring: Dictionary = {}
 	if m != null:
 		ring = DictUtil.get_dict(DictUtil.get_dict(DictUtil.get_dict(_data(), "planets"), planet_id), "ring")

@@ -91,7 +91,7 @@ func _backdrop(gs: GameState) -> void:
 	planet.position = Vector3(95, -10, -175)
 	planet.scale = Vector3.ONE * 1.0
 	_world.add_child(planet)
-	PlanetLook.apply(planet, biome, tint, hash(pid))
+	PlanetLook.apply(planet, biome, tint, hash(pid), pid)
 	planet.rebuilt.connect(func() -> void: _lights_on(planet), CONNECT_ONE_SHOT)
 	_lights_on(planet)
 	var ark := VisualSlot.make("space.ark_exterior")

@@ -193,7 +193,7 @@ func _hologram(rig: Node3D, spec: Dictionary) -> Node3D:
 	sm.radial_segments = 16
 	sm.rings = 8
 	globe.mesh = sm
-	globe.material_override = _holo_mat(Color(str(h.get("globe", "#ffb070"))), float(h.get("energy", 0.7)) * 0.8)
+	globe.material_override = _holo_mat(Color(str(h.get("globe", "#ffb070"))), float(h.get("energy", 0.7)) * 0.45)
 	root.add_child(globe)
 	return root
 
