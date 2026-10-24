@@ -61,6 +61,7 @@ var _horizon: MeshInstance3D
 var _sea: MeshInstance3D
 var _horizon_bits: Array[Node3D] = []
 var _mothership: Node3D
+var _ark_pending := false
 var _clouds: MultiMeshInstance3D
 var _plasma: MeshInstance3D
 var _plasma_mat: ShaderMaterial
@@ -100,9 +101,7 @@ func start(p_root: Node3D, p_terrain: TerrainBuilder, p_planet: Dictionary, p_ta
 	_alt = alt
 	_cam_pos = p - _vel.normalized() * 30.0 + Vector3.UP * 8.0
 	_cam_off = _cam_pos - p
-	if _mothership:
-		_mothership.global_position = p - _vel.normalized() * 260.0 + Vector3.UP * 70.0 + _vel.normalized().cross(Vector3.UP) * 90.0
-		_mothership.look_at(_mothership.global_position + _vel.normalized().cross(Vector3.UP), Vector3.UP)
+	_ark_pending = _mothership != null
 	_phase = _phase_for(alt)
 	_set_sky(alt > SWITCH_ALT)
 	AudioService.set_ambience_any(["amb_space"])
@@ -669,6 +668,13 @@ func _process(delta: float) -> void:
 		_fog_for_alt(_alt)
 	_update_fx(delta, pos)
 	_update_camera(delta, pos)
+	if _ark_pending:
+		# Just undocked: the Ark hangs in orbit high in the frame, the lander dives away from it.
+		_ark_pending = false
+		var cb := _cam.global_basis
+		_mothership.scale = Vector3.ONE * 7.0
+		_mothership.global_position = _cam.global_position - cb.z * 1150.0 + cb.x * 360.0 + cb.y * 300.0
+		_mothership.look_at(_mothership.global_position + cb.x, Vector3.UP)
 	_update_hud(hdist)
 
 
