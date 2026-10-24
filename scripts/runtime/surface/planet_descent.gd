@@ -722,7 +722,9 @@ func _fly(delta: float, pos: Vector3, to: Vector3, hdist: float) -> void:
 		_manual_hold = 2.5
 	_manual_hold = maxf(0.0, _manual_hold - delta)
 	var hv := Vector3(_vel.x, 0.0, _vel.z)
-	var heading := hv.normalized() if hv.length() > 1.0 else to.normalized()
+	var heading := hv.normalized() if hv.length() > 1.0 else (to.normalized() if to.length() > 0.5 else -lander_body.global_basis.z)
+	heading.y = 0.0
+	heading = heading.normalized() if heading.length() > 0.01 else Vector3.FORWARD
 	# Cruise speed falls with altitude: orbital pace up high, a slow hover near the ground.
 	var cruise := lerpf(50.0, 330.0, smoothstep(120.0, 4200.0, _alt)) * (1.6 if Input.is_action_pressed("sprint") else 1.0)
 	var want_h: Vector3
@@ -865,7 +867,7 @@ func _update_fx(delta: float, pos: Vector3) -> void:
 	_plasma_mat.set_shader_parameter("heat", heat)
 	var fwd := _vel.normalized() if speed > 1.0 else -lander_body.global_basis.z
 	_plasma.global_position = pos + fwd * 2.5 * scale_k
-	_plasma.global_basis = Basis.looking_at(fwd, Vector3.UP if absf(fwd.y) < 0.98 else Vector3.FORWARD).scaled(Vector3(4.2, 3.4, 8.5) * scale_k)
+	_plasma.global_basis = Basis.looking_at(fwd, Vector3.UP if absf(fwd.y) < 0.98 else Vector3.FORWARD) * Basis.from_scale(Vector3(4.2, 3.4, 8.5) * scale_k)
 	_plasma.visible = heat > 0.01 and not _ascent
 	_streak_mat.set_shader_parameter("heat", heat)
 	(_vignette.material as ShaderMaterial).set_shader_parameter("heat", heat)
@@ -931,8 +933,9 @@ func _update_camera(delta: float, pos: Vector3) -> void:
 	if _landing:
 		look = pos
 	_cam.global_position = _cam_pos + Vector3(randf_range(-1, 1), randf_range(-1, 1), randf_range(-1, 1)) * _shake
-	if _cam.global_position.distance_to(look) > 0.1:
-		_cam.look_at(look, Vector3.UP)
+	var view := look - _cam.global_position
+	if view.length() > 0.1:
+		_cam.look_at(look, Vector3.UP if absf(view.normalized().y) < 0.98 else Vector3.FORWARD)
 	_cam.fov = lerpf(_cam.fov, lerpf(62.0, 78.0, clampf(speed / 520.0, 0.0, 1.0)), clampf(delta * 2.0, 0.0, 1.0))
 
 
