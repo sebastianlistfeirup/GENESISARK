@@ -77,6 +77,7 @@ var _white: ColorRect
 var _lbl_phase: Label
 var _lbl_data: Label
 var _lbl_hint: Label
+var _gauge: DescentHud
 var _sky_tint := Color(0.85, 0.9, 1.0)
 var _haze := Color(0.8, 0.86, 0.9)
 
@@ -563,12 +564,30 @@ func _build_hud() -> void:
 	_white.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_white.color = Color(_sky_tint.lightened(0.6), 0.0)
 	_hud.add_child(_white)
+	_gauge = DescentHud.new()
+	_gauge.switch_alt = SWITCH_ALT
+	_hud.add_child(_gauge)
+	# Readout in a framed strip at the top centre (the game's panel style).
+	var frame := PanelContainer.new()
+	frame.set_anchors_preset(Control.PRESET_CENTER_TOP)
+	frame.position = Vector2(-300, 18)
+	frame.custom_minimum_size = Vector2(600, 0)
+	var sb := StyleBoxFlat.new()
+	sb.bg_color = Color(UiKit.PANEL, 0.62)
+	sb.border_color = Color(UiKit.PETROL, 0.8)
+	sb.set_border_width_all(1)
+	sb.border_width_bottom = 3
+	sb.set_corner_radius_all(6)
+	sb.content_margin_left = 18
+	sb.content_margin_right = 18
+	sb.content_margin_top = 8
+	sb.content_margin_bottom = 8
+	frame.add_theme_stylebox_override("panel", sb)
+	frame.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_hud.add_child(frame)
 	var box := VBoxContainer.new()
-	box.set_anchors_preset(Control.PRESET_CENTER_TOP)
-	box.position = Vector2(-260, 26)
-	box.custom_minimum_size = Vector2(520, 0)
 	box.alignment = BoxContainer.ALIGNMENT_CENTER
-	_hud.add_child(box)
+	frame.add_child(box)
 	_lbl_phase = UiKit.label("", 26, UiKit.AMBER)
 	_lbl_phase.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_lbl_phase.add_theme_constant_override("outline_size", 8)
@@ -879,6 +898,18 @@ func _update_camera(delta: float, pos: Vector3) -> void:
 
 
 func _update_hud(hdist: float) -> void:
+	_gauge.alt = _alt
+	_gauge.position = Vector2.ZERO
+	_gauge.size = get_viewport().get_visible_rect().size
+	var site := target + Vector3.UP * 6.0
+	var behind := _cam.is_position_behind(site)
+	var px := _cam.unproject_position(site)
+	var vr := get_viewport().get_visible_rect().size
+	_gauge.site_on_screen = not behind and px.x > 30.0 and px.y > 30.0 and px.x < vr.x - 30.0 and px.y < vr.y - 30.0
+	_gauge.site_px = (vr - px) if behind else px  # behind the camera: point the other way
+	_gauge.site_text = Loc.t("SITE %s") % _fmt_m(hdist)
+	_gauge.visible = not _landing
+	_gauge.queue_redraw()
 	var names := {"space": Loc.t("LOW ORBIT"), "entry": Loc.t("ATMOSPHERIC ENTRY"), "atmos": Loc.t("DESCENT")}
 	_lbl_phase.text = Loc.t("TOUCHDOWN") if _landing else (Loc.t("LIFT-OFF") if _ascent and _alt < 120.0 else (Loc.t("CLIMB TO ORBIT") if _ascent else str(names.get(_phase, ""))))
 	_lbl_data.text = Loc.t("ALT %s · SPEED %d m/s · SITE %s · %s") % [_fmt_m(_alt), int(_vel.length()), _fmt_m(hdist),

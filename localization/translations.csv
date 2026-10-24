@@ -951,6 +951,9 @@ the orbital terminal,kredsløbsterminalen
 the planet comparison,planetsammenligningen
 the star map,stjernekortet
 the workbench,værkstedsbænken
+CLOUDS,SKYER
+GROUND,JORD
+ORBIT,KREDSLØB
 ALT %s · SPEED %d m/s · SITE %s · %s,HØJDE %s · FART %d m/s · LANDINGSSTED %s · %s
 ATMOSPHERIC ENTRY,ATMOSFÆRISK INDTRÆDEN
 AUTOPILOT,AUTOPILOT
@@ -960,6 +963,7 @@ LANDING ASSIST,LANDINGSASSISTENT
 LIFT-OFF,LETTER
 LOW ORBIT,LAVT KREDSLØB
 MANUAL,MANUEL
+SITE %s,STED %s
 TOUCHDOWN,NEDSÆTNING
 [%s] autopilot / manual · [%s][%s] speed · [%s][%s] steer · [%s][%s] climb/dive · [%s] skip descent,[%s] autopilot / manuel · [%s][%s] fart · [%s][%s] styr · [%s][%s] stig/dyk · [%s] spring nedstigningen over
  Optional risk sample., Valgfri risikoprøve.
