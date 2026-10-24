@@ -63,7 +63,7 @@ func _ready() -> void:
 		reach.append(a[0])
 		for i: int in 8:
 			reach.append(a[0] + Vector2.from_angle(TAU * i / 8.0) * float(a[1]))
-	terrain.set_water_below(reach)
+	terrain.set_water_below(reach, false)
 	add_child(terrain)
 	terrain.build()
 	terrain.scatter(hash(gs.colony.site_id) + 1, 60 if GroundCover.spec_for(gs.colony.planet_id, "").is_empty() else 0, avoid)
@@ -588,6 +588,9 @@ func debug_action(action: String) -> void:
 			cam_rig.zoom = 30.0
 			if decision.visible:
 				decision.hide()
+			if event_dialog.visible:
+				event_dialog.hide()
+			cam_rig.zoom = 18.0
 		"event":
 			for id: String in GameSession.content.events.keys():
 				if GameSession.content.events[id].get("critical", false):
