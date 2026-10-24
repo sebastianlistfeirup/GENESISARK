@@ -338,10 +338,30 @@ func _relayout() -> void:
 		var dc: Array = DictUtil.get_arr(site["districts"][dk], "center")
 		if dc.size() == 2:
 			dl.append([dk, Vector2(float(dc[0]), float(dc[1])), DictUtil.get_float(site["districts"][dk], "radius") * dscale])
+	var rocks: Array = []  # the site's blocked rock formations (drawn ~1.1 x radius wide) and colliding plants
+	for bz: Dictionary in DictUtil.get_arr(site, "blocked"):
+		var bc: Array = DictUtil.get_arr(bz, "center")
+		if bc.size() == 2:
+			rocks.append([Vector2(float(bc[0]), float(bc[1])), DictUtil.get_float(bz, "radius") * 1.25 + 0.5])
+	if _cover:  # tree trunks and landmarks that collide: no market or parked rover grows through them
+		for n: Node in _cover.find_children("*", "CollisionShape3D", true, false):
+			var cs := n as CollisionShape3D
+			if cs.disabled or not cs.is_inside_tree():
+				continue
+			var r := 1.5
+			if cs.shape is CylinderShape3D:
+				r = (cs.shape as CylinderShape3D).radius
+			elif cs.shape is BoxShape3D:
+				r = maxf((cs.shape as BoxShape3D).size.x, (cs.shape as BoxShape3D).size.z) * 0.5
+			elif cs.shape is SphereShape3D:
+				r = (cs.shape as SphereShape3D).radius
+			rocks.append([Vector2(cs.global_position.x, cs.global_position.z), r + 0.8])
 	_dressing.rebuild(views, terrain, clear, float(lights.get(str(planet.get("id", "")), lights.get("_default", 0.45))), dl,
-		DictUtil.get_dict(DictUtil.get_dict(BuildingDressing.doc(), "night"), str(planet.get("id", ""))))
+		DictUtil.get_dict(DictUtil.get_dict(BuildingDressing.doc(), "night"), str(planet.get("id", ""))), _paths.roads, rocks)
+	_prune_cover(_dressing.street_area)  # no tree through a market stall or a parked rover
 	_paths.block_discs(_dressing.kept)  # walkers step around the crates and lamps
 	_life.relayout(gs, _paths)
+	_life.set_crowd(gs, _dressing.crowd)
 
 
 ## Where a road has to run through a corridor tube, the one tube module there is
@@ -820,6 +840,23 @@ func debug_action(action: String) -> void:
 		if event_dialog.visible:
 			event_dialog.hide()
 		get_viewport().warp_mouse(Vector2(get_viewport().get_visible_rect().size.x * 0.5, 160))  # no stray tooltip in the shot
+		return
+	if action.begins_with("market"):  # evidence: "market[:<n>[:<zoom>[:<yaw deg>]]]" close-up on the n-th market crowd spot
+		var parts := action.split(":")
+		var spots: Array = _dressing.crowd if _dressing else []
+		print("STREET_STATS ", _dressing.stats if _dressing else {})
+		if not spots.is_empty():
+			var p: Vector2 = (spots[mini(int(parts[1]) if parts.size() > 1 else 0, spots.size() - 1)] as Array)[0]
+			cam_rig.position = Vector3(p.x, terrain.height_at(p.x, p.y), p.y)
+		cam_rig.zoom = float(parts[2]) if parts.size() > 2 else 14.0
+		if parts.size() > 3:
+			cam_rig.target_yaw = deg_to_rad(float(parts[3]))
+			cam_rig.rotation.y = cam_rig.target_yaw
+		if decision.visible:
+			decision.hide()
+		if event_dialog.visible:
+			event_dialog.hide()
+		get_viewport().warp_mouse(Vector2(get_viewport().get_visible_rect().size.x * 0.5, 160))
 		return
 	match action:
 		"people":  # evidence: close-up on a walking colonist (the camera follows them)

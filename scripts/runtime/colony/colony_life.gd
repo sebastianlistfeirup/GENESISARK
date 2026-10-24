@@ -4,8 +4,9 @@ extends Node3D
 ## population data). Colonists walk door to door along the walking grid
 ## (ColonyPaths) and play their walk/idle clips; work robots circle the
 ## construction sites; drones hop between rooftops; a few hover vehicles drive
-## the dirt roads. Counts follow the colony's size; pack files that are missing
-## are skipped (the colonists fall back to their proxies).
+## the dirt roads; at the market corners (ColonyStreets) a few colonists stand
+## and browse, glancing around now and then. Counts follow the colony's size;
+## pack files that are missing are skipped (the colonists fall back to their proxies).
 
 const MAX_ROUTES_PER_FRAME := 3
 
@@ -16,6 +17,7 @@ var living_center := Vector2.ZERO
 var _people: Array = []    # [{node, anim, robot, route, i, wait, speed, seed}]
 var _drones: Array = []    # [{node, from, to, t, dur, wait, h, blink}]
 var _vehicles: Array = []  # [{node, road, s, dir, speed, wait, hover, len}]
+var _crowd: Array = []     # [{node, anim, yaw, look, t}] colonists standing at the market corners
 var _rng := RandomNumberGenerator.new()
 var _targets: Array = []   # Vector2 of construction sites
 var _doors: Array = []     # [Vector2 door, bool living]
@@ -28,10 +30,10 @@ func _init() -> void:
 	_rng.seed = 7331
 
 
-## Up to ~40 visible citizens illustrate the cohorts; robots show up at
-## construction sites (same counts as before this pass).
+## Up to data life.walkers.max visible citizens illustrate the cohorts; robots
+## show up at construction sites.
 func sync_people(gs: GameState) -> void:
-	var want_people := mini(40, gs.population.alive_count())
+	var want_people := mini(DictUtil.get_int(_life_cfg("walkers"), "max", 40), gs.population.alive_count())
 	_targets.clear()
 	for b: Dictionary in gs.colony.buildings:
 		if b["state"] == ColonyState.B_CONSTRUCTING:
@@ -129,6 +131,7 @@ func _process(delta: float) -> void:
 		(p["anim"] as CharacterAnimator).update("walk", float(p["speed"]))
 	_move_drones(delta)
 	_move_vehicles(delta)
+	_idle_crowd(delta)
 
 
 ## Work robots circle their construction site (as before), now animated.
@@ -287,6 +290,39 @@ func _move_vehicles(delta: float) -> void:
 		var y := terrain.height_at(p.x, p.y) + hv + (sin(_t * 2.1 + float(v["seed"])) * 0.06 if hv > 0.0 else 0.0)
 		node.position = Vector3(p.x, y, p.y)
 		node.rotation.y = lerp_angle(node.rotation.y, atan2(tan.x, tan.y), clampf(delta * 4.0, 0.0, 1.0))
+
+
+## Colonists standing at the market corners (spots [Vector2, yaw] from
+## ColonyDressing.crowd): as many as data life.crowd allows and the colony has
+## adults; respawned only when the spots change. Purely illustrative.
+func set_crowd(gs: GameState, spots: Array) -> void:
+	for c: Dictionary in _crowd:
+		(c["node"] as Node).queue_free()
+	_crowd.clear()
+	var cfg := _life_cfg("crowd")
+	var want := mini(mini(spots.size(), DictUtil.get_int(cfg, "max", 24)), gs.population.alive_count() / maxi(1, DictUtil.get_int(cfg, "per_people", 8)))
+	var kids_only := gs.population.count_stage("adult") == 0
+	for i: int in want:
+		var sp: Array = spots[i]
+		var p: Vector2 = sp[0]
+		var slot := "char.citizen_child" if kids_only or i % 5 == 4 else "char.citizen_adult"
+		var n := VisualSlot.make(slot)
+		n.variant = 100 + i
+		n.position = Vector3(p.x, terrain.height_at(p.x, p.y), p.y)
+		n.rotation.y = float(sp[1])
+		add_child(n)
+		_crowd.append({"node": n, "anim": CharacterAnimator.for_slot(n), "yaw": float(sp[1]), "look": 0.0, "t": _rng.randf_range(1.0, 6.0)})
+
+
+func _idle_crowd(delta: float) -> void:
+	for c: Dictionary in _crowd:
+		c["t"] = float(c["t"]) - delta
+		if float(c["t"]) <= 0.0:
+			c["t"] = _rng.randf_range(2.5, 8.0)
+			c["look"] = _rng.randf_range(-0.7, 0.7) if _rng.randf() < 0.6 else 0.0
+		var n: Node3D = c["node"]
+		n.rotation.y = lerp_angle(n.rotation.y, float(c["yaw"]) + float(c["look"]), clampf(delta * 2.0, 0.0, 1.0))
+		(c["anim"] as CharacterAnimator).update("idle", 0.0)
 
 
 ## Evidence: where a colonist is walking right now (or any colonist).

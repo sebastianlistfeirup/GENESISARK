@@ -20,7 +20,9 @@ static func plan(clear: ColonyClearance, kept: Array, districts: Array) -> Array
 	var near := DictUtil.get_float(cfg, "near", 7.0)
 	var spot_r := DictUtil.get_float(cfg, "spot_r", 0.9)
 	var ps := DictUtil.get_float(BuildingDressing.doc(), "prop_scale", 0.72)
-	var passes: Array = [[DictUtil.get_dict(cfg, "kits"), spot_r, 0.0], [DictUtil.get_dict(cfg, "lanes"), DictUtil.get_float(cfg, "lane_r", 0.4), DictUtil.get_float(cfg, "step", 3.2) * 0.5]]
+	var own: Dictionary = BuildingDressing.style_cfg("infill")  # the style's street furniture joins the shared kits
+	var passes: Array = [[_merged(DictUtil.get_dict(cfg, "kits"), DictUtil.get_dict(own, "kits")), spot_r, 0.0],
+		[_merged(DictUtil.get_dict(cfg, "lanes"), DictUtil.get_dict(own, "lanes")), DictUtil.get_float(cfg, "lane_r", 0.4), DictUtil.get_float(cfg, "step", 3.2) * 0.5]]
 	# Props already standing (building dressing) plus everything placed here.
 	var taken := ColonyClearance.new()
 	for k: Array in kept:
@@ -92,6 +94,20 @@ static func _pass(out: Array, clear: ColonyClearance, taken: ColonyClearance, di
 				taken.add_segment(q, q, rr)
 
 
+## Kit lists per district: the shared ones plus the style's ("_replace": [keys]
+## drops the shared list for those districts).
+static func _merged(base: Dictionary, extra: Dictionary) -> Dictionary:
+	if extra.is_empty():
+		return base
+	var out := base.duplicate()
+	var drop: Array = DictUtil.get_arr(extra, "_replace")
+	for k: String in extra.keys():
+		if k.begins_with("_"):
+			continue
+		out[k] = (DictUtil.get_arr(extra, k) if k in drop else DictUtil.get_arr(base, k) + DictUtil.get_arr(extra, k))
+	return out
+
+
 static func _district(p: Vector2, districts: Array) -> String:
 	var best := "_default"
 	var bd := INF
@@ -115,14 +131,18 @@ static func _pick(list: Array, rng: RandomNumberGenerator) -> Dictionary:
 	return list[0]
 
 
-## One prop standing on the ground at p (bounds centred), world space at y = 0.
-static func _item(it: Dictionary, p: Vector2, yaw: float, ps: float) -> Dictionary:
+## One prop standing on the ground at p (bounds centred), world space at y = 0
+## (+ lift metres). The set entry's "turn" (degrees) fixes a prefab whose front
+## is not +Z, so "facing" in the kits always means the prop's front.
+static func _item(it: Dictionary, p: Vector2, yaw: float, ps: float, lift: float = 0.0) -> Dictionary:
 	var pr: Dictionary = BuildingDressing.parts(str(it["mesh"]))
 	var box: AABB = pr["aabb"]
 	var sc := ps * DictUtil.get_float(it, "scale", 1.0)
 	var centre := Vector3(box.get_center().x, box.position.y, box.get_center().z)
-	var xf := Transform3D(Basis(Vector3.UP, yaw).scaled(Vector3.ONE * sc), Vector3(p.x, 0, p.y)) * Transform3D(Basis.IDENTITY, -centre)
+	yaw += deg_to_rad(DictUtil.get_float(it, "turn", 0.0))
+	var xf := Transform3D(Basis(Vector3.UP, yaw).scaled(Vector3.ONE * sc), Vector3(p.x, lift, p.y)) * Transform3D(Basis.IDENTITY, -centre)
 	var la: Array = DictUtil.get_arr(it, "light_at")
 	var lp := Vector3(float(la[0]), float(la[1]), float(la[2])) if la.size() == 3 else Vector3(box.get_center().x, box.end.y - box.size.y * 0.06, box.get_center().z)
 	return {"mesh": str(it["mesh"]), "xf": xf, "r": maxf(box.size.x, box.size.z) * 0.5 * sc, "light": str(it.get("light", "")), "light_at": lp,
-		"top": box.size.y * sc, "build": true, "kind": "infill"}
+		"top": box.size.y * sc, "build": true, "kind": "infill", "glow": str(it.get("glow", "")), "glow_at": box.get_center(),
+		"fx": str(it.get("fx", "")), "fx_scale": DictUtil.get_float(it, "fx_scale", 0.5), "fx_at": Vector3(box.get_center().x, box.end.y, box.get_center().z)}

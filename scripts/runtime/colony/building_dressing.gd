@@ -92,6 +92,16 @@ static func instance(short: String) -> Node3D:
 	return inst
 
 
+## The colony's architecture family ("explorer", "corp", "scav"; AssetSlots.style).
+static func style_key() -> String:
+	return AssetSlots.style if not AssetSlots.style.is_empty() else "explorer"
+
+
+## One section of this style's street look (data "styles" -> style -> section), {} when none.
+static func style_cfg(section: String) -> Dictionary:
+	return DictUtil.get_dict(DictUtil.get_dict(DictUtil.get_dict(doc(), "styles"), style_key()), section)
+
+
 static func spec(def_id: String) -> Dictionary:
 	var bs: Dictionary = DictUtil.get_dict(doc(), "buildings")
 	return DictUtil.get_dict(bs, def_id) if bs.has(def_id) else DictUtil.get_dict(bs, "_default")

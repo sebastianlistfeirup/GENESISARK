@@ -17,6 +17,11 @@ var _bulb_mesh: SphereMesh
 var kept: Array = []
 ## Evidence/debug: how many props were planned, kept on the first try, moved, and added as infill.
 var stats := {}
+## Where idle colonists stand and browse at the market corners: [Vector2, yaw] (ColonyLife).
+var crowd: Array = []
+## Ground the street life took (ColonyStreets items and crowd spots): plants growing there are pruned.
+var street_area := ColonyClearance.new()
+var _prop_fx: Array = []  # [Vector3 world position, slot, scale] from set entries with "fx" (smoking silos)
 
 static var _tint_cache: Dictionary = {}  # "mesh id|tint" -> Mesh
 var _on_platform: ColonyClearance  # footprints of the buildings that stand on platform tiles
@@ -29,7 +34,10 @@ var weather_world := ""
 ## corridors and roads. light_scale: lamp brightness for this world.
 ## districts: [[key, Vector2 centre, radius]] for the street furniture.
 ## night: this world's night look (data "night"): emissive boost, light pools, roof beacons.
-func rebuild(views: Dictionary, terrain: TerrainBuilder, clear: ColonyClearance, light_scale: float, districts: Array = [], night: Dictionary = {}) -> void:
+## roads: the road polylines (ColonyPaths.roads) for the roadside signs and parked vehicles.
+## avoid: [[Vector2, radius]] ground the street life keeps off (the site's rock formations).
+func rebuild(views: Dictionary, terrain: TerrainBuilder, clear: ColonyClearance, light_scale: float, districts: Array = [], night: Dictionary = {},
+		roads: Array = [], avoid: Array = []) -> void:
 	for c: Node in get_children():
 		remove_child(c)
 		c.queue_free()
@@ -38,7 +46,10 @@ func rebuild(views: Dictionary, terrain: TerrainBuilder, clear: ColonyClearance,
 	var lights: Array = []        # [Vector3 pos, Color]
 	var retry: Array = []         # [BuildingView, item]
 	kept.clear()
-	stats = {"planned": 0, "first": 0, "moved": 0, "infill": 0}
+	stats = {"planned": 0, "first": 0, "moved": 0, "infill": 0, "street": 0, "crowd": 0, "pools": 0}
+	_prop_fx = []
+	street_area = ColonyClearance.new()
+	crowd = []
 	_margin = BuildingDressing.platform_margin()
 	_on_platform = ColonyClearance.new()
 	for bid: int in views.keys():
@@ -98,7 +109,33 @@ func rebuild(views: Dictionary, terrain: TerrainBuilder, clear: ColonyClearance,
 			taken.add_segment(p, p, r * 0.8)
 			_emit(batches, ranges, lights, it, xf, vxf.origin.y, terrain)
 			break
+	var pools: Array = []
 	if not districts.is_empty():
+		# Street life first (markets need the open courtyards), then the furniture fills the lanes.
+		var room := ColonyClearance.new()
+		for k: Array in kept:
+			room.add_segment(k[0], k[0], float(k[1]) * 0.85)
+		for a: Array in avoid:
+			room.add_segment(a[0], a[0], float(a[1]))
+		var street: Dictionary = ColonyStreets.plan(clear, room, districts, roads)
+		for it: Dictionary in street["items"]:
+			var xf: Transform3D = it["xf"]
+			kept.append([Vector2(xf.origin.x, xf.origin.z), float(it["r"])])
+			if float(it["r"]) > 0.0:
+				var half := Vector2.ONE * float(it["r"])
+				street_area.add_rect(Rect2(Vector2(xf.origin.x, xf.origin.z) - half, half * 2.0), -1)
+			stats["street"] += 1
+			_emit(batches, ranges, lights, it, xf, 0.0, terrain)
+		crowd = street["crowd"]
+		for c: Array in crowd:
+			kept.append([c[0], 0.35])
+			street_area.add_rect(Rect2((c[0] as Vector2) - Vector2.ONE * 0.4, Vector2.ONE * 0.8), -1)
+		pools = street["pools"]
+		for pl: Array in pools:
+			kept.append([pl[0], (pl[1] as Vector2).x])
+		stats["crowd"] = crowd.size()
+		stats["street_counts"] = street["counts"]
+		stats["pools"] = pools.size()
 		for it: Dictionary in ColonyInfill.plan(clear, kept, districts):
 			var xf: Transform3D = it["xf"]
 			kept.append([Vector2(xf.origin.x, xf.origin.z), float(it["r"])])
@@ -122,6 +159,7 @@ func rebuild(views: Dictionary, terrain: TerrainBuilder, clear: ColonyClearance,
 	_add_night(views, night)
 	_add_weathering(views, terrain, clear)
 	_add_fx(views)
+	_add_pools(pools, terrain)
 
 
 ## Biome weathering at the foundations (data "weathering" per world): soft,
@@ -191,9 +229,23 @@ func _add_weathering(views: Dictionary, terrain: TerrainBuilder, clear: ColonyCl
 ## generators and water plants, sparks at workshops. Capped per type and only
 ## on finished buildings; missing effect scenes fall back to the slot proxy.
 func _add_fx(views: Dictionary) -> void:
-	var cfg: Dictionary = DictUtil.get_dict(BuildingDressing.doc(), "fx")
-	if cfg.is_empty():
-		return
+	# The shared effects, then the style's own (scavenger chimneys smoke).
+	for li: int in 2:
+		var cfg: Dictionary = DictUtil.get_dict(BuildingDressing.doc(), "fx") if li == 0 else BuildingDressing.style_cfg("fx")
+		if not cfg.is_empty():
+			_add_fx_list(views, cfg)
+	# Effects carried by street props (set field "fx"), capped by data "street_fx_max".
+	var cap := DictUtil.get_int(BuildingDressing.doc(), "street_fx_max", 8)
+	for i: int in mini(cap, _prop_fx.size()):
+		var e: Array = _prop_fx[i]
+		var n := VisualSlot.make(str(e[1]))
+		n.scale = Vector3.ONE * float(e[2])
+		n.position = e[0]
+		add_child(n)
+		stats["fx_" + str(e[1]).trim_prefix("fx.")] = int(stats.get("fx_" + str(e[1]).trim_prefix("fx."), 0)) + 1
+
+
+func _add_fx_list(views: Dictionary, cfg: Dictionary) -> void:
 	var count := {}
 	var ids := views.keys()
 	ids.sort()
@@ -205,6 +257,7 @@ func _add_fx(views: Dictionary) -> void:
 		if int(count.get(v.def_id, 0)) >= DictUtil.get_int(f, "max", 4):
 			continue
 		count[v.def_id] = int(count.get(v.def_id, 0)) + 1
+		stats["fx_" + str(f.get("slot", "fx.steam_vent")).trim_prefix("fx.")] = int(stats.get("fx_" + str(f.get("slot", "fx.steam_vent")).trim_prefix("fx."), 0)) + 1
 		var n := VisualSlot.make(str(f.get("slot", "fx.steam_vent")))
 		var at: Array = DictUtil.get_arr(f, "at")  # [x, z] in footprint halves, y = roof or given
 		var fs: Vector2 = v.footprint()
@@ -281,6 +334,103 @@ func _add_night(views: Dictionary, night: Dictionary) -> void:
 	add_child(mmi)
 
 
+## Signs and holograms spill their colour (data "street_glow": capped, spread
+## subset of real lights, no shadows, stronger on night worlds).
+func _add_glows(glows: Array, light_scale: float) -> void:
+	var cfg: Dictionary = DictUtil.get_dict(BuildingDressing.doc(), "street_glow")
+	if glows.is_empty() or light_scale <= 0.05 or cfg.is_empty():
+		return
+	var step := maxi(1, int(ceil(glows.size() / float(DictUtil.get_int(cfg, "max", 20)))))
+	for i: int in range(0, glows.size(), step):
+		var ol := OmniLight3D.new()
+		ol.position = glows[i][0]
+		ol.light_color = glows[i][1]
+		ol.light_energy = DictUtil.get_float(cfg, "energy", 1.2) * light_scale
+		ol.omni_range = DictUtil.get_float(cfg, "range", 5.0)
+		ol.omni_attenuation = 1.4
+		ol.shadow_enabled = false
+		ol.light_specular = 0.3
+		ol.distance_fade_enabled = true
+		ol.distance_fade_begin = 110.0
+		ol.distance_fade_length = 30.0
+		add_child(ol)
+
+
+## Toxic spill pools (style "pools", scavenger industry): a dark crusted rim and
+## a glowing, slowly rippling surface, two MultiMeshes for the whole colony.
+func _add_pools(pools: Array, terrain: TerrainBuilder) -> void:
+	var cfg: Dictionary = BuildingDressing.style_cfg("pools")
+	if pools.is_empty() or cfg.is_empty():
+		return
+	# An organic puddle outline from the pack (data "mesh"), normalised to radius 1; else a disc.
+	var shape: Mesh = null
+	var norm := Transform3D.IDENTITY
+	var pr: Dictionary = BuildingDressing.parts(str(cfg.get("mesh", "")))
+	if not pr.is_empty():
+		shape = (pr["parts"] as Array)[0][0]
+		var box: AABB = shape.get_aabb()
+		var k := 2.0 / maxf(maxf(box.size.x, box.size.z), 0.01)
+		norm = Transform3D(Basis.from_scale(Vector3(k, 1.0, k)), Vector3.ZERO) * Transform3D(Basis.IDENTITY, -Vector3(box.get_center().x, box.position.y, box.get_center().z))
+	else:
+		var disc := CylinderMesh.new()
+		disc.top_radius = 1.0
+		disc.bottom_radius = 1.0
+		disc.height = 0.06
+		disc.radial_segments = 14
+		disc.rings = 1
+		shape = disc
+	for layer: int in 2:  # 0 = rim, 1 = liquid
+		var mm := MultiMesh.new()
+		mm.transform_format = MultiMesh.TRANSFORM_3D
+		mm.mesh = shape
+		mm.instance_count = pools.size()
+		for i: int in pools.size():
+			var pl: Array = pools[i]
+			var c: Vector2 = pl[0]
+			var rad: Vector2 = (pl[1] as Vector2) * (1.25 if layer == 0 else 1.0)
+			var b := Basis(Vector3.UP, float(pl[2]) + (0.35 if layer == 0 else 0.0)) * Basis.from_scale(Vector3(rad.x, 1.0 if layer == 0 else 1.5, rad.y))
+			mm.set_instance_transform(i, Transform3D(b, Vector3(c.x, terrain.height_at(c.x, c.y) + (0.02 if layer == 0 else 0.05), c.y)) * norm)
+		var mmi := MultiMeshInstance3D.new()
+		mmi.multimesh = mm
+		mmi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+		if layer == 0:
+			var rim := StandardMaterial3D.new()
+			rim.albedo_color = Color(str(cfg.get("rim", "#3a3a24")))
+			rim.roughness = 0.9
+			mmi.material_override = rim
+		else:
+			var mat := ShaderMaterial.new()
+			mat.shader = _pool_shader()
+			mat.set_shader_parameter("col", Color(str(cfg.get("color", "#c8f03c"))))
+			mat.set_shader_parameter("energy", DictUtil.get_float(cfg, "energy", 1.6))
+			mmi.material_override = mat
+		mmi.visibility_range_end = 260.0
+		add_child(mmi)
+
+
+static var _pool_sh: Shader
+
+
+static func _pool_shader() -> Shader:
+	if _pool_sh == null:
+		_pool_sh = Shader.new()
+		_pool_sh.code = """shader_type spatial;
+render_mode shadows_disabled;
+uniform vec4 col : source_color = vec4(0.78, 0.94, 0.24, 1.0);
+uniform float energy = 1.6;
+varying vec3 wp;
+void vertex() { wp = (MODEL_MATRIX * vec4(VERTEX, 1.0)).xyz; }
+void fragment() {
+	float r = sin(wp.x * 2.3 + TIME * 1.1) * sin(wp.z * 2.9 - TIME * 0.8);
+	float k = 0.75 + 0.25 * r;
+	ALBEDO = col.rgb * 0.35;
+	ROUGHNESS = 0.15;
+	EMISSION = col.rgb * energy * k;
+}
+"""
+	return _pool_sh
+
+
 static var _beacon_sh: Shader
 
 
@@ -324,10 +474,19 @@ func _emit(batches: Dictionary, ranges: Dictionary, lights: Array, it: Dictionar
 			batches[m] = []
 			ranges[m] = 0.0
 		(batches[m] as Array).append(xf * (part[1] as Transform3D))
-		ranges[m] = maxf(float(ranges[m]), 420.0 if big else (110.0 if kind in ["infill", "roof"] else 190.0))
+		var reach := 110.0 if kind in ["infill", "roof"] else 190.0
+		if big:
+			reach = 300.0 if kind == "street" else 420.0
+		ranges[m] = maxf(float(ranges[m]), reach)
 	var col := str(it["light"])
 	if not col.is_empty():
 		lights.append([xf * (it["light_at"] as Vector3), Color(col)])
+	var fx := str(it.get("fx", ""))
+	if not fx.is_empty():
+		_prop_fx.append([xf * (it["fx_at"] as Vector3), fx, float(it.get("fx_scale", 0.5))])
+	var glow := str(it.get("glow", ""))
+	if not glow.is_empty():  # neon signs and holograms: a coloured light spill, no bulb
+		lights.append([xf * (it["glow_at"] as Vector3), Color(glow), true])
 
 
 ## A copy of the mesh whose standard materials are multiplied by a tint (the
@@ -358,7 +517,12 @@ static func _tinted(m: Mesh, tint: String) -> Mesh:
 
 ## Each lamp gets a small glowing bulb; a capped, evenly spread subset also casts
 ## real light (no shadows, fades out with distance) so the colony glows at night.
-func _add_lights(lights: Array, light_scale: float) -> void:
+func _add_lights(all: Array, light_scale: float) -> void:
+	var lights: Array = []
+	var glows: Array = []
+	for l: Array in all:
+		(glows if l.size() > 2 else lights).append(l)
+	_add_glows(glows, light_scale)
 	if lights.is_empty():
 		return
 	if _bulb_mesh == null:

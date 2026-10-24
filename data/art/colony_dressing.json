@@ -54,6 +54,13 @@
   "nivalis": 0.7,
   "pelagos": 0.7
  },
+ "street_glow": {
+  "_note": "Coloured light spill of neon signs, holograms and stalls (set field \"glow\", ColonyDressing._add_glows, D-045): a capped, spread subset of real lights, scaled by the world light level.",
+  "max": 20,
+  "energy": 1.4,
+  "range": 6.0
+ },
+ "street_fx_max": 8,
  "sets": {
   "crates": [
    {
@@ -389,6 +396,351 @@
    {
     "mesh": "C:Props/SM_Prop_SatDish_03",
     "scale": 0.8
+   }
+  ],
+  "stalls_scav": [
+   {
+    "mesh": "W:Buildings/SM_Bld_Vendor_01",
+    "glow": "#ff8a3a"
+   },
+   {
+    "mesh": "W:Buildings/SM_Bld_Vendor_02",
+    "glow": "#ff8a3a"
+   },
+   {
+    "mesh": "W:Buildings/SM_Bld_Vendor_03",
+    "glow": "#ff8a3a"
+   },
+   {
+    "mesh": "W:Buildings/SM_Bld_Vendor_04",
+    "glow": "#ff8a3a"
+   },
+   {
+    "mesh": "W:Buildings/SM_Bld_Vendor_05",
+    "glow": "#ff8a3a"
+   }
+  ],
+  "kiosks": [
+   {
+    "mesh": "W:Buildings/SM_Bld_Vendor_04"
+   },
+   {
+    "mesh": "W:Buildings/SM_Bld_Vendor_02"
+   }
+  ],
+  "food_huts": [
+   {
+    "mesh": "C:Buildings/SM_Bld_FoodHole_01",
+    "scale": 1.2
+   }
+  ],
+  "seated": [
+   {
+    "mesh": "W:Props/Junkies/SM_Prop_Junky_Male_01",
+    "scale": 1.39
+   },
+   {
+    "mesh": "W:Props/Junkies/SM_Prop_Junky_Male_02",
+    "scale": 1.39
+   },
+   {
+    "mesh": "W:Props/Junkies/SM_Prop_Junky_Male_03",
+    "scale": 1.39
+   },
+   {
+    "mesh": "W:Props/Junkies/SM_Prop_Junky_Male_05",
+    "scale": 1.39
+   },
+   {
+    "mesh": "W:Props/Junkies/SM_Prop_Junky_Female_01",
+    "scale": 1.39
+   },
+   {
+    "mesh": "W:Props/Junkies/SM_Prop_Junky_Female_02",
+    "scale": 1.39
+   },
+   {
+    "mesh": "W:Props/Junkies/SM_Prop_Junky_Female_03",
+    "scale": 1.39
+   },
+   {
+    "mesh": "W:Props/Junkies/SM_Prop_Junky_Female_05",
+    "scale": 1.39
+   }
+  ],
+  "goods": [
+   {
+    "mesh": "W:Props/SM_Prop_Syncola_Can_Stack_01",
+    "scale": 1.3
+   },
+   {
+    "mesh": "W:Props/SM_Prop_Syncola_Can_Stack_02",
+    "scale": 1.3
+   },
+   {
+    "mesh": "W:Props/SM_Prop_Cardboard_Box_01",
+    "scale": 1.3
+   },
+   {
+    "mesh": "W:Props/SM_Prop_Cardboard_Box_03",
+    "scale": 1.3
+   },
+   {
+    "mesh": "W:Props/SM_Prop_Vendor_Cooker_01",
+    "scale": 1.3
+   },
+   {
+    "mesh": "W:Props/SM_Prop_Vendor_TV_01",
+    "scale": 1.3
+   }
+  ],
+  "market_tables": [
+   {
+    "mesh": "C:Props/SM_Prop_MarketTable_01",
+    "scale": 1.25
+   },
+   {
+    "mesh": "C:Props/SM_Prop_MarketTable_02",
+    "scale": 1.25
+   },
+   {
+    "mesh": "C:Props/SM_Prop_MarketTable_04",
+    "scale": 1.25
+   },
+   {
+    "mesh": "C:Props/SM_Prop_MarketTable_05",
+    "scale": 1.25
+   }
+  ],
+  "market_lights": [
+   {
+    "mesh": "C:Props/SM_Prop_MarketLights_01",
+    "scale": 1.25,
+    "glow": "#ffd27a"
+   }
+  ],
+  "canopies": [
+   {
+    "mesh": "W:Props/SM_Prop_Canopy_Preset_01",
+    "scale": 0.55
+   },
+   {
+    "mesh": "W:Props/SM_Prop_Canopy_Preset_03",
+    "scale": 0.5
+   }
+  ],
+  "monitors": [
+   {
+    "mesh": "W:Props/SM_Prop_Monitor_01",
+    "scale": 1.2
+   }
+  ],
+  "junk": [
+   {
+    "mesh": "W:Props/SM_Prop_Junk_Cardboard_01",
+    "scale": 0.8
+   },
+   {
+    "mesh": "W:Props/SM_Prop_Junk_Cardboard_03",
+    "scale": 0.8
+   },
+   {
+    "mesh": "W:Props/SM_Prop_Junk_Cardboard_05",
+    "scale": 0.8
+   }
+  ],
+  "scrap_heaps": [
+   {
+    "mesh": "W:Props/Scrap/SM_Prop_Scav_Scrap_01",
+    "scale": 0.3
+   },
+   {
+    "mesh": "W:Props/Scrap/SM_Prop_Scav_Scrap_02",
+    "scale": 0.3
+   },
+   {
+    "mesh": "W:Props/Scrap/SM_Prop_Scav_Scrap_04",
+    "scale": 0.3
+   }
+  ],
+  "sign_towers": [
+   {
+    "mesh": "W:Props/Signs/SM_Prop_Billboard_09",
+    "glow": "#5fe8ff"
+   },
+   {
+    "mesh": "W:Props/Signs/SM_Prop_Billboard_10",
+    "glow": "#5fe8ff"
+   }
+  ],
+  "sign_blades": [
+   {
+    "mesh": "W:Props/Signs/SM_Prop_Sign_02",
+    "scale": 1.1,
+    "glow": "#ff4fa8"
+   }
+  ],
+  "billboards_big": [
+   {
+    "mesh": "W:Props/Signs/SM_Prop_Billboard_Large_01",
+    "scale": 0.55,
+    "glow": "#9fd8ff"
+   },
+   {
+    "mesh": "W:Props/Signs/SM_Prop_Billboard_Large_02",
+    "scale": 0.42,
+    "glow": "#9fd8ff"
+   }
+  ],
+  "holo_food": [
+   {
+    "mesh": "C:Props/SM_Prop_Hologram_Burger_03",
+    "scale": 0.55,
+    "glow": "#ffb347"
+   },
+   {
+    "mesh": "C:Props/SM_Prop_Hologram_Noodles_01",
+    "scale": 0.5,
+    "glow": "#ffb347"
+   },
+   {
+    "mesh": "C:Props/SM_Prop_Hologram_Pizza_01",
+    "scale": 0.55,
+    "glow": "#ffb347"
+   }
+  ],
+  "holo_poles": [
+   {
+    "mesh": "C:Props/SM_Prop_Hologram_Bottle_01",
+    "scale": 0.42,
+    "glow": "#4fc3ff"
+   }
+  ],
+  "soda": [
+   {
+    "mesh": "C:Props/SM_Prop_VendingMachine_Soda_01",
+    "scale": 0.8
+   },
+   {
+    "mesh": "W:Props/SM_Prop_Vending_Machine_01"
+   },
+   {
+    "mesh": "W:Props/SM_Prop_Vending_Machine_04"
+   }
+  ],
+  "bench_seats": [
+   {
+    "mesh": "C:Props/SM_Prop_BenchSeat_01",
+    "scale": 1.2
+   },
+   {
+    "mesh": "C:Props/SM_Prop_Bench_01"
+   }
+  ],
+  "tables": [
+   {
+    "mesh": "W:Props/SM_Prop_Table_Small_01",
+    "scale": 1.3
+   }
+  ],
+  "chairs": [
+   {
+    "mesh": "W:Props/SM_Prop_Chair_01",
+    "scale": 1.3
+   }
+  ],
+  "parked_scav": [
+   {
+    "mesh": "W:Props/Vehicles/SM_Veh_Hover_Bike_01",
+    "scale": 1.2
+   },
+   {
+    "mesh": "W:Props/Vehicles/SM_Veh_Hover_Bike_02",
+    "scale": 1.2
+   },
+   {
+    "mesh": "W:Props/Vehicles/SM_Veh_Buggy_01"
+   },
+   {
+    "mesh": "W:Props/Vehicles/SM_Veh_Vendor_Tug_Preset_01",
+    "scale": 0.75
+   }
+  ],
+  "parked_corp": [
+   {
+    "mesh": "C:Vehicles/SM_Veh_Future_01"
+   },
+   {
+    "mesh": "C:Vehicles/SM_Veh_Future_Taxi_01"
+   },
+   {
+    "mesh": "C:Vehicles/SM_Veh_Armored_Truck_01_Hover"
+   },
+   {
+    "mesh": "C:Vehicles/SM_Veh_Classic_01_Hover"
+   },
+   {
+    "mesh": "C:Vehicles/SM_Veh_Sweepo_01"
+   }
+  ],
+  "parked_explorer": [
+   {
+    "mesh": "W:Props/Vehicles/SM_Veh_Buggy_01"
+   },
+   {
+    "mesh": "W:Props/Vehicles/SM_Veh_Apc_02",
+    "scale": 0.75
+   },
+   {
+    "mesh": "W:Props/Vehicles/SM_Veh_HoverCraft_01",
+    "scale": 0.75
+   },
+   {
+    "mesh": "W:Props/Vehicles/SM_Veh_Hover_Bike_01",
+    "scale": 1.2
+   }
+  ],
+  "kiosk_small": [
+   {
+    "mesh": "W:Buildings/SM_Bld_Vendor_04"
+   }
+  ],
+  "silos": [
+   {
+    "mesh": "W:Buildings/SM_Bld_Scav_Refinery_Silo_01",
+    "scale": 0.85,
+    "fx": "fx.smoke_toxic",
+    "fx_scale": 0.55
+   },
+   {
+    "mesh": "W:Buildings/SM_Bld_Scav_Refinery_Silo_02",
+    "scale": 0.85,
+    "fx": "fx.smoke_plume",
+    "fx_scale": 0.55
+   },
+   {
+    "mesh": "W:Buildings/SM_Bld_Scav_Refinery_Silo_03",
+    "scale": 0.85,
+    "fx": "fx.smoke_toxic",
+    "fx_scale": 0.55
+   },
+   {
+    "mesh": "W:Buildings/SM_Bld_Scav_Refinery_Silo_04",
+    "scale": 0.85,
+    "fx": "fx.smoke_plume",
+    "fx_scale": 0.55
+   },
+   {
+    "mesh": "W:Buildings/SM_Bld_Scav_Refinery_Silo_05",
+    "scale": 0.85,
+    "fx": "fx.smoke_toxic",
+    "fx_scale": 0.55
+   },
+   {
+    "mesh": "W:Buildings/SM_Bld_Scav_Refinery_Silo_06",
+    "scale": 0.85,
+    "fx": "fx.smoke_plume",
+    "fx_scale": 0.55
    }
   ]
  },
@@ -1008,6 +1360,15 @@
     0.45,
     0.0
    ]
+  },
+  "crowd": {
+   "_note": "Colonists standing at the market corners (ColonyLife.set_crowd, D-045): at most max, one per per_people living colonists.",
+   "max": 24,
+   "per_people": 8
+  },
+  "walkers": {
+   "_note": "Colonists walking door to door (ColonyLife.sync_people); bible p.11: about 40 visible citizens.",
+   "max": 40
   }
  },
  "roads": {
@@ -1613,5 +1974,985 @@
    13.6,
    5.0
   ]
+ },
+ "styles": {
+  "_note": "Street life per colony style (ColonyStreets, D-045), after the Synty Sci-Fi Worlds key art. markets / corners / yards = kits placed in that order on a seeded grid in the listed districts where spot_r stays clear and min_buildings walls are within 'near': parts [set, across, forward, extra yaw deg, lift m] (forward = away from the nearest wall; the first part is the anchor), crowd [across, forward, facing deg] = spots where idle colonists stand (0 = looking at the kit), floor [w, d, forward] = a paved tile in the district tint. roadside = one item every 'every' m on alternating road shoulders within reach x district radius ('face': road | along). pools = glowing spill pools around a district. fx = extra building effects. infill = kits added to the shared street furniture ('_replace' drops the shared list). Set entries may carry 'turn' (deg, prefab front fix), 'glow' (coloured light spill, street_glow) and 'fx' + 'fx_scale' (an effect on top, street_fx_max).",
+  "scav": {
+   "markets": {
+    "districts": [
+     "living",
+     "landing"
+    ],
+    "step": 3.0,
+    "spot_r": 2.3,
+    "near": 8.5,
+    "spacing": 8.0,
+    "max": 7,
+    "reach": 1.0,
+    "kits": [
+     {
+      "w": 4,
+      "parts": [
+       [
+        "stalls_scav",
+        0,
+        0
+       ],
+       [
+        "seated",
+        -2.4,
+        1.3,
+        40
+       ],
+       [
+        "goods",
+        2.2,
+        0.9
+       ],
+       [
+        "sign_blades",
+        2.9,
+        -0.4,
+        90
+       ]
+      ],
+      "crowd": [
+       [
+        -0.5,
+        2.3,
+        0
+       ],
+       [
+        0.9,
+        2.5,
+        20
+       ],
+       [
+        2.0,
+        2.6,
+        -25
+       ]
+      ],
+      "floor": [
+       5.6,
+       5.0,
+       0.9
+      ]
+     },
+     {
+      "w": 2,
+      "parts": [
+       [
+        "canopies",
+        0,
+        0.4
+       ],
+       [
+        "market_tables",
+        -1.4,
+        0.6
+       ],
+       [
+        "market_tables",
+        1.4,
+        0.6
+       ],
+       [
+        "goods",
+        0,
+        -0.4
+       ],
+       [
+        "seated",
+        -3.0,
+        1.8,
+        60
+       ]
+      ],
+      "crowd": [
+       [
+        -1.2,
+        2.0,
+        0
+       ],
+       [
+        1.1,
+        2.1,
+        10
+       ],
+       [
+        0.0,
+        2.6,
+        -15
+       ]
+      ],
+      "floor": [
+       5.6,
+       5.0,
+       0.9
+      ]
+     },
+     {
+      "w": 2,
+      "parts": [
+       [
+        "stalls_scav",
+        0,
+        0
+       ],
+       [
+        "monitors",
+        -2.2,
+        0.5
+       ],
+       [
+        "seated",
+        2.3,
+        1.4,
+        -30
+       ],
+       [
+        "junk",
+        0,
+        2.2
+       ]
+      ],
+      "crowd": [
+       [
+        0.2,
+        2.4,
+        0
+       ],
+       [
+        -1.2,
+        2.6,
+        25
+       ]
+      ],
+      "floor": [
+       5.6,
+       5.0,
+       0.9
+      ]
+     }
+    ],
+    "min_buildings": 2
+   },
+   "roadside": {
+    "every": 13.0,
+    "reach": 1.5,
+    "max": 26,
+    "gap": 0.6,
+    "kinds": [
+     {
+      "w": 3,
+      "set": "parked_scav",
+      "face": "along"
+     },
+     {
+      "w": 2,
+      "set": "sign_towers",
+      "face": "road"
+     },
+     {
+      "w": 1,
+      "set": "sign_blades",
+      "face": "road"
+     }
+    ]
+   },
+   "pools": {
+    "district": "resource",
+    "n": 8,
+    "r": [
+     2.0,
+     3.6
+    ],
+    "from": 0.55,
+    "to": 1.3,
+    "color": "#b8e030",
+    "rim": "#2f2e1c",
+    "energy": 0.9,
+    "mesh": "W:Environments/SM_Env_Blob_01"
+   },
+   "fx": {
+    "mine": {
+     "slot": "fx.smoke_toxic",
+     "scale": 1.2,
+     "max": 6,
+     "at": [
+      0.2,
+      0.1
+     ],
+     "top": 0.95
+    },
+    "workshop": {
+     "slot": "fx.smoke_plume",
+     "scale": 0.75,
+     "max": 5,
+     "at": [
+      -0.4,
+      -0.3
+     ],
+     "top": 1.0
+    },
+    "geothermal_generator": {
+     "slot": "fx.smoke_plume",
+     "scale": 0.55,
+     "max": 4,
+     "at": [
+      0.0,
+      0.0
+     ],
+     "top": 1.0
+    }
+   },
+   "infill": {
+    "kits": {
+     "living": [
+      {
+       "w": 2,
+       "parts": [
+        [
+         "seated",
+         0,
+         0
+        ],
+        [
+         "goods",
+         0.9,
+         0.3
+        ]
+       ]
+      },
+      {
+       "w": 1,
+       "parts": [
+        [
+         "junk",
+         0,
+         0
+        ],
+        [
+         "barrels",
+         0.9,
+         0.2
+        ]
+       ]
+      }
+     ],
+     "resource": [
+      {
+       "w": 2,
+       "parts": [
+        [
+         "scrap_heaps",
+         0,
+         0
+        ]
+       ]
+      },
+      {
+       "w": 1,
+       "parts": [
+        [
+         "junk",
+         0,
+         0
+        ],
+        [
+         "crates",
+         0.9,
+         0.3
+        ]
+       ]
+      }
+     ],
+     "landing": [
+      {
+       "w": 1,
+       "parts": [
+        [
+         "seated",
+         0,
+         0
+        ],
+        [
+         "crates",
+         0.9,
+         0.3
+        ]
+       ]
+      }
+     ]
+    }
+   },
+   "corners": {
+    "districts": [
+     "living",
+     "landing"
+    ],
+    "step": 2.0,
+    "spot_r": 1.5,
+    "near": 6.0,
+    "min_buildings": 2,
+    "spacing": 6.0,
+    "max": 10,
+    "reach": 1.0,
+    "kits": [
+     {
+      "w": 3,
+      "parts": [
+       [
+        "kiosk_small",
+        0,
+        0
+       ],
+       [
+        "seated",
+        1.6,
+        0.9,
+        -30
+       ]
+      ],
+      "crowd": [
+       [
+        0.0,
+        1.7,
+        0
+       ]
+      ],
+      "floor": [
+       3.4,
+       3.2,
+       0.5
+      ]
+     },
+     {
+      "w": 2,
+      "parts": [
+       [
+        "market_tables",
+        0,
+        0.2
+       ],
+       [
+        "goods",
+        1.6,
+        0.3
+       ]
+      ],
+      "crowd": [
+       [
+        -0.4,
+        1.4,
+        0
+       ],
+       [
+        0.6,
+        1.5,
+        10
+       ]
+      ],
+      "floor": [
+       3.4,
+       3.2,
+       0.5
+      ]
+     },
+     {
+      "w": 1,
+      "parts": [
+       [
+        "sign_blades",
+        0,
+        0,
+        90
+       ],
+       [
+        "seated",
+        1.0,
+        0.6
+       ]
+      ],
+      "floor": [
+       3.4,
+       3.2,
+       0.5
+      ]
+     }
+    ]
+   },
+   "yards": {
+    "districts": [
+     "resource"
+    ],
+    "step": 3.0,
+    "spot_r": 2.4,
+    "near": 9.0,
+    "min_buildings": 1,
+    "spacing": 10.0,
+    "max": 5,
+    "reach": 1.1,
+    "kits": [
+     {
+      "w": 2,
+      "parts": [
+       [
+        "silos",
+        0,
+        0
+       ],
+       [
+        "barrels",
+        2.4,
+        0.6
+       ],
+       [
+        "scrap_heaps",
+        -2.6,
+        0.9
+       ]
+      ],
+      "crowd": [
+       [
+        0.8,
+        2.6,
+        0
+       ]
+      ],
+      "floor": [
+       5.6,
+       5.0,
+       0.6
+      ]
+     },
+     {
+      "w": 1,
+      "parts": [
+       [
+        "silos",
+        0,
+        0
+       ],
+       [
+        "crates",
+        2.2,
+        0.4
+       ],
+       [
+        "junk",
+        -2.0,
+        1.2
+       ]
+      ],
+      "floor": [
+       5.6,
+       5.0,
+       0.6
+      ]
+     }
+    ]
+   }
+  },
+  "corp": {
+   "markets": {
+    "districts": [
+     "living",
+     "landing"
+    ],
+    "step": 3.0,
+    "spot_r": 2.2,
+    "near": 8.5,
+    "spacing": 8.5,
+    "max": 6,
+    "reach": 1.0,
+    "kits": [
+     {
+      "w": 3,
+      "parts": [
+       [
+        "food_huts",
+        0,
+        0
+       ],
+       [
+        "holo_food",
+        0,
+        0,
+        0,
+        2.9
+       ],
+       [
+        "bench_seats",
+        2.4,
+        0.9,
+        90
+       ],
+       [
+        "soda",
+        -2.2,
+        0.2
+       ]
+      ],
+      "crowd": [
+       [
+        -0.4,
+        2.2,
+        0
+       ],
+       [
+        0.8,
+        2.4,
+        15
+       ],
+       [
+        -1.4,
+        2.6,
+        -20
+       ]
+      ],
+      "floor": [
+       5.6,
+       5.0,
+       0.9
+      ]
+     },
+     {
+      "w": 2,
+      "parts": [
+       [
+        "market_tables",
+        -1.4,
+        0.4
+       ],
+       [
+        "market_tables",
+        1.4,
+        0.4
+       ],
+       [
+        "market_lights",
+        0,
+        -0.3
+       ],
+       [
+        "holo_poles",
+        3.0,
+        0
+       ]
+      ],
+      "crowd": [
+       [
+        -1.1,
+        1.8,
+        0
+       ],
+       [
+        1.2,
+        1.9,
+        10
+       ]
+      ],
+      "floor": [
+       5.6,
+       5.0,
+       0.9
+      ]
+     },
+     {
+      "w": 2,
+      "parts": [
+       [
+        "soda",
+        0,
+        0
+       ],
+       [
+        "soda",
+        1.6,
+        0
+       ],
+       [
+        "bench_seats",
+        -2.2,
+        0.8,
+        90
+       ],
+       [
+        "holo_poles",
+        -3.4,
+        0
+       ]
+      ],
+      "crowd": [
+       [
+        0.3,
+        1.8,
+        0
+       ],
+       [
+        1.5,
+        2.0,
+        -15
+       ]
+      ],
+      "floor": [
+       5.6,
+       5.0,
+       0.9
+      ]
+     }
+    ],
+    "min_buildings": 2
+   },
+   "roadside": {
+    "every": 14.0,
+    "reach": 1.5,
+    "max": 24,
+    "gap": 0.6,
+    "kinds": [
+     {
+      "w": 3,
+      "set": "parked_corp",
+      "face": "along"
+     },
+     {
+      "w": 1,
+      "set": "billboards_big",
+      "face": "road"
+     },
+     {
+      "w": 2,
+      "set": "sign_towers",
+      "face": "road"
+     }
+    ]
+   },
+   "infill": {
+    "kits": {
+     "living": [
+      {
+       "w": 1,
+       "parts": [
+        [
+         "soda",
+         0,
+         0,
+         180
+        ],
+        [
+         "bench_seats",
+         1.6,
+         0.3
+        ]
+       ]
+      }
+     ]
+    }
+   },
+   "corners": {
+    "districts": [
+     "living",
+     "landing"
+    ],
+    "step": 2.0,
+    "spot_r": 1.5,
+    "near": 6.0,
+    "min_buildings": 2,
+    "spacing": 6.0,
+    "max": 10,
+    "reach": 1.0,
+    "kits": [
+     {
+      "w": 2,
+      "parts": [
+       [
+        "soda",
+        0,
+        0
+       ],
+       [
+        "bench_seats",
+        1.7,
+        0.4,
+        90
+       ]
+      ],
+      "crowd": [
+       [
+        0.0,
+        1.5,
+        0
+       ]
+      ],
+      "floor": [
+       3.4,
+       3.2,
+       0.5
+      ]
+     },
+     {
+      "w": 2,
+      "parts": [
+       [
+        "holo_poles",
+        0,
+        0
+       ],
+       [
+        "bench_seats",
+        1.3,
+        0.3
+       ]
+      ],
+      "crowd": [
+       [
+        0.4,
+        1.4,
+        0
+       ]
+      ],
+      "floor": [
+       3.4,
+       3.2,
+       0.5
+      ]
+     },
+     {
+      "w": 1,
+      "parts": [
+       [
+        "market_tables",
+        0,
+        0.2
+       ],
+       [
+        "market_lights",
+        0,
+        -0.4
+       ]
+      ],
+      "crowd": [
+       [
+        -0.4,
+        1.4,
+        0
+       ],
+       [
+        0.6,
+        1.5,
+        10
+       ]
+      ],
+      "floor": [
+       3.4,
+       3.2,
+       0.5
+      ]
+     }
+    ]
+   }
+  },
+  "explorer": {
+   "markets": {
+    "districts": [
+     "living"
+    ],
+    "step": 3.0,
+    "spot_r": 2.2,
+    "near": 8.5,
+    "spacing": 9.0,
+    "max": 5,
+    "reach": 1.0,
+    "kits": [
+     {
+      "w": 2,
+      "parts": [
+       [
+        "kiosks",
+        0,
+        0
+       ],
+       [
+        "tables",
+        -2.0,
+        1.2
+       ],
+       [
+        "chairs",
+        -2.6,
+        1.6,
+        60
+       ],
+       [
+        "goods",
+        2.0,
+        0.7
+       ]
+      ],
+      "crowd": [
+       [
+        0.0,
+        2.2,
+        0
+       ],
+       [
+        1.1,
+        2.4,
+        20
+       ]
+      ],
+      "floor": [
+       5.6,
+       5.0,
+       0.9
+      ]
+     },
+     {
+      "w": 2,
+      "parts": [
+       [
+        "canopies",
+        0,
+        0.4
+       ],
+       [
+        "market_tables",
+        -1.4,
+        0.6
+       ],
+       [
+        "market_tables",
+        1.4,
+        0.6
+       ],
+       [
+        "pots",
+        0,
+        -0.6
+       ]
+      ],
+      "crowd": [
+       [
+        -1.0,
+        2.0,
+        0
+       ],
+       [
+        1.0,
+        2.1,
+        -10
+       ],
+       [
+        0.1,
+        2.7,
+        5
+       ]
+      ],
+      "floor": [
+       5.6,
+       5.0,
+       0.9
+      ]
+     }
+    ],
+    "min_buildings": 2
+   },
+   "roadside": {
+    "every": 16.0,
+    "reach": 1.4,
+    "max": 16,
+    "gap": 0.6,
+    "kinds": [
+     {
+      "w": 4,
+      "set": "parked_explorer",
+      "face": "along"
+     },
+     {
+      "w": 1,
+      "set": "sign_towers",
+      "face": "road"
+     }
+    ]
+   },
+   "corners": {
+    "districts": [
+     "living",
+     "landing"
+    ],
+    "step": 2.0,
+    "spot_r": 1.5,
+    "near": 6.0,
+    "min_buildings": 2,
+    "spacing": 6.0,
+    "max": 8,
+    "reach": 1.0,
+    "kits": [
+     {
+      "w": 2,
+      "parts": [
+       [
+        "tables",
+        0,
+        0.4
+       ],
+       [
+        "chairs",
+        0.9,
+        0.6,
+        60
+       ],
+       [
+        "chairs",
+        -0.9,
+        0.6,
+        -60
+       ]
+      ],
+      "crowd": [
+       [
+        0.0,
+        1.5,
+        0
+       ]
+      ],
+      "floor": [
+       3.4,
+       3.2,
+       0.5
+      ]
+     },
+     {
+      "w": 2,
+      "parts": [
+       [
+        "kiosk_small",
+        0,
+        0
+       ],
+       [
+        "pots",
+        1.3,
+        0.3
+       ]
+      ],
+      "crowd": [
+       [
+        0.0,
+        1.7,
+        0
+       ]
+      ],
+      "floor": [
+       3.4,
+       3.2,
+       0.5
+      ]
+     }
+    ]
+   }
+  }
  }
 }
