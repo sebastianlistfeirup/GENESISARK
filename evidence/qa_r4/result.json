@@ -1,0 +1,47 @@
+{
+  "task_id": "qa_r4",
+  "decision": "D-063",
+  "commit": "88fa673",
+  "engine_version": "Godot 4.7.2-stable (Forward+, Vulkan, RTX 5090)",
+  "command": [
+    "godot --path . --resolution 1600x900|1280x720 -- --capture=<png> --setup=<fresh|power|none|orbit:viridia|approach:ferrum|expedition:<p>|grown:<p>> --scene=<menu|ship|flight|surface|colony> --wait=<200-300> [--action=<wakeup:<s>|powerwave|starmap|orbit|embryo|workshop|pause_settings|pause_load|journal|overview|settings_access|descent:<alt>|ascent:<s>|scan|scan_ground|wildlife|leviathan|finish|new|continue>] [--post=N] [--park=1] [--ui_scale=1.5] [--reduced_motion=1]",
+    "CHECK_FAST=1 tools/check.sh",
+    "godot --path . -- --perf --out=builds/perf_qa4.json"
+  ],
+  "exit_code": 0,
+  "expected": "Whole flow played via captures with the focus on how this session's features interact (location card vs wake-up/descent, wake-up + subtitles + waypoints, scanner tags vs waypoint labels, clouds vs descent sky-follow, wildlife vs LOD/visibility, holo menus at 1280x720 @1.5 and reduced motion, power wave vs saved-game load, ascent -> ship arrival); highest-impact issues fixed with small presentation-only changes; checks green; perf within budget.",
+  "observed": "About 75 captures (before, after, two verification rounds, a menu -> new campaign -> wake-up flow and a menu -> continue flow, one expedition -> ascent -> ship run). 11 issues fixed, 4 left open (see findings). check.sh (CHECK_FAST=1): compile 175 scripts 0 failed, loc_exit=0 tests_exit=0 (81 tests) smoke_exit=0 (58 checks) touch_exit=0 campaign_exit=0. Perf: 10 cases, 0 over budget (p95 8.9-10.8 ms, p50 8.0-8.5 ms). No SCRIPT ERROR in any capture log after the fixes.",
+  "fixture": "fresh, power, none (menu with saves), orbit:viridia, approach:ferrum, expedition:viridia|pelagos|umbra|nivalis, grown:viridia|pelagos",
+  "status": "PASS",
+  "findings": [
+    {"id": 1, "status": "FIXED", "area": "wake-up + subtitles", "issue": "The HUD (and its StoryPlayer) was hidden from the hatch opening (4.2 s, where intro_wakeup is triggered) to the end of the cinematic (9 s): the first line 'Cold. Then the sound of fans...' (5 s) ran out unseen.", "fix": "ship_scene shows the story layer while ShipWakeup.is_open(); the cinematic's frost/black layer moved from canvas layer 30 to 15 (under the subtitles at 20).", "evidence": ["sheet_wake_first_subtitle.jpg"]},
+    {"id": 2, "status": "FIXED", "area": "wake-up + control", "issue": "ship_scene._process re-enabled the captain every frame (input_enabled false -> set_active(true)), so the invisible captain could walk and mouse-look turned the rig behind the cinematic.", "fix": "ship_scene skips its activation logic while the wake-up runs; ShipWakeup freezes the camera rig (cursor stays captured) and hands over with captain.set_active(true)."},
+    {"id": 3, "status": "FIXED", "area": "ascent -> ship arrival", "issue": "expedition_complete (5 lines) is triggered by cmd_finish_expedition right before the ascent: the HUD was hidden during the climb and the surface scene's StoryPlayer was freed on the scene change, so the whole scene was lost (same for landing_commit before the colony).", "fix": "StoryPlayer stores unfinished lines on _exit_tree (same GameState instance, < 15 s, not in test mode) and the next scene's player resumes them first; PlanetDescent keeps the GameHud's story layer visible over the descent/ascent.", "evidence": ["after/surf_finish_ascent.jpg", "after/surf_finish_ship.jpg"]},
+    {"id": 4, "status": "FIXED", "area": "skip input", "issue": "[Enter] (skip_line) skipped the wake-up / descent and, in the same press, the subtitle line playing over it.", "fix": "ShipWakeup and PlanetDescent consume skip_line in _unhandled_input (they still poll it to skip)."},
+    {"id": 5, "status": "FIXED", "area": "pause + subtitles", "issue": "StoryPlayer and the voice player ran with PROCESS_MODE_ALWAYS: lines advanced (and peeked out) behind the pause menu.", "fix": "StoryPlayer and the VO player are pausable; the box hides while paused.", "evidence": ["sheet_pause_load_subtitle_1280x720_ui1.5_rm.jpg"]},
+    {"id": 6, "status": "FIXED", "area": "scanner vs waypoints", "issue": "Scanner tags stacked on the waypoint layer's place name, the POI sign and the hazard sign of the same spot (same text twice, overlapping); hazards got '◆ ▲'; the relay beacon's glowing orb cut through the tag.", "fix": "SurfaceScanner.tagged(node, seconds) -> WaypointLayer.hush() and the surface scene hides the POI/hazard Label3D meanwhile (objective keeps its diamond); no ◆ before ▲; tag render_priority 10.", "evidence": ["sheet_scan_tags_vista.jpg", "after/surf_scan_ground.jpg", "after/s15_scan_ground_rm.jpg"]},
+    {"id": 7, "status": "FIXED", "area": "clouds vs descent", "issue": "The descent cloud deck (1.1-1.5 km) stayed at full presence below it: fogged into dark green blotches over the last few hundred metres (36 m: blotches over the whole sky) and vanished with a pop when the descent node was freed at touchdown.", "fix": "presence *= smoothstep(650, 1000, alt); the world's PlanetSky cloud deck (which rides along overhead) is the sky below.", "evidence": ["sheet_ascent_viridia_36m.jpg"]},
+    {"id": 8, "status": "FIXED", "area": "descent horizon", "issue": "The stand-in globe (R 9 km) dips its horizon ~16 deg at 380 m; the band up to level showed the procedural sky's dark ground half as a murky stripe over the world.", "fix": "While airborne the planet sky's ground colours blend to the horizon haze (in 0.03 steps, restored at touchdown).", "evidence": ["sheet_descent_viridia_380m.jpg"]},
+    {"id": 9, "status": "FIXED", "area": "shaders", "issue": "fract(sin()) hash gave square blocks in the cryo-pod frost (first seconds of a new game) and inside the cloud puffs.", "fix": "Sine-free hash in cryo_frost, cloud_puff, cloud_sky.", "evidence": ["sheet_wake_frost_glass.jpg", "before/cloud_puffs_closeup.jpg", "after/cloud_puffs_closeup.jpg"]},
+    {"id": 10, "status": "FIXED", "area": "main menu", "issue": "The CONTINUE caption over the save card washed out against the planet's bright limb (read as '...NTINUE').", "fix": "Caption on a dark rounded pill with a thin amber edge.", "evidence": ["sheet_menu_continue_caption.jpg", "sheet_menu_continue_caption_1280x720_ui1.5.jpg"]},
+    {"id": 11, "status": "FIXED", "area": "errors", "issue": "'Lambda capture at index 0 was freed' ~10 s into a new game (vapour timer lambda outlived the cinematic); 'Condition !is_inside_tree()' from SeaLeviathan._place on Pelagos colony build.", "fix": "Vapour freed by its own tween; leviathan spray placed in local space."},
+    {"id": 12, "status": "FIXED", "area": "evidence pipeline", "issue": "--capture / --perf fixture campaigns autosave through real commands and overwrote the player's user://saves slots (the owner's autosave was replaced during this and earlier QA sessions).", "fix": "SaveService uses user://saves_debug when DebugCapture/PerfProbe is requested."},
+    {"id": 13, "status": "OPEN", "area": "pause menu (debug only)", "issue": "--action=pause_load logs 'grab_focus: !is_inside_tree()' (open() defers focus to a main-menu entry that _load_menu frees in the same frame).", "reason": "Only the debug capture calls open() and _load_menu() in one frame; players click Load later."},
+    {"id": 14, "status": "OPEN", "area": "headless smoke (engine)", "issue": "One of four scene_smoke runs logged dummy-renderer RID errors in TerrainBuilder.build (ArrayMesh.add_surface_from_arrays); 58/58 checks passed, not reproducible in the next run.", "reason": "Engine dummy RID allocator flake in headless mode, code untouched."},
+    {"id": 15, "status": "OPEN", "area": "wake-up reduced motion", "issue": "With reduced motion ShipWakeup sets _t = 6.5 and _dur = 2.5, so it finishes on its first frame (no frost reveal at all).", "reason": "Reads as a deliberate 'skip' for reduced motion; left for the owner to decide."},
+    {"id": 16, "status": "OPEN", "area": "flight HUD", "issue": "The approach flight's top-right status panel is still the plain pre-holo panel (D-059 did not cover it).", "reason": "Visual consistency only; outside this round's interaction focus."}
+  ],
+  "checked_without_findings": [
+    "Location card vs wake-up: measured, the card is fully gone at t = 0.77 s of the cinematic, inside its 0-0.6 s black (first frame delta 0.14 s)",
+    "Power wave vs saved-game load: loading a powered save sets lights instantly ('init' path); the wave only follows the coupling",
+    "Wildlife vs descent/LOD: GroundWildlife hides with the site while in space and returns at the switch altitude; its processing stops while invisible",
+    "Holo menus (star map, orbit, embryo bank, workshop, settings, load, journal, colony overview, main menu settings) at 1280x720 @1.5 and with reduced motion: fit, no clipping",
+    "Wake-up -> waypoints: hidden during the cinematic, objective marker appears on hand-over"
+  ],
+  "artifacts": [
+    "evidence/qa_r4/sheet_*.jpg (before | after side by side)",
+    "evidence/qa_r4/before/*.jpg, evidence/qa_r4/after/*.jpg",
+    "evidence/qa_r4/checked/*.jpg (screens reviewed without findings)",
+    "evidence/qa_r4/perf/perf_qa4.json"
+  ]
+}

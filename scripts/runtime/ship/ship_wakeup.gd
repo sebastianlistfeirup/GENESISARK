@@ -32,6 +32,8 @@ func start(p_captain: Captain, p_hud: GameHud, spawn: Vector3, yaw: float) -> vo
 	hud = p_hud
 	captain.visible = false
 	captain.input_enabled = false
+	if captain.camera_rig:
+		captain.camera_rig.active = false  # no mouse-look piling up behind the cinematic (cursor stays captured)
 	hud.visible = false
 	var fwd := Vector3(-sin(yaw), 0.0, -cos(yaw))
 	var eye := spawn + Vector3(0, 1.62, 0)
@@ -46,7 +48,7 @@ func start(p_captain: Captain, p_hud: GameHud, spawn: Vector3, yaw: float) -> vo
 	_cam.global_transform = _lie
 	_cam.current = true
 	_layer = CanvasLayer.new()
-	_layer.layer = 30
+	_layer.layer = 15  # over the 3D, under the subtitles (StoryPlayer 20): the first line starts as the hatch opens
 	add_child(_layer)
 	_frost = ColorRect.new()
 	_frost.set_anchors_preset(Control.PRESET_FULL_RECT)
@@ -63,6 +65,17 @@ func start(p_captain: Captain, p_hud: GameHud, spawn: Vector3, yaw: float) -> vo
 	if FxEffect.reduced_motion():
 		_dur = 2.5
 		_t = 6.5
+
+
+## True once the hatch is up: the first subtitle runs from here, over the cinematic.
+func is_open() -> bool:
+	return _opened and not _done
+
+
+## [Enter] skips the cinematic, not also the first subtitle line under it.
+func _unhandled_input(event: InputEvent) -> void:
+	if not _done and event.is_action_pressed("skip_line"):
+		get_viewport().set_input_as_handled()
 
 
 func _process(delta: float) -> void:
@@ -116,17 +129,19 @@ func _open_now() -> void:
 	var fwd := -_rest.basis.z
 	vapour.global_position = _lie.origin + fwd * 0.5 + Vector3(0, 0.1, 0)
 	vapour.emitting = true
-	get_tree().create_timer(6.0).timeout.connect(func() -> void:
-		if is_instance_valid(vapour):
-			vapour.queue_free())
+	# The vapour's own tween frees it (a tree timer's lambda outlived it once the
+	# cinematic, its parent, was gone: "Lambda capture ... was freed").
+	var vt := vapour.create_tween()
+	vt.tween_interval(6.0)
+	vt.tween_callback(vapour.queue_free)
 	opened.emit()
 
 
 func _exit_tree() -> void:
-	_restore()  # scene changed mid-sequence: never leave the player hidden or frozen
+	_restore(true)  # scene changed mid-sequence: never leave the player hidden or frozen
 
 
-func _restore() -> void:
+func _restore(leaving: bool = false) -> void:
 	if _done:
 		return
 	_done = true
@@ -134,6 +149,10 @@ func _restore() -> void:
 		captain.visible = true
 		captain.input_enabled = true
 		if captain.camera_rig:
+			if leaving:
+				captain.camera_rig.active = true
+			else:
+				captain.set_active(true)  # rig live again, mouse captured, its camera current
 			captain.camera_rig.camera.current = true
 			captain.camera_rig.snap()
 	if is_instance_valid(hud):

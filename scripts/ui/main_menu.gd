@@ -207,7 +207,22 @@ func _refresh_save_card() -> void:
 	box.grow_vertical = Control.GROW_DIRECTION_BEGIN
 	box.offset_right = -28
 	box.offset_bottom = -52
-	box.add_child(UiKit.section(Loc.t("Continue"), "ui.icon_load"))
+	# The caption sits on a dark pill: over the planet's bright limb it used to wash out.
+	var pill := PanelContainer.new()
+	var sb := StyleBoxFlat.new()
+	sb.bg_color = Color(UiKit.BG, 0.82)
+	sb.border_color = Color(UiKit.AMBER, 0.35)
+	sb.set_border_width_all(1)
+	sb.set_corner_radius_all(12)
+	sb.content_margin_left = 12
+	sb.content_margin_right = 16
+	sb.content_margin_top = 3
+	sb.content_margin_bottom = 3
+	pill.add_theme_stylebox_override("panel", sb)
+	pill.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
+	pill.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	pill.add_child(UiKit.section(Loc.t("Continue"), "ui.icon_load"))
+	box.add_child(pill)
 	box.add_child(card)
 	_save_card = box
 	_ui.add_child(box)
@@ -400,6 +415,10 @@ func debug_action(action: String) -> void:
 			_open_panel(_settings)
 			_settings.show_tab({"settings_display": 1, "settings_access": 2, "settings_controls": 3}[action])
 		"load": _load_list()
+		"new":  # the real New campaign path, with the wake-up a capture normally skips
+			GameSession.new_campaign()
+			AppFlow.goto("ship", {"action": "wakeup"})
+		"continue": _continue()
 		"focus2":
 			if _body.get_child_count() > 1:
 				(_body.get_child(1) as Control).grab_focus()

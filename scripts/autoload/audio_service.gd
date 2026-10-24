@@ -262,6 +262,7 @@ func play_voice(line_id: String) -> float:
 			if _voice == null:
 				_voice = AudioStreamPlayer.new()
 				_voice.bus = "Voice"
+				_voice.process_mode = Node.PROCESS_MODE_PAUSABLE  # holds with its subtitle while the pause menu is open
 				add_child(_voice)
 			_voice.stream = st
 			_voice.bus = "VoiceArk" if _speaker_of(line_id) == "ARK" else "Voice"

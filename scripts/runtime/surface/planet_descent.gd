@@ -84,6 +84,7 @@ var _gauge: DescentHud
 var _sky_tint := Color(0.85, 0.9, 1.0)
 var _sky_far: Array = []  # [node, rest position]: moons, sun, rings, aurora of the planet's sky
 var _haze := Color(0.8, 0.86, 0.9)
+var _sky_air := 0.0  # last airborne blend written into the planet sky's ground colours
 
 
 static func wanted() -> bool:
@@ -159,6 +160,10 @@ func _setup(p_root: Node3D, p_terrain: TerrainBuilder, p_planet: Dictionary, p_t
 		if c is CanvasLayer and (c as CanvasLayer).visible:
 			(c as CanvasLayer).visible = false
 			_layers.append(c)
+			if c is GameHud and (c as GameHud).story:
+				# Subtitles stay over the cinematic (the expedition's closing lines play
+				# during the climb to orbit, the landing order during the Ark's descent).
+				(c as GameHud).story.visible = true
 	# Sky bodies hang 1.5 km from the site: from the air they must stay at sky
 	# distance around the camera, not turn into nearby spheres and a fence of aurora.
 	var ps := p_root.get_node_or_null("PlanetSky")
@@ -202,11 +207,26 @@ func _remember_fog() -> void:
 		return
 	_fog = {"color": _planet_env.fog_light_color, "sky_affect": _planet_env.fog_sky_affect, "begin": _planet_env.fog_depth_begin, "end": _planet_env.fog_depth_end, "density": _planet_env.fog_density, "enabled": _planet_env.fog_enabled,
 		"height_density": _planet_env.fog_height_density, "aerial": _planet_env.fog_aerial_perspective}
+	var psky := _ground_sky()
+	if psky:
+		_fog["ground_horizon"] = psky.ground_horizon_color
+		_fog["ground_bottom"] = psky.ground_bottom_color
+
+
+## The planet's procedural sky, if it has one (its lower half is the "ground" colour).
+func _ground_sky() -> ProceduralSkyMaterial:
+	if _planet_env and _planet_env.sky:
+		return _planet_env.sky.sky_material as ProceduralSkyMaterial
+	return null
 
 
 func _restore_fog() -> void:
 	if _planet_env == null or _fog.is_empty():
 		return
+	var psky := _ground_sky()
+	if psky and _fog.has("ground_horizon"):
+		psky.ground_horizon_color = _fog["ground_horizon"]
+		psky.ground_bottom_color = _fog["ground_bottom"]
 	_planet_env.fog_depth_begin = _fog["begin"]
 	_planet_env.fog_depth_end = _fog["end"]
 	_planet_env.fog_density = _fog["density"]
@@ -231,6 +251,14 @@ func _fog_for_alt(alt: float) -> void:
 	var air := smoothstep(60.0, 500.0, alt)
 	_planet_env.fog_light_color = (_fog["color"] as Color).lerp(_haze, air)
 	_planet_env.fog_sky_affect = lerpf(float(_fog["sky_affect"]), 0.15, air)
+	# The stand-in globe is small, so from a few hundred metres its horizon dips well
+	# below level and the band between showed the sky's dark "ground" half as a
+	# murky stripe over the world: up there that band is the horizon haze.
+	var psky := _ground_sky()
+	if psky and _fog.has("ground_horizon") and (absf(air - _sky_air) > 0.03 or (air != _sky_air and (air == 0.0 or air == 1.0))):
+		_sky_air = air  # in steps: every change re-bakes the sky's radiance
+		psky.ground_horizon_color = (_fog["ground_horizon"] as Color).lerp(_haze, air)
+		psky.ground_bottom_color = (_fog["ground_bottom"] as Color).lerp(_haze.darkened(0.15), air)
 
 
 func _build_space_env() -> void:
@@ -662,6 +690,12 @@ func _set_sky(in_space: bool) -> void:
 		AudioService.set_ambience_any(["amb_surface_" + str(planet.get("biome_id")), "amb_colony_wind"])
 
 
+## [Enter] skips the flight, not also the subtitle line playing over it.
+func _unhandled_input(event: InputEvent) -> void:
+	if not _done and lander_body != null and event.is_action_pressed("skip_line"):
+		get_viewport().set_input_as_handled()
+
+
 func _process(delta: float) -> void:
 	if _done or lander_body == null:
 		return
@@ -951,7 +985,10 @@ func _update_fx(delta: float, pos: Vector3) -> void:
 	var w := 1.0 - smoothstep(0.0, 220.0, absf(_alt - SWITCH_ALT))
 	_white.color.a = w * 0.88 if not _landing else 0.0
 	_marker.visible = _alt > 60.0 and not _ascent
-	(_clouds.material_override as ShaderMaterial).set_shader_parameter("presence", 1.0 - smoothstep(1900.0, 2700.0, _alt))
+	# Below the deck it thins out: the world's own cloud sky (PlanetSky, which rides
+	# along overhead) takes over, instead of the deck hanging fogged into dark
+	# blotches over the last few hundred metres and vanishing at touchdown.
+	(_clouds.material_override as ShaderMaterial).set_shader_parameter("presence", (1.0 - smoothstep(1900.0, 2700.0, _alt)) * smoothstep(650.0, 1000.0, _alt))
 
 
 func _update_camera(delta: float, pos: Vector3) -> void:
