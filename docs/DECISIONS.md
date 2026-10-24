@@ -2,6 +2,9 @@
 
 Biblen er baseline. Her står begrundede valg og afvigelser. Nyeste øverst.
 
+### D-062 · Dragtscanner på overfladen (kun præsentation og information)
+Som No Man's Sky's analysevisir: [C] / pad Y sender en puls ud over terrænet fra kaptajnen (åben cylinder med scanlinjer, `scan_wave.gdshader`, 60 m/s ud til 95 m). Når bølgefronten passerer et interessepunkt (prøvesteder, relæplads, landeren, farezoner), popper et mærke op over det med navn og afstand (lille overshoot, holder 7 s, toner ud). 5 s nedkøling; suit-panelet viser "[C] Scanner" / "Scanner lader op". Ingen domæneændring; nedsat bevægelse: mærker uden pop. Ny handling `scan` i tastaturlayoutet (kan omkodes). Bevis: `--action=scan --post=<frames>`.
+
 ### D-061 · Strømmen vender tilbage som en bølge gennem skibet (kun præsentation)
 Når kaptajnen lukker nødkoblingen, skifter skibet ikke længere øjeblikkeligt: nødlamperne hakker, alt går i sort i et slag, og så tænder lys, konsoller og holoskærme i en bølge, der ruller ud fra koblingen (~42 m/s), hver lampe blusser forbi sit niveau og lægger sig (forventning, handling, efterslæb); atlassets lysstriber og den omgivende tone følger efter. `ShipBuilder.power_wave(origin)`; uændret ved indlæsning af et gemt spil, øjeblikkeligt med nedsat bevægelse. Bevis: `--setup=fresh --scene=ship --action=powerwave --post=<frames>`.
 

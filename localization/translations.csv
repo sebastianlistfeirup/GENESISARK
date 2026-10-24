@@ -651,6 +651,7 @@ Run,Løb
 Skip subtitle line,Spring undertekstlinje over
 Speed 1x,Hastighed 1x
 Speed 3x,Hastighed 3x
+Suit scanner (surface),Dragtscanner (overflade)
 Zoom in,Zoom ind
 Zoom out,Zoom ud
 Auto,Auto
@@ -991,6 +992,7 @@ Return to,Vend tilbage til
 Return to the lander,Vend tilbage til landeren
 Sample taken.,Prøve taget.
 Samples: %d/2 · Relay: %s,Prøver: %d/2 · Relæ: %s
+Scanner recharging,Scanner lader op
 Suit,Dragt
 Take sample:,Tag prøve:
 Take the main sample,Tag hovedprøven
@@ -999,6 +1001,7 @@ The relay is transmitting.,Relæet sender.
 The relay secures data and assesses the landing site.,Relæet sikrer data og vurderer landingspladsen.
 You have no samples yet. Press again to return anyway.,Du har ingen prøver endnu. Tryk igen for at vende tilbage alligevel.
 [%s] Call drone reserve (+%d%%),[%s] Kald dronereserve (+%d%%)
+[%s] Scanner,[%s] Scanner
 missing,mangler
 placed,placeret
 the lander,landeren

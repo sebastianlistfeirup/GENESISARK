@@ -27,6 +27,7 @@ var waypoints: WaypointLayer
 var _nav_said: Dictionary = {}  # what NAV has reported this expedition (UI memory, not saved)
 var _objective_key := ""
 var _nav_t := 0.0
+var scanner: SurfaceScanner
 var _descending := false  # PlanetDescent in progress: no suit drain, no HUD
 var _poi_labels: Dictionary = {}  # key -> Label3D: far-off signage, handed to the waypoint layer up close
 
@@ -110,6 +111,15 @@ func _ready() -> void:
 	hud = GameHud.new()
 	add_child(hud)
 	_maybe_landing_intro(ex)
+	scanner = SurfaceScanner.new()
+	scanner.name = "Scanner"
+	add_child(scanner)
+	scanner.captain = captain
+	for key: String in _markers.keys():
+		var m: Interactable = _markers[key]
+		scanner.targets.append({"node": m, "name": WaypointLayer.nice(m.title), "color": UiKit.PETROL.lightened(0.35) if key == "lander" else (UiKit.AMBER if key != "relay" else Color("59e6ff"))})
+	for h: Dictionary in hazard_areas:
+		scanner.targets.append({"node": h["area"], "name": "▲ " + str(h["label"]), "color": Color("ff7a5c"), "height": 9.5})
 	waypoints = WaypointLayer.new()
 	add_child(waypoints)
 	waypoints.visible = not _descending
@@ -363,6 +373,8 @@ func _physics_process(delta: float) -> void:
 	if hm[0] > 1.0:
 		lines.append(Loc.t("▲ In hazard zone: %s (×%.1f consumption)") % [hm[1], hm[0]])
 	lines.append(Loc.t("Samples: %d/2 · Relay: %s") % [ex.samples.size(), Loc.t("placed") if ex.relay_placed else Loc.t("missing")])
+	if scanner:
+		lines.append(Loc.t("[%s] Scanner") % SettingsService.binding_text("scan") if scanner.can_scan() else Loc.t("Scanner recharging"))
 	if ex.drone_refill_available and not ex.drone_refill_used:
 		lines.append(Loc.t("[%s] Call drone reserve (+%d%%)") % [SettingsService.binding_text("drone_refill"), int(GameSession.content.bal("suit.drone_refill", 35.0))])
 	var lander: Node3D = _markers.get("lander")
@@ -397,6 +409,8 @@ func _nav_context(ex: ExpeditionState, hm: Array) -> Dictionary:
 
 
 func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action_pressed("scan") and scanner and not _descending and not _finishing:
+		scanner.pulse()
 	if event.is_action_pressed("drone_refill"):
 		var r := GameSession.cmd_drone_refill()
 		if r.ok:
@@ -460,6 +474,10 @@ func debug_action(action: String) -> void:
 		var body := _lander_body()
 		if lander and body:
 			_start_descent(lander, body, float(action.get_slice(":", 1)) if action.contains(":") else PlanetDescent.START_ALT)
+		return
+	if action == "scan":  # evidence: a scanner pulse from the camp, seen from a vista
+		scanner.pulse()
+		debug_action("vista:200")
 		return
 	if action.begins_with("ascent"):  # evidence: the climb back to orbit, ascent[:<seconds in>] (no domain change)
 		var d := PlanetDescent.new()
