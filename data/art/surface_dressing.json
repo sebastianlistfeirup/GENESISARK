@@ -1,0 +1,1085 @@
+{
+ "_note": "Point-of-interest set dressing for the expedition surface (PoiDressing, D-038). Kits: camp (around the lander), main_sample, relay, risk_sample, hazard_<hazard id>, route_<route id>. Each kit merges the entries under 'any', the biome id and the planet id. Entry fields: mesh|meshes, count, ring [min,max] m from the anchor (hazards: in_zone + zone_frac of the zone radius), size [min,max] = longest extent in m, cluster [n, spread], even, face anchor|away|random, tilt deg, sink m, sink_frac of height, flush_top (top surface m above ground), ground (flat detail, may sit under markers), collide, footprint, tint/glow, lamp {color, glow, size, above, omni, energy, range}, view (cull distance). Route kits: every m, offset [min,max] beyond the clear corridor, start, one_side. clearance keeps interactables, the lander and the route polylines free. Paths are local Synty packs (gitignored); missing files are skipped.",
+ "clearance": {
+  "interactable": 4.2,
+  "lander": 5.5,
+  "route": 2.6,
+  "spacing": 0.5
+ },
+ "keep_clear": [
+  {
+   "_why": "captain spawn beside the lander (surface_scene teleport 4,4)",
+   "anchor": "lander",
+   "offset": [
+    4,
+    4
+   ],
+   "radius": 3.0
+  },
+  {
+   "_why": "surface debug_action at_sample viewpoint (evidence captures)",
+   "anchor": "main_sample",
+   "offset": [
+    -4,
+    5
+   ],
+   "radius": 2.5
+  }
+ ],
+ "kits": {
+  "camp": {
+   "any": [
+    {
+     "mesh": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Buildings/SM_Bld_Pod_Pad_01.tscn",
+     "count": 1,
+     "ring": [
+      0,
+      0
+     ],
+     "size": [
+      11.5,
+      11.5
+     ],
+     "ground": true,
+     "view": 260,
+     "flush_top": 0.12
+    },
+    {
+     "meshes": [
+      "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_Crate_01.tscn",
+      "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_Crate_02.tscn",
+      "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_Crate_05.tscn",
+      "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_Crate_06.tscn",
+      "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_Crate_10.tscn",
+      "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_Crate_12.tscn",
+      "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_Crate_13.tscn",
+      "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_Crate_14.tscn"
+     ],
+     "count": 3,
+     "ring": [
+      6.8,
+      10.5
+     ],
+     "size": [
+      0.8,
+      1.3
+     ],
+     "cluster": [
+      3,
+      1.8
+     ],
+     "collide": true
+    },
+    {
+     "mesh": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_Container_01.tscn",
+     "count": 1,
+     "ring": [
+      7.5,
+      11
+     ],
+     "size": [
+      3.0,
+      3.4
+     ],
+     "face": "anchor",
+     "collide": true
+    },
+    {
+     "meshes": [
+      "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_Canopy_Preset_01.tscn",
+      "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_Canopy_Preset_02.tscn"
+     ],
+     "count": 1,
+     "ring": [
+      9,
+      12
+     ],
+     "size": [
+      8.5,
+      9.5
+     ],
+     "face": "anchor",
+     "footprint": 0.5
+    },
+    {
+     "mesh": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_PowerGenerator_02.tscn",
+     "count": 1,
+     "ring": [
+      7,
+      10
+     ],
+     "size": [
+      2.2,
+      2.6
+     ],
+     "collide": true
+    },
+    {
+     "meshes": [
+      "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_BatteryPack_01.tscn",
+      "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_BatteryPack_02.tscn",
+      "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_Fuel_Cell_01.tscn",
+      "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_Cable_02.tscn",
+      "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_Cable_04.tscn"
+     ],
+     "count": 5,
+     "ring": [
+      6.2,
+      10
+     ],
+     "size": [
+      0.8,
+      1.6
+     ]
+    },
+    {
+     "meshes": [
+      "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_SolarPanel_01.tscn",
+      "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_SolarPanel_03.tscn"
+     ],
+     "count": 2,
+     "ring": [
+      10,
+      14
+     ],
+     "size": [
+      3.0,
+      3.6
+     ],
+     "face": "anchor",
+     "collide": true
+    },
+    {
+     "mesh": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_Antenna_03.tscn",
+     "count": 1,
+     "ring": [
+      8,
+      11
+     ],
+     "size": [
+      4.0,
+      4.8
+     ]
+    },
+    {
+     "mesh": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_Tether_Pole_Tall_01.tscn",
+     "count": 4,
+     "ring": [
+      6.0,
+      6.6
+     ],
+     "size": [
+      3.4,
+      3.8
+     ],
+     "even": true,
+     "lamp": {
+      "color": "#ffb347",
+      "glow": 5.0,
+      "size": 0.16,
+      "omni": true,
+      "energy": 2.2,
+      "range": 8.0
+     }
+    }
+   ]
+  },
+  "main_sample": {
+   "any": [
+    {
+     "meshes": [
+      "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_Drill_03.tscn",
+      "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_Drill_04.tscn"
+     ],
+     "count": 1,
+     "ring": [
+      4.6,
+      5.6
+     ],
+     "size": [
+      2.6,
+      3.2
+     ],
+     "face": "anchor",
+     "collide": true
+    },
+    {
+     "mesh": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_Scanner_01.tscn",
+     "count": 1,
+     "ring": [
+      4.5,
+      5.5
+     ],
+     "size": [
+      1.2,
+      1.5
+     ],
+     "face": "anchor"
+    },
+    {
+     "meshes": [
+      "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_Crate_01.tscn",
+      "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_Crate_02.tscn",
+      "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_Crate_05.tscn",
+      "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_Crate_06.tscn",
+      "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_Crate_10.tscn",
+      "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_Crate_12.tscn",
+      "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_Crate_13.tscn",
+      "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_Crate_14.tscn"
+     ],
+     "count": 1,
+     "ring": [
+      5,
+      7
+     ],
+     "size": [
+      0.9,
+      1.4
+     ],
+     "cluster": [
+      2,
+      1.4
+     ],
+     "collide": true
+    },
+    {
+     "meshes": [
+      "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Ground_Greeble_01.tscn",
+      "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Ground_Greeble_03.tscn"
+     ],
+     "count": 2,
+     "ring": [
+      1.6,
+      3.2
+     ],
+     "size": [
+      1.6,
+      2.2
+     ],
+     "ground": true
+    }
+   ],
+   "desert": [
+    {
+     "mesh": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Blob_05.tscn",
+     "count": 1,
+     "ring": [
+      2.0,
+      3.0
+     ],
+     "size": [
+      2.6,
+      3.2
+     ],
+     "ground": true
+    },
+    {
+     "meshes": [
+      "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Artifact_AlienRuin_05.tscn",
+      "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Artifact_AlienRuin_06.tscn"
+     ],
+     "count": 3,
+     "ring": [
+      7,
+      10.5
+     ],
+     "size": [
+      5.5,
+      7.5
+     ],
+     "face": "anchor",
+     "collide": true,
+     "view": 260
+    },
+    {
+     "meshes": [
+      "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Artifact_Head_01.tscn",
+      "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Artifact_Head_03.tscn"
+     ],
+     "count": 1,
+     "ring": [
+      12,
+      16
+     ],
+     "size": [
+      6,
+      8
+     ],
+     "sink_frac": 0.3,
+     "tilt": 18,
+     "face": "anchor",
+     "collide": true,
+     "view": 300
+    }
+   ],
+   "green": [
+    {
+     "meshes": [
+      "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Artifact_AlienRuin_02.tscn",
+      "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Artifact_AlienRuin_03.tscn",
+      "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Artifact_AlienRuin_04.tscn"
+     ],
+     "count": 3,
+     "ring": [
+      7,
+      10.5
+     ],
+     "size": [
+      5,
+      8
+     ],
+     "face": "anchor",
+     "collide": true,
+     "view": 260
+    },
+    {
+     "mesh": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Artifact_Arm_01.tscn",
+     "count": 1,
+     "ring": [
+      11,
+      15
+     ],
+     "size": [
+      5,
+      6
+     ],
+     "sink_frac": 0.2,
+     "tilt": 15,
+     "collide": true,
+     "view": 300
+    }
+   ],
+   "ice": [
+    {
+     "meshes": [
+      "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Snow_Pile_01.tscn",
+      "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Snow_Pile_03.tscn"
+     ],
+     "count": 2,
+     "ring": [
+      1.5,
+      3.5
+     ],
+     "size": [
+      3,
+      4
+     ],
+     "ground": true
+    },
+    {
+     "meshes": [
+      "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Artifact_AlienRuin_07.tscn",
+      "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Artifact_AlienRuin_08.tscn"
+     ],
+     "count": 2,
+     "ring": [
+      7,
+      10.5
+     ],
+     "size": [
+      6,
+      8
+     ],
+     "face": "anchor",
+     "collide": true,
+     "view": 260
+    },
+    {
+     "meshes": [
+      "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Plant_Fester_01.tscn",
+      "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Plant_Fester_02.tscn",
+      "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Plant_Fester_03.tscn",
+      "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Plant_Fester_04.tscn"
+     ],
+     "count": 4,
+     "ring": [
+      5.5,
+      9
+     ],
+     "size": [
+      1.6,
+      3.0
+     ],
+     "collide": true
+    }
+   ]
+  },
+  "relay": {
+   "any": [
+    {
+     "meshes": [
+      "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_Satellite_03.tscn",
+      "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_Satellite_04.tscn"
+     ],
+     "count": 1,
+     "ring": [
+      4.6,
+      6.0
+     ],
+     "size": [
+      3.6,
+      4.4
+     ],
+     "face": "away",
+     "collide": true,
+     "view": 260
+    },
+    {
+     "meshes": [
+      "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_Antenna_04.tscn",
+      "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_Antenna_08.tscn",
+      "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_Antenna_11.tscn"
+     ],
+     "count": 2,
+     "ring": [
+      4.6,
+      7.5
+     ],
+     "size": [
+      3.0,
+      5.0
+     ]
+    },
+    {
+     "mesh": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_SolarPanel_02.tscn",
+     "count": 2,
+     "ring": [
+      5,
+      8.5
+     ],
+     "size": [
+      2.4,
+      3.0
+     ],
+     "collide": true
+    },
+    {
+     "meshes": [
+      "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_BatteryPack_01.tscn",
+      "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_BatteryPack_03.tscn",
+      "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_Cable_05.tscn"
+     ],
+     "count": 2,
+     "ring": [
+      4.6,
+      6.5
+     ],
+     "size": [
+      0.8,
+      1.4
+     ]
+    },
+    {
+     "mesh": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_Tether_Pole_Tall_01.tscn",
+     "count": 1,
+     "ring": [
+      4.6,
+      5.5
+     ],
+     "size": [
+      3.4,
+      3.8
+     ],
+     "lamp": {
+      "color": "#38e0d0",
+      "glow": 5.0,
+      "size": 0.16,
+      "omni": true,
+      "energy": 1.8,
+      "range": 7.0
+     }
+    }
+   ]
+  },
+  "risk_sample": {
+   "any": [
+    {
+     "mesh": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_Scav_Barrel_01.tscn",
+     "count": 1,
+     "ring": [
+      4.5,
+      6
+     ],
+     "size": [
+      0.9,
+      1.1
+     ],
+     "cluster": [
+      3,
+      1.3
+     ]
+    },
+    {
+     "mesh": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/Signs/SM_Prop_Sign_01.tscn",
+     "count": 1,
+     "ring": [
+      4.5,
+      5.5
+     ],
+     "size": [
+      1.8,
+      2.0
+     ],
+     "face": "anchor"
+    },
+    {
+     "meshes": [
+      "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Ground_Greeble_03.tscn"
+     ],
+     "count": 1,
+     "ring": [
+      1.4,
+      2.6
+     ],
+     "size": [
+      1.6,
+      2.0
+     ],
+     "ground": true
+    }
+   ],
+   "desert": [
+    {
+     "meshes": [
+      "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/Bones/SM_Prop_Skeleton_Spine_02.tscn",
+      "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/Bones/SM_Prop_Skeleton_Spine_Broken_01.tscn",
+      "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/Bones/SM_Prop_Skeleton_Skull_01.tscn"
+     ],
+     "count": 3,
+     "ring": [
+      4.5,
+      8
+     ],
+     "size": [
+      1.2,
+      3.0
+     ],
+     "sink_frac": 0.2,
+     "tilt": 20
+    }
+   ],
+   "green": [
+    {
+     "mesh": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Blob_05.tscn",
+     "count": 2,
+     "ring": [
+      4.5,
+      7
+     ],
+     "size": [
+      2.0,
+      3.0
+     ],
+     "ground": true
+    }
+   ],
+   "ice": [
+    {
+     "meshes": [
+      "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Plant_Fester_01.tscn",
+      "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Plant_Fester_02.tscn",
+      "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Plant_Fester_03.tscn",
+      "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Plant_Fester_04.tscn"
+     ],
+     "count": 2,
+     "ring": [
+      4.5,
+      7
+     ],
+     "size": [
+      1.4,
+      2.4
+     ],
+     "collide": true
+    }
+   ]
+  },
+  "hazard_heat": {
+   "any": [
+    {
+     "meshes": [
+      "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Skeleton_Preset_01.tscn",
+      "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Skeleton_Preset_02.tscn",
+      "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Skeleton_Preset_03.tscn",
+      "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Skeleton_Preset_04.tscn",
+      "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Skeleton_Preset_05.tscn"
+     ],
+     "count": 2,
+     "in_zone": true,
+     "zone_frac": 1.0,
+     "ring": [
+      3,
+      11
+     ],
+     "size": [
+      7,
+      10
+     ],
+     "sink_frac": 0.3,
+     "tilt": 12,
+     "collide": true,
+     "footprint": 0.5,
+     "view": 260
+    },
+    {
+     "mesh": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Artifact_Head_02.tscn",
+     "count": 1,
+     "ring": [
+      10,
+      15
+     ],
+     "size": [
+      6,
+      7
+     ],
+     "sink_frac": 0.35,
+     "tilt": 25,
+     "collide": true,
+     "view": 300
+    },
+    {
+     "meshes": [
+      "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Rock_Spike_01.tscn",
+      "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Rock_Spike_03.tscn"
+     ],
+     "count": 3,
+     "in_zone": true,
+     "ring": [
+      3,
+      10
+     ],
+     "size": [
+      2.5,
+      4.5
+     ],
+     "collide": true
+    },
+    {
+     "meshes": [
+      "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Detail_Crater_04.tscn"
+     ],
+     "count": 2,
+     "in_zone": true,
+     "ring": [
+      2,
+      9
+     ],
+     "size": [
+      5,
+      7
+     ],
+     "ground": true,
+     "sink_frac": 0.6
+    }
+   ]
+  },
+  "hazard_dust": {
+   "any": [
+    {
+     "meshes": [
+      "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Skeleton_Preset_01.tscn",
+      "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Skeleton_Preset_02.tscn",
+      "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Skeleton_Preset_03.tscn",
+      "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Skeleton_Preset_04.tscn",
+      "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Skeleton_Preset_05.tscn"
+     ],
+     "count": 2,
+     "in_zone": true,
+     "zone_frac": 1.0,
+     "ring": [
+      3,
+      12
+     ],
+     "size": [
+      7,
+      10
+     ],
+     "sink_frac": 0.3,
+     "tilt": 12,
+     "collide": true,
+     "footprint": 0.5,
+     "view": 260
+    },
+    {
+     "mesh": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Buildings/SM_Bld_Scav_Wreckage_01.tscn",
+     "count": 1,
+     "ring": [
+      11,
+      16
+     ],
+     "size": [
+      14,
+      16
+     ],
+     "sink_frac": 0.25,
+     "tilt": 22,
+     "collide": true,
+     "footprint": 0.45,
+     "view": 320
+    },
+    {
+     "meshes": [
+      "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/Scrap/SM_Prop_Scav_Scrap_05.tscn",
+      "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/Scrap/SM_Prop_Scav_Scrap_12.tscn",
+      "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/Scrap/SM_Prop_Scav_Scrap_20.tscn"
+     ],
+     "count": 4,
+     "in_zone": true,
+     "ring": [
+      3,
+      11
+     ],
+     "size": [
+      1.5,
+      3.5
+     ],
+     "tilt": 25
+    }
+   ]
+  },
+  "hazard_spores": {
+   "any": [
+    {
+     "meshes": [
+      "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Plant_Fester_01.tscn",
+      "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Plant_Fester_02.tscn",
+      "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Plant_Fester_03.tscn",
+      "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Plant_Fester_04.tscn"
+     ],
+     "count": 6,
+     "in_zone": true,
+     "zone_frac": 1.0,
+     "ring": [
+      3,
+      10
+     ],
+     "size": [
+      1.6,
+      3.4
+     ],
+     "collide": true
+    },
+    {
+     "mesh": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Blob_05.tscn",
+     "count": 3,
+     "in_zone": true,
+     "ring": [
+      2,
+      9
+     ],
+     "size": [
+      2.5,
+      4.0
+     ],
+     "ground": true
+    },
+    {
+     "meshes": [
+      "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Skeleton_Preset_04.tscn",
+      "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Skeleton_Preset_05.tscn"
+     ],
+     "count": 1,
+     "in_zone": true,
+     "ring": [
+      4,
+      10
+     ],
+     "size": [
+      5,
+      7
+     ],
+     "sink_frac": 0.3,
+     "tilt": 15,
+     "collide": true,
+     "footprint": 0.5
+    }
+   ]
+  },
+  "hazard_storms": {
+   "any": [
+    {
+     "mesh": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Buildings/SM_Bld_Scav_Wreckage_02.tscn",
+     "count": 1,
+     "ring": [
+      12,
+      17
+     ],
+     "size": [
+      15,
+      17
+     ],
+     "sink_frac": 0.25,
+     "tilt": 25,
+     "collide": true,
+     "footprint": 0.45,
+     "view": 320
+    },
+    {
+     "meshes": [
+      "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/Scrap/SM_Prop_Scav_Scrap_Pile_02.tscn"
+     ],
+     "count": 1,
+     "in_zone": true,
+     "ring": [
+      4,
+      11
+     ],
+     "size": [
+      5,
+      6
+     ],
+     "sink_frac": 0.2,
+     "collide": true,
+     "footprint": 0.6
+    },
+    {
+     "meshes": [
+      "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_Antenna_05.tscn",
+      "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_Antenna_07.tscn"
+     ],
+     "count": 3,
+     "in_zone": true,
+     "ring": [
+      3,
+      11
+     ],
+     "size": [
+      3,
+      5
+     ],
+     "tilt": 35
+    },
+    {
+     "meshes": [
+      "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/Scrap/SM_Prop_Scav_Scrap_05.tscn",
+      "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/Scrap/SM_Prop_Scav_Scrap_12.tscn"
+     ],
+     "count": 3,
+     "in_zone": true,
+     "ring": [
+      3,
+      11
+     ],
+     "size": [
+      1.5,
+      3.0
+     ],
+     "tilt": 25
+    }
+   ]
+  },
+  "hazard_cold": {
+   "any": [
+    {
+     "meshes": [
+      "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Plant_Fester_01.tscn",
+      "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Plant_Fester_02.tscn",
+      "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Plant_Fester_03.tscn",
+      "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Plant_Fester_04.tscn"
+     ],
+     "count": 6,
+     "in_zone": true,
+     "zone_frac": 1.0,
+     "ring": [
+      3,
+      10
+     ],
+     "size": [
+      1.8,
+      3.8
+     ],
+     "collide": true
+    },
+    {
+     "mesh": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Detail_Round_01.tscn",
+     "count": 2,
+     "in_zone": true,
+     "ring": [
+      4,
+      10
+     ],
+     "size": [
+      3.5,
+      5
+     ],
+     "collide": true,
+     "sink_frac": 0.1
+    },
+    {
+     "meshes": [
+      "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Snow_Pile_01.tscn",
+      "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Snow_Pile_03.tscn"
+     ],
+     "count": 3,
+     "in_zone": true,
+     "ring": [
+      2,
+      9
+     ],
+     "size": [
+      4,
+      6
+     ],
+     "ground": true
+    }
+   ]
+  },
+  "hazard_long_night": {
+   "any": [
+    {
+     "meshes": [
+      "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Plant_Fester_01.tscn",
+      "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Plant_Fester_02.tscn",
+      "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Plant_Fester_03.tscn",
+      "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Plant_Fester_04.tscn"
+     ],
+     "count": 5,
+     "in_zone": true,
+     "zone_frac": 1.0,
+     "ring": [
+      3,
+      11
+     ],
+     "size": [
+      1.8,
+      3.6
+     ],
+     "collide": true
+    },
+    {
+     "meshes": [
+      "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Plant_Fester_01.tscn",
+      "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Plant_Fester_02.tscn",
+      "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Plant_Fester_03.tscn",
+      "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Plant_Fester_04.tscn"
+     ],
+     "count": 2,
+     "in_zone": true,
+     "ring": [
+      4,
+      10
+     ],
+     "size": [
+      2.6,
+      3.4
+     ],
+     "collide": true,
+     "lamp": {
+      "color": "#7fe8ff",
+      "glow": 3.0,
+      "size": 0.05,
+      "above": -1.2,
+      "omni": true,
+      "energy": 2.4,
+      "range": 9.0
+     }
+    },
+    {
+     "meshes": [
+      "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Detail_Spire_Group_01.tscn",
+      "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Detail_Spikey_Group_02.tscn"
+     ],
+     "count": 2,
+     "in_zone": true,
+     "ring": [
+      3,
+      11
+     ],
+     "size": [
+      5,
+      7
+     ],
+     "collide": true,
+     "footprint": 0.6
+    },
+    {
+     "mesh": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Skeleton_Preset_03.tscn",
+     "count": 1,
+     "ring": [
+      11,
+      16
+     ],
+     "size": [
+      8,
+      10
+     ],
+     "sink_frac": 0.3,
+     "collide": true,
+     "footprint": 0.5,
+     "view": 260
+    }
+   ]
+  },
+  "route_safe": {
+   "any": [
+    {
+     "mesh": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_Tether_Pole_01.tscn",
+     "every": 12,
+     "offset": [
+      0.3,
+      0.8
+     ],
+     "start": 9,
+     "size": [
+      1.6,
+      1.9
+     ],
+     "lamp": {
+      "color": "#38e0d0",
+      "glow": 5.0,
+      "size": 0.09
+     }
+    }
+   ],
+   "umbra": [
+    {
+     "mesh": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_Tether_Pole_Tall_01.tscn",
+     "every": 24,
+     "offset": [
+      0.6,
+      1.0
+     ],
+     "start": 15,
+     "one_side": true,
+     "size": [
+      3.2,
+      3.6
+     ],
+     "lamp": {
+      "color": "#38e0d0",
+      "glow": 5.0,
+      "size": 0.14,
+      "omni": true,
+      "energy": 1.6,
+      "range": 8.0
+     }
+    }
+   ]
+  },
+  "route_short": {
+   "any": [
+    {
+     "meshes": [
+      "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_Scav_Barrel_01.tscn",
+      "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/Signs/SM_Prop_Sign_02.tscn"
+     ],
+     "every": 15,
+     "offset": [
+      0.4,
+      1.2
+     ],
+     "start": 10,
+     "size": [
+      1.0,
+      1.9
+     ],
+     "lamp": {
+      "color": "#ffb347",
+      "glow": 4.0,
+      "size": 0.08
+     }
+    }
+   ]
+  }
+ }
+}

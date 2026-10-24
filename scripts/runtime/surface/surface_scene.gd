@@ -64,6 +64,7 @@ func _ready() -> void:
 	_place_points(pts)
 	_place_routes()
 	_place_hazards()
+	add_child(PoiDressing.build(terrain, survey, planet, hash(ex.site_id)))  # D-038: camp, POI, hazard and route set dressing (look only)
 	captain = Captain.new()
 	captain.footstep_slot = "sfx_footstep_soil"
 	captain.wear_helmet = true
