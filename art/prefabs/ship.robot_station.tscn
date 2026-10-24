@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" path="res://assets/Synty/SciFiSpace/FBX/SM_Prop_Battery_03.fbx" id="1_dlyuv"]
 
-[node name="ship_robot_station" type="Node3D" unique_id=1569992304]
+[node name="ship_robot_station" type="Node3D" unique_id=504525713]
 metadata/synty_source = "res://assets/Synty/SciFiSpace/FBX/SM_Prop_Battery_03.fbx"
 metadata/synty_fit = "natural"
 

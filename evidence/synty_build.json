@@ -3,75 +3,281 @@
     {
       "clips": {
         "build": {
+          "length_s": 1.77,
+          "loop": true,
+          "removed_travel_m": 0.0,
+          "retargeted": true,
+          "source": "res://assets/imported/anim_pass/A_POLY_IDL_UsePhone_TwoHands_Typing_Masc.fbx"
+        },
+        "idle": {
+          "length_s": 1.77,
+          "loop": true,
+          "removed_travel_m": 0.0,
+          "retargeted": true,
+          "source": "res://assets/Synty/Animations/A_POLY_IDL_Base_Masc.fbx"
+        },
+        "idle_alt_look_l": {
+          "length_s": 2.17,
+          "loop": false,
+          "removed_travel_m": 0.0,
+          "retargeted": true,
+          "source": "res://assets/imported/anim_pass/A_POLY_IDL_Look_L_Masc.fbx"
+        },
+        "idle_alt_look_r": {
+          "length_s": 2.17,
+          "loop": false,
+          "removed_travel_m": 0.0,
+          "retargeted": true,
+          "source": "res://assets/imported/anim_pass/A_POLY_IDL_Look_R_Masc.fbx"
+        },
+        "idle_alt_shift": {
+          "length_s": 4.3,
+          "loop": false,
+          "removed_travel_m": 0.0,
+          "retargeted": true,
+          "source": "res://assets/imported/anim_pass/A_POLY_IDL_WeightShift_L_Masc.fbx"
+        },
+        "idle_alt_watch": {
           "length_s": 2.63,
+          "loop": false,
           "removed_travel_m": 0.0,
           "retargeted": true,
           "source": "res://assets/Synty/Animations/A_POLY_IDL_CheckWatch_Masc.fbx"
         },
-        "idle": {
-          "length_s": 1.77,
-          "removed_travel_m": 0.0,
-          "retargeted": true,
-          "source": "res://assets/Synty/Animations/A_Idle_Standing_Masc.fbx"
-        },
         "interact": {
-          "length_s": 4.37,
+          "length_s": 1.8,
+          "loop": false,
           "removed_travel_m": 0.0,
           "retargeted": true,
-          "source": "res://assets/Synty/Animations/A_POLY_IDL_Inspect_Hands_Masc.fbx"
+          "source": "res://assets/imported/anim_pass/A_POLY_IDL_PointHand_Index_F_Small_Masc.fbx"
         },
         "run": {
-          "length_s": 0.7,
+          "length_s": 0.6,
+          "loop": true,
+          "removed_travel_m": 0.0,
+          "retargeted": true,
+          "source": "res://assets/imported/anim_pass/A_Sprint_F_Masc.fbx"
+        },
+        "sample": {
+          "length_s": 1.77,
+          "loop": true,
+          "removed_travel_m": 0.0,
+          "retargeted": true,
+          "source": "res://assets/imported/anim_pass/A_POLY_IDL_Pray_Kneeling_Loop_Masc.fbx",
+          "upper": "res://assets/imported/anim_pass/A_POLY_IDL_UsePhone_TwoHands_Typing_Masc.fbx"
+        },
+        "stop_run_l": {
+          "length_s": 0.97,
+          "loop": false,
+          "removed_travel_m": 0.04,
+          "retargeted": true,
+          "source": "res://assets/imported/anim_pass/A_Run_ToIdleF_LFoot_Masc.fbx"
+        },
+        "stop_run_r": {
+          "length_s": 0.97,
+          "loop": false,
+          "removed_travel_m": 0.05,
+          "retargeted": true,
+          "source": "res://assets/imported/anim_pass/A_Run_ToIdleF_RFoot_Masc.fbx"
+        },
+        "stop_walk_l": {
+          "length_s": 0.97,
+          "loop": false,
+          "removed_travel_m": 0.04,
+          "retargeted": true,
+          "source": "res://assets/imported/anim_pass/A_Run_ToIdleF_LFoot_Masc.fbx"
+        },
+        "stop_walk_r": {
+          "length_s": 0.97,
+          "loop": false,
+          "removed_travel_m": 0.05,
+          "retargeted": true,
+          "source": "res://assets/imported/anim_pass/A_Run_ToIdleF_RFoot_Masc.fbx"
+        },
+        "stop_walk_slow_l": {
+          "length_s": 1.03,
+          "loop": false,
+          "removed_travel_m": 0.03,
+          "retargeted": true,
+          "source": "res://assets/imported/anim_pass/A_Walk_ToIdleF_LFoot_Masc.fbx"
+        },
+        "stop_walk_slow_r": {
+          "length_s": 1.03,
+          "loop": false,
+          "removed_travel_m": 0.03,
+          "retargeted": true,
+          "source": "res://assets/imported/anim_pass/A_Walk_ToIdleF_RFoot_Masc.fbx"
+        },
+        "turn_l": {
+          "length_s": 0.97,
+          "loop": false,
+          "removed_travel_m": 0.0,
+          "retargeted": true,
+          "source": "res://assets/imported/anim_pass/A_Turn_Standing_90L_Masc.fbx"
+        },
+        "turn_r": {
+          "length_s": 0.97,
+          "loop": false,
+          "removed_travel_m": 0.0,
+          "retargeted": true,
+          "source": "res://assets/imported/anim_pass/A_Turn_Standing_90R_Masc.fbx"
+        },
+        "walk": {
+          "length_s": 0.65,
+          "loop": true,
           "removed_travel_m": 0.0,
           "retargeted": true,
           "source": "res://assets/Synty/Animations/A_Run_F_Masc.fbx"
         },
-        "sample": {
-          "length_s": 1.77,
+        "walk_mid": {
+          "length_s": 0.7,
+          "loop": true,
           "removed_travel_m": 0.0,
           "retargeted": true,
-          "source": "res://assets/Synty/Animations/A_Idle_Crouching_Masc.fbx"
+          "source": "res://assets/Synty/Animations/A_Run_F_Masc.fbx"
         },
-        "walk": {
+        "walk_slow": {
           "length_s": 1.03,
+          "loop": true,
           "removed_travel_m": 0.0,
           "retargeted": true,
           "source": "res://assets/Synty/Animations/A_Walk_F_Masc.fbx"
         }
       },
       "errors": [],
+      "ground_fix_m": {
+        "run": 0.086,
+        "stop_run_l": 0.07,
+        "stop_run_r": 0.02,
+        "stop_walk_l": 0.07,
+        "stop_walk_r": 0.02,
+        "walk": 0.06,
+        "walk_mid": 0.044
+      },
       "library": "res://art/animations/char.captain.res",
       "ok": true,
       "slot": "char.captain"
     },
     {
       "clips": {
+        "build": {
+          "length_s": 1.77,
+          "loop": true,
+          "removed_travel_m": 0.0,
+          "retargeted": true,
+          "source": "res://assets/imported/anim_pass/A_POLY_IDL_UsePhone_TwoHands_Typing_Masc.fbx"
+        },
         "idle": {
           "length_s": 1.77,
+          "loop": true,
           "removed_travel_m": 0.0,
           "retargeted": true,
           "source": "res://assets/Synty/Animations/A_POLY_IDL_Base_Masc.fbx"
         },
+        "idle_alt_look_l": {
+          "length_s": 2.17,
+          "loop": false,
+          "removed_travel_m": 0.0,
+          "retargeted": true,
+          "source": "res://assets/imported/anim_pass/A_POLY_IDL_Look_L_Masc.fbx"
+        },
+        "idle_alt_look_r": {
+          "length_s": 2.17,
+          "loop": false,
+          "removed_travel_m": 0.0,
+          "retargeted": true,
+          "source": "res://assets/imported/anim_pass/A_POLY_IDL_Look_R_Masc.fbx"
+        },
+        "idle_alt_shift_l": {
+          "length_s": 4.3,
+          "loop": false,
+          "removed_travel_m": 0.0,
+          "retargeted": true,
+          "source": "res://assets/imported/anim_pass/A_POLY_IDL_WeightShift_L_Masc.fbx"
+        },
+        "idle_alt_shift_r": {
+          "length_s": 4.53,
+          "loop": false,
+          "removed_travel_m": 0.0,
+          "retargeted": true,
+          "source": "res://assets/imported/anim_pass/A_POLY_IDL_WeightShift_R_Masc.fbx"
+        },
+        "idle_alt_stretch": {
+          "length_s": 3.43,
+          "loop": false,
+          "removed_travel_m": 0.0,
+          "retargeted": true,
+          "source": "res://assets/imported/anim_pass/A_POLY_IDL_Stretch_Arms_Masc.fbx"
+        },
+        "idle_alt_think": {
+          "length_s": 2.07,
+          "loop": false,
+          "removed_travel_m": 0.0,
+          "retargeted": true,
+          "source": "res://assets/imported/anim_pass/A_POLY_IDL_Thoughtful_R_ChinScratch_Masc.fbx"
+        },
+        "idle_alt_watch": {
+          "length_s": 2.63,
+          "loop": false,
+          "removed_travel_m": 0.0,
+          "retargeted": true,
+          "source": "res://assets/Synty/Animations/A_POLY_IDL_CheckWatch_Masc.fbx"
+        },
+        "idle_alt_yawn": {
+          "length_s": 3.3,
+          "loop": false,
+          "removed_travel_m": 0.0,
+          "retargeted": true,
+          "source": "res://assets/imported/anim_pass/A_POLY_IDL_Yawn_Masc.fbx"
+        },
         "interact": {
           "length_s": 1.77,
+          "loop": false,
           "removed_travel_m": 0.0,
           "retargeted": true,
           "source": "res://assets/Synty/Animations/A_POLY_IDL_HandsOnHips_Base_Loop_Masc.fbx"
         },
         "run": {
           "length_s": 0.7,
+          "loop": true,
           "removed_travel_m": 0.0,
           "retargeted": true,
           "source": "res://assets/Synty/Animations/A_Run_F_Masc.fbx"
         },
+        "sample": {
+          "length_s": 1.77,
+          "loop": true,
+          "removed_travel_m": 0.0,
+          "retargeted": true,
+          "source": "res://assets/imported/anim_pass/A_POLY_IDL_Pray_Kneeling_Loop_Masc.fbx",
+          "upper": "res://assets/imported/anim_pass/A_POLY_IDL_UsePhone_TwoHands_Typing_Masc.fbx"
+        },
+        "stop_walk_l": {
+          "length_s": 1.03,
+          "loop": false,
+          "removed_travel_m": 0.03,
+          "retargeted": true,
+          "source": "res://assets/imported/anim_pass/A_Walk_ToIdleF_LFoot_Masc.fbx"
+        },
+        "stop_walk_r": {
+          "length_s": 1.03,
+          "loop": false,
+          "removed_travel_m": 0.03,
+          "retargeted": true,
+          "source": "res://assets/imported/anim_pass/A_Walk_ToIdleF_RFoot_Masc.fbx"
+        },
         "walk": {
           "length_s": 1.03,
+          "loop": true,
           "removed_travel_m": 0.0,
           "retargeted": true,
           "source": "res://assets/Synty/Animations/A_Walk_F_Masc.fbx"
         }
       },
       "errors": [],
+      "ground_fix_m": {
+        "run": 0.044
+      },
       "library": "res://art/animations/char.citizen_adult.res",
       "ok": true,
       "slot": "char.citizen_adult"
@@ -80,24 +286,79 @@
       "clips": {
         "idle": {
           "length_s": 1.77,
+          "loop": true,
           "removed_travel_m": 0.0,
           "retargeted": true,
           "source": "res://assets/Synty/Animations/A_POLY_IDL_Base_Masc.fbx"
         },
+        "idle_alt_look_l": {
+          "length_s": 2.17,
+          "loop": false,
+          "removed_travel_m": 0.0,
+          "retargeted": true,
+          "source": "res://assets/imported/anim_pass/A_POLY_IDL_Look_L_Masc.fbx"
+        },
+        "idle_alt_look_r": {
+          "length_s": 2.17,
+          "loop": false,
+          "removed_travel_m": 0.0,
+          "retargeted": true,
+          "source": "res://assets/imported/anim_pass/A_POLY_IDL_Look_R_Masc.fbx"
+        },
+        "idle_alt_shift_l": {
+          "length_s": 4.3,
+          "loop": false,
+          "removed_travel_m": 0.0,
+          "retargeted": true,
+          "source": "res://assets/imported/anim_pass/A_POLY_IDL_WeightShift_L_Masc.fbx"
+        },
+        "idle_alt_shift_r": {
+          "length_s": 4.53,
+          "loop": false,
+          "removed_travel_m": 0.0,
+          "retargeted": true,
+          "source": "res://assets/imported/anim_pass/A_POLY_IDL_WeightShift_R_Masc.fbx"
+        },
+        "idle_alt_stretch": {
+          "length_s": 3.43,
+          "loop": false,
+          "removed_travel_m": 0.0,
+          "retargeted": true,
+          "source": "res://assets/imported/anim_pass/A_POLY_IDL_Stretch_Arms_Masc.fbx"
+        },
         "run": {
           "length_s": 0.7,
+          "loop": true,
           "removed_travel_m": 0.0,
           "retargeted": true,
           "source": "res://assets/Synty/Animations/A_Run_F_Femn.fbx"
         },
+        "stop_walk_l": {
+          "length_s": 1.03,
+          "loop": false,
+          "removed_travel_m": 0.03,
+          "retargeted": true,
+          "source": "res://assets/imported/anim_pass/A_Walk_ToIdleF_LFoot_Masc.fbx"
+        },
+        "stop_walk_r": {
+          "length_s": 1.03,
+          "loop": false,
+          "removed_travel_m": 0.03,
+          "retargeted": true,
+          "source": "res://assets/imported/anim_pass/A_Walk_ToIdleF_RFoot_Masc.fbx"
+        },
         "walk": {
           "length_s": 1.03,
+          "loop": true,
           "removed_travel_m": 0.0,
           "retargeted": true,
           "source": "res://assets/Synty/Animations/A_Walk_F_Femn.fbx"
         }
       },
       "errors": [],
+      "ground_fix_m": {
+        "run": 0.029
+      },
       "library": "res://art/animations/char.citizen_child.res",
       "ok": true,
       "slot": "char.citizen_child"

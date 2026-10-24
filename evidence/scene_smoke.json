@@ -6,7 +6,7 @@
       "ok": true
     },
     {
-      "detail": "@Button@57:<Button#132925884289>",
+      "detail": "@Button@57:<Button#133529864065>",
       "name": "pad_focuses_menu",
       "ok": true
     },
@@ -36,7 +36,7 @@
       "ok": true
     },
     {
-      "detail": "moved=0.36",
+      "detail": "moved=0.61",
       "name": "riglab_runs",
       "ok": true
     },
@@ -58,6 +58,11 @@
     {
       "detail": "ga/idle 1.00",
       "name": "anim_library_states",
+      "ok": true
+    },
+    {
+      "detail": "[\"ga/walk_slow\", \"ga/walk\", \"ga/walk_slow\", \"ga/walk\"] phases=[0.82661992311478, 0.74566769599915] stop=true",
+      "name": "anim_gait_stop_phase",
       "ok": true
     },
     {
@@ -91,12 +96,12 @@
       "ok": true
     },
     {
-      "detail": "dyaw=-0.60",
+      "detail": "dyaw=-0.61",
       "name": "pad_look_turns_camera",
       "ok": true
     },
     {
-      "detail": "I_power_coupling:<Area3D#294993795533>",
+      "detail": "I_power_coupling:<Area3D#296856066519>",
       "name": "prompt_targets_coupling",
       "ok": true
     },
@@ -279,5 +284,5 @@
   "engine_version": "4.7.1-stable (official)",
   "failures": [],
   "status": "PASS",
-  "timestamp": "2026-10-24T11:23:15"
+  "timestamp": "2026-10-24T11:25:56"
 }

@@ -4,14 +4,14 @@
 [ext_resource type="ArrayMesh" path="res://assets/Synty/PolygonSciFiWorlds/Models/extracted/SM_Env_Plant_Kelp_01.res" id="2_lys8i"]
 [ext_resource type="Material" path="res://assets/Synty/PolygonSciFiWorlds/Materials/Plants/Plants_Animated_01_mat.tres" id="3_yejri"]
 
-[node name="surface_plant_green" type="Node3D" unique_id=1043316016]
+[node name="surface_plant_green" type="Node3D" unique_id=116369669]
 metadata/synty_source = "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Plant_Kelp_01.tscn"
 metadata/synty_fit = "natural"
 
-[node name="Model" type="Node3D" parent="." unique_id=233941758]
+[node name="Model" type="Node3D" parent="." unique_id=728426637]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0022788048, 0.1039401, 0)
 
-[node name="SM_Env_Plant_Kelp_01" type="MeshInstance3D" parent="Model" unique_id=308915674 instance=ExtResource("1_61bdl")]
+[node name="SM_Env_Plant_Kelp_01" type="MeshInstance3D" parent="Model" unique_id=533105017 instance=ExtResource("1_61bdl")]
 gi_mode = 2
 mesh = ExtResource("2_lys8i")
 surface_material_override/0 = ExtResource("3_yejri")

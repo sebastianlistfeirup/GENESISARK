@@ -4,13 +4,13 @@
 [ext_resource type="ArrayMesh" path="res://assets/Synty/PolygonSciFiWorlds/Models/extracted/SM_Prop_Crate_02.res" id="2_vqdow"]
 [ext_resource type="Material" path="res://assets/Synty/PolygonSciFiWorlds/Materials/Alts/PolygonScifiWorlds_01_A_mat.tres" id="3_rfcdl"]
 
-[node name="ship_crate" type="Node3D" unique_id=720969578]
+[node name="ship_crate" type="Node3D" unique_id=2133379670]
 metadata/synty_source = "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Props/SM_Prop_Crate_02.tscn"
 metadata/synty_fit = "natural"
 
-[node name="Model" type="Node3D" parent="." unique_id=733393870]
+[node name="Model" type="Node3D" parent="." unique_id=355615613]
 
-[node name="SM_Prop_Crate_02" type="MeshInstance3D" parent="Model" unique_id=2129081611 instance=ExtResource("1_vapiq")]
+[node name="SM_Prop_Crate_02" type="MeshInstance3D" parent="Model" unique_id=1642345454 instance=ExtResource("1_vapiq")]
 gi_mode = 2
 mesh = ExtResource("2_vqdow")
 surface_material_override/0 = ExtResource("3_rfcdl")
