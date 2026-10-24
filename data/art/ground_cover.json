@@ -418,6 +418,111 @@
     ]
    }
   ],
+  "wildlife": [
+   {
+    "model": "res://assets/imported/polyperfect/SKM_Stag_Fantasy_Common.fbx",
+    "tex": "res://assets/imported/polyperfect/Stag_Fantasy_Common_COL_2k.png",
+    "herds": 2,
+    "herd": [
+     4,
+     6
+    ],
+    "size": 2.3,
+    "var": 0.1,
+    "skin": {
+     "hue": 0.42,
+     "sat": 1.2,
+     "grad": [
+      "#0f3a3c",
+      "#e4dc8a"
+     ],
+     "grad_amount": 0.45,
+     "glow": 0.9,
+     "glow_min": 0.8,
+     "glow_color": "#8affc6"
+    },
+    "walk": 1.0,
+    "run": 6.0,
+    "flee": 11,
+    "habitat": "land",
+    "ring": [
+     22,
+     84
+    ],
+    "spread": 7,
+    "vis": 170,
+    "colony": 1
+   },
+   {
+    "model": "res://assets/imported/polyperfect/SKM_Horse_Unicorn.fbx",
+    "tex": "res://assets/imported/polyperfect/Horse_Unicorn_COL_2k.png",
+    "herds": 1,
+    "herd": [
+     3,
+     5
+    ],
+    "size": 2.0,
+    "var": 0.1,
+    "skin": {
+     "hue": 0.62,
+     "sat": 1.3,
+     "grad": [
+      "#3a1a50",
+      "#ffb347"
+     ],
+     "grad_amount": 0.7,
+     "bands": 1.0,
+     "band_freq": 2.2,
+     "glow_color": "#5affe0"
+    },
+    "walk": 1.0,
+    "run": 6.0,
+    "flee": 11,
+    "habitat": "land",
+    "ring": [
+     22,
+     84
+    ],
+    "spread": 7,
+    "vis": 170,
+    "colony": 0
+   },
+   {
+    "model": "res://assets/imported/polyperfect/SKM_Bull_Fantasy.fbx",
+    "tex": "res://assets/imported/polyperfect/Bull_Fantasy_COL_2k.png",
+    "herds": 1,
+    "herd": [
+     1,
+     1
+    ],
+    "size": 5.8,
+    "var": 0.03,
+    "skin": {
+     "hue": 0.25,
+     "sat": 0.9,
+     "grad": [
+      "#5a7a40",
+      "#f0e8a0"
+     ],
+     "grad_amount": 0.7,
+     "glow": 0.6,
+     "glow_min": 0.8,
+     "glow_color": "#c8ff7a"
+    },
+    "walk": 2.0,
+    "run": 6.0,
+    "flee": 0,
+    "habitat": "land",
+    "ring": [
+     52,
+     82
+    ],
+    "spread": 10,
+    "vis": 500,
+    "colony": 1,
+    "emit_tex": "res://assets/imported/polyperfect/Bull_Fantasy_EMIT_2k.png"
+   }
+  ],
   "descent": {
    "canopy": "blob",
    "color": "#2f5a22",
@@ -726,6 +831,75 @@
      62,
      86
     ]
+   }
+  ],
+  "wildlife": [
+   {
+    "model": "res://assets/imported/polyperfect/SKM_Horse_Thoroughbred.fbx",
+    "tex": "res://assets/imported/polyperfect/Horse_Thoroughbred_COL_2k.png",
+    "herds": 2,
+    "herd": [
+     3,
+     5
+    ],
+    "size": 1.9,
+    "var": 0.1,
+    "skin": {
+     "hue": 0.52,
+     "sat": 0.9,
+     "grad": [
+      "#4a8aa8",
+      "#effcff"
+     ],
+     "grad_amount": 0.7,
+     "glow": 0.5,
+     "glow_min": 0.85,
+     "glow_color": "#7fe8ff",
+     "bands": 0.9,
+     "band_freq": 2.4
+    },
+    "walk": 1.0,
+    "run": 6.0,
+    "flee": 11,
+    "habitat": "shore",
+    "ring": [
+     16,
+     86
+    ],
+    "spread": 7,
+    "vis": 170,
+    "colony": 1
+   },
+   {
+    "model": "res://assets/imported/polyperfect/SKM_Gryphon.fbx",
+    "tex": "res://assets/imported/polyperfect/Gryphon_COL_2k.png",
+    "herds": 2,
+    "herd": [
+     1,
+     2
+    ],
+    "size": 2.4,
+    "var": 0.1,
+    "skin": {
+     "hue": 0.45,
+     "sat": 1.1,
+     "grad": [
+      "#2a4a5a",
+      "#fff8ea"
+     ],
+     "grad_amount": 0.55
+    },
+    "walk": 1.0,
+    "run": 6.0,
+    "flee": 13,
+    "habitat": "shore",
+    "ring": [
+     16,
+     86
+    ],
+    "spread": 7,
+    "vis": 170,
+    "colony": 1
    }
   ],
   "descent": {
@@ -1097,6 +1271,103 @@
     ]
    }
   ],
+  "wildlife": [
+   {
+    "model": "res://assets/imported/polyperfect/SKM_Bull_Fantasy.fbx",
+    "tex": "res://assets/imported/polyperfect/Bull_Fantasy_COL_2k.png",
+    "herds": 2,
+    "herd": [
+     3,
+     5
+    ],
+    "size": 2.1,
+    "var": 0.1,
+    "skin": {
+     "hue": 0.0,
+     "sat": 1.1,
+     "val": 0.85,
+     "grad": [
+      "#2a1a18",
+      "#9a6a52"
+     ],
+     "grad_amount": 0.75,
+     "emit": 3.0,
+     "emit_color": "#ffb04a",
+     "bands": 1.6,
+     "band_freq": 1.4,
+     "glow_color": "#ff8a2a"
+    },
+    "walk": 1.0,
+    "run": 6.0,
+    "flee": 11,
+    "habitat": "land",
+    "ring": [
+     22,
+     84
+    ],
+    "spread": 7,
+    "vis": 170,
+    "colony": 1,
+    "emit_tex": "res://assets/imported/polyperfect/Bull_Fantasy_EMIT_2k.png"
+   },
+   {
+    "model": "res://assets/imported/polyperfect/SKM_Horse_Skeleton.fbx",
+    "tex": "res://assets/imported/polyperfect/Horse_Skeleton_COL_2k.png",
+    "herds": 1,
+    "herd": [
+     2,
+     4
+    ],
+    "size": 1.9,
+    "var": 0.1,
+    "skin": {
+     "hue": 0.05,
+     "sat": 0.6,
+     "grad": [
+      "#3a2418",
+      "#efd2b0"
+     ],
+     "grad_amount": 0.5,
+     "emit": 2.0,
+     "emit_color": "#ffd25a"
+    },
+    "walk": 1.0,
+    "run": 6.0,
+    "flee": 11,
+    "habitat": "land",
+    "ring": [
+     22,
+     84
+    ],
+    "spread": 7,
+    "vis": 170,
+    "colony": 0,
+    "emit_tex": "res://assets/imported/polyperfect/Horse_Skeleton_EMIT_2k.png"
+   },
+   {
+    "model": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Characters/SM_Chr_ScifiWorlds_AlienSpikes_01.tscn",
+    "only_mesh": "SM_Chr_ScifiWorlds_AlienSpikes_01",
+    "library": "res://art/animations/beast.alienspikes_01.res",
+    "herds": 1,
+    "herd": [
+     1,
+     1
+    ],
+    "size": 5.2,
+    "var": 0.05,
+    "walk": 2.2,
+    "run": 2.2,
+    "flee": 0,
+    "habitat": "land",
+    "ring": [
+     58,
+     84
+    ],
+    "spread": 14,
+    "vis": 600,
+    "colony": 1
+   }
+  ],
   "descent": {
    "canopy": "none",
    "rocks": true
@@ -1391,6 +1662,78 @@
      62,
      84
     ]
+   }
+  ],
+  "wildlife": [
+   {
+    "model": "res://assets/imported/polyperfect/SKM_Hippogryph.fbx",
+    "tex": "res://assets/imported/polyperfect/Hippogryph_COL_2k.png",
+    "herds": 2,
+    "herd": [
+     3,
+     5
+    ],
+    "size": 2.2,
+    "var": 0.1,
+    "skin": {
+     "hue": 0.0,
+     "sat": 0.6,
+     "val": 1.1,
+     "grad": [
+      "#2f6f73",
+      "#f3e6c8"
+     ],
+     "grad_amount": 0.75,
+     "bands": 0.7,
+     "band_freq": 1.8,
+     "glow_color": "#ffb060"
+    },
+    "walk": 1.0,
+    "run": 6.0,
+    "flee": 11,
+    "habitat": "land",
+    "ring": [
+     22,
+     84
+    ],
+    "spread": 7,
+    "vis": 170,
+    "colony": 1
+   },
+   {
+    "model": "res://assets/imported/polyperfect/SKM_Stag_Fantasy_Undead.fbx",
+    "tex": "res://assets/imported/polyperfect/Stag_Fantasy_Undead_COL_2k.png",
+    "herds": 2,
+    "herd": [
+     1,
+     2
+    ],
+    "size": 2.3,
+    "var": 0.1,
+    "skin": {
+     "hue": 0.08,
+     "sat": 0.4,
+     "val": 1.1,
+     "grad": [
+      "#6a5a48",
+      "#fffaf0"
+     ],
+     "grad_amount": 0.75,
+     "glow": 0.5,
+     "glow_min": 0.86,
+     "glow_color": "#ffcf7a"
+    },
+    "walk": 1.0,
+    "run": 6.0,
+    "flee": 11,
+    "habitat": "land",
+    "ring": [
+     22,
+     84
+    ],
+    "spread": 7,
+    "vis": 170,
+    "colony": 1
    }
   ],
   "descent": {
@@ -1760,6 +2103,99 @@
      60,
      84
     ]
+   }
+  ],
+  "wildlife": [
+   {
+    "model": "res://assets/imported/polyperfect/SKM_Stag_Fantasy_Frost.fbx",
+    "tex": "res://assets/imported/polyperfect/Stag_Fantasy_Frost_COL_2k.png",
+    "herds": 2,
+    "herd": [
+     4,
+     6
+    ],
+    "size": 2.4,
+    "var": 0.1,
+    "skin": {
+     "hue": 0.0,
+     "sat": 0.9,
+     "grad": [
+      "#1c2f4a",
+      "#e8f6ff"
+     ],
+     "grad_amount": 0.35,
+     "glow": 1.1,
+     "glow_min": 0.82,
+     "glow_color": "#9fe8ff"
+    },
+    "walk": 1.0,
+    "run": 6.0,
+    "flee": 11,
+    "habitat": "land",
+    "ring": [
+     22,
+     84
+    ],
+    "spread": 7,
+    "vis": 170,
+    "colony": 1
+   },
+   {
+    "model": "res://assets/imported/polyperfect/SKM_Bear_Fantasy_Snow.fbx",
+    "tex": "res://assets/imported/polyperfect/Bear_Fantasy_Snow_COL_2k.png",
+    "herds": 2,
+    "herd": [
+     1,
+     1
+    ],
+    "size": 2.2,
+    "var": 0.1,
+    "skin": {
+     "hue": 0.55,
+     "sat": 0.5,
+     "grad": [
+      "#2a3448",
+      "#f2f6ff"
+     ],
+     "grad_amount": 0.4,
+     "emit": 1.5,
+     "emit_color": "#9fe8ff"
+    },
+    "walk": 1.0,
+    "run": 4.0,
+    "flee": 14,
+    "habitat": "land",
+    "ring": [
+     22,
+     84
+    ],
+    "spread": 7,
+    "vis": 170,
+    "colony": 1,
+    "emit_tex": "res://assets/imported/polyperfect/Bear_Fantasy_Snow_EMIT_2k.png"
+   },
+   {
+    "model": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Characters/SM_Chr_ScifiWorlds_AlienRock_01.tscn",
+    "only_mesh": "SM_Chr_ScifiWorlds_AlienRock_01",
+    "library": "res://art/animations/beast.alienrock_01.res",
+    "herds": 1,
+    "herd": [
+     1,
+     1
+    ],
+    "size": 6.0,
+    "var": 0.05,
+    "walk": 2.2,
+    "run": 2.2,
+    "flee": 0,
+    "habitat": "land",
+    "ring": [
+     58,
+     84
+    ],
+    "spread": 14,
+    "vis": 600,
+    "colony": 1
    }
   ],
   "descent": {
@@ -2132,6 +2568,121 @@
      58,
      84
     ]
+   }
+  ],
+  "wildlife": [
+   {
+    "model": "res://assets/imported/polyperfect/SKM_Stag_Fantasy_Undead.fbx",
+    "tex": "res://assets/imported/polyperfect/Stag_Fantasy_Undead_COL_2k.png",
+    "herds": 2,
+    "herd": [
+     3,
+     5
+    ],
+    "size": 2.3,
+    "var": 0.1,
+    "skin": {
+     "hue": 0.55,
+     "sat": 1.1,
+     "val": 0.6,
+     "grad": [
+      "#0a1020",
+      "#3a4a6a"
+     ],
+     "grad_amount": 0.6,
+     "glow": 1.8,
+     "glow_min": 0.6,
+     "glow_color": "#4dffe0",
+     "bands": 2.2,
+     "band_freq": 1.6
+    },
+    "walk": 1.0,
+    "run": 6.0,
+    "flee": 11,
+    "habitat": "land",
+    "ring": [
+     22,
+     84
+    ],
+    "spread": 7,
+    "vis": 170,
+    "colony": 1
+   },
+   {
+    "model": "res://assets/imported/polyperfect/SKM_Bear_Fantasy_Forest.fbx",
+    "tex": "res://assets/imported/polyperfect/Bear_Fantasy_Forest_COL_2k.png",
+    "herds": 2,
+    "herd": [
+     1,
+     1
+    ],
+    "size": 2.2,
+    "var": 0.1,
+    "skin": {
+     "hue": 0.7,
+     "sat": 1.0,
+     "val": 0.55,
+     "grad": [
+      "#120a22",
+      "#4a3a6a"
+     ],
+     "grad_amount": 0.6,
+     "bands": 2.6,
+     "band_freq": 1.3,
+     "glow_color": "#c07bff",
+     "emit": 2.0,
+     "emit_color": "#c07bff"
+    },
+    "walk": 1.0,
+    "run": 3.6,
+    "flee": 14,
+    "habitat": "land",
+    "ring": [
+     22,
+     84
+    ],
+    "spread": 7,
+    "vis": 170,
+    "colony": 1,
+    "emit_tex": "res://assets/imported/polyperfect/Bear_Fantasy_Forest_EMIT_2k.png"
+   },
+   {
+    "model": "res://assets/imported/polyperfect/SKM_Horse_Skeleton.fbx",
+    "tex": "res://assets/imported/polyperfect/Horse_Skeleton_COL_2k.png",
+    "herds": 1,
+    "herd": [
+     3,
+     4
+    ],
+    "size": 1.9,
+    "var": 0.1,
+    "skin": {
+     "hue": 0.5,
+     "sat": 0.8,
+     "val": 0.6,
+     "grad": [
+      "#081420",
+      "#4a7088"
+     ],
+     "grad_amount": 0.5,
+     "emit": 3.0,
+     "emit_color": "#4dffe0",
+     "glow": 0.8,
+     "glow_min": 0.7,
+     "glow_color": "#4dffe0"
+    },
+    "walk": 1.0,
+    "run": 6.0,
+    "flee": 11,
+    "habitat": "land",
+    "ring": [
+     22,
+     84
+    ],
+    "spread": 7,
+    "vis": 170,
+    "colony": 0,
+    "emit_tex": "res://assets/imported/polyperfect/Horse_Skeleton_EMIT_2k.png"
    }
   ],
   "descent": {

@@ -91,6 +91,13 @@ func _ready() -> void:
 	if motes:
 		captain.add_child(motes)
 	captain.teleport(Vector3(4, terrain.height_at(4, 4) + 0.3, 4), PI * 0.25)
+	# D-053: the world's ground wildlife; a child of the scene root, so the descent
+	# from orbit hides it with the rest of the site until the terrain is shown.
+	var wild_avoid := avoid.duplicate()
+	wild_avoid.append([Vector2.ZERO, 22.0])  # the camp stays clear, not just the pad
+	wild_avoid.append_array(GroundWildlife.obstacles(get_node_or_null("GroundCover")))
+	var wild_spec := GroundCover.spec_for(str(planet.get("id")), str(planet.get("biome_id")))
+	add_child(GroundWildlife.build(terrain, DictUtil.get_arr(wild_spec, "wildlife"), hash(ex.site_id) + 11, wild_avoid, 180.0, captain))
 	if str(planet.get("id")) == "umbra":
 		var lamp := SpotLight3D.new()
 		lamp.position = Vector3(0, 1.7, -0.3)
@@ -457,6 +464,22 @@ func debug_action(action: String) -> void:
 		captain.visible = false
 		d.start_ascent(self, terrain, planet, _lander_body())
 		d.debug_advance(float(action.get_slice(":", 1)) if action.contains(":") else 0.0)
+		return
+	if action.begins_with("wildlife"):  # evidence: close look at an animal (wildlife / wildlife:<index>)
+		var wild := get_node_or_null("GroundWildlife") as GroundWildlife
+		if wild == null or wild.count() == 0:
+			return
+		var at := wild.animal_position(int(action.get_slice(":", 1)) if action.contains(":") else 0)
+		var off := Vector2(at.x, at.z).normalized() * -14.0  # from the camp side
+		var cam := Camera3D.new()
+		add_child(cam)
+		cam.position = Vector3(at.x + off.x, maxf(terrain.height_at(at.x + off.x, at.z + off.y), at.y) + 6.5, at.z + off.y)
+		cam.look_at(at + Vector3(0, 1.0, 0))
+		cam.fov = 55.0
+		cam.far = 3000.0
+		cam.current = true
+		if hud:
+			hud.visible = false
 		return
 	if action == "sunview":  # evidence: look toward the system's star from the camp
 		var pr := Lighting.preset(planet)

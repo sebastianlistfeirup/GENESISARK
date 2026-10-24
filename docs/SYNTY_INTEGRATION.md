@@ -264,6 +264,12 @@ Praktisk vej til Godot:
 - Kontrol: fødder må ikke glide, ingen "pose-snap". Se i 0,25× og 1× hastighed.
 - En animation bliver først `APPROVED` efter billede/video ved gameplaykamera.
 
+### Dyreliv på jorden (D-053)
+
+- **Poly Perfect-dyr:** `python3 tools/polyperfect/stage.py` kopierer de valgte FBX + teksturer til `assets/imported/polyperfect/` (lokalt). Klippene ligger indlejret i FBX'en (idle/walk/run/eat …) og er in-place. `GroundWildlife` måler selv dyrets højde, retning og gangfart (den laveste plantede DEF-knogle glider baglæns med kroppens fart) og afspiller klippet med fart/ref, så hovene ikke glider. Riggens IK/MCH-hjælpeknogler fjernes fra de klip, der spilles (halv pris).
+- **Synty-aliens (AlienRock, AlienSpikes):** findes kun som Godot-prefabs med eget Synty-skelet. `tools/synty/bake_alien_clips.gd` overfører borgerens retargetede idle/walk pose for pose (samme rotation i forhold til hvilestillingen i skeletrummet, hofterne skaleret efter hoftehøjde) til `art/animations/beast.<krop>.res`. Uden filen springes kæmpen over (aldrig T-pose).
+- **Data:** `tools/gen_planet_looks.py` → `WILDLIFE` → `data/art/ground_cover.json` `<planet>.wildlife` (art, flokke, størrelse, hud/glød, habitat, flugtradius). Hudfarven sættes af `art/shaders/creature_skin.gdshader`.
+
 ---
 
 ## 10. Hvilken pakke til hvad?

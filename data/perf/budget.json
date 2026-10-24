@@ -85,6 +85,7 @@
     "shadow_single_cascade": 1,
     "terrain_step": 2.0,
     "scatter_scale": 0.6,
+    "wildlife_scale": 0.5,
     "fx_amount": 0.6
   }
 }

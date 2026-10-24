@@ -1,0 +1,34 @@
+{
+  "task_id": "wildlife_r1",
+  "decision": "D-053",
+  "commit": "base 1ccda81 (this branch's wildlife commit)",
+  "engine_version": "Godot 4.7.2-stable (Forward+, Vulkan, RTX 5090)",
+  "command": [
+    "python3 tools/polyperfect/stage.py && godot --headless --path . --import --quit-after 2000",
+    "godot --headless --path . --script res://tools/synty/bake_alien_clips.gd",
+    "python3 tools/gen_planet_looks.py",
+    "godot --path . --resolution 1600x900 -- --capture=<png> --setup=expedition:<planet> --scene=surface --wait=200 [--action=vista:40|wildlife:<n>|descent|descent:120]",
+    "godot --path . --resolution 1600x900 -- --capture=<png> --setup=grown:<planet> --scene=colony --wait=200 [--action=wildlife:<n>]",
+    "godot --path . -- --perf --out=builds/perf_before2.json (polyperfect folder and beast.*.res moved aside) then --out=builds/perf_wild3.json, back-to-back",
+    "CHECK_FAST=1 tools/check.sh"
+  ],
+  "exit_code": 0,
+  "expected": "Ambient animated ground wildlife on all six planets (expedition surface; lighter around colonies), each world with its own species set and alien colouring; no T-pose, plausible scale, no collision, never in camp/sample sites/routes, flees the captain, hidden in space during the descent; perf p95 about 10 ms; checks green.",
+  "observed": "Counted instances: Viridia expedition 16 animals, Umbra colony 5 (data caps herds; all worlds stay at a few dozen or fewer).Closeups on all six planets show walking/grazing/idle poses (no T-pose; the Synty rock and spike giants walk and idle on clips baked from the citizen library). Gait speeds measured from the planted DEF bone (stag 1.07 m/s walk / 6.5 m/s run at native size) drive playback. Descent: nothing visible at 6.9 km (surface root hidden), animals appear with the site. Wildlife CPU in _process: ~0.25-0.33 ms/frame for 16 animals after stripping rig helper tracks (was ~0.5 ms). Perf back-to-back: before p95 8.8-10.7 ms (surface_hazard 16.8 spike), after p95 8.8-9.6 ms in all 10 cases; surface_viridia draws 542->584, prims 2.19M->2.30M, load 2361->2592 ms. check.sh: compile 149 scripts 0 failed, loc_exit=0 tests_exit=0 smoke_exit=0 touch_exit=0 campaign_exit=0 (smoke 58/58 incl. surface_wildlife_clear_and_ghostly and surface_wildlife_flees_captain: moved 6.2 m further away).",
+  "fixture": "expedition:<p>, grown:<p> for p in viridia, pelagos, ferrum, sere, nivalis, umbra",
+  "status": "PASS",
+  "artifacts": [
+    "evidence/wildlife_r1/before_vista_<planet>.jpg / after_vista_<planet>.jpg",
+    "evidence/wildlife_r1/after_close_<planet>_a.jpg (first herd) / _b.jpg (last species: giant on Ferrum/Nivalis)",
+    "evidence/wildlife_r1/after_close_viridia_grazers.jpg",
+    "evidence/wildlife_r1/after_colony_wildlife_<planet>.jpg",
+    "evidence/wildlife_r1/descent_space_hidden_nivalis.jpg / descent_low_shown_nivalis.jpg",
+    "evidence/wildlife_r1/perf/perf_before.json / perf_after.json"
+  ],
+  "open": [
+    "The Viridia titan grazes in dense jungle and is mostly hidden from the evidence camera; it reads from the vista only as a silhouette.",
+    "Foot sliding judged from stills and the measured gait refs only; a short video at 0.25x would confirm (needs a human run).",
+    "Animals walk through small ground cover (MultiMesh, no footprint); trees and landmarks are avoided.",
+    "Colony animals avoid districts at their grown extent (radius x2 + 10 m) laid once; a colony that grows beyond that could meet a grazer."
+  ]
+}
