@@ -23,6 +23,7 @@ uniform vec2 window_size = vec2(0.55, 0.32); // lit fraction of a cell
 uniform vec3 window_color : source_color = vec3(1.0, 0.82, 0.55);
 uniform vec3 window_color2 : source_color = vec3(0.45, 0.95, 1.0);
 uniform float window_energy = 3.0;
+uniform float window_side = 0.75;              // |normal.x| from which a face counts as a side
 
 varying vec3 obj_pos;
 varying vec3 obj_nrm;
@@ -54,13 +55,15 @@ void fragment() {
 	ALBEDO = mix(c * albedo_mul, strip, mask);
 	if (window_amount > 0.0) {
 		// side faces only, on plain hull plating (not on lit strips or dark vents)
-		float side = smoothstep(0.75, 0.9, abs(normalize(obj_nrm).x));
+		float side = smoothstep(window_side, window_side + 0.15, abs(normalize(obj_nrm).x));
 		vec2 q = vec2(obj_pos.z, obj_pos.y) / window_cell;
 		vec2 cell = floor(q);
 		vec2 f = fract(q);
-		float lit = step(0.35, whash(cell + sign(obj_pos.x) * 17.0));
+		// whole rows are window strips (about a third of them), most windows in a strip lit
+		float row = step(0.62, whash(vec2(cell.y * 3.1, floor(cell.x / 9.0)) + sign(obj_pos.x) * 5.0));
+		float lit = row * step(0.18, whash(cell + sign(obj_pos.x) * 17.0));
 		float rect = step(abs(f.x - 0.5), window_size.x * 0.5) * step(abs(f.y - 0.5), window_size.y * 0.5);
-		float plate = (1.0 - mask) * smoothstep(0.12, 0.3, mx);
+		float plate = (1.0 - mask) * smoothstep(0.04, 0.12, mx);
 		float win = side * rect * lit * plate * window_amount;
 		vec3 wc = mix(window_color, window_color2, step(0.82, whash(cell * 1.7 + 3.0)));
 		ALBEDO = mix(ALBEDO, wc, win);

@@ -91,22 +91,20 @@ static func dress_ark(slot: Node3D, spec: Dictionary) -> void:
 		var copies: Dictionary = {}
 		for n: Node in slot.find_children("*", "MeshInstance3D", true, false):
 			var mi := n as MeshInstance3D
-			var src := mi.material_override as ShaderMaterial
-			if src == null or src.shader == null or not str(src.shader.resource_path).ends_with("synty_glow_atlas.gdshader"):
+			if mi.mesh == null:
 				continue
-			if not copies.has(src):
-				var m := src.duplicate() as ShaderMaterial
-				m.set_shader_parameter("window_amount", float(win.get("amount", 1.0)))
-				m.set_shader_parameter("window_energy", float(win.get("energy", 3.0)))
-				var cell: Array = DictUtil.get_arr(win, "cell")
-				if cell.size() == 2:
-					m.set_shader_parameter("window_cell", Vector2(float(cell[0]), float(cell[1])))
-				var size: Array = DictUtil.get_arr(win, "size")
-				if size.size() == 2:
-					m.set_shader_parameter("window_size", Vector2(float(size[0]), float(size[1])))
-				m.set_shader_parameter("glow_energy", float(win.get("strip_energy", 3.2)))
-				copies[src] = m
-			mi.material_override = copies[src]
+			# The atlas arrives through the FBX import (surface material) or as an
+			# override; either way the copy goes on as a surface override.
+			for si: int in mi.mesh.get_surface_count():
+				var src := mi.get_active_material(si) as ShaderMaterial
+				if src == null or src.shader == null or not str(src.shader.resource_path).ends_with("synty_glow_atlas.gdshader"):
+					continue
+				if not copies.has(src):
+					copies[src] = _window_material(src, win)
+				if mi.material_override != null:
+					mi.material_override = copies[src]
+				else:
+					mi.set_surface_override_material(si, copies[src])
 	var engine_col := Color(str(spec.get("engine_color", "#5fe8ff")))
 	for e: Variant in DictUtil.get_arr(spec, "engines"):
 		var a: Array = e
@@ -125,6 +123,21 @@ static func dress_ark(slot: Node3D, spec: Dictionary) -> void:
 		var t := trail(float(spec.get("trail_length", 60.0)) * r, r * 0.8, engine_col, 1.6)
 		t.rotation_degrees.y = 180.0
 		holder.add_child(t)
+
+
+static func _window_material(src: ShaderMaterial, win: Dictionary) -> ShaderMaterial:
+	var m := src.duplicate() as ShaderMaterial
+	m.set_shader_parameter("window_amount", float(win.get("amount", 1.0)))
+	m.set_shader_parameter("window_energy", float(win.get("energy", 3.0)))
+	var cell: Array = DictUtil.get_arr(win, "cell")
+	if cell.size() == 2:
+		m.set_shader_parameter("window_cell", Vector2(float(cell[0]), float(cell[1])))
+	var size: Array = DictUtil.get_arr(win, "size")
+	if size.size() == 2:
+		m.set_shader_parameter("window_size", Vector2(float(size[0]), float(size[1])))
+	m.set_shader_parameter("glow_energy", float(win.get("strip_energy", 3.2)))
+	m.set_shader_parameter("window_side", float(win.get("side", 0.75)))
+	return m
 
 
 static func _glow_texture() -> GradientTexture2D:

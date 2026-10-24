@@ -417,3 +417,8 @@ func debug_action(action: String) -> void:
 				ship.position.z = -_belt_start() + 40.0
 			for i: int in 30:
 				_physics_process(1.0 / 60.0)
+		"ark_side":  # evidence: the Ark's lit windows and nozzles from beside the hull
+			_set_view(false)
+			set_physics_process(false)
+			cam.global_position = ship.global_position + Vector3(-26.0, 5.0, 14.0)
+			cam.look_at(ship.global_position + Vector3(0, 0, 2.0))

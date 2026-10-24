@@ -258,16 +258,17 @@
   ],
   "windows": {
    "amount": 1.0,
-   "energy": 3.2,
+   "energy": 3.6,
    "cell": [
-    3.2,
-    3.6
+    3.0,
+    2.6
    ],
    "size": [
-    0.55,
-    0.32
+    0.62,
+    0.4
    ],
-   "strip_energy": 3.4
+   "strip_energy": 3.4,
+   "side": 0.55
   }
  },
  "cockpit": {
