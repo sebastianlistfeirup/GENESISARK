@@ -2,6 +2,9 @@
 
 Biblen er baseline. Her står begrundede valg og afvigelser. Nyeste øverst.
 
+### D-058 · Havleviathan på Pelagos via billede-til-3D (ejerens image-to-3d-rebuild-skill, kun præsentation)
+Første asset efter skillens arbejdsgang: referencebillede først (Meshy tekst-til-billede, da xAI-kontoen er løbet tør for kredit), derefter Meshy billede-til-3D (seneste model, tekstur, 20k trekanter; kvittering `meshy_work/receipts/leviathan_img.json`). Tekst-til-3D-forsøget gav en forkert form og blev forkastet. `SeaLeviathan` (scripts/runtime/visual/sea_leviathan.gd): en ~150 m havslange, der langt ude bag øen rejser sig i en bue, glider frem og ruller ned igen, og dukker op et andet sted efter en pause. Disney-takter ved ~50 %: skum før den bryder overfladen (forventning), ease-out-stigning, lang glidning med let rul og "ånde" (efterslæb), ease-in-dyk med en sidste sprøjt fra halen; cyan pletter lyser via glow-atlasset. Ingen kollision, uden for kortet, stillestående med nedsat bevægelse, springes over uden den lokale model (gitignoreret). Bevis: `--action=leviathan`.
+
 ### D-057 · Meshy-heltelandemærker: lysende sporetræer på Umbra og malmkrystaller på Ferrum (kun præsentation)
 Ingen Synty-pakke har et kæmpe bioluminescent træ eller en glødende malmformation, så de er genereret med Meshy (tekst-til-3D, forhåndsvisning + tekstur, 4 kørsler, kvitteringer i `meshy_work/receipts/`). Filerne ligger kun lokalt i `assets/imported/meshy/` (gitignoreret, ejerens betalte output). Landemærker kan nu have `glow` som dække/træer (stykkets eget atlas gennem `synty_glow_atlas`). Umbra: 4 sporetræer, 27–36 m, cyan knolde lyser i natten; Ferrum: 4 krystaludspring, 19–27 m, ravgule spidser på rustsort klippe. En havleviathan til Pelagos blev forkastet efter forhåndsvisningen (forkert form) og laves om via billede-til-3D. Uden filerne (frisk klon) springes de over.
 

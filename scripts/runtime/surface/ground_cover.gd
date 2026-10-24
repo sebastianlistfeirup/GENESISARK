@@ -79,7 +79,7 @@ static func build(terrain: Node3D, key: String, seed_value: int, avoid: Array, s
 		for k: int in batches.keys():
 			var tm := _multimesh(srcs[k][0], batches[k], true, 180.0)
 			if it.has("glow"):
-				tm.material_override = _glow_material(srcs[k][0], DictUtil.get_arr(it, "glow"))
+				tm.material_override = glow_material(srcs[k][0], DictUtil.get_arr(it, "glow"))
 			root.add_child(tm)
 	# Ground cover: clustered patches, MultiMesh per piece.
 	for item: Variant in DictUtil.get_arr(spec, "cover"):
@@ -132,7 +132,7 @@ static func build(terrain: Node3D, key: String, seed_value: int, avoid: Array, s
 			em.emission_energy_multiplier = 2.5
 			mmi.material_override = em
 		elif it.has("glow"):
-			mmi.material_override = _glow_material(src[0], DictUtil.get_arr(it, "glow"))
+			mmi.material_override = glow_material(src[0], DictUtil.get_arr(it, "glow"))
 		root.add_child(mmi)
 	# Landmarks: big silhouettes in an outer ring (no collision: beyond the playable edge).
 	var taken: Array = []  # [centre, radius] of placed landmarks: earlier entries win, nothing interpenetrates
@@ -202,7 +202,7 @@ static func build(terrain: Node3D, key: String, seed_value: int, avoid: Array, s
 			mi.transform = Transform3D(basis.scaled(Vector3.ONE * s), Vector3(p.x, y, p.y) - off) * (src[1] as Transform3D)
 			mi.visibility_range_end = 600.0
 			if it.has("glow") and mi.material_override == null:  # bioluminescent hero pieces (Meshy landmarks)
-				mi.material_override = _glow_material(src[0], DictUtil.get_arr(it, "glow"))
+				mi.material_override = glow_material(src[0], DictUtil.get_arr(it, "glow"))
 			root.add_child(mi)
 	_cliffs(root, terrain, DictUtil.get_arr(spec, "cliffs"), rng, size_m)
 	return root
@@ -211,7 +211,7 @@ static func build(terrain: Node3D, key: String, seed_value: int, avoid: Array, s
 ## Bioluminescence for alien flora: the piece's own atlas through the glow-atlas
 ## shader, so only its bright saturated texels (bulb tips, crystal caps) emit.
 ## glow = [energy, sat_min, val_min].
-static func _glow_material(mesh: Mesh, glow: Array) -> Material:
+static func glow_material(mesh: Mesh, glow: Array) -> Material:
 	var m0 := mesh.surface_get_material(0)
 	var tex: Texture2D = (m0 as BaseMaterial3D).albedo_texture if m0 is BaseMaterial3D else null
 	if m0 is ShaderMaterial:

@@ -261,6 +261,7 @@ HERO = {
     "umbra": [dict(lm([MS("landmark_sporetree")], 4, (14.0, 19.0), (52, 74)), glow=[2.6, 0.25, 0.55])],
     "ferrum": [dict(lm([MS("landmark_orecrystal")], 4, (10.0, 14.0), (52, 74)), glow=[2.2, 0.35, 0.6])],
 }
+PLANETS["pelagos"]["sky"]["leviathan"] = {"model": MS("creature_leviathan"), "size": 150, "radius": [240, 340], "glow": [2.4, 0.4, 0.7]}
 for _pid, _l in HERO.items():
     PLANETS[_pid]["landmarks"] = _l + PLANETS[_pid]["landmarks"]
 for _pid, _d in DESCENT.items():

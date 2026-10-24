@@ -498,6 +498,22 @@ func debug_action(action: String) -> void:
 		if hud:
 			hud.visible = false
 		return
+	if action == "leviathan":  # evidence: the sea serpent mid-glide in front of a low camera over the water
+		var lv := find_child("SeaLeviathan", true, false) as SeaLeviathan
+		if lv:
+			lv.set("_pos", Vector2(-60, -300))
+			lv.set("_dir", Vector2(1, 0.15).normalized())
+			lv.set("_cycle", SeaLeviathan.RISE + SeaLeviathan.GLIDE * 0.4)
+			var cam := Camera3D.new()
+			add_child(cam)
+			cam.position = Vector3(0, terrain.height_at(0, 0) + 9.0, 0)
+			cam.look_at(Vector3(-60, lv.water_y + 35.0, -300))
+			cam.fov = 55.0
+			cam.far = 3000.0
+			cam.current = true
+			if hud:
+				hud.visible = false
+		return
 	if action.begins_with("vista"):  # evidence: a high establishing shot over the site (vista / vista:<azimuth deg>)
 		var az := deg_to_rad(float(action.get_slice(":", 1))) if action.contains(":") else 0.6
 		var cam := Camera3D.new()

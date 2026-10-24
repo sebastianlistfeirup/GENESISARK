@@ -40,6 +40,10 @@ static func build(planet_id: String, fallback: String, terrain: Node3D = null) -
 		var cr := SkyCreatures.build(DictUtil.get_arr(sky, "creatures"), hash(planet_id + "creatures"), terrain)
 		if cr:
 			root.add_child(cr)
+	if sky.has("leviathan") and terrain and float(terrain.get("water_level")) > -50.0:
+		var lv := SeaLeviathan.build(DictUtil.get_dict(sky, "leviathan"), float(terrain.get("water_level")), hash(planet_id + "leviathan"))
+		if lv:
+			root.add_child(lv)
 	if sky.has("sun_size"):
 		var sun := _sun(planet_id, fallback, DictUtil.get_float(sky, "sun_size"), Color(str(sky.get("sun_color", "#fff2c8"))))
 		sun.set_meta("sky_far", true)

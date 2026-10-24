@@ -570,6 +570,19 @@
     "flocks": 4,
     "count": 11,
     "scale": 1.9
+   },
+   "leviathan": {
+    "model": "res://assets/imported/meshy/creature_leviathan.glb",
+    "size": 150,
+    "radius": [
+     240,
+     340
+    ],
+    "glow": [
+     2.4,
+     0.4,
+     0.7
+    ]
    }
   },
   "terrain": {
