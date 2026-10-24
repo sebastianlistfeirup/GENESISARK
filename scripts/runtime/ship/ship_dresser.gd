@@ -66,7 +66,9 @@ static func dress(b: ShipBuilder) -> Node3D:
 				var walls: Array = DictUtil.get_arr(spec, "wall")
 				if not walls.is_empty() and (h / 7) % 2 == 0:
 					var w: Array = walls[(h / 13) % walls.size()]
-					_place(root, str(w[0]), wall_pt - outward * 0.45 - along * slide * 0.6 + Vector3(0, float(w[1]), 0), yaw, mat)
+					var wi := _place(root, str(w[0]), wall_pt - outward * 0.45 - along * slide * 0.6 + Vector3(0, float(w[1]), 0), yaw, mat)
+					if wi and w.size() > 2:
+						wi.scale = Vector3.ONE * float(w[2])
 	# Set pieces at fixed cells (bridge crew stations, cryo wall pods, sleepers in tubes).
 	for sp: Variant in DictUtil.get_arr(doc, "set_pieces"):
 		var d: Dictionary = sp

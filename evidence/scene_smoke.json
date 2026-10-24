@@ -36,7 +36,7 @@
       "ok": true
     },
     {
-      "detail": "moved=0.56",
+      "detail": "moved=0.57",
       "name": "riglab_runs",
       "ok": true
     },
@@ -101,7 +101,7 @@
       "ok": true
     },
     {
-      "detail": "I_power_coupling:<Area3D#297493600727>",
+      "detail": "I_power_coupling:<Area3D#300110846524>",
       "name": "prompt_targets_coupling",
       "ok": true
     },
@@ -284,5 +284,5 @@
   "engine_version": "4.7.1-stable (official)",
   "failures": [],
   "status": "PASS",
-  "timestamp": "2026-10-24T12:40:29"
+  "timestamp": "2026-10-24T12:45:24"
 }

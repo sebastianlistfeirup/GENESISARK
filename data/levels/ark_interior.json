@@ -24,27 +24,27 @@
   "zones": {
     "B": {
       "name": "Broen",
-      "light": "#9fd6e0",
+      "light": "#ffb08f",
       "emergency": true
     },
     "E": {
       "name": "Embryobanken",
-      "light": "#7fd6d0",
+      "light": "#8affd6",
       "emergency": true
     },
     "W": {
       "name": "Værkstedet",
-      "light": "#ffd29a",
+      "light": "#ffc27a",
       "emergency": true
     },
     "C": {
       "name": "Kryorummet",
-      "light": "#b8d8ff",
+      "light": "#a8d4ff",
       "emergency": true
     },
     ".": {
       "name": "Ringkorridoren",
-      "light": "#d8e2e6",
+      "light": "#ffd2b0",
       "emergency": true
     }
   },

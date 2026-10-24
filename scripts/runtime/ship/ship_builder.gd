@@ -223,7 +223,7 @@ func set_power(restored: bool) -> void:
 		var ol: OmniLight3D = l["light"]
 		if restored:
 			ol.light_color = Color.from_string(str(zones.get(l["zone"], {}).get("light", "#d8e2e6")), Color.WHITE)
-			ol.light_energy = 1.7
+			ol.light_energy = 2.1
 		else:
 			ol.light_color = Color("c0392b") if l["zone"] != "." else Color("e8a33d")
 			ol.light_energy = 0.7 if (lights.find(l) % 2 == 0 or l["zone"] == ".") else 0.0
