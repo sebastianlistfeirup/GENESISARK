@@ -48,6 +48,8 @@ func open() -> void:
 	refresh()
 	fit()
 	fit.call_deferred()
+	UiKit.fade_in(_dim, 0.22)
+	UiKit.fade_in(panel)
 
 
 func close() -> void:
@@ -69,7 +71,15 @@ func header(text: String, sub: String = "") -> void:
 		v.add_child(UiKit.label(sub, 15, UiKit.MUTED, true))
 	v.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	h.add_child(v)
-	h.add_child(UiKit.button(Loc.t("Close  [%s]") % SettingsService.primary_key("pause"), close))
+	var cb := UiKit.button(Loc.t("Close  [%s]") % SettingsService.primary_key("pause"), close)
+	# On a controller, show the real button glyph instead of its name.
+	var glyph := SyntySkin.pad_glyph(str(SettingsService.PAD["pause"][0])) if SettingsService.using_pad else null
+	if glyph:
+		cb.text = Loc.t("Close")
+		cb.icon = glyph
+		cb.expand_icon = false
+		cb.add_theme_constant_override("icon_max_width", 26)
+	h.add_child(cb)
 	body.add_child(h)
 
 

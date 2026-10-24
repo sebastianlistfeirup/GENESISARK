@@ -36,6 +36,7 @@ func open() -> void:
 	_build()
 	UiKit.fit_layer(self, _panel)
 	UiKit.fit_layer.call_deferred(self, _panel)
+	UiKit.fade_in(_panel)
 
 
 func close() -> void:
