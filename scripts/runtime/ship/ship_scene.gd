@@ -48,6 +48,7 @@ func _ready() -> void:
 	e.fog_enabled = true
 	e.fog_light_color = Color("0b1219")
 	e.fog_density = 0.01
+	e.fog_sky_affect = 0.0  # the interior haze must not blank the nebula outside the windows
 	env.environment = e
 	add_child(env)
 	# The builder and an empty "Dressing" node live in ship.tscn: tick
@@ -193,8 +194,13 @@ func _window_view() -> void:
 	# A candidate world outside the bridge windows once in orbit.
 	_window_planet = Node3D.new()
 	add_child(_window_planet)
-	_window_planet.position = Vector3(-40, -112, builder.origin.z - 240)  # the orbited world: its curved horizon fills the bridge windows
-	_window_planet.scale = Vector3.ONE * 3.0
+	# The orbited world framed in the port bridge window (azimuth ~41 deg left of
+	# the console, seen from the bridge centre): its curved limb crosses the
+	# window strip. Before, it sat behind the wall between the windows.
+	var eye := builder.cell_to_world(7.5, 3.6) + Vector3(0, 2.0, 0)
+	var dir := Vector3(-sin(deg_to_rad(41.0)), 0, -cos(deg_to_rad(41.0)))
+	_window_planet.position = eye + dir * 250.0 + Vector3(0, -80.0, 0)
+	_window_planet.scale = Vector3.ONE * 1.6  # radius 96 m at 250 m: a big curved limb across the window
 
 
 func _on_state(_kind: String) -> void:
