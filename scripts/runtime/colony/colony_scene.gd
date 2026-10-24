@@ -60,6 +60,7 @@ func _ready() -> void:
 	add_child(terrain)
 	terrain.build()
 	terrain.scatter(hash(gs.colony.site_id) + 1, 60, avoid)
+	add_child(GroundCover.build(terrain, gs.colony.biome_id, hash(gs.colony.site_id) + 3, avoid, 220.0))
 	_draw_districts()
 	SceneDressing.attach(self, str(site.get("id", "")), terrain)
 	_net = MeshInstance3D.new()
@@ -222,8 +223,37 @@ func _sync() -> void:
 		b.modulate = Color.WHITE if afford else Color(1, 1, 1, 0.55)
 		b.text = Loc.t("%s\n%d mat.%s") % [str(GameSession.content.building(def_id).get("name")).replace(Loc.t(" and incubation center"), "").replace(Loc.t("Geothermal generator"), Loc.t("Geothermal")), int(cost.get("alloy", 0)), (Loc.t(" · %d comp.") % int(cost["components"])) if cost.has("components") else ""]
 	_draw_network()
+	_draw_corridors()
 	_refresh_info()
 	_sync_people()
+
+
+var _corridors: Node3D
+var _corridor_key := ""
+
+
+## Walkway tubes along a spanning tree of the active links (visual only).
+func _draw_corridors() -> void:
+	var gs: GameState = GameSession.state
+	var key := ""
+	for b: Dictionary in gs.colony.buildings:
+		if b.get("accessible") and b.get("state") == ColonyState.B_ACTIVE:
+			key += "%d," % int(b["id"])
+	if key == _corridor_key:
+		_process_network_visibility()
+		return
+	_corridor_key = key
+	if _corridors:
+		_corridors.queue_free()
+	_corridors = ColonyCorridors.build(gs, terrain)
+	add_child(_corridors)
+	_process_network_visibility()
+
+
+func _process_network_visibility() -> void:
+	# The raw link lines are a build-mode aid; outside it the corridors carry the read.
+	if _net and ghost:
+		_net.visible = not build_def.is_empty() or _corridors == null or _corridors.get_child_count() == 0
 
 
 func _draw_network() -> void:
@@ -307,6 +337,7 @@ func _sync_people() -> void:
 
 
 func _process(delta: float) -> void:
+	_process_network_visibility()
 	_t += delta
 	_layout_hud()
 	var gs: GameState = GameSession.state

@@ -1,0 +1,85 @@
+class_name ColonyCorridors
+extends RefCounted
+## Walkway tubes between linked buildings, the way the Sci-Fi Worlds demo colony
+## reads as one connected base. Visual only: the domain network (power/access)
+## is unchanged; this draws a minimum spanning tree over the same links so the
+## base gets a few clean corridors instead of a web of crossing lines. Tubes are
+## tiled from 10 m Synty corridor modules, trimmed to the building footprints.
+## Skipped when the purchased module is missing.
+
+const MODULES := ["res://assets/Synty/PolygonSciFiWorlds/Prefabs/Buildings/SM_Bld_Pod_Corridor_Square_01.tscn",
+	"res://assets/Synty/PolygonSciFiWorlds/Prefabs/Buildings/SM_Bld_Pod_Corridor_Square_03.tscn",
+	"res://assets/Synty/PolygonSciFiWorlds/Prefabs/Buildings/SM_Bld_Pod_Corridor_Round_02.tscn"]
+const WIDTH := 2.4  # metres across, to sit with the scaled-down pods
+const NO_TUBE := ["solar_array", "battery", "geothermal_generator", "drone_hub"]  # power/pad pieces stand free
+
+
+static func build(gs: GameState, terrain: TerrainBuilder) -> Node3D:
+	var root := Node3D.new()
+	root.name = "Corridors"
+	var mods: Array = []
+	for p: String in MODULES:
+		var m := GroundCover._mesh_of(p)
+		if not m.is_empty():
+			mods.append(m)
+	if mods.is_empty():
+		return root
+	var nodes: Array = []
+	for b: Dictionary in gs.colony.buildings:
+		if b.get("accessible") and b.get("state") == ColonyState.B_ACTIVE and not str(b["def_id"]) in NO_TUBE:
+			nodes.append(b)
+	# Prim's MST over pairs within link range.
+	if nodes.size() < 2:
+		return root
+	var in_tree := {0: true}
+	while in_tree.size() < nodes.size():
+		var best := INF
+		var pair := Vector2i(-1, -1)
+		for i: int in in_tree.keys():
+			for j: int in nodes.size():
+				if in_tree.has(j):
+					continue
+				var d := _pos(nodes[i]).distance_to(_pos(nodes[j]))
+				var reach := maxf(GameSession.sim.colony.link_range(str(nodes[i]["def_id"])), GameSession.sim.colony.link_range(str(nodes[j]["def_id"])))
+				if d < best and d <= maxf(reach, 1.0) * 1.05:
+					best = d
+					pair = Vector2i(i, j)
+		if pair.x < 0:
+			break
+		in_tree[pair.y] = true
+		_tube(root, nodes[pair.x], nodes[pair.y], terrain, mods[absi(hash(pair)) % mods.size()])
+	return root
+
+
+static func _pos(b: Dictionary) -> Vector2:
+	return Vector2(float(b["x"]), float(b["z"]))
+
+
+static func _half(b: Dictionary) -> float:
+	var fp: Array = DictUtil.get_arr(GameSession.content.building(str(b["def_id"])), "footprint")
+	return (minf(float(fp[0]), float(fp[1])) * 0.5) if fp.size() == 2 else 3.0
+
+
+static func _tube(root: Node3D, a: Dictionary, b: Dictionary, terrain: TerrainBuilder, mod: Array) -> void:
+	var pa := _pos(a)
+	var pb := _pos(b)
+	var dir := (pb - pa).normalized()
+	var start := pa + dir * (_half(a) - 0.4)
+	var end := pb - dir * (_half(b) - 0.4)
+	var length := start.distance_to(end)
+	if length < 1.0 or (pb - pa).dot(end - start) <= 0.0:
+		return
+	var box: AABB = mod[2]
+	var s := WIDTH / maxf(box.size.x, 0.1)
+	var seg := box.size.z * s
+	var n := maxi(1, int(ceil(length / seg)))
+	var stretch := length / (n * seg)
+	var yaw := atan2(dir.x, dir.y)
+	var basis := Basis(Vector3.UP, yaw) * Basis.from_scale(Vector3(s, s, s * stretch))
+	for i: int in n:
+		var c := start + dir * (seg * stretch * (i + 0.5))
+		var y := terrain.height_at(c.x, c.y) - box.position.y * s
+		var mi := MeshInstance3D.new()
+		mi.mesh = mod[0]
+		mi.transform = Transform3D(basis, Vector3(c.x, y, c.y)) * Transform3D(Basis.IDENTITY, -Vector3(box.get_center().x, 0, box.get_center().z)) * (mod[1] as Transform3D)
+		root.add_child(mi)
