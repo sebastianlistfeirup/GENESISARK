@@ -608,6 +608,12 @@ Through the hollow,Gennem lavningen
 Viridia: The air is almost breathable. The spores aren't toxic — there are just far too many of them.,Viridia: Luften er næsten åndbar. Sporerne er ikke giftige — der er bare alt for mange.
 Viridia: The relay on the high ridge covers the whole clearing.,Viridia: Relæet på højdedraget dækker hele lysningen.
 Viridia: The spores can be filtered. Greenhouses must stand apart from the housing.,Viridia: Sporerne kan filtreres. Væksthuse skal stå adskilt fra boligerne.
+Approach,Indflyvning
+Colony · year %d,Koloni · år %d
+Day %d of the voyage,Dag %d af rejsen
+EPILOGUE,EPILOG
+Expedition,Ekspedition
+THE ARK,ARKEN
 Autosave failed: ,Autogem fejlede: 
 Suit energy is below reserve. Return to the lander.,Dragtens energi er under reserve. Vend tilbage til landeren.
 The suit is drained. ARK is guiding you back to the lander.,Dragten er tom. ARK fører dig tilbage til landeren.
@@ -752,7 +758,6 @@ event %s: fallback '%s' has requirements,event %s: fallback '%s' har krav
 event %s: missing valid fallback,event %s: mangler gyldig fallback
 event %s: unknown building %s,event %s: ukendt bygning %s
 An expedition is already under way.,En ekspedition er allerede i gang.
-Expedition,Ekspedition
 Expedition on %s complete: %d new findings.,Ekspedition på %s afsluttet: %d nye oplysninger.
 Expedition: ,Ekspedition: 
 Expeditions require the Ark to be in orbit before landing.,"Ekspeditioner kræver, at arken er i kredsløb før landing."
@@ -1133,7 +1138,6 @@ We want to decide for ourselves. Give the council the keys.,Vi vil selv bestemme
 Year %d: the first generation speaks,År %d: den første generation taler
 %d people · %s · own power %.0f / %.0f kW · reserve %s days · %d crises resolved · the captain in stasis for %d years,%d mennesker · %s · egen strøm %.0f / %.0f kW · reserve %s dage · %d kriser løst · kaptajnen i stasis i %d år
 Continue from the last save before the handover,Fortsæt fra seneste save før overdragelsen
-EPILOGUE,EPILOG
 Loading the backup from before the ending.,Indlæser backuppen fra før slutningen.
 Main menu,Hovedmenu
 council,råd
