@@ -395,8 +395,10 @@ func _stretch_cover(on: bool) -> void:
 		return
 	for n: Node in gc.get_children():
 		var mmi := n as MultiMeshInstance3D
-		if mmi == null or mmi.multimesh == null or mmi.multimesh.instance_count > 400:
+		if mmi == null or mmi.multimesh == null or mmi.multimesh.mesh == null:
 			continue
+		if mmi.multimesh.mesh.get_aabb().size.length() < 3.0:
+			continue  # pebbles and tufts stay culled: from the air they only speckle the playable square
 		if on:
 			mmi.set_meta("vis_end", mmi.visibility_range_end)
 			mmi.visibility_range_end = 2500.0 if mmi.visibility_range_end > 0.0 else 0.0
