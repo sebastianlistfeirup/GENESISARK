@@ -8,7 +8,7 @@ extends Node
 const SHOTS := [
 	# [setup, scene, action, seconds, caption, hide_hud, drift_deg_per_s]
 	["fresh", "menu", "", 7.0, "", false, 0.0],
-	["fresh", "ship", "room_C", 6.0, "50,000 embryos. One last human.", true, 0.0],
+	["fresh", "ship", "", 9.0, "50,000 embryos. One last human.", true, 0.0],
 	["power", "ship", "roomcam_E", 5.0, "", true, 1.5],
 	["power", "ship", "roomcam_B", 5.0, "", true, 1.5],
 	["power", "ship", "starmap", 7.0, "Six possible worlds", false, 0.0],
