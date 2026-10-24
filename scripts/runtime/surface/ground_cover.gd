@@ -201,6 +201,8 @@ static func build(terrain: Node3D, key: String, seed_value: int, avoid: Array, s
 			var off := basis.scaled(Vector3.ONE * s) * Vector3(box.get_center().x, 0.0, box.get_center().z)
 			mi.transform = Transform3D(basis.scaled(Vector3.ONE * s), Vector3(p.x, y, p.y) - off) * (src[1] as Transform3D)
 			mi.visibility_range_end = 600.0
+			if it.has("glow") and mi.material_override == null:  # bioluminescent hero pieces (Meshy landmarks)
+				mi.material_override = _glow_material(src[0], DictUtil.get_arr(it, "glow"))
 			root.add_child(mi)
 	_cliffs(root, terrain, DictUtil.get_arr(spec, "cliffs"), rng, size_m)
 	return root

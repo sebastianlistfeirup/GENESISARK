@@ -17,6 +17,7 @@ R = lambda n: N + "Arid/FBX/" + n + ".fbx"
 Wp = lambda n: W + n + ".tscn"
 SS = lambda n: "res://assets/Synty/SciFiSpace/FBX/" + n + ".fbx"
 Bd = lambda n: "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Buildings/" + n + ".tscn"
+MS = lambda n: "res://assets/imported/meshy/" + n + ".glb"  # owner's Meshy generations (local only)
 
 
 def c(mesh, count, s=(0.8, 1.3), cluster=5, **kw):
@@ -255,6 +256,13 @@ WILDLIFE = {
 for _pid, _w in WILDLIFE.items():
     PLANETS[_pid]["wildlife"] = _w
 
+# Hero landmarks generated with Meshy for what no Synty pack has (D-057).
+HERO = {
+    "umbra": [dict(lm([MS("landmark_sporetree")], 4, (14.0, 19.0), (52, 74)), glow=[2.6, 0.25, 0.55])],
+    "ferrum": [dict(lm([MS("landmark_orecrystal")], 4, (10.0, 14.0), (52, 74)), glow=[2.2, 0.35, 0.6])],
+}
+for _pid, _l in HERO.items():
+    PLANETS[_pid]["landmarks"] = _l + PLANETS[_pid]["landmarks"]
 for _pid, _d in DESCENT.items():
     PLANETS[_pid]["descent"] = _d
 for _pid, _extra in ALIEN.items():

@@ -1144,6 +1144,25 @@
   "landmarks": [
    {
     "meshes": [
+     "res://assets/imported/meshy/landmark_orecrystal.glb"
+    ],
+    "count": 4,
+    "scale": [
+     10.0,
+     14.0
+    ],
+    "ring": [
+     52,
+     74
+    ],
+    "glow": [
+     2.2,
+     0.35,
+     0.6
+    ]
+   },
+   {
+    "meshes": [
      "res://assets/Synty/SciFiSpace/FBX/SM_Ship_Bomber_02.fbx"
     ],
     "count": 1,
@@ -2520,6 +2539,25 @@
    }
   ],
   "landmarks": [
+   {
+    "meshes": [
+     "res://assets/imported/meshy/landmark_sporetree.glb"
+    ],
+    "count": 4,
+    "scale": [
+     14.0,
+     19.0
+    ],
+    "ring": [
+     52,
+     74
+    ],
+    "glow": [
+     2.6,
+     0.25,
+     0.55
+    ]
+   },
    {
     "meshes": [
      "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Artifact_AlienRuin_01.tscn",
