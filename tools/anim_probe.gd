@@ -63,7 +63,23 @@ func _process(_d: float) -> bool:
 					row["foot_slide_mps"] = snappedf(absf(v - ref * pb), 0.001)
 					row["foot_slide_pct"] = snappedf(100.0 * absf(v - ref * pb) / v, 0.1)
 				slide["%s@%.2f" % [st, v]] = row
-		report["slots"][slot] = {"prefab": prefab, "clips": clips, "slide_at_game_speed": slide}
+		# Body variants (slot__N prefabs) share the library: their walk speed must agree with the map.
+		var variants := {}
+		for k: int in range(2, 21):
+			var vp := "res://art/prefabs/%s__%d.tscn" % [slot, k]
+			if not ResourceLoader.exists(vp) or not lib.has_animation("walk"):
+				continue
+			var vm: Node3D = (load(vp) as PackedScene).instantiate()
+			root.add_child(vm)
+			var vsk := vm.find_children("GeneralSkeleton", "Skeleton3D", true, false)
+			if not vsk.is_empty():
+				var vap := CharacterAnimator.attach(vm, lib)
+				var m := _measure(vap, vsk[0], "walk", lib.get_animation("walk"))
+				variants[vp.get_file()] = {"walk_speed_ref_mps": m.get("speed_ref_mps", 0.0), "hips_y_m": m["hips_y_max_m"]}
+			vm.queue_free()
+		report["slots"][slot] = {"prefab": prefab, "clips": clips, "slide_at_game_speed": slide, "variants": variants}
+		if not variants.is_empty():
+			print("  variants ", variants)
 		model.queue_free()
 	for base: String in ROOT_MOTION.keys():
 		var p := "res://assets/imported/anim_pass/%s.fbx" % base

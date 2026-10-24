@@ -161,8 +161,10 @@ func _use_slot(slot: String) -> void:
 	if _model:
 		_model.queue_free()
 	_slot = slot
-	_model = (load("res://art/prefabs/%s.tscn" % slot) as PackedScene).instantiate()
+	var vs := VisualSlot.make(slot)  # same model setup as in game (attachments hidden etc.)
+	_model = vs
 	_world.add_child(_model)
+	vs.rebuild()
 	var libs := AnimationLibraryBuilder.load_mappings()
 	_ap = CharacterAnimator.attach(_model, load(str(libs[slot])))
 

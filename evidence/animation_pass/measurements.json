@@ -575,10 +575,10 @@
     "walk@4.20": {
      "game_mps": 4.2,
      "measured_ref": 4.3,
-     "map_ref": 4.2,
-     "playback": 1.0,
-     "foot_slide_mps": 0.1,
-     "foot_slide_pct": 2.4
+     "map_ref": 4.3,
+     "playback": 0.977,
+     "foot_slide_mps": 0.0,
+     "foot_slide_pct": 0.0
     },
     "run@7.00": {
      "game_mps": 7.0,
@@ -588,7 +588,8 @@
      "foot_slide_mps": 0.0,
      "foot_slide_pct": 0.0
     }
-   }
+   },
+   "variants": {}
   },
   "char.citizen_adult": {
    "prefab": "res://art/prefabs/char.citizen_adult.tscn",
@@ -1055,6 +1056,44 @@
      "foot_slide_mps": 0.0,
      "foot_slide_pct": 0.0
     }
+   },
+   "variants": {
+    "char.citizen_adult__2.tscn": {
+     "walk_speed_ref_mps": 1.49,
+     "hips_y_m": 0.885
+    },
+    "char.citizen_adult__3.tscn": {
+     "walk_speed_ref_mps": 1.49,
+     "hips_y_m": 0.885
+    },
+    "char.citizen_adult__4.tscn": {
+     "walk_speed_ref_mps": 1.49,
+     "hips_y_m": 0.882
+    },
+    "char.citizen_adult__5.tscn": {
+     "walk_speed_ref_mps": 1.49,
+     "hips_y_m": 0.882
+    },
+    "char.citizen_adult__6.tscn": {
+     "walk_speed_ref_mps": 1.49,
+     "hips_y_m": 0.885
+    },
+    "char.citizen_adult__7.tscn": {
+     "walk_speed_ref_mps": 1.49,
+     "hips_y_m": 0.885
+    },
+    "char.citizen_adult__8.tscn": {
+     "walk_speed_ref_mps": 1.49,
+     "hips_y_m": 0.882
+    },
+    "char.citizen_adult__9.tscn": {
+     "walk_speed_ref_mps": 1.49,
+     "hips_y_m": 0.885
+    },
+    "char.citizen_adult__10.tscn": {
+     "walk_speed_ref_mps": 1.49,
+     "hips_y_m": 0.885
+    }
    }
   },
   "char.citizen_child": {
@@ -1360,7 +1399,8 @@
      "foot_slide_mps": 0.0,
      "foot_slide_pct": 0.0
     }
-   }
+   },
+   "variants": {}
   }
  },
  "root_motion_sources": {
