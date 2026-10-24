@@ -23,6 +23,7 @@ CAST = {
     "elias": ["Daniel", "George", "Callum"],
     "sana": ["Matilda", "Aria", "Sarah"],
     "narrator": ["George", "Brian", "Daniel"],
+    "nav_computer": ["Will", "Eric", "Roger"],
 }
 SETTINGS = {
     "ark_ai": {"stability": 0.62, "similarity_boost": 0.8, "style": 0.15},
@@ -50,7 +51,8 @@ def main() -> None:
     only = a[a.index("--only") + 1] if "--only" in a else ""
     force, dry, narrator = "--force" in a, "--dry" in a, "--narrator" in a
     rows = list(csv.DictReader(open(ROOT / "docs" / "VO_SCRIPT.csv", encoding="utf-8")))
-    todo = [r for r in rows if (narrator or r["voice_id"] != "narrator") and (not only or r["scene"].startswith(only))
+    # Lines with runtime placeholders ({dest}, {fuel} ...) stay subtitles-only: TTS would read the braces.
+    todo = [r for r in rows if "{" not in r["text"] and (narrator or r["voice_id"] != "narrator") and (not only or r["scene"].startswith(only))
             and (force or not (OUT / (r["line_id"] + ".mp3")).exists())]
     print(len(todo), "lines,", sum(len(r["text"]) for r in todo), "chars")
     if dry:
