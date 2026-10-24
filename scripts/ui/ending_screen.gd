@@ -11,9 +11,10 @@ func _ready() -> void:
 	bg.color = UiKit.BG
 	bg.set_anchors_preset(Control.PRESET_FULL_RECT)
 	add_child(bg)
-	if not GameSession.has_game() or GameSession.state.campaign.ending_id.is_empty():
-		DebugFixtures.prepare("era:pelagos:40")
-		GameSession.cmd_handover()
+	if not GameSession.has_game() or GameSession.state.colony == null:
+		DebugFixtures.prepare("era:pelagos:40")  # developer path: opened without a campaign
+	if GameSession.state.campaign.ending_id.is_empty():
+		GameSession.cmd_handover()  # e.g. --scene=ending --setup=era:<planet>:40 shows that planet's ending
 	var gs: GameState = GameSession.state
 	_backdrop(gs)
 	var def: Dictionary = GameSession.content.endings.get(gs.campaign.ending_id, {})
@@ -24,7 +25,9 @@ func _ready() -> void:
 	var frame := MarginContainer.new()
 	frame.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	frame.add_theme_constant_override("margin_left", 160)
-	frame.add_theme_constant_override("margin_right", int(maxf(60.0, vis.x - 160.0 - 1100.0)))
+	# The text column keeps clear of the planet on the right at every size and
+	# UI scale (at 1280x720 @1.5 it used to run across the bright limb).
+	frame.add_theme_constant_override("margin_right", int(maxf(60.0, vis.x * 0.3)))
 	frame.add_theme_constant_override("margin_top", 90)
 	frame.add_theme_constant_override("margin_bottom", 40)
 	add_child(frame)
@@ -106,7 +109,8 @@ func _backdrop(gs: GameState) -> void:
 	var g := Gradient.new()
 	g.set_color(0, Color(UiKit.BG, 0.94))
 	g.set_color(1, Color(UiKit.BG, 0.0))
-	g.add_point(0.55, Color(UiKit.BG, 0.8))
+	g.add_point(0.5, Color(UiKit.BG, 0.84))
+	g.add_point(0.7, Color(UiKit.BG, 0.5))
 	var gt := GradientTexture2D.new()
 	gt.gradient = g
 	gt.fill_to = Vector2(1, 0)
