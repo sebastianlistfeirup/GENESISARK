@@ -224,7 +224,7 @@ static func _mesh_of(path: String) -> Array:
 	if _meshes.has(path):
 		return _meshes[path]
 	var out: Array = []
-	if not path.is_empty() and ResourceLoader.exists(path):
+	if not path.is_empty() and ResourceLoader.exists(path) and load(path) is PackedScene:
 		var inst: Node = (load(path) as PackedScene).instantiate()
 		var mis: Array = [inst] if inst is MeshInstance3D else []
 		mis.append_array(inst.find_children("*", "MeshInstance3D", true, false))

@@ -24,7 +24,7 @@ static func mesh(path: String, look: Dictionary = {}) -> Array:
 	if _meshes.has(key):
 		return _meshes[key]
 	var out: Array = []
-	if ResourceLoader.exists(path):
+	if ResourceLoader.exists(path) and load(path) is PackedScene:
 		var pack := pack_root(path)
 		var list := _list(pack)
 		var inst: Node = (load(path) as PackedScene).instantiate()
@@ -83,6 +83,8 @@ static func _local(n: Node, root: Node) -> Transform3D:
 
 static func _transform_arrays(a: Array, xf: Transform3D) -> void:
 	if xf == Transform3D.IDENTITY:
+		return
+	if a[Mesh.ARRAY_VERTEX] == null:
 		return
 	var v: PackedVector3Array = a[Mesh.ARRAY_VERTEX]
 	for i: int in v.size():
