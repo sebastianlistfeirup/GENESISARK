@@ -4,26 +4,48 @@ extends Node3D
 ## per mesh for the whole colony, plus small lamps that glow on dark worlds.
 ## A prop is dropped when it would touch another building's footprint, a
 ## corridor tube or a road, so placement and collision stay owned by the domain
-## and the building views. Rebuilt only when the building set changes.
-## Presentation only: no collision, no picking.
+## and the building views. A dropped prop first gets a second chance on another
+## side of its own building, and the lanes between buildings get street
+## furniture (ColonyInfill). Platform tiles take their district's tint.
+## Rebuilt only when the building set changes. Presentation only: no collision,
+## no picking.
 
 const MAX_LIGHTS := 48
 
 var _bulb_mesh: SphereMesh
 ## Props that survived the clearance test: [Vector2 position, radius] (walkers keep off them).
 var kept: Array = []
+## Evidence/debug: how many props were planned, kept on the first try, moved, and added as infill.
+var stats := {}
+
+static var _tint_cache: Dictionary = {}  # "mesh id|tint" -> Mesh
+var _on_platform: ColonyClearance  # footprints of the buildings that stand on platform tiles
+var _margin := 0.0
 
 
 ## views: building id -> BuildingView. clear: ColonyClearance with footprints,
 ## corridors and roads. light_scale: lamp brightness for this world.
-func rebuild(views: Dictionary, terrain: TerrainBuilder, clear: ColonyClearance, light_scale: float) -> void:
+## districts: [[key, Vector2 centre, radius]] for the street furniture.
+## night: this world's night look (data "night"): emissive boost, light pools, roof beacons.
+func rebuild(views: Dictionary, terrain: TerrainBuilder, clear: ColonyClearance, light_scale: float, districts: Array = [], night: Dictionary = {}) -> void:
 	for c: Node in get_children():
 		remove_child(c)
 		c.queue_free()
 	var batches: Dictionary = {}  # Mesh -> Array[Transform3D]
 	var ranges: Dictionary = {}   # Mesh -> visibility range
 	var lights: Array = []        # [Vector3 pos, Color]
+	var retry: Array = []         # [BuildingView, item]
 	kept.clear()
+	stats = {"planned": 0, "first": 0, "moved": 0, "infill": 0}
+	_margin = BuildingDressing.platform_margin()
+	_on_platform = ColonyClearance.new()
+	for bid: int in views.keys():
+		var bv: BuildingView = views[bid]
+		if is_instance_valid(bv) and BuildingDressing.pad_style(bv.def_id) == "skirt":
+			var fs: Vector2 = bv.footprint()
+			if posmod(roundi(bv.rotation.y / (PI * 0.5)), 2) == 1:
+				fs = Vector2(fs.y, fs.x)
+			_on_platform.add_rect(Rect2(Vector2(bv.position.x, bv.position.z) - fs * 0.5, fs), bid)
 	for bid: int in views.keys():
 		var v: BuildingView = views[bid]
 		if not is_instance_valid(v) or v.dressing.is_empty():
@@ -35,24 +57,42 @@ func rebuild(views: Dictionary, terrain: TerrainBuilder, clear: ColonyClearance,
 				continue
 			var xf: Transform3D = vxf * (it["xf"] as Transform3D)
 			if kind != "platform":
+				stats["planned"] += 1
 				var p := Vector2(xf.origin.x, xf.origin.z)
 				if clear.blocked(p, float(it["r"]), bid):
+					retry.append([v, it])
 					continue
+				stats["first"] += 1
 				kept.append([p, float(it["r"])])
-				# Stand on the real ground (the ring can leave the flattened district).
-				xf.origin.y = terrain.height_at(p.x, p.y) + (xf.origin.y - vxf.origin.y) - 0.03
-			var pr: Dictionary = BuildingDressing.parts(str(it["mesh"]))
-			var big := kind in ["platform", "park"] or float(it["top"]) > 2.5
-			for part: Array in pr["parts"]:
-				var m: Mesh = part[0]
-				if not batches.has(m):
-					batches[m] = []
-					ranges[m] = 0.0
-				(batches[m] as Array).append(xf * (part[1] as Transform3D))
-				ranges[m] = maxf(float(ranges[m]), 420.0 if big else 190.0)
-			var col := str(it["light"])
-			if not col.is_empty():
-				lights.append([xf * (it["light_at"] as Vector3), Color(col)])
+			_emit(batches, ranges, lights, it, xf, vxf.origin.y, terrain)
+	# Second chance: the same prop on the opposite side (or, for a square
+	# footprint, a quarter turn) of its own building, if that side is free.
+	var taken := ColonyClearance.new()
+	for k: Array in kept:
+		taken.add_segment(k[0], k[0], float(k[1]) * 0.8)
+	for rt: Array in retry:
+		var v: BuildingView = rt[0]
+		var it: Dictionary = rt[1]
+		var vxf := v.global_transform if v.is_inside_tree() else v.transform
+		var size: Vector2 = v.footprint()
+		var turns: Array = [PI, PI * 0.5, -PI * 0.5] if absf(size.x - size.y) < 0.6 else [PI]
+		var r := float(it["r"])
+		for ang: float in turns:
+			var xf: Transform3D = vxf * Transform3D(Basis(Vector3.UP, ang), Vector3.ZERO) * (it["xf"] as Transform3D)
+			var p := Vector2(xf.origin.x, xf.origin.z)
+			if clear.blocked(p, r, v.building_id) or taken.blocked(p, r * 0.8):
+				continue
+			stats["moved"] += 1
+			kept.append([p, r])
+			taken.add_segment(p, p, r * 0.8)
+			_emit(batches, ranges, lights, it, xf, vxf.origin.y, terrain)
+			break
+	if not districts.is_empty():
+		for it: Dictionary in ColonyInfill.plan(clear, kept, districts):
+			var xf: Transform3D = it["xf"]
+			kept.append([Vector2(xf.origin.x, xf.origin.z), float(it["r"])])
+			stats["infill"] += 1
+			_emit(batches, ranges, lights, it, xf, 0.0, terrain)
 	for m: Mesh in batches.keys():
 		var xfs: Array = batches[m]
 		var mm := MultiMesh.new()
@@ -68,6 +108,144 @@ func rebuild(views: Dictionary, terrain: TerrainBuilder, clear: ColonyClearance,
 		mmi.visibility_range_fade_mode = GeometryInstance3D.VISIBILITY_RANGE_FADE_SELF
 		add_child(mmi)
 	_add_lights(lights, light_scale)
+	_add_night(views, night)
+
+
+## Night worlds: every active building's emissive windows burn brighter, a soft
+## warm pool of light spills around it (a capped, spread subset of real lights)
+## and the tall ones carry a slow red roof beacon (one MultiMesh, shader blink).
+func _add_night(views: Dictionary, night: Dictionary) -> void:
+	var glow := DictUtil.get_float(night, "windows", 1.0)
+	var pools: Array = []
+	var beacons: Array = []
+	var min_h := DictUtil.get_float(night, "beacon_min_h", 5.0)
+	for bid: int in views.keys():
+		var v: BuildingView = views[bid]
+		if not is_instance_valid(v):
+			continue
+		v.set_glow(glow if not v.constructing() else 1.0)
+		if night.is_empty() or v.constructing():
+			continue
+		var fs: Vector2 = v.footprint()
+		pools.append([v.position + Vector3(0, 1.2, 0), maxf(fs.x, fs.y) * 0.75 + 3.0])
+		var top := v.visual_top()
+		if top >= min_h:
+			beacons.append(v.global_transform * Vector3(0, top + 0.15, 0) if v.is_inside_tree() else v.position + Vector3(0, top + 0.15, 0))
+	if night.is_empty():
+		return
+	var cap := DictUtil.get_int(night, "pool_max", 36)
+	var step := maxi(1, int(ceil(pools.size() / float(cap))))
+	var pc := Color(str(night.get("pool", "#ffc98a")))
+	for i: int in range(0, pools.size(), step):
+		var ol := OmniLight3D.new()
+		ol.position = pools[i][0]
+		ol.light_color = pc
+		ol.light_energy = DictUtil.get_float(night, "pool_energy", 1.0)
+		ol.omni_range = float(pools[i][1])
+		ol.omni_attenuation = 1.6
+		ol.shadow_enabled = false
+		ol.light_specular = 0.1
+		ol.distance_fade_enabled = true
+		ol.distance_fade_begin = 140.0
+		ol.distance_fade_length = 40.0
+		add_child(ol)
+	if beacons.is_empty() or not night.has("beacon"):
+		return
+	var sm := SphereMesh.new()
+	sm.radius = 0.16
+	sm.height = 0.32
+	sm.radial_segments = 8
+	sm.rings = 4
+	var mm := MultiMesh.new()
+	mm.transform_format = MultiMesh.TRANSFORM_3D
+	mm.use_custom_data = true
+	mm.mesh = sm
+	mm.instance_count = beacons.size()
+	for i: int in beacons.size():
+		mm.set_instance_transform(i, Transform3D(Basis.IDENTITY, beacons[i]))
+		mm.set_instance_custom_data(i, Color(fmod(i * 0.37, 1.0), 0, 0, 0))
+	var mmi := MultiMeshInstance3D.new()
+	mmi.multimesh = mm
+	mmi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	var mat := ShaderMaterial.new()
+	mat.shader = _beacon_shader()
+	mat.set_shader_parameter("col", Color(str(night["beacon"])))
+	mmi.material_override = mat
+	mmi.visibility_range_end = 400.0
+	add_child(mmi)
+
+
+static var _beacon_sh: Shader
+
+
+static func _beacon_shader() -> Shader:
+	if _beacon_sh == null:
+		_beacon_sh = Shader.new()
+		_beacon_sh.code = """shader_type spatial;
+render_mode unshaded, shadows_disabled;
+uniform vec4 col : source_color = vec4(1.0, 0.3, 0.2, 1.0);
+varying float phase;
+void vertex() { phase = INSTANCE_CUSTOM.r; }
+void fragment() {
+	float t = fract(TIME * 0.55 + phase);
+	float on = smoothstep(0.0, 0.05, t) * (1.0 - smoothstep(0.12, 0.3, t));
+	ALBEDO = col.rgb * (0.35 + on);
+	EMISSION = col.rgb * (0.2 + on * 5.0);
+}
+"""
+	return _beacon_sh
+
+
+## Queue one placed item (world transform xf; base_y = its building's ground).
+func _emit(batches: Dictionary, ranges: Dictionary, lights: Array, it: Dictionary, xf: Transform3D, base_y: float, terrain: TerrainBuilder) -> void:
+	var kind := str(it["kind"])
+	if kind != "platform":
+		# Stand on the real ground (the ring can leave the flattened district),
+		# or on the platform tiles where the prop's base reaches over them.
+		var p := Vector2(xf.origin.x, xf.origin.z)
+		var on_tiles := _on_platform != null and _on_platform.blocked(p, float(it["r"]) * 0.6 + _margin - 0.25, -1, true)
+		xf.origin.y = terrain.height_at(p.x, p.y) + (xf.origin.y - base_y) + (0.05 if on_tiles else -0.03)
+	var pr: Dictionary = BuildingDressing.parts(str(it["mesh"]))
+	var big := kind in ["platform", "park"] or float(it["top"]) > 2.5
+	var tint := str(it.get("tint", ""))
+	for part: Array in pr["parts"]:
+		var m: Mesh = part[0]
+		if not tint.is_empty():
+			m = _tinted(m, tint)
+		if not batches.has(m):
+			batches[m] = []
+			ranges[m] = 0.0
+		(batches[m] as Array).append(xf * (part[1] as Transform3D))
+		ranges[m] = maxf(float(ranges[m]), 420.0 if big else (150.0 if kind == "infill" else 190.0))
+	var col := str(it["light"])
+	if not col.is_empty():
+		lights.append([xf * (it["light_at"] as Vector3), Color(col)])
+
+
+## A copy of the mesh whose standard materials are multiplied by a tint (the
+## district's paving colour). Shader materials are left as they are.
+static func _tinted(m: Mesh, tint: String) -> Mesh:
+	var key := "%d|%s" % [m.get_instance_id(), tint]
+	if _tint_cache.has(key):
+		return _tint_cache[key]
+	var out: Mesh = m
+	if m is ArrayMesh:
+		out = (m as ArrayMesh).duplicate()
+		var f := tint.split_floats(",")
+		var col := Color(f[0], f[1], f[2]) if f.size() >= 3 else Color(tint)
+		for s: int in out.get_surface_count():
+			var mat := out.surface_get_material(s)
+			if mat is StandardMaterial3D:
+				var t := (mat as StandardMaterial3D).duplicate() as StandardMaterial3D
+				t.albedo_color = t.albedo_color * col
+				(out as ArrayMesh).surface_set_material(s, t)
+			elif mat is ShaderMaterial and (mat as ShaderMaterial).get_shader_parameter("BaseColor") is Color:
+				# Synty's Generic_Basic shader multiplies its atlas by BaseColor.
+				var sm := (mat as ShaderMaterial).duplicate() as ShaderMaterial
+				sm.set_shader_parameter("BaseColor", (sm.get_shader_parameter("BaseColor") as Color) * col)
+				(out as ArrayMesh).surface_set_material(s, sm)
+	_tint_cache[key] = out
+	return out
 
 
 ## Each lamp gets a small glowing bulb; a capped, evenly spread subset also casts

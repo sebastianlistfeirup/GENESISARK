@@ -21,6 +21,9 @@ var _constructing := false
 var _body_for := ""  # "frame" | "shape": what the walkable body currently follows
 ## Building-local set dressing (BuildingDressing.plan); ColonyDressing draws it.
 var dressing: Array = []
+var _glow := 1.0  # night worlds: how much brighter the model's emissive windows/strips burn
+
+static var _boosted: Dictionary = {}  # "material id|factor" -> ShaderMaterial
 
 
 func setup(b: Dictionary, terrain_height: float) -> void:
@@ -33,6 +36,7 @@ func setup(b: Dictionary, terrain_height: float) -> void:
 	_visual = VisualSlot.make(str(def.get("visual_slot", "building." + def_id)))
 	_visual.rebuilt.connect(func() -> void:
 		_body_for = ""
+		_apply_glow()
 		if is_inside_tree():
 			_fit_body(_constructing))
 	add_child(_visual)
@@ -40,7 +44,7 @@ func setup(b: Dictionary, terrain_height: float) -> void:
 	add_child(_frame)
 	_modules = Node3D.new()
 	add_child(_modules)
-	dressing = BuildingDressing.plan(def_id, _size, building_id)
+	dressing = BuildingDressing.plan(def_id, _size, building_id, district_at(Vector2(float(b["x"]), float(b["z"]))))
 	var style := BuildingDressing.pad_style(def_id)
 	if style != "none":
 		# "pad": the plain slab (fresh clone). "skirt": a dark base under the Synty
@@ -74,6 +78,26 @@ func setup(b: Dictionary, terrain_height: float) -> void:
 	_status.position.y = _height + 2.5
 	add_child(_status)
 	refresh(b)
+
+
+## The district a map point belongs to (nearest centre relative to its radius),
+## "" without a running colony. Platforms and street furniture follow it.
+static func district_at(p: Vector2) -> String:
+	if not GameSession.has_game() or GameSession.state.colony == null:
+		return ""
+	var site := GameSession.content.site(GameSession.state.colony.site_id)
+	var best := ""
+	var bd := INF
+	var ds: Dictionary = DictUtil.get_dict(site, "districts")
+	for dk: String in ds.keys():
+		var c: Array = DictUtil.get_arr(ds[dk], "center")
+		if c.size() != 2:
+			continue
+		var d := p.distance_to(Vector2(float(c[0]), float(c[1]))) / maxf(DictUtil.get_float(ds[dk], "radius", 10.0), 1.0)
+		if d < bd:
+			bd = d
+			best = dk
+	return best
 
 
 ## Walkable collision: the scaffold footprint while building, then the model's shape.
@@ -110,6 +134,56 @@ func collision_boxes() -> Array[AABB]:
 
 func constructing() -> bool:
 	return _constructing
+
+
+## Footprint in building space (before the view's rotation).
+func footprint() -> Vector2:
+	return _size
+
+
+## Night worlds: the model's emissive parts (windows, light strips) burn brighter.
+## Instance overrides only; the shared pack materials are never touched.
+func set_glow(factor: float) -> void:
+	if is_equal_approx(factor, _glow):
+		return
+	_glow = factor
+	_apply_glow()
+
+
+func _apply_glow() -> void:
+	if _visual == null:
+		return
+	for n: Node in _visual.find_children("*", "MeshInstance3D", true, false):
+		var mi := n as MeshInstance3D
+		if mi.mesh == null:
+			continue
+		for s: int in mi.mesh.get_surface_count():
+			var base := mi.mesh.surface_get_material(s)
+			if not (base is ShaderMaterial) or not ((base as ShaderMaterial).get_shader_parameter("Emission_Color") is Color):
+				continue
+			if _glow <= 1.0:
+				mi.set_surface_override_material(s, null)
+				continue
+			var key := "%d|%.2f" % [base.get_instance_id(), _glow]
+			if not _boosted.has(key):
+				var m := (base as ShaderMaterial).duplicate() as ShaderMaterial
+				m.set_shader_parameter("Emission_Color", (m.get_shader_parameter("Emission_Color") as Color) * _glow)
+				_boosted[key] = m
+			mi.set_surface_override_material(s, _boosted[key])
+
+
+## Top of the drawn model above the view origin (for roof beacons), 0 if unknown.
+func visual_top() -> float:
+	var top := 0.0
+	if _visual == null:
+		return top
+	for n: Node in _visual.find_children("*", "MeshInstance3D", true, false):
+		var mi := n as MeshInstance3D
+		if mi.mesh == null or not mi.is_visible_in_tree():
+			continue
+		var box: AABB = (global_transform.affine_inverse() * mi.global_transform) * mi.get_aabb() if is_inside_tree() else mi.get_aabb()
+		top = maxf(top, box.end.y)
+	return top
 
 
 func refresh(b: Dictionary) -> void:

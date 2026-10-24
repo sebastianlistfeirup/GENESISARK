@@ -58,3 +58,22 @@ func blocked(p: Vector2, r: float, own: int = -1, rects_only: bool = false) -> b
 
 func rects() -> Array:
 	return _rects
+
+
+## Footprints closer than d to p (each once), nearest first not guaranteed.
+func rects_near(p: Vector2, d: float) -> Array:
+	var out: Array = []
+	var seen := {}
+	var a := Vector2i(floori((p.x - d) / CELL), floori((p.y - d) / CELL))
+	var b := Vector2i(floori((p.x + d) / CELL), floori((p.y + d) / CELL))
+	for x: int in range(a.x, b.x + 1):
+		for y: int in range(a.y, b.y + 1):
+			for e: Array in _grid.get(Vector2i(x, y), []):
+				if e[0] != "r" or seen.has(e[1]):
+					continue
+				seen[e[1]] = true
+				var r: Rect2 = _rects[e[1]][0]
+				var c := Vector2(clampf(p.x, r.position.x, r.end.x), clampf(p.y, r.position.y, r.end.y))
+				if c.distance_to(p) < d:
+					out.append(r)
+	return out

@@ -34,6 +34,8 @@ var _life: ColonyLife
 var _cover: Node3D
 var _roads: Node3D
 var _paths: ColonyPaths
+var _district_marks: Array[Node3D] = []
+const DISTRICT_MARKS_UNTIL := 24  # buildings; a bigger colony shows its districts only while placing
 var _t := 0.0
 var planet: Dictionary = {}
 var site: Dictionary = {}
@@ -138,14 +140,22 @@ func _draw_districts() -> void:
 		ring.material_override = AssetSlots.material(cols[dk], 0.8, 0.8)
 		ring.position = Vector3(float(c[0]), terrain.height_at(float(c[0]), float(c[1])) + 0.15, float(c[1]))
 		add_child(ring)
+		_district_marks.append(ring)
 		var lbl := Label3D.new()
 		lbl.text = labels[dk]
 		lbl.font_size = 96
 		lbl.pixel_size = 0.02
 		lbl.billboard = BaseMaterial3D.BILLBOARD_ENABLED
 		lbl.modulate = Color(cols[dk])
-		lbl.position = ring.position + Vector3(0, 1.0, -r)
+		# Above trees and roofs, drawn on top with an outline so nothing hides it.
+		lbl.position = ring.position + Vector3(0, 4.0, -r)
+		lbl.pixel_size = 0.014
+		lbl.no_depth_test = true
+		lbl.outline_size = 18
+		lbl.outline_modulate = Color(0, 0, 0, 0.55)
+		lbl.render_priority = 2
 		add_child(lbl)
+		_district_marks.append(lbl)
 	for bz: Dictionary in DictUtil.get_arr(site, "blocked"):
 		var bc: Array = DictUtil.get_arr(bz, "center")
 		var m := VisualSlot.make("surface.rock_large", "#5f5d58")
@@ -290,7 +300,7 @@ func _relayout() -> void:
 	_paths.build(gs, site, segs, 220.0)
 	for rd: PackedVector2Array in _paths.roads:
 		clear.add_polyline(rd, road_w * 0.5 + 0.3)
-	_draw_roads(road_cfg)
+	_draw_roads(road_cfg, clear)
 	if _cover == null:
 		_lay_ground_cover(clear)
 	_prune_cover(clear)
@@ -299,13 +309,61 @@ func _relayout() -> void:
 		_dressing.name = "Dressing"
 		add_child(_dressing)
 	var lights: Dictionary = DictUtil.get_dict(BuildingDressing.doc(), "lights")
-	_dressing.rebuild(views, terrain, clear, float(lights.get(str(planet.get("id", "")), lights.get("_default", 0.45))))
+	_open_crossings()
+	var dl: Array = []
+	var dscale := GameSession.sim.colony.district_scale(gs)
+	for dk: String in DictUtil.get_dict(site, "districts").keys():
+		var dc: Array = DictUtil.get_arr(site["districts"][dk], "center")
+		if dc.size() == 2:
+			dl.append([dk, Vector2(float(dc[0]), float(dc[1])), DictUtil.get_float(site["districts"][dk], "radius") * dscale])
+	_dressing.rebuild(views, terrain, clear, float(lights.get(str(planet.get("id", "")), lights.get("_default", 0.45))), dl,
+		DictUtil.get_dict(DictUtil.get_dict(BuildingDressing.doc(), "night"), str(planet.get("id", ""))))
 	_paths.block_discs(_dressing.kept)  # walkers step around the crates and lamps
 	_life.relayout(gs, _paths)
 
 
+## Where a road has to run through a corridor tube, the one tube module there is
+## left out and both cut ends get an end cap (an airlock gate), so vehicles and
+## walkers never pass through its walls.
+func _open_crossings() -> void:
+	if _corridors == null or _paths == null:
+		return
+	for c: Node in _corridors.get_children():
+		if c.has_meta("gate_cap"):
+			c.queue_free()
+		elif c is MeshInstance3D:
+			(c as MeshInstance3D).visible = true
+	var cap: Dictionary = BuildingDressing.parts(str(DictUtil.get_dict(BuildingDressing.doc(), "roads").get("gate_cap", "")))
+	for h: Vector2 in _paths.crossings():
+		var best: MeshInstance3D = null
+		var bd := INF
+		for c: Node in _corridors.get_children():
+			if c is MeshInstance3D and not c.has_meta("gate_cap"):
+				var w: Vector3 = (c as MeshInstance3D).transform * (c as MeshInstance3D).get_aabb().get_center()
+				if Vector2(w.x, w.z).distance_to(h) < bd:
+					bd = Vector2(w.x, w.z).distance_to(h)
+					best = c
+		if best == null or bd > 4.0 or not best.visible:
+			continue
+		best.visible = false
+		if cap.is_empty():
+			continue
+		var box := best.get_aabb()
+		var cb: AABB = cap["aabb"]
+		for zend: float in [box.position.z + cb.size.z * 0.5, box.end.z - cb.size.z * 0.5]:
+			var at: Vector3 = best.transform * Vector3(box.get_center().x, box.position.y, zend)
+			var turn := 0.0 if zend < box.get_center().z else PI  # the cap faces the road
+			var xf := Transform3D(best.transform.basis * Basis(Vector3.UP, turn), at) * Transform3D(Basis.IDENTITY, -Vector3(cb.get_center().x, cb.position.y, cb.get_center().z))
+			for part: Array in cap["parts"]:
+				var mi := MeshInstance3D.new()
+				mi.mesh = part[0]
+				mi.transform = xf * (part[1] as Transform3D)
+				mi.set_meta("gate_cap", true)
+				_corridors.add_child(mi)
+
+
 ## Dirt roads between the districts, a darker tone of the planet's ground.
-func _draw_roads(cfg: Dictionary) -> void:
+func _draw_roads(cfg: Dictionary, under: ColonyClearance) -> void:
 	if _roads:
 		_roads.queue_free()
 	_roads = Node3D.new()
@@ -322,8 +380,21 @@ func _draw_roads(cfg: Dictionary) -> void:
 	var per: Dictionary = DictUtil.get_dict(cfg, "colors")  # a dirt tone per world reads better than a shade
 	if per.has(str(planet.get("id", ""))):
 		col = Color(str(per[str(planet.get("id", ""))]))
+	# Night worlds: a lighter, faintly glowing track and lit edge studs; day
+	# worlds get plain reflective studs (data: roads.night / roads.markers).
+	var pid := str(planet.get("id", ""))
+	var night: Dictionary = DictUtil.get_dict(DictUtil.get_dict(cfg, "night"), pid)
+	if night.has("color"):
+		col = Color(str(night["color"]))
+	var marks: Dictionary = DictUtil.get_dict(cfg, "markers")
+	var mk: Dictionary = DictUtil.get_dict(marks, pid) if marks.has(pid) else DictUtil.get_dict(marks, "_default")
+	var w := DictUtil.get_float(cfg, "width", 3.2)
+	var grow := BuildingDressing.platform_margin() - 0.2
 	for rd: PackedVector2Array in _paths.roads:
-		_roads.add_child(ColonyPaths.road_mesh(rd, terrain, col, DictUtil.get_float(cfg, "width", 3.2), DictUtil.get_float(cfg, "shoulder", 1.4)))
+		_roads.add_child(ColonyPaths.road_mesh(rd, terrain, col, w, DictUtil.get_float(cfg, "shoulder", 1.4), under, grow, DictUtil.get_float(night, "glow", 0.0)))
+		if not mk.is_empty():
+			_roads.add_child(ColonyPaths.road_markers(rd, terrain, w, DictUtil.get_float(mk, "every", 5.0), Color(str(mk.get("color", "#ffb04a"))),
+				DictUtil.get_float(mk, "energy", 0.0), under, grow + 0.3))
 
 
 ## Ground cover is laid with the first layout (district cores, buildings, roads
@@ -381,7 +452,18 @@ func _prune_cover(clear: ColonyClearance) -> void:
 						(cs as CollisionShape3D).disabled = true
 
 
+## District rings and names explain the map early on; once the colony has grown
+## into a town they would cut through it, so they only show while placing.
+func _process_district_marks() -> void:
+	var show := not build_def.is_empty() or GameSession.state == null or GameSession.state.colony == null \
+		or GameSession.state.colony.buildings.size() < DISTRICT_MARKS_UNTIL
+	for n: Node3D in _district_marks:
+		if is_instance_valid(n) and n.visible != show:
+			n.visible = show
+
+
 func _process_network_visibility() -> void:
+	_process_district_marks()
 	# The raw link lines are a build-mode aid; outside it the corridors carry the read.
 	if _net:
 		_net.visible = not build_def.is_empty() or _corridors == null or _corridors.get_child_count() == 0
@@ -651,6 +733,56 @@ func _check_pending_event() -> void:
 			return
 
 
+## Evidence only: plans n door-to-door routes the way ColonyLife does and
+## measures, every 10 cm, the distance to the nearest footprint and tube wall.
+func _walk_audit(n: int) -> Dictionary:
+	var gs: GameState = GameSession.state
+	var doors: Array = []
+	for b: Dictionary in gs.colony.buildings:
+		if b["state"] == ColonyState.B_ACTIVE:
+			var d := _paths.door(b, _life.living_center)
+			if _paths.walkable(d):
+				doors.append(d)
+	var rects: Array = []
+	for b: Dictionary in gs.colony.buildings:
+		rects.append(ColonySimulation.rect_for(GameSession.content.building(str(b["def_id"])), float(b["x"]), float(b["z"]), int(b.get("rot", 0))))
+	var segs: Array = _corridors.get_meta("segments") if _corridors and _corridors.has_meta("segments") else []
+	var gates: Array = _paths.crossings()  # tube modules left out where a road passes
+	var rng := RandomNumberGenerator.new()
+	rng.seed = 99
+	var out := {"routes": 0, "samples": 0, "in_footprint": 0, "under_0_3m": 0, "in_tube": 0, "min_clear": INF}
+	for i: int in n:
+		if doors.size() < 2:
+			break
+		var r := _paths.route(doors[rng.randi() % doors.size()], doors[rng.randi() % doors.size()])
+		if r.size() < 2:
+			continue
+		out["routes"] += 1
+		for k: int in range(1, r.size()):
+			var steps := maxi(1, int(r[k - 1].distance_to(r[k]) / 0.1))
+			for s: int in steps:
+				var p := r[k - 1].lerp(r[k], float(s) / steps)
+				out["samples"] += 1
+				var best := INF
+				for rc: Rect2 in rects:
+					var c := Vector2(clampf(p.x, rc.position.x, rc.end.x), clampf(p.y, rc.position.y, rc.end.y))
+					best = minf(best, c.distance_to(p))
+				out["min_clear"] = minf(out["min_clear"], best)
+				if best <= 0.0:
+					out["in_footprint"] += 1
+				elif best < 0.3:
+					out["under_0_3m"] += 1
+				var at_gate := false
+				for h: Vector2 in gates:
+					if h.distance_to(p) < 3.2:
+						at_gate = true
+				for sg: Array in ([] if at_gate else segs):
+					if Geometry2D.get_closest_point_to_segment(p, sg[0], sg[1]).distance_to(p) < ColonyCorridors.WIDTH * 0.5:
+						out["in_tube"] += 1
+						break
+	return out
+
+
 func debug_action(action: String) -> void:
 	if action.begins_with("district:"):  # evidence: "district:<landing|resource|living>:<zoom>[:<yaw deg>]"
 		var parts := action.split(":")
@@ -676,6 +808,8 @@ func debug_action(action: String) -> void:
 			if event_dialog.visible:
 				event_dialog.hide()
 			get_viewport().warp_mouse(Vector2(get_viewport().get_visible_rect().size.x * 0.5, 160))
+		"walk_audit":  # evidence: how close walker routes come to footprints and corridor tubes
+			print("WALK_AUDIT ", _walk_audit(400))
 		"ghost":
 			_start_build("habitat")
 			var gs: GameState = GameSession.state
@@ -701,6 +835,11 @@ func debug_action(action: String) -> void:
 			overview._start_forecast()
 		"zoomout":
 			cam_rig.zoom = 110.0
+			if decision.visible:
+				decision.hide()
+			if event_dialog.visible:
+				event_dialog.hide()
+			get_viewport().warp_mouse(Vector2(get_viewport().get_visible_rect().size.x * 0.5, 160))  # no stray tooltip in the shot
 		"living":  # evidence: the living district close up (citizens, habitats)
 			var lc: Array = site["districts"]["living"]["center"]
 			cam_rig.position = Vector3(float(lc[0]), terrain.height_at(float(lc[0]), float(lc[1])), float(lc[1]))
