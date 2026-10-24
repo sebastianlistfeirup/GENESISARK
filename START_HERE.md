@@ -1,8 +1,26 @@
 # START HER — GENESIS ARK
 
-Hej Sebastian. Session 7 (24.10.2026) er øverst; ferie-sessionernes overdragelse (17.-19. oktober) står nedenunder til reference.
+Hej Sebastian. Session 9 (24.10.2026, aften) er øverst; ferie-sessionernes overdragelse (17.-19. oktober) står nedenunder til reference.
 
-## 0. Status efter session 7 (24. oktober 2026)
+## 0. Status efter session 9 (24. oktober 2026, aften)
+
+Nyt siden session 7: landing i realtid fra kredsløb og letning tilbage (session 8), planeterne efter dine Sci-Fi Worlds-referencer, og nu (session 9) holo-konsoller på skibet og i alle menuer, dyreliv, Meshy-heltemotiver lavet med din image-to-3D-skill, opvågningen i kryokapslen, strømbølgen, dragtscanneren og et ydelsespas, så alle scener holder budgettet. Overblik med billeder: handover-artefaktet; detaljer i `docs/STATUS.md` og `docs/DECISIONS.md` (D-043 til D-063).
+
+**Start:** genvejen **GODKEND - Genesis Ark session 8** (starter Godot 4.7.2 med projektet).
+
+**Nye taster:** `C` / pad Y = dragtscanner (på overfladen) · `F` = manuel styring under nedstigningen · `Enter` = spring nedstigning/opvågning over · `V` = cockpit/jagtkamera i indflyvningen · `G` = dronereserve.
+
+**Lokale filer, der ikke ligger på GitHub** (genskab på en ny maskine):
+- Synty-pakker: som før (afsnittet nedenfor).
+- Dyreliv (Poly Perfect): `python3 tools/polyperfect/stage.py`, så `godot --headless --path . --import` og `godot --headless --path . --script res://tools/synty/bake_alien_clips.gd`.
+- Meshy-modeller i `assets/imported/meshy/` (kvitteringer i `../meshy_work/receipts/`; hentes igen med `meshy.py fetch` / `meshy_i23d.py fetch`).
+- Lyd og stemmer (ElevenLabs): `python3 tools/audio/eleven_sfx.py`, `eleven_music.py`, `eleven_vo.py` (læser nøglen fra REALMREND-.env).
+- Dine plugins i `addons/` (installeret korrekt, ikke i brug endnu).
+Uden filerne kører spillet stadig – med proxies, uden dyr/heltemotiver/lyd.
+
+**Trailer:** `godot --path . --resolution 1920x1080 --write-movie <sti>.avi --fixed-fps 30 res://tools/trailer/trailer.tscn` (ffmpeg via `pip install imageio-ffmpeg` til mp4).
+
+## 0a. Status efter session 7 (24. oktober 2026)
 
 Spillet kører nu på **din maskine** med **Godot 4.7.2** og **Synty-grafik overalt**: skib, seks unikke planeter, koloni, figurer og animationer. Alt er testet her (81 domænetests, 56 scenetests, 24/24 hele kampagner, Windows-build startet). Overblik med billeder: handover-artefaktet "Genesis Ark Overdragelse". Detaljer: `docs/STATUS.md` (session 7) og `docs/DECISIONS.md` D-033 til D-042.
 
