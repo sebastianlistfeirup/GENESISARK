@@ -345,9 +345,13 @@ func _build_far_ring(mat: Material, ground: Color, patch: Color, cliff: Color, f
 				var fn := (vs[2] - vs[0]).cross(vs[1] - vs[0]).normalized()
 				var slope := 1.0 - fn.y
 				var c := ground.lerp(patch, clampf(detail.get_noise_2d(vs[0].x * 0.08, vs[0].z * 0.08) * 0.5 + 0.5, 0, 1)).lerp(cliff, smoothstep(0.1, 0.35, slope))
-				if maxf(absf(vs[0].x), absf(vs[0].z)) > size_m * 0.5:  # far land: broad regions of darker and lighter ground
+				# Same light speckle as the playable ground, so the two meet without a seam.
+				c = c.lerp(c.lightened(0.12), clampf(detail.get_noise_2d(vs[0].x, vs[0].z) * 0.5 + 0.5, 0, 1) * 0.35)
+				var far_k := smoothstep(size_m * 0.5, size_m * 0.5 + 160.0, maxf(absf(vs[0].x), absf(vs[0].z)))
+				if far_k > 0.0:  # far land: broad regions of darker and lighter ground, faded in past the map edge
 					var reg := noise.get_noise_2d(vs[0].x * 0.0022 + 90.0, vs[0].z * 0.0022)
-					c = c.lerp(c.darkened(0.38), smoothstep(-0.05, 0.4, reg)).lerp(patch.lightened(0.12), smoothstep(-0.2, -0.5, reg))
+					var rc := c.lerp(c.darkened(0.38), smoothstep(-0.05, 0.4, reg)).lerp(patch.lightened(0.12), smoothstep(-0.2, -0.5, reg))
+					c = c.lerp(rc, far_k)
 				if biome_id == "ice" and vs[0].y > height_scale * 0.6:
 					c = c.lerp(Color.WHITE, 0.6)
 				st.set_color(c)
