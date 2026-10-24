@@ -1,0 +1,56 @@
+{
+ "_note": "D-040 animation pass. Merged by tools/synty/build_wrappers.gd over the 'animations' section of synty_choices.json (per slot: states here replace/add states there; null removes one). A state is a clip path or {source, upper?, lower_bones?, loop?}: 'upper' layers that clip's upper body over the source's legs/hips (AnimationLibraryBuilder.layer). Gaits are picked by measured speed (data/art/animation_map.json, evidence/animation_pass/measurements.json).",
+ "animations": {
+  "char.captain": {
+   "states": {
+    "idle": "res://assets/Synty/Animations/A_POLY_IDL_Base_Masc.fbx",
+    "walk_slow": "res://assets/Synty/Animations/A_Walk_F_Masc.fbx",
+    "walk_mid": "res://assets/Synty/Animations/A_Run_F_Masc.fbx",
+    "walk": {"source": "res://assets/Synty/Animations/A_Run_F_Masc.fbx", "blend_with": "res://assets/imported/anim_pass/A_Sprint_F_Masc.fbx", "weight": 0.53},
+    "run": "res://assets/imported/anim_pass/A_Sprint_F_Masc.fbx",
+    "stop_walk_slow_l": "res://assets/imported/anim_pass/A_Walk_ToIdleF_LFoot_Masc.fbx",
+    "stop_walk_slow_r": "res://assets/imported/anim_pass/A_Walk_ToIdleF_RFoot_Masc.fbx",
+    "stop_walk_l": "res://assets/imported/anim_pass/A_Run_ToIdleF_LFoot_Masc.fbx",
+    "stop_walk_r": "res://assets/imported/anim_pass/A_Run_ToIdleF_RFoot_Masc.fbx",
+    "stop_run_l": "res://assets/imported/anim_pass/A_Run_ToIdleF_LFoot_Masc.fbx",
+    "stop_run_r": "res://assets/imported/anim_pass/A_Run_ToIdleF_RFoot_Masc.fbx",
+    "turn_l": "res://assets/imported/anim_pass/A_Turn_Standing_90L_Masc.fbx",
+    "turn_r": "res://assets/imported/anim_pass/A_Turn_Standing_90R_Masc.fbx",
+    "interact": "res://assets/imported/anim_pass/A_POLY_IDL_PointHand_Index_F_Small_Masc.fbx",
+    "sample": {"source": "res://assets/imported/anim_pass/A_POLY_IDL_Pray_Kneeling_Loop_Masc.fbx", "upper": "res://assets/imported/anim_pass/A_POLY_IDL_UsePhone_TwoHands_Typing_Masc.fbx", "loop": true},
+    "build": "res://assets/imported/anim_pass/A_POLY_IDL_UsePhone_TwoHands_Typing_Masc.fbx",
+    "idle_alt_look_l": "res://assets/imported/anim_pass/A_POLY_IDL_Look_L_Masc.fbx",
+    "idle_alt_look_r": "res://assets/imported/anim_pass/A_POLY_IDL_Look_R_Masc.fbx",
+    "idle_alt_watch": "res://assets/Synty/Animations/A_POLY_IDL_CheckWatch_Masc.fbx",
+    "idle_alt_shift": "res://assets/imported/anim_pass/A_POLY_IDL_WeightShift_L_Masc.fbx"
+   }
+  },
+  "char.citizen_adult": {
+   "states": {
+    "stop_walk_l": "res://assets/imported/anim_pass/A_Walk_ToIdleF_LFoot_Masc.fbx",
+    "stop_walk_r": "res://assets/imported/anim_pass/A_Walk_ToIdleF_RFoot_Masc.fbx",
+    "build": "res://assets/imported/anim_pass/A_POLY_IDL_UsePhone_TwoHands_Typing_Masc.fbx",
+    "sample": {"source": "res://assets/imported/anim_pass/A_POLY_IDL_Pray_Kneeling_Loop_Masc.fbx", "upper": "res://assets/imported/anim_pass/A_POLY_IDL_UsePhone_TwoHands_Typing_Masc.fbx", "loop": true},
+    "idle_alt_look_l": "res://assets/imported/anim_pass/A_POLY_IDL_Look_L_Masc.fbx",
+    "idle_alt_look_r": "res://assets/imported/anim_pass/A_POLY_IDL_Look_R_Masc.fbx",
+    "idle_alt_watch": "res://assets/Synty/Animations/A_POLY_IDL_CheckWatch_Masc.fbx",
+    "idle_alt_shift_l": "res://assets/imported/anim_pass/A_POLY_IDL_WeightShift_L_Masc.fbx",
+    "idle_alt_shift_r": "res://assets/imported/anim_pass/A_POLY_IDL_WeightShift_R_Masc.fbx",
+    "idle_alt_stretch": "res://assets/imported/anim_pass/A_POLY_IDL_Stretch_Arms_Masc.fbx",
+    "idle_alt_yawn": "res://assets/imported/anim_pass/A_POLY_IDL_Yawn_Masc.fbx",
+    "idle_alt_think": "res://assets/imported/anim_pass/A_POLY_IDL_Thoughtful_R_ChinScratch_Masc.fbx"
+   }
+  },
+  "char.citizen_child": {
+   "states": {
+    "stop_walk_l": "res://assets/imported/anim_pass/A_Walk_ToIdleF_LFoot_Masc.fbx",
+    "stop_walk_r": "res://assets/imported/anim_pass/A_Walk_ToIdleF_RFoot_Masc.fbx",
+    "idle_alt_look_l": "res://assets/imported/anim_pass/A_POLY_IDL_Look_L_Masc.fbx",
+    "idle_alt_look_r": "res://assets/imported/anim_pass/A_POLY_IDL_Look_R_Masc.fbx",
+    "idle_alt_shift_l": "res://assets/imported/anim_pass/A_POLY_IDL_WeightShift_L_Masc.fbx",
+    "idle_alt_shift_r": "res://assets/imported/anim_pass/A_POLY_IDL_WeightShift_R_Masc.fbx",
+    "idle_alt_stretch": "res://assets/imported/anim_pass/A_POLY_IDL_Stretch_Arms_Masc.fbx"
+   }
+  }
+ }
+}
