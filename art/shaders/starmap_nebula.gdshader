@@ -17,6 +17,7 @@ uniform float veil_strength = 0.85;
 uniform float drift = 0.004;            // parallax speed (0 with reduced motion)
 uniform float grid = 0.22;              // grid line strength
 uniform float seed = 3.0;
+uniform vec2 parallax = vec2(0.0);      // D-055: pointer parallax, layers move by depth
 
 float hash(vec2 p) { vec3 p3 = fract(vec3(p.xyx + seed * 0.37) * 0.1031); p3 += dot(p3, p3.yzx + 33.33); return fract((p3.x + p3.y) * p3.z); }
 float noise(vec2 x) {
@@ -40,7 +41,8 @@ vec3 stars(vec2 p, float cells, float density, float size, float bright) {
 }
 
 void fragment() {
-	vec2 p = (UV - 0.5) * aspect;
+	vec2 p0 = (UV - 0.5) * aspect;
+	vec2 p = p0 + parallax * 0.35;  // the gas sits far back
 	float t = TIME * drift;
 	vec2 q = p * 2.2 + vec2(seed * 0.31, seed * 0.17) + vec2(t * 0.3, 0.0);
 	float w1 = fbm(q);
@@ -60,10 +62,11 @@ void fragment() {
 	// dust lanes
 	col *= mix(1.0, 0.45, smoothstep(0.55, 0.78, fbm(p * 5.0 + 23.0 + w1)));
 	// stars, each layer drifting at its own speed
-	col += stars(p + vec2(t * 0.2, 0.0), 160.0, 0.05 + 0.06 * banks, 0.22, 0.7);
-	col += stars(p + vec2(t * 0.5, 0.0), 60.0, 0.05, 0.12, 1.6);
-	col += stars(p + vec2(t * 1.0, 0.0), 22.0, 0.04, 0.07, 3.0);
-	// navigation grid: rings and spokes around the centre, fading outwards
+	col += stars(p0 + parallax * 0.5 + vec2(t * 0.2, 0.0), 160.0, 0.05 + 0.06 * banks, 0.22, 0.7);
+	col += stars(p0 + parallax * 1.0 + vec2(t * 0.5, 0.0), 60.0, 0.05, 0.12, 1.6);
+	col += stars(p0 + parallax * 1.8 + vec2(t * 1.0, 0.0), 22.0, 0.04, 0.07, 3.0);
+	// navigation grid: rings and spokes around the centre, fading outwards (fixed to the map)
+	p = p0;
 	float r = length(p);
 	float ring = smoothstep(0.0035, 0.0, abs(fract(r * 6.0 + 0.5) - 0.5) / 6.0);
 	float ang = atan(p.y, p.x) / 6.2831853 * 12.0;

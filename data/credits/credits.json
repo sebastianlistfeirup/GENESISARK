@@ -61,6 +61,11 @@
           "role": "Quantico typeface (SIL Open Font License)",
           "name": "Matthew Desmond",
           "status": "in_use"
+        },
+        {
+          "role": "Zen Dots typeface (SIL Open Font License)",
+          "name": "The Dots Project Authors",
+          "status": "in_use"
         }
       ]
     },

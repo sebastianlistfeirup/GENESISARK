@@ -67,6 +67,49 @@
     "marker.ring": "SoldierHUD/Source_Sprites/Sprites/HUD/SPR_HUD_SciFi_DialHex_Med_Clean.png",
     "marker.arrow": "SoldierHUD/Source_Sprites/Sprites/HUD/SPR_HUD_SciFi_Arrow_Clean.png",
 
-    "key.cap": "SciFiMenus/SourceFiles/Core/Icons_Input/MouseKeyboard/ICON_Input_PC_Button_Clean.png"
+    "stat.gravity": "SciFiMenus/SourceFiles/Sprites/Icons_Menu/ICON_SciFiMenus_Menu_ArrowDown_02_Clean.png",
+    "stat.temperature_hot": "SoldierHUD/Source_Sprites/Sprites/Icons_Map/ICON_SciFi_Map_Star.png",
+    "stat.temperature_cold": "SoldierHUD/Source_Sprites/Sprites/Icons_Status/ICON_SciFi_Status_Cold.png",
+    "stat.atmosphere": "SoldierHUD/Source_Sprites/Sprites/Icons_Status/ICON_SciFi_Status_Oxygen01.png",
+    "stat.water": "SoldierHUD/Source_Sprites/Sprites/Icons_Status/ICON_SciFi_Status_Bleeding.png",
+    "stat.minerals": "SoldierHUD/Source_Sprites/Sprites/Icons_Inventory/ICON_SciFi_Inventory_Minerals.png",
+    "stat.solar": "SoldierHUD/Source_Sprites/Sprites/Icons_Map/ICON_SciFi_Map_Lightning.png",
+    "stat.geothermal": "SoldierHUD/Source_Sprites/Sprites/Icons_Map/ICON_SciFi_Map_Fire.png",
+    "stat.biohazard": "SoldierHUD/Source_Sprites/Sprites/Icons_Map/ICON_SciFi_Map_Biohazard.png",
+
+    "ui.icon_probe": "SoldierHUD/Source_Sprites/Sprites/Icons_Inventory/ICON_SciFi_Inventory_Science.png",
+    "ui.icon_target": "SoldierHUD/Source_Sprites/Sprites/Icons_Map/ICON_SciFi_Map_Target.png",
+    "ui.icon_unknown": "SoldierHUD/Source_Sprites/Sprites/Icons_Map/ICON_SciFi_Map_Unknown.png",
+    "ui.icon_hull": "SoldierHUD/Source_Sprites/Sprites/Icons_Status/ICON_SciFi_Status_Armor.png",
+    "ui.icon_fuel_pump": "SoldierHUD/Source_Sprites/Sprites/Icons_Map/ICON_SciFi_Map_Fuel.png",
+    "ui.icon_plus": "SoldierHUD/Source_Sprites/Sprites/Icons_Status/ICON_SciFi_Status_Health02.png",
+    "ui.icon_flag": "SoldierHUD/Source_Sprites/Sprites/Icons_Map/ICON_SciFi_Map_Flag.png",
+    "ui.icon_skull": "SoldierHUD/Source_Sprites/Sprites/Icons_Map/ICON_SciFi_Map_Skull.png",
+    "ui.icon_flat": "SciFiMenus/SourceFiles/Sprites/Icons_Menu/ICON_SciFiMenus_Menu_Settings_02_Clean.png",
+    "ui.icon_shelter": "SoldierHUD/Source_Sprites/Sprites/Icons_Status/ICON_SciFi_Status_Armor.png",
+    "ui.icon_wind": "SoldierHUD/Source_Sprites/Sprites/Icons_Status/ICON_SciFi_Status_Radiation.png",
+    "ui.icon_lander": "SciFiMenus/SourceFiles/Sprites/Icons_Menu/ICON_SciFiMenus_Menu_ArrowDown_01_Clean.png",
+    "ui.icon_expedition": "SoldierHUD/Source_Sprites/Sprites/Icons_Inventory/ICON_SciFi_Inventory_Backpack.png",
+    "ui.icon_cooling": "SoldierHUD/Source_Sprites/Sprites/Icons_Status/ICON_SciFi_Status_Cold.png",
+    "ui.icon_heart": "SoldierHUD/Source_Sprites/Sprites/Icons_Status/ICON_SciFi_Status_Health01.png",
+
+    "biome.green": "SoldierHUD/Source_Sprites/Sprites/Icons_Inventory/ICON_SciFi_Inventory_Herbs.png",
+    "biome.desert": "SoldierHUD/Source_Sprites/Sprites/Icons_Map/ICON_SciFi_Map_Star.png",
+    "biome.ice": "SoldierHUD/Source_Sprites/Sprites/Icons_Status/ICON_SciFi_Status_Cold.png",
+    "hazard.heat": "SoldierHUD/Source_Sprites/Sprites/Icons_Map/ICON_SciFi_Map_Fire.png",
+    "hazard.cold": "SoldierHUD/Source_Sprites/Sprites/Icons_Status/ICON_SciFi_Status_Cold.png",
+    "hazard.storms": "SoldierHUD/Source_Sprites/Sprites/Icons_Map/ICON_SciFi_Map_Lightning.png",
+    "hazard.dust": "SoldierHUD/Source_Sprites/Sprites/Icons_Status/ICON_SciFi_Status_Radiation.png",
+    "hazard.spores": "SoldierHUD/Source_Sprites/Sprites/Icons_Map/ICON_SciFi_Map_Biohazard.png",
+    "hazard.long_night": "SciFiMenus/SourceFiles/Sprites/Icons_Menu/ICON_SciFiMenus_Menu_Planet_02_Clean.png",
+
+    "prop.embryo_tube": "SoldierHUD/Source_Sprites/Sprites/Icons_Resources/ICON_SM_Prop_Test_Tube_01_SciFiSpace.png",
+    "prop.battery": "SoldierHUD/Source_Sprites/Sprites/Icons_Resources/ICON_SM_Prop_Battery_01_SciFiSpace.png",
+    "prop.fuel_cell": "SoldierHUD/Source_Sprites/Sprites/Icons_Resources/ICON_SM_Prop_Fuel_Cell_01_SciFiWorlds.png",
+    "prop.oxygen": "SoldierHUD/Source_Sprites/Sprites/Icons_Resources/ICON_SM_Prop_Oxygen_Tank_Large_SciFiSpace.png",
+    "prop.robot_arm": "SoldierHUD/Source_Sprites/Sprites/Icons_Resources/ICON_SM_Prop_Robotic_Part_04_SciFiCity.png",
+    "prop.drone": "SoldierHUD/Source_Sprites/Sprites/Icons_Resources/ICON_SM_Prop_Drone_02_SciFiWorlds.png",
+
+    "key.cap":"SciFiMenus/SourceFiles/Core/Icons_Input/MouseKeyboard/ICON_Input_PC_Button_Clean.png"
   }
 }
