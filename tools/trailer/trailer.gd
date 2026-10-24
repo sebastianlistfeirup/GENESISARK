@@ -8,20 +8,20 @@ extends Node
 const SHOTS := [
 	# [setup, scene, action, seconds, caption, hide_hud, drift_deg_per_s]
 	["fresh", "menu", "", 7.0, "", false, 0.0],
-	["fresh", "ship", "", 9.0, "50,000 embryos. One last human.", true, 0.0],
+	["fresh", "ship", "", 9.0, "50,000 embryos. One last human.", false, 0.0],
 	["power", "ship", "roomcam_E", 5.0, "", true, 1.5],
 	["power", "ship", "roomcam_B", 5.0, "", true, 1.5],
 	["power", "ship", "starmap", 7.0, "Six possible worlds", false, 0.0],
 	["orbit:sere", "ship", "orbit", 5.0, "", false, 0.0],
 	["orbit:viridia", "flight", "", 8.0, "", true, 0.0],
-	["expedition:viridia", "surface", "descent:2600", 31.0, "Land anywhere. In real time.", true, 0.0],
+	["expedition:viridia", "surface", "descent:2600", 31.0, "Land anywhere. In real time.", false, 0.0],
 	["expedition:viridia", "surface", "vista:200", 7.0, "VIRIDIA", true, 3.0],
 	["expedition:pelagos", "surface", "leviathan", 9.0, "PELAGOS", true, 1.0],
 	["expedition:umbra", "surface", "vista:45", 7.0, "UMBRA", true, 3.0],
 	["expedition:sere", "surface", "vista:135", 7.0, "SERE", true, 3.0],
 	["expedition:nivalis", "surface", "vista:45", 6.0, "NIVALIS", true, 3.0],
 	["expedition:ferrum", "surface", "vista:225", 6.0, "FERRUM", true, 3.0],
-	["expedition:viridia", "surface", "ascent", 11.0, "", true, 0.0],
+	["expedition:viridia", "surface", "ascent", 11.0, "", false, 0.0],
 	["era:ferrum:20", "colony", "zoomout", 8.0, "Build a civilisation", true, 4.0],
 	["grown:viridia", "colony", "living", 6.0, "", true, 2.0],
 	["era:viridia:40", "ending", "", 8.0, "", false, 0.0],
@@ -88,6 +88,8 @@ func _wait(seconds: float) -> void:
 func _run() -> void:
 	for shot: Array in SHOTS:
 		DebugFixtures.prepare(str(shot[0]))
+		if str(shot[0]) != "fresh" and GameSession.has_game():
+			GameSession.state.mark_applied("story:intro_wakeup")  # the wake-up plays only in the opening shot
 		var act := str(shot[2])
 		var params := {"action": act} if act.begins_with("descent") else {"no_intro": true}
 		AppFlow.goto(str(shot[1]), params)
@@ -103,9 +105,10 @@ func _run() -> void:
 		if not act.is_empty() and not act.begins_with("descent") and sc and sc.has_method("debug_action"):
 			sc.call("debug_action", act)
 		if bool(shot[5]) and sc:
-			var hud: Variant = sc.get("hud")
-			if hud is CanvasLayer:
-				(hud as CanvasLayer).visible = false
+			# Every UI layer of the scene (HUD, dialogs, waypoints), not just the HUD.
+			for n: Node in sc.find_children("*", "CanvasLayer", true, false):
+				(n as CanvasLayer).visible = false
+			GameSession.colony_clock_active = false  # no event popping up mid-shot
 		_show_caption(str(shot[4]))
 		var t := 0.0
 		var dur := float(shot[3])
