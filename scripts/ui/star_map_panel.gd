@@ -10,6 +10,8 @@ var tabs: TabContainer
 var map_view: StarMapView
 var detail: VBoxContainer
 var compare_box: VBoxContainer
+var preview: PlanetDiorama  # the selected world, live
+var _preview_frame: Control
 var _pending_txn := ""
 var _confirming := false
 
@@ -33,13 +35,22 @@ func refresh() -> void:
 		_confirming = false
 		_show_detail(loc))
 	map_tab.add_child(map_view)
+	# Right column: the selected world live (D-046), its facts scrolling below.
+	var right := UiKit.vbox(8)
+	right.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	preview = PlanetDiorama.make(map_view.selected if not map_view.selected.is_empty() else "viridia", "preview", Vector2i(580, 190))
+	_preview_frame = PlanetDiorama.framed(preview, "")
+	_preview_frame.visible = not map_view.selected.is_empty()
+	right.add_child(_preview_frame)
 	var scroll := ScrollContainer.new()
-	scroll.custom_minimum_size = Vector2(640, 600)
+	scroll.custom_minimum_size = Vector2(580, 400)
+	scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
 	detail = UiKit.vbox(8)
 	detail.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	scroll.add_child(detail)
-	map_tab.add_child(scroll)
+	right.add_child(scroll)
+	map_tab.add_child(right)
 	tabs.add_child(map_tab)
 	var cmp_scroll := ScrollContainer.new()
 	cmp_scroll.name = Loc.t("Comparison")
@@ -61,6 +72,9 @@ func _show_detail(loc: String) -> void:
 	var gs: GameState = GameSession.state
 	var pid := str(content.locations.get(loc, {}).get("planet_id", ""))
 	var p := content.planet(pid)
+	if preview != null and not pid.is_empty():
+		preview.set_planet(pid)
+		_preview_frame.visible = true
 	detail.add_child(UiKit.heading(str(p.get("name", loc))))
 	detail.add_child(UiKit.label(str(p.get("description", "")), 16, UiKit.MUTED, true))
 	detail.add_child(UiKit.rich(Loc.t("[color=#5fae6e]+[/color] %s\n[color=#e8a33d]−[/color] %s") % [p.get("advantage", ""), p.get("price", "")]))

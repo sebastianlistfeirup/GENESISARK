@@ -1,5 +1,5 @@
 {
- "_note": "Planet looks in space after the POLYGON Sci-Fi Space planet sheet (D-044). PlanetLook.apply reads this per planet id; the masks are the pack's own planet textures (local, gitignored). Missing textures = the procedural planet.gdshader fallback. mesh = optional faceted Synty planet model (normalised to the slot sphere); ring = PolygonScifi_PlanteRings_01 on a flat ring.",
+ "_note": "Planet looks in space after the POLYGON Sci-Fi Space planet sheet (D-044, D-046). PlanetLook.apply reads this per planet id; the masks and models are the pack's own planet textures and FBX files (local, gitignored). Missing textures = the procedural planet.gdshader fallback; missing model = a smooth sphere. mesh = faceted Synty planet model normalised to the slot sphere (tilt in degrees leans its bands); halo = atmosphere shell strength (halo_color, default atmo); moons = [{look (moon_looks), size (planet radii), pos (planet radii from the centre), mesh, tilt}]; ring = PolygonScifi_PlanteRings_01 on a flat ring.",
  "textures": {
   "land": "res://assets/Synty/SciFiSpace/Textures/Planet_Land_Mask_01.png",
   "cloud": "res://assets/Synty/SciFiSpace/Textures/Planet_Cloud_Mask_01.png",
@@ -19,7 +19,25 @@
    "sea_shift": 0.0,
    "bands": 0.0,
    "clouds": 0.45,
-   "rim": 1.3
+   "rim": 1.3,
+   "mesh": "res://assets/Synty/SciFiSpace/FBX/SM_Env_Planet_05.fbx",
+   "tilt": [
+    14,
+    30,
+    -10
+   ],
+   "halo": 1.1,
+   "moons": [
+    {
+     "look": "grey",
+     "size": 0.2,
+     "pos": [
+      1.7,
+      0.55,
+      -0.5
+     ]
+    }
+   ]
   },
   "pelagos": {
    "ocean": "#1cb0b0",
@@ -34,7 +52,34 @@
    "bands": 0.35,
    "band_scale": 1.2,
    "clouds": 0.55,
-   "rim": 1.4
+   "rim": 1.4,
+   "mesh": "res://assets/Synty/SciFiSpace/FBX/SM_Env_Planet_07.fbx",
+   "tilt": [
+    -10,
+    60,
+    8
+   ],
+   "halo": 1.2,
+   "moons": [
+    {
+     "look": "ice",
+     "size": 0.16,
+     "pos": [
+      -1.65,
+      0.7,
+      -0.4
+     ]
+    },
+    {
+     "look": "ochre",
+     "size": 0.1,
+     "pos": [
+      1.55,
+      -0.35,
+      0.6
+     ]
+    }
+   ]
   },
   "ferrum": {
    "band_a": "#ec8a52",
@@ -46,8 +91,26 @@
    "band_wobble": 0.08,
    "clouds": 0.0,
    "rim": 1.0,
-   "craters": 1.0,
-   "crater_scale": 4.0
+   "craters": 0.45,
+   "crater_scale": 4.0,
+   "mesh": "res://assets/Synty/SciFiSpace/FBX/SM_Env_Planet_02.fbx",
+   "tilt": [
+    8,
+    0,
+    16
+   ],
+   "halo": 0.8,
+   "moons": [
+    {
+     "look": "rust",
+     "size": 0.14,
+     "pos": [
+      1.6,
+      0.5,
+      0.3
+     ]
+    }
+   ]
   },
   "sere": {
    "band_a": "#f6d29a",
@@ -68,12 +131,30 @@
      0,
      12
     ]
-   }
+   },
+   "mesh": "res://assets/Synty/SciFiSpace/FBX/SM_Env_Planet_03.fbx",
+   "tilt": [
+    0,
+    0,
+    0
+   ],
+   "halo": 0.9,
+   "moons": [
+    {
+     "look": "grey",
+     "size": 0.13,
+     "pos": [
+      -1.9,
+      0.8,
+      -0.3
+     ]
+    }
+   ]
   },
   "nivalis": {
-   "ocean": "#8aaed6",
-   "land": "#cbd8ea",
-   "land2": "#bccbe2",
+   "ocean": "#6f9ad0",
+   "land": "#aec6e6",
+   "land2": "#c4d2ea",
    "band_a": "#d0cce0",
    "band_b": "#98acc8",
    "atmo": "#bfe6ff",
@@ -87,7 +168,25 @@
    "clouds": 0.2,
    "rim": 0.9,
    "vein": "#6fe0ff",
-   "vein_amount": 0.22
+   "vein_amount": 0.22,
+   "mesh": "res://assets/Synty/SciFiSpace/FBX/SM_Env_Planet_08.fbx",
+   "tilt": [
+    20,
+    10,
+    -6
+   ],
+   "halo": 1.0,
+   "moons": [
+    {
+     "look": "ice",
+     "size": 0.15,
+     "pos": [
+      1.75,
+      0.6,
+      -0.2
+     ]
+    }
+   ]
   },
   "umbra": {
    "ocean": "#1a1c3a",
@@ -100,10 +199,28 @@
    "land_scale": 1.3,
    "bands": 0.3,
    "clouds": 0.0,
-   "rim": 1.6,
+   "rim": 1.2,
    "soft": 0.2,
    "vein": "#b46cff",
-   "vein_amount": 1.0
+   "vein_amount": 0.6,
+   "mesh": "res://assets/Synty/SciFiSpace/FBX/SM_Env_Planet_01.fbx",
+   "tilt": [
+    -12,
+    40,
+    10
+   ],
+   "halo": 1.3,
+   "moons": [
+    {
+     "look": "violet",
+     "size": 0.18,
+     "pos": [
+      -1.7,
+      0.6,
+      -0.3
+     ]
+    }
+   ]
   }
  },
  "gas_giants": {
@@ -112,21 +229,145 @@
    "band_b": "#3f6f96",
    "atmo": "#8fd0ff",
    "ring": "#d6e8ee",
-   "ring_band": "#5d7484"
+   "ring_band": "#5d7484",
+   "mesh": "res://assets/Synty/SciFiSpace/FBX/SM_Env_Planet_04.fbx"
   },
   "ice": {
    "band_a": "#f8b070",
    "band_b": "#c25a34",
    "atmo": "#ffb27a",
    "ring": "#ecd4b0",
-   "ring_band": "#8a6a52"
+   "ring_band": "#8a6a52",
+   "mesh": "res://assets/Synty/SciFiSpace/FBX/SM_Env_Planet_04.fbx"
   },
   "green": {
    "band_a": "#e6b0f0",
    "band_b": "#8a54b0",
    "atmo": "#d0a0ff",
    "ring": "#eadcf2",
-   "ring_band": "#76608a"
+   "ring_band": "#76608a",
+   "mesh": "res://assets/Synty/SciFiSpace/FBX/SM_Env_Planet_04.fbx"
   }
+ },
+ "moon_looks": {
+  "grey": {
+   "mesh": "res://assets/Synty/SciFiSpace/FBX/SM_Env_Planet_10.fbx",
+   "band_a": "#d8d0e2",
+   "band_b": "#a094b4",
+   "atmo": "#d8d0ff",
+   "bands": 0.6,
+   "band_scale": 1.4,
+   "craters": 0.6,
+   "crater_scale": 4.0,
+   "rim": 0.7
+  },
+  "ice": {
+   "mesh": "res://assets/Synty/SciFiSpace/FBX/SM_Env_Planet_12.fbx",
+   "band_a": "#eef6ff",
+   "band_b": "#b0c8e4",
+   "atmo": "#cfeaff",
+   "bands": 0.5,
+   "band_scale": 2.0,
+   "rim": 0.9
+  },
+  "ochre": {
+   "mesh": "res://assets/Synty/SciFiSpace/FBX/SM_Env_Planet_13.fbx",
+   "band_a": "#f4cc94",
+   "band_b": "#c48250",
+   "atmo": "#ffd0a0",
+   "bands": 0.8,
+   "band_scale": 1.6,
+   "craters": 0.4,
+   "rim": 0.6
+  },
+  "rust": {
+   "mesh": "res://assets/Synty/SciFiSpace/FBX/SM_Env_Planet_13.fbx",
+   "band_a": "#dc8a5e",
+   "band_b": "#8a3c2a",
+   "atmo": "#ffa070",
+   "bands": 0.8,
+   "band_scale": 1.8,
+   "craters": 0.7,
+   "crater_scale": 3.0,
+   "rim": 0.6
+  },
+  "violet": {
+   "mesh": "res://assets/Synty/SciFiSpace/FBX/SM_Env_Planet_11.fbx",
+   "band_a": "#5c4a94",
+   "band_b": "#2a2250",
+   "atmo": "#b080ff",
+   "bands": 0.5,
+   "vein": "#c690ff",
+   "vein_amount": 0.0,
+   "rim": 1.6,
+   "halo": 0.0
+  }
+ },
+ "orbit_view": {
+  "_note": "PlanetDiorama \"orbit\" mode (orbital terminal, D-046): the Ark on a tilted orbit (radius in planet radii, scale of the 36 m carrier), satellites and traffic circling the world. phase/tilt in degrees, speed in rad/s (still with reduced motion).",
+  "ark_radius": 1.6,
+  "ark_scale": 1.2,
+  "ark_tilt": -8,
+  "ark_phase": 250,
+  "ark_speed": 0.03,
+  "satellites": [
+   {
+    "mesh": "res://assets/Synty/SciFiSpace/FBX/SM_Ship_Station_01.fbx",
+    "size": 16,
+    "radius": 1.8,
+    "tilt": 8,
+    "phase": 130,
+    "speed": 0.015,
+    "yaw": 30,
+    "light": "#5fe8ff"
+   },
+   {
+    "mesh": "res://assets/Synty/SciFiSpace/FBX/SM_Veh_Beacon_01.fbx",
+    "size": 3.2,
+    "radius": 1.22,
+    "tilt": -22,
+    "phase": 160,
+    "speed": 0.06,
+    "light": "#ff5a7a"
+   },
+   {
+    "mesh": "res://assets/Synty/SciFiSpace/FBX/SM_Veh_Beacon_01.fbx",
+    "size": 3.0,
+    "radius": 1.28,
+    "tilt": 36,
+    "phase": 245,
+    "speed": 0.05,
+    "light": "#ffb347"
+   },
+   {
+    "mesh": "res://assets/Synty/SciFiSpace/FBX/SM_Veh_Drone_Repair_01.fbx",
+    "size": 2.2,
+    "radius": 1.5,
+    "tilt": 14,
+    "phase": 207,
+    "speed": 0.03,
+    "light": "#5fe8ff"
+   }
+  ],
+  "traffic": [
+   {
+    "mesh": "res://assets/Synty/SciFiSpace/FBX/SM_Ship_Transport_01.fbx",
+    "size": 7,
+    "radius": 1.95,
+    "tilt": -6,
+    "phase": 228,
+    "speed": 0.05,
+    "trail": "#ffb347"
+   },
+   {
+    "mesh": "res://assets/Synty/SciFiSpace/FBX/SM_Ship_Fighter_02.fbx",
+    "size": 3.5,
+    "radius": 1.6,
+    "tilt": 24,
+    "phase": 175,
+    "speed": 0.09,
+    "trail": "#ff5ad0"
+   }
+  ]
  }
 }

@@ -1,8 +1,10 @@
 shader_type spatial;
-render_mode unshaded, cull_disabled, depth_draw_never, blend_mix;
+render_mode cull_disabled, depth_draw_never, blend_mix, shadows_disabled;
 // Planetary ring on a flat quad: concentric bands with gaps, fading at the
 // inner and outer edge. Own art; with use_tex the bands come from the POLYGON
 // Sci-Fi Space ring texture (local pack, D-044: u = angle, v = radius).
+// D-046: lit (soft wrap) instead of unshaded, so the ring dims on the night
+// side and no longer glows flat white in front of the planet.
 uniform vec3 ring_color : source_color = vec3(0.9, 0.78, 0.62);
 uniform vec3 band_color : source_color = vec3(0.62, 0.48, 0.4);
 uniform float inner = 0.42;
@@ -31,5 +33,14 @@ void fragment() {
 	}
 	vec3 col = mix(band_color, ring_color, bands);
 	ALBEDO = col;
+	ROUGHNESS = 1.0;
+	SPECULAR = 0.0;
+	EMISSION = col * 0.06;
 	ALPHA = clamp(edge * (0.35 + 0.65 * bands) * (1.0 - gap * 0.85) * opacity, 0.0, 1.0);
+}
+
+void light() {
+	// Both faces lit alike: a thin ring scatters light through itself.
+	float nl = abs(dot(NORMAL, LIGHT));
+	DIFFUSE_LIGHT += LIGHT_COLOR * ATTENUATION * (0.35 + 0.65 * nl) / 3.14159265 * 1.3;
 }

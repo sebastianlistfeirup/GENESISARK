@@ -3,46 +3,6 @@ extends Node3D
 ## against the star field and a faint nebula. With "reduced motion" the camera,
 ## ark and UI stay still and nothing fades (D-035).
 
-const ATMO_SHADER := """
-shader_type spatial;
-render_mode unshaded, blend_add, depth_draw_never, shadows_disabled;
-uniform vec4 rim_color : source_color = vec4(0.45, 0.85, 0.9, 1.0);
-uniform float rim_power = 3.0;
-uniform float rim_strength = 1.6;
-uniform vec3 sun_dir = vec3(-0.8, 0.3, 0.5);
-void fragment() {
-	vec3 n_world = normalize((INV_VIEW_MATRIX * vec4(NORMAL, 0.0)).xyz);
-	float lit = 0.08 + 0.92 * smoothstep(-0.35, 0.6, dot(n_world, normalize(sun_dir)));
-	// Front faces of a shell slightly larger than the planet: glow builds
-	// towards the limb and fades out again at the shell's own edge.
-	float d = abs(dot(normalize(NORMAL), normalize(VIEW)));
-	float rim = pow(1.0 - d, rim_power) * smoothstep(0.0, 0.25, d);
-	ALBEDO = rim_color.rgb * rim * rim_strength * lit;
-}
-"""
-
-const NEBULA_SHADER := """
-shader_type spatial;
-render_mode unshaded, cull_front, depth_draw_never, fog_disabled;
-uniform vec4 tint_a : source_color = vec4(0.06, 0.22, 0.26, 1.0);
-uniform vec4 tint_b : source_color = vec4(0.30, 0.16, 0.06, 1.0);
-float hash(vec3 p) { p = fract(p * 0.3183099 + 0.1); p *= 17.0; return fract(p.x * p.y * p.z * (p.x + p.y + p.z)); }
-float noise(vec3 p) {
-	vec3 i = floor(p); vec3 f = fract(p); f = f * f * (3.0 - 2.0 * f);
-	return mix(mix(mix(hash(i), hash(i + vec3(1,0,0)), f.x), mix(hash(i + vec3(0,1,0)), hash(i + vec3(1,1,0)), f.x), f.y),
-		mix(mix(hash(i + vec3(0,0,1)), hash(i + vec3(1,0,1)), f.x), mix(hash(i + vec3(0,1,1)), hash(i + vec3(1,1,1)), f.x), f.y), f.z);
-}
-float fbm(vec3 p) { float v = 0.0; float a = 0.5; for (int i = 0; i < 5; i++) { v += a * noise(p); p *= 2.03; a *= 0.5; } return v; }
-void fragment() {
-	vec3 d = normalize((INV_VIEW_MATRIX * vec4(VERTEX, 1.0)).xyz - CAMERA_POSITION_WORLD);
-	float n = fbm(d * 2.6 + vec3(3.1, 0.0, 1.7));
-	float m = fbm(d * 5.0 - vec3(1.0, 2.0, 0.5));
-	float band = smoothstep(0.55, 0.0, abs(d.y + 0.25 * d.x - 0.08));
-	vec3 col = tint_a.rgb * smoothstep(0.45, 0.9, n) * (0.15 + band) + tint_b.rgb * smoothstep(0.6, 0.95, m) * band * 0.6;
-	ALBEDO = col * 0.4;
-}
-"""
-
 const ARK_BASE := Vector3(19.0, 5.0, -40.0)
 const CAM_BASE := Vector3(-10.0, 4.0, 50.0)
 const CAM_TARGET := Vector3(2.0, -2.0, -20.0)
@@ -56,7 +16,6 @@ var _col: VBoxContainer
 var _body: VBoxContainer
 var _ui: Control
 var _t := 0.0
-var _sun_dir := Vector3(-0.8, 0.3, 0.5)
 var _focus_sound_armed := false
 
 
@@ -82,52 +41,23 @@ func _build_world() -> void:
 	var backdrop := SpaceBackdrop.new()
 	add_child(backdrop)
 	# Grade the shared backdrop for a cinematic key: low ambient, strong rim sun.
-	for c: Node in backdrop.get_children():
-		if c is WorldEnvironment:
-			var e := (c as WorldEnvironment).environment
-			e.ambient_light_energy = 0.35
-			e.glow_intensity = 1.0
-			e.glow_bloom = 0.18
-			e.adjustment_enabled = true
-			e.adjustment_contrast = 1.08
-			e.adjustment_saturation = 1.05
-		elif c is DirectionalLight3D:
-			var sun := c as DirectionalLight3D
-			sun.rotation_degrees = Vector3(-18, -118, 0)
-			sun.light_energy = 1.9
-			_sun_dir = sun.global_transform.basis.z if sun.is_inside_tree() else Basis.from_euler(sun.rotation).z
-	var neb := MeshInstance3D.new()
-	var sphere := SphereMesh.new()
-	sphere.radius = 1500.0
-	sphere.height = 3000.0
-	sphere.radial_segments = 32
-	sphere.rings = 16
-	neb.mesh = sphere
-	var nm := ShaderMaterial.new()
-	var ns := Shader.new()
-	ns.code = NEBULA_SHADER
-	nm.shader = ns
-	neb.material_override = nm
-	neb.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
-	add_child(neb)
+	# The painted nebula of the flight shows here too (D-046; the menu used to
+	# hide it behind its own dark sphere, and turned the violet fill into a
+	# second sun).
+	var e := backdrop.environment
+	e.ambient_light_energy = 0.45
+	e.glow_intensity = 1.0
+	e.glow_bloom = 0.16
+	e.adjustment_enabled = true
+	e.adjustment_contrast = 1.08
+	e.adjustment_saturation = 1.1
+	backdrop.set_sun(Vector3(-18, -118, 0), 1.9)
+	backdrop.sky_material.set_shader_parameter("veil_strength", 0.85)
 	_planet = Node3D.new()
 	_planet.position = Vector3(112, -96, -215)
 	var planet_slot := VisualSlot.make("space.planet_green", "#4f8a3a")
 	_planet.add_child(planet_slot)
 	PlanetLook.apply(planet_slot, "green", "#4f8a3a", 11, "viridia")
-	var atmo := MeshInstance3D.new()
-	var am := SphereMesh.new()
-	am.radius = 66.0
-	am.height = 132.0
-	atmo.mesh = am
-	var mat := ShaderMaterial.new()
-	var sh := Shader.new()
-	sh.code = ATMO_SHADER
-	mat.shader = sh
-	mat.set_shader_parameter("sun_dir", _sun_dir)
-	atmo.material_override = mat
-	atmo.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
-	_planet.add_child(atmo)
 	add_child(_planet)
 	_ark = Node3D.new()
 	var ark_slot := VisualSlot.make("space.ark_exterior")

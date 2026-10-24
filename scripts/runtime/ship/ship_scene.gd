@@ -364,6 +364,11 @@ func debug_action(action: String) -> void:
 		if lo.x < INF:
 			captain.teleport(builder.cell_to_world((lo.x + hi.x + 1.0) * 0.5 + 1.2, hi.y + 0.2), 0.0)
 		return
+	if action.begins_with("starmap_"):  # evidence: the star map with another world selected (starmap_umbra)
+		_open(starmap)
+		starmap.map_view.selected = action.trim_prefix("starmap_")
+		starmap._show_detail(starmap.map_view.selected)
+		return
 	match action:
 		"starmap":
 			_open(starmap)

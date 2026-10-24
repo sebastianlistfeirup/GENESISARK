@@ -28,6 +28,18 @@
       "setup": "power"
     },
     {
+      "id": "ship_orbit_view",
+      "scene": "ship",
+      "setup": "orbit:sere",
+      "action": "orbit"
+    },
+    {
+      "id": "ship_starmap",
+      "scene": "ship",
+      "setup": "power",
+      "action": "starmap"
+    },
+    {
       "id": "flight_belt",
       "scene": "flight",
       "setup": "approach:umbra"

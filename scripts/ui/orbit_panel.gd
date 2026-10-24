@@ -34,6 +34,9 @@ func refresh() -> void:
 	var top := UiKit.hbox(16)
 	var left := UiKit.vbox(8)
 	left.custom_minimum_size = Vector2(520, 0)
+	# The world below, live (D-046): the faceted planet with its moons, the Ark
+	# parked on its orbit, satellites and traffic against the painted nebula.
+	left.add_child(PlanetDiorama.framed(PlanetDiorama.make(pid, "orbit", Vector2i(520, 260)), str(p.get("name", ""))))
 	left.add_child(UiKit.title(Loc.t("The planet")))
 	left.add_child(StarMapPanel.knowledge_grid(pid))
 	var k := gs.knowledge_of(pid)
@@ -42,12 +45,6 @@ func refresh() -> void:
 		refresh())
 	scan.disabled = k.level_reached.get("orbital_scan_done", false)
 	left.add_child(scan)
-	var globe := StarMapView.planet_icon(pid)
-	globe.custom_minimum_size = Vector2(230, 230)
-	globe.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
-	globe.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	globe.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-	left.add_child(globe)
 	top.add_child(left)
 	var right := UiKit.vbox(10)
 	right.size_flags_horizontal = Control.SIZE_EXPAND_FILL

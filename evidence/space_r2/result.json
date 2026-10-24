@@ -1,0 +1,23 @@
+{
+  "task_id": "space_r2",
+  "commit": "see git log (D-046 commit on this branch)",
+  "engine_version": "4.7.1.stable.official (Forward+, NVIDIA GeForce RTX 5090)",
+  "command": "godot --path . --resolution 1600x900 -- --capture=<file> --setup=<fixture> --scene=<ship|flight|menu|ending> --wait=150 [--action=orbit|starmap|starmap_umbra|window|cockpit]; godot --path . --resolution 1600x900 --script res://tools/space_planet_sheet.gd -- --out=<file>; godot --path . -- --perf [--case=ship_orbit_view|ship_starmap]; CHECK_FAST=1 tools/check.sh",
+  "exit_code": 0,
+  "expected": "Exploring new planets (orbital terminal, star map, approach, menu, epilogue) reads like the POLYGON Sci-Fi Space / Sci-Fi Worlds key art: faceted pack planet models with the planet_synty look, atmosphere halo, moons and rings, an orbit view with the Ark, satellites and traffic against the nebula, a nebula star map with glowing routes and planet renders; gameplay and domain untouched; perf p95 < ~10 ms; CHECK_FAST gate all *_exit=0",
+  "observed": "Before/after captures in before/ and after/, side-by-side JPEGs (our captures only) in this folder, orbit_views_after.jpg (Viridia, Sere, Umbra orbit dioramas) and after/planet_sheet.jpg. Perf (RTX 5090): ship p95 8.8 ms, ship_orbit_view p95 8.9 ms (182 draws), ship_starmap p95 8.8 ms (203 draws), flight_belt p95 9.7 ms, surface/colony cases p95 <= 9.6 ms (their older primitive overruns are unchanged). Gate: loc_exit=0 tests_exit=0 smoke_exit=0 touch_exit=0 campaign_exit=0. Found and fixed: the main menu hid the painted sky behind its own dark sphere and turned the violet fill light into a second sun; small moons lit up white from blurred-mip vein glow (veins off on moons).",
+  "fixture": "orbit:viridia, orbit:sere, orbit:umbra, power (star map), approach:viridia, approach:sere, approach:umbra, fresh (menu), era:pelagos:40 (epilogue)",
+  "status": "PASS",
+  "artifacts": [
+    "evidence/space_r2/orbit_panel_viridia_before_after.jpg",
+    "evidence/space_r2/starmap_before_after.jpg",
+    "evidence/space_r2/flight_viridia_before_after.jpg",
+    "evidence/space_r2/flight_sere_before_after.jpg",
+    "evidence/space_r2/menu_before_after.jpg",
+    "evidence/space_r2/ending_before_after.jpg",
+    "evidence/space_r2/orbit_window_sere_before_after.jpg",
+    "evidence/space_r2/orbit_views_after.jpg",
+    "evidence/space_r2/after/planet_sheet.jpg"
+  ],
+  "note_local_only": "Comparisons with the Synty reference sheets stay local (public repo); only our own game captures are committed."
+}

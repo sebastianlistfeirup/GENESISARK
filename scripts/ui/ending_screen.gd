@@ -122,7 +122,12 @@ func _backdrop(gs: GameState) -> void:
 
 
 func _lights_on(planet: VisualSlot) -> void:
+	# The world fills the right half here: a moon would sit behind the text column.
+	for moon: Node in planet.find_children("Moon*", "", true, false):
+		(moon as Node3D).visible = false
 	for mi: Node in planet.find_children("*", "MeshInstance3D", true, false):
+		if not mi.has_meta("planet_body"):
+			continue  # moons, halo and ring keep their look
 		var m := (mi as MeshInstance3D).material_override as ShaderMaterial
 		if m:
 			m.set_shader_parameter("city_lights", 1.0)

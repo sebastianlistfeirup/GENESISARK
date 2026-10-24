@@ -234,9 +234,15 @@ func _gas_giant(biome: String) -> void:
 		m.set_shader_parameter("cloud_speed", 0.0)
 	var mi := MeshInstance3D.new()
 	mi.mesh = sphere
+	# The faceted pack model when present (D-046), with an atmosphere halo.
+	var model := PlanetLook.model_of(str(sheet.get("mesh", "")))
+	if not model.is_empty():
+		PlanetLook.fit_model(mi, model, radius, Vector3.ZERO, [])
 	mi.material_override = m
 	mi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 	root.add_child(mi)
+	if m.shader == PlanetLook.SYNTY_SHADER:
+		root.add_child(PlanetLook.halo_node(radius, Color(str(sheet.get("atmo", "#8fd0ff"))), 0.9))
 	root.add_child(PlanetLook.ring_node(radius, {"scale": float(g.get("ring_scale", 4.6)),
 		"color": str(sheet.get("ring", pal.get("ring", "#e8d2b4"))), "band": str(sheet.get("ring_band", pal.get("ring_band", "#8a7262")))}))
 	add_child(root)
