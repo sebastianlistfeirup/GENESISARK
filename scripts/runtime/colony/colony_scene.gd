@@ -274,9 +274,15 @@ func _draw_corridors() -> void:
 		_corridors.queue_free()
 	_corridors = ColonyCorridors.build(gs, terrain)
 	add_child(_corridors)
+	if AssetSlots.style == "corp":
+		if _perimeter:
+			_perimeter.queue_free()
+		_perimeter = ColonyPerimeter.build(gs, site, terrain)
+		add_child(_perimeter)
 	_process_network_visibility()
 
 
+var _perimeter: Node3D
 var _dressing: ColonyDressing
 var _layout_key := ""
 

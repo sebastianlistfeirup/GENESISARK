@@ -145,9 +145,13 @@ static func build(terrain: Node3D, key: String, seed_value: int, avoid: Array, s
 		for i: int in n:
 			var a := TAU * (i + rng.randf_range(0.0, 0.7)) / n
 			var r := rng.randf_range(float(ring[0]), float(ring[1])) if ring.size() == 2 else 80.0
+			r *= size_m / 180.0  # rings are authored for the 180 m expedition map
 			var p := Vector2(cos(a), sin(a)) * r
 			var src: Array = srcs[rng.randi() % srcs.size()]
 			var s := rng.randf_range(float(sc[0]), float(sc[1])) if sc.size() == 2 else 1.0
+			var reach := maxf((src[2] as AABB).size.x, (src[2] as AABB).size.z) * s * 0.5
+			if _blocked(p, avoid, reach + 6.0):
+				continue  # never over a site, route or colony district
 			var mi := MeshInstance3D.new()
 			mi.mesh = src[0]
 			# Anchor by the mesh's own base, on the LOWEST ground under its footprint, sunk a
