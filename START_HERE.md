@@ -4,14 +4,14 @@ Hej Sebastian. Session 7 (24.10.2026) er øverst; ferie-sessionernes overdragels
 
 ## 0. Status efter session 7 (24. oktober 2026)
 
-Spillet kører nu på **din maskine** med **Godot 4.7.1** og **Synty-grafik overalt**: skib, seks unikke planeter, koloni, figurer og animationer. Alt er testet her (81 domænetests, 56 scenetests, 24/24 hele kampagner, Windows-build startet). Overblik med billeder: handover-artefaktet "Genesis Ark Overdragelse". Detaljer: `docs/STATUS.md` (session 7) og `docs/DECISIONS.md` D-033 til D-042.
+Spillet kører nu på **din maskine** med **Godot 4.7.2** og **Synty-grafik overalt**: skib, seks unikke planeter, koloni, figurer og animationer. Alt er testet her (81 domænetests, 56 scenetests, 24/24 hele kampagner, Windows-build startet). Overblik med billeder: handover-artefaktet "Genesis Ark Overdragelse". Detaljer: `docs/STATUS.md` (session 7) og `docs/DECISIONS.md` D-033 til D-042.
 
 | # | Hvad | Kommando / sted | Færdig når |
 |---|---|---|---|
 | 1 | Spil det | Genvejen **GODKEND - Genesis Ark session 7** på skrivebordet, eller `builds/windows/GenesisArk.exe` | spillet starter i hovedmenuen |
 | 2 | Spil ~20 min og skriv de tre største irritationsmomenter ned (GA-11) | fra den mørke ark til første ekspedition og kolonien | tre punkter |
 | 3 | Giv visuel godkendelse eller rettelser (skib, de seks planeter, kolonien, animation) | `evidence/` + artefaktet | "Godkendt" eller en liste |
-| 4 | Kør testkæden efter ændringer | `GODOT_BIN=".../Godot_v4.7.1-stable_win64_console.exe" tools/check.sh` (Git Bash) | alle `*_exit=0` |
+| 4 | Kør testkæden efter ændringer | `GODOT_BIN=".../Godot_v4.7.2-stable_win64_console.exe" tools/check.sh` (Git Bash) | alle `*_exit=0` |
 
 **Synty-pakkerne** ligger kun lokalt i `assets/Synty/` (gitignored, repoet er offentligt). På en ny maskine: pak Godot-pakkerne (Sci-Fi Worlds, Sci-Fi City), Sci-Fi Space-kildefilerne, de fire Nature Biomes-pakker, figurerne og animationerne ud til de samme stier (se `data/art/synty_choices.json` og `data/art/ground_cover.json` for stierne), fjern skrivebeskyttelse, kør `godot --headless --path . --import`, så `tools/synty/build_godot_packs.sh` og `python3 tools/synty/extract_anim_clips.py`. Uden pakkerne viser spillet de gamle proxies.
 

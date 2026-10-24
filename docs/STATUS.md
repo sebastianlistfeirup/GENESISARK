@@ -4,7 +4,7 @@
 |---|---|
 | project | GENESIS ARK |
 | spec_version | Udviklingsbibel v1.0 (16.10.2026) |
-| engine_version | Godot 4.7.1-stable (official, a13da4feb) — se D-033 |
+| engine_version | Godot 4.7.2-stable (official, ed1daf0bf) — se D-033, D-050 |
 | profile | HOME (Windows 11, RTX 5090, Vulkan Forward+; Synty-pakker lokalt i `assets/Synty/`) |
 | current_phase | 1 · Fundament (port ikke bestået endnu) |
 | last_passed_gate | — (fase 1-porten kræver GA-11 og GA-12 DONE) |
@@ -98,7 +98,7 @@
 
 | Område | Hvad | Hvor |
 |---|---|---|
-| Motor | Godot 4.7.1; motoruafhængig save-checksum, gamle saves accepteres | D-033 |
+| Motor | Godot 4.7.2; motoruafhængig save-checksum, gamle saves accepteres | D-033 |
 | Synty-integration | Godot-pakker (Sci-Fi Worlds, Sci-Fi City) og kilde-FBX (Sci-Fi Space, Nature Biomes ×4, figurer, animationer) bruges direkte; 55 slots mappet; ingen købte filer i git | `tools/synty/`, `data/art/synty_choices.json`, D-021/D-033 |
 | Skib | Modulært Sci-Fi Space-interiør, broens konsolrækker, hologrammer, ARK som holografisk kerne, kryokapsler med sovende kolonister, rigtige vinduer med tågehimmel og planeten man kredser om, nødstrøm i rav → cyan | `ship_dresser.gd`, `data/art/ship_dressing.json`, `hologram.gd` |
 | Planeter | Seks unikke verdener: jungle, vandverden, rustmesaer, klitter, isskov, bioluminescent nat; måner, ringplaneter, nordlys | D-039, `data/art/ground_cover.json`, `nature_kit.gd` |

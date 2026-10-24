@@ -411,11 +411,38 @@ func _finish(recalled: bool) -> void:
 		hud.toast(str(survey.get("evacuation", Loc.t("ARK is guiding you back."))), "critical", 6.0)
 		await get_tree().create_timer(2.5).timeout
 	GameSession.cmd_finish_expedition()
-	await get_tree().create_timer(1.0).timeout
+	var body := _lander_body()
+	if body and PlanetDescent.wanted() and not AppFlow.test_mode:
+		# Home the way you came: lift-off and the climb back up to orbit (D-049).
+		captain.visible = false
+		var d := PlanetDescent.new()
+		d.name = "Ascent"
+		add_child(d)
+		d.start_ascent(self, terrain, planet, body)
+		await d.finished
+	else:
+		await get_tree().create_timer(1.0).timeout
 	AppFlow.goto("ship", {"spawn": "orbit_terminal"})
 
 
+func _lander_body() -> Node3D:
+	var lander: Node3D = _markers.get("lander")
+	if lander == null:
+		return null
+	for c: Node in lander.get_children():
+		if c is VisualSlot:
+			return c
+	return null
+
+
 func debug_action(action: String) -> void:
+	if action.begins_with("ascent"):  # evidence: the climb back to orbit, ascent[:<seconds in>] (no domain change)
+		var d := PlanetDescent.new()
+		add_child(d)
+		captain.visible = false
+		d.start_ascent(self, terrain, planet, _lander_body())
+		d.debug_advance(float(action.get_slice(":", 1)) if action.contains(":") else 0.0)
+		return
 	if action == "sunview":  # evidence: look toward the system's star from the camp
 		var pr := Lighting.preset(planet)
 		var dir := Basis.from_euler(Vector3(deg_to_rad(float(pr.get("sun_pitch", -45))), deg_to_rad(float(pr.get("sun_yaw", 30))), 0)).z.normalized()

@@ -30,3 +30,9 @@ __pycache__/
 
 # Building kits lifted from the Synty demo scenes reference vendor prefabs; regenerate locally with tools/synty/extract_kits.gd
 /art/kits/
+
+# Third-party plugins the owner downloaded (Godot 4.7.2, installed locally under
+# addons/<plugin>). Not committed until a feature uses one (CLAUDE.md: no addons
+# without documented gain); genesis_slots is ours and stays tracked.
+/addons/*
+!/addons/genesis_slots/

@@ -20,7 +20,7 @@ func _ready() -> void:
 
 func _collect(dir: String, out: Array) -> void:
 	var d := DirAccess.open(dir)
-	if d == null:
+	if d == null or d.file_exists(".gdignore"):  # folders Godot itself ignores
 		return
 	for f: String in d.get_files():
 		if f.ends_with(".gd"):

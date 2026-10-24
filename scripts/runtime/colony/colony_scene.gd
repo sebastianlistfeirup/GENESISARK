@@ -959,6 +959,7 @@ func _maybe_ark_descent() -> void:
 	GameSession.colony_clock_active = false
 	var d := PlanetDescent.new()
 	d.name = "Descent"
+	d.nose_yaw = -PI * 0.5  # the landed Ark model is long in X
 	add_child(d)
 	d.start(self, terrain, planet, ark.global_position, ark, float(action.get_slice(":", 1)) if action.contains(":") else PlanetDescent.START_ALT)
 	d.finished.connect(func() -> void:

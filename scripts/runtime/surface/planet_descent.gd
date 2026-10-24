@@ -29,10 +29,13 @@ var lander_body: Node3D           # the lander's VisualSlot, flown top-level dur
 var surface_root: Node3D
 
 var autopilot := true
+var _ascent := false
+var _climb_dir := Vector3.FORWARD
+var _asc_t := 0.0
 var scale_k := 1.0
 var _body_rest := Transform3D.IDENTITY   # the body's own local transform, restored at touchdown
 var _rest_basis := Basis.IDENTITY
-var _nose_yaw := PI  # Synty ships face +Z; long-in-X models (the landed Ark) fly along X                # camera and landing distances scale with the ship (the Ark is huge)
+var nose_yaw := PI  # Synty ships face +Z; callers flying a long-in-X model (the landed Ark) set -PI/2                # camera and landing distances scale with the ship (the Ark is huge)
 var _layers: Array[CanvasLayer] = []
 var _vel := Vector3.ZERO
 var _alt := START_ALT
@@ -82,6 +85,63 @@ static func wanted() -> bool:
 
 
 func start(p_root: Node3D, p_terrain: TerrainBuilder, p_planet: Dictionary, p_target: Vector3, p_body: Node3D, start_alt: float = START_ALT) -> void:
+	_setup(p_root, p_terrain, p_planet, p_target, p_body)
+	# Come in from the sunward side, kilometres out and high: the globe's curve
+	# and the terminator fill the view, the site is a marker far below.
+	var dir := Vector2.from_angle(deg_to_rad(float(hash(str(planet.get("id", ""))) % 360)))
+	var alt := clampf(start_alt, 60.0, START_ALT)
+	var k := alt / START_ALT
+	var p := Vector3(dir.x * START_RANGE * k, target.y + alt, dir.y * START_RANGE * k)
+	lander_body.top_level = true
+	lander_body.global_position = p
+	_vel = (Vector3(target.x, target.y + alt * 0.55, target.z) - p).normalized() * lerpf(80.0, 360.0, k)
+	_alt = alt
+	_cam_pos = p - _vel.normalized() * 30.0 + Vector3.UP * 8.0
+	_cam_off = _cam_pos - p
+	if _mothership:
+		_mothership.global_position = p - _vel.normalized() * 260.0 + Vector3.UP * 70.0 + _vel.normalized().cross(Vector3.UP) * 90.0
+		_mothership.look_at(_mothership.global_position + _vel.normalized().cross(Vector3.UP), Vector3.UP)
+	_phase = _phase_for(alt)
+	_set_sky(alt > SWITCH_ALT)
+	AudioService.set_ambience_any(["amb_space"])
+	AudioService.play("sfx_thruster", "SFX", -10.0)
+
+
+## The way home: lift-off from the pad, a climbing turn out over the land, up
+## through the cloud deck into space; `finished` fires high in orbit (the caller
+## then changes scene). Cinematic (no stick), skippable.
+func start_ascent(p_root: Node3D, p_terrain: TerrainBuilder, p_planet: Dictionary, p_body: Node3D) -> void:
+	_setup(p_root, p_terrain, p_planet, p_body.global_position, p_body)
+	_ascent = true
+	autopilot = true
+	lander_body.top_level = true
+	_alt = 0.0
+	var dir := Vector2.from_angle(deg_to_rad(float(hash(str(planet.get("id", ""))) % 360) + 140.0))
+	_climb_dir = Vector3(dir.x, 0.0, dir.y)
+	var p := lander_body.global_position
+	_cam_off = (-_climb_dir * 16.0 + Vector3.UP * 4.0 + _climb_dir.cross(Vector3.UP) * 9.0) * scale_k
+	_cam_pos = p + _cam_off
+	_phase = "atmos"
+	_set_sky(false)
+	_marker.visible = false
+	var dust := VisualSlot.make("fx.landing_dust")
+	var lander := lander_body.get_parent() as Node3D
+	if lander:
+		lander.add_child(dust)
+		get_tree().create_timer(4.0).timeout.connect(dust.queue_free)
+	AudioService.play("sfx_thruster", "SFX", -6.0)
+
+
+## Evidence captures: run the flight forward by `seconds` of simulated time.
+func debug_advance(seconds: float) -> void:
+	var steps := int(seconds * 60.0)
+	for i: int in steps:
+		if _done:
+			return
+		_process(1.0 / 60.0)
+
+
+func _setup(p_root: Node3D, p_terrain: TerrainBuilder, p_planet: Dictionary, p_target: Vector3, p_body: Node3D) -> void:
 	surface_root = p_root
 	terrain = p_terrain
 	planet = p_planet
@@ -91,8 +151,6 @@ func start(p_root: Node3D, p_terrain: TerrainBuilder, p_planet: Dictionary, p_ta
 	_rest_basis = p_body.global_basis
 	var box := AssetSlots.aabb_of(p_body, Transform3D.IDENTITY)
 	scale_k = clampf(box.size.length() / 14.0, 1.0, 8.0)
-	if box.size.x > box.size.z * 1.25:
-		_nose_yaw = -PI * 0.5
 	for c: Node in p_root.get_children():
 		if c is CanvasLayer and (c as CanvasLayer).visible:
 			(c as CanvasLayer).visible = false
@@ -119,25 +177,6 @@ func start(p_root: Node3D, p_terrain: TerrainBuilder, p_planet: Dictionary, p_ta
 	_cam.fov = 66.0
 	add_child(_cam)
 	_cam.current = true
-	# Come in from the sunward side, kilometres out and high: the globe's curve
-	# and the terminator fill the view, the site is a marker far below.
-	var dir := Vector2.from_angle(deg_to_rad(float(hash(str(planet.get("id", ""))) % 360)))
-	var alt := clampf(start_alt, 60.0, START_ALT)
-	var k := alt / START_ALT
-	var p := Vector3(dir.x * START_RANGE * k, target.y + alt, dir.y * START_RANGE * k)
-	lander_body.top_level = true
-	lander_body.global_position = p
-	_vel = (Vector3(target.x, target.y + alt * 0.55, target.z) - p).normalized() * lerpf(80.0, 360.0, k)
-	_alt = alt
-	_cam_pos = p - _vel.normalized() * 30.0 + Vector3.UP * 8.0
-	_cam_off = _cam_pos - p
-	if _mothership:
-		_mothership.global_position = p - _vel.normalized() * 260.0 + Vector3.UP * 70.0 + _vel.normalized().cross(Vector3.UP) * 90.0
-		_mothership.look_at(_mothership.global_position + _vel.normalized().cross(Vector3.UP), Vector3.UP)
-	_phase = _phase_for(alt)
-	_set_sky(alt > SWITCH_ALT)
-	AudioService.set_ambience_any(["amb_space"])
-	AudioService.play("sfx_thruster", "SFX", -10.0)
 
 
 func _find_env(n: Node) -> WorldEnvironment:
@@ -594,7 +633,9 @@ func _process(delta: float) -> void:
 	_alt = pos.y - ground
 	var to := Vector3(target.x - pos.x, 0.0, target.z - pos.z)
 	var hdist := to.length()
-	if not _landing:
+	if _ascent:
+		_ascend(delta, pos)
+	elif not _landing:
 		if hdist < ASSIST_RANGE * sqrt(scale_k) and _alt < ASSIST_ALT * sqrt(scale_k):
 			_begin_landing()
 		else:
@@ -661,7 +702,31 @@ func _fly(delta: float, pos: Vector3, to: Vector3, hdist: float) -> void:
 	var fwd := _vel.normalized() if _vel.length() > 1.0 else heading
 	fwd.y = clampf(fwd.y, -0.55, 0.3)
 	var b := Basis.looking_at(fwd.normalized(), Vector3.UP)
-	lander_body.global_basis = b * Basis(Vector3.FORWARD, _bank) * Basis(Vector3.UP, _nose_yaw)
+	lander_body.global_basis = b * Basis(Vector3.FORWARD, _bank) * Basis(Vector3.UP, nose_yaw)
+
+
+func _ascend(delta: float, pos: Vector3) -> void:
+	_asc_t += delta
+	var np := pos
+	if _asc_t < 2.6:
+		# Lift-off: straight up on the thrusters, nose levelling out.
+		var k := smoothstep(0.0, 2.6, _asc_t)
+		np = Vector3(target.x, target.y + k * k * 22.0 * scale_k, target.z)
+		_vel = Vector3.UP * 12.0 * scale_k + _climb_dir * 2.0
+		lander_body.global_position = np
+		lander_body.global_basis = _rest_basis.slerp(Basis.looking_at(_climb_dir, Vector3.UP) * Basis(Vector3.UP, nose_yaw), k * 0.6)
+		return
+	var speed := lerpf(40.0, 640.0, smoothstep(2.6, 15.0, _asc_t))
+	var pitch := lerpf(0.18, 0.62, smoothstep(2.6, 9.0, _asc_t))  # climb steepens
+	var want := (_climb_dir * cos(pitch) + Vector3.UP * sin(pitch)).normalized() * speed
+	_vel = _vel.lerp(want, clampf(delta * 1.5, 0.0, 1.0))
+	np = pos + _vel * delta
+	lander_body.global_position = np
+	var fwd := _vel.normalized()
+	lander_body.global_basis = Basis.looking_at(fwd, Vector3.UP) * Basis(Vector3.UP, nose_yaw)
+	if np.y - target.y > 3800.0 or _asc_t > 22.0:
+		_done = true
+		finished.emit()
 
 
 func _begin_landing() -> void:
@@ -691,6 +756,10 @@ func _touchdown() -> void:
 
 
 func _skip() -> void:
+	if _ascent:
+		_done = true
+		finished.emit()
+		return
 	_landing = true
 	_finish()
 
@@ -730,11 +799,14 @@ func _update_fx(delta: float, pos: Vector3) -> void:
 	var heat := smoothstep(2600.0, 1700.0, _alt) * smoothstep(650.0, 1150.0, _alt) * clampf(speed / 380.0, 0.0, 1.2)
 	if _landing:
 		heat = 0.0
+	if _ascent:
+		heat *= 0.45  # climbing out: a glow, not a burn
+		_plasma.visible = false
 	_plasma_mat.set_shader_parameter("heat", heat)
 	var fwd := _vel.normalized() if speed > 1.0 else -lander_body.global_basis.z
 	_plasma.global_position = pos + fwd * 2.5 * scale_k
 	_plasma.global_basis = Basis.looking_at(fwd, Vector3.UP if absf(fwd.y) < 0.98 else Vector3.FORWARD).scaled(Vector3(4.2, 3.4, 8.5) * scale_k)
-	_plasma.visible = heat > 0.01
+	_plasma.visible = heat > 0.01 and not _ascent
 	_streak_mat.set_shader_parameter("heat", heat)
 	(_vignette.material as ShaderMaterial).set_shader_parameter("heat", heat)
 	_streaks.visible = heat > 0.02
@@ -757,7 +829,7 @@ func _update_fx(delta: float, pos: Vector3) -> void:
 	_glow_light.light_energy = heat * 6.0
 	_thruster.global_position = pos + Vector3.DOWN * 1.2
 	_thruster.global_basis = Basis(Vector3.RIGHT, PI * 0.5)  # plume down at the ground
-	_thruster.visible = _alt < 600.0 or _landing
+	_thruster.visible = _alt < 600.0 or _landing or _ascent
 	if heat > 0.25 and _shake_ok():
 		_shake = maxf(_shake, heat * 0.22)
 	_shake = maxf(0.0, _shake - delta * 0.8)
@@ -775,6 +847,11 @@ func _update_camera(delta: float, pos: Vector3) -> void:
 	back = back.normalized()
 	var dist := lerpf(10.0, 17.0, clampf(speed / 350.0, 0.0, 1.0)) * scale_k
 	var want := pos - back * dist + Vector3.UP * lerpf(3.2, 5.0, clampf(speed / 350.0, 0.0, 1.0)) * scale_k
+	if _ascent and _alt > 700.0:
+		# Out of the clouds: the camera swings ahead and looks back down past the
+		# ship at the world falling away.
+		var k := smoothstep(700.0, 1600.0, _alt)
+		want = want.lerp(pos + back * 22.0 * scale_k + Vector3.UP * 9.0 * scale_k + back.cross(Vector3.UP) * 10.0 * scale_k, k)
 	if _landing:
 		want = pos + (Vector3(_cam_pos.x - pos.x, 0, _cam_pos.z - pos.z).normalized() * 22.0 * scale_k) + Vector3.UP * 9.0 * scale_k
 	# Smooth the camera's offset from the ship, not its world position: at
@@ -784,6 +861,8 @@ func _update_camera(delta: float, pos: Vector3) -> void:
 	var floor_y := _ground_y(_cam_pos) + 3.0
 	_cam_pos.y = maxf(_cam_pos.y, floor_y)
 	var look := pos + back * 40.0 + Vector3.DOWN * 6.0
+	if _ascent and _alt > 700.0:
+		look = look.lerp(pos - back * 60.0 + Vector3.DOWN * 40.0, smoothstep(700.0, 1600.0, _alt))
 	if _landing:
 		look = pos
 	_cam.global_position = _cam_pos + Vector3(randf_range(-1, 1), randf_range(-1, 1), randf_range(-1, 1)) * _shake
@@ -794,14 +873,14 @@ func _update_camera(delta: float, pos: Vector3) -> void:
 
 func _update_hud(hdist: float) -> void:
 	var names := {"space": Loc.t("LOW ORBIT"), "entry": Loc.t("ATMOSPHERIC ENTRY"), "atmos": Loc.t("DESCENT")}
-	_lbl_phase.text = Loc.t("TOUCHDOWN") if _landing else str(names.get(_phase, ""))
+	_lbl_phase.text = Loc.t("TOUCHDOWN") if _landing else (Loc.t("LIFT-OFF") if _ascent and _alt < 120.0 else (Loc.t("CLIMB TO ORBIT") if _ascent else str(names.get(_phase, ""))))
 	_lbl_data.text = Loc.t("ALT %s · SPEED %d m/s · SITE %s · %s") % [_fmt_m(_alt), int(_vel.length()), _fmt_m(hdist),
 		Loc.t("LANDING ASSIST") if _landing else (Loc.t("AUTOPILOT") if autopilot and _manual_hold <= 0.0 else Loc.t("MANUAL"))]
 	_lbl_hint.text = Loc.t("[%s] autopilot / manual · [%s][%s] speed · [%s][%s] steer · [%s][%s] climb/dive · [%s] skip descent") % [
 		SettingsService.binding_text("autopilot"), SettingsService.binding_text("move_forward"), SettingsService.binding_text("move_back"),
 		SettingsService.binding_text("move_left"), SettingsService.binding_text("move_right"), SettingsService.binding_text("ascend"),
 		SettingsService.binding_text("descend"), SettingsService.binding_text("skip_line")]
-	_lbl_hint.visible = not _landing
+	_lbl_hint.visible = not _landing and not _ascent
 
 
 func _fmt_m(m: float) -> String:

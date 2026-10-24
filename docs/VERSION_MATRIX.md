@@ -2,9 +2,9 @@
 
 | Komponent | Låst version | Kilde / bemærkning |
 |---|---|---|
-| Godot Engine | **4.5.1-stable (official, f62fdbde1)** | `Godot_v4.5.1-stable_linux.x86_64` fra github.com/godotengine/godot/releases. Samme version skal bruges på Windows (`Godot_v4.5.1-stable_win64.exe`). |
-| Export templates | 4.5.1.stable | `Godot_v4.5.1-stable_export_templates.tpz` (windows_release_x86_64.exe, linux_release.x86_64 er afprøvet). |
-| Sprog | GDScript (typed) | Ingen C#/.NET, ingen GDExtensions, ingen addons. |
+| Godot Engine | **4.7.2-stable (official, ed1daf0bf)** | Ejeren opgraderede 2026-10-24 (4.5.1 → 4.7.1, D-033 → 4.7.2, D-050). Windows: `Godot_v4.7.2-stable_win64.exe`. 4.5-kopien ligger som klon i `GeneSIS 4.5/`. |
+| Export templates | 4.7.2.stable (skal installeres i editoren før eksport) | tidligere 4.5.1: `Godot_v4.5.1-stable_export_templates.tpz` (windows_release_x86_64.exe, linux_release.x86_64 er afprøvet). |
+| Sprog | GDScript (typed) | Ingen C#/.NET. Ejerens plugins ligger lokalt i addons/ (ikke committet, D-050); spillet bruger dem ikke endnu. |
 | Renderer | Forward+ (desktop) | Fallback til OpenGL3 er slået til (`rendering_device/fallback_to_opengl3`). CI/screenshots kører `--rendering-method gl_compatibility` under Xvfb + Mesa llvmpipe. |
 | Fysik | Godot Physics 3D, 60 Hz | Bibel s. 29. Koloniøkonomi tickes separat (1 dag = 2 s ved 1x). |
 | Save schema | 2 | v1 → v2 migrering testet med `fixtures/saves/v1_voyage.json`. |
