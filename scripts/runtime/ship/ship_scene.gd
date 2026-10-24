@@ -142,6 +142,8 @@ func _spawn_interactables() -> void:
 		it.add_child(sb)
 		it.used.connect(_on_use)
 		interactables[id] = it
+		if id == "power_coupling":
+			_coupling_beacon(it)
 
 
 func _spawn_display() -> void:
@@ -264,6 +266,7 @@ func _panel_closed() -> void:
 
 
 func _process(delta: float) -> void:
+	_process_beacon(delta)
 	_ai_t += delta
 	_update_zone_audio()
 	if _ai:
@@ -306,6 +309,10 @@ func _any_panel() -> bool:
 
 ## DEBUG/evidence hook used by DebugCapture (--action=...).
 func debug_action(action: String) -> void:
+	if action == "coupling":  # evidence: the first goal in the dark workshop
+		var it: Node3D = interactables.get("power_coupling")
+		captain.teleport(it.global_position + Vector3(4.5, 0.1, 0.0), PI * 0.5)
+		return
 	if action == "window":  # evidence: the bridge windows from inside
 		captain.teleport(builder.cell_to_world(7.5, 2.6), 0.0)
 		captain.camera_rig.pitch = 0.05
@@ -348,3 +355,35 @@ func debug_action(action: String) -> void:
 
 func _exit_tree() -> void:
 	ShipBuilder.set_strip_glow(true)  # the shared atlas is also used outside the ship
+
+
+var _beacon: OmniLight3D
+var _beacon_t := 0.0
+
+
+## The first goal must read in the dark: a pulsing amber light and spark FX on
+## the emergency coupling until power is restored (calm, no pulse with reduced motion).
+func _coupling_beacon(it: Node3D) -> void:
+	_beacon = OmniLight3D.new()
+	_beacon.light_color = Color("ffb347")
+	_beacon.light_energy = 2.0
+	_beacon.omni_range = 4.5
+	_beacon.position = Vector3(0, 1.4, 0)
+	it.add_child(_beacon)
+	var sparks := VisualSlot.make("fx.power_surge")
+	sparks.position = Vector3(0, 1.1, 0)
+	sparks.name = "CouplingSparks"
+	it.add_child(sparks)
+
+
+func _process_beacon(delta: float) -> void:
+	if _beacon == null:
+		return
+	var off: bool = GameSession.state.ark.systems.get("power") == "offline"
+	_beacon.visible = off
+	var sp := _beacon.get_parent().get_node_or_null("CouplingSparks") as Node3D
+	if sp:
+		sp.visible = off
+	if off and not FxEffect.reduced_motion():
+		_beacon_t += delta
+		_beacon.light_energy = 1.4 + 1.2 * (0.5 + 0.5 * sin(_beacon_t * 3.0))

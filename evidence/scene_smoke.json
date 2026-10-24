@@ -36,7 +36,7 @@
       "ok": true
     },
     {
-      "detail": "moved=0.36",
+      "detail": "moved=0.39",
       "name": "riglab_runs",
       "ok": true
     },
@@ -91,12 +91,12 @@
       "ok": true
     },
     {
-      "detail": "dyaw=-0.60",
+      "detail": "dyaw=-0.61",
       "name": "pad_look_turns_camera",
       "ok": true
     },
     {
-      "detail": "I_power_coupling:<Area3D#293869722031>",
+      "detail": "I_power_coupling:<Area3D#294960241101>",
       "name": "prompt_targets_coupling",
       "ok": true
     },
@@ -279,5 +279,5 @@
   "engine_version": "4.7.1-stable (official)",
   "failures": [],
   "status": "PASS",
-  "timestamp": "2026-10-24T11:09:34"
+  "timestamp": "2026-10-24T11:13:33"
 }

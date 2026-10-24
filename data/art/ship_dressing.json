@@ -243,6 +243,34 @@
    ],
    "yaw": 180,
    "collide": true
+  },
+  {
+   "mesh": "SM_Prop_Cart_Filled_01",
+   "cell": [
+    3.6,
+    14.3
+   ],
+   "yaw": 30,
+   "collide": true
+  },
+  {
+   "mesh": "SM_Prop_Engine_Construction_01",
+   "cell": [
+    4.3,
+    13.2
+   ],
+   "yaw": 90,
+   "scale": 0.45,
+   "collide": true
+  },
+  {
+   "mesh": "SM_Prop_Crate_Wide_01",
+   "cell": [
+    6.4,
+    15.3
+   ],
+   "yaw": 0,
+   "collide": true
   }
  ]
 }
