@@ -1439,6 +1439,25 @@
     ],
     "radius": 0.4,
     "cluster": 4
+   },
+   {
+    "meshes": [
+     "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Plant_Balloon_Tall_01.tscn",
+     "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Plant_Balloon_01.tscn",
+     "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Plant_Balloon_Tall_02.tscn"
+    ],
+    "count": 34,
+    "scale": [
+     1.0,
+     1.6
+    ],
+    "radius": 0.4,
+    "cluster": 3,
+    "glow": [
+     0.9,
+     0.22,
+     0.8
+    ]
    }
   ],
   "cover": [
@@ -1562,6 +1581,47 @@
     "emissive": "#9fe8ff"
    },
    {
+    "mesh": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Rock_Spike_01.tscn",
+    "count": 12,
+    "scale": [
+     0.45,
+     0.8
+    ],
+    "cluster": 2
+   },
+   {
+    "mesh": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Rock_Spike_03.tscn",
+    "count": 12,
+    "scale": [
+     0.45,
+     0.8
+    ],
+    "cluster": 2
+   },
+   {
+    "mesh": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Detail_Spikey_Group_02.tscn",
+    "count": 8,
+    "scale": [
+     0.35,
+     0.6
+    ],
+    "cluster": 1
+   },
+   {
+    "mesh": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Plant_Balloon_Group_01.tscn",
+    "count": 40,
+    "scale": [
+     0.8,
+     1.2
+    ],
+    "cluster": 4,
+    "glow": [
+     0.9,
+     0.22,
+     0.8
+    ]
+   },
+   {
     "mesh": "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Plant_Fester_03.tscn",
     "count": 14,
     "scale": [
@@ -1617,9 +1677,8 @@
    },
    {
     "meshes": [
-     "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Artifact_AlienRuin_07.tscn",
-     "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Artifact_AlienRuin_08.tscn",
-     "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Detail_Spire_Group_01.tscn"
+     "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Detail_Spire_Group_01.tscn",
+     "res://assets/Synty/PolygonSciFiWorlds/Prefabs/Environments/SM_Env_Detail_Spikey_Group_01.tscn"
     ],
     "count": 4,
     "scale": [

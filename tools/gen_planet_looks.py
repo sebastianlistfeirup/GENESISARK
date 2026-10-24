@@ -123,7 +123,7 @@ PLANETS = {
                   c(A("SM_Env_Rock_Pebbles_02"), 180, (0.8, 1.3), 5), c(A("SM_Env_Moss_Lumps_02"), 50, (0.7, 1.1), 3),
                   c(Wp("SM_Env_Floating_Crystal_02"), 30, (0.05, 0.1), 3, emissive="#9fe8ff")],
         "landmarks": [lm([Wp("SM_Env_Skeleton_Preset_02"), Wp("SM_Env_Skeleton_Preset_04")], 1, (0.2, 0.24), (64, 76)),
-                      lm([Wp("SM_Env_Artifact_AlienRuin_07"), Wp("SM_Env_Artifact_AlienRuin_08"), Wp("SM_Env_Detail_Spire_Group_01")], 4, (1.8, 2.6), (62, 82)), lm([A("SM_Env_MountainRange_01"), A("SM_Env_MountainRange_02"), A("SM_Env_MountainRange_03"), A("SM_Env_MountainRange_04")], 8, (0.5, 0.7), (92, 104)),
+                      lm([Wp("SM_Env_Detail_Spire_Group_01"), Wp("SM_Env_Detail_Spikey_Group_01")], 4, (1.8, 2.6), (62, 82)), lm([A("SM_Env_MountainRange_01"), A("SM_Env_MountainRange_02"), A("SM_Env_MountainRange_03"), A("SM_Env_MountainRange_04")], 8, (0.5, 0.7), (92, 104)),
                       lm([A("SM_Env_Rock_08"), A("SM_Env_Rock_09"), A("SM_Env_Rock_010"), A("SM_Env_Rock_Cliff_Arch_01"), Wp("SM_Env_Detail_Spire_Group_01")], 16, (2.4, 3.6), (60, 84))],
     },
     "umbra": {
@@ -168,7 +168,10 @@ ALIEN = {
         "cover": [c(P("Succulent_Large_01"), 14, (0.3, 0.5), 2), c(P("Cactus_01"), 30, (0.9, 1.3), 3), c(P("Pinecone_03"), 14, (0.5, 0.8), 2)],
     },
     "nivalis": {
-        "cover": [c(P("Fester_03"), 14, (0.4, 0.7), 2, glow=[1.4, 0.25, 0.75]), c(P("Fester_04"), 24, (0.5, 0.8), 3, glow=[1.4, 0.25, 0.75]),
+        "trees": [t([P("Balloon_Tall_01"), P("Balloon_01"), P("Balloon_Tall_02")], 34, (1.0, 1.6), 0.4, 3, glow=[0.9, 0.22, 0.8])],
+        "cover": [c(Wp("SM_Env_Rock_Spike_01"), 12, (0.45, 0.8), 2), c(Wp("SM_Env_Rock_Spike_03"), 12, (0.45, 0.8), 2), c(Wp("SM_Env_Detail_Spikey_Group_02"), 8, (0.35, 0.6), 1),
+                  c(P("Balloon_Group_01"), 40, (0.8, 1.2), 4, glow=[0.9, 0.22, 0.8]),
+                  c(P("Fester_03"), 14, (0.4, 0.7), 2, glow=[1.4, 0.25, 0.75]), c(P("Fester_04"), 24, (0.5, 0.8), 3, glow=[1.4, 0.25, 0.75]),
                   c(P("Shrub_01"), 60, (0.8, 1.2), 4)],
     },
     "umbra": {
