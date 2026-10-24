@@ -15,7 +15,9 @@ void fragment() {
 	float rays = n1(x * 3.0) * 0.6 + n1(x * 11.0 + 5.0) * 0.4;
 	float sweep = smoothstep(0.25, 0.75, n1(UV.x * 7.0 + TIME * speed * 3.0));
 	float v = UV.y;
-	float body = smoothstep(0.0, 0.25, 1.0 - v) * smoothstep(1.0, 0.55, 1.0 - v);
+	// Ragged, long foot: each ray ends at its own height, so the curtain has no ruled lower edge.
+	float foot = (1.0 - v) - (n1(x * 1.7 + 11.0) - 0.5) * 0.3;
+	float body = smoothstep(0.02, 0.45, foot) * smoothstep(1.0, 0.55, 1.0 - v);
 	vec3 col = mix(low_color, high_color, clamp(1.0 - v, 0.0, 1.0));
 	ALBEDO = col * rays * sweep * body * strength;
 }
