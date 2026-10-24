@@ -317,6 +317,15 @@ static func button(text: String, cb: Callable = Callable(), tooltip: String = ""
 	return b
 
 
+## A choice button that shows the CURRENT option of a group (language,
+## graphics quality): inert like a disabled button, but drawn in the amber
+## "pressed" look with bright text, so it reads as chosen, not as unavailable.
+static func mark_selected(b: Button) -> void:
+	b.disabled = true
+	b.add_theme_stylebox_override("disabled", theme().get_stylebox("pressed", "Button"))
+	b.add_theme_color_override("font_disabled_color", Color("fff4e0"))
+
+
 ## True when the player asked for reduced motion: no fades, slides or drift.
 static func calm() -> bool:
 	return bool(SettingsService.get_value("reduced_motion", false))

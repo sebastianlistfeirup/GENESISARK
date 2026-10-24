@@ -324,6 +324,7 @@ func debug_action(action: String) -> void:
 	match action:
 		"credits": _open_panel(_credits)
 		"settings": _open_panel(_settings)
+		"load": _load_list()
 		"focus2":
 			if _body.get_child_count() > 1:
 				(_body.get_child(1) as Control).grab_focus()

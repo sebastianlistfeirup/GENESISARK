@@ -59,7 +59,9 @@ func _run() -> void:
 		elif act in ["pause", "pause_settings"] and hud is GameHud:
 			(hud as GameHud).pause_menu.open()
 			if act == "pause_settings":
-				(hud as GameHud).pause_menu.settings.open()
+				(hud as GameHud).pause_menu.open_settings()
+		elif act == "journal" and hud is GameHud:
+			(hud as GameHud).journal.toggle()
 		elif sc and sc.has_method("debug_action"):
 			sc.call("debug_action", act)
 		# The alarm banner hides after a few real seconds; software rendering is slow.
