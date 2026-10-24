@@ -71,6 +71,12 @@
       "scene": "colony",
       "setup": "era:sere:20",
       "action": "zoomout"
+    },
+    {
+      "id": "surface_descent",
+      "scene": "surface",
+      "setup": "expedition:viridia",
+      "action": "descent:1700"
     }
   ],
   "quality_low": {

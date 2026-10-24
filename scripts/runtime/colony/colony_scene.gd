@@ -953,7 +953,7 @@ func _maybe_ark_descent() -> void:
 			ark = bv.get("_visual") as Node3D  # the model flies; its pad and label wait on the ground
 			break
 	var action := str(AppFlow.params.get("action", ""))
-	if ark == null or not PlanetDescent.wanted() or AppFlow.test_mode or (DebugCapture.requested() and not action.begins_with("descent")):
+	if ark == null or not PlanetDescent.wanted() or AppFlow.test_mode or ((DebugCapture.requested() or PerfProbe.requested()) and not action.begins_with("descent")):
 		hud.toast(Loc.t("The Ark has landed. Build power, water and a habitat. Tap a building below."), "info", 10.0)
 		return
 	GameSession.colony_clock_active = false

@@ -436,6 +436,12 @@ func _lander_body() -> Node3D:
 
 
 func debug_action(action: String) -> void:
+	if action.begins_with("descent") and get_node_or_null("Descent") == null:  # perf/evidence: start a descent now
+		var lander: Node3D = _markers.get("lander")
+		var body := _lander_body()
+		if lander and body:
+			_start_descent(lander, body, float(action.get_slice(":", 1)) if action.contains(":") else PlanetDescent.START_ALT)
+		return
 	if action.begins_with("ascent"):  # evidence: the climb back to orbit, ascent[:<seconds in>] (no domain change)
 		var d := PlanetDescent.new()
 		add_child(d)
@@ -520,7 +526,7 @@ func _maybe_landing_intro(ex: ExpeditionState) -> void:
 	if AppFlow.test_mode or ex.elapsed_s > 0.5 or not ex.samples.is_empty():
 		return
 	var action := str(AppFlow.params.get("action", ""))
-	if DebugCapture.requested() and action != "intro" and not action.begins_with("descent"):
+	if (DebugCapture.requested() or PerfProbe.requested()) and action != "intro" and not action.begins_with("descent"):
 		return
 	var lander: Node3D = _markers.get("lander")
 	if lander == null or lander.get_child_count() == 0:
