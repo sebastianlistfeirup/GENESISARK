@@ -63,15 +63,12 @@ func refresh() -> void:
 	pass
 
 
-func header(text: String, sub: String = "") -> void:
-	var h := UiKit.hbox(10)
-	var v := UiKit.vbox(0)
-	v.add_child(UiKit.heading(text))
-	if not sub.is_empty():
-		v.add_child(UiKit.label(sub, 15, UiKit.MUTED, true))
-	v.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	h.add_child(v)
+func header(text: String, sub: String = "", icon_slot: String = "") -> void:
+	var blk := UiKit.header_block(text, sub, icon_slot)
+	var h := blk.get_child(0) as HBoxContainer
 	var cb := UiKit.button(Loc.t("Close  [%s]") % SettingsService.primary_key("pause"), close)
+	UiKit.with_icon(cb, "ui.icon_close", 16)
+	cb.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	# On a controller, show the real button glyph instead of its name.
 	var glyph := SyntySkin.pad_glyph(str(SettingsService.PAD["pause"][0])) if SettingsService.using_pad else null
 	if glyph:
@@ -79,8 +76,9 @@ func header(text: String, sub: String = "") -> void:
 		cb.icon = glyph
 		cb.expand_icon = false
 		cb.add_theme_constant_override("icon_max_width", 26)
+		cb.add_theme_color_override("icon_normal_color", Color.WHITE)
 	h.add_child(cb)
-	body.add_child(h)
+	body.add_child(blk)
 
 
 func _unhandled_input(event: InputEvent) -> void:

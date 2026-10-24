@@ -6,7 +6,7 @@
       "ok": true
     },
     {
-      "detail": "@Button@63:<Button#139586439097>",
+      "detail": "@Button@74:<Button#157001189385>",
       "name": "pad_focuses_menu",
       "ok": true
     },
@@ -36,7 +36,7 @@
       "ok": true
     },
     {
-      "detail": "moved=0.56",
+      "detail": "moved=0.61",
       "name": "riglab_runs",
       "ok": true
     },
@@ -101,7 +101,7 @@
       "ok": true
     },
     {
-      "detail": "I_power_coupling:<Area3D#314891574138>",
+      "detail": "I_power_coupling:<Area3D#337087830990>",
       "name": "prompt_targets_coupling",
       "ok": true
     },
@@ -266,7 +266,7 @@
       "ok": true
     },
     {
-      "detail": "[P: (114.0, 16.0), S: (1052.0, 93.0)] vs [P: (24.0, 117.0), S: (420.0, 123.0)]",
+      "detail": "[P: (160.5, 16.0), S: (959.0, 85.0)] vs [P: (24.0, 109.0), S: (420.0, 135.0)]",
       "name": "a11y_top_bar_clear_of_objectives",
       "ok": true
     },
@@ -281,8 +281,8 @@
       "ok": true
     }
   ],
-  "engine_version": "4.7.1-stable (official)",
+  "engine_version": "4.7.2-stable (official)",
   "failures": [],
   "status": "PASS",
-  "timestamp": "2026-10-24T13:44:33"
+  "timestamp": "2026-10-24T16:03:25"
 }

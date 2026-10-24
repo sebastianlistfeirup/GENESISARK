@@ -43,10 +43,12 @@ Game engine,Spilmotor
 Generated procedurally for the prototype,Genereret procedurelt til prototypen
 Godot Engine and its contributors,Godot Engine og dets bidragydere
 INTERFACE Sci-Fi Menus and Sci-Fi Soldier HUD,INTERFACE Sci-Fi Menus og Sci-Fi Soldier HUD
+Matthew Desmond,Matthew Desmond
 Natanael Gama,Natanael Gama
 Placeholder sounds,Pladsholderlyde
 "Planet flora and rock: POLYGON Nature Biomes (Tropical Jungle, Swamp Marshland, Alpine Mountain, Arid Desert)","Planeternes flora og klipper: POLYGON Nature Biomes (Tropical Jungle, Swamp Marshland, Alpine Mountain, Arid Desert)"
 Programming and tools,Programmering og værktøjer
+Quantico typeface (SIL Open Font License),Skrifttypen Quantico (SIL Open Font License)
 Sebastian Listfeirup,Sebastian Listfeirup
 Sebastian Listfeirup with Claude Code,Sebastian Listfeirup med Claude Code
 "Ship, colony, space and characters: POLYGON Sci-Fi Space, Sci-Fi Worlds and Sci-Fi City","Skib, koloni, rum og figurer: POLYGON Sci-Fi Space, Sci-Fi Worlds og Sci-Fi City"
@@ -257,7 +259,6 @@ People need a place to live.,Mennesker skal have et sted at bo.
 Place the water plant close to water and within range of the supply network.,Placér vandanlægget tæt på vand og inden for netværkets rækkevidde.
 Press B for colony mode. Choose a power source that suits the planet.,"Tryk B for kolonitilstand. Vælg en strømkilde, der passer til planeten."
 Reach year 20,Nå år 20
-Restore emergency power,Genopret nødstrømmen
 Review the colony plan on the bridge and confirm when you are sure.,"Gennemgå koloniplanen på broen, og bekræft, når du er sikker."
 Scan the planet from orbit,Scan planeten fra kredsløb
 See where the Ark can go.,"Se, hvor arken kan tage hen."
@@ -910,6 +911,11 @@ Year %d · day %d   %s,År %d · dag %d   %s
 "Content error — see log:
 ","Indholdsfejl — se log:
 "
+ALARM: critical,ALARM: kritisk
+Connect,Tilslut
+Restore emergency power,Genopret nødstrømmen
+You are the last human who can give humanity a future.,"Du er det sidste menneske, der kan give menneskeheden en fremtid."
+the emergency power coupling,nødstrømskoblingen
 locked,låst
 %s/%s speed · %s/%s sideways · %s/%s up/down · [%s] evasive burn · [%s] autopilot,%s/%s fart · %s/%s sideværts · %s/%s op/ned · [%s] undvigemanøvre · [%s] autopilot
 %s/%s speed · %s/%s sideways · %s/%s up/down · [%s] evasive burn · [%s] autopilot · [%s] view,%s/%s fart · %s/%s sideværts · %s/%s op/ned · [%s] undvigemanøvre · [%s] autopilot · [%s] visning
@@ -932,7 +938,6 @@ Embryos %s · Stasis %.1f yrs","%s
 Brændstof %d · Skrog %d%% · Ilt %d%% · Komp. %d
 Embryoner %s · Stasis %.1f år"
 "Compare candidate worlds, send probes and choose a route.","Sammenlign kandidatverdener, send sonder og vælg rute."
-Connect,Tilslut
 Examine,Undersøg
 Known and missing knowledge about all six worlds.,Kendt og manglende viden om alle seks verdener.
 Open,Åbn
@@ -946,7 +951,6 @@ emergency power is running,nødstrømmen kører
 no power — restore emergency power in the workshop,ingen strøm — genopret nødstrømmen i værkstedet
 the Ark is not in orbit around a planet,arken er ikke i kredsløb om en planet
 the embryo bank,embryobanken
-the emergency power coupling,nødstrømskoblingen
 the orbital terminal,kredsløbsterminalen
 the planet comparison,planetsammenligningen
 the star map,stjernekortet
@@ -978,12 +982,18 @@ the relay is here,relæet står her
 the sample is taken,prøven er taget
 ▲ In hazard zone: %s (×%.1f consumption),▲ I fareområde: %s (×%.1f forbrug)
 Born,Født
+Components,Komponenter
 "Every component you use here will be missing later in the colony. Probes cost 3, a drone reserve 2. Whatever remains at landing becomes the colony's starting stock.","Hver komponent, du bruger her, mangler senere i kolonien. Sonder koster 3, en dronereserve 2. Det, der er tilbage ved landing, bliver koloniens startlager."
-Hull %d%% · Oxygen %d%% · Components %d · Fuel %d,Skrog %d%% · Ilt %d%% · Komponenter %d · Brændstof %d
+Fuel,Brændstof
+Hull,Skrog
 In incubation,I inkubation
 Lost,Tabt
+Oxygen,Ilt
+Redundancy,Redundans
 "Redundancy: four independent cooling loops, all stable on emergency power. Incubation requires a care center, stable supply and +5 kW on a new world.","Redundans: fire uafhængige kølesløjfer, alle stabile på nødstrøm. Inkubation kræver et omsorgscenter, stabil forsyning og +5 kW på en ny verden."
+Repair scrubbers,Reparér iltrensere
 Repair scrubbers: %d comp. → +%d%%,Reparér iltrensere: %d komp. → +%d%%
+Repair the hull,Reparér skroget
 Repair the hull: %d comp. → +%d%%,Reparér skroget: %d komp. → +%d%%
 "Robots, components and repairs.","Robotter, komponenter og reparationer."
 "Storage status, redundancy and the later care plan.","Lagerstatus, redundans og den senere omsorgsplan."
@@ -1107,7 +1117,6 @@ council,råd
 no council,intet råd
   (free),  (gratis)
 Time stands still until you have chosen. Time leaps stop at unresolved crises.,"Tiden står stille, til du har valgt. Tidsspring stopper ved uafklarede kriser."
-ALARM: critical,ALARM: kritisk
 ALARM: warning,ALARM: advarsel
 Objectives,Mål
 The colony is self-sufficient.,Kolonien klarer sig selv.
@@ -1121,8 +1130,8 @@ Load,Indlæs
 Load latest valid backup,Indlæs seneste gyldige backup
 New campaign,Ny kampagne
 Quit,Afslut
+Select,Vælg
 Settings,Indstillinger
-You are the last human who can give humanity a future.,"Du er det sidste menneske, der kan give menneskeheden en fremtid."
 v%s · Godot %s,v%s · Godot %s
 Back — continue the voyage,Tilbage — fortsæt rejsen
 Building material %d · Components %d · Water %d person-days · Food %d person-days,Byggemateriale %d · Komponenter %d · Vand %d persondøgn · Mad %d persondøgn

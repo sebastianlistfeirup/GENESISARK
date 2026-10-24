@@ -47,7 +47,7 @@ func close() -> void:
 
 func _build() -> void:
 	UiKit.clear(_body)
-	_body.add_child(UiKit.heading(Loc.t("Settings")))
+	_body.add_child(UiKit.header_block(Loc.t("Settings"), "", "ui.icon_settings"))
 	var lang_row := UiKit.hbox(8)
 	var ll := UiKit.label(Loc.t("Language"), 16)
 	ll.custom_minimum_size = Vector2(300, 0)
@@ -60,10 +60,10 @@ func _build() -> void:
 			UiKit.mark_selected(lb)
 		lang_row.add_child(lb)
 	_body.add_child(lang_row)
-	_body.add_child(UiKit.title(Loc.t("Audio")))
+	_body.add_child(UiKit.section(Loc.t("Audio"), "ui.icon_audio"))
 	for k: String in ["master_volume", "music_volume", "sfx_volume", "ambience_volume", "ui_volume"]:
 		_slider(k, {"master_volume": Loc.t("Master"), "music_volume": Loc.t("Music"), "sfx_volume": Loc.t("Effects"), "ambience_volume": Loc.t("Ambience"), "ui_volume": Loc.t("Interface")}[k], 0.0, 1.0, 0.05)
-	_body.add_child(UiKit.title(Loc.t("Display and accessibility")))
+	_body.add_child(UiKit.section(Loc.t("Display and accessibility"), "ui.icon_display"))
 	var q_row := UiKit.hbox(8)
 	var ql := UiKit.label(Loc.t("Graphics quality"), 16)
 	ql.custom_minimum_size = Vector2(300, 0)
@@ -83,12 +83,12 @@ func _build() -> void:
 	_toggle("reduced_motion", Loc.t("Reduced motion (no fades/shaking)"))
 	_toggle("camera_shake", Loc.t("Camera shake"))
 	_toggle("fullscreen", Loc.t("Fullscreen"))
-	_body.add_child(UiKit.title(Loc.t("Mouse")))
+	_body.add_child(UiKit.section(Loc.t("Mouse"), "ui.icon_mouse"))
 	_slider("mouse_sensitivity", Loc.t("Sensitivity"), 0.05, 1.0, 0.05)
 	_toggle("invert_y", Loc.t("Invert vertical axis"))
 	if TouchControls.enabled:
 		_slider("touch_look_sensitivity", Loc.t("Camera drag (touch)"), 0.4, 2.0, 0.05)
-	_body.add_child(UiKit.title(Loc.t("Controls")))
+	_body.add_child(UiKit.section(Loc.t("Controls"), "ui.icon_controls"))
 	for action: String in SettingsService.ACTIONS.keys():
 		var h := UiKit.hbox(8)
 		var l := UiKit.label(Loc.t(str(SettingsService.ACTION_LABELS.get(action, action))), 16)
@@ -101,10 +101,14 @@ func _build() -> void:
 			_build())
 		h.add_child(b)
 		_body.add_child(h)
-	_body.add_child(UiKit.button(Loc.t("Reset keys"), func() -> void:
+	var foot := UiKit.hbox(10)
+	foot.alignment = BoxContainer.ALIGNMENT_END
+	foot.add_child(UiKit.with_icon(UiKit.button(Loc.t("Reset keys"), func() -> void:
 		SettingsService.reset_bindings()
-		_build()))
-	_body.add_child(UiKit.button(Loc.t("Close"), close))
+		_build()), "ui.icon_time", 18))
+	foot.add_child(UiKit.with_icon(UiKit.button(Loc.t("Close"), close), "ui.icon_close", 16))
+	_body.add_child(UiKit.trim())
+	_body.add_child(foot)
 
 
 func _slider(key: String, label_text: String, lo: float, hi: float, step: float) -> void:

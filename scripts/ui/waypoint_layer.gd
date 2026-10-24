@@ -22,6 +22,12 @@ var places: Array = []       # [{node: Node3D, label: String, height: float}]
 var _canvas: Control
 var _beam: MeshInstance3D
 var _t := 0.0
+## Synty HUD marker sprites (null without the packs: the drawn shapes are used).
+var _tex_obj: Texture2D
+var _tex_obj_under: Texture2D
+var _tex_ring: Texture2D
+var _tex_arrow: Texture2D
+var _tex_place: Texture2D
 
 
 func _ready() -> void:
@@ -31,6 +37,11 @@ func _ready() -> void:
 	_canvas.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_canvas.draw.connect(_draw_markers)
 	add_child(_canvas)
+	_tex_obj = SyntySkin.icon("marker.objective", 64)
+	_tex_obj_under = SyntySkin.icon("marker.objective_under", 64)
+	_tex_ring = SyntySkin.icon("marker.ring", 96)
+	_tex_arrow = SyntySkin.icon("marker.arrow", 48)
+	_tex_place = SyntySkin.icon("marker.place", 32)
 	_beam = MeshInstance3D.new()
 	var cyl := CylinderMesh.new()
 	cyl.top_radius = 0.2
@@ -96,8 +107,11 @@ func _draw_markers() -> void:
 		if not rect.has_point(sp):
 			continue
 		var a := clampf(1.0 - (d - 8.0) / (PLACE_RANGE - 8.0), 0.0, 1.0) * 0.85
-		_canvas.draw_circle(sp, 6.0, Color(UiKit.PETROL.lightened(0.35), a))
-		_canvas.draw_arc(sp, 9.0, 0, TAU, 20, Color(1, 1, 1, a * 0.5), 1.5)
+		if _tex_place:
+			_canvas.draw_texture_rect(_tex_place, Rect2(sp - Vector2(9, 9), Vector2(18, 18)), false, Color(UiKit.PETROL.lightened(0.45), a))
+		else:
+			_canvas.draw_circle(sp, 6.0, Color(UiKit.PETROL.lightened(0.35), a))
+			_canvas.draw_arc(sp, 9.0, 0, TAU, 20, Color(1, 1, 1, a * 0.5), 1.5)
 		_text(font, sp + Vector2(0, -16), str(p["label"]), 16, Color(UiKit.TEXT, a))
 	if objective == null or not is_instance_valid(objective) or not objective.is_inside_tree():
 		return
@@ -132,16 +146,32 @@ func _draw_markers() -> void:
 	var scale := minf(half.x / maxf(absf(dir.x), 0.001), half.y / maxf(absf(dir.y), 0.001))
 	var edge := center + dir * scale
 	_canvas.draw_circle(edge, 30.0, Color(0.03, 0.06, 0.08, 0.6))
-	_canvas.draw_arc(edge, 30.0, 0, TAU, 32, Color(UiKit.AMBER, 0.5 * pulse), 2.0)
+	if _tex_ring:
+		_canvas.draw_texture_rect(_tex_ring, Rect2(edge - Vector2(34, 34), Vector2(68, 68)), false, Color(UiKit.AMBER, 0.75 * pulse))
+	else:
+		_canvas.draw_arc(edge, 30.0, 0, TAU, 32, Color(UiKit.AMBER, 0.5 * pulse), 2.0)
 	_diamond(edge, 15.0, col)
-	var tip := edge + dir * 46.0
-	var side := Vector2(-dir.y, dir.x) * 13.0
-	_canvas.draw_colored_polygon(PackedVector2Array([tip, edge + dir * 31.0 + side, edge + dir * 31.0 - side]), col)
+	if _tex_arrow:
+		# The Synty arrow points down in the sprite: rotate it towards the target.
+		_canvas.draw_set_transform(edge + dir * 44.0, dir.angle() - PI * 0.5, Vector2.ONE)
+		_canvas.draw_texture_rect(_tex_arrow, Rect2(Vector2(-11, -11), Vector2(22, 22)), false, col)
+		_canvas.draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
+	else:
+		var tip := edge + dir * 46.0
+		var side := Vector2(-dir.y, dir.x) * 13.0
+		_canvas.draw_colored_polygon(PackedVector2Array([tip, edge + dir * 31.0 + side, edge + dir * 31.0 - side]), col)
 	var label_off := Vector2(0, -44) if edge.y > center.y else Vector2(0, 58)
 	_text(font, edge + label_off, "%s · %s" % [objective_label, dist_txt], 17, Color(UiKit.TEXT, 0.95), true)
 
 
 func _diamond(c: Vector2, r: float, col: Color) -> void:
+	if _tex_obj:
+		# Synty world-space objective glyph over its dark underlay (legible on any ground).
+		var rr := Rect2(c - Vector2(r, r) * 1.25, Vector2(r, r) * 2.5)
+		if _tex_obj_under:
+			_canvas.draw_texture_rect(_tex_obj_under, rr.grow(2.0), false, Color(0.02, 0.04, 0.06, 0.75 * col.a))
+		_canvas.draw_texture_rect(_tex_obj, rr, false, col)
+		return
 	var pts := PackedVector2Array([c + Vector2(0, -r), c + Vector2(r, 0), c + Vector2(0, r), c + Vector2(-r, 0)])
 	_canvas.draw_colored_polygon(pts, Color(0.04, 0.07, 0.09, 0.55 * col.a))
 	pts.append(pts[0])

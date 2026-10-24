@@ -50,18 +50,32 @@ func _run() -> void:
 	AppFlow.goto(scene_key, extra)
 	for i: int in wait_frames:
 		await get_tree().process_frame
+	# Park the cursor where no button sits, so no stray hover/tooltip lands in the shot.
+	get_viewport().warp_mouse(Vector2(get_viewport().get_visible_rect().size.x * 0.5, 170))
 	if extra.has("action"):
 		var sc := get_tree().current_scene
 		var act := str(extra["action"])
 		var hud: Variant = sc.get("hud") if sc else null
 		if act == "alarm" and hud is GameHud:
 			AudioService.alarm_raised.emit(true)  # the HUD's visual twin of an alarm sound
-		elif act in ["pause", "pause_settings"] and hud is GameHud:
+		elif act in ["pause", "pause_settings", "pause_save", "pause_load"] and hud is GameHud:
 			(hud as GameHud).pause_menu.open()
 			if act == "pause_settings":
 				(hud as GameHud).pause_menu.open_settings()
+			elif act == "pause_save":
+				(hud as GameHud).pause_menu._save_menu()
+			elif act == "pause_load":
+				(hud as GameHud).pause_menu._load_menu()
 		elif act == "journal" and hud is GameHud:
 			(hud as GameHud).journal.toggle()
+		elif act == "hud_demo" and hud is GameHud:
+			# Every HUD message surface at once: notices of each kind, a subtitle and a prompt.
+			var gh := hud as GameHud
+			gh.toast(Loc.t("Objective complete: %s") % Loc.t("Restore emergency power"), "ok")
+			gh.toast(Loc.t("Not enough components (have %d, need %d).") % [1, 3], "warning")
+			gh.toast(Loc.t("ALARM: critical"), "critical")
+			gh.story.play_scene({"id": "dbg", "lines": [{"speaker": "CAPTAIN", "text": Loc.t("You are the last human who can give humanity a future.")}]})
+			gh.set_prompt("[%s] %s %s" % [SettingsService.binding_text("interact"), Loc.t("Connect"), Loc.t("the emergency power coupling")])
 		elif sc and sc.has_method("debug_action"):
 			sc.call("debug_action", act)
 		# The alarm banner hides after a few real seconds; software rendering is slow.

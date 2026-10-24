@@ -22,12 +22,22 @@ var _t := 0.0
 func _ready() -> void:
 	custom_minimum_size = Vector2(460, 0)
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
-	var sb := StyleBoxFlat.new()
-	sb.bg_color = Color(0.02, 0.05, 0.06, 0.82)
-	sb.border_color = UiKit.PETROL
-	sb.border_width_left = 3
-	sb.set_content_margin_all(12)
-	add_theme_stylebox_override("panel", sb)
+	if not SyntySkin.available():
+		var sb := StyleBoxFlat.new()
+		sb.bg_color = Color(0.02, 0.05, 0.06, 0.82)
+		sb.border_color = UiKit.PETROL
+		sb.border_width_left = 3
+		sb.set_content_margin_all(12)
+		add_theme_stylebox_override("panel", sb)
+	# With the packs NAV uses the shared HUD glass plate plus a comms glyph.
+	var row := HBoxContainer.new()
+	row.add_theme_constant_override("separation", 10)
+	row.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	add_child(row)
+	var ic := UiKit.icon_rect("ui.icon_nav", 22, Color("7fd6d0"))
+	if ic:
+		ic.size_flags_vertical = Control.SIZE_SHRINK_BEGIN
+		row.add_child(ic)
 	_label = RichTextLabel.new()
 	_label.bbcode_enabled = true
 	_label.fit_content = true
@@ -36,7 +46,7 @@ func _ready() -> void:
 	_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_apply_size()
 	SettingsService.changed.connect(_apply_size)
-	add_child(_label)
+	row.add_child(_label)
 	visible = false
 
 

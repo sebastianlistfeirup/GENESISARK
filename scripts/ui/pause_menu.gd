@@ -17,7 +17,7 @@ func _ready() -> void:
 	dim.color = Color(0, 0, 0, 0.55)
 	dim.set_anchors_preset(Control.PRESET_FULL_RECT)
 	add_child(dim)
-	_panel = UiKit.panel(Vector2(520, 0))
+	_panel = UiKit.panel(Vector2(560, 0))
 	_panel.set_anchors_and_offsets_preset(Control.PRESET_CENTER)
 	_panel.grow_horizontal = Control.GROW_DIRECTION_BOTH
 	_panel.grow_vertical = Control.GROW_DIRECTION_BOTH
@@ -47,22 +47,39 @@ func close() -> void:
 	Input.mouse_mode = _prev_mouse
 
 
+## Menu entry in the main-menu style (lit plate, amber tab, glyph).
+func _entry(text: String, icon_slot: String, cb: Callable) -> Button:
+	var b := UiKit.button(text, cb)
+	UiKit.with_icon(b, icon_slot, 20)
+	UiKit.style_menu_button(b, true, 19, 44)
+	return b
+
+
+func _head(text: String) -> void:
+	var sub := ""
+	if GameSession.has_game():
+		var o := GameSession.sim.objectives.current(GameSession.state)
+		sub = "%s: %s" % [Loc.t("Objectives"), str(o.get("title", ""))] if not o.is_empty() else ""
+	_body.add_child(UiKit.header_block(text, sub, "ui.icon_pause"))
+
+
 func _main() -> void:
 	_panel.visible = true
 	UiKit.clear(_body)
-	_body.add_child(UiKit.heading(Loc.t("Pause")))
-	_body.add_child(UiKit.button(Loc.t("Continue"), close))
-	_body.add_child(UiKit.button(Loc.t("Save game"), _save_menu))
-	_body.add_child(UiKit.button(Loc.t("Load game"), _load_menu))
-	_body.add_child(UiKit.button(Loc.t("Settings"), open_settings))
-	_body.add_child(UiKit.button(Loc.t("Main menu"), func() -> void:
+	_head(Loc.t("Pause"))
+	var first := _entry(Loc.t("Continue"), "ui.icon_play", close)
+	_body.add_child(first)
+	_body.add_child(_entry(Loc.t("Save game"), "ui.icon_save", _save_menu))
+	_body.add_child(_entry(Loc.t("Load game"), "ui.icon_load", _load_menu))
+	_body.add_child(_entry(Loc.t("Settings"), "ui.icon_settings", open_settings))
+	_body.add_child(_entry(Loc.t("Main menu"), "ui.icon_menu", func() -> void:
 		GameSession.autosave()
 		close()
 		AppFlow.goto("menu")))
-	_body.add_child(UiKit.button(Loc.t("Quit game"), func() -> void:
+	_body.add_child(_entry(Loc.t("Quit game"), "ui.icon_quit", func() -> void:
 		GameSession.autosave()
 		get_tree().quit()))
-	(_body.get_child(1) as Button).grab_focus.call_deferred()
+	first.grab_focus.call_deferred()
 
 
 ## Settings replace the pause panel (never drawn through it).
@@ -73,25 +90,32 @@ func open_settings() -> void:
 
 func _save_menu() -> void:
 	UiKit.clear(_body)
-	_body.add_child(UiKit.heading(Loc.t("Save game")))
+	_body.add_child(UiKit.header_block(Loc.t("Save game"), "", "ui.icon_save"))
+	var first: Button
 	for slot: String in ["manual_1", "manual_2", "manual_3"]:
 		var sm := SaveService.summary(slot)
 		var txt := "%s — %s" % [Loc.t(str(SaveService.SLOT_LABELS[slot])), _describe(sm)]
-		_body.add_child(UiKit.button(txt, func() -> void:
+		var b := _entry(txt, "ui.icon_save", func() -> void:
 			var r := GameSession.save_to(slot)
-			_status(Loc.t("Saved to %s.") % Loc.t(str(SaveService.SLOT_LABELS[slot])) if r["ok"] else Loc.t("Save failed: ") + str(r["error"]))))
-	_body.add_child(UiKit.button(Loc.t("Back"), _main))
+			_status(Loc.t("Saved to %s.") % Loc.t(str(SaveService.SLOT_LABELS[slot])) if r["ok"] else Loc.t("Save failed: ") + str(r["error"]), bool(r["ok"])))
+		_body.add_child(b)
+		if first == null:
+			first = b
+	_body.add_child(_entry(Loc.t("Back"), "ui.icon_back", _main))
+	first.grab_focus.call_deferred()
 
 
 func _load_menu() -> void:
 	UiKit.clear(_body)
-	_body.add_child(UiKit.heading(Loc.t("Load game")))
+	_body.add_child(UiKit.header_block(Loc.t("Load game"), "", "ui.icon_load"))
 	for slot: String in SaveService.SLOTS:
 		if not SaveService.store.exists(slot):
 			continue
 		var sm := SaveService.summary(slot)
-		_body.add_child(UiKit.button("%s — %s" % [Loc.t(str(SaveService.SLOT_LABELS[slot])), _describe(sm)], func() -> void: _load(slot, false)))
-	_body.add_child(UiKit.button(Loc.t("Back"), _main))
+		_body.add_child(_entry("%s — %s" % [Loc.t(str(SaveService.SLOT_LABELS[slot])), _describe(sm)], "ui.icon_load", func() -> void: _load(slot, false)))
+	var back := _entry(Loc.t("Back"), "ui.icon_back", _main)
+	_body.add_child(back)
+	(_body.get_child(1) as Control).grab_focus.call_deferred()
 
 
 func _load(slot: String, backup: bool) -> void:
@@ -101,16 +125,21 @@ func _load(slot: String, backup: bool) -> void:
 		AppFlow.continue_game()
 		return
 	UiKit.clear(_body)
-	_body.add_child(UiKit.heading(Loc.t("Could not load")))
+	_body.add_child(UiKit.header_block(Loc.t("Could not load"), "", "ui.icon_warning"))
 	_body.add_child(UiKit.label(str(r["error"]), 17, UiKit.WARN, true))
 	if r["backup_available"] and not backup:
-		_body.add_child(UiKit.button(Loc.t("Load latest valid backup"), func() -> void: _load(slot, true)))
-	_body.add_child(UiKit.button(Loc.t("Back"), _main))
+		_body.add_child(_entry(Loc.t("Load latest valid backup"), "ui.icon_load", func() -> void: _load(slot, true)))
+	var back := _entry(Loc.t("Back"), "ui.icon_back", _main)
+	_body.add_child(back)
+	back.grab_focus.call_deferred()
 
 
-func _status(text: String) -> void:
+func _status(text: String, ok: bool = true) -> void:
 	_main()
-	_body.add_child(UiKit.label(text, 16, UiKit.MUTED, true))
+	var row := UiKit.hbox(8)
+	row.add_child(UiKit.status_glyph("ok" if ok else "warning", 18))
+	row.add_child(UiKit.label(text, 16, UiKit.MUTED.lightened(0.2), true))
+	_body.add_child(row)
 
 
 static func _describe(sm: Dictionary) -> String:

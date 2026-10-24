@@ -18,7 +18,9 @@ func ask(id: String) -> void:
 func refresh() -> void:
 	UiKit.clear(body)
 	var gs: GameState = GameSession.state
-	body.add_child(UiKit.label(Loc.t("Year %d: the first generation speaks") % int(gs.campaign.colony_year()), 28, UiKit.AMBER))
+	var blk := UiKit.header_block(Loc.t("Year %d: the first generation speaks") % int(gs.campaign.colony_year()), "", "ui.icon_council", 28)
+	(blk.find_children("*", "Label", true, false)[0] as Label).add_theme_color_override("font_color", UiKit.AMBER)
+	body.add_child(blk)
 	body.add_child(UiKit.label(Loc.t("Those born here have their own answers to what the colony should be. Your choice sets the colony's lasting course until the next decision: each has a gain and a price. No answer is the right one."), 16, UiKit.TEXT, true))
 	var lines := {"expansion": Loc.t("We have to move on. The valleys to the north could feed thousands."), "safety": Loc.t("We can't afford to lose anything. Reserves before everything else."),
 		"self_determination": Loc.t("We want to decide for ourselves. Give the council the keys.")}
@@ -28,7 +30,7 @@ func refresh() -> void:
 			continue
 		var p := UiKit.panel()
 		var v := UiKit.vbox(4)
-		v.add_child(UiKit.label(str(ch.get("name")), 20, UiKit.TEXT))
+		v.add_child(UiKit.heading(str(ch.get("name")), 20))
 		v.add_child(UiKit.label(str(ch.get("bio", "")), 14, UiKit.MUTED, true))
 		v.add_child(UiKit.label("“%s”" % lines.get(persp, ""), 16, UiKit.TEXT, true))
 		var d := ChoiceRules.describe(GameSession.content, persp)

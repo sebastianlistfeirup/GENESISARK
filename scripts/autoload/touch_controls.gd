@@ -58,7 +58,7 @@ func _ready() -> void:
 		["rotate_cam_right", "⟳", Vector2(-420, -330), 40.0], ["colony_mode", "B", Vector2(-120, -460), 40.0],
 		["autopilot", Loc.t("Auto"), Vector2(-120, -150), 64.0], ["drone_refill", Loc.t("Drone"), Vector2(-260, -250), 44.0],
 		["ascend", "▲", Vector2(-380, -150), 42.0], ["descend", "▼", Vector2(-380, -60), 42.0],
-		["journal", Loc.t("Log"), Vector2(170, 180), 40.0], ["pause", "II", Vector2(70, 180), 40.0],
+		["journal", Loc.t("Log"), Vector2(52, 262), 38.0], ["pause", "II", Vector2(52, 168), 38.0],
 		["speed_pause", Loc.t("Time"), Vector2(-220, -460), 40.0], ["camera_view", Loc.t("View"), Vector2(-260, -250), 40.0],
 	]
 	for d: Array in defs:
@@ -74,6 +74,15 @@ func _ready() -> void:
 
 
 func _circle(r: float, c: Color) -> Control:
+	# Synty ring over glass when the packs are installed (same size, same role).
+	var ring := SyntySkin.MENUS + "SciFiMenus/SPR_SciFiMenus_Frame_Circle_05"
+	var sk := SyntySkin.stack([[ring + "_Background.png", Color(c.r, c.g, c.b, minf(1.0, c.a * 2.5))], [ring + ".png", Color(0.8, 0.92, 0.96, 0.55)]], r * 2.0 / 1024.0, Vector4.ZERO, Vector4.ZERO)
+	if sk:
+		var tr := TextureRect.new()
+		tr.texture = sk.texture
+		tr.size = Vector2(r * 2, r * 2)
+		tr.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		return tr
 	var p := Panel.new()
 	var sb := StyleBoxFlat.new()
 	sb.bg_color = c
@@ -105,7 +114,15 @@ func _add_button(action: String, text: String, offset: Vector2, r: float) -> voi
 	var pressed := img.duplicate() as Image
 	pressed.adjust_bcs(1.6, 1.0, 1.0)
 	b.texture_pressed = ImageTexture.create_from_image(pressed)
+	# Synty steel ring over dark glass (petrol when pressed), same size and hit circle.
+	var ring := SyntySkin.MENUS + "SciFiMenus/SPR_SciFiMenus_Frame_Circle_02"
+	var sk_n := SyntySkin.stack([[ring + "_Background.png", Color(0.04, 0.09, 0.12, 0.66)], [ring + ".png", Color(0.75, 0.9, 0.95, 0.9)]], r * 2.0 / 1024.0, Vector4.ZERO, Vector4.ZERO)
+	if sk_n:
+		b.texture_normal = sk_n.texture
+		var sk_p := SyntySkin.stack([[ring + "_Background.png", Color(UiKit.PETROL, 0.85)], [ring + ".png", Color(1.0, 0.85, 0.6)]], r * 2.0 / 1024.0, Vector4.ZERO, Vector4.ZERO)
+		b.texture_pressed = sk_p.texture
 	var l := UiKit.label(text, int(r * 0.55), UiKit.TEXT)
+	l.add_theme_font_override("font", UiKit.display_font())
 	l.size = Vector2(r * 2, r * 2)
 	l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	l.vertical_alignment = VERTICAL_ALIGNMENT_CENTER

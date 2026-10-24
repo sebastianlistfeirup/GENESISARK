@@ -17,6 +17,10 @@ var journal: JournalPanel
 var pause_menu: PauseMenu
 var nav: NavComms  # NAV, the navigation computer's channel (top centre; silent in the colony)
 var _prompt_panel: PanelContainer
+var _prompt_key: HBoxContainer  # key cap(s) parsed from a leading "[E]" in the prompt
+var _prompt_sub: Label  # second and later prompt lines (the consequence), smaller
+var _dock: PanelContainer  # plate behind the scene's bottom bar (colony build bar)
+var _decorated := -1
 var _objective: PanelContainer
 var _alarm: PanelContainer  # visual twin of every alarm sound (bible p.26)
 var _alarm_label: Label
@@ -43,9 +47,10 @@ func _ready() -> void:
 	op.custom_minimum_size = Vector2(420, 0)
 	op.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	var ov := UiKit.vbox(2)
-	ov.add_child(UiKit.title(Loc.t("Objectives")))
+	ov.add_child(UiKit.section(Loc.t("Objectives"), "ui.icon_objective"))
 	objective_title = UiKit.label("", 21, UiKit.TEXT, true)
-	objective_hint = UiKit.label("", 15, UiKit.MUTED, true)
+	objective_title.add_theme_font_override("font", UiKit.bold_font())
+	objective_hint = UiKit.label("", 15, UiKit.MUTED.lightened(0.1), true)
 	ov.add_child(objective_title)
 	ov.add_child(objective_hint)
 	op.add_child(ov)
@@ -65,16 +70,31 @@ func _ready() -> void:
 	_prompt_panel.position.y -= 210
 	_prompt_panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	var pv := UiKit.vbox(4)
+	var prow := UiKit.hbox(10)
+	prow.alignment = BoxContainer.ALIGNMENT_CENTER
+	_prompt_key = UiKit.hbox(4)
+	_prompt_key.visible = false
+	prow.add_child(_prompt_key)
 	prompt = UiKit.label("", 20, UiKit.TEXT)
 	prompt.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	pv.add_child(prompt)
+	prow.add_child(prompt)
+	pv.add_child(prow)
+	_prompt_sub = UiKit.label("", 15, UiKit.MUTED.lightened(0.15))
+	_prompt_sub.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_prompt_sub.visible = false
+	pv.add_child(_prompt_sub)
 	hold_bar = UiKit.bar(0, 1, UiKit.AMBER, 10)
 	hold_bar.visible = false
 	pv.add_child(hold_bar)
 	_prompt_panel.add_child(pv)
 	_prompt_panel.visible = false
 	root.add_child(_prompt_panel)
-	# Bottom bar for scene widgets
+	# Bottom bar for scene widgets, on a dock plate that follows its size.
+	_dock = PanelContainer.new()
+	_dock.theme_type_variation = &"PanelDock"
+	_dock.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_dock.visible = false
+	root.add_child(_dock)
 	bottom = UiKit.hbox(10)
 	bottom.set_anchors_and_offsets_preset(Control.PRESET_CENTER_BOTTOM)
 	bottom.grow_horizontal = Control.GROW_DIRECTION_BOTH
@@ -97,8 +117,16 @@ func _ready() -> void:
 	_alarm.grow_horizontal = Control.GROW_DIRECTION_BOTH
 	_alarm.position.y = 150
 	_alarm.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_alarm.theme_type_variation = &"PanelAccent"
+	var ah := UiKit.hbox(10)
+	var aic := UiKit.icon_rect("ui.icon_critical", 26, UiKit.DANGER)
+	if aic:
+		aic.name = "AlarmIcon"
+		ah.add_child(aic)
 	_alarm_label = UiKit.label("", 22, UiKit.TEXT)
-	_alarm.add_child(_alarm_label)
+	_alarm_label.add_theme_font_override("font", UiKit.display_variant(2))
+	ah.add_child(_alarm_label)
+	_alarm.add_child(ah)
 	_alarm.visible = false
 	root.add_child(_alarm)
 	AudioService.alarm_raised.connect(show_alarm)
@@ -108,6 +136,11 @@ func _ready() -> void:
 	add_child(journal)
 	pause_menu = PauseMenu.new()
 	add_child(pause_menu)
+	# Touch: the pause/log buttons live in a column at the left edge, so the
+	# objective and the notices move right of it instead of under the thumbs.
+	if is_instance_valid(TouchControls) and TouchControls.enabled:
+		_objective.position.x += 76.0
+		toasts.position.x += 76.0
 	GameSession.objectives_completed.connect(_on_objectives)
 	GameSession.state_changed.connect(func(_k: String) -> void: refresh_objective())
 	GameSession.command_failed.connect(func(r: CommandResult) -> void:
@@ -132,9 +165,26 @@ func _on_objectives(ids: Array) -> void:
 	refresh_objective()
 
 
+## Interaction prompt. A leading "[E]" (or "[E / Mouse 1]") becomes key caps,
+## the first line stays large, later lines (the consequence) are smaller.
 func set_prompt(text: String) -> void:
-	prompt.text = text
 	_prompt_panel.visible = not text.is_empty()
+	var lines := text.split("\n", true, 1)
+	var first := lines[0] if lines.size() > 0 else ""
+	_prompt_sub.text = lines[1] if lines.size() > 1 else ""
+	_prompt_sub.visible = not _prompt_sub.text.is_empty()
+	UiKit.clear(_prompt_key)
+	_prompt_key.visible = false
+	var m := _KEY_RX.search(first)
+	if m:
+		for k: String in m.get_string(1).split(" / ", false):
+			_prompt_key.add_child(UiKit.keycap(k.strip_edges(), 16))
+		_prompt_key.visible = _prompt_key.get_child_count() > 0
+		first = first.substr(m.get_end())
+	prompt.text = first
+
+
+static var _KEY_RX := RegEx.create_from_string("^\\[([^\\]]{1,24})\\]\\s*")
 
 
 ## Scenes without subtitles (the approach flight) dock the prompt near the
@@ -162,14 +212,23 @@ func toast(text: String, kind: String = "info", seconds: float = 5.0) -> void:
 		return
 	var p := UiKit.panel()
 	p.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	var h := UiKit.hbox(8)
-	var icon := UiKit.label(UiKit.status_icon(kind), 18, UiKit.status_color(kind))
-	h.add_child(icon)
+	if kind == "critical":
+		p.theme_type_variation = &"PanelDanger"
+	var h := UiKit.hbox(10)
+	# Status strip + glyph + text: colour is never the only signal.
+	var strip := ColorRect.new()
+	strip.color = UiKit.status_color(kind)
+	strip.custom_minimum_size = Vector2(3, 0)
+	strip.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	h.add_child(strip)
+	h.add_child(UiKit.status_glyph(kind, 20))
 	var l := UiKit.label(text, 16, UiKit.TEXT, true)
-	l.custom_minimum_size = Vector2(360, 0)
+	l.custom_minimum_size = Vector2(350, 0)
+	l.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	h.add_child(l)
 	p.add_child(h)
 	toasts.add_child(p)
+	UiKit.fade_in(p, 0.25)
 	while toasts.get_child_count() > 4:
 		var old := toasts.get_child(0)
 		toasts.remove_child(old)
@@ -185,10 +244,11 @@ func toast(text: String, kind: String = "info", seconds: float = 5.0) -> void:
 func show_alarm(critical: bool) -> void:
 	var kind := "critical" if critical else "warning"
 	_alarm_label.text = UiKit.status_text(kind, Loc.t("ALARM: critical") if critical else Loc.t("ALARM: warning"))
-	var sb := (UiKit.theme().get_stylebox("panel", "PanelContainer") as StyleBoxFlat).duplicate() as StyleBoxFlat
-	sb.border_color = UiKit.status_color(kind)
-	sb.set_border_width_all(3)
-	_alarm.add_theme_stylebox_override("panel", sb)
+	_alarm.theme_type_variation = &"PanelDanger" if critical else &"PanelAccent"
+	var aic := _alarm.find_child("AlarmIcon", true, false) as TextureRect
+	if aic:
+		aic.texture = SyntySkin.icon("ui.icon_" + kind, 52)
+		aic.modulate = UiKit.status_color(kind)
 	_alarm_label.add_theme_color_override("font_color", UiKit.status_color(kind))
 	_alarm.visible = true
 	_alarm.modulate.a = 1.0
@@ -232,6 +292,7 @@ func objective_rect() -> Rect2:
 ## NAV sits top centre; when the screen is narrow (UI scale 1.5 at 1280x720)
 ## it drops below the objective / top-right columns instead of overlapping them.
 func _process(_delta: float) -> void:
+	_update_dock()
 	if not nav.visible:
 		return
 	var y := 18.0
@@ -240,6 +301,28 @@ func _process(_delta: float) -> void:
 		if c.visible and c.get_rect().intersects(nr):
 			y = maxf(y, c.get_rect().end.y + 8.0)
 	nav.position.y = y
+
+
+## The dock plate tracks the bottom bar (only when it has visible content);
+## build buttons get their Synty glyph once (presentation only).
+func _update_dock() -> void:
+	var r := bottom.get_global_rect()
+	var show := bottom.is_visible_in_tree() and r.size.x > 4.0 and r.size.y > 4.0
+	for c: Node in bottom.get_children():
+		show = show and c is Control and (c as Control).visible
+	_dock.visible = show and bottom.get_child_count() > 0
+	if not _dock.visible:
+		return
+	var vis := root.get_rect()
+	var g := Rect2(r.position - Vector2(12, 8), r.size + Vector2(24, 16)).intersection(vis.grow(-2.0))
+	_dock.position = g.position
+	_dock.size = g.size
+	var n := bottom.get_child_count() + (bottom.get_child(0).get_child_count() if bottom.get_child_count() > 0 else 0)
+	if n != _decorated:
+		_decorated = n
+		for b: Node in bottom.find_children("*", "Button", true, false):
+			if b.has_meta("def_id") and (b as Button).icon == null:
+				UiKit.with_icon(b as Button, "build." + str(b.get_meta("def_id")), 20)
 
 
 func any_modal_open() -> bool:

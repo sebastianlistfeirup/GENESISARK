@@ -38,11 +38,11 @@ func refresh() -> void:
 	if not GameSession.has_game():
 		return
 	var gs: GameState = GameSession.state
-	_body.add_child(UiKit.heading(Loc.t("Journal")))
+	_body.add_child(UiKit.header_block(Loc.t("Journal"), "", "ui.icon_journal"))
 	var l := gs.ark.ledger()
 	_body.add_child(UiKit.rich(Loc.t("[color=#8fa3ad]Embryo ledger:[/color] %s viable · %s in incubation · %s born · %s lost   [color=#8fa3ad](total %s)[/color]") % [
 		UiKit.thousands(l["viable"]), UiKit.thousands(l["incubating"]), UiKit.thousands(l["born"]), UiKit.thousands(l["lost"]), UiKit.thousands(gs.ark.embryo_sum())]))
-	_body.add_child(UiKit.title(Loc.t("Objectives")))
+	_body.add_child(UiKit.section(Loc.t("Objectives"), "ui.icon_objective"))
 	var ids: Array = GameSession.content.objectives.keys()
 	ids.sort_custom(func(a: String, b: String) -> bool: return int(GameSession.content.objectives[a].get("order", 0)) < int(GameSession.content.objectives[b].get("order", 0)))
 	var shown := 0
@@ -55,7 +55,7 @@ func refresh() -> void:
 		if shown > 3:
 			continue
 		_body.add_child(UiKit.rich("%s %s" % ["[color=#5fae6e]✔[/color]" if done else ("[color=#e8a33d]▶[/color]" if cur else "[color=#8fa3ad]○[/color]"), o.get("title", id)]))
-	_body.add_child(UiKit.title(Loc.t("Logbook")))
+	_body.add_child(UiKit.section(Loc.t("Logbook"), "ui.icon_journal"))
 	var entries: Array = gs.campaign.journal.duplicate()
 	entries.reverse()
 	for e: Dictionary in entries.slice(0, 40):

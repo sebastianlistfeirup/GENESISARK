@@ -26,6 +26,7 @@ func _ready() -> void:
 	_box.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	var v := UiKit.vbox(2)
 	_speaker = UiKit.label("", 16, UiKit.AMBER)
+	_speaker.add_theme_font_override("font", UiKit.display_variant(2))
 	_text = UiKit.label("", 22, UiKit.TEXT, true)
 	_text.custom_minimum_size = Vector2(860, 0)
 	v.add_child(_speaker)
@@ -71,7 +72,7 @@ func _show_line() -> void:
 		name = ""
 	elif GameSession.content and GameSession.content.characters.has(sp):
 		name = str(GameSession.content.characters[sp].get("name", sp))
-	_speaker.text = name
+	_speaker.text = name.to_upper()
 	_speaker.visible = not name.is_empty()
 	_text.text = str(line.get("text", ""))
 	var size := int(SettingsService.get_value("subtitle_size", 22))

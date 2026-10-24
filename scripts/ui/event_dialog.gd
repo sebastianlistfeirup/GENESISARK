@@ -20,11 +20,13 @@ func refresh() -> void:
 	if event_def.is_empty():
 		return
 	var crit := bool(event_def.get("critical", false))
-	var h := UiKit.label(("■ " if crit else "◆ ") + str(event_def.get("title", "")), 28, UiKit.DANGER if crit else UiKit.AMBER, true)
-	body.add_child(h)
+	var blk := UiKit.header_block(str(event_def.get("title", "")), Loc.t("Time stands still until you have chosen. Time leaps stop at unresolved crises.") if crit else "", "ui.icon_critical" if crit else "ui.icon_event", 28)
+	var hl := blk.find_children("*", "Label", true, false)[0] as Label
+	hl.text = ("■ " if crit else "◆ ") + hl.text  # symbol + colour, never colour alone
+	hl.add_theme_color_override("font_color", UiKit.DANGER.lightened(0.15) if crit else UiKit.AMBER)
+	hl.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	body.add_child(blk)
 	body.add_child(UiKit.label(str(event_def.get("text", "")), 18, UiKit.TEXT, true))
-	if crit:
-		body.add_child(UiKit.label(Loc.t("Time stands still until you have chosen. Time leaps stop at unresolved crises."), 14, UiKit.MUTED, true))
 	var gs: GameState = GameSession.state
 	for o: Dictionary in DictUtil.get_arr(event_def, "options"):
 		var blockers := GameSession.sim.events.option_blockers(gs, event_def, o)
