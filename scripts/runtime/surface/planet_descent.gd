@@ -67,7 +67,8 @@ var _plasma_mat: ShaderMaterial
 var _glow_light: OmniLight3D
 var _streaks: MultiMeshInstance3D
 var _streak_mat: ShaderMaterial
-var _streak_pts: Array = []  # [local offset (ship frame), length]
+var _streak_pts: Array = []
+var _roar := false  # [local offset (ship frame), length]
 var _vignette: ColorRect
 var _thruster: Node3D
 var _marker: Label3D
@@ -773,6 +774,7 @@ func _finish() -> void:
 	if _world_env:
 		_world_env.environment = _planet_env
 	_restore_fog()
+	AudioService.set_layer("", -2.0)
 	_stretch_cover(false)
 	if is_instance_valid(_horizon):
 		_horizon.queue_free()
@@ -830,6 +832,11 @@ func _update_fx(delta: float, pos: Vector3) -> void:
 	_thruster.global_position = pos + Vector3.DOWN * 1.2
 	_thruster.global_basis = Basis(Vector3.RIGHT, PI * 0.5)  # plume down at the ground
 	_thruster.visible = _alt < 600.0 or _landing or _ascent
+	# Entry roar: the storm bed swells with the heat and dies away below the deck.
+	var roaring := heat > 0.15 or (_alt < SWITCH_ALT + 150.0 and _alt > SWITCH_ALT - 250.0)
+	if roaring != _roar:
+		_roar = roaring
+		AudioService.set_layer("amb_hazard_storm" if roaring else "", -2.0)
 	if heat > 0.25 and _shake_ok():
 		_shake = maxf(_shake, heat * 0.22)
 	_shake = maxf(0.0, _shake - delta * 0.8)
