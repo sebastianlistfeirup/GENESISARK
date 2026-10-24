@@ -91,9 +91,12 @@ func _ready() -> void:
 	_spawn_hazard(hash(str(pa.get("txn", _dest))))
 	hud = GameHud.new()
 	add_child(hud)
-	_info = UiKit.label("", 17)
+	_info = UiKit.label("", 16)
 	var panel := UiKit.panel()
-	panel.add_child(_info)
+	var pv := UiKit.vbox(4)
+	pv.add_child(UiKit.section(Loc.t("Approach"), "ui.icon_ship"))
+	pv.add_child(_info)
+	panel.add_child(pv)
 	hud.top_right.add_child(panel)
 	# The campaign objective still names the ship task until the Ark is in orbit;
 	# in the cockpit the goal is the approach itself.
