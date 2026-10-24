@@ -162,6 +162,17 @@ func _draw_districts() -> void:
 		_district_marks.append(lbl)
 	for bz: Dictionary in DictUtil.get_arr(site, "blocked"):
 		var bc: Array = DictUtil.get_arr(bz, "center")
+		var spec := GroundCover.spec_for(gs_planet_id(), "")
+		var rock := GroundCover.mesh_of(str(spec.get("blocked_rock", "")), DictUtil.get_dict(spec, "look"))
+		if not rock.is_empty():
+			# The world's own rock formation marks ground that cannot be built on.
+			var rb: AABB = rock[2]
+			var mi := MeshInstance3D.new()
+			mi.mesh = rock[0]
+			var sc := DictUtil.get_float(bz, "radius") * 2.2 / maxf(maxf(rb.size.x, rb.size.z), 0.1)
+			mi.transform = Transform3D(Basis(Vector3.UP, float(absi(hash(bc)) % 628) / 100.0).scaled(Vector3.ONE * sc), Vector3(float(bc[0]), terrain.height_at(float(bc[0]), float(bc[1])) - rb.position.y * sc - 0.4, float(bc[1]))) * (rock[1] as Transform3D)
+			add_child(mi)
+			continue
 		var m := VisualSlot.make("surface.rock_large", "#5f5d58")
 		m.position = Vector3(float(bc[0]), terrain.height_at(float(bc[0]), float(bc[1])) - 0.5, float(bc[1]))
 		m.scale = Vector3(1.0, 0.6, 1.0) * DictUtil.get_float(bz, "radius") / 2.5
@@ -889,3 +900,7 @@ func debug_action(action: String) -> void:
 
 func _exit_tree() -> void:
 	AssetSlots.style = ""
+
+
+func gs_planet_id() -> String:
+	return GameSession.state.colony.planet_id if GameSession.state and GameSession.state.colony else ""
