@@ -16,8 +16,8 @@
 
 | Lag | Kommando | Resultat |
 |---|---|---|
-| 1 · Domæne | `godot --headless --path . --script res://tests/run_tests.gd` | **81 tests, 0 fejl** → `evidence/test_report.json` |
-| 2 · Scener (rigtigt input) | `godot --headless --path . res://scenes/tests/scene_smoke.tscn` | **56 checks, 0 fejl** + touch-føling 6/6 → `evidence/scene_smoke.json` |
+| 1 · Domæne | `godot --headless --path . --script res://tests/run_tests.gd` | **83 tests, 0 fejl** → `evidence/test_report.json` |
+| 2 · Scener (rigtigt input) | `godot --headless --path . res://scenes/tests/scene_smoke.tscn` | **65 checks, 0 fejl** + touch-føling 6/6 → `evidence/scene_smoke.json` |
 | Parse-tjek | `godot --headless --path . res://scenes/tests/compile_all.tscn` | 131 scripts, 0 fejl |
 | Balance | `godot --headless --path . --script res://tools/balance/run_balance.gd` | 18 kørsler til år 40 → `evidence/balance/` |
 | Hel kampagne (bot) | `godot --headless --path . --script res://tools/campaign/campaign_bot.gd` | 6 planeter × 4 spillestile → `evidence/campaign_bot.json` (se session 6) |

@@ -1,0 +1,94 @@
+{
+  "engine": "4.7.2-stable (official)",
+  "findings": [],
+  "from": "menu",
+  "settings": {
+    "language": "en",
+    "realtime_descent": true,
+    "reduced_motion": false,
+    "subtitles": true
+  },
+  "speed": 1.0,
+  "timestamp": "2026-10-25T01:49:20",
+  "timings": [
+    {
+      "note": "",
+      "ok": true,
+      "seconds": 2.4,
+      "stage": "menu"
+    },
+    {
+      "note": "cinematic 9.1 s",
+      "ok": true,
+      "seconds": 11.0,
+      "stage": "wakeup"
+    },
+    {
+      "note": "",
+      "ok": true,
+      "seconds": 21.6,
+      "stage": "power"
+    },
+    {
+      "note": "",
+      "ok": true,
+      "seconds": 15.9,
+      "stage": "embryo"
+    },
+    {
+      "note": "",
+      "ok": true,
+      "seconds": 20.5,
+      "stage": "starmap"
+    },
+    {
+      "note": "",
+      "ok": true,
+      "seconds": 36.6,
+      "stage": "flight"
+    },
+    {
+      "note": "",
+      "ok": true,
+      "seconds": 12.4,
+      "stage": "orbit"
+    },
+    {
+      "note": "41.6 s",
+      "ok": true,
+      "seconds": 42.4,
+      "stage": "descent"
+    },
+    {
+      "note": "",
+      "ok": true,
+      "seconds": 65.1,
+      "stage": "surface"
+    },
+    {
+      "note": "",
+      "ok": true,
+      "seconds": 8.7,
+      "stage": "ascent"
+    },
+    {
+      "note": "",
+      "ok": true,
+      "seconds": 6.7,
+      "stage": "savecycle"
+    },
+    {
+      "note": "",
+      "ok": true,
+      "seconds": 4.3,
+      "stage": "landing"
+    },
+    {
+      "note": "",
+      "ok": true,
+      "seconds": 631.7,
+      "stage": "colony"
+    }
+  ],
+  "total_s": 879.4
+}

@@ -652,10 +652,10 @@ func _build_hud() -> void:
 	_lbl_data.add_theme_constant_override("outline_size", 6)
 	_lbl_data.add_theme_color_override("font_outline_color", Color(0.02, 0.05, 0.06, 0.9))
 	box.add_child(_lbl_data)
-	_lbl_hint = UiKit.label("", 15, Color(0.85, 0.92, 0.95))
+	_lbl_hint = UiKit.label("", 18, Color(0.85, 0.92, 0.95))
 	_lbl_hint.set_anchors_preset(Control.PRESET_CENTER_BOTTOM)
-	_lbl_hint.position = Vector2(-420, -64)
-	_lbl_hint.custom_minimum_size = Vector2(840, 0)
+	_lbl_hint.position = Vector2(-520, -64)
+	_lbl_hint.custom_minimum_size = Vector2(1040, 0)
 	_lbl_hint.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_lbl_hint.add_theme_constant_override("outline_size", 6)
 	_lbl_hint.add_theme_color_override("font_outline_color", Color(0.02, 0.05, 0.06, 0.9))
@@ -1072,10 +1072,11 @@ func _update_hud(hdist: float) -> void:
 	_lbl_phase.text = Loc.t("TOUCHDOWN") if _landing else (Loc.t("LIFT-OFF") if _ascent and _alt < 120.0 else (Loc.t("CLIMB TO ORBIT") if _ascent else str(names.get(_phase, ""))))
 	_lbl_data.text = Loc.t("ALT %s · SPEED %d m/s · SITE %s · %s") % [_fmt_m(_alt), int(_vel.length()), _fmt_m(hdist),
 		Loc.t("LANDING ASSIST") if _landing else (Loc.t("AUTOPILOT") if autopilot and _manual_hold <= 0.0 else Loc.t("MANUAL"))]
+	# One key per action (as the approach flight does): "[W / Up][S / Down]" made the line unreadable.
+	var k := SettingsService.primary_key
 	_lbl_hint.text = Loc.t("[%s] autopilot / manual · [%s][%s] speed · [%s][%s] steer · [%s][%s] climb/dive · [%s] skip descent") % [
-		SettingsService.binding_text("autopilot"), SettingsService.binding_text("move_forward"), SettingsService.binding_text("move_back"),
-		SettingsService.binding_text("move_left"), SettingsService.binding_text("move_right"), SettingsService.binding_text("ascend"),
-		SettingsService.binding_text("descend"), SettingsService.binding_text("skip_line")]
+		k.call("autopilot"), k.call("move_forward"), k.call("move_back"), k.call("move_left"), k.call("move_right"),
+		k.call("ascend"), k.call("descend"), k.call("skip_line")]
 	_lbl_hint.visible = not _landing and not _ascent
 
 

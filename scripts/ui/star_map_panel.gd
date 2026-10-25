@@ -86,6 +86,10 @@ func refresh() -> void:
 	compare_box.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	cmp_scroll.add_child(compare_box)
 	tabs.add_child(cmp_scroll)
+	# Looking at the comparison is a way to "compare the candidates" (obj_choose_probe), not only a probe.
+	tabs.tab_changed.connect(func(i: int) -> void:
+		if i == 1 and GameSession.has_game():
+			GameSession.cmd_mark("candidates_compared"))
 	_build_compare()
 	if map_view.selected.is_empty():
 		_preview_frame.visible = false

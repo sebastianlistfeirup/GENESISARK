@@ -35,5 +35,9 @@ func current(gs: GameState) -> Dictionary:
 		# Objectives of an earlier phase can no longer be completed; skip them.
 		if order.find(str(content.objectives[id].get("phase", "ARK"))) < now and now >= 0:
 			continue
+		# A step the player went past (travelled without probing or seeing the bank)
+		# no longer points back to it: the guidance follows where the campaign is.
+		if str(content.objectives[id].get("superseded_by", "")) in gs.campaign.completed_objectives:
+			continue
 		return content.objectives[id]
 	return {}

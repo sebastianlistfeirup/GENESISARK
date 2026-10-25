@@ -75,8 +75,14 @@ func _ready() -> void:
 	captain.name = "Captain"
 	add_child(captain)
 	captain.teleport(builder.spawn + Vector3(0, 0.1, 0), builder.spawn_yaw)
-	if AppFlow.params.has("spawn") and interactables.has(str(AppFlow.params["spawn"])):
-		var it: Interactable = interactables[str(AppFlow.params["spawn"])]
+	var spawn_id := str(AppFlow.params.get("spawn", ""))
+	# Continue/Load in orbit: wake at the bridge's orbital terminal, where the voyage
+	# stands, not in the cryo bay 50 m away (D-066 playtest; the wake-up spot is for the start).
+	if spawn_id.is_empty() and AppFlow.params.is_empty() and not AppFlow.test_mode and GameSession.state.is_applied("story:intro_wakeup") \
+			and GameSession.state.ark.systems.get("power") != "offline" and not GameSession.sim.travel.current_planet_id(GameSession.state).is_empty():
+		spawn_id = "orbit_terminal"
+	if interactables.has(spawn_id):
+		var it: Interactable = interactables[spawn_id]
 		captain.teleport(it.global_position + Vector3(0, 0.1, 3.0), 0.0)
 	hud = GameHud.new()
 	add_child(hud)
@@ -85,7 +91,7 @@ func _ready() -> void:
 	for id: String in interactables.keys():
 		var wit: Interactable = interactables[id]
 		waypoints.add_place(wit, WaypointLayer.nice(wit.title), 2.4 if id != "embryo_bank" else 3.8)
-	captain.interact_target_changed.connect(func(t: Interactable) -> void: hud.set_prompt(t.prompt_text() + ("" if t.consequence.is_empty() or t.locked else "\n" + t.consequence) if t else ""))
+	captain.interact_target_changed.connect(func(t: Interactable) -> void: hud.set_prompt(_prompt_for(t)))
 	captain.hold_progress.connect(hud.set_hold)
 	var vp := UiKit.panel(Vector2(300, 0))
 	var vv := UiKit.vbox(2)
@@ -290,6 +296,10 @@ func _on_state(_kind: String) -> void:
 	if pc:
 		pc.locked = powered
 		pc.locked_reason = Loc.t("emergency power is running")
+	# The prompt follows a lock that changed under the captain's feet (the coupling
+	# just closed still offered "[E] Connect" until the captain stepped away).
+	if captain and captain.current_target and not _any_panel():
+		hud.set_prompt(_prompt_for(captain.current_target))
 	UiKit.clear(_window_planet)
 	var pid2 := GameSession.sim.travel.current_planet_id(gs)
 	if not pid2.is_empty():
@@ -330,6 +340,13 @@ func _open(p: OverlayPanel) -> void:
 
 func _panel_closed() -> void:
 	captain.set_active(true)
+	hud.set_prompt(_prompt_for(captain.current_target))  # still at the console: its prompt comes back
+
+
+func _prompt_for(t: Interactable) -> String:
+	if t == null:
+		return ""
+	return t.prompt_text() + ("" if t.consequence.is_empty() or t.locked else "\n" + t.consequence)
 
 
 func _process(delta: float) -> void:

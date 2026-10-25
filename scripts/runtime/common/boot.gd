@@ -12,7 +12,22 @@ func _ready() -> void:
 	if PerfProbe.requested():
 		get_tree().root.add_child(PerfProbe.new())
 		return
+	if _playtest_requested():  # dev tool: scripted player (tools/playtest, D-066)
+		var drv := load("res://tools/playtest/play_driver.gd") as GDScript
+		if drv and drv.can_instantiate():
+			get_tree().root.add_child(drv.new() as Node)
+			return
+		push_error("playtest driver failed to load")
+		get_tree().quit(3)
+		return
 	if DebugCapture.requested():
 		get_tree().root.add_child(DebugCapture.new())
 		return
 	AppFlow.goto("menu")
+
+
+static func _playtest_requested() -> bool:
+	for a: String in OS.get_cmdline_user_args():
+		if a.begins_with("--playtest"):
+			return true
+	return false

@@ -326,6 +326,9 @@ func _run() -> void:
 	Input.action_release("interact")
 	check("ga03_power_restored_by_interaction", GameSession.state.ark.systems["power"] != "offline")
 	await frames(2)
+	# D-066: the prompt follows the coupling's new lock instead of still offering "[E] Connect".
+	var ship_hud: GameHud = ship.get("hud")
+	check("prompt_follows_lock_after_power", captain.current_target == coupling and not ship_hud.prompt.text.contains(coupling.verb), ship_hud.prompt.text)
 	var cur_obj := GameSession.sim.objectives.current(GameSession.state)
 	var want_it: Variant = ship.get("interactables").get(str(DictUtil.get_dict(cur_obj, "targets").get("ship", "")))
 	check("waypoint_follows_next_objective", wl.objective != ship.get("interactables")["power_coupling"] and wl.objective == want_it, "%s → %s" % [cur_obj.get("id"), wl.objective_label])
@@ -376,6 +379,22 @@ func _run() -> void:
 	check("ga06_expedition_start", rs.ok, rs.reason)
 	var surf := await load_scene("res://scenes/surface/surface.tscn")
 	var cap2: Captain = surf.get("captain")
+	# D-066: touchdown never offers "[E] Return to the lander" first; the drone reserve
+	# on a full suit only warns on the first press, a second press calls it.
+	var lander0: Interactable = (surf.get("_markers") as Dictionary)["lander"]
+	check("surface_lander_quiet_at_touchdown", lander0.collision_layer == 0 and cap2.current_target != lander0, "layer=%d target=%s dist=%.1f" % [lander0.collision_layer, cap2.current_target, cap2.global_position.distance_to(lander0.global_position)])
+	var dr := InputEventAction.new()
+	dr.action = "drone_refill"
+	dr.pressed = true
+	Input.parse_input_event(dr)
+	await frames(2)
+	var warned := not GameSession.state.expedition.drone_refill_used
+	Input.parse_input_event(dr)
+	await frames(2)
+	check("surface_drone_full_suit_asks_first", warned and GameSession.state.expedition.drone_refill_used, "warned=%s used=%s" % [warned, GameSession.state.expedition.drone_refill_used])
+	var pod0 := surf.get_node_or_null("DropPod") as DropPod
+	if pod0 and pod0.is_busy():
+		pod0.skip()
 	await frames(30)
 	check("surface_captain_on_terrain", cap2.global_position.y > -5.0 and cap2.global_position.y < 40.0, str(cap2.global_position))
 	check("surface_dressing_keeps_paths_clear", _dressing_blockers(surf).is_empty(), str(_dressing_blockers(surf)))
@@ -453,6 +472,21 @@ func _run() -> void:
 	await frames(5)
 	var back: bool = col.get("mode") == "overhead" and not cap3.input_enabled and (col.get("cam_rig") as ColonyCamera).active
 	check("ga02_camera_mode_switch_clean", on_captain and back and cap3.global_position.distance_to(p0) < 0.5, "moved=%.2f" % cap3.global_position.distance_to(p0))
+	# D-066: [Esc] with a build ghost cancels it (as its tip says) instead of opening the pause menu.
+	col.call("_start_build", "battery")
+	await frames(2)
+	var tip := (col.get("hud") as GameHud).root.get_node("GhostTip") as Control
+	check("colony_ghost_tip_lets_clicks_through", tip.visible and tip.mouse_filter == Control.MOUSE_FILTER_IGNORE)
+	var esc := InputEventAction.new()
+	esc.action = "pause"
+	esc.pressed = true
+	Input.parse_input_event(esc)
+	await frames(3)
+	var col_hud: GameHud = col.get("hud")
+	check("colony_esc_cancels_build", str(col.get("build_def")).is_empty() and not col_hud.pause_menu.visible and not get_tree().paused,
+		"build=%s pause=%s" % [col.get("build_def"), col_hud.pause_menu.visible])
+	if col_hud.pause_menu.visible:
+		col_hud.pause_menu.close()
 	var views: Dictionary = col.get("views")
 	check("ga08_building_views_synced", views.size() == GameSession.state.colony.buildings.size(), "%d vs %d" % [views.size(), GameSession.state.colony.buildings.size()])
 	check("ga08_habitat_active", GameSession.state.colony.count_active("habitat") == 1)

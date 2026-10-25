@@ -132,7 +132,11 @@ func _ready() -> void:
 	for key: String in _markers.keys():
 		var m: Interactable = _markers[key]
 		waypoints.add_place(m, WaypointLayer.nice(m.title), 3.6 if key != "lander" else 4.2)
-	captain.interact_target_changed.connect(func(t: Interactable) -> void: hud.set_prompt(t.prompt_text() + ("\n" + t.consequence if t and not t.consequence.is_empty() else "") if t else ""))
+	captain.interact_target_changed.connect(func(t: Interactable) -> void: _show_prompt(t))
+	# Touchdown leaves the captain beside the hatch: "[E] Return to the lander" (which
+	# ends the expedition) must not be the first thing offered (D-066). The lander
+	# answers once the captain has walked off the pad or has a sample.
+	(_markers["lander"] as Interactable).collision_layer = 0
 	captain.hold_progress.connect(hud.set_hold)
 	_build_suit_hud()
 	if ex.drone_refill_available and not ex.drone_refill_used:
@@ -415,8 +419,24 @@ func _physics_process(delta: float) -> void:
 	if _markers.has("relay") and ex.relay_placed:
 		(_markers["relay"] as Interactable).locked = true
 		(_markers["relay"] as Interactable).locked_reason = Loc.t("the relay is here")
+	var lander_it: Interactable = _markers.get("lander")
+	if lander_it and lander_it.collision_layer == 0 and (not ex.samples.is_empty() or captain.global_position.distance_to(lander_it.global_position) > 8.0):
+		lander_it.collision_layer = 4  # Interactable's "interactable" layer: the captain's probe finds it again
+	# A sample taken or the relay placed under the captain's feet: the prompt says so
+	# instead of still offering "[E] Take sample" until the captain steps away.
+	if captain.current_target and captain.current_target.locked != _prompt_locked:
+		_show_prompt(captain.current_target)
 	if ex.status == ExpeditionState.STATUS_RECALLED:
 		_finish(true)
+
+
+var _prompt_locked := false  # lock state of the target the prompt was last written for
+var _drone_confirm_until := 0  # msec: a second drone press before this calls the pod on a full suit
+
+
+func _show_prompt(t: Interactable) -> void:
+	_prompt_locked = t != null and t.locked
+	hud.set_prompt("" if t == null else t.prompt_text() + ("" if t.consequence.is_empty() or t.locked else "\n" + t.consequence))
 
 
 func _nav_context(ex: ExpeditionState, hm: Array) -> Dictionary:
@@ -439,6 +459,17 @@ func _unhandled_input(event: InputEvent) -> void:
 			get_viewport().set_input_as_handled()
 			return
 		var before := GameSession.state.expedition.suit_energy if GameSession.state.expedition else 0.0
+		# The one cell is easy to waste on a nearly full suit (D-066 playtest: called at
+		# 97 %, it added 3 %): the first press only warns, a second press within 5 s calls it.
+		var refill := float(GameSession.content.bal("suit.drone_refill", 35.0))
+		var max_e := float(GameSession.content.bal("suit.max_energy", 100.0))
+		var ex0 := GameSession.state.expedition
+		if ex0 and ex0.drone_refill_available and not ex0.drone_refill_used and before + refill * 0.5 > max_e and Time.get_ticks_msec() > _drone_confirm_until:
+			_drone_confirm_until = Time.get_ticks_msec() + 5000
+			hud.toast(Loc.t("The suit is still at %d%%: most of the cell would be wasted. Press [%s] again to call the drone anyway.") % [int(before), SettingsService.binding_text("drone_refill")], "warning", 5.0)
+			get_viewport().set_input_as_handled()
+			return
+		_drone_confirm_until = 0
 		var r := GameSession.cmd_drone_refill()
 		if r.ok:
 			hud.toast(Loc.t("The drone delivers an energy cell."), "ok")
