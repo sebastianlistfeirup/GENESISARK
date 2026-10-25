@@ -1,0 +1,216 @@
+{"ev":"start","from":"menu","settings":{"realtime_descent":true,"reduced_motion":false},"speed":1.0,"stage":"","t":0.02}
+{"ev":"begin","stage":"menu","t":0.02}
+{"ev":"scene","key":"menu","stage":"menu","t":1.08}
+{"ambience":"amb_space","ev":"shot","file":"01_menu.jpg","music":"music_hope","objective":"","prompt":"","scene":"menu","stage":"menu","t":2.39}
+{"ev":"click","stage":"menu","t":2.44,"what":"New campaign"}
+{"ev":"end","note":"","ok":true,"seconds":2.4,"stage":"menu","t":2.44}
+{"ev":"begin","stage":"wakeup","t":2.44}
+{"ev":"scene","key":"ship","stage":"wakeup","t":4.15}
+{"ambience":"amb_ship_dark","ev":"shot","file":"02_wakeup_dark.jpg","music":"music_ark_alone","objective":"Go to the workshop","prompt":"","scene":"ship","stage":"wakeup","t":5.25}
+{"ambience":"amb_ship_dark","ev":"shot","file":"03_wakeup_hatch.jpg","music":"music_ark_alone","objective":"Go to the workshop","prompt":"","scene":"ship","stage":"wakeup","t":8.87}
+{"cam_active":true,"ev":"wakeup_done","input":true,"seconds":9.1,"stage":"wakeup","t":13.36}
+{"ambience":"amb_ship_dark","ev":"shot","file":"04_wakeup_handover.jpg","music":"music_ark_alone","objective":"Go to the workshop","prompt":"","scene":"ship","stage":"wakeup","t":13.4}
+{"ev":"end","note":"cinematic 9.1 s","ok":true,"seconds":11.0,"stage":"wakeup","t":13.4}
+{"ev":"begin","stage":"power","t":13.4}
+{"ev":"objective","stage":"power","t":13.4,"text":"Go to the workshop"}
+{"cells":7200,"ev":"nav_grid","solid":2036,"stage":"power","step":0.75,"t":13.41}
+{"ev":"stuck_dodge","pos":"(6.0, 0.0, 13.1)","stage":"power","t":19.14}
+{"ambience":"amb_ship_dark","ev":"shot","file":"05_coupling_prompt.jpg","music":"music_ark_alone","objective":"Go to the workshop","prompt":"Connect the emergency power coupling","scene":"ship","stage":"power","t":31.1}
+{"ev":"prompt","stage":"power","t":31.11,"text":"Connect the emergency power coupling"}
+{"ev":"objectives_completed","ids":["obj_restore_power","obj_wake"],"stage":"power","t":31.12}
+{"ambience":"amb_ship_dark","ev":"shot","file":"06_power_wave_early.jpg","music":"music_ark_alone","objective":"Visit the embryo bank","prompt":"the emergency power coupling — emergency power is running","scene":"ship","stage":"power","t":31.75}
+{"ambience":"amb_ship_dark","ev":"shot","file":"07_power_wave.jpg","music":"music_ark_alone","objective":"Visit the embryo bank","prompt":"the emergency power coupling — emergency power is running","scene":"ship","stage":"power","t":33.57}
+{"ev":"objective","stage":"power","t":35.03,"text":"Visit the embryo bank"}
+{"ev":"end","note":"","ok":true,"seconds":21.6,"stage":"power","t":35.05}
+{"ev":"begin","stage":"embryo","t":35.05}
+{"ev":"prompt","stage":"embryo","t":48.94,"text":"Examine the embryo bank"}
+{"ev":"objectives_completed","ids":["obj_check_embryo_bank"],"stage":"embryo","t":48.95}
+{"ambience":"amb_ship_dark","ev":"shot","file":"08_embryo_panel.jpg","music":"music_ark_alone","objective":"Open the star map","prompt":"","scene":"ship","stage":"embryo","t":50.27}
+{"ev":"objective","stage":"embryo","t":50.9,"text":"Open the star map"}
+{"ev":"end","note":"","ok":true,"seconds":15.9,"stage":"embryo","t":50.9}
+{"ev":"begin","stage":"starmap","t":50.9}
+{"ev":"prompt","stage":"starmap","t":65.99,"text":"Open the star map"}
+{"ev":"objectives_completed","ids":["obj_open_starmap"],"stage":"starmap","t":65.99}
+{"ambience":"amb_ship_dark","ev":"shot","file":"09_starmap.jpg","music":"music_ark_alone","objective":"Compare the candidates","prompt":"","scene":"ship","stage":"starmap","t":68.11}
+{"ev":"objectives_completed","ids":["obj_choose_probe"],"stage":"starmap","t":68.12}
+{"ambience":"amb_ship_dark","ev":"shot","file":"10_compare.jpg","music":"music_ark_alone","objective":"Travel to a candidate","prompt":"","scene":"ship","stage":"starmap","t":69.18}
+{"ev":"objective","stage":"starmap","t":69.18,"text":"Travel to a candidate"}
+{"ambience":"amb_ship_dark","ev":"shot","file":"11_starmap_viridia.jpg","music":"music_ark_alone","objective":"Travel to a candidate","prompt":"","scene":"ship","stage":"starmap","t":70.9}
+{"ev":"objective","stage":"starmap","t":70.9,"text":"Travel to a candidate"}
+{"ev":"objectives_completed","ids":["obj_travel"],"stage":"starmap","t":70.92}
+{"ev":"click","stage":"starmap","t":70.95,"what":"Travel here"}
+{"ev":"end","note":"","ok":true,"seconds":20.5,"stage":"starmap","t":71.44}
+{"ev":"begin","stage":"flight","t":71.44}
+{"ev":"scene","key":"flight","stage":"flight","t":72.1}
+{"ambience":"amb_space","ev":"shot","file":"12_flight_start.jpg","music":"music_ark_alone","objective":"Reach orbit around Viridia","prompt":"W/S speed · A/D sideways · Space/Ctrl up/down · [Shift] evasive burn · [F] autopilot · [V] view","scene":"flight","stage":"flight","t":73.21}
+{"ev":"manual_progress","m":278.0,"speed":60.0,"stage":"flight","t":77.58}
+{"ambience":"amb_space","ev":"shot","file":"13_flight_cockpit.jpg","music":"music_ark_alone","objective":"Reach orbit around Viridia","prompt":"W/S speed · A/D sideways · Space/Ctrl up/down · [Shift] evasive burn · [F] autopilot · [V] view","scene":"flight","stage":"flight","t":78.7}
+{"ambience":"amb_space","ev":"shot","file":"14_flight_autopilot.jpg","music":"music_ark_alone","objective":"Reach orbit around Viridia","prompt":"W/S speed · A/D sideways · Space/Ctrl up/down · [Shift] evasive burn · [F] autopilot · [V] view","scene":"flight","stage":"flight","t":79.85}
+{"ambience":"amb_space","ev":"shot","file":"15_flight_arrive.jpg","music":"music_ark_alone","objective":"Reach orbit around Viridia","prompt":"Orbit established.","scene":"flight","stage":"flight","t":108.05}
+{"autopilot_s":28.2,"ev":"flight","hits":0,"stage":"flight","t":108.05}
+{"ev":"end","note":"","ok":true,"seconds":36.6,"stage":"flight","t":108.05}
+{"ev":"begin","stage":"orbit","t":108.06}
+{"ev":"scene","key":"ship","stage":"orbit","t":111.57}
+{"ambience":"amb_ship_powered","ev":"shot","file":"16_orbit_ship.jpg","music":"music_ark_alone","objective":"Scan the planet from orbit","prompt":"Open the orbital terminal","scene":"ship","stage":"orbit","t":113.16}
+{"ev":"objective","stage":"orbit","t":113.17,"text":"Scan the planet from orbit"}
+{"ev":"spawn_dist","m":3.0,"stage":"orbit","t":113.17,"target":true}
+{"ev":"prompt","stage":"orbit","t":113.17,"text":"Open the orbital terminal"}
+{"ambience":"amb_ship_powered","ev":"shot","file":"17_orbit_panel.jpg","music":"music_ark_alone","objective":"Scan the planet from orbit","prompt":"","scene":"ship","stage":"orbit","t":114.99}
+{"ev":"objectives_completed","ids":["obj_orbital_scan"],"stage":"orbit","t":115.01}
+{"ev":"click","stage":"orbit","t":115.08,"what":"Orbital scan"}
+{"ambience":"amb_ship_powered","ev":"shot","file":"18_orbit_scanned.jpg","music":"music_ark_alone","objective":"Complete an expedition","prompt":"","scene":"ship","stage":"orbit","t":116.09}
+{"ev":"click","stage":"orbit","t":116.14,"what":"drone reserve switch"}
+{"ev":"click","stage":"orbit","t":116.5,"what":"Expedition"}
+{"ev":"scene","key":"surface","stage":"orbit","t":120.19}
+{"ambience":"amb_surface_green","ev":"shot","file":"19_after_expedition_click.jpg","music":"music_ark_alone","objective":"Complete an expedition","prompt":"","scene":"surface","stage":"orbit","t":120.5}
+{"ev":"end","note":"","ok":true,"seconds":12.4,"stage":"orbit","t":120.5}
+{"ev":"begin","stage":"descent","t":120.51}
+{"ambience":"amb_surface_green","ev":"shot","file":"20_descent_orbit.jpg","music":"music_ark_alone","objective":"Complete an expedition","prompt":"","scene":"surface","stage":"descent","t":122.1}
+{"ambience":"amb_surface_green","ev":"shot","file":"21_descent_manual.jpg","music":"music_ark_alone","objective":"Complete an expedition","prompt":"","scene":"surface","stage":"descent","t":125.16}
+{"ambience":"amb_surface_green","ev":"shot","file":"22_descent_entry.jpg","music":"music_ark_alone","objective":"Complete an expedition","prompt":"","scene":"surface","stage":"descent","t":129.26}
+{"ev":"pause_in_descent","menu_visible":true,"paused":true,"stage":"descent","t":130.31}
+{"ambience":"amb_surface_green","ev":"shot","file":"23_descent_paused.jpg","music":"music_ark_alone","objective":"Complete an expedition","prompt":"","scene":"surface","stage":"descent","t":130.35}
+{"ambience":"amb_surface_green","ev":"shot","file":"24_descent_low.jpg","music":"music_ark_alone","objective":"Complete an expedition","prompt":"","scene":"surface","stage":"descent","t":142.76}
+{"ambience":"amb_surface_green","ev":"shot","file":"25_touchdown.jpg","music":"music_ark_alone","objective":"Complete an expedition","prompt":"","scene":"surface","stage":"descent","t":162.94}
+{"autopilot_completed":true,"ev":"descent","seconds":41.6,"stage":"descent","t":162.94}
+{"ev":"end","note":"41.6 s","ok":true,"seconds":42.4,"stage":"descent","t":162.95}
+{"ev":"begin","stage":"surface","t":162.95}
+{"ambience":"amb_surface_green","ev":"shot","file":"26_surface_start.jpg","music":"music_ark_alone","objective":"Complete an expedition","prompt":"","scene":"surface","stage":"surface","t":163.96}
+{"ev":"objective","stage":"surface","status":"Samples: 0/2 · Relay: missing\n[C] Scanner\n[G] Call drone reserve (+35%)\nLander: 5 m","t":163.96,"text":"Complete an expedition"}
+{"ambience":"amb_surface_green","ev":"shot","file":"27_scanner.jpg","music":"music_ark_alone","objective":"Complete an expedition","prompt":"","scene":"surface","stage":"surface","t":165.64}
+{"ev":"prompt","stage":"surface","t":179.44,"text":"Take sample: The Fungal Rim"}
+{"ambience":"amb_surface_green","ev":"shot","file":"28_sampling_main_sample.jpg","music":"music_ark_alone","objective":"Complete an expedition","prompt":"Take sample: The Fungal Rim","scene":"surface","stage":"surface","t":182.48}
+{"ambience":"amb_surface_green","ev":"shot","file":"29_sample_done_main_sample.jpg","music":"music_ark_alone","objective":"Complete an expedition","prompt":"The Fungal Rim — the sample is taken","scene":"surface","stage":"surface","t":187.97}
+{"ev":"drone_warned","stage":"surface","suit":96.9,"t":188.42}
+{"ambience":"amb_surface_green","ev":"shot","file":"30_drone_warning.jpg","music":"music_ark_alone","objective":"Complete an expedition","prompt":"The Fungal Rim — the sample is taken","scene":"surface","stage":"surface","t":188.45}
+{"ambience":"amb_surface_green","ev":"shot","file":"31_droppod_incoming.jpg","music":"music_ark_alone","objective":"Complete an expedition","prompt":"The Fungal Rim — the sample is taken","scene":"surface","stage":"surface","t":189.54}
+{"ambience":"amb_surface_green","ev":"shot","file":"32_droppod_landed.jpg","music":"music_ark_alone","objective":"Complete an expedition","prompt":"The Fungal Rim — the sample is taken","scene":"surface","stage":"surface","t":192.04}
+{"ambience":"amb_surface_green","ev":"shot","file":"33_droppod_done.jpg","music":"music_ark_alone","objective":"Complete an expedition","prompt":"The Fungal Rim — the sample is taken","scene":"surface","stage":"surface","t":196.86}
+{"after":99.0,"before":96.9,"ev":"drone","stage":"surface","t":196.87}
+{"ambience":"amb_surface_green","ev":"shot","file":"34_relay_prompt.jpg","music":"music_ark_alone","objective":"Complete an expedition","prompt":"Place relay at The High Ridge","scene":"surface","stage":"surface","t":207.28}
+{"ev":"prompt","stage":"surface","t":207.28,"text":"Place relay at The High Ridge"}
+{"ambience":"amb_surface_green","ev":"shot","file":"35_relay_placed.jpg","music":"music_ark_alone","objective":"Complete an expedition","prompt":"The High Ridge — the relay is here","scene":"surface","stage":"surface","t":208.35}
+{"ambience":"amb_surface_green","ev":"shot","file":"36_hazard_zone.jpg","music":"music_ark_alone","objective":"Complete an expedition","prompt":"Take sample: The Spore Capsule","scene":"surface","stage":"surface","t":215.34}
+{"ev":"prompt","stage":"surface","t":215.34,"text":"Take sample: The Spore Capsule"}
+{"ambience":"amb_surface_green","ev":"shot","file":"37_sampling_risk_sample.jpg","music":"music_ark_alone","objective":"Complete an expedition","prompt":"Take sample: The Spore Capsule","scene":"surface","stage":"surface","t":218.34}
+{"ambience":"amb_surface_green","ev":"shot","file":"38_sample_done_risk_sample.jpg","music":"music_ark_alone","objective":"Complete an expedition","prompt":"The Spore Capsule — the sample is taken","scene":"surface","stage":"surface","t":223.85}
+{"ambience":"amb_surface_green","ev":"shot","file":"39_lander_prompt.jpg","music":"music_ark_alone","objective":"Complete an expedition","prompt":"Return to the lander","scene":"surface","stage":"surface","t":227.53}
+{"ev":"expedition","relay":true,"samples":["main_sample","risk_sample"],"stage":"surface","suit":93.2,"t":227.54}
+{"ev":"prompt","stage":"surface","t":227.54,"text":"Return to the lander"}
+{"ev":"objectives_completed","ids":["obj_expedition"],"stage":"surface","t":227.54}
+{"ev":"end","note":"","ok":true,"seconds":65.1,"stage":"surface","t":228.01}
+{"ev":"begin","stage":"ascent","t":228.02}
+{"ambience":"amb_surface_green","ev":"shot","file":"40_ascent.jpg","music":"music_ark_alone","objective":"Complete an expedition","prompt":"","scene":"surface","stage":"ascent","t":230.03}
+{"ambience":"amb_surface_green","ev":"shot","file":"41_ascent_climb.jpg","music":"music_ark_alone","objective":"Complete an expedition","prompt":"","scene":"surface","stage":"ascent","t":234.04}
+{"ev":"scene","key":"ship","stage":"ascent","t":235.08}
+{"ev":"ascent","seconds":7.1,"stage":"ascent","t":235.15}
+{"ambience":"amb_ship_powered","ev":"shot","file":"42_back_on_ship.jpg","music":"music_ark_alone","objective":"Confirm the landing","prompt":"Open the orbital terminal","scene":"ship","stage":"ascent","t":236.67}
+{"ev":"objective","stage":"ascent","t":236.68,"text":"Confirm the landing"}
+{"ev":"end","note":"","ok":true,"seconds":8.7,"stage":"ascent","t":236.68}
+{"ev":"begin","stage":"savecycle","t":236.68}
+{"ambience":"amb_ship_powered","ev":"shot","file":"43_pause.jpg","music":"music_ark_alone","objective":"Confirm the landing","prompt":"Open the orbital terminal","scene":"ship","stage":"savecycle","t":237.57}
+{"ev":"click","stage":"savecycle","t":237.67,"what":"Save game"}
+{"ambience":"amb_ship_powered","ev":"shot","file":"44_save_slots.jpg","music":"music_ark_alone","objective":"Confirm the landing","prompt":"Open the orbital terminal","scene":"ship","stage":"savecycle","t":238.32}
+{"ev":"click","stage":"savecycle","t":238.36,"what":"save slot 1"}
+{"ambience":"amb_ship_powered","ev":"shot","file":"45_saved.jpg","music":"music_ark_alone","objective":"Confirm the landing","prompt":"Open the orbital terminal","scene":"ship","stage":"savecycle","t":239.21}
+{"ev":"click","stage":"savecycle","t":239.25,"what":"Main menu"}
+{"ev":"scene","key":"menu","stage":"savecycle","t":239.67}
+{"ambience":"amb_space","ev":"shot","file":"46_menu_continue.jpg","music":"music_hope","objective":"","prompt":"","scene":"menu","stage":"savecycle","t":240.97}
+{"ev":"click","stage":"savecycle","t":241.02,"what":"Continue"}
+{"ev":"scene","key":"ship","stage":"savecycle","t":242.04}
+{"ambience":"amb_ship_powered","ev":"shot","file":"47_continued.jpg","music":"music_ark_alone","objective":"Confirm the landing","prompt":"Open the orbital terminal","scene":"ship","stage":"savecycle","t":243.34}
+{"ev":"end","note":"","ok":true,"seconds":6.7,"stage":"savecycle","t":243.34}
+{"ev":"begin","stage":"landing","t":243.34}
+{"cells":7200,"ev":"nav_grid","solid":2036,"stage":"landing","step":0.75,"t":243.35}
+{"ev":"prompt","stage":"landing","t":244.59,"text":"Open the orbital terminal"}
+{"ev":"click","stage":"landing","t":246.21,"what":"Prepare landing"}
+{"ambience":"amb_ship_powered","ev":"shot","file":"48_landing_preview.jpg","music":"music_ark_alone","objective":"Confirm the landing","prompt":"","scene":"ship","stage":"landing","t":247.63}
+{"ev":"objectives_completed","ids":["obj_commit_landing"],"stage":"landing","t":247.66}
+{"ev":"click","stage":"landing","t":247.68,"what":"Confirm landing (final)"}
+{"ev":"end","note":"","ok":true,"seconds":4.3,"stage":"landing","t":247.69}
+{"ev":"begin","stage":"colony","t":247.69}
+{"ev":"scene","key":"colony","stage":"colony","t":250.54}
+{"ambience":"amb_space","ev":"shot","file":"49_ark_descent.jpg","music":"","objective":"Build a power supply","prompt":"","scene":"colony","stage":"colony","t":252.67}
+{"ambience":"amb_space","ev":"shot","file":"50_ark_descent_entry.jpg","music":"","objective":"Build a power supply","prompt":"","scene":"colony","stage":"colony","t":258.67}
+{"ambience":"amb_surface_green","ev":"shot","file":"51_ark_descent_low.jpg","music":"","objective":"Build a power supply","prompt":"","scene":"colony","stage":"colony","t":279.66}
+{"ev":"ark_descent","seconds":49.2,"stage":"colony","t":299.84}
+{"ambience":"amb_surface_green","ev":"shot","file":"52_colony_start.jpg","music":"","objective":"Build a power supply","prompt":"","scene":"colony","stage":"colony","t":301.35}
+{"ev":"colony_open","hint":"Pick a power source in the build bar at the bottom and click the ground to place it. Choose one that suits the planet.","objective":"Build a power supply","speed":0,"stage":"colony","t":301.35}
+{"ev":"click","stage":"colony","t":301.4,"what":"build solar_array"}
+{"ambience":"amb_surface_green","ev":"shot","file":"53_ghost_solar_array.jpg","music":"","objective":"Build a power supply","prompt":"","scene":"colony","stage":"colony","t":302.33}
+{"at":[0.0,9.0],"def":"solar_array","ev":"built","stage":"colony","t":303.2}
+{"ev":"click","stage":"colony","t":303.28,"what":"build water_plant"}
+{"ambience":"amb_surface_green","ev":"shot","file":"54_ghost_water_plant.jpg","music":"","objective":"Build a power supply","prompt":"","scene":"colony","stage":"colony","t":304.22}
+{"at":[12.0,0.0],"def":"water_plant","ev":"built","stage":"colony","t":304.93}
+{"ev":"click","stage":"colony","t":305.06,"what":"build habitat"}
+{"ambience":"amb_surface_green","ev":"shot","file":"55_ghost_habitat.jpg","music":"","objective":"Build a power supply","prompt":"","scene":"colony","stage":"colony","t":306.01}
+{"at":[-17.0,17.0],"def":"habitat","ev":"built","stage":"colony","t":306.76}
+{"ambience":"amb_surface_green","ev":"shot","file":"56_colony_built.jpg","music":"","objective":"Build a power supply","prompt":"","scene":"colony","stage":"colony","t":306.79}
+{"ev":"objective","stage":"colony","t":306.79,"text":"Build a power supply"}
+{"ev":"click","stage":"colony","t":306.84,"what":"build battery"}
+{"cancelled":true,"ev":"esc_cancel_build","had_ghost":true,"paused":false,"stage":"colony","t":307.51}
+{"ev":"objectives_completed","ids":["obj_build_power"],"stage":"colony","t":308.86}
+{"ev":"objectives_completed","ids":["obj_build_water"],"stage":"colony","t":310.86}
+{"ev":"objectives_completed","ids":["obj_stable_supply"],"stage":"colony","t":312.19}
+{"ev":"objectives_completed","ids":["obj_build_habitat"],"stage":"colony","t":313.52}
+{"after_s":5.6,"day":9,"ev":"first_builds_active","objective":"Build the care center","stage":"colony","t":313.66}
+{"ambience":"amb_surface_green","ev":"shot","file":"57_colony_running.jpg","music":"","objective":"Build the care center","prompt":"","scene":"colony","stage":"colony","t":313.68}
+{"cost":70,"day":28,"ev":"material_wait","seconds":12.5,"stage":"colony","t":326.2}
+{"ev":"click","stage":"colony","t":326.28,"what":"build care_center"}
+{"ambience":"amb_surface_green","ev":"shot","file":"58_ghost_care_center.jpg","music":"","objective":"Build the care center","prompt":"","scene":"colony","stage":"colony","t":327.2}
+{"at":[-11.0,28.0],"def":"care_center","ev":"built","stage":"colony","t":327.98}
+{"ev":"objectives_completed","ids":["obj_care_center"],"stage":"colony","t":330.86}
+{"ev":"pick","selected":5,"stage":"colony","t":331.66,"what":"care center"}
+{"ambience":"amb_surface_green","ev":"shot","file":"59_care_center_card.jpg","music":"","objective":"Start the first cohort","prompt":"","scene":"colony","stage":"colony","t":332.3}
+{"ev":"pick","selected":5,"stage":"colony","t":334.97,"what":"care center"}
+{"ev":"pick","selected":5,"stage":"colony","t":337.69,"what":"care center"}
+{"ev":"pick","selected":5,"stage":"colony","t":340.4,"what":"care center"}
+{"ev":"pick","selected":5,"stage":"colony","t":343.1,"what":"care center"}
+{"ev":"pick","selected":5,"stage":"colony","t":345.81,"what":"care center"}
+{"ev":"pick","selected":5,"stage":"colony","t":348.51,"what":"care center"}
+{"ev":"pick","selected":5,"stage":"colony","t":351.22,"what":"care center"}
+{"ev":"pick","selected":5,"stage":"colony","t":353.93,"what":"care center"}
+{"ev":"pick","selected":5,"stage":"colony","t":356.64,"what":"care center"}
+{"ev":"pick","selected":5,"stage":"colony","t":359.35,"what":"care center"}
+{"ev":"pick","selected":5,"stage":"colony","t":362.06,"what":"care center"}
+{"ev":"pick","selected":5,"stage":"colony","t":364.76,"what":"care center"}
+{"ev":"pick","selected":5,"stage":"colony","t":367.48,"what":"care center"}
+{"ev":"pick","selected":5,"stage":"colony","t":370.18,"what":"care center"}
+{"ev":"pick","selected":5,"stage":"colony","t":372.9,"what":"care center"}
+{"ev":"pick","selected":5,"stage":"colony","t":375.59,"what":"care center"}
+{"ev":"pick","selected":5,"stage":"colony","t":378.3,"what":"care center"}
+{"ev":"pick","selected":5,"stage":"colony","t":381.01,"what":"care center"}
+{"ev":"pick","selected":5,"stage":"colony","t":383.72,"what":"care center"}
+{"ev":"pick","selected":5,"stage":"colony","t":386.43,"what":"care center"}
+{"ev":"pick","selected":5,"stage":"colony","t":389.14,"what":"care center"}
+{"ev":"pick","selected":5,"stage":"colony","t":391.86,"what":"care center"}
+{"ev":"pick","selected":5,"stage":"colony","t":394.56,"what":"care center"}
+{"ev":"pick","selected":5,"stage":"colony","t":397.27,"what":"care center"}
+{"ev":"pick","selected":5,"stage":"colony","t":399.98,"what":"care center"}
+{"ev":"pick","selected":5,"stage":"colony","t":402.68,"what":"care center"}
+{"ev":"pick","selected":5,"stage":"colony","t":405.39,"what":"care center"}
+{"ev":"pick","selected":5,"stage":"colony","t":408.1,"what":"care center"}
+{"ev":"pick","selected":5,"stage":"colony","t":410.81,"what":"care center"}
+{"ev":"pick","selected":5,"stage":"colony","t":413.52,"what":"care center"}
+{"ev":"pick","selected":5,"stage":"colony","t":416.24,"what":"care center"}
+{"ev":"pick","selected":5,"stage":"colony","t":418.94,"what":"care center"}
+{"ev":"pick","selected":5,"stage":"colony","t":421.66,"what":"care center"}
+{"ev":"pick","selected":5,"stage":"colony","t":424.36,"what":"care center"}
+{"ev":"pick","selected":5,"stage":"colony","t":427.07,"what":"care center"}
+{"ev":"pick","selected":5,"stage":"colony","t":429.78,"what":"care center"}
+{"ev":"pick","selected":5,"stage":"colony","t":432.48,"what":"care center"}
+{"ev":"pick","selected":5,"stage":"colony","t":435.19,"what":"care center"}
+{"ev":"pick","selected":5,"stage":"colony","t":437.9,"what":"care center"}
+{"ev":"pick","selected":5,"stage":"colony","t":440.6,"what":"care center"}
+{"ev":"pick","selected":5,"stage":"colony","t":443.32,"what":"care center"}
+{"ev":"pick","selected":5,"stage":"colony","t":446.04,"what":"care center"}
+{"ev":"pick","selected":5,"stage":"colony","t":448.74,"what":"care center"}
+{"ev":"pick","selected":5,"stage":"colony","t":451.45,"what":"care center"}
+{"ev":"pick","selected":5,"stage":"colony","t":454.15,"what":"care center"}
+{"blockers":["Requires water and food reserves for 30 days for the coming children (now 6).","The planet requires a habitat with a filter module.","Not enough housing for the coming children."],"day":219,"ev":"incubation_ready","stage":"colony","t":454.15,"wait_s":121.9}
+{"after_s":420.0,"day":849,"decision":false,"ev":"first_event","event":false,"population":0,"stage":"colony","t":874.16}
+{"ev":"click","stage":"colony","t":874.84,"what":"Colony overview"}
+{"ambience":"amb_surface_green","ev":"shot","file":"60_overview.jpg","music":"","objective":"Start the first cohort","prompt":"","scene":"colony","stage":"colony","t":876.26}
+{"ambience":"amb_surface_green","ev":"shot","file":"61_captain_mode.jpg","music":"","objective":"Start the first cohort","prompt":"","scene":"colony","stage":"colony","t":878.53}
+{"buildings":5,"day":849,"ev":"colony_state","objective":"Start the first cohort","population":0,"stage":"colony","t":879.36}
+{"ev":"end","note":"","ok":true,"seconds":631.7,"stage":"colony","t":879.36}

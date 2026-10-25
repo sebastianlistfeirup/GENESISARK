@@ -1,10 +1,10 @@
 {
   "content_errors": [],
-  "elapsed_ms": 2243,
+  "elapsed_ms": 2252,
   "engine_version": "4.7.2-stable (official)",
   "failures": [],
   "files": {
-    "test_ark_travel.gd": 9,
+    "test_ark_travel.gd": 11,
     "test_choices.gd": 14,
     "test_colony.gd": 9,
     "test_content.gd": 6,
@@ -16,6 +16,6 @@
     "test_survey_expedition.gd": 6
   },
   "status": "PASS",
-  "tests": 81,
-  "timestamp": "2026-10-24T23:29:57"
+  "tests": 83,
+  "timestamp": "2026-10-25T01:55:21"
 }

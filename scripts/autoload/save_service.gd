@@ -13,7 +13,7 @@ func _ready() -> void:
 	# Evidence captures and perf runs build fixture campaigns whose commands
 	# autosave: they keep to their own folder instead of overwriting the
 	# player's real slots.
-	if DebugCapture.requested() or PerfProbe.requested():
+	if DebugCapture.requested() or PerfProbe.requested() or "--playtest" in " ".join(OS.get_cmdline_user_args()):
 		store = SaveStore.new("user://saves_debug")
 
 

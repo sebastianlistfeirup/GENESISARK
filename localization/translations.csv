@@ -227,7 +227,6 @@ The cold gets through anything that isn't actively heated.,"Kulden trænger genn
 The long night,Den lange nat
 The planet rotates slowly. For weeks there is no sunlight.,Planeten roterer langsomt. I ugevis er der intet sollys.
 "50,000 embryos sleep in the cold. See them with your own eyes.",50.000 embryoner sover i kulden. Se dem med egne øjne.
-"A probe costs components, but resolves an important uncertainty.","En probe koster komponenter, men fjerner en vigtig usikkerhed."
 A self-sufficient community of at least 500 inhabitants and a council.,Et selvforsynende samfund med mindst 500 indbyggere og et råd.
 Begin incubating ten embryos.,Begynd inkubationen af ti embryoner.
 Build a habitat,Byg et habitat
@@ -257,11 +256,12 @@ Keep a power and water surplus for seven days in a row.,Hold strøm og vand i ov
 Keep the colony stable while the first cohort grows.,"Hold kolonien stabil, mens den første kohorte vokser."
 Let the colony begin to govern itself.,Lad kolonien begynde at styre sig selv.
 New life needs a place to be cared for.,Nyt liv kræver et sted at blive passet.
+"Open the Comparison tab on the star map, or send a probe: it costs components but resolves an important uncertainty.","Åbn fanen Sammenligning på stjernekortet, eller send en sonde: den koster komponenter, men fjerner en vigtig usikkerhed."
 Open the care center. The requirements are shown before you can start.,"Åbn omsorgscentret. Kravene vises, før du kan starte."
 Open the star map,Åbn stjernekortet
 People need a place to live.,Mennesker skal have et sted at bo.
+Pick a power source in the build bar at the bottom and click the ground to place it. Choose one that suits the planet.,"Vælg en strømkilde i byggebjælken forneden, og klik på jorden for at placere den. Vælg en, der passer til planeten."
 Place the water plant close to water and within range of the supply network.,Placér vandanlægget tæt på vand og inden for netværkets rækkevidde.
-Press B for colony mode. Choose a power source that suits the planet.,"Tryk B for kolonitilstand. Vælg en strømkilde, der passer til planeten."
 Reach year 20,Nå år 20
 Review the colony plan on the bridge and confirm when you are sure.,"Gennemgå koloniplanen på broen, og bekræft, når du er sikker."
 Scan the planet from orbit,Scan planeten fra kredsløb
@@ -269,7 +269,6 @@ See where the Ark can go.,"Se, hvor arken kan tage hen."
 "Send a remote probe, or compare the known worlds.","Send en langdistanceprobe, eller sammenlign de kendte verdener."
 Stabilize supply,Stabilisér forsyningen
 Start the first cohort,Start den første kohorte
-Start the orbital scan from the bridge. It costs a little fuel.,Start orbitalscanningen fra broen. Den koster lidt brændstof.
 Take surface samples and place a relay.,"Tag prøver på overfladen, og placér et relæ."
 "The Ark is dark, and the emergency power is failing. Find your way to the workshop.","Arken er mørk, og nødstrømmen svigter. Find vej til værkstedet."
 The Ark lands for the last time. It cannot be undone.,Arken lander for sidste gang. Det kan ikke gøres om.
@@ -281,6 +280,7 @@ The embryo bank is amidships. Go to the board with the number.,Embryobanken ligg
 The emergency power coupling in the workshop has come loose. Reconnect it.,Nødstrømskoblingen i værkstedet er gået løs. Sæt den i igen.
 The supply balance is shown at the top. A battery helps through night and bad weather.,Se forsyningsbalancen øverst. Et batteri hjælper gennem nat og uvejr.
 Travel to a candidate,Rejs til en kandidat
+Use the orbital terminal on the bridge. The scan takes one day.,Brug kredsløbsterminalen på broen. Scanningen tager én dag.
 Use the time leap. It stops at unresolved crises.,Brug tidsspringet. Det stopper ved uløste kriser.
 Visit the embryo bank,Besøg embryobanken
 Wait for the first birth,Vent på den første fødsel
@@ -908,6 +908,7 @@ Pause,Pause
 Resource area,Ressourceområde
 "Supply, population, generation leap and council","Forsyning, befolkning, generationsspring og råd"
 "The Ark has landed. Build power, water and a habitat. Tap a building below.","Arken er landet. Byg strøm, vand og et habitat. Tryk på en bygning nederst."
+Time is paused: construction starts when time runs. Press [%s] or ▶ 1x.,"Tiden står stille: byggeriet går i gang, når tiden løber. Tryk [%s] eller ▶ 1x."
 Walk the colony as the captain,Gå rundt i kolonien som kaptajnen
 Year %d · day %d   %s,År %d · dag %d   %s
 ● can be built,● kan bygges
@@ -993,6 +994,7 @@ Take the main sample,Tag hovedprøven
 The drone delivers an energy cell.,Dronen leverer en energicelle.
 The relay is transmitting.,Relæet sender.
 The relay secures data and assesses the landing site.,Relæet sikrer data og vurderer landingspladsen.
+The suit is still at %d%%: most of the cell would be wasted. Press [%s] again to call the drone anyway.,Dragten er stadig på %d%%: det meste af cellen ville gå til spilde. Tryk [%s] igen for at kalde dronen alligevel.
 You have no samples yet. Press again to return anyway.,Du har ingen prøver endnu. Tryk igen for at vende tilbage alligevel.
 [%s] Call drone reserve (+%d%%),[%s] Kald dronereserve (+%d%%)
 [%s] Scanner,[%s] Scanner

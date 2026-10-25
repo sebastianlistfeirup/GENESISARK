@@ -25,7 +25,8 @@
     {
       "id": "obj_check_embryo_bank",
       "order": 3,
-      "phase": "ARK",
+      "phase": "VOYAGE",
+      "superseded_by": "obj_travel",
       "title": "Visit the embryo bank",
       "description": "50,000 embryos sleep in the cold. See them with your own eyes.",
       "hint": "The embryo bank is amidships. Go to the board with the number.",
@@ -36,7 +37,8 @@
     {
       "id": "obj_open_starmap",
       "order": 4,
-      "phase": "ARK",
+      "phase": "VOYAGE",
+      "superseded_by": "obj_travel",
       "title": "Open the star map",
       "description": "See where the Ark can go.",
       "hint": "Go up to the bridge and use the star map at the command console.",
@@ -48,9 +50,10 @@
       "id": "obj_choose_probe",
       "order": 5,
       "phase": "VOYAGE",
+      "superseded_by": "obj_travel",
       "title": "Compare the candidates",
       "description": "Send a remote probe, or compare the known worlds.",
-      "hint": "A probe costs components, but resolves an important uncertainty.",
+      "hint": "Open the Comparison tab on the star map, or send a probe: it costs components but resolves an important uncertainty.",
       "targets": {
         "ship": "starmap"
       }
@@ -70,9 +73,10 @@
       "id": "obj_orbital_scan",
       "order": 7,
       "phase": "VOYAGE",
+      "superseded_by": "obj_expedition",
       "title": "Scan the planet from orbit",
       "description": "Find climate, gravity and possible landing sites.",
-      "hint": "Start the orbital scan from the bridge. It costs a little fuel.",
+      "hint": "Use the orbital terminal on the bridge. The scan takes one day.",
       "targets": {
         "ship": "orbit_terminal"
       }
@@ -105,7 +109,7 @@
       "phase": "SETTLED",
       "title": "Build a power supply",
       "description": "Build a solar array or a geothermal generator.",
-      "hint": "Press B for colony mode. Choose a power source that suits the planet."
+      "hint": "Pick a power source in the build bar at the bottom and click the ground to place it. Choose one that suits the planet."
     },
     {
       "id": "obj_build_water",

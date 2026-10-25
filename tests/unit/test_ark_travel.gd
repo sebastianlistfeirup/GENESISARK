@@ -31,6 +31,35 @@ func test_power_objective_once() -> void:
 	eq(sim.state.campaign.completed_objectives.size(), n, "ingen dobbelt belønning")
 
 
+## D-066 playtest: after the power comes back the guidance walks the player to the
+## embryo bank and the star map (they were ARK-phase objectives that the phase switch
+## to VOYAGE skipped), looking at the comparison counts as comparing, and a step the
+## player went past (travelled without probing) no longer points back to it.
+func test_objective_chain_after_power() -> void:
+	var sim := new_sim()
+	ok(sim.ark.restore_power(sim.state), "strøm")
+	sim.update_objectives()
+	eq(str(sim.objectives.current(sim.state).get("id")), "obj_check_embryo_bank", "embryobanken efter strøm")
+	ok(sim.ark.mark_system(sim.state, "embryo_bank_checked"), "bank set")
+	sim.update_objectives()
+	eq(str(sim.objectives.current(sim.state).get("id")), "obj_open_starmap", "stjernekort efter banken")
+	ok(sim.ark.mark_system(sim.state, "starmap_opened"), "kort åbnet")
+	sim.update_objectives()
+	eq(str(sim.objectives.current(sim.state).get("id")), "obj_choose_probe", "sammenlign")
+	ok(sim.ark.mark_system(sim.state, "candidates_compared"), "sammenligning set")
+	sim.update_objectives()
+	eq(str(sim.objectives.current(sim.state).get("id")), "obj_travel", "sammenligning tæller som at sammenligne")
+
+
+func test_objective_superseded_by_travel() -> void:
+	var sim := new_sim()
+	ok(sim.ark.restore_power(sim.state), "strøm")
+	ok(sim.travel.request_travel(sim.state, "viridia", "t-sup"), "rejse uden bank, kort eller sonde")
+	sim.update_objectives()
+	eq(str(sim.objectives.current(sim.state).get("id")), "obj_orbital_scan", "vejledningen peger ikke tilbage på springet over")
+	check(not "obj_choose_probe" in sim.state.campaign.completed_objectives, "springet over er ikke belønnet")
+
+
 func test_travel_requires_power() -> void:
 	var sim := new_sim()
 	fails(sim.travel.request_travel(sim.state, "viridia", "t1"), "travel_blocked")

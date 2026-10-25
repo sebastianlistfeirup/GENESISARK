@@ -254,6 +254,7 @@ func _build_ui() -> void:
 	gp.grow_vertical = Control.GROW_DIRECTION_BEGIN
 	gp.visible = false
 	gp.name = "GhostTip"
+	gp.mouse_filter = Control.MOUSE_FILTER_IGNORE  # a click on the ground behind the tip must place the building (D-066)
 	hud.root.add_child(gp)
 
 
@@ -755,7 +756,7 @@ func _cancel_build() -> void:
 
 func _update_ghost() -> void:
 	# Controller: the build cursor is the screen centre; move the camera to aim.
-	var screen := get_viewport().get_visible_rect().size * 0.5 if SettingsService.using_pad else get_viewport().get_mouse_position()
+	var screen := get_viewport().get_visible_rect().size * 0.5 if SettingsService.using_pad else (_mouse_screen if _mouse_screen.x >= 0.0 else get_viewport().get_mouse_position())
 	var gp: Variant = _mouse_ground(screen)
 	if gp == null:
 		return
@@ -783,6 +784,10 @@ func _confirm_build() -> void:
 		AudioService.ui("ui_error")
 		return
 	var r := GameSession.cmd_place_building(build_def, ghost_pos, build_rot)
+	if r.ok and GameSession.colony_speed == 0 and not _paused_hint_shown:
+		# The colony opens paused; the first site waits for time to run (D-066 playtest).
+		_paused_hint_shown = true
+		hud.toast(Loc.t("Time is paused: construction starts when time runs. Press [%s] or ▶ 1x.") % SettingsService.primary_key("speed_pause"), "info", 8.0)
 	if r.ok and not Input.is_action_pressed("build_repeat"):
 		_cancel_build()
 
@@ -994,11 +999,20 @@ func debug_action(action: String) -> void:
 
 
 var _tips_armed := false
+var _mouse_screen := Vector2(-1.0, -1.0)  # last pointer position from input events (-1: none yet)
+var _paused_hint_shown := false
 
 
 ## Build-bar hints arm on the first real mouse move (or any key / pad input),
 ## so the scene's opening frame never shows a tooltip under a resting cursor.
 func _input(event: InputEvent) -> void:
+	if event is InputEventMouse:
+		_mouse_screen = (event as InputEventMouse).position  # the ghost follows the pointer's events
+	# The ghost tip promises [Esc] cancels: it must not open the pause menu instead (D-066).
+	if not build_def.is_empty() and event.is_action_pressed("pause") and not hud.any_modal_open() and not _overlay_open():
+		_cancel_build()
+		get_viewport().set_input_as_handled()
+		return
 	if _tips_armed or _build_bar == null:
 		return
 	var mm := event as InputEventMouseMotion

@@ -58,7 +58,7 @@ func update_objectives() -> Array:
 		"obj_check_embryo_bank": bool(gs.ark.systems.get("embryo_bank_checked", false)),
 		"obj_wake": bool(gs.ark.systems.get("workshop_checked", false)) or gs.ark.systems.get("power") != "offline",
 		"obj_open_starmap": bool(gs.ark.systems.get("starmap_opened", false)),
-		"obj_choose_probe": _any_probe(),
+		"obj_choose_probe": _any_probe() or bool(gs.ark.systems.get("candidates_compared", false)),
 		"obj_travel": gs.campaign.visited.size() > 1,
 		"obj_orbital_scan": _any_level("orbital_scan_done"),
 		"obj_expedition": _any_expedition(),
