@@ -23,6 +23,7 @@ const SHOTS := [
 	["expedition:ferrum", "surface", "vista:225", 6.0, "FERRUM", true, 3.0],
 	["expedition:viridia", "surface", "ascent", 11.0, "", false, 0.0],
 	["era:ferrum:20", "colony", "zoomout", 8.0, "Build a civilisation", true, 4.0],
+	["era:ferrum:20", "colony", "rover", 7.0, "", true, 0.0],
 	["grown:viridia", "colony", "living", 6.0, "", true, 2.0],
 	["era:viridia:40", "ending", "", 8.0, "", false, 0.0],
 ]
