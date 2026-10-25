@@ -17,7 +17,7 @@ import numpy as np
 from PIL import Image, ImageDraw
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from scene import load_scan, load_rebuild, sample_surface, sample_tex  # noqa: E402
+from scene import load_scan, load_rebuild, sample_surface, sample_tex, yaw_points  # noqa: E402
 
 ap = argparse.ArgumentParser()
 ap.add_argument("scan")
@@ -27,10 +27,13 @@ ap.add_argument("--slices", type=int, default=12)
 ap.add_argument("--samples", type=int, default=1_500_000)
 ap.add_argument("--metal-threshold", type=float, default=0.35)
 ap.add_argument("--rebuild", default=None)
+ap.add_argument("--yaw", type=float, default=0.0, help="turn the scan about +Y first (degrees; 90 maps -X onto +Z)")
 args = ap.parse_args()
 os.makedirs(args.out, exist_ok=True)
 
 pos, nrm, uv, idx, base, mr = load_scan(args.scan)
+if args.yaw:
+    pos, nrm = yaw_points(pos, args.yaw), yaw_points(nrm, args.yaw)
 lo, hi = pos.min(0), pos.max(0)
 s = 1.0
 if args.size:
@@ -62,6 +65,8 @@ reb = None
 if args.rebuild:
     _, _, prims = load_rebuild(args.rebuild)
     reb = np.concatenate([p["wpos"] for p in prims])
+    rlo, rhi = reb.min(0), reb.max(0)
+    reb = reb - [(rlo[0] + rhi[0]) / 2, rlo[1], (rlo[2] + rhi[2]) / 2]  # centred like the scan
 
 PX = 900
 span = float((hi - lo).max()) * 1.1

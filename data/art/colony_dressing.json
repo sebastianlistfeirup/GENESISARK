@@ -1361,6 +1361,37 @@
     0.0
    ]
   },
+  "rovers": {
+   "_note": "Six-wheeled utility rovers on the dirt roads (ColonyRovers, D-065): base + one per per_buildings active buildings, at most max. speed m/s, lane = offset from the road's centre line. night: worlds where the head lamps are on; dust: worlds whose wheels raise dust (dust colour). sounds: first slot that exists plays.",
+   "base": 1,
+   "per_buildings": 7,
+   "max": 4,
+   "speed": 4.2,
+   "lane": 1.35,
+   "night": [
+    "umbra"
+   ],
+   "dust": {
+    "sere": "#c9a878",
+    "ferrum": "#a8705a"
+   },
+   "sounds": {
+    "unload_start": [
+     "sfx_rover_hydraulic"
+    ],
+    "unload_seat": [
+     "sfx_rover_unload",
+     "sfx_door"
+    ],
+    "unload_seat_db": -12.0,
+    "turn": [
+     "sfx_rover_turn"
+    ],
+    "horn": [
+     "sfx_rover_horn"
+    ]
+   }
+  },
   "crowd": {
    "_note": "Colonists standing at the market corners (ColonyLife.set_crowd, D-045): at most max, one per per_people living colonists.",
    "max": 24,

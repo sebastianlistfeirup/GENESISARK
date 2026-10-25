@@ -48,3 +48,5 @@ __pycache__/
 /assets/audio/vo/*.mp3.import
 /assets/audio/final/*.ogg
 /assets/audio/final/*.ogg.import
+# D-065: the rover viewer's baked paint is derived from the owner's Meshy scan (local only)
+/evidence/rover/viewer/rover_baked*

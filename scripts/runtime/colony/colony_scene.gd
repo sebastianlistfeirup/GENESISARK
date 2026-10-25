@@ -98,6 +98,8 @@ func _ready() -> void:
 	captain.teleport(Vector3(float(lc[0]) + 10, terrain.height_at(float(lc[0]) + 10, float(lc[1]) + 9) + 0.5, float(lc[1]) + 9))
 	captain.set_active(false)
 	captain.visible = false
+	_life.captain = captain
+	_life.world_id = str(planet.get("id", ""))
 	cam_rig.make_current()
 	hud = GameHud.new()
 	add_child(hud)
@@ -344,7 +346,7 @@ func _relayout() -> void:
 	_paths = ColonyPaths.new()
 	_paths.build(gs, site, segs, 220.0)
 	for rd: PackedVector2Array in _paths.roads:
-		clear.add_polyline(rd, road_w * 0.5 + 0.3)
+		clear.add_polyline(rd, road_w * 0.5 + 1.4)  # road + shoulder stay clear: the rovers (D-065) drive out to 2.7 m
 	_draw_roads(road_cfg, clear)
 	if _cover == null:
 		_lay_ground_cover(clear)
@@ -615,13 +617,17 @@ func _sync_people() -> void:
 	_life.sync_people(GameSession.state)
 
 
-var _follow: Node3D  # evidence only ("people" debug action)
+var _follow: Node3D  # evidence only ("people" / "rover" debug actions)
+var _follow_yaw := NAN  # "rover": keep the camera at this yaw relative to the rover's heading
 
 
 func _process(delta: float) -> void:
 	_process_network_visibility()
 	if is_instance_valid(_follow):
-		cam_rig.position = _follow.position
+		cam_rig.position = _follow.global_position
+		if not is_nan(_follow_yaw):
+			cam_rig.target_yaw = _follow.global_rotation.y + _follow_yaw
+			cam_rig.rotation.y = lerp_angle(cam_rig.rotation.y, cam_rig.target_yaw, clampf(delta * 2.5, 0.0, 1.0))
 	_t += delta
 	_layout_hud()
 	var gs: GameState = GameSession.state
@@ -907,6 +913,31 @@ func debug_action(action: String) -> void:
 		if parts.size() > 3:
 			cam_rig.target_yaw = deg_to_rad(float(parts[3]))
 			cam_rig.rotation.y = cam_rig.target_yaw
+		if decision.visible:
+			decision.hide()
+		if event_dialog.visible:
+			event_dialog.hide()
+		get_viewport().warp_mouse(Vector2(get_viewport().get_visible_rect().size.x * 0.5, 160))
+		return
+	if action.begins_with("rover"):  # evidence: "rover[:<n>[:<zoom>[:<yaw deg vs heading>[:<arrive|unload|turn|mid|captain>]]]]" follow a rover (D-065)
+		var parts := action.split(":")
+		var rv := _life.rovers if _life else null
+		if rv and rv.count() > 0:
+			var i := int(parts[1]) if parts.size() > 1 else 0
+			if parts.size() > 4 and parts[4] == "captain":  # the captain steps into its lane: it stops and flashes
+				rv.force(i, "mid")
+				captain.visible = true
+				captain.teleport(rv.lane_point(i, 15.0) + Vector3(0, 0.3, 0), 0.0)
+			elif parts.size() > 4:
+				rv.force(i, parts[4])
+			_follow = rv.rover(i)
+			_follow_yaw = deg_to_rad(float(parts[3])) if parts.size() > 3 else deg_to_rad(35.0)
+			cam_rig.target_yaw = _follow.global_rotation.y + _follow_yaw
+			cam_rig.rotation.y = cam_rig.target_yaw
+			print("ROVER_STATS count=", rv.count(), " ", rv.state_of(i))
+		else:
+			print("ROVER_STATS count=0")
+		cam_rig.zoom = float(parts[2]) if parts.size() > 2 else 16.0
 		if decision.visible:
 			decision.hide()
 		if event_dialog.visible:

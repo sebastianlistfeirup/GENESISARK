@@ -4,7 +4,8 @@ extends Node3D
 ## population data). Colonists walk door to door along the walking grid
 ## (ColonyPaths) and play their walk/idle clips; work robots circle the
 ## construction sites; drones hop between rooftops; a few hover vehicles drive
-## the dirt roads; at the market corners (ColonyStreets) a few colonists stand
+## the dirt roads; six-wheeled utility rovers shuttle along them (ColonyRovers,
+## D-065); at the market corners (ColonyStreets) a few colonists stand
 ## and browse, glancing around now and then. Counts follow the colony's size;
 ## pack files that are missing are skipped (the colonists fall back to their proxies).
 
@@ -13,6 +14,10 @@ const MAX_ROUTES_PER_FRAME := 3
 var terrain: TerrainBuilder
 var paths: ColonyPaths
 var living_center := Vector2.ZERO
+## The captain (rovers and hover vehicles give way to him) and the world id.
+var captain: Node3D
+var world_id := ""
+var rovers: ColonyRovers
 
 var _people: Array = []    # [{node, anim, robot, route, i, wait, speed, seed}]
 var _drones: Array = []    # [{node, from, to, t, dur, wait, h, blink}]
@@ -74,6 +79,14 @@ func relayout(gs: GameState, new_paths: ColonyPaths) -> void:
 		p["route"] = PackedVector2Array()  # re-plan on the new grid
 		p["wait"] = minf(float(p["wait"]), 0.5)
 	_sync_drones(active)
+	if rovers == null:
+		rovers = ColonyRovers.new()
+		rovers.terrain = terrain
+		rovers.captain = captain
+		rovers.life = self
+		rovers.setup(world_id)
+		add_child(rovers)
+	rovers.relayout(paths, active.size())
 	_sync_vehicles(active.size())
 
 
@@ -246,6 +259,15 @@ func _sync_vehicles(active_count: int) -> void:
 	_vehicles.clear()
 	if paths == null or paths.roads.is_empty():
 		return
+	# The rovers own their roads (D-065): hover cars only drive the others, so the
+	# two never meet head-on in one lane or stack up behind each other.
+	var used: Array = rovers.used_roads() if rovers else []
+	var free_roads: Array = []
+	for ri: int in paths.roads.size():
+		if not ri in used:
+			free_roads.append(paths.roads[ri])
+	if free_roads.is_empty():
+		return
 	var want := mini(DictUtil.get_int(cfg, "max", 5), active_count / maxi(1, DictUtil.get_int(cfg, "per_buildings", 6)))
 	var ps := DictUtil.get_float(BuildingDressing.doc(), "prop_scale", 0.72)
 	for i: int in want:
@@ -259,21 +281,26 @@ func _sync_vehicles(active_count: int) -> void:
 		body.position = -Vector3(box.get_center().x, box.position.y, box.get_center().z) * ps
 		node.add_child(body)
 		add_child(node)
-		var road: PackedVector2Array = paths.roads[i % paths.roads.size()]
+		var road: PackedVector2Array = free_roads[i % free_roads.size()]
 		var length := 0.0
 		for k: int in range(1, road.size()):
 			length += road[k - 1].distance_to(road[k])
 		_vehicles.append({"node": node, "road": road, "len": length, "s": _rng.randf() * length, "dir": 1.0 if i % 2 == 0 else -1.0,
 			"speed": DictUtil.get_float(cfg, "speed", 4.0) * _rng.randf_range(0.8, 1.15), "wait": 0.0,
-			"hover": float(hovers[mi]) if mi < hovers.size() else 0.0, "seed": i})
+			"hover": float(hovers[mi]) if mi < hovers.size() else 0.0, "seed": i, "yield": false})
 
 
 func _move_vehicles(delta: float) -> void:
 	for v: Dictionary in _vehicles:
 		var node: Node3D = v["node"]
 		var length := float(v["len"])
+		# Give way to the rovers and the captain in the lane ahead (D-065).
+		var fwd := Vector2(sin(node.rotation.y), cos(node.rotation.y))
+		v["yield"] = float(v["wait"]) <= 0.0 and _vehicle_blocked(Vector2(node.position.x, node.position.z), fwd)
 		if float(v["wait"]) > 0.0:
 			v["wait"] = float(v["wait"]) - delta
+		elif bool(v["yield"]):
+			pass
 		else:
 			var s := float(v["s"]) + float(v["dir"]) * float(v["speed"]) * delta
 			if s <= 2.0 or s >= length - 2.0:
@@ -323,6 +350,22 @@ func _idle_crowd(delta: float) -> void:
 		var n: Node3D = c["node"]
 		n.rotation.y = lerp_angle(n.rotation.y, float(c["yaw"]) + float(c["look"]), clampf(delta * 2.0, 0.0, 1.0))
 		(c["anim"] as CharacterAnimator).update("idle", 0.0)
+
+
+func _vehicle_blocked(p: Vector2, fwd: Vector2) -> bool:
+	var side := fwd.orthogonal()
+	if is_instance_valid(captain) and captain.visible:
+		var d := Vector2(captain.global_position.x, captain.global_position.z) - p
+		if d.dot(fwd) > 0.0 and d.dot(fwd) < 6.5 and absf(d.dot(side)) < 1.6:
+			return true
+	return rovers != null and rovers.blocks(p, fwd, 14.0, 2.0)
+
+
+## Where the colonists are (rovers stop for anyone on the road). Appends to `out`.
+func walker_points(out: PackedVector2Array) -> void:
+	for p: Dictionary in _people:
+		var n: Node3D = p["node"]
+		out.append(Vector2(n.position.x, n.position.z))
 
 
 ## Evidence: where a colonist is walking right now (or any colonist).
